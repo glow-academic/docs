@@ -1,0 +1,942 @@
+# Auths
+
+## Endpoints
+
+### `POST` `/auths/get`
+
+Get Auth
+
+Get auth information using the canonical shared auth operation.
+
+**Request body** (`GetAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | No | UUID of the auth provider to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to load |
+
+**Response** (`GetAuthApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `auth_exists` | `boolean` | No | Whether the auth provider exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this auth |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`AuthNameSection`](#authnamesection) | No | Name section with resources |
+| `descriptions` | [`AuthDescriptionSection`](#authdescriptionsection) | No | Description section with resources |
+| `flags` | [`AuthFlagSection`](#authflagsection) | No | Flag section with configs |
+| `protocols` | [`AuthProtocolSection`](#authprotocolsection) | No | Protocol section with resources |
+| `slugs` | [`AuthSlugSection`](#authslugsection) | No | Slug section with resources |
+| `items` | [`AuthItemSection`](#authitemsection) | No | Auth item section with resources |
+
+---
+
+### `POST` `/auths/search`
+
+Search Auth
+
+Search auths — composable infra architecture.
+
+**Request body** (`SearchAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `filter_department_ids` | `string`[] | No | — |
+| `department_search` | `string` | No | — |
+| `page_size` | `integer` | No | — |
+| `page_offset` | `integer` | No | — |
+
+**Response** (`ListAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `auths` | [`ListAuthApiAuth`](#listauthapiauth)[] | No | List of auth provider items |
+| `department_filter` | [`ListFilterSection`](#listfiltersection) | No | Filter options for departments |
+| `total_count` | `integer` | No | Total number of auth providers |
+
+---
+
+### `POST` `/auths/create`
+
+Create Auth
+
+Create auths using composable infra architecture.
+
+**Request body** (`CreateAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auths` | [`CreateAuthItem`](#createauthitem)[] | Yes | List of auth providers to create |
+
+**Response** (`CreateAuthApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AuthResultItem`](#authresultitem)[] | Yes | Per-item creation results |
+
+---
+
+### `POST` `/auths/update`
+
+Update Auth
+
+Update auths using composable infra architecture.
+
+**Request body** (`UpdateAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auths` | [`UpdateAuthItem`](#updateauthitem)[] | Yes | List of auth providers to update |
+
+**Response** (`UpdateAuthApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AuthResultItem`](#authresultitem)[] | Yes | Per-item update results |
+
+---
+
+### `POST` `/auths/duplicate`
+
+Duplicate Auth
+
+Duplicate an auth — composable infra architecture.
+
+**Request body** (`DuplicateAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | Yes | UUID of the auth provider to duplicate |
+
+**Response** (`DuplicateAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `auth_id` | `string` | Yes | UUID of the newly created auth provider |
+| `message` | `string` | Yes | Result message |
+
+---
+
+### `POST` `/auths/delete`
+
+Delete Auth
+
+Bulk delete auths — composable infra architecture.
+
+**Request body** (`DeleteAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_ids` | `string`[] | Yes | UUIDs of auth providers to delete |
+
+**Response** (`DeleteAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteAuthResult`](#deleteauthresult)[] | Yes | Per-item deletion results |
+
+---
+
+### `PATCH` `/auths/draft`
+
+Patch Auth Draft
+
+Patch auth draft — composable infra architecture.
+
+**Request body** (`PatchAuthDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `protocol_ids` | `string`[] | No | Protocol resource UUIDs |
+| `slug_ids` | `string`[] | No | Slug resource UUIDs |
+| `item_ids` | `string`[] | No | Auth item UUIDs |
+
+**Response** (`PatchAuthDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`AuthDraftFormState`](#authdraftformstate) | No | Server-authoritative form state |
+
+---
+
+### `POST` `/auths/drafts`
+
+Get Auth Drafts
+
+List auth drafts owned by the current profile.
+
+**Response** (`GetAuthDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetAuthDraftResponse`](#getauthdraftresponse)[] | No | List of auth draft entries |
+
+---
+
+### `POST` `/auths/docs`
+
+Get Auth Docs Endpoint
+
+Get composed documentation for the auth artifact.
+
+**Request body** (`DocsApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entity_id` | `string` | No | — |
+
+**Response** (`ComposedDocsResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Output`](#docsresponse-output) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](#docsapiresponse) | No | Page-level metadata from docs API |
+
+---
+
+### `POST` `/auths/export`
+
+Export Auths
+
+Export all auths as a clean, denormalized CSV.
+
+**Request body** (`ExportAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | No | UUID of the auth provider to export |
+
+**Response** (`ExportAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+---
+
+### `POST` `/auths/refresh`
+
+Auth Refresh
+
+Refresh auth materialized views and invalidate caches.
+
+**Response** (`RefreshResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+
+---
+
+### `POST` `/stream/CreateAuthApiRequest`
+
+Schema: CreateAuthApiRequest
+
+**Request body** (`CreateAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auths` | [`CreateAuthItem`](#createauthitem)[] | Yes | List of auth providers to create |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/CreateAuthApiResponse`
+
+Schema: CreateAuthApiResponse
+
+**Request body** (`CreateAuthApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AuthResultItem`](#authresultitem)[] | Yes | Per-item creation results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteAuthApiRequest`
+
+Schema: DeleteAuthApiRequest
+
+**Request body** (`DeleteAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_ids` | `string`[] | Yes | UUIDs of auth providers to delete |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteAuthApiResponse`
+
+Schema: DeleteAuthApiResponse
+
+**Request body** (`DeleteAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteAuthResult`](#deleteauthresult)[] | Yes | Per-item deletion results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateAuthApiRequest`
+
+Schema: DuplicateAuthApiRequest
+
+**Request body** (`DuplicateAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | Yes | UUID of the auth provider to duplicate |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateAuthApiResponse`
+
+Schema: DuplicateAuthApiResponse
+
+**Request body** (`DuplicateAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `auth_id` | `string` | Yes | UUID of the newly created auth provider |
+| `message` | `string` | Yes | Result message |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportAuthApiRequest`
+
+Schema: ExportAuthApiRequest
+
+**Request body** (`ExportAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | No | UUID of the auth provider to export |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportAuthApiResponse`
+
+Schema: ExportAuthApiResponse
+
+**Request body** (`ExportAuthApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetAuthApiRequest`
+
+Schema: GetAuthApiRequest
+
+**Request body** (`GetAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | No | UUID of the auth provider to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to load |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetAuthApiResponse`
+
+Schema: GetAuthApiResponse
+
+**Request body** (`GetAuthApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `auth_exists` | `boolean` | No | Whether the auth provider exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this auth |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`AuthNameSection`](#authnamesection) | No | Name section with resources |
+| `descriptions` | [`AuthDescriptionSection`](#authdescriptionsection) | No | Description section with resources |
+| `flags` | [`AuthFlagSection`](#authflagsection) | No | Flag section with configs |
+| `protocols` | [`AuthProtocolSection`](#authprotocolsection) | No | Protocol section with resources |
+| `slugs` | [`AuthSlugSection`](#authslugsection) | No | Slug section with resources |
+| `items` | [`AuthItemSection`](#authitemsection) | No | Auth item section with resources |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetAuthDraftsApiResponse`
+
+Schema: GetAuthDraftsApiResponse
+
+**Request body** (`GetAuthDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetAuthDraftResponse`](#getauthdraftresponse)[] | No | List of auth draft entries |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchAuthDraftApiRequest`
+
+Schema: PatchAuthDraftApiRequest
+
+**Request body** (`PatchAuthDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `protocol_ids` | `string`[] | No | Protocol resource UUIDs |
+| `slug_ids` | `string`[] | No | Slug resource UUIDs |
+| `item_ids` | `string`[] | No | Auth item UUIDs |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchAuthDraftApiResponse`
+
+Schema: PatchAuthDraftApiResponse
+
+**Request body** (`PatchAuthDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`AuthDraftFormState`](#authdraftformstate) | No | Server-authoritative form state |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateAuthApiRequest`
+
+Schema: UpdateAuthApiRequest
+
+**Request body** (`UpdateAuthApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auths` | [`UpdateAuthItem`](#updateauthitem)[] | Yes | List of auth providers to update |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateAuthApiResponse`
+
+Schema: UpdateAuthApiResponse
+
+**Request body** (`UpdateAuthApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AuthResultItem`](#authresultitem)[] | Yes | Per-item update results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+## Types
+
+### `AuthDescriptionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected description resource |
+| `resources` | `any`[] | No | Available description resources |
+
+---
+
+### `AuthDraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
+| `protocol_ids` | `string`[] | Yes | Assigned protocol UUIDs |
+| `slug_ids` | `string`[] | Yes | Assigned slug UUIDs |
+| `item_ids` | `string`[] | Yes | Assigned auth item UUIDs |
+
+---
+
+### `AuthFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Name of the field that failed validation |
+| `message` | `string` | Yes | Validation error message |
+
+---
+
+### `AuthFlagConfig`
+
+Enriched flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `flag_option_id` | `string` | No | UUID of the selected flag option |
+| `show` | `boolean` | No | Whether the flag is visible to the client |
+| `required` | `boolean` | No | Whether the flag is required |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+
+---
+
+### `AuthFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`AuthFlagConfig`](#authflagconfig)[] | No | Currently assigned flag configs |
+| `resources` | [`AuthFlagConfig`](#authflagconfig)[] | No | Available flag configs |
+
+---
+
+### `AuthItemResource`
+
+Auth item resource shape for client/editing.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_item_id` | `string` | No | Unique auth item identifier |
+| `name` | `string` | No | Auth item display name |
+| `description` | `string` | No | Auth item description text |
+| `position` | `integer` | No | Sort position within the auth provider |
+| `active` | `boolean` | No | Whether the auth item is active |
+| `value_masked` | `string` | No | Masked value for display |
+| `key_id` | `string` | No | UUID of the associated key |
+| `encrypted` | `boolean` | No | Whether the value is encrypted |
+| `generated` | `boolean` | No | Whether the item was AI-generated |
+
+---
+
+### `AuthItemSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`AuthItemResource`](#authitemresource)[] | No | Currently assigned auth items |
+| `resources` | [`AuthItemResource`](#authitemresource)[] | No | Available auth item resources |
+
+---
+
+### `AuthNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected name resource |
+| `resources` | `any`[] | No | Available name resources |
+
+---
+
+### `AuthProtocolSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned protocols |
+| `resources` | `any`[] | No | Available protocol resources |
+
+---
+
+### `AuthResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `auth_id` | `string` | No | UUID of the created or updated auth |
+| `message` | `string` | Yes | Result message |
+| `errors` | [`AuthFieldError`](#authfielderror)[] | No | Per-field validation errors |
+
+---
+
+### `AuthSlugSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned slugs |
+| `resources` | `any`[] | No | Available slug resources |
+
+---
+
+### `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+### `CreateAuthItem`
+
+Single auth item for create — no auth_id.
+
+Required fields (name): provide ID or value.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Optional preset UUID for the new auth provider |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `slug_id` | `string` | No | UUID of the slug resource |
+| `slug` | `string` | No | Slug value to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the active flag option |
+| `active_flag` | `boolean` | No | Whether the auth provider is active |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
+| `protocol_ids` | `string`[] | No | Protocol resource UUIDs |
+| `protocol` | `string` | No | Protocol value to resolve |
+| `item_ids` | `string`[] | No | Auth item UUIDs |
+| `auth_resource_ids` | `string`[] | No | Auth resource UUIDs |
+
+---
+
+### `DeleteAuthResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the deletion succeeded |
+| `auth_id` | `string` | Yes | UUID of the deleted auth provider |
+| `message` | `string` | Yes | Result message |
+
+---
+
+### `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+### `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+### `GetAuthDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `item_ids` | `string`[] | Yes | Associated item UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `protocol_ids` | `string`[] | Yes | Associated protocol UUIDs |
+| `slug_ids` | `string`[] | Yes | Associated slug UUIDs |
+
+---
+
+### `ListAuthApiAuth`
+
+Auth type for list endpoint with computed permissions.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | No | Unique auth provider identifier |
+| `name` | `string` | No | Auth provider display name |
+| `description` | `string` | No | Auth provider description text |
+| `item_count` | `integer` | No | Number of auth items |
+| `department_ids` | `string`[] | No | Associated department IDs |
+| `is_inactive` | `boolean` | No | Whether the auth provider is inactive |
+| `can_edit` | `boolean` | No | Whether the actor can edit this auth |
+| `can_duplicate` | `boolean` | No | Whether the actor can duplicate this auth |
+| `can_delete` | `boolean` | No | Whether the actor can delete this auth |
+
+---
+
+### `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+### `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+### `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+### `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+### `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+### `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+### `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+### `UpdateAuthItem`
+
+Single auth item for update — auth_id required, all fields optional.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | Yes | UUID of the auth provider to update |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `slug_id` | `string` | No | UUID of the slug resource |
+| `slug` | `string` | No | Slug value to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the active flag option |
+| `active_flag` | `boolean` | No | Whether the auth provider is active |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
+| `protocol_ids` | `string`[] | No | Protocol resource UUIDs |
+| `protocol` | `string` | No | Protocol value to resolve |
+| `item_ids` | `string`[] | No | Auth item UUIDs |
+| `auth_resource_ids` | `string`[] | No | Auth resource UUIDs |
+
+---

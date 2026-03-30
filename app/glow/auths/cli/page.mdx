@@ -1,0 +1,63 @@
+# Auths
+
+## Commands
+
+### `glow auths`
+
+```bash
+glow auths <action> [--body JSON]
+```
+
+### `glow auths search`
+
+```bash
+glow auths search
+```
+
+### `glow auths get`
+
+```bash
+glow auths get --body '\{"auth_id": "..."}'
+```
+
+### `glow auths create`
+
+```bash
+glow auths create --body '\{...}'
+```
+
+### `glow auths update`
+
+```bash
+glow auths update --body '\{"auth_id": "...", ...}'
+```
+
+### `glow auths delete`
+
+```bash
+glow auths delete --body '\{"auth_id": "..."}'
+```
+
+### `glow auths list`
+
+```bash
+glow auths list
+```
+
+### `glow auths export`
+
+```bash
+glow auths export
+```
+
+### `glow auths draft`
+
+```bash
+glow auths draft --body '\{...}'
+```
+
+### `glow auths media`
+
+```bash
+glow auths <file|image|text|audio|video> <upload|download|create|chunk|status|finalize|discover|preview> [flags]
+```

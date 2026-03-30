@@ -1,0 +1,857 @@
+# Departments
+
+## Endpoints
+
+### `POST` `/departments/get`
+
+Get Department
+
+Get department information using the canonical shared department operation.
+
+**Request body** (`GetDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to load |
+
+**Response** (`GetDepartmentApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `department_exists` | `boolean` | No | Whether the department exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this department |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`DepartmentNameSection`](#departmentnamesection) | No | Name section with resources |
+| `descriptions` | [`DepartmentDescriptionSection`](#departmentdescriptionsection) | No | Description section with resources |
+| `flags` | [`DepartmentFlagSection`](#departmentflagsection) | No | Flag section with configs |
+| `settings` | [`DepartmentSettingSection`](#departmentsettingsection) | No | Setting section with resources |
+
+---
+
+### `POST` `/departments/search`
+
+Search Department
+
+Search departments — composable infra architecture.
+
+**Request body** (`SearchDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `page_size` | `integer` | No | — |
+| `page_offset` | `integer` | No | — |
+
+**Response** (`ListDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `departments` | [`ListDepartmentApiDepartment`](#listdepartmentapidepartment)[] | No | List of department items |
+| `total_count` | `integer` | No | Total number of departments |
+
+---
+
+### `POST` `/departments/create`
+
+Create Department
+
+Create departments using composable infra architecture.
+
+**Request body** (`CreateDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `departments` | [`CreateDepartmentItem`](#createdepartmentitem)[] | Yes | List of departments to create |
+
+**Response** (`CreateDepartmentApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DepartmentResultItem`](#departmentresultitem)[] | Yes | Per-item creation results |
+
+---
+
+### `POST` `/departments/update`
+
+Update Department
+
+Update departments using composable infra architecture.
+
+**Request body** (`UpdateDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `departments` | [`UpdateDepartmentItem`](#updatedepartmentitem)[] | Yes | List of departments to update |
+
+**Response** (`UpdateDepartmentApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DepartmentResultItem`](#departmentresultitem)[] | Yes | Per-item update results |
+
+---
+
+### `POST` `/departments/duplicate`
+
+Duplicate Department
+
+Duplicate a department — composable infra architecture.
+
+**Request body** (`DuplicateDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | Yes | UUID of the department to duplicate |
+
+**Response** (`DuplicateDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `department_id` | `string` | Yes | UUID of the newly created department |
+| `message` | `string` | Yes | Result message |
+
+---
+
+### `POST` `/departments/delete`
+
+Delete Department
+
+Bulk delete departments — composable infra architecture.
+
+**Request body** (`DeleteDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_ids` | `string`[] | Yes | UUIDs of departments to delete |
+
+**Response** (`DeleteDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteDepartmentResult`](#deletedepartmentresult)[] | Yes | Per-item deletion results |
+
+---
+
+### `PATCH` `/departments/draft`
+
+Patch Department Draft
+
+Patch department draft — composable infra architecture.
+
+**Request body** (`PatchDepartmentDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `setting_ids` | `string`[] | No | Setting UUIDs to assign |
+
+**Response** (`PatchDepartmentDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`DepartmentDraftFormState`](#departmentdraftformstate) | No | Server-authoritative form state |
+
+---
+
+### `POST` `/departments/drafts`
+
+Get Department Drafts
+
+List department drafts owned by the current profile.
+
+**Response** (`GetDepartmentDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetDepartmentDraftResponse`](#getdepartmentdraftresponse)[] | No | List of department draft entries |
+
+---
+
+### `POST` `/departments/docs`
+
+Get Department Docs Endpoint
+
+Get composed documentation for the department artifact.
+
+**Request body** (`DocsApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entity_id` | `string` | No | — |
+
+**Response** (`ComposedDocsResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Output`](#docsresponse-output) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](#docsapiresponse) | No | Page-level metadata from docs API |
+
+---
+
+### `POST` `/departments/export`
+
+Export Departments
+
+Export all departments as a clean, denormalized CSV.
+
+**Request body** (`ExportDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department to export |
+
+**Response** (`ExportDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+---
+
+### `POST` `/departments/csv`
+
+Parse Department Csv
+
+Parse a CSV file and return mapped items for preview.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+**Response** (`ParseDepartmentCsvApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateDepartmentItem`](#createdepartmentitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |
+
+---
+
+### `POST` `/departments/refresh`
+
+Department Refresh
+
+Refresh department materialized views and invalidate caches.
+
+**Response** (`RefreshResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+
+---
+
+### `POST` `/stream/CreateDepartmentApiRequest`
+
+Schema: CreateDepartmentApiRequest
+
+**Request body** (`CreateDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `departments` | [`CreateDepartmentItem`](#createdepartmentitem)[] | Yes | List of departments to create |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/CreateDepartmentApiResponse`
+
+Schema: CreateDepartmentApiResponse
+
+**Request body** (`CreateDepartmentApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DepartmentResultItem`](#departmentresultitem)[] | Yes | Per-item creation results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteDepartmentApiRequest`
+
+Schema: DeleteDepartmentApiRequest
+
+**Request body** (`DeleteDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_ids` | `string`[] | Yes | UUIDs of departments to delete |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteDepartmentApiResponse`
+
+Schema: DeleteDepartmentApiResponse
+
+**Request body** (`DeleteDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteDepartmentResult`](#deletedepartmentresult)[] | Yes | Per-item deletion results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateDepartmentApiRequest`
+
+Schema: DuplicateDepartmentApiRequest
+
+**Request body** (`DuplicateDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | Yes | UUID of the department to duplicate |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateDepartmentApiResponse`
+
+Schema: DuplicateDepartmentApiResponse
+
+**Request body** (`DuplicateDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `department_id` | `string` | Yes | UUID of the newly created department |
+| `message` | `string` | Yes | Result message |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportDepartmentApiRequest`
+
+Schema: ExportDepartmentApiRequest
+
+**Request body** (`ExportDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department to export |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportDepartmentApiResponse`
+
+Schema: ExportDepartmentApiResponse
+
+**Request body** (`ExportDepartmentApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetDepartmentApiRequest`
+
+Schema: GetDepartmentApiRequest
+
+**Request body** (`GetDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to load |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetDepartmentApiResponse`
+
+Schema: GetDepartmentApiResponse
+
+**Request body** (`GetDepartmentApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `department_exists` | `boolean` | No | Whether the department exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this department |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`DepartmentNameSection`](#departmentnamesection) | No | Name section with resources |
+| `descriptions` | [`DepartmentDescriptionSection`](#departmentdescriptionsection) | No | Description section with resources |
+| `flags` | [`DepartmentFlagSection`](#departmentflagsection) | No | Flag section with configs |
+| `settings` | [`DepartmentSettingSection`](#departmentsettingsection) | No | Setting section with resources |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetDepartmentDraftsApiResponse`
+
+Schema: GetDepartmentDraftsApiResponse
+
+**Request body** (`GetDepartmentDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetDepartmentDraftResponse`](#getdepartmentdraftresponse)[] | No | List of department draft entries |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchDepartmentDraftApiRequest`
+
+Schema: PatchDepartmentDraftApiRequest
+
+**Request body** (`PatchDepartmentDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `setting_ids` | `string`[] | No | Setting UUIDs to assign |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchDepartmentDraftApiResponse`
+
+Schema: PatchDepartmentDraftApiResponse
+
+**Request body** (`PatchDepartmentDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`DepartmentDraftFormState`](#departmentdraftformstate) | No | Server-authoritative form state |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateDepartmentApiRequest`
+
+Schema: UpdateDepartmentApiRequest
+
+**Request body** (`UpdateDepartmentApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `departments` | [`UpdateDepartmentItem`](#updatedepartmentitem)[] | Yes | List of departments to update |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateDepartmentApiResponse`
+
+Schema: UpdateDepartmentApiResponse
+
+**Request body** (`UpdateDepartmentApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DepartmentResultItem`](#departmentresultitem)[] | Yes | Per-item update results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+## Types
+
+### `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+### `CreateDepartmentItem`
+
+Single department item for create — no department_id.
+
+Required fields (name): provide ID or value.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Optional preset UUID for the new department |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the active flag option |
+| `active_flag` | `boolean` | No | Whether the department is active |
+| `settings_ids` | `string`[] | No | Setting UUIDs to assign |
+| `department_ids` | `string`[] | No | Sub-department UUIDs to assign |
+
+---
+
+### `DeleteDepartmentResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the deletion succeeded |
+| `department_id` | `string` | Yes | UUID of the deleted department |
+| `message` | `string` | Yes | Result message |
+
+---
+
+### `DepartmentDescriptionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected description resource |
+| `resources` | `any`[] | No | Available description resources |
+
+---
+
+### `DepartmentDraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `setting_ids` | `string`[] | Yes | Assigned setting UUIDs |
+
+---
+
+### `DepartmentFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Name of the field that failed validation |
+| `message` | `string` | Yes | Validation error message |
+
+---
+
+### `DepartmentFlagConfig`
+
+Enriched flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `flag_option_id` | `string` | No | UUID of the selected flag option |
+| `show` | `boolean` | No | Whether the flag is visible to the client |
+| `required` | `boolean` | No | Whether the flag is required |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+
+---
+
+### `DepartmentFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`DepartmentFlagConfig`](#departmentflagconfig)[] | No | Currently assigned flag configs |
+| `resources` | [`DepartmentFlagConfig`](#departmentflagconfig)[] | No | Available flag configs |
+
+---
+
+### `DepartmentNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected name resource |
+| `resources` | `any`[] | No | Available name resources |
+
+---
+
+### `DepartmentResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `department_id` | `string` | No | UUID of the created or updated department |
+| `message` | `string` | Yes | Result message |
+| `errors` | [`DepartmentFieldError`](#departmentfielderror)[] | No | Per-field validation errors |
+
+---
+
+### `DepartmentSettingSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned settings |
+| `resources` | `any`[] | No | Available setting resources |
+
+---
+
+### `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+### `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+### `GetDepartmentDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `setting_ids` | `string`[] | Yes | Associated setting UUIDs |
+
+---
+
+### `ListDepartmentApiDepartment`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | Unique department identifier |
+| `name` | `string` | No | Department display name |
+| `description` | `string` | No | Department description text |
+| `staff_count` | `integer` | No | Number of staff in the department |
+| `is_inactive` | `boolean` | No | Whether the department is inactive |
+| `can_edit` | `boolean` | No | Whether the actor can edit this department |
+| `can_duplicate` | `boolean` | No | Whether the actor can duplicate this department |
+| `can_delete` | `boolean` | No | Whether the actor can delete this department |
+| `updated_at` | `string` | No | Timestamp of last update |
+
+---
+
+### `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+### `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+### `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+### `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+### `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+### `UpdateDepartmentItem`
+
+Single department item for update — department_id required, all fields optional.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | Yes | UUID of the department to update |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the active flag option |
+| `active_flag` | `boolean` | No | Whether the department is active |
+| `settings_ids` | `string`[] | No | Setting UUIDs to assign |
+| `department_ids` | `string`[] | No | Sub-department UUIDs to assign |
+
+---

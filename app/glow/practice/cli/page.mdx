@@ -1,0 +1,63 @@
+# Practice
+
+## Commands
+
+### `glow practice`
+
+```bash
+glow practice <action> [--body JSON]
+```
+
+### `glow practice search`
+
+```bash
+glow practice search
+```
+
+### `glow practice get`
+
+```bash
+glow practice get --body '\{"practice_id": "..."}'
+```
+
+### `glow practice create`
+
+```bash
+glow practice create --body '\{...}'
+```
+
+### `glow practice update`
+
+```bash
+glow practice update --body '\{"practice_id": "...", ...}'
+```
+
+### `glow practice delete`
+
+```bash
+glow practice delete --body '\{"practice_id": "..."}'
+```
+
+### `glow practice list`
+
+```bash
+glow practice list
+```
+
+### `glow practice export`
+
+```bash
+glow practice export
+```
+
+### `glow practice draft`
+
+```bash
+glow practice draft --body '\{...}'
+```
+
+### `glow practice media`
+
+```bash
+glow practice <file|image|text|audio|video> <upload|download|create|chunk|status|finalize|discover|preview> [flags]
+```

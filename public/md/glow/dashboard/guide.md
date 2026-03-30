@@ -1,0 +1,144 @@
+# Dashboard Guide
+
+The Dashboard is the admin analytics hub for TA training programs. It provides a comprehensive view of training metrics across your institution -- header summaries, primary and secondary metric panels, rubric breakdowns, simulation overviews, and full attempt history -- so program coordinators can evaluate how TAs are performing in office-hours simulations.
+
+![Dashboard overview showing aggregate scores by rubric standard across all cohorts](/screenshots/dashboard/overview.png)
+
+## What is Dashboard?
+
+Dashboard aggregates training data across all TAs, cohorts, and simulations into a single analytics surface. It answers questions like:
+
+- How are TAs scoring on Communication Skills and De-escalation rubrics this semester?
+- Which simulations (e.g., Confused Student, Aggressive Student) have the lowest pass rates?
+- What is the overall completion percentage across departments?
+- How has average score trended over the past 30 days?
+
+![Dashboard chart showing score trends over time for each rubric standard group](/screenshots/dashboard/trends.png)
+
+Dashboard returns `header_metrics` (total attempts, average score, completion percentage, first-attempt pass rate), `primary_metrics` and `secondary_metrics` panels, rubric/parameter/scenario breakdowns, score `thresholds`, AI-generated `insights`, and inline `history` with pagination.
+
+## Quick Start
+
+### CLI
+
+```bash
+# Fetch the full dashboard bundle (all metrics, rubrics, simulations)
+glow dashboard get
+
+# Fetch dashboard scoped to a specific cohort and date range
+glow dashboard get --body '{"cohort_ids": ["cohort-abc"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+
+# Search attempt history (paginated)
+glow dashboard search --body '{"page": 1, "page_size": 25, "sort_by": "score", "sort_order": "desc"}'
+
+# Export dashboard data as a ZIP
+glow dashboard export
+```
+
+### API
+
+```bash
+# Get dashboard bundle
+curl -X POST https://<your-instance>/v5/dashboard/get \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "department_ids": ["dept-cs"],
+    "start_date": "2025-01-01",
+    "end_date": "2025-06-30"
+  }'
+
+# Search attempt history
+curl -X POST https://<your-instance>/v5/dashboard/search \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "page": 1,
+    "page_size": 20,
+    "sort_order": "desc"
+  }'
+```
+
+## Filtering and Scoping
+
+Dashboard supports composable filters so you can drill down to exactly the data you need:
+
+| Filter | Field | Example |
+|---|---|---|
+| Date range | `start_date`, `end_date` | `"start_date": "2025-01-01"` |
+| Cohorts | `cohort_ids` | `["fall-2025-cs101"]` |
+| Departments | `department_ids` | `["dept-cs", "dept-math"]` |
+| Simulations | `simulation_ids` | `["sim-confused-student"]` |
+| Roles | `roles` | `["ta", "lead-ta"]` |
+| Rubric picker | `rubric_ids`, `rubric_search` | `"rubric_search": "de-escalation"` |
+| Scenario picker | `scenario_ids`, `scenario_search` | `"scenario_search": "passive"` |
+| Parameter picker | `parameter_ids`, `parameter_search` | `"parameter_search": "policy"` |
+| Single TA | `target_profile_id` | UUID of the TA profile |
+
+When `target_profile_id` is provided, the response includes `profile_name`, `profile_emails`, `profile_primary_email`, and `profile_role` for the scoped TA.
+
+## Understanding the Response
+
+The `DashboardBundleResponse` is organized into sections:
+
+- **`header_metrics`** -- Top-line summary cards: total attempts, average score, completion percentage, first-attempt pass rate.
+- **`primary_metrics`** / **`secondary_metrics`** / **`footer_metrics`** -- Detailed metric panels with trend data, hover tooltips, and breakdowns.
+- **`simulations`** -- Metadata for each simulation (name, scenario count, rubric mappings).
+- **`scenarios`** -- Per-scenario metadata for drill-down.
+- **`rubrics`** / **`parameters`** / **`fields`** -- Rubric and parameter breakdowns (e.g., Communication Skills, Policy Knowledge, De-escalation).
+- **`thresholds`** -- Score threshold configuration for pass/fail determination.
+- **`insights`** -- AI-generated insights per section, highlighting patterns and anomalies.
+- **`history`** -- Inline paginated attempt history with `HistoryItem` rows.
+- **`analytics`** -- Filter facets (department options, cohort options, role options, date range boundaries) for rendering dropdowns.
+
+## History Search
+
+The `/dashboard/search` endpoint returns paginated attempt history. This is useful for building tables of TA attempts:
+
+```bash
+curl -X POST https://<your-instance>/v5/dashboard/search \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target_profile_id": "ta-profile-uuid",
+    "scenario_ids": ["scenario-confused-student"],
+    "sort_by": "date",
+    "sort_order": "desc",
+    "page": 1,
+    "page_size": 10
+  }'
+```
+
+Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_status` (pass/fail), `persona_names_junction`, `num_scenarios_completed`, and action flags like `show_view` and `show_continue`.
+
+## Refreshing and Exporting
+
+```bash
+# Refresh dashboard caches (admin only)
+glow dashboard refresh
+
+# Export all dashboard data as a denormalized ZIP
+glow dashboard export
+```
+
+The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `mime_type`, and `row_count`.
+
+## Common Operations
+
+| Task | CLI | API Endpoint |
+|---|---|---|
+| Full dashboard metrics | `glow dashboard get` | `POST /dashboard/get` |
+| Search attempt history | `glow dashboard search` | `POST /dashboard/search` |
+| Export data | `glow dashboard export` | `POST /dashboard/export` |
+| Refresh caches | `glow dashboard refresh` | `POST /dashboard/refresh` |
+| View API docs | -- | `POST /dashboard/docs` |
+
+## Related
+
+- [Dashboard API Reference](/glow/dashboard/api)
+- [Dashboard CLI Reference](/glow/dashboard/cli)
+- [Reports Guide](/glow/reports/guide) -- aggregate training reports
+- [Record Guide](/glow/record/guide) -- single-TA dashboard view

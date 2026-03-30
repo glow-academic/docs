@@ -1,0 +1,180 @@
+# How AI Simulation Training Works
+
+This page explains the ideas behind simulation-based training — why it works, what the building blocks are, and how to think about designing effective simulations. You don't need any technical background to follow along.
+
+## Why Simulation Training Works
+
+Most training is passive. People watch videos, read policies, or sit through lectures. Then they're expected to perform under pressure with real people. The gap between "knowing" and "doing" is where most failures happen.
+
+Simulation training closes that gap by letting people **practice before the stakes are real**.
+
+There are four reasons it works:
+
+**Practice beats passive learning.** Research consistently shows that active recall — actually doing the thing, not just reading about it — produces dramatically better retention. A teaching assistant who practices handling a frustrated student five times will outperform one who watched a training video about it.
+
+**Safe failure is the best teacher.** In a simulation, getting it wrong has no consequences. There's no real student who leaves upset, no customer who churns, no patient who gets the wrong advice. Glow supports this with backtracking (undo a message and try a different approach) and practice mode (retry freely without scores counting), so learners can experiment without fear.
+
+**Immediate, structured feedback accelerates learning.** In traditional training, feedback comes days or weeks later — if it comes at all. In simulation training, every conversation gets graded in seconds against specific criteria with named levels. Instead of "you did okay," learners see: *"Active Listening: Acceptable (3/5) — Occasionally guided the student with questions but sometimes provided direct answers."* They know exactly what to work on.
+
+**Repetition with variation builds intuition.** Glow generates scenarios by combining personas, course material, and environmental parameters (time of day, deadline pressure, room crowdedness, emotional intensity). The same rubric criteria get tested across meaningfully different situations, building the kind of adaptable skill that a single role-play session can't.
+
+## The Building Blocks
+
+Before thinking about any specific tool or platform, every simulation training program needs the same core ingredients:
+
+### A character with personality and rules (Persona)
+
+The person your learner talks to. Not a generic chatbot — a character with a name, a backstory, a mood, and specific behavioral rules that create realistic challenge.
+
+The most important design principle, learned through extensive testing: **the AI character must not be able to solve the problem on its own.** In Glow, personas are designed so they can only make progress when the learner provides specific, relevant guidance using course terminology. If the learner asks a vague question like "What do you think?", the persona pushes back, gets more confused, or shuts down — just like a real person would.
+
+This single rule is what makes the simulation *training* rather than just *conversation*. It forces the learner to actually teach.
+
+A well-designed persona has:
+- A **role and emotional state** — not "a student" but "a frustrated senior who believes their grade was unfair and has been waiting 20 minutes"
+- **Behavioral rules** — how they react to good vs. bad teaching. An aggressive persona de-escalates when the learner acknowledges their frustration; a passive persona opens up only to specific, targeted questions
+- **Knowledge boundaries** — what they know and don't know, and crucially, what misconceptions they hold
+- **"Show, don't tell" design** — the persona's traits are demonstrated through behavior, never labeled. Instead of "a passive student," the scenario reads: "A student stands quietly at the edge of the room, clutching their notes, hesitating before approaching"
+
+### A situation with context (Scenario)
+
+The context that puts the learner in a position where they need to use their skills. A good scenario has:
+- A **problem statement** — what's happening, written to *show* the persona's emotional state rather than *tell* it
+- **Documents** — real course material (assignments, syllabi, problem sets) that ground the scenario in specifics
+- **Objectives** — what the learner is trying to achieve
+- **Environmental parameters** — time, location, crowdedness, deadline pressure, and intensity that shape the atmosphere
+
+Scenarios work best when they're generated from real situations. In Glow's university deployment, every scenario is grounded in actual course documents (CS 180 homework on loops, EAPS 106 project on plate boundaries, MA 261 quiz on multivariable calculus). This specificity is what makes practice feel real and transfers to actual performance.
+
+### Criteria for what "good" looks like (Rubric)
+
+The scoring framework that defines what a successful interaction looks like. Without this, you're just having conversations — not training.
+
+Glow uses rubrics with **named performance levels** rather than just numbers. Each criterion has five levels (Poor, Marginal, Acceptable, Good, Excellent) with specific behavioral descriptions:
+
+| Level | Score | Active Listening Example |
+|---|---|---|
+| Poor | 1 | Directly provided the answer |
+| Marginal | 2 | Rarely uses questioning techniques, often resorting to hints or partial solutions |
+| Acceptable | 3 | Occasionally guides students with questions but sometimes provides direct answers |
+| Good | 4 | Regularly uses guided questioning, encouraging student reasoning with occasional prompts |
+| Excellent | 5 | Consistently employs open-ended questions that empower students to discover solutions independently |
+
+This specificity serves two purposes: it gives the AI grader clear criteria to evaluate against, and it gives the learner a concrete roadmap for improvement. A score of 3 isn't just "average" — it means something specific and actionable.
+
+### Real-time support (Hints)
+
+Because simulation training can be challenging — especially the first time — Glow provides optional hints during the conversation. Each hint covers a different aspect of the interaction: emotional support strategies, content clarification techniques, and pedagogical approaches. Hints help learners who are stuck without giving away the answer.
+
+### A way to measure and report performance
+
+The system that turns rubric scores into actionable insights — both for the individual learner ("here's what to work on") and for the training designer ("here's where the cohort is struggling"). Glow provides dashboards, reports, leaderboards, and LMS-compatible exports.
+
+## The Design Loop
+
+Great simulations aren't designed in one pass. They're iterated into existence through a cycle that Glow's deployment at Purdue refined over a year of real-world use:
+
+### 1. Start with the skill, not the tool
+
+Before you open any editor, answer: **what specific skill are you trying to develop?** Not "customer service" — that's too broad. Something like "de-escalating a frustrated customer who has already been transferred twice."
+
+The specificity of your skill definition determines the quality of everything that follows.
+
+### 2. Design the rubric first
+
+This is counterintuitive — most people want to build the persona and scenario first because that's the fun part. But starting with the rubric forces you to define what "good" actually looks like before you build the training.
+
+Ask yourself: if a learner does this perfectly, what specifically would I observe? Those observations become your rubric standards. Write the behavioral descriptions for each level — what does a 1 look like? A 3? A 5?
+
+### 3. Build personas that test those rubric criteria
+
+Now design characters that create the right level of challenge for the skills you're measuring. If your rubric measures de-escalation, you need a persona who escalates. If it measures guided questioning, you need a persona who won't progress unless guided well.
+
+The hardest part of persona design — and the area that required the most iteration in practice — is getting the AI to convincingly stay in character. Key lessons:
+- Be explicit about what the persona is NOT allowed to do (solve problems independently, break character, offer help)
+- Provide example conversations showing the expected interaction style
+- Define escalation and de-escalation triggers tied to the learner's behavior
+- Keep the persona's language natural and age-appropriate
+
+### 4. Test it yourself
+
+This is the step most people skip, and it's the most important one. Before giving the simulation to anyone else, **practice it yourself**. Talk to the AI character. See if the conversation feels realistic. See if the rubric scores match your intuition about how the conversation went.
+
+If you played the scenario perfectly and got a mediocre rubric score, your rubric needs work. If the persona agreed too easily, it needs more resistance. If the persona broke character and started teaching instead of asking for help, the instructions need tightening.
+
+### 5. Run with a small group
+
+Deploy to 3-5 people. Watch the scores. Read the conversations. Look for patterns:
+- Are scores clustered? The rubric might not differentiate well.
+- Are learners confused about what to do? The scenario briefing needs more context — consider enabling hints.
+- Do conversations end too quickly? The persona needs more depth.
+- Is the grading consistent? Review a few transcripts yourself and compare your evaluation to the AI's.
+
+### 6. Iterate and expand
+
+Adjust based on what you learned. Then scale: add more scenarios to test different facets of the skill, add more challenging personas, create a progression from easy to hard. Use parameters to generate scenario variations without starting from scratch each time.
+
+## Common Pitfalls
+
+### Personas that solve problems on their own
+
+The most damaging mistake. If the AI character reasons through the problem, offers suggestions, or makes progress without the learner's input, the simulation teaches nothing — the learner just watches the AI work.
+
+**Fix:** Be explicit in the persona instructions: "You are NOT allowed to solve the question independently, even partially. You may ONLY make progress if the user's response directly uses relevant terminology and logically builds on what you just said." This single rule transforms the simulation from a conversation into actual training.
+
+### Personas that break character
+
+AI models are trained to be helpful assistants. When asked to play a confused student, they may slip into explaining concepts, asking guiding questions, or managing the conversation — behaviors that belong to the *teacher*, not the student.
+
+**Fix:** Add explicit boundaries: "Never explain concepts from a position of authority. Never ask the user to 'calm down' or manage the conversation's flow. Never offer to 'look at the problem together.' You are the student — you need help, not the other way around." Also provide example conversations showing exactly the expected back-and-forth.
+
+### Rubrics that are too vague
+
+Criteria like "communicates well" or "handles the situation appropriately" are nearly useless for grading. The AI doesn't know what you mean, and neither will the learner reviewing their feedback.
+
+**Fix:** Make every standard observable and specific. Instead of "shows empathy," write "acknowledges the other person's emotional state before transitioning to problem-solving." Give each score level a concrete behavioral description, not just a number.
+
+### Not accounting for cheating
+
+In real deployments, learners will copy AI character messages into ChatGPT and paste back generated responses. This is especially common in text-based simulations.
+
+**Fix:** Glow provides multiple mitigations: disable copy-paste in the simulation, use audio-only mode for higher-stakes assessments, and enable input guardrails that detect unnaturally long or formatted responses. Design your assessment approach with these options in mind.
+
+### Punishing failure instead of encouraging exploration
+
+If learners lose all progress when they fail one scenario, or can't undo a bad message, they'll play it safe instead of experimenting. This undermines the entire point of simulation training.
+
+**Fix:** Use practice mode for skill development, enable hints for support, and allow message backtracking so learners can try different approaches to the same conversation moment. Save formal assessment mode for when scores actually count.
+
+## Beyond University TAs
+
+Glow was built and validated training TAs, but the same framework generalizes to any domain where people practice interpersonal skills. The building blocks stay the same — only the personas, rubrics, scenarios, and parameters change.
+
+### How the Framework Translates
+
+| University | Enterprise | What changes |
+|---|---|---|
+| **Personas:** Confused, Aggressive, Passive, Happy students | **Personas:** Frustrated employee, Anxious report, Defensive team member, Enthusiastic new hire, Manager | Different emotional profiles, same behavioral rules (can't solve independently, show-don't-tell, escalation/de-escalation paths) |
+| **Parameters:** Class, Location, Crowdedness, Deadline, Intensity, Time | **Parameters:** Employee Level (Junior → Executive), Years with Company, Job Position (Engineer, Designer, Analyst, Manager) | Different context dimensions, same parameterization system |
+| **Rubric:** Adaptability, Content Mastery, Active Listening, Communication, Time Management | **Rubric:** Empathy, Policy Knowledge, Conflict Resolution, Professional Tone, Follow-through | Different criteria, same 5-level structure with behavioral descriptions |
+| **Scenarios:** Office hours help sessions, grade disputes, confused students | **Scenarios:** One-on-ones, performance reviews, delivering difficult feedback, handling termination conversations | Different situations, same design principles (show-don't-tell, objectives, documents) |
+
+### What Stays the Same Across Domains
+
+The core design principles that make simulations effective don't change:
+
+- **The persona can't solve independently** — whether it's a student who can't figure out loops or an employee who can't accept negative feedback, the AI character should only progress when the learner demonstrates the right skills
+- **The rubric defines what "good" looks like** — with named performance levels and behavioral descriptions, not just numbers
+- **Scenarios are grounded in real situations** — use actual company policies, performance review templates, or HR guidelines as documents, just like university courses use real homework assignments
+- **Progressive difficulty applies everywhere** — start with an enthusiastic new hire (easy), work up to a defensive senior employee (hard)
+
+### Multi-Discipline in Education
+
+Even within education, the framework extends beyond CS. Glow has been used with course material spanning computer science, earth science, biology, chemistry, physics, mathematics, and statistics. The personas and rubric stay the same — a confused student is a confused student whether they're stuck on pointers or plate tectonics. The scenarios and documents change to match the discipline.
+
+## Next Steps
+
+- [Design Your First Simulation](/glow/tutorial) — a hands-on tutorial that walks through building a complete simulation from scratch
+- [Annotated Example](/glow/annotated-example) — see what excellent and poor conversations actually look like, with rubric scores and commentary
+- [Patterns & Best Practices](/glow/patterns) — quick recipes for common design challenges
+- [Start](/glow/start) — set up your Glow instance and start building

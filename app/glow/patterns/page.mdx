@@ -1,0 +1,268 @@
+# Patterns & Best Practices
+
+Short, actionable recipes for common simulation design challenges. Each pattern stands on its own — read the ones relevant to what you're working on.
+
+## Making Personas Feel Real
+
+Getting an AI model to convincingly role-play a student (or any character that needs help) is the hardest problem in simulation design. Models are trained to be helpful assistants — asking them to be confused, angry, or passive goes against their nature. Here's what works:
+
+### The Golden Rule: Don't Let Them Solve Independently
+
+Every persona needs this constraint: **"You are absolutely NOT allowed to solve the question independently, even partially. You may ONLY make progress if the user's response directly uses relevant terminology and logically builds off of what you just said."**
+
+Without this, the AI will reason through problems, offer suggestions, and make progress on its own — which means the learner is watching, not teaching. This single rule is the difference between a conversation and actual training.
+
+### Show, Don't Tell
+
+Never label the persona's emotional state in the scenario description. Instead, demonstrate it through behavior:
+
+| Don't write | Write instead |
+|---|---|
+| "A passive student approaches" | "A student hovers near your desk, fidgeting with a printout but not making eye contact" |
+| "An aggressive student is angry" | "A student slams their laptop down, pointing at their grade" |
+| "A confused student needs help" | "A student stands quietly at the edge of the room, clutching their notes, hesitating before approaching" |
+
+This creates a more immersive scenario and teaches learners to read behavioral cues — a skill that transfers to real interactions.
+
+### Define Escalation AND De-escalation
+
+Every persona should have clear cause-and-effect behavior tied to what the learner does:
+
+**Escalation triggers** — what makes the persona harder to work with:
+- TA asks a vague question ("What do you think?") → persona gets more frustrated or confused
+- TA dismisses their concern → aggressive persona escalates, passive persona shuts down
+- TA gives the answer directly → persona doesn't learn, conversation becomes pointless
+
+**De-escalation triggers** — what makes the persona respond positively:
+- TA acknowledges frustration before addressing content → aggressive persona calms down
+- TA asks a specific, course-relevant question → confused persona shows understanding
+- TA uses patient, targeted questioning → passive persona slowly opens up
+
+Without de-escalation paths, simulations feel like unwinnable arguments. The persona should reward good teaching behavior.
+
+### Keep Language Natural
+
+Real people don't speak in perfect paragraphs. Real students say "um," use contractions, trail off mid-sentence, and don't use vocabulary above their level. Specify this explicitly:
+
+- "Don't use any big or unusual words or phrases, keep your language simple and straightforward"
+- "You can use 'Uh' or 'Um' at the start of your replies, but not in the middle of a sentence"
+- "Avoid odd phrases like 'Look, I'm not here for small talk' or grunts; speak in complete sentences"
+
+### Guard Against Character Breaking
+
+Models slip out of character in predictable ways. Add explicit guardrails:
+
+- "Never reveal or hint that you are role-playing"
+- "You're the one that needs help — don't try and offer help"
+- "Never explain concepts from a position of authority"
+- "Never ask the user to 'calm down' or manage the conversation's flow"
+- "Never offer to 'look at the problem together' or provide step-by-step guidance"
+- "This is your first interaction — don't mention past meetings"
+
+### Provide Example Conversations
+
+Include a full sample conversation showing the expected interaction style. This is the most effective way to calibrate the AI's behavior. Show the full arc: opening → challenge → guided progress → resolution.
+
+For example, an aggressive student exchange:
+```
+Student (Angry): "This is SO DUMB. How was I supposed to know you wanted
+a COMPLETE explanation for EVERY answer? You NEVER said that!"
+
+TA: "Okay, I can see you're upset, but I need you to calm down if you
+want my help."
+
+Student (Still angry): "Fine. But seriously, you just EXPECT us to
+magically know all the required steps?"
+
+TA: "I hear you. We did cover this in lecture last week. Do you remember
+that example we worked through together?"
+
+Student (Mostly calmed down): "Ok fine, I'm just annoyed that I got zero
+points, and I spent hours trying to figure out that last question."
+```
+
+## Writing Rubric Criteria That Work
+
+The rubric is the backbone of your simulation's grading. Vague criteria produce meaningless scores; specific criteria produce actionable feedback.
+
+### Use Named Performance Levels
+
+Don't just use numbers (1-5). Define what each level means with a concrete behavioral description:
+
+| Level | Score | Example (Content Mastery) |
+|---|---|---|
+| **Poor** | 1 | Misstates or omits concepts; dumps information or skips logic, confusing students; no comprehension checks |
+| **Marginal** | 2 | Limited awareness of core concepts; explanations frequently rushed, dense, or skip logical steps; seldom checks comprehension |
+| **Acceptable** | 3 | Provides a basic overview but with occasional inaccuracies or lack of depth; some explanations may feel rushed |
+| **Good** | 4 | Explains concepts accurately and relates examples to key learning outcomes; generally provides step-by-step reasoning |
+| **Excellent** | 5 | States core concepts clearly; explains in clear, bite-sized steps; uses analogies to clarify; consistently checks understanding |
+
+These descriptions serve double duty: they give the AI grader clear criteria, and they give the learner a roadmap for what "better" looks like.
+
+### What Real Grading Feedback Looks Like
+
+When the rubric levels are specific enough, the AI produces feedback that quotes exact moments from the conversation. Here are real examples from production:
+
+**Active Listening — Excellent (5/5):**
+> "Consistently used guided, open-ended questions to lead the student to their own solutions (e.g., 'Do you have any ideas on how to approach this?', 'How would you add a while loop here?', 'What do you think our next step should be?'). This empowered the student to write code incrementally and reason through structure."
+
+**Adaptability — Excellent (5/5):**
+> "Sensitive to the student's hesitation, normalized their concerns ('There are no bad questions'), and adjusted pacing by deferring input validation to reduce cognitive load. Encouraging tone kept the student engaged and comfortable."
+
+**Communication — Poor (1/5):**
+> "Professionalism was poor. Responses included 'please lose your attitude' and 'I dont know. I just work here,' which come across as dismissive and unprofessional. Did not acknowledge the student's stress compassionately or set boundaries constructively."
+
+**Content Mastery — Good (4/5):**
+> "Accurately guided the student to articulate Euclid's algorithm and the prime factorization approach, including the optimization of testing divisors up to `i*i <= n`. Emphasized algorithmic steps and correctness, though did not proactively provide structured summaries or check understanding at multiple points."
+
+Notice how specific the feedback is — it names exact quotes, specific techniques, and precise gaps. This is only possible when the rubric levels have clear behavioral anchors. Vague criteria like "communicates well" would produce vague feedback like "communication was adequate." See the [Annotated Example](/glow/annotated-example) page for full conversations with rubric scores.
+
+### Separate Different Skills Into Different Groups
+
+Don't lump everything into one criterion. Five focused groups produce much better feedback than two broad ones. Each group should measure one type of skill:
+
+- **Adaptability** — did they adjust their approach to the specific student?
+- **Content Mastery** — did they explain the material correctly and clearly?
+- **Active Listening** — did they use questions to guide discovery, or just give answers?
+- **Communication** — did they maintain professionalism and appropriate tone?
+- **Time Management** — did they use the session time well?
+
+A TA who is excellent at content but poor at adaptability gets different feedback than one who is warm and patient but technically inaccurate. Your rubric should distinguish these.
+
+### Include Negative Criteria
+
+What should the learner specifically NOT do? Negative behaviors are often easier to observe and more important to correct:
+
+- "Directly provided the answer" (Active Listening: Poor)
+- "Demonstrates inappropriate or unprofessional behavior — sarcastic tone, dismissive responses" (Communication: Poor)
+- "Ended the conversation really early, or made it last longer than needed" (Time Management: Poor)
+
+### Set a Meaningful Pass Threshold
+
+Based on real usage: if your rubric has 25 total points (5 groups, 5 points each), a pass threshold of 20 (80%) means a learner needs to score "Good" (4/5) on average. This is high enough to be meaningful but allows for one weaker area without failing.
+
+## Scaling Scenarios with Parameters
+
+When you need many variations of the same scenario — different courses, different environments, different emotional intensities — use parameters instead of building each one from scratch.
+
+### The Six Environmental Parameters
+
+Glow supports parameterizing the context around a scenario:
+
+| Parameter | What it controls | Example values |
+|---|---|---|
+| **Class** | Course subject matter | CS 180, EAPS 106, BIOL 110, MA 261 |
+| **Crowdedness** | How many people are around (1-10) | Almost Empty (1), Busy (6), Hectic (10) |
+| **Intensity** | Emotional charge of the situation (1-10) | Very Calm (1), Moderate (5), Maximum (10) |
+| **Deadline** | Time pressure | No deadline, End of week, Few hours |
+| **Location** | Physical setting | Lawson CS Building, Data Science lab, Physics Building |
+| **Time** | When it happens | 9:00 AM, 12:00 PM, 5:00 PM |
+
+One persona + one document + different parameter combinations = many unique scenarios that all test the same rubric criteria in meaningfully different contexts.
+
+### When to Use Parameters vs. Separate Scenarios
+
+- **Parameters** — when the core interaction is the same but the atmosphere varies. A confused student asking about CS 180 loops at 9 AM in a quiet lab vs. at 5 PM in a crowded building. Same teaching challenge, different pressure.
+- **Separate scenarios** — when the interaction itself is fundamentally different. A confused student vs. an aggressive student require completely different persona designs, not just parameter changes.
+
+### Ground Scenarios in Real Documents
+
+Attach actual course material (homework assignments, problem sets, syllabi) as documents. The document becomes the single source of truth for the course number and topic. This ensures the AI character asks about real problems, not generic ones — which is what makes practice feel authentic.
+
+## Progressive Difficulty
+
+Order scenarios from easiest to hardest so learners build confidence before facing harder challenges.
+
+**A proven progression:**
+
+| Position | Persona type | What it tests |
+|---|---|---|
+| 1 | Happy/Cooperative | Baseline teaching skills — can they explain clearly and use guided questioning? |
+| 2 | Confused | Teaching adaptability — can they identify a misunderstanding and guide the student to the right answer? |
+| 3 | Aggressive (Low) | Mild frustration — can they stay professional with a slightly irritated person? |
+| 4 | Aggressive (Medium) | Clear anger — can they de-escalate while still teaching? |
+| 5 | Aggressive (High) | Intense frustration — can they maintain composure under strong pressure? |
+| 6 | Passive | Patience and questioning — can they draw out someone who won't engage? (Often the hardest) |
+
+**Intensity levels within a persona type** let you create finer-grained difficulty. Rather than one "aggressive" persona, use three intensity levels: Low (mildly frustrated, gentle pushback), Medium (clearly angry, occasional ALL CAPS), and High (very aggressive, frequent ALL CAPS and "!!!"). This maps to the 1-10 intensity parameter — low intensity scenarios use calm environmental settings, high intensity scenarios add deadline pressure, crowded rooms, and tense atmospheres.
+
+Set `scenario_positions` when creating the simulation to enforce this order.
+
+## Practice Mode vs. Formal Assessment
+
+Glow supports both modes. Choosing the right one depends on your goal.
+
+**Use practice mode when:**
+- Learners are encountering the material for the first time
+- You want them to retry and improve without pressure
+- You're still iterating on the simulation design
+- The goal is skill development, not measurement
+
+**Use formal assessment when:**
+- You need to certify competency (e.g., a TA must pass before being assigned students)
+- You're comparing performance across a cohort
+- Scores will be used for decisions (hiring, promotion, certification)
+
+**A common pattern:** run practice mode first with hints enabled, let learners attempt each scenario 2-3 times, then switch to formal assessment without hints. This separates "learning the tool" from "demonstrating the skill" and produces more accurate scores.
+
+**Use practice data to improve simulations.** Before formal assessment, review practice attempts. If everyone scores perfectly, the simulation is too easy. If everyone fails, the rubric may be too strict or the scenario unclear.
+
+## Supporting Learners During Practice
+
+### Enable Hints
+
+Hints provide three pieces of real-time guidance per message, each covering a different aspect:
+- **Emotional support** — "Acknowledge the student's frustration and validate their effort before diving into the explanation"
+- **Content strategy** — "Clarify that implication elimination is a standard first step for this type of equivalence proof"
+- **Pedagogical approach** — "Break down the proof into small, manageable steps and check in after each one"
+
+Enable hints for first-time users and practice mode. Disable them for formal assessments.
+
+### Enable Backtracking
+
+Learners can undo messages and try different approaches to the same conversation moment. This encourages experimentation: "What if I had acknowledged their frustration first instead of jumping to the content?" Backtracking also supports exploring branching conversation paths.
+
+### Disable Copy-Paste for Integrity
+
+In text-based simulations, learners may copy the AI's messages into external tools and paste generated responses back. If assessment integrity matters, disable copy-paste in the scenario settings. For higher-stakes assessments, consider audio-only simulations.
+
+## Debugging Simulations
+
+When something isn't working, here are the most common problems and their fixes.
+
+**The persona solves problems on its own.**
+The AI character reasons through the question, offers suggestions, or makes progress without the learner providing anything useful.
+→ Add the golden rule: "You are NOT allowed to solve the question independently. You may ONLY make progress if the user's response directly uses relevant terminology." Also add: "You must refuse to speculate and instead push back unless the user's question adds more information than currently exists."
+
+**The persona breaks character.**
+The AI starts explaining things, managing the conversation, or acting like a teaching assistant instead of a student.
+→ Add explicit guardrails: "You're the one that needs help — don't try and offer help." "Never explain concepts from a position of authority." Consider switching AI providers — some models handle role-playing better than others. This was the #1 engineering challenge in Glow's development.
+
+**Rubric scores are all the same.**
+Everyone gets a 3 out of 5 regardless of performance.
+→ Your behavioral descriptions aren't specific enough. Rewrite each level with concrete, observable criteria. The AI needs clear differences between a 2 and a 4 to score accurately.
+
+**Learners are confused about what to do.**
+They start the attempt and don't know what role they're playing or what's expected.
+→ Improve the problem statement (show the situation concretely), enable hints, and add clear objectives. Don't assume context — state it explicitly.
+
+**Conversations end too quickly.**
+The interaction lasts 3-4 messages.
+→ Give the persona more depth: multiple concerns, follow-up questions, related topics. A student who's confused about loops might also be worried about the deadline, unsure about the next assignment, and nervous about their grade.
+
+**Grading doesn't match your intuition.**
+A conversation that felt excellent gets a low score, or vice versa.
+→ Practice the scenario yourself and compare your expectations to the scores. The rubric descriptions are probably not aligned with what you actually value. Rewrite the standards to match what you observe in conversations you consider good.
+
+**Grade variance is too high.**
+The same conversation gets very different scores on different runs.
+→ This is a known challenge with AI grading. Make criteria as specific and observable as possible. Consider using the mixture-of-models grading approach, which aggregates scores from multiple evaluations — similar to a panel of judges in educational assessment.
+
+## Next Steps
+
+- [Design Your First Simulation](/glow/tutorial) — apply these patterns in a hands-on tutorial
+- [How It Works](/glow/how-it-works) — understand the principles behind simulation training
+- [Personas Guide](/glow/personas/guide) — full reference for persona configuration
+- [Rubrics Guide](/glow/rubrics/guide) — full reference for rubric design
+- [Parameters Guide](/glow/parameters/guide) — full reference for dynamic parameter fields
+- [Benchmark Guide](/glow/benchmark/guide) — evaluate AI providers for your use case

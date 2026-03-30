@@ -1,0 +1,141 @@
+# Invocation Guide
+
+Invocation provides visibility into AI model configurations and their operational parameters. In the context of Glow, an invocation represents the configuration and execution context for AI model calls -- the models, endpoints, pricing, quality settings, and modalities used to power TA training simulations.
+
+![Invocation list showing recent model calls with agent name, tokens used, and latency](/screenshots/invocation/list.png)
+
+## What is Invocation?
+
+An invocation ties together the configuration details needed to make AI model calls during TA training:
+
+- **Names** and **Descriptions** -- Identity for the model configuration
+- **Values** -- Configuration values (e.g., system prompts, persona definitions)
+- **Flags** -- Feature toggles
+- **Departments** -- Department-level scoping
+- **Keys** -- API keys for the model provider
+- **Endpoints** -- Model API endpoint URLs
+- **Modalities** -- Supported input/output types (text, audio, image, video)
+- **Temperature Levels** -- Temperature settings for AI response generation
+- **Pricing** -- Cost-per-token configuration
+- **Reasoning Levels** -- Reasoning depth settings
+- **Qualities** -- Quality tier settings
+- **Voices** -- Voice configuration for audio modalities
+
+Invocations are used by the Test system to configure which model and parameters are used for automated benchmark runs, and by the broader platform to manage AI provider configurations.
+
+## Quick Start
+
+### CLI
+
+```bash
+# List all invocations
+glow invocation search
+
+# Get a specific invocation
+glow invocation get --body '{"invocation_id": "invocation-uuid"}'
+
+# Export invocation data
+glow invocation export
+```
+
+### API
+
+```bash
+# Get invocation detail (via suite endpoint)
+curl -X POST https://<your-instance>/v5/stream/GetSuiteRequest \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "test_id": "test-uuid"
+  }'
+```
+
+## Understanding the Invocation Response
+
+The `GetSuiteResponse` contains the full configuration for an invocation:
+
+- **`test_id`** -- The test this invocation belongs to
+- **`profile_has_access`** -- Whether the current profile can view this invocation
+- **`draft_version`** -- Current draft version number
+- **`group_id`** -- Associated generation group ID
+
+### Configuration Sections
+
+Each section follows a consistent structure with `show` (visibility), `required` (whether the field is mandatory), `show_ai_generate` (whether AI generation is available), `current` (selected items), and `resources` (available options).
+
+| Section | Field | Description |
+|---|---|---|
+| Names | `names` | Model configuration name |
+| Descriptions | `descriptions` | Human-readable description |
+| Values | `values` | Configuration values (prompts, parameters) |
+| Flags | `flags` | Feature toggles |
+| Departments | `departments` | Department scoping |
+| Keys | `keys` | API provider keys |
+| Endpoints | `endpoints` | Model API endpoint URLs |
+| Modalities | `modalities` | Supported I/O types (text, audio, image, video) |
+| Temperature Levels | `temperature_levels` | AI generation temperature settings |
+| Pricing | `pricing` | Cost-per-token configuration |
+| Reasoning Levels | `reasoning_levels` | AI reasoning depth settings |
+| Qualities | `qualities` | Quality tier configuration |
+| Voices | `voices` | Voice settings for audio output |
+
+## Invocations in the Test Flow
+
+Invocations are central to the automated testing system. When a test is started, each benchmark scenario creates an invocation that specifies:
+
+1. Which AI model to use (via `endpoints` and `keys`)
+2. How the model should behave (via `temperature_levels`, `reasoning_levels`, `qualities`)
+3. What input modalities are supported (via `modalities`)
+4. What the cost parameters are (via `pricing`)
+
+During test execution, each invocation produces runs that are tracked in the test detail view. The test's `GetTestArtifactResponse` includes an `invocations` array with per-invocation results.
+
+## Searching Invocations
+
+Use the CLI to list and filter invocations:
+
+```bash
+# List all invocations
+glow invocation search
+
+# Get a specific invocation by ID
+glow invocation get --body '{"invocation_id": "invocation-uuid"}'
+```
+
+The search endpoint uses the standard descriptions search pattern. You can also use `descriptions_search` when fetching via the suite endpoint:
+
+```bash
+curl -X POST https://<your-instance>/v5/stream/GetSuiteRequest \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "test_id": "test-uuid",
+    "descriptions_search": "gpt-4"
+  }'
+```
+
+## Exporting
+
+```bash
+# Export invocation data
+glow invocation export
+```
+
+## Common Operations
+
+| Task | CLI | API Endpoint |
+|---|---|---|
+| List invocations | `glow invocation search` | `POST /invocation/search` |
+| Get invocation | `glow invocation get` | `POST /invocation/get` |
+| Get suite config | -- | `POST /stream/GetSuiteRequest` |
+| Export | `glow invocation export` | `POST /invocation/export` |
+
+## Related
+
+- [Invocation API Reference](/glow/invocation/api)
+- [Invocation CLI Reference](/glow/invocation/cli)
+- [Test Guide](/glow/test/guide) -- automated benchmark testing
+- [Group Guide](/glow/group/guide) -- AI generation group details
+- [Pricing Guide](/glow/pricing/guide) -- cost tracking for AI model calls

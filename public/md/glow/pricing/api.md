@@ -1,0 +1,399 @@
+# Pricing
+
+## Endpoints
+
+### `POST` `/pricing/get`
+
+Get Pricing
+
+Get pricing top chart — daily cost aggregation + filter options.
+
+**Request body** (`PricingRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `date_from` | `string` | No | Alias for start date |
+| `date_to` | `string` | No | Alias for end date |
+
+**Response** (`PricingResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `daily` | [`PricingDailyItem-Output`](#pricingdailyitem-output)[] | No | Daily pricing aggregations |
+| `resources` | [`PricingResources`](#pricingresources) | No | Pricing resource metadata |
+| `total_count` | `integer` | No | Total number of matching records |
+| `model_options` | [`FilterOption`](#filteroption)[] | No | Model filter options |
+| `agent_options` | [`FilterOption`](#filteroption)[] | No | Agent filter options |
+| `analytics` | [`AnalyticsFacets-Output`](#analyticsfacets-output) | No | Inline analytics facets for SSR |
+
+---
+
+### `POST` `/pricing/search`
+
+Search Pricing
+
+Get pricing group history (bottom table, paginated).
+
+**Request body** (`ListPricingRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `date_from` | `string` | No | Alias for start date |
+| `date_to` | `string` | No | Alias for end date |
+| `page` | `integer` | No | Pagination page number |
+| `page_size` | `integer` | No | Items per page |
+| `sort_order` | `string` | No | Sort direction (asc or desc) |
+
+**Response** (`ListPricingResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `data` | [`PricingGroupItem`](#pricinggroupitem)[] | No | Pricing group rows |
+| `total_count` | `integer` | No | Total number of matching records |
+| `page` | `integer` | No | Current page number |
+| `page_size` | `integer` | No | Items per page |
+| `total_pages` | `integer` | No | Total number of pages |
+
+---
+
+### `POST` `/pricing/refresh`
+
+Pricing Refresh
+
+Refresh pricing materialized views and invalidate caches.
+
+**Response** (`RefreshResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+
+---
+
+### `POST` `/pricing/export`
+
+Export Pricing
+
+Export all pricing data as a clean, denormalized ZIP.
+
+**Response** (`ExportPricingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Base64-encoded file content |
+| `file_name` | `string` | Yes | Suggested download file name |
+| `mime_type` | `string` | Yes | MIME type of the export file |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+---
+
+### `POST` `/pricing/docs`
+
+Get Pricing Docs Endpoint
+
+Get composed documentation for the pricing analytics.
+
+**Request body** (`DocsApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entity_id` | `string` | No | — |
+
+**Response** (`ComposedDocsResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Output`](#docsresponse-output) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](#docsapiresponse) | No | Page-level metadata from docs API |
+
+---
+
+### `POST` `/stream/PricingRequest`
+
+Schema: PricingRequest
+
+**Request body** (`PricingRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `date_from` | `string` | No | Alias for start date |
+| `date_to` | `string` | No | Alias for end date |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PricingResponse`
+
+Schema: PricingResponse
+
+**Request body** (`PricingResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `daily` | [`PricingDailyItem-Input`](#pricingdailyitem-input)[] | No | Daily pricing aggregations |
+| `resources` | [`PricingResources`](#pricingresources) | No | Pricing resource metadata |
+| `total_count` | `integer` | No | Total number of matching records |
+| `model_options` | [`FilterOption`](#filteroption)[] | No | Model filter options |
+| `agent_options` | [`FilterOption`](#filteroption)[] | No | Agent filter options |
+| `analytics` | [`AnalyticsFacets-Input`](#analyticsfacets-input) | No | Inline analytics facets for SSR |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+## Types
+
+### `AnalyticsFacets-Input`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+### `AnalyticsFacets-Output`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+### `AnalyticsFilterField`
+
+Visibility/disabled state for a single filter field.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `visible` | `boolean` | No | Whether the filter field is visible |
+| `disabled` | `boolean` | No | Whether the filter field is disabled |
+
+---
+
+### `AnalyticsFilterFields`
+
+Per-page filter field visibility configuration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_range` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Date range filter config |
+| `departments` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Department filter config |
+| `cohorts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Cohort filter config |
+| `roles` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Role filter config |
+| `attempts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Attempt filter config |
+
+---
+
+### `AnalyticsFilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+
+---
+
+### `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+### `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+### `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+### `FilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Internal value for the filter option |
+| `label` | `string` | No | Display label for the filter option |
+| `count` | `integer` | No | Number of matching records |
+
+---
+
+### `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+### `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+### `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+### `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+### `PricingDailyItem-Input`
+
+A single day+model aggregation bucket.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_key` | `string` | Yes | Date bucket key |
+| `model_id` | `string` | No | Associated model identifier |
+| `total_cost` | `number` \| `string` | No | Total cost for this bucket |
+| `run_count` | `integer` | No | Number of runs in this bucket |
+
+---
+
+### `PricingDailyItem-Output`
+
+A single day+model aggregation bucket.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_key` | `string` | Yes | Date bucket key |
+| `model_id` | `string` | No | Associated model identifier |
+| `total_cost` | `string` | No | Total cost for this bucket |
+| `run_count` | `integer` | No | Number of runs in this bucket |
+
+---
+
+### `PricingGroupItem`
+
+A single group row in the pricing list.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | Pricing group identifier |
+| `session_id` | `string` | No | Associated session ID |
+| `group_name` | `string` | No | Group display name |
+| `first_run_at` | `string` | No | Timestamp of first run |
+| `last_run_at` | `string` | No | Timestamp of last run |
+| `run_count` | `integer` | No | Number of runs in the group |
+| `total_input_tokens` | `integer` | No | Total input tokens consumed |
+| `total_output_tokens` | `integer` | No | Total output tokens generated |
+| `total_tokens` | `integer` | No | Total tokens used |
+| `total_cost` | `string` | No | Total cost for the group |
+| `agent_ids` | `string`[] | No | Associated agent IDs |
+| `model_ids` | `string`[] | No | Associated model IDs |
+| `agent_names` | `string`[] | No | Associated agent names |
+| `model_names` | `string`[] | No | Associated model names |
+
+---
+
+### `PricingResources`
+
+Pricing resource metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `agents` | `object` | No | Agent resources keyed by ID |
+| `models` | `object` | No | Model resources keyed by ID |
+
+---
+
+### `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---

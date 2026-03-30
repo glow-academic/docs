@@ -1,0 +1,27 @@
+# Authentication
+
+## Commands
+
+### `glow login`
+
+Authenticate with Glow instance (OAuth)
+
+```bash
+glow login
+```
+
+### `glow logout`
+
+Remove stored authentication token for Glow instance
+
+```bash
+glow logout
+```
+
+### `glow health`
+
+Check Glow instance health
+
+```bash
+glow health
+```

@@ -1,0 +1,1045 @@
+# Settings
+
+## Endpoints
+
+### `POST` `/settings/search`
+
+Search Setting
+
+Search settings — composable infra architecture.
+
+**Request body** (`SearchSettingApiRequest`):
+
+```
+`object`
+```
+
+**Response** (`ListSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `user_role` | `string` | No | Role of the acting user |
+| `settings` | [`ListSettingApiSetting`](#listsettingapisetting)[] | No | List of setting items |
+| `keys` | [`ListSettingApiKey`](#listsettingapikey)[] | No | List of key items |
+
+---
+
+### `POST` `/settings/get`
+
+Get Setting
+
+Get setting information using the canonical shared setting operation.
+
+**Request body** (`GetSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings_id` | `string` | No | UUID of the setting to retrieve |
+| `color_search` | `string` | No | Search query for color resources |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `mcp` | `boolean` | No | Whether request is from MCP client |
+
+**Response** (`GetSettingApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `setting_exists` | `boolean` | No | Whether the setting exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this setting |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `names` | [`SettingNameSection`](#settingnamesection) | No | Name section with resources |
+| `descriptions` | [`SettingDescriptionSection`](#settingdescriptionsection) | No | Description section with resources |
+| `colors` | [`SettingColorSection`](#settingcolorsection) | No | Color section with resources |
+| `flags` | [`SettingFlagSection`](#settingflagsection) | No | Flag section with configs |
+| `departments` | [`SettingDepartmentSection`](#settingdepartmentsection) | No | Department section with resources |
+| `profiles` | [`SettingProfileSection`](#settingprofilesection) | No | Profile section with resources |
+| `auths` | [`SettingAuthSection`](#settingauthsection) | No | Auth section with resources |
+| `provider_keys` | [`SettingProviderKeySection`](#settingproviderkeysection) | No | Provider key section with resources |
+| `auth_item_keys` | [`SettingAuthItemKeySection`](#settingauthitemkeysection) | No | Auth item key section with resources |
+| `systems` | [`SettingSystemSection`](#settingsystemsection) | No | System section with resources |
+
+---
+
+### `POST` `/settings/create`
+
+Create Setting
+
+Create settings using composable infra architecture.
+
+**Request body** (`CreateSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`CreateSettingItem`](#createsettingitem)[] | Yes | List of settings to create |
+
+**Response** (`CreateSettingApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](#settingresultitem)[] | Yes | Per-item creation results |
+
+---
+
+### `POST` `/settings/update`
+
+Update Setting
+
+Update settings using composable infra architecture.
+
+**Request body** (`UpdateSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`UpdateSettingItem`](#updatesettingitem)[] | Yes | List of settings to update |
+
+**Response** (`UpdateSettingApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](#settingresultitem)[] | Yes | Per-item update results |
+
+---
+
+### `POST` `/settings/duplicate`
+
+Duplicate Setting
+
+Duplicate a setting — composable infra architecture.
+
+**Request body** (`DuplicateSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | Yes | UUID of the setting to duplicate |
+
+**Response** (`DuplicateSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `setting_id` | `string` | Yes | UUID of the newly created setting |
+| `message` | `string` | Yes | Result message |
+
+---
+
+### `POST` `/settings/delete`
+
+Delete Setting
+
+Bulk delete settings — composable infra architecture.
+
+**Request body** (`DeleteSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_ids` | `string`[] | Yes | UUIDs of settings to delete |
+
+**Response** (`DeleteSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteSettingResult`](#deletesettingresult)[] | Yes | Per-item deletion results |
+
+---
+
+### `PATCH` `/settings/draft`
+
+Patch Setting Draft
+
+Patch setting draft — composable infra architecture.
+
+**Request body** (`PatchSettingDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `color_ids` | `string`[] | No | Color resource UUIDs |
+| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
+| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `provider_key_ids` | `string`[] | No | Provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
+
+**Response** (`PatchSettingDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`SettingDraftFormState`](#settingdraftformstate) | No | Server-authoritative form state |
+
+---
+
+### `POST` `/settings/drafts`
+
+Get Setting Drafts
+
+List setting drafts owned by the current profile.
+
+**Response** (`GetSettingDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetSettingDraftResponse`](#getsettingdraftresponse)[] | No | List of setting draft entries |
+
+---
+
+### `POST` `/settings/export`
+
+Export Settings
+
+Export all settings as a clean, denormalized CSV.
+
+**Request body** (`ExportSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | No | UUID of the setting to export |
+
+**Response** (`ExportSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+---
+
+### `POST` `/settings/csv`
+
+Parse Setting Csv
+
+Parse a CSV file and return mapped items for preview.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+**Response** (`ParseSettingCsvApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateSettingItem`](#createsettingitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |
+
+---
+
+### `POST` `/settings/docs`
+
+Get Setting Docs Endpoint
+
+Get composed documentation for the setting artifact.
+
+**Request body** (`DocsApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entity_id` | `string` | No | — |
+
+**Response** (`ComposedDocsResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Output`](#docsresponse-output) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](#docsapiresponse) | No | Page-level metadata from docs API |
+
+---
+
+### `POST` `/settings/refresh`
+
+Setting Refresh
+
+Refresh setting materialized views and invalidate caches.
+
+**Response** (`RefreshResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+
+---
+
+### `POST` `/settings/decrypt`
+
+Decrypt Setting Key
+
+Decrypt a key scoped to a setting artifact.
+
+**Request body** (`DecryptSettingKeyApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | Yes | UUID of the parent setting |
+| `key_id` | `string` | Yes | UUID of the key to decrypt |
+
+**Response** (`DecryptSettingKeyApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | No | Decrypted key value |
+| `name` | `string` | No | Key display name |
+| `actor_name` | `string` | No | Display name of the acting user |
+
+---
+
+### `POST` `/stream/CreateSettingApiRequest`
+
+Schema: CreateSettingApiRequest
+
+**Request body** (`CreateSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`CreateSettingItem`](#createsettingitem)[] | Yes | List of settings to create |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/CreateSettingApiResponse`
+
+Schema: CreateSettingApiResponse
+
+**Request body** (`CreateSettingApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](#settingresultitem)[] | Yes | Per-item creation results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteSettingApiRequest`
+
+Schema: DeleteSettingApiRequest
+
+**Request body** (`DeleteSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_ids` | `string`[] | Yes | UUIDs of settings to delete |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteSettingApiResponse`
+
+Schema: DeleteSettingApiResponse
+
+**Request body** (`DeleteSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteSettingResult`](#deletesettingresult)[] | Yes | Per-item deletion results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateSettingApiRequest`
+
+Schema: DuplicateSettingApiRequest
+
+**Request body** (`DuplicateSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | Yes | UUID of the setting to duplicate |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateSettingApiResponse`
+
+Schema: DuplicateSettingApiResponse
+
+**Request body** (`DuplicateSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `setting_id` | `string` | Yes | UUID of the newly created setting |
+| `message` | `string` | Yes | Result message |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportSettingApiRequest`
+
+Schema: ExportSettingApiRequest
+
+**Request body** (`ExportSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | No | UUID of the setting to export |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportSettingApiResponse`
+
+Schema: ExportSettingApiResponse
+
+**Request body** (`ExportSettingApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetSettingApiRequest`
+
+Schema: GetSettingApiRequest
+
+**Request body** (`GetSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings_id` | `string` | No | UUID of the setting to retrieve |
+| `color_search` | `string` | No | Search query for color resources |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `mcp` | `boolean` | No | Whether request is from MCP client |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetSettingApiResponse`
+
+Schema: GetSettingApiResponse
+
+**Request body** (`GetSettingApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `setting_exists` | `boolean` | No | Whether the setting exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this setting |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `names` | [`SettingNameSection`](#settingnamesection) | No | Name section with resources |
+| `descriptions` | [`SettingDescriptionSection`](#settingdescriptionsection) | No | Description section with resources |
+| `colors` | [`SettingColorSection`](#settingcolorsection) | No | Color section with resources |
+| `flags` | [`SettingFlagSection`](#settingflagsection) | No | Flag section with configs |
+| `departments` | [`SettingDepartmentSection`](#settingdepartmentsection) | No | Department section with resources |
+| `profiles` | [`SettingProfileSection`](#settingprofilesection) | No | Profile section with resources |
+| `auths` | [`SettingAuthSection`](#settingauthsection) | No | Auth section with resources |
+| `provider_keys` | [`SettingProviderKeySection`](#settingproviderkeysection) | No | Provider key section with resources |
+| `auth_item_keys` | [`SettingAuthItemKeySection`](#settingauthitemkeysection) | No | Auth item key section with resources |
+| `systems` | [`SettingSystemSection`](#settingsystemsection) | No | System section with resources |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetSettingDraftsApiResponse`
+
+Schema: GetSettingDraftsApiResponse
+
+**Request body** (`GetSettingDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetSettingDraftResponse`](#getsettingdraftresponse)[] | No | List of setting draft entries |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchSettingDraftApiRequest`
+
+Schema: PatchSettingDraftApiRequest
+
+**Request body** (`PatchSettingDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `color_ids` | `string`[] | No | Color resource UUIDs |
+| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
+| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `provider_key_ids` | `string`[] | No | Provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchSettingDraftApiResponse`
+
+Schema: PatchSettingDraftApiResponse
+
+**Request body** (`PatchSettingDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`SettingDraftFormState`](#settingdraftformstate) | No | Server-authoritative form state |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateSettingApiRequest`
+
+Schema: UpdateSettingApiRequest
+
+**Request body** (`UpdateSettingApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`UpdateSettingItem`](#updatesettingitem)[] | Yes | List of settings to update |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateSettingApiResponse`
+
+Schema: UpdateSettingApiResponse
+
+**Request body** (`UpdateSettingApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](#settingresultitem)[] | Yes | Per-item update results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+## Types
+
+### `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+### `CreateSettingItem`
+
+Single setting item for create — no setting_id.
+
+Required fields (name): provide ID or value.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Optional preset UUID for the new setting |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the active flag option |
+| `active_flag` | `boolean` | No | Whether the setting is active |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
+| `color_ids` | `string`[] | No | Color resource UUIDs |
+| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
+| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `provider_key_ids` | `string`[] | No | Provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
+| `auth_item_value_ids` | `string`[] | No | Auth item value UUIDs |
+| `system_ids` | `string`[] | No | System UUIDs to assign |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
+| `setting_resource_ids` | `string`[] | No | Setting resource UUIDs |
+
+---
+
+### `DeleteSettingResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the deletion succeeded |
+| `setting_id` | `string` | Yes | UUID of the deleted setting |
+| `message` | `string` | Yes | Result message |
+
+---
+
+### `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+### `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+### `GetSettingDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `agent_ids` | `string`[] | Yes | Associated agent UUIDs |
+| `auth_item_key_ids` | `string`[] | Yes | Associated auth item key UUIDs |
+| `auth_ids` | `string`[] | Yes | Associated auth UUIDs |
+| `color_ids` | `string`[] | Yes | Associated color UUIDs |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `item_ids` | `string`[] | Yes | Associated item UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `provider_key_ids` | `string`[] | Yes | Associated provider key UUIDs |
+| `threshold_ids` | `string`[] | Yes | Associated threshold UUIDs |
+
+---
+
+### `ListSettingApiKey`
+
+Key type for list endpoint.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key_id` | `string` | No | Unique key identifier |
+| `name` | `string` | No | Key display name |
+| `key_masked` | `string` | No | Masked key value for display |
+| `description` | `string` | No | Key description text |
+| `active` | `boolean` | No | Whether the key is currently active |
+| `department_ids` | `string`[] | No | Associated department IDs |
+
+---
+
+### `ListSettingApiSetting`
+
+Setting type for list endpoint with computed permissions.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings_id` | `string` | No | Unique setting identifier |
+| `created_at` | `string` | No | Timestamp when setting was created |
+| `active` | `boolean` | No | Whether the setting is currently active |
+| `name` | `string` | No | Setting display name |
+| `description` | `string` | No | Setting description text |
+| `department_ids` | `string`[] | No | Associated department IDs |
+| `can_edit` | `boolean` | No | Whether the actor can edit this setting |
+| `can_delete` | `boolean` | No | Whether the actor can delete this setting |
+| `can_duplicate` | `boolean` | No | Whether the actor can duplicate this setting |
+
+---
+
+### `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+### `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+### `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+### `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+### `SettingAuthItemKeySection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned auth item keys |
+| `resources` | `any`[] | No | Available auth item key resources |
+
+---
+
+### `SettingAuthSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned auth providers |
+| `resources` | `any`[] | No | Available auth resources |
+
+---
+
+### `SettingColorSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned colors |
+| `resources` | `any`[] | No | Available color resources |
+
+---
+
+### `SettingDepartmentSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned departments |
+| `resources` | `any`[] | No | Available department resources |
+
+---
+
+### `SettingDescriptionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `object` | No | Currently selected description resource |
+| `resources` | `any`[] | No | Available description resources |
+
+---
+
+### `SettingDraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
+| `color_ids` | `string`[] | Yes | Assigned color UUIDs |
+| `profile_ids` | `string`[] | Yes | Assigned profile UUIDs |
+| `auth_ids` | `string`[] | Yes | Assigned auth provider UUIDs |
+| `provider_key_ids` | `string`[] | Yes | Assigned provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | Yes | Assigned auth item key UUIDs |
+| `threshold_ids` | `string`[] | Yes | Assigned threshold UUIDs |
+
+---
+
+### `SettingFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Name of the field that failed validation |
+| `message` | `string` | Yes | Validation error message |
+
+---
+
+### `SettingFlagConfig`
+
+Enriched flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag key identifier (e.g. 'active') |
+| `label` | `string` | Yes | Human-readable flag label (e.g. 'Active') |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `flag_option_id` | `string` | No | UUID of the flag option to use when enabling |
+| `show` | `boolean` | No | Whether the flag is visible to the client |
+| `required` | `boolean` | No | Whether the flag is required |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+
+---
+
+### `SettingFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SettingFlagConfig`](#settingflagconfig) | No | Currently selected flag config |
+| `resources` | [`SettingFlagConfig`](#settingflagconfig)[] | No | Available flag configs |
+
+---
+
+### `SettingNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `object` | No | Currently selected name resource |
+| `resources` | `any`[] | No | Available name resources |
+
+---
+
+### `SettingProfileSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned profiles |
+| `resources` | `any`[] | No | Available profile resources |
+
+---
+
+### `SettingProviderKeySection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned provider keys |
+| `resources` | `any`[] | No | Available provider key resources |
+
+---
+
+### `SettingResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `setting_id` | `string` | No | UUID of the created or updated setting |
+| `message` | `string` | Yes | Result message |
+| `errors` | [`SettingFieldError`](#settingfielderror)[] | No | Per-field validation errors |
+
+---
+
+### `SettingSystemSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned systems |
+| `resources` | `any`[] | No | Available system resources |
+
+---
+
+### `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+### `UpdateSettingItem`
+
+Single setting item for update — setting_id required, all fields optional.
+
+Only provided fields are updated (partial update).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | Yes | UUID of the setting to update |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the active flag option |
+| `active_flag` | `boolean` | No | Whether the setting is active |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
+| `color_ids` | `string`[] | No | Color resource UUIDs |
+| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
+| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `provider_key_ids` | `string`[] | No | Provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
+| `auth_item_value_ids` | `string`[] | No | Auth item value UUIDs |
+| `system_ids` | `string`[] | No | System UUIDs to assign |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
+| `setting_resource_ids` | `string`[] | No | Setting resource UUIDs |
+
+---

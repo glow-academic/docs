@@ -1,0 +1,14 @@
+# Compatibility: documentation covers these component versions.
+# Specs are fetched from the latest GitHub release of each repo.
+
+component: glow-docs
+min_glow_api: "2.0.0"
+min_glow_cli: "2.0.0"
+
+specs:
+  glow-api:
+    repo: learnloopllc/glow-api
+    asset: openapi.json
+  cli:
+    repo: learnloopllc/glow-cli
+    asset: cli-spec.json

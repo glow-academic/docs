@@ -1,0 +1,63 @@
+# Personas
+
+## Commands
+
+### `glow personas`
+
+```bash
+glow personas <action> [--body JSON]
+```
+
+### `glow personas search`
+
+```bash
+glow personas search
+```
+
+### `glow personas get`
+
+```bash
+glow personas get --body '\{"persona_id": "..."}'
+```
+
+### `glow personas create`
+
+```bash
+glow personas create --body '\{...}'
+```
+
+### `glow personas update`
+
+```bash
+glow personas update --body '\{"persona_id": "...", ...}'
+```
+
+### `glow personas delete`
+
+```bash
+glow personas delete --body '\{"persona_id": "..."}'
+```
+
+### `glow personas list`
+
+```bash
+glow personas list
+```
+
+### `glow personas export`
+
+```bash
+glow personas export
+```
+
+### `glow personas draft`
+
+```bash
+glow personas draft --body '\{...}'
+```
+
+### `glow personas media`
+
+```bash
+glow personas <file|image|text|audio|video> <upload|download|create|chunk|status|finalize|discover|preview> [flags]
+```

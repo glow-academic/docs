@@ -1,0 +1,114 @@
+# Benchmark Guide
+
+The Benchmark resource provides test performance analytics across your Glow instance. Use it to review eval scores, track test history, and export data for reporting. Benchmark is an API-only resource with no CLI commands.
+
+![Benchmark dashboard showing test results across models with scores per evaluation criterion](/screenshots/benchmark/dashboard.png)
+
+## What is Benchmark?
+
+Benchmark aggregates test and eval performance data into a single analytics surface. It collects scores, pass rates, invocation counts, and test history across departments and date ranges. Administrators and instructors can use benchmark data to compare eval performance over time, identify trends, and export results for institutional reporting.
+
+Each benchmark response includes eval cards (high-level performance summaries), paginated test history, department filters, and inline analytics facets for client-side rendering.
+
+## Quick Start
+
+### API
+
+![Benchmark test configuration showing model selection, scenario selection, and test parameters](/screenshots/benchmark/create.png)
+
+**Fetch benchmark data** for the current semester:
+
+```bash
+curl -X POST https://<your-instance>/benchmark/get \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "start_date": "2026-01-15",
+    "end_date": "2026-05-15"
+  }'
+```
+
+The response includes `evals` (eval performance cards), `departments`, `history` (paginated test runs), and `analytics` (filter facets).
+
+**Filter by department:**
+
+```bash
+curl -X POST https://<your-instance>/benchmark/get \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "start_date": "2026-01-15",
+    "end_date": "2026-05-15",
+    "department_ids": ["dept-nursing-101"]
+  }'
+```
+
+![Benchmark results showing side-by-side model comparison with per-criterion scores](/screenshots/benchmark/results.png)
+
+## Searching Test History
+
+Use `/benchmark/search` to paginate and filter test history independently of the full benchmark payload:
+
+```bash
+curl -X POST https://<your-instance>/benchmark/search \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "history_page": 1,
+    "history_page_size": 25,
+    "history_search": "midterm",
+    "history_sort_by": "created_at",
+    "history_sort_order": "desc"
+  }'
+```
+
+The response returns `data` (an array of `BenchmarkHistoryItem` objects), `total_count`, pagination fields, and `eval_options` for dropdown filters.
+
+### Filtering by Eval and Archive Status
+
+```bash
+curl -X POST https://<your-instance>/benchmark/search \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "history_eval_ids": ["eval-abc-123"],
+    "history_archived": false,
+    "history_page": 1,
+    "history_page_size": 50
+  }'
+```
+
+## Refreshing and Exporting
+
+**Refresh materialized views** to ensure benchmark data is up to date. This invalidates caches and rebuilds aggregated views:
+
+```bash
+curl -X POST https://<your-instance>/benchmark/refresh \
+  -H "Authorization: Bearer <token>"
+```
+
+Returns `success`, `refreshed_views`, and `invalidated_tags`.
+
+**Export benchmark data** as a denormalized ZIP file for offline analysis or institutional reporting:
+
+```bash
+curl -X POST https://<your-instance>/benchmark/export \
+  -H "Authorization: Bearer <token>"
+```
+
+The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, and `row_count`.
+
+## Common Operations
+
+| Operation | Method | Endpoint |
+|---|---|---|
+| Get benchmark data | `POST` | `/benchmark/get` |
+| Search test history | `POST` | `/benchmark/search` |
+| Refresh views | `POST` | `/benchmark/refresh` |
+| Export data (ZIP) | `POST` | `/benchmark/export` |
+| Get documentation | `POST` | `/benchmark/docs` |
+
+## Related
+
+- [Benchmark API](/glow/benchmark/api)
+- [Health Guide](/glow/health/guide) -- service-level monitoring

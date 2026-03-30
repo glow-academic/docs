@@ -1,0 +1,7 @@
+# Emulation Guide
+> This guide is a work in progress.
+## Overview
+Learn how to work with emulation in the LearnLoop platform.
+## Related
+- [Emulation API](/glow/emulation/api)
+- [Emulation CLI](/glow/emulation/cli)

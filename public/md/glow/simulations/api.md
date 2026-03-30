@@ -1,0 +1,1246 @@
+# Simulations
+
+## Endpoints
+
+### `POST` `/simulations/get`
+
+Get Simulation
+
+Get simulation information using the canonical shared simulation operation.
+
+**Request body** (`GetSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | UUID of the simulation to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to retrieve |
+| `scenario_search` | `string` | No | Search text to filter scenarios |
+| `filter_scenario_ids` | `string`[] | No | Filter by scenario UUIDs |
+
+**Response** (`GetSimulationApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `simulation_exists` | `boolean` | No | Whether the simulation exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason the simulation is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | UUID of the owning group |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `names` | [`SimulationNameSection`](#simulationnamesection) | No | Name section data |
+| `descriptions` | [`SimulationDescriptionSection`](#simulationdescriptionsection) | No | Description section data |
+| `flags` | [`SimulationFlagSection`](#simulationflagsection) | No | Flag section data |
+| `departments` | [`SimulationDepartmentSection`](#simulationdepartmentsection) | No | Department section data |
+| `scenarios` | [`SimulationScenarioSection`](#simulationscenariosection) | No | Scenario section data |
+| `scenario_flags` | [`SimulationScenarioFlagSection`](#simulationscenarioflagsection) | No | Scenario flag section data |
+| `scenario_positions` | [`SimulationScenarioPositionSection`](#simulationscenariopositionsection) | No | Scenario position section data |
+| `scenario_rubrics` | [`SimulationScenarioRubricSection`](#simulationscenariorubricsection) | No | Scenario rubric section data |
+| `scenario_time_limits` | [`SimulationScenarioTimeLimitSection`](#simulationscenariotimelimitsection) | No | Scenario time limit section data |
+| `rubrics` | [`SimulationRubric`](#simulationrubric)[] | No | Available rubric catalog items |
+
+---
+
+### `POST` `/simulations/search`
+
+Search Simulation
+
+Search simulations — composable infra architecture.
+
+**Request body** (`SearchSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `filter_scenario_ids` | `string`[] | No | — |
+| `filter_cohort_ids` | `string`[] | No | — |
+| `filter_department_ids` | `string`[] | No | — |
+| `scenario_search` | `string` | No | — |
+| `cohort_search` | `string` | No | — |
+| `department_search` | `string` | No | — |
+| `flag_search` | `string` | No | — |
+| `page_size` | `integer` | No | — |
+| `page_offset` | `integer` | No | — |
+
+**Response** (`ListSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `simulations` | [`ListSimulationApiSimulation`](#listsimulationapisimulation)[] | No | List of simulation items |
+| `scenarios` | [`ListSimulationApiScenario`](#listsimulationapiscenario)[] | No | List of scenario items |
+| `scenario_filter` | [`ListFilterSection`](#listfiltersection) | No | Filter options for scenarios |
+| `cohort_filter` | [`ListFilterSection`](#listfiltersection) | No | Filter options for cohorts |
+| `department_filter` | [`ListFilterSection`](#listfiltersection) | No | Filter options for departments |
+| `flag_filter` | [`ListFilterSection`](#listfiltersection) | No | Filter options for flags |
+| `total_count` | `integer` | No | Total number of matching records |
+
+---
+
+### `POST` `/simulations/create`
+
+Create Simulation
+
+Create simulations using composable infra architecture.
+
+**Request body** (`CreateSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | [`CreateSimulationItem`](#createsimulationitem)[] | Yes | List of simulations to create |
+
+**Response** (`CreateSimulationApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](#simulationresultitem)[] | Yes | List of operation results |
+
+---
+
+### `POST` `/simulations/csv`
+
+Parse Simulation Csv
+
+Parse a CSV file and return mapped items for preview.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+**Response** (`ParseSimulationCsvApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateSimulationItem`](#createsimulationitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |
+
+---
+
+### `POST` `/simulations/update`
+
+Update Simulation
+
+Update simulations using composable infra architecture.
+
+**Request body** (`UpdateSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | [`UpdateSimulationItem`](#updatesimulationitem)[] | Yes | List of simulations to update |
+
+**Response** (`UpdateSimulationApiResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](#simulationresultitem)[] | Yes | List of operation results |
+
+---
+
+### `POST` `/simulations/duplicate`
+
+Duplicate Simulation
+
+Duplicate a simulation — composable infra architecture.
+
+**Request body** (`DuplicateSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | Yes | UUID of the simulation to duplicate |
+
+**Response** (`DuplicateSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `simulation_id` | `string` | Yes | UUID of the duplicated simulation |
+| `message` | `string` | Yes | Human-readable result message |
+
+---
+
+### `POST` `/simulations/delete`
+
+Delete Simulation
+
+Bulk delete simulations — composable infra architecture.
+
+**Request body** (`DeleteSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_ids` | `string`[] | Yes | UUIDs of simulations to delete |
+
+**Response** (`DeleteSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteSimulationResult`](#deletesimulationresult)[] | Yes | List of operation results |
+
+---
+
+### `PATCH` `/simulations/draft`
+
+Patch Simulation Draft
+
+Patch simulation draft — composable infra architecture.
+
+**Request body** (`PatchSimulationDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | UUID of the input draft |
+| `expected_version` | `integer` | No | Expected draft version for optimistic lock |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_ids` | `string`[] | No | Associated flag UUIDs |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Existing scenario flag UUIDs |
+| `scenario_flags` | [`DraftScenarioFlagValue`](#draftscenarioflagvalue)[] | No | Scenario flag values to create |
+| `scenario_position_ids` | `string`[] | No | Existing scenario position UUIDs |
+| `scenario_positions` | [`DraftScenarioPositionValue`](#draftscenariopositionvalue)[] | No | Scenario position values to create |
+| `scenario_rubric_ids` | `string`[] | No | Existing scenario rubric UUIDs |
+| `scenario_rubrics` | [`DraftScenarioRubricValue`](#draftscenariorubricvalue)[] | No | Scenario rubric values to create |
+| `scenario_time_limit_ids` | `string`[] | No | Existing scenario time limit UUIDs |
+| `scenario_time_limits` | [`DraftScenarioTimeLimitValue`](#draftscenariotimelimitvalue)[] | No | Scenario time limit values to create |
+
+**Response** (`PatchSimulationDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version number |
+| `message` | `string` | Yes | Human-readable result message |
+| `form_state` | [`SimulationDraftFormState`](#simulationdraftformstate) | No | Server-authoritative form state |
+
+---
+
+### `POST` `/simulations/drafts`
+
+Get Simulation Drafts
+
+List simulation drafts owned by the current profile.
+
+**Response** (`GetSimulationDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetSimulationDraftResponse`](#getsimulationdraftresponse)[] | No | List of simulation draft entries |
+
+---
+
+### `POST` `/simulations/export`
+
+Export Simulations
+
+Export all simulations as a clean, denormalized CSV.
+
+**Request body** (`ExportSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | UUID of the simulation to export |
+| `search` | `string` | No | Search query text |
+| `filter_scenario_ids` | `string`[] | No | Filter by scenario UUIDs |
+| `filter_cohort_ids` | `string`[] | No | Filter by cohort UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+
+**Response** (`ExportSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Total number of exported rows |
+
+---
+
+### `POST` `/simulations/docs`
+
+Get Simulation Docs Endpoint
+
+Get composed documentation for the simulation artifact.
+
+**Request body** (`DocsApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entity_id` | `string` | No | — |
+
+**Response** (`ComposedDocsResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Output`](#docsresponse-output) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](#docsapiresponse) | No | Page-level metadata from docs API |
+
+---
+
+### `POST` `/simulations/refresh`
+
+Simulation Refresh
+
+Refresh simulation materialized views and invalidate caches.
+
+**Response** (`RefreshResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+
+---
+
+### `POST` `/stream/CreateSimulationApiRequest`
+
+Schema: CreateSimulationApiRequest
+
+**Request body** (`CreateSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | [`CreateSimulationItem`](#createsimulationitem)[] | Yes | List of simulations to create |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/CreateSimulationApiResponse`
+
+Schema: CreateSimulationApiResponse
+
+**Request body** (`CreateSimulationApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](#simulationresultitem)[] | Yes | List of operation results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteSimulationApiRequest`
+
+Schema: DeleteSimulationApiRequest
+
+**Request body** (`DeleteSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_ids` | `string`[] | Yes | UUIDs of simulations to delete |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DeleteSimulationApiResponse`
+
+Schema: DeleteSimulationApiResponse
+
+**Request body** (`DeleteSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteSimulationResult`](#deletesimulationresult)[] | Yes | List of operation results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateSimulationApiRequest`
+
+Schema: DuplicateSimulationApiRequest
+
+**Request body** (`DuplicateSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | Yes | UUID of the simulation to duplicate |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/DuplicateSimulationApiResponse`
+
+Schema: DuplicateSimulationApiResponse
+
+**Request body** (`DuplicateSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `simulation_id` | `string` | Yes | UUID of the duplicated simulation |
+| `message` | `string` | Yes | Human-readable result message |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportSimulationApiRequest`
+
+Schema: ExportSimulationApiRequest
+
+**Request body** (`ExportSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | UUID of the simulation to export |
+| `search` | `string` | No | Search query text |
+| `filter_scenario_ids` | `string`[] | No | Filter by scenario UUIDs |
+| `filter_cohort_ids` | `string`[] | No | Filter by cohort UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/ExportSimulationApiResponse`
+
+Schema: ExportSimulationApiResponse
+
+**Request body** (`ExportSimulationApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Total number of exported rows |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetSimulationApiRequest`
+
+Schema: GetSimulationApiRequest
+
+**Request body** (`GetSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | UUID of the simulation to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to retrieve |
+| `scenario_search` | `string` | No | Search text to filter scenarios |
+| `filter_scenario_ids` | `string`[] | No | Filter by scenario UUIDs |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetSimulationApiResponse`
+
+Schema: GetSimulationApiResponse
+
+**Request body** (`GetSimulationApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `simulation_exists` | `boolean` | No | Whether the simulation exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason the simulation is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | UUID of the owning group |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `names` | [`SimulationNameSection`](#simulationnamesection) | No | Name section data |
+| `descriptions` | [`SimulationDescriptionSection`](#simulationdescriptionsection) | No | Description section data |
+| `flags` | [`SimulationFlagSection`](#simulationflagsection) | No | Flag section data |
+| `departments` | [`SimulationDepartmentSection`](#simulationdepartmentsection) | No | Department section data |
+| `scenarios` | [`SimulationScenarioSection`](#simulationscenariosection) | No | Scenario section data |
+| `scenario_flags` | [`SimulationScenarioFlagSection`](#simulationscenarioflagsection) | No | Scenario flag section data |
+| `scenario_positions` | [`SimulationScenarioPositionSection`](#simulationscenariopositionsection) | No | Scenario position section data |
+| `scenario_rubrics` | [`SimulationScenarioRubricSection`](#simulationscenariorubricsection) | No | Scenario rubric section data |
+| `scenario_time_limits` | [`SimulationScenarioTimeLimitSection`](#simulationscenariotimelimitsection) | No | Scenario time limit section data |
+| `rubrics` | [`SimulationRubric`](#simulationrubric)[] | No | Available rubric catalog items |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/GetSimulationDraftsApiResponse`
+
+Schema: GetSimulationDraftsApiResponse
+
+**Request body** (`GetSimulationDraftsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetSimulationDraftResponse`](#getsimulationdraftresponse)[] | No | List of simulation draft entries |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchSimulationDraftApiRequest`
+
+Schema: PatchSimulationDraftApiRequest
+
+**Request body** (`PatchSimulationDraftApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | UUID of the input draft |
+| `expected_version` | `integer` | No | Expected draft version for optimistic lock |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_ids` | `string`[] | No | Associated flag UUIDs |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Existing scenario flag UUIDs |
+| `scenario_flags` | [`DraftScenarioFlagValue`](#draftscenarioflagvalue)[] | No | Scenario flag values to create |
+| `scenario_position_ids` | `string`[] | No | Existing scenario position UUIDs |
+| `scenario_positions` | [`DraftScenarioPositionValue`](#draftscenariopositionvalue)[] | No | Scenario position values to create |
+| `scenario_rubric_ids` | `string`[] | No | Existing scenario rubric UUIDs |
+| `scenario_rubrics` | [`DraftScenarioRubricValue`](#draftscenariorubricvalue)[] | No | Scenario rubric values to create |
+| `scenario_time_limit_ids` | `string`[] | No | Existing scenario time limit UUIDs |
+| `scenario_time_limits` | [`DraftScenarioTimeLimitValue`](#draftscenariotimelimitvalue)[] | No | Scenario time limit values to create |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/PatchSimulationDraftApiResponse`
+
+Schema: PatchSimulationDraftApiResponse
+
+**Request body** (`PatchSimulationDraftApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version number |
+| `message` | `string` | Yes | Human-readable result message |
+| `form_state` | [`SimulationDraftFormState`](#simulationdraftformstate) | No | Server-authoritative form state |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateSimulationApiRequest`
+
+Schema: UpdateSimulationApiRequest
+
+**Request body** (`UpdateSimulationApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | [`UpdateSimulationItem`](#updatesimulationitem)[] | Yes | List of simulations to update |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+### `POST` `/stream/UpdateSimulationApiResponse`
+
+Schema: UpdateSimulationApiResponse
+
+**Request body** (`UpdateSimulationApiResponse-Input`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](#simulationresultitem)[] | Yes | List of operation results |
+
+**Response:**
+
+```
+`object`
+```
+
+---
+
+## Types
+
+### `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+### `CreateSimulationItem`
+
+Single simulation item for create — no simulation_id.
+
+Required fields (name): provide ID or value.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Client-provided UUID for the simulation |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description text value |
+| `flag_ids` | `string`[] | No | Associated flag UUIDs |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
+| `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
+| `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
+| `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
+| `is_inactive` | `boolean` | No | Whether the simulation is inactive |
+| `is_practice` | `boolean` | No | Whether this is a practice simulation |
+| `departments` | `string`[] | No | Department names for matching |
+| `scenarios` | `string`[] | No | Scenario names for matching |
+
+---
+
+### `DeleteSimulationResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `simulation_id` | `string` | Yes | UUID of the deleted simulation |
+| `message` | `string` | Yes | Human-readable result message |
+
+---
+
+### `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+### `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+### `DraftScenarioFlagValue`
+
+Value for creating a scenario_flag resource via draft.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | Yes | UUID of the parent scenario |
+| `flag_id` | `string` | Yes | UUID of the flag resource |
+
+---
+
+### `DraftScenarioPositionValue`
+
+Value for creating a scenario_position resource via draft.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | Yes | UUID of the parent scenario |
+| `value` | `integer` | Yes | Position value |
+
+---
+
+### `DraftScenarioRubricValue`
+
+Value for creating a scenario_rubric resource via draft.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | Yes | UUID of the parent scenario |
+| `rubric_id` | `string` | Yes | UUID of the rubric resource |
+
+---
+
+### `DraftScenarioTimeLimitValue`
+
+Value for creating a scenario_time_limit resource via draft.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | Yes | UUID of the parent scenario |
+| `time_limit_seconds` | `integer` | Yes | Time limit in seconds |
+| `negative` | `boolean` | No | Whether the time limit is negative |
+
+---
+
+### `GetSimulationDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `scenario_flag_ids` | `string`[] | Yes | Associated scenario flag UUIDs |
+| `scenario_position_ids` | `string`[] | Yes | Associated scenario position UUIDs |
+| `scenario_rubric_ids` | `string`[] | Yes | Associated scenario rubric UUIDs |
+| `scenario_time_limit_ids` | `string`[] | Yes | Associated scenario time limit UUIDs |
+| `scenario_ids` | `string`[] | Yes | Associated scenario UUIDs |
+
+---
+
+### `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+### `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+### `ListSimulationApiPersona`
+
+Persona in list response (minimal: only for color dot rendering).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `persona_id` | `string` | No | UUID of the persona |
+| `color` | `string` | No | Display color for the persona |
+
+---
+
+### `ListSimulationApiScenario`
+
+Scenario in list response (minimal: only for color dot rendering).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | UUID of the scenario |
+| `name` | `string` | No | Scenario name |
+| `persona_ids` | `string`[] | No | Associated persona UUIDs |
+| `persona_mapping` | [`ListSimulationApiPersona`](#listsimulationapipersona)[] | No | Persona color mapping for rendering |
+
+---
+
+### `ListSimulationApiSimulation`
+
+Simulation item in list response with Python-computed permissions.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | UUID of the simulation |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Simulation description text |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `is_inactive` | `boolean` | No | Whether the simulation is inactive |
+| `practice_simulation` | `boolean` | No | Whether this is a practice simulation |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `mcp` | `boolean` | No | Whether this is an MCP simulation |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `num_cohorts` | `integer` | No | Total number of cohorts |
+| `cohort_usage_count` | `integer` | No | Number of cohorts using this simulation |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `can_delete` | `boolean` | No | Whether the current user can delete |
+| `can_duplicate` | `boolean` | No | Whether the current user can duplicate |
+| `cohort_ids` | `string`[] | No | Associated cohort UUIDs |
+| `updated_at` | `string` | No | Last updated timestamp |
+
+---
+
+### `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+### `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+### `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+### `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+### `SimulationDepartment`
+
+Department for simulation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationDepartmentSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationDepartment`](#simulationdepartment)[] | No | Currently selected departments |
+| `resources` | [`SimulationDepartment`](#simulationdepartment)[] | No | Available departments |
+
+---
+
+### `SimulationDescriptionResource`
+
+Description resource for simulation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationDescriptionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | [`SimulationDescriptionResource`](#simulationdescriptionresource) | No | Currently selected description resource |
+| `resources` | [`SimulationDescriptionResource`](#simulationdescriptionresource)[] | No | Available description resources |
+
+---
+
+### `SimulationDraftFormState`
+
+Full form state after draft patch — server is source of truth.
+
+Client replaces its local form state with this after every successful patch.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | UUID of the selected name resource |
+| `description_id` | `string` | No | UUID of the selected description resource |
+| `flag_ids` | `string`[] | No | Selected flag UUIDs |
+| `department_ids` | `string`[] | No | Selected department UUIDs |
+| `scenario_ids` | `string`[] | No | Selected scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Selected scenario flag UUIDs |
+| `scenario_position_ids` | `string`[] | No | Selected scenario position UUIDs |
+| `scenario_rubric_ids` | `string`[] | No | Selected scenario rubric UUIDs |
+| `scenario_time_limit_ids` | `string`[] | No | Selected scenario time limit UUIDs |
+
+---
+
+### `SimulationFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Name of the field with the error |
+| `message` | `string` | Yes | Human-readable error message |
+
+---
+
+### `SimulationFlagConfig`
+
+Enriched flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag config key identifier |
+| `label` | `string` | Yes | Display label for the flag |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | UUID of the selected icon resource |
+| `flag_option_id` | `string` | No | UUID of the flag option |
+| `show` | `boolean` | No | Whether to show this flag in the UI |
+| `required` | `boolean` | No | Whether this flag is required |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationFlagConfig`](#simulationflagconfig)[] | No | Currently selected flags |
+| `resources` | [`SimulationFlagConfig`](#simulationflagconfig)[] | No | Available flag configs |
+
+---
+
+### `SimulationNameResource`
+
+Name resource for simulation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | [`SimulationNameResource`](#simulationnameresource) | No | Currently selected name resource |
+| `resources` | [`SimulationNameResource`](#simulationnameresource)[] | No | Available name resources |
+
+---
+
+### `SimulationResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `simulation_id` | `string` | No | UUID of the affected simulation |
+| `message` | `string` | Yes | Human-readable result message |
+| `errors` | [`SimulationFieldError`](#simulationfielderror)[] | No | List of per-field errors |
+
+---
+
+### `SimulationRubric`
+
+Rubric catalog item.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the rubric |
+| `name` | `string` | No | Rubric name |
+| `description` | `string` | No | Rubric description text |
+| `standard_group_ids` | `string`[] | No | Associated standard group UUIDs |
+
+---
+
+### `SimulationScenario`
+
+Scenario for simulation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | UUID of the scenario |
+| `name` | `string` | No | Scenario name |
+| `description` | `string` | No | Scenario description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `show_problem_statement` | `boolean` | No | Whether to show problem statement |
+| `show_objectives` | `boolean` | No | Whether to show objectives |
+| `show_video` | `boolean` | No | Whether to show video |
+| `show_text` | `boolean` | No | Whether to show text input |
+| `show_audio` | `boolean` | No | Whether to show audio input |
+| `show_copy_paste` | `boolean` | No | Whether to show copy/paste |
+| `show_images` | `boolean` | No | Whether to show images |
+| `show_questions` | `boolean` | No | Whether to show questions |
+
+---
+
+### `SimulationScenarioFlag`
+
+Scenario flag (denormalized: includes flag name/description/icon).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the scenario flag |
+| `scenario_id` | `string` | No | UUID of the parent scenario |
+| `flag_id` | `string` | No | UUID of the flag resource |
+| `name` | `string` | No | Flag name |
+| `description` | `string` | No | Flag description text |
+| `icon` | `string` | No | Icon identifier for the flag |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationScenarioFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationScenarioFlag`](#simulationscenarioflag)[] | No | Currently selected scenario flags |
+| `resources` | [`SimulationScenarioFlag`](#simulationscenarioflag)[] | No | Available scenario flags |
+
+---
+
+### `SimulationScenarioPosition`
+
+Scenario position.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the scenario position |
+| `scenario_id` | `string` | No | UUID of the parent scenario |
+| `value` | `integer` | No | Position value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationScenarioPositionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationScenarioPosition`](#simulationscenarioposition)[] | No | Currently selected scenario positions |
+| `resources` | [`SimulationScenarioPosition`](#simulationscenarioposition)[] | No | Available scenario positions |
+
+---
+
+### `SimulationScenarioRubric`
+
+Scenario rubric.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the scenario rubric |
+| `scenario_id` | `string` | No | UUID of the parent scenario |
+| `rubric_id` | `string` | No | UUID of the rubric resource |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+### `SimulationScenarioRubricSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationScenarioRubric`](#simulationscenariorubric)[] | No | Currently selected scenario rubrics |
+| `resources` | [`SimulationScenarioRubric`](#simulationscenariorubric)[] | No | Available scenario rubrics |
+
+---
+
+### `SimulationScenarioSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationScenario`](#simulationscenario)[] | No | Currently selected scenarios |
+| `resources` | [`SimulationScenario`](#simulationscenario)[] | No | Available scenarios |
+
+---
+
+### `SimulationScenarioTimeLimit`
+
+Scenario time limit.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the scenario time limit |
+| `scenario_id` | `string` | No | UUID of the parent scenario |
+| `time_limit_seconds` | `integer` | No | Time limit in seconds |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `negative` | `boolean` | No | Whether the time limit is negative |
+
+---
+
+### `SimulationScenarioTimeLimitSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`SimulationScenarioTimeLimit`](#simulationscenariotimelimit)[] | No | Currently selected scenario time limits |
+| `resources` | [`SimulationScenarioTimeLimit`](#simulationscenariotimelimit)[] | No | Available scenario time limits |
+
+---
+
+### `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+### `UpdateSimulationItem`
+
+Single simulation item for update — simulation_id required, all fields optional.
+
+Only provided fields are updated (partial update).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | Yes | UUID of the simulation to update |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description text value |
+| `flag_ids` | `string`[] | No | Associated flag UUIDs |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
+| `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
+| `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
+| `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
+| `is_inactive` | `boolean` | No | Whether the simulation is inactive |
+| `is_practice` | `boolean` | No | Whether this is a practice simulation |
+| `departments` | `string`[] | No | Department names for matching |
+| `scenarios` | `string`[] | No | Scenario names for matching |
+
+---

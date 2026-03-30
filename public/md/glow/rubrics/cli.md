@@ -1,0 +1,63 @@
+# Rubrics
+
+## Commands
+
+### `glow rubrics`
+
+```bash
+glow rubrics <action> [--body JSON]
+```
+
+### `glow rubrics search`
+
+```bash
+glow rubrics search
+```
+
+### `glow rubrics get`
+
+```bash
+glow rubrics get --body '\{"rubric_id": "..."}'
+```
+
+### `glow rubrics create`
+
+```bash
+glow rubrics create --body '\{...}'
+```
+
+### `glow rubrics update`
+
+```bash
+glow rubrics update --body '\{"rubric_id": "...", ...}'
+```
+
+### `glow rubrics delete`
+
+```bash
+glow rubrics delete --body '\{"rubric_id": "..."}'
+```
+
+### `glow rubrics list`
+
+```bash
+glow rubrics list
+```
+
+### `glow rubrics export`
+
+```bash
+glow rubrics export
+```
+
+### `glow rubrics draft`
+
+```bash
+glow rubrics draft --body '\{...}'
+```
+
+### `glow rubrics media`
+
+```bash
+glow rubrics <file|image|text|audio|video> <upload|download|create|chunk|status|finalize|discover|preview> [flags]
+```

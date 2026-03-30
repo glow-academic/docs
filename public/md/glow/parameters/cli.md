@@ -1,0 +1,63 @@
+# Parameters
+
+## Commands
+
+### `glow parameters`
+
+```bash
+glow parameters <action> [--body JSON]
+```
+
+### `glow parameters search`
+
+```bash
+glow parameters search
+```
+
+### `glow parameters get`
+
+```bash
+glow parameters get --body '\{"parameter_id": "..."}'
+```
+
+### `glow parameters create`
+
+```bash
+glow parameters create --body '\{...}'
+```
+
+### `glow parameters update`
+
+```bash
+glow parameters update --body '\{"parameter_id": "...", ...}'
+```
+
+### `glow parameters delete`
+
+```bash
+glow parameters delete --body '\{"parameter_id": "..."}'
+```
+
+### `glow parameters list`
+
+```bash
+glow parameters list
+```
+
+### `glow parameters export`
+
+```bash
+glow parameters export
+```
+
+### `glow parameters draft`
+
+```bash
+glow parameters draft --body '\{...}'
+```
+
+### `glow parameters media`
+
+```bash
+glow parameters <file|image|text|audio|video> <upload|download|create|chunk|status|finalize|discover|preview> [flags]
+```

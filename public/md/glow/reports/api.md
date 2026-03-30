@@ -1,0 +1,524 @@
+# Reports
+
+## Endpoints
+
+### `POST` `/reports/export`
+
+Export Reports
+
+Export all reports data as a clean, denormalized ZIP.
+
+**Response** (`ExportReportsApiResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Base64-encoded file content |
+| `file_name` | `string` | Yes | Suggested download file name |
+| `mime_type` | `string` | Yes | MIME type of the export file |
+| `row_count` | `integer` | Yes | Number of rows in the export |
+
+---
+
+### `POST` `/reports/search`
+
+Get Reports
+
+Get reports artifact data via composable context resolver.
+
+**Request body** (`ReportsRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `cohort_ids` | `string`[] | No | Cohort IDs to filter by |
+| `simulation_ids` | `string`[] | No | Simulation IDs to filter by |
+| `department_ids` | `string`[] | No | Department IDs to filter by |
+| `roles` | `string`[] | No | Roles to filter by |
+| `simulation_filters` | `string`[] | No | Simulation filter strings |
+| `actor_profile_id` | `string` | No | Acting user profile ID |
+| `target_profile_id` | `string` | No | Target profile ID to scope data |
+| `profile_ids` | `string`[] | No | Profile IDs to filter by |
+| `scenario_ids` | `string`[] | No | Scenario IDs to filter by |
+| `search` | `string` | No | Search string |
+| `sort_by` | `string` | No | Sort field name |
+| `sort_order` | `string` | No | Sort direction (asc or desc) |
+| `page_limit` | `integer` | No | Max items per page |
+| `page_offset` | `integer` | No | Pagination offset |
+
+**Response** (`ReportsResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `sections` | [`ReportsSections`](#reportssections) | No | Computed report sections |
+| `views` | [`ReportsViews`](#reportsviews) | No | Raw MV view slices (deprecated) |
+| `resources` | [`ReportsResources`](#reportsresources) | No | Resource metadata for hydration |
+| `total_count` | `integer` | No | Total number of matching records |
+| `simulation_options` | [`FilterOption`](#filteroption)[] | No | Simulation filter options |
+| `profile_options` | [`FilterOption`](#filteroption)[] | No | Profile filter options |
+| `scenario_options` | [`FilterOption`](#filteroption)[] | No | Scenario filter options |
+| `analytics` | [`AnalyticsFacets-Output`](#analyticsfacets-output) | No | Inline analytics facets for SSR |
+
+---
+
+### `POST` `/reports/refresh`
+
+Reports Refresh
+
+Refresh reports caches.
+
+**Response** (`RefreshResponse`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+
+---
+
+### `POST` `/reports/docs`
+
+Get Reports Docs Endpoint
+
+Get composed documentation for the reports analytics.
+
+**Request body** (`DocsApiRequest`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entity_id` | `string` | No | — |
+
+**Response** (`ComposedDocsResponse-Output`):
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Output`](#docsresponse-output) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Output`](#docsresponse-output)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](#docsapiresponse) | No | Page-level metadata from docs API |
+
+---
+
+## Types
+
+### `AnalyticsFacets-Output`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+### `AnalyticsFilterField`
+
+Visibility/disabled state for a single filter field.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `visible` | `boolean` | No | Whether the filter field is visible |
+| `disabled` | `boolean` | No | Whether the filter field is disabled |
+
+---
+
+### `AnalyticsFilterFields`
+
+Per-page filter field visibility configuration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_range` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Date range filter config |
+| `departments` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Department filter config |
+| `cohorts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Cohort filter config |
+| `roles` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Role filter config |
+| `attempts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Attempt filter config |
+
+---
+
+### `AnalyticsFilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+
+---
+
+### `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+### `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+### `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+### `FilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Internal value for the filter option |
+| `label` | `string` | No | Display label for the filter option |
+| `count` | `integer` | No | Number of matching records |
+
+---
+
+### `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+### `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+### `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+### `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+### `ReportsDataPoint`
+
+Metric trend point (lightweight equivalent of SQL data_point type).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_id` | `string` | No | Associated profile ID |
+| `date` | `string` | No | Date of the data point |
+| `value` | `number` \| `integer` | No | Data point value |
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `scenario_id` | `string` | No | Associated scenario ID |
+| `attempt_id` | `string` | No | Associated attempt ID |
+
+---
+
+### `ReportsHeaderMetrics`
+
+Header summary metrics.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `total_attempts` | [`ReportsMetric`](#reportsmetric) | No | Total attempts metric |
+| `average_score` | [`ReportsMetric`](#reportsmetric) | No | Average score metric |
+| `completion_percentage` | [`ReportsMetric`](#reportsmetric) | No | Completion percentage metric |
+| `first_attempt_pass_rate` | [`ReportsMetric`](#reportsmetric) | No | First attempt pass rate metric |
+
+---
+
+### `ReportsHistoryRow`
+
+History row from attempt facts.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | No | Attempt identifier |
+| `profile_id` | `string` | No | Associated profile ID |
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `cohort_id` | `string` | No | Associated cohort ID |
+| `attempt_created_at` | `string` | No | Attempt creation timestamp |
+| `attempt_type` | `string` | No | Type of attempt |
+| `is_archived` | `boolean` | No | Whether attempt is archived |
+| `infinite_mode` | `boolean` | No | Whether attempt was infinite mode |
+| `score_percent` | `number` | No | Score as percentage |
+| `has_passed` | `boolean` | No | Whether attempt passed |
+| `num_chats` | `integer` | No | Number of chats in attempt |
+| `num_chats_completed` | `integer` | No | Number of completed chats |
+| `total_time_seconds` | `integer` | No | Total time in seconds |
+| `scenario_ids` | `string`[] | No | Associated scenario IDs |
+
+---
+
+### `ReportsHistorySection`
+
+History section output.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `status` | [`ReportsSectionStatus`](#reportssectionstatus) | No | Section status metadata |
+| `rows` | [`ReportsHistoryRow`](#reportshistoryrow)[] | No | History rows |
+
+---
+
+### `ReportsLeaderboardRow`
+
+Leaderboard row from profile metrics.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rank` | `integer` | Yes | Leaderboard rank position |
+| `profile_id` | `string` | No | Profile identifier |
+| `total_attempts` | `integer` | No | Total number of attempts |
+| `average_score` | `number` | No | Average score |
+| `highest_score` | `number` | No | Highest score achieved |
+| `completion_percentage` | `number` | No | Completion percentage |
+| `first_attempt_pass_rate` | `number` | No | First attempt pass rate |
+| `profile_metrics` | [`ReportsProfileMetrics`](#reportsprofilemetrics) | No | Detailed profile metrics |
+| `simulation_ids` | `string`[] | No | Associated simulation IDs |
+| `scenario_ids` | `string`[] | No | Associated scenario IDs |
+
+---
+
+### `ReportsLeaderboardSection`
+
+Leaderboard section output.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `status` | [`ReportsSectionStatus`](#reportssectionstatus) | No | Section status metadata |
+| `rows` | [`ReportsLeaderboardRow`](#reportsleaderboardrow)[] | No | Leaderboard rows |
+
+---
+
+### `ReportsMetric`
+
+Small, reusable metric envelope for section outputs.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `current_value` | `number` \| `integer` | No | Current metric value |
+| `has_data` | `boolean` | No | Whether metric has any data |
+| `method` | `string` | No | Aggregation method used |
+| `data_points` | [`ReportsDataPoint`](#reportsdatapoint)[] | No | Metric data points |
+| `hover` | [`ReportsMetricHover`](#reportsmetrichover) | No | Hover tooltip payload |
+| `status` | `string` | No | Metric status indicator |
+
+---
+
+### `ReportsMetricHover`
+
+Metric hover payload (compatible field names with legacy SQL bundle).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `mean` | `integer` | No | Mean value |
+| `median` | `integer` | No | Median value |
+| `mode` | `integer` | No | Mode value |
+| `count` | `integer` | No | Total count |
+| `completed` | `integer` | No | Number completed |
+| `total` | `integer` | No | Total number |
+| `percent` | `integer` | No | Percentage value |
+| `top` | `integer`[] | No | Top values list |
+| `mean_seconds` | `integer` | No | Mean time in seconds |
+| `median_seconds` | `integer` | No | Median time in seconds |
+| `samples` | `integer` | No | Number of samples |
+| `avg_score_percent` | `integer` | No | Average score percentage |
+| `avg_minutes` | `integer` | No | Average duration in minutes |
+| `efficiency` | `integer` | No | Efficiency score |
+| `tracked` | `integer` | No | Number tracked |
+| `stagnant` | `integer` | No | Number stagnant |
+| `rate_percent` | `integer` | No | Rate as percentage |
+| `total_minutes` | `integer` | No | Total time in minutes |
+| `total_hours` | `number` | No | Total time in hours |
+| `attempts` | `integer` | No | Number of attempts |
+| `unique_simulations` | `integer` | No | Number of unique simulations |
+| `per_simulation_mean` | `integer` | No | Mean per simulation |
+
+---
+
+### `ReportsOverviewRow`
+
+Overview row grouped by simulation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | Simulation identifier |
+| `attempts` | `integer` | No | Number of attempts |
+| `completed_attempts` | `integer` | No | Number of completed attempts |
+| `passed_attempts` | `integer` | No | Number of passing attempts |
+| `average_score` | `number` | No | Average score |
+| `completion_percentage` | `number` | No | Completion percentage |
+| `pass_rate` | `number` | No | Pass rate percentage |
+
+---
+
+### `ReportsOverviewSection`
+
+Overview section output.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `status` | [`ReportsSectionStatus`](#reportssectionstatus) | No | Section status metadata |
+| `rows` | [`ReportsOverviewRow`](#reportsoverviewrow)[] | No | Overview rows by simulation |
+
+---
+
+### `ReportsProfileMetrics`
+
+Per-profile metric bundle aligned to legacy report metric families.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `average_score` | [`ReportsMetric`](#reportsmetric) | No | Average score metric |
+| `completion_percentage` | [`ReportsMetric`](#reportsmetric) | No | Completion percentage metric |
+| `first_attempt_pass_rate` | [`ReportsMetric`](#reportsmetric) | No | First attempt pass rate metric |
+| `highest_score` | [`ReportsMetric`](#reportsmetric) | No | Highest score metric |
+| `messages_per_session` | [`ReportsMetric`](#reportsmetric) | No | Messages per session metric |
+| `persona_response_times` | [`ReportsMetric`](#reportsmetric) | No | Persona response times metric |
+| `session_efficiency` | [`ReportsMetric`](#reportsmetric) | No | Session efficiency metric |
+| `stagnation_rate` | [`ReportsMetric`](#reportsmetric) | No | Stagnation rate metric |
+| `time_spent` | [`ReportsMetric`](#reportsmetric) | No | Time spent metric |
+| `total_attempts` | [`ReportsMetric`](#reportsmetric) | No | Total attempts metric |
+
+---
+
+### `ReportsResources`
+
+Resource metadata keyed by ID for normalized hydration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | `object` | No | Simulation resources keyed by ID |
+| `profiles` | `object` | No | Profile resources keyed by ID |
+| `scenarios` | `object` | No | Scenario resources keyed by ID |
+| `cohorts` | `object` | No | Cohort resources keyed by ID |
+| `personas` | `object` | No | Persona resources keyed by ID |
+| `rubrics` | `object` | No | Rubric resources keyed by ID |
+
+---
+
+### `ReportsSectionStatus`
+
+Section-level status metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `has_data` | `boolean` | No | Whether section has any data |
+| `status` | `string` | No | Section status indicator |
+| `note` | `string` | No | Optional status note |
+
+---
+
+### `ReportsSections`
+
+Business-computed section skeletons (built in permissions.py).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `header_metrics` | [`ReportsHeaderMetrics`](#reportsheadermetrics) | No | Header summary metrics |
+| `overview` | [`ReportsOverviewSection`](#reportsoverviewsection) | No | Overview section data |
+| `leaderboard` | [`ReportsLeaderboardSection`](#reportsleaderboardsection) | No | Leaderboard section data |
+| `trends` | [`ReportsTrendsSection`](#reportstrendssection) | No | Trends section data |
+| `history` | [`ReportsHistorySection`](#reportshistorysection) | No | History section data |
+
+---
+
+### `ReportsTrendPoint`
+
+Time-series aggregate point.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date` | `string` | No | Date of the trend point |
+| `attempts` | `integer` | No | Number of attempts |
+| `completed_attempts` | `integer` | No | Number of completed attempts |
+| `passed_attempts` | `integer` | No | Number of passing attempts |
+| `average_score` | `number` | No | Average score |
+| `completion_percentage` | `number` | No | Completion percentage |
+| `pass_rate` | `number` | No | Pass rate percentage |
+
+---
+
+### `ReportsTrendsSection`
+
+Trends section output.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `status` | [`ReportsSectionStatus`](#reportssectionstatus) | No | Section status metadata |
+| `chart_data` | [`ReportsTrendPoint`](#reportstrendpoint)[] | No | Trend chart time-series data |
+
+---
+
+### `ReportsViews`
+
+Raw MV slices used to compute section outputs (deprecated — always empty).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_facts` | `any`[] | No | Raw attempt fact slices |
+| `chat_facts` | `any`[] | No | Raw chat fact slices |
+| `daily_metrics` | `any`[] | No | Raw daily metric slices |
+| `profile_metrics` | `any`[] | No | Raw profile metric slices |
+
+---
+
+### `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---

@@ -1,0 +1,15 @@
+# Info
+
+## Endpoints
+
+### `GET` `/`
+
+Root Info
+
+**Response:**
+
+```
+`any`
+```
+
+---

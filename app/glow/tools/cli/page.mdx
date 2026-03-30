@@ -1,0 +1,63 @@
+# Tools
+
+## Commands
+
+### `glow tools`
+
+```bash
+glow tools <action> [--body JSON]
+```
+
+### `glow tools search`
+
+```bash
+glow tools search
+```
+
+### `glow tools get`
+
+```bash
+glow tools get --body '\{"tool_id": "..."}'
+```
+
+### `glow tools create`
+
+```bash
+glow tools create --body '\{...}'
+```
+
+### `glow tools update`
+
+```bash
+glow tools update --body '\{"tool_id": "...", ...}'
+```
+
+### `glow tools delete`
+
+```bash
+glow tools delete --body '\{"tool_id": "..."}'
+```
+
+### `glow tools list`
+
+```bash
+glow tools list
+```
+
+### `glow tools export`
+
+```bash
+glow tools export
+```
+
+### `glow tools draft`
+
+```bash
+glow tools draft --body '\{...}'
+```
+
+### `glow tools media`
+
+```bash
+glow tools <file|image|text|audio|video> <upload|download|create|chunk|status|finalize|discover|preview> [flags]
+```

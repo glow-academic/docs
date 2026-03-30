@@ -1,0 +1,62 @@
+# Info Guide
+
+The Info resource returns root server metadata from your Glow instance. It is the simplest endpoint in the API -- a single `GET /` call that returns version, status, and instance information.
+
+## What is Info?
+
+Info provides a lightweight way to verify that a Glow instance is reachable and to inspect its metadata (version, deployment environment, capabilities). It is commonly used for:
+
+- **Health checks** -- confirming the server is up before making authenticated requests.
+- **Version detection** -- checking which API version the instance is running.
+- **Integration setup** -- verifying connectivity during initial client configuration.
+
+## Quick Start
+
+### CLI
+
+```bash
+glow health
+```
+
+The `glow health` command calls the root info endpoint and displays the instance's status, version, and connectivity.
+
+### API
+
+```bash
+curl https://<your-instance>/
+```
+
+No authentication is required. The response contains server metadata such as version, environment, and uptime information.
+
+## Usage Patterns
+
+### Pre-flight Check
+
+Before starting an authenticated session, verify the instance is reachable:
+
+```bash
+# Check if instance is up
+curl -s -o /dev/null -w "%{http_code}" https://<your-instance>/
+# Returns 200 if healthy
+```
+
+### Version Detection
+
+Clients can use the info response to detect the server version and adjust behavior accordingly. This is useful for libraries or integrations that need to support multiple Glow versions.
+
+```bash
+curl -s https://<your-instance>/ | jq '.version'
+```
+
+## Common Operations
+
+| Operation | Method | Endpoint |
+|---|---|---|
+| Get server metadata | `GET` | `/` |
+
+## Related
+
+- [Info API](/glow/info/api)
+- [Info CLI](/glow/info/cli)
+- [Health Guide](/glow/health/guide) -- detailed service health monitoring
+- [Authentication Guide](/glow/authentication/guide) -- authenticating after confirming the instance is up

@@ -1,0 +1,16 @@
+/* Sidebar: items stick closer to their section header above,
+   more space before the next section header below */
+.nextra-sidebar [class*="not-first:mt-5"] {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.125rem !important;
+}
+
+/* Reduce spacing between sidebar items within a section */
+.nextra-sidebar li {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.nextra-sidebar ul {
+  gap: 0;
+}
