@@ -1,13 +1,12 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
-import { VersionSwitcher } from '@/components/VersionSwitcher'
 import 'nextra-theme-docs/style.css'
 import './custom.css'
 
 export const metadata = {
-  title: 'LearnLoop Docs',
-  description: 'Documentation for the LearnLoop platform',
+  title: 'Glow Docs',
+  description: 'Documentation for the Glow conversational AI training platform',
 }
 
 export default async function RootLayout({
@@ -20,13 +19,7 @@ export default async function RootLayout({
       <Head />
       <body>
         <Layout
-          navbar={
-            <Navbar
-              logo={<b>LearnLoop</b>}
-            >
-              <VersionSwitcher />
-            </Navbar>
-          }
+          navbar={<Navbar logo={<b>Glow</b>} />}
           pageMap={await getPageMap()}
           editLink={null}
           feedback={{ content: null }}

@@ -9,48 +9,22 @@ server {
     listen 80;
     server_name _;
 
-    # Buffer settings
     proxy_buffering on;
     proxy_buffer_size 128k;
     proxy_buffers 8 256k;
     proxy_busy_buffers_size 256k;
 
-    # Gzip
     gzip on;
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript image/svg+xml;
     gzip_min_length 256;
 
-    # Health check
     location = /health {
         access_log off;
         return 200 'ok';
         add_header Content-Type text/plain;
     }
 
-    # Root → redirect to /latest
-    location = / {
-        return 302 /latest;
-    }
-
-    # Canonical LLM paths → redirect to latest version
-    location = /llms.txt {
-        return 302 /latest/llms.txt;
-    }
-
-    location = /llms-full.txt {
-        return 302 /latest/llms-full.txt;
-    }
-
-    # Shared versions.json (lists all deployed versions)
-    location = /versions.json {
-        alias /etc/nginx/versions.json;
-        add_header Content-Type application/json;
-        add_header Cache-Control "no-cache";
-        add_header Access-Control-Allow-Origin *;
-    }
-
-    # Latest docs (blue-green deployment)
-    location /latest {
+    location / {
         set $backend $app_backend;
         proxy_pass         http://$backend;
         proxy_http_version 1.1;
@@ -61,20 +35,6 @@ server {
         proxy_set_header   X-Forwarded-Host  $host;
     }
 
-    # Versioned docs (e.g. /v2.1.0/glow/agents)
-    location ~ ^/(v\d+\.\d+\.\d+)(/.*)? {
-        set $ver $1;
-        set $version_backend "app-$ver:3000";
-        proxy_pass         http://$version_backend;
-        proxy_http_version 1.1;
-        proxy_set_header   Host              $host;
-        proxy_set_header   X-Real-IP         $remote_addr;
-        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Proto $scheme;
-        proxy_set_header   X-Forwarded-Host  $host;
-    }
-
-    # Cache static assets
     location /_next/static/ {
         set $backend $app_backend;
         proxy_pass         http://$backend;
