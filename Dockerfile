@@ -2,6 +2,7 @@
 
 FROM oven/bun:1.3 AS deps
 WORKDIR /app
+RUN apt-get update -qq && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
 COPY package.json bun.lockb ./
 RUN bun install --frozen-lockfile
 
