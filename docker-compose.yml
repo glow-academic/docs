@@ -8,6 +8,11 @@ services:
       - HOSTNAME=0.0.0.0
       - INTERNAL_API_BASE=http://glow-api:8000
       - NODE_ENV=production
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:-}
+      - BETTER_AUTH_URL=${ORIGIN:-http://localhost:3300}
+      - AUTH_CLIENT_ID=${AUTH_CLIENT_ID:-glow-docs}
+      - AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET:-}
+      - GLOW_API_URL=${GLOW_API_URL:-http://glow-api:8000}
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
       interval: 10s
@@ -24,6 +29,11 @@ services:
       - HOSTNAME=0.0.0.0
       - INTERNAL_API_BASE=http://glow-api:8000
       - NODE_ENV=production
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:-}
+      - BETTER_AUTH_URL=${ORIGIN:-http://localhost:3300}
+      - AUTH_CLIENT_ID=${AUTH_CLIENT_ID:-glow-docs}
+      - AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET:-}
+      - GLOW_API_URL=${GLOW_API_URL:-http://glow-api:8000}
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
       interval: 10s
