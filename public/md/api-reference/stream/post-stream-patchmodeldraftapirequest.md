@@ -1,0 +1,36 @@
+# `POST` `/stream/PatchModelDraftApiRequest`
+
+Schema: PatchModelDraftApiRequest
+
+## Request Body (`PatchModelDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft ID to update |
+| `expected_version` | `integer` | No | Expected draft version for concurrency |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | Name resource identifier |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | Description resource identifier |
+| `flag_ids` | `string`[] | No | Flag option identifiers |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `modality_ids` | `string`[] | No | Modality identifiers |
+| `pricing_ids` | `string`[] | No | Pricing tier identifiers |
+| `provider_ids` | `string`[] | No | Provider identifiers |
+| `quality_ids` | `string`[] | No | Quality level identifiers |
+| `reasoning_level_ids` | `string`[] | No | Reasoning level identifiers |
+| `temperature_level_ids` | `string`[] | No | Temperature level identifiers |
+| `value_ids` | `string`[] | No | Value resource identifiers |
+| `voice_ids` | `string`[] | No | Voice identifiers |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchmodeldraftapirequest Schema Stream Patchmodeldraftapirequest Post"
+}
+```

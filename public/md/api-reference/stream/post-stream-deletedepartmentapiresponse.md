@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteDepartmentApiResponse`
+
+Schema: DeleteDepartmentApiResponse
+
+## Request Body (`DeleteDepartmentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteDepartmentResult`](/api-reference/stream/types#deletedepartmentresult)[] | Yes | Per-item deletion results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deletedepartmentapiresponse Schema Stream Deletedepartmentapiresponse Post"
+}
+```

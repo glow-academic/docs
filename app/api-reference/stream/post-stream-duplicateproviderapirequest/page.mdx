@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicateProviderApiRequest`
+
+Schema: DuplicateProviderApiRequest
+
+## Request Body (`DuplicateProviderApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `provider_id` | `string` | Yes | Provider identifier to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicateproviderapirequest Schema Stream Duplicateproviderapirequest Post"
+}
+```

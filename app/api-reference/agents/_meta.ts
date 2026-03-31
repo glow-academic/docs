@@ -1,0 +1,15 @@
+export default {
+  'post-agents-get': 'POST /get',
+  'post-agents-search': 'POST /search',
+  'post-agents-create': 'POST /create',
+  'post-agents-update': 'POST /update',
+  'post-agents-duplicate': 'POST /duplicate',
+  'post-agents-delete': 'POST /delete',
+  'patch-agents-draft': 'PATCH /draft',
+  'post-agents-drafts': 'POST /drafts',
+  'post-agents-docs': 'POST /docs',
+  'post-agents-export': 'POST /export',
+  'post-agents-csv': 'POST /csv',
+  'post-agents-refresh': 'POST /refresh',
+  'types': 'Types',
+}

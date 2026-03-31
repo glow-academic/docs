@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateEvalApiResponse`
+
+Schema: CreateEvalApiResponse
+
+## Request Body (`CreateEvalApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`EvalResultItem`](/api-reference/stream/types#evalresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createevalapiresponse Schema Stream Createevalapiresponse Post"
+}
+```

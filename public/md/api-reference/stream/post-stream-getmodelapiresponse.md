@@ -1,0 +1,41 @@
+# `POST` `/stream/GetModelApiResponse`
+
+Schema: GetModelApiResponse
+
+## Request Body (`GetModelApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `model_exists` | `boolean` | No | Whether the model exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason editing is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group identifier for the model |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `provider_show_ai_generate` | `boolean` | No | Show AI generate for provider step |
+| `features_show_ai_generate` | `boolean` | No | Show AI generate for features step |
+| `names` | [`ModelNameSection`](/api-reference/stream/types#modelnamesection) | No | Name section with resources |
+| `descriptions` | [`ModelDescriptionSection`](/api-reference/stream/types#modeldescriptionsection) | No | Description section with resources |
+| `values` | [`ModelValueSection`](/api-reference/stream/types#modelvaluesection) | No | Value section with resources |
+| `providers` | [`ModelProviderSection`](/api-reference/stream/types#modelprovidersection) | No | Provider section with resources |
+| `flags` | [`ModelFlagSection`](/api-reference/stream/types#modelflagsection) | No | Flag section with configs |
+| `departments` | [`ModelDepartmentSection`](/api-reference/stream/types#modeldepartmentsection) | No | Department section with resources |
+| `modalities` | [`ModelModalitySection`](/api-reference/stream/types#modelmodalitysection) | No | Modality section with resources |
+| `temperature_levels` | [`ModelTemperatureLevelSection`](/api-reference/stream/types#modeltemperaturelevelsection) | No | Temperature level section |
+| `pricing` | [`ModelPricingSection`](/api-reference/stream/types#modelpricingsection) | No | Pricing section with resources |
+| `reasoning_levels` | [`ModelReasoningLevelSection`](/api-reference/stream/types#modelreasoninglevelsection) | No | Reasoning level section |
+| `qualities` | [`ModelQualitySection`](/api-reference/stream/types#modelqualitysection) | No | Quality section with resources |
+| `voices` | [`ModelVoiceSection`](/api-reference/stream/types#modelvoicesection) | No | Voice section with resources |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getmodelapiresponse Schema Stream Getmodelapiresponse Post"
+}
+```

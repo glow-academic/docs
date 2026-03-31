@@ -1,0 +1,21 @@
+# `POST` `/stream/ExportDocumentApiRequest`
+
+Schema: ExportDocumentApiRequest
+
+## Request Body (`ExportDocumentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `document_id` | `string` | No | Document UUID to export |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportdocumentapirequest Schema Stream Exportdocumentapirequest Post"
+}
+```

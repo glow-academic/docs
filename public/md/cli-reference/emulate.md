@@ -1,0 +1,16 @@
+# `glow emulate`
+
+Emulate another user profile
+
+## Usage
+
+```bash
+glow emulate target_profile_id <target_profile_id> [--ttl]
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `target_profile_id` | Yes | Target profile ID to emulate |
+| `--ttl` | No | TTL in seconds |

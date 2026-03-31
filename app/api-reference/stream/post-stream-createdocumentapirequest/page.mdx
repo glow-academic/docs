@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateDocumentApiRequest`
+
+Schema: CreateDocumentApiRequest
+
+## Request Body (`CreateDocumentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `documents` | [`CreateDocumentItem`](/api-reference/stream/types#createdocumentitem)[] | Yes | List of documents to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createdocumentapirequest Schema Stream Createdocumentapirequest Post"
+}
+```

@@ -1,0 +1,22 @@
+# `POST` `/stream/GetDocumentApiRequest`
+
+Schema: GetDocumentApiRequest
+
+## Request Body (`GetDocumentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `document_id` | `string` | No | Document UUID to retrieve |
+| `draft_id` | `string` | No | Draft UUID to load from |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getdocumentapirequest Schema Stream Getdocumentapirequest Post"
+}
+```

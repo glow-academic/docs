@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateProfileApiRequest`
+
+Schema: CreateProfileApiRequest
+
+## Request Body (`CreateProfileApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profiles` | [`CreateProfileItem`](/api-reference/stream/types#createprofileitem)[] | Yes | List of profiles to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createprofileapirequest Schema Stream Createprofileapirequest Post"
+}
+```

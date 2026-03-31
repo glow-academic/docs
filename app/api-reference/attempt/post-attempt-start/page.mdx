@@ -1,0 +1,21 @@
+# `POST` `/attempt/start`
+
+Start Attempt
+
+Create a new attempt using the canonical internal attempt orchestration.
+
+## Request Body (`AttemptStartPayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `home_id` | `string` | No | UUID of the home resource |
+| `practice_id` | `string` | No | UUID of the practice resource |
+| `infinite_mode` | `boolean` | No | Whether to run in infinite mode |
+
+## Response (`StartAttemptApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | — |
+| `chat_entry_id` | `string` | No | — |
+| `attempt_chat_id` | `string` | No | — |

@@ -1,0 +1,21 @@
+# `POST` `/stream/GetDepartmentDraftsApiResponse`
+
+Schema: GetDepartmentDraftsApiResponse
+
+## Request Body (`GetDepartmentDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetDepartmentDraftResponse`](/api-reference/stream/types#getdepartmentdraftresponse)[] | No | List of department draft entries |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getdepartmentdraftsapiresponse Schema Stream Getdepartmentdraftsapiresponse Post"
+}
+```

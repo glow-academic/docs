@@ -1,0 +1,20 @@
+# `POST` `/scenarios/csv`
+
+Parse Scenario Csv
+
+Parse a CSV file and return mapped items for preview.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+## Response (`ParseScenarioCsvApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateScenarioItem`](/api-reference/scenarios/types#createscenarioitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |

@@ -1,0 +1,9 @@
+# `glow admin logout`
+
+Remove stored authentication token for LearnLoop API
+
+## Usage
+
+```bash
+glow admin logout
+```

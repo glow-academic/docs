@@ -1,0 +1,21 @@
+# `POST` `/stream/GetAgentDraftsApiResponse`
+
+Schema: GetAgentDraftsApiResponse
+
+## Request Body (`GetAgentDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetAgentDraftResponse`](/api-reference/stream/types#getagentdraftresponse)[] | No | List of agent draft entries |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getagentdraftsapiresponse Schema Stream Getagentdraftsapiresponse Post"
+}
+```

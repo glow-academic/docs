@@ -1,0 +1,24 @@
+# `POST` `/stream/ExportPersonaApiResponse`
+
+Schema: ExportPersonaApiResponse
+
+## Request Body (`ExportPersonaApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | CSV content as a string |
+| `file_name` | `string` | Yes | Suggested download file name |
+| `mime_type` | `string` | Yes | MIME type of the export (text/csv) |
+| `row_count` | `integer` | Yes | Number of data rows in the export |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportpersonaapiresponse Schema Stream Exportpersonaapiresponse Post"
+}
+```

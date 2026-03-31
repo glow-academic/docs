@@ -1,0 +1,20 @@
+# `POST` `/departments/export`
+
+Export Departments
+
+Export all departments as a clean, denormalized CSV.
+
+## Request Body (`ExportDepartmentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department to export |
+
+## Response (`ExportDepartmentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |

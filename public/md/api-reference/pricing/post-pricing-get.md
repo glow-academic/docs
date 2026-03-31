@@ -1,0 +1,25 @@
+# `POST` `/pricing/get`
+
+Get Pricing
+
+Get pricing top chart — daily cost aggregation + filter options.
+
+## Request Body (`PricingRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `date_from` | `string` | No | Alias for start date |
+| `date_to` | `string` | No | Alias for end date |
+
+## Response (`PricingResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `daily` | [`PricingDailyItem-Output`](/api-reference/pricing/types#pricingdailyitem-output)[] | No | Daily pricing aggregations |
+| `resources` | [`PricingResources`](/api-reference/pricing/types#pricingresources) | No | Pricing resource metadata |
+| `total_count` | `integer` | No | Total number of matching records |
+| `model_options` | [`FilterOption`](/api-reference/pricing/types#filteroption)[] | No | Model filter options |
+| `agent_options` | [`FilterOption`](/api-reference/pricing/types#filteroption)[] | No | Agent filter options |
+| `analytics` | [`AnalyticsFacets-Output`](/api-reference/pricing/types#analyticsfacets-output) | No | Inline analytics facets for SSR |

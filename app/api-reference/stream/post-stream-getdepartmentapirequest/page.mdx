@@ -1,0 +1,22 @@
+# `POST` `/stream/GetDepartmentApiRequest`
+
+Schema: GetDepartmentApiRequest
+
+## Request Body (`GetDepartmentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | UUID of the department to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to load |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getdepartmentapirequest Schema Stream Getdepartmentapirequest Post"
+}
+```

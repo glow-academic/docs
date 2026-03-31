@@ -1,0 +1,20 @@
+# `POST` `/activity/resolve`
+
+Resolve Problem
+
+Resolve or unresolve a problem entry.
+
+## Request Body (`ResolveProblemRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `problem_id` | `string` | Yes | — |
+| `resolved` | `boolean` | No | — |
+
+## Response (`ResolveProblemResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `problem_id` | `string` | Yes | — |
+| `resolved` | `boolean` | Yes | — |
+| `updated_at` | `string` | Yes | — |

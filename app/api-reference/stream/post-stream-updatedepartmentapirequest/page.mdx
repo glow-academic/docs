@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateDepartmentApiRequest`
+
+Schema: UpdateDepartmentApiRequest
+
+## Request Body (`UpdateDepartmentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `departments` | [`UpdateDepartmentItem`](/api-reference/stream/types#updatedepartmentitem)[] | Yes | List of departments to update |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updatedepartmentapirequest Schema Stream Updatedepartmentapirequest Post"
+}
+```

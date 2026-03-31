@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteFieldApiRequest`
+
+Schema: DeleteFieldApiRequest
+
+## Request Body (`DeleteFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field_ids` | `string`[] | Yes | UUIDs of fields to delete |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deletefieldapirequest Schema Stream Deletefieldapirequest Post"
+}
+```

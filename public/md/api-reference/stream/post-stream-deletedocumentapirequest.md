@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteDocumentApiRequest`
+
+Schema: DeleteDocumentApiRequest
+
+## Request Body (`DeleteDocumentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `document_ids` | `string`[] | Yes | Document UUIDs to delete |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deletedocumentapirequest Schema Stream Deletedocumentapirequest Post"
+}
+```

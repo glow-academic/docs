@@ -1,0 +1,37 @@
+# `POST` `/stream/PatchSimulationDraftApiRequest`
+
+Schema: PatchSimulationDraftApiRequest
+
+## Request Body (`PatchSimulationDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | UUID of the input draft |
+| `expected_version` | `integer` | No | Expected draft version for optimistic lock |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_ids` | `string`[] | No | Associated flag UUIDs |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Existing scenario flag UUIDs |
+| `scenario_flags` | [`DraftScenarioFlagValue`](/api-reference/stream/types#draftscenarioflagvalue)[] | No | Scenario flag values to create |
+| `scenario_position_ids` | `string`[] | No | Existing scenario position UUIDs |
+| `scenario_positions` | [`DraftScenarioPositionValue`](/api-reference/stream/types#draftscenariopositionvalue)[] | No | Scenario position values to create |
+| `scenario_rubric_ids` | `string`[] | No | Existing scenario rubric UUIDs |
+| `scenario_rubrics` | [`DraftScenarioRubricValue`](/api-reference/stream/types#draftscenariorubricvalue)[] | No | Scenario rubric values to create |
+| `scenario_time_limit_ids` | `string`[] | No | Existing scenario time limit UUIDs |
+| `scenario_time_limits` | [`DraftScenarioTimeLimitValue`](/api-reference/stream/types#draftscenariotimelimitvalue)[] | No | Scenario time limit values to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchsimulationdraftapirequest Schema Stream Patchsimulationdraftapirequest Post"
+}
+```

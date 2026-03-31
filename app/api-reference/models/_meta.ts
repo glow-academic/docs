@@ -1,0 +1,15 @@
+export default {
+  'post-models-get': 'POST /get',
+  'post-models-search': 'POST /search',
+  'post-models-create': 'POST /create',
+  'post-models-update': 'POST /update',
+  'post-models-duplicate': 'POST /duplicate',
+  'post-models-delete': 'POST /delete',
+  'patch-models-draft': 'PATCH /draft',
+  'post-models-drafts': 'POST /drafts',
+  'post-models-docs': 'POST /docs',
+  'post-models-export': 'POST /export',
+  'post-models-csv': 'POST /csv',
+  'post-models-refresh': 'POST /refresh',
+  'types': 'Types',
+}

@@ -1,0 +1,27 @@
+# `POST` `/practice/get`
+
+Practice Get
+
+Get simulations available for practice (operational).
+
+## Request Body (`GetPracticeRequest`)
+
+```
+{
+  "properties": {},
+  "type": "object",
+  "title": "GetPracticeRequest",
+  "description": "Request for practice get endpoint — simulation cards only."
+}
+```
+
+## Response (`GetPracticeResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Current user display name |
+| `items` | [`ChatSimulationOperational`](/api-reference/practice/types#chatsimulationoperational)[] | No | Available practice simulation cards |
+| `rubrics` | [`RubricMapping`](/api-reference/practice/types#rubricmapping)[] | No | Rubric mapping data |
+| `standard_groups` | [`StandardGroupMapping`](/api-reference/practice/types#standardgroupmapping)[] | No | Standard group mapping data |
+| `standards` | [`StandardMapping`](/api-reference/practice/types#standardmapping)[] | No | Standard mapping data |
+| `analytics` | [`AnalyticsFacets-Output`](/api-reference/practice/types#analyticsfacets-output) | No | Inline analytics facets for SSR |

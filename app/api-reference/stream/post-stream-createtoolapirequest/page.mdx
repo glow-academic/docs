@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateToolApiRequest`
+
+Schema: CreateToolApiRequest
+
+## Request Body (`CreateToolApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `tools` | [`CreateToolItem`](/api-reference/stream/types#createtoolitem)[] | Yes | List of tools to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createtoolapirequest Schema Stream Createtoolapirequest Post"
+}
+```

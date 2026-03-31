@@ -1,0 +1,28 @@
+# `PATCH` `/departments/draft`
+
+Patch Department Draft
+
+Patch department draft — composable infra architecture.
+
+## Request Body (`PatchDepartmentDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `setting_ids` | `string`[] | No | Setting UUIDs to assign |
+
+## Response (`PatchDepartmentDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`DepartmentDraftFormState`](/api-reference/departments/types#departmentdraftformstate) | No | Server-authoritative form state |

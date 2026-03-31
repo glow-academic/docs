@@ -1,0 +1,16 @@
+# `glow generate`
+
+Generate content for a group
+
+## Usage
+
+```bash
+glow generate group_id <group_id> [--body]
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `group_id` | Yes | Group ID to generate for |
+| `--body` | No | JSON body for additional options |

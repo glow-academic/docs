@@ -1,0 +1,37 @@
+# `POST` `/stream/GetProfileApiResponse`
+
+Schema: GetProfileApiResponse
+
+## Request Body (`GetProfileApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `profile_exists` | `boolean` | No | Whether the profile exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this profile |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `profile_id` | `string` | No | UUID of the profile |
+| `role` | `string` | No | Current role of the profile |
+| `role_options` | `string`[] | No | Available role options |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show basic AI generate button |
+| `general_show_ai_generate` | `boolean` | No | Whether to show general AI generate button |
+| `names` | [`ProfileNameSection`](/api-reference/stream/types#profilenamesection) | No | Name section with resources |
+| `emails` | [`ProfileEmailSection`](/api-reference/stream/types#profileemailsection) | No | Email section with resources |
+| `request_limits` | [`ProfileRequestLimitSection`](/api-reference/stream/types#profilerequestlimitsection) | No | Request limit section with resources |
+| `flags` | [`ProfileFlagSection`](/api-reference/stream/types#profileflagsection) | No | Flag section with configs |
+| `departments` | [`ProfileDepartmentSection`](/api-reference/stream/types#profiledepartmentsection) | No | Department section with resources |
+| `roles` | [`ProfileRoleSection`](/api-reference/stream/types#profilerolesection) | No | Role section with resources |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getprofileapiresponse Schema Stream Getprofileapiresponse Post"
+}
+```

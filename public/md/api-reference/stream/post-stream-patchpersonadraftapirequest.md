@@ -1,0 +1,36 @@
+# `POST` `/stream/PatchPersonaDraftApiRequest`
+
+Schema: PatchPersonaDraftApiRequest
+
+## Request Body (`PatchPersonaDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to patch (omit to create a new draft) |
+| `expected_version` | `integer` | No | Expected draft version for optimistic concurrency control |
+| `name` | `string` | No | Display name text (creates new name resource) |
+| `name_id` | `string` | No | UUID of an existing name resource to select |
+| `description` | `string` | No | Description text (creates new description resource) |
+| `description_id` | `string` | No | UUID of an existing description resource to select |
+| `instructions` | `string` | No | Instruction template text (creates new instruction resource) |
+| `instructions_id` | `string` | No | UUID of an existing instruction resource to select |
+| `examples` | `string`[] | No | Example texts (creates new example resources) |
+| `example_ids` | `string`[] | No | Existing example resource UUIDs to select |
+| `color_id` | `string` | No | UUID of a color resource to select |
+| `icon_id` | `string` | No | UUID of an icon resource to select |
+| `flag_id` | `string` | No | UUID of a flag option to set |
+| `department_ids` | `string`[] | No | Department UUIDs to associate |
+| `parameter_field_ids` | `string`[] | No | Parameter field UUIDs to associate |
+| `voice_ids` | `string`[] | No | Voice resource UUIDs to associate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchpersonadraftapirequest Schema Stream Patchpersonadraftapirequest Post"
+}
+```

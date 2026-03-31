@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicatePersonaApiRequest`
+
+Schema: DuplicatePersonaApiRequest
+
+## Request Body (`DuplicatePersonaApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `persona_id` | `string` | Yes | UUID of the persona to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicatepersonaapirequest Schema Stream Duplicatepersonaapirequest Post"
+}
+```

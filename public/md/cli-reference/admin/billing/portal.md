@@ -1,0 +1,15 @@
+# `glow admin billing portal`
+
+Open the billing portal
+
+## Usage
+
+```bash
+glow admin billing portal org_id <org_id>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `org_id` | Yes | Organization ID |

@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateParameterApiResponse`
+
+Schema: CreateParameterApiResponse
+
+## Request Body (`CreateParameterApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ParameterResultItem`](/api-reference/stream/types#parameterresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createparameterapiresponse Schema Stream Createparameterapiresponse Post"
+}
+```

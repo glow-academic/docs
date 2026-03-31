@@ -1,0 +1,35 @@
+# `POST` `/settings/get`
+
+Get Setting
+
+Get setting information using the canonical shared setting operation.
+
+## Request Body (`GetSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings_id` | `string` | No | UUID of the setting to retrieve |
+| `color_search` | `string` | No | Search query for color resources |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `mcp` | `boolean` | No | Whether request is from MCP client |
+
+## Response (`GetSettingApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `setting_exists` | `boolean` | No | Whether the setting exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this setting |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `names` | [`SettingNameSection`](/api-reference/settings/types#settingnamesection) | No | Name section with resources |
+| `descriptions` | [`SettingDescriptionSection`](/api-reference/settings/types#settingdescriptionsection) | No | Description section with resources |
+| `colors` | [`SettingColorSection`](/api-reference/settings/types#settingcolorsection) | No | Color section with resources |
+| `flags` | [`SettingFlagSection`](/api-reference/settings/types#settingflagsection) | No | Flag section with configs |
+| `departments` | [`SettingDepartmentSection`](/api-reference/settings/types#settingdepartmentsection) | No | Department section with resources |
+| `profiles` | [`SettingProfileSection`](/api-reference/settings/types#settingprofilesection) | No | Profile section with resources |
+| `auths` | [`SettingAuthSection`](/api-reference/settings/types#settingauthsection) | No | Auth section with resources |
+| `provider_keys` | [`SettingProviderKeySection`](/api-reference/settings/types#settingproviderkeysection) | No | Provider key section with resources |
+| `auth_item_keys` | [`SettingAuthItemKeySection`](/api-reference/settings/types#settingauthitemkeysection) | No | Auth item key section with resources |
+| `systems` | [`SettingSystemSection`](/api-reference/settings/types#settingsystemsection) | No | System section with resources |

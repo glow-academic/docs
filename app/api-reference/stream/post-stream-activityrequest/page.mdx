@@ -1,0 +1,24 @@
+# `POST` `/stream/ActivityRequest`
+
+Schema: ActivityRequest
+
+## Request Body (`ActivityRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_from` | `string` | No | Filter start date |
+| `date_to` | `string` | No | Filter end date |
+| `department_ids` | `string`[] | No | Department IDs to filter by |
+| `roles` | `string`[] | No | Roles to filter by |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Activityrequest Schema Stream Activityrequest Post"
+}
+```

@@ -1,0 +1,17 @@
+# `POST` `/providers/update`
+
+Update Provider
+
+Update providers using composable infra architecture.
+
+## Request Body (`UpdateProviderApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `providers` | [`UpdateProviderItem`](/api-reference/providers/types#updateprovideritem)[] | Yes | List of providers to update |
+
+## Response (`UpdateProviderApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ProviderResultItem`](/api-reference/providers/types#providerresultitem)[] | Yes | List of operation results |

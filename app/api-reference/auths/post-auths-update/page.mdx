@@ -1,0 +1,17 @@
+# `POST` `/auths/update`
+
+Update Auth
+
+Update auths using composable infra architecture.
+
+## Request Body (`UpdateAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auths` | [`UpdateAuthItem`](/api-reference/auths/types#updateauthitem)[] | Yes | List of auth providers to update |
+
+## Response (`UpdateAuthApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AuthResultItem`](/api-reference/auths/types#authresultitem)[] | Yes | Per-item update results |

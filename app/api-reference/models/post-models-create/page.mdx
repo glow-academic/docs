@@ -1,0 +1,17 @@
+# `POST` `/models/create`
+
+Create Model
+
+Create models using composable infra architecture.
+
+## Request Body (`CreateModelApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `models` | [`CreateModelItem`](/api-reference/models/types#createmodelitem)[] | Yes | List of models to create |
+
+## Response (`CreateModelApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ModelResultItem`](/api-reference/models/types#modelresultitem)[] | Yes | List of operation results |

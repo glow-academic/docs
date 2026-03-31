@@ -1,0 +1,23 @@
+# `POST` `/stream/DuplicateScenarioApiResponse`
+
+Schema: DuplicateScenarioApiResponse
+
+## Request Body (`DuplicateScenarioApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `scenario_id` | `string` | Yes | UUID of the duplicated scenario |
+| `message` | `string` | Yes | Human-readable result message |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicatescenarioapiresponse Schema Stream Duplicatescenarioapiresponse Post"
+}
+```

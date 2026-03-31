@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicateEvalApiRequest`
+
+Schema: DuplicateEvalApiRequest
+
+## Request Body (`DuplicateEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `eval_id` | `string` | Yes | Eval UUID to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicateevalapirequest Schema Stream Duplicateevalapirequest Post"
+}
+```

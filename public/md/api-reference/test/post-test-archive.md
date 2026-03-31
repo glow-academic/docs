@@ -1,0 +1,18 @@
+# `POST` `/test/archive`
+
+Archive Test Artifacts
+
+Archive or unarchive benchmark tests by IDs.
+
+## Request Body (`ArchiveTestsRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_ids` | `string`[] | Yes | UUIDs of tests to archive/unarchive |
+| `archived` | `boolean` | No | Whether to archive or unarchive |
+
+## Response (`ArchiveTestsResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `updated_count` | `integer` | No | Number of tests updated |

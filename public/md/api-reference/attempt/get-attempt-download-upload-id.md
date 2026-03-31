@@ -1,0 +1,17 @@
+# `GET` `/attempt/download/\{upload_id\}`
+
+Download
+
+Download any file by upload ID with range support.
+
+## Parameters
+
+| Name | In | Required | Description |
+|---|---|---|---|
+| `upload_id` | path | Yes | — |
+
+## Response
+
+```
+{}
+```

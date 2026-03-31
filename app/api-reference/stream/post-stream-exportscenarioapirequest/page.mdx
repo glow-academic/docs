@@ -1,0 +1,25 @@
+# `POST` `/stream/ExportScenarioApiRequest`
+
+Schema: ExportScenarioApiRequest
+
+## Request Body (`ExportScenarioApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | UUID of the scenario to export |
+| `search` | `string` | No | Search query text |
+| `persona_ids` | `string`[] | No | Filter by persona UUIDs |
+| `simulation_ids` | `string`[] | No | Filter by simulation UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportscenarioapirequest Schema Stream Exportscenarioapirequest Post"
+}
+```

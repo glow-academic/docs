@@ -1,0 +1,21 @@
+# `POST` `/stream/GetPersonaDraftsApiResponse`
+
+Schema: GetPersonaDraftsApiResponse
+
+## Request Body (`GetPersonaDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetPersonaDraftResponse`](/api-reference/stream/types#getpersonadraftresponse)[] | No | List of persona drafts |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getpersonadraftsapiresponse Schema Stream Getpersonadraftsapiresponse Post"
+}
+```

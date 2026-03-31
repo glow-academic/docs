@@ -1,0 +1,22 @@
+# `POST` `/stream/GetEvalApiRequest`
+
+Schema: GetEvalApiRequest
+
+## Request Body (`GetEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `eval_id` | `string` | No | Eval UUID to retrieve |
+| `draft_id` | `string` | No | Draft UUID to load from |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getevalapirequest Schema Stream Getevalapirequest Post"
+}
+```

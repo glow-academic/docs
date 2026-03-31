@@ -1,0 +1,21 @@
+# `POST` `/stream/ExportFieldApiRequest`
+
+Schema: ExportFieldApiRequest
+
+## Request Body (`ExportFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field_id` | `string` | No | UUID of the field to export |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportfieldapirequest Schema Stream Exportfieldapirequest Post"
+}
+```

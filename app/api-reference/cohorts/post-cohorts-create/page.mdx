@@ -1,0 +1,17 @@
+# `POST` `/cohorts/create`
+
+Create Cohort
+
+Create cohorts using composable infra architecture.
+
+## Request Body (`CreateCohortApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohorts` | [`CreateCohortItem`](/api-reference/cohorts/types#createcohortitem)[] | Yes | List of cohorts to create |
+
+## Response (`CreateCohortApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`CohortResultItem`](/api-reference/cohorts/types#cohortresultitem)[] | Yes | List of operation results |

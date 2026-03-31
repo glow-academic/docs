@@ -1,0 +1,28 @@
+# `POST` `/stream/PatchDepartmentDraftApiRequest`
+
+Schema: PatchDepartmentDraftApiRequest
+
+## Request Body (`PatchDepartmentDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `setting_ids` | `string`[] | No | Setting UUIDs to assign |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchdepartmentdraftapirequest Schema Stream Patchdepartmentdraftapirequest Post"
+}
+```

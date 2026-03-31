@@ -1,0 +1,39 @@
+# `POST` `/dashboard/search`
+
+Search Dashboard
+
+Get dashboard attempt history (paginated).
+
+## Request Body (`ListDashboardRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `cohort_ids` | `string`[] | No | Cohort IDs to filter by |
+| `department_ids` | `string`[] | No | Department IDs to filter by |
+| `target_profile_id` | `string` | No | Target profile ID to scope data |
+| `practice` | `boolean` | No | Filter to practice attempts only |
+| `scenario_ids` | `string`[] | No | Scenario IDs to filter by |
+| `infinite_mode` | `boolean` | No | Filter by infinite mode status |
+| `show_archived` | `boolean` | No | Include archived attempts |
+| `sort_by` | `string` | No | Sort field name |
+| `sort_order` | `string` | No | Sort direction (asc or desc) |
+| `page` | `integer` | No | Pagination page number |
+| `page_size` | `integer` | No | Items per page |
+| `simulation_search` | `string` | No | Search string for simulations |
+| `scenario_search` | `string` | No | Search string for scenarios |
+| `profile_search` | `string` | No | Search string for profiles |
+
+## Response (`HistoryResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `data` | [`HistoryItem`](/api-reference/dashboard/types#historyitem)[] | No | List of history items |
+| `total_count` | `integer` | No | Total number of matching records |
+| `page` | `integer` | No | Current page number |
+| `page_size` | `integer` | No | Items per page |
+| `total_pages` | `integer` | No | Total number of pages |
+| `simulation_options` | [`FilterOption`](/api-reference/dashboard/types#filteroption)[] | No | Filter options for simulations |
+| `scenario_options` | [`FilterOption`](/api-reference/dashboard/types#filteroption)[] | No | Filter options for scenarios |
+| `profile_options` | [`FilterOption`](/api-reference/dashboard/types#filteroption)[] | No | Filter options for profiles |

@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateProfileApiRequest`
+
+Schema: UpdateProfileApiRequest
+
+## Request Body (`UpdateProfileApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profiles` | [`UpdateProfileItem`](/api-reference/stream/types#updateprofileitem)[] | Yes | List of profiles to update |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updateprofileapirequest Schema Stream Updateprofileapirequest Post"
+}
+```

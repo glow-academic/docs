@@ -1,0 +1,25 @@
+# `POST` `/stream/ExportPersonaApiRequest`
+
+Schema: ExportPersonaApiRequest
+
+## Request Body (`ExportPersonaApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `persona_id` | `string` | No | UUID of a specific persona to export (omit for bulk export) |
+| `search` | `string` | No | Filter personas by search text |
+| `scenario_ids` | `string`[] | No | Filter to personas used in these scenarios |
+| `field_ids` | `string`[] | No | Filter to personas with these fields |
+| `filter_department_ids` | `string`[] | No | Filter to personas in these departments |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportpersonaapirequest Schema Stream Exportpersonaapirequest Post"
+}
+```

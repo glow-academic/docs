@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteProfileApiRequest`
+
+Schema: DeleteProfileApiRequest
+
+## Request Body (`DeleteProfileApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_ids` | `string`[] | Yes | UUIDs of profiles to delete |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deleteprofileapirequest Schema Stream Deleteprofileapirequest Post"
+}
+```

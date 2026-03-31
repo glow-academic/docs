@@ -1,0 +1,38 @@
+# `POST` `/attempt/get`
+
+Attempt Get
+
+Get attempt detail with the canonical shared attempt bundle.
+
+## Request Body (`GetAttemptDetailRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | UUID of the attempt to fetch |
+
+## Response (`GetAttemptDetailResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `attempt_exists` | `boolean` | No | Whether the attempt exists |
+| `access_denied` | `boolean` | No | Whether access was denied |
+| `attempt` | [`AttemptData`](/api-reference/attempt/types#attemptdata) | No | Attempt-level data |
+| `simulation` | [`SimulationData`](/api-reference/attempt/types#simulationdata) | No | Simulation metadata |
+| `timer` | [`TimerData`](/api-reference/attempt/types#timerdata) | No | Timer information |
+| `aggregated_results` | [`AggregatedResults`](/api-reference/attempt/types#aggregatedresults) | No | Aggregated results across chats |
+| `current_chat_index` | `integer` | No | Index of the current chat |
+| `expected_chat_count` | `integer` | No | Expected total number of chats |
+| `is_active` | `boolean` | No | Whether the attempt is currently active |
+| `is_lobby` | `boolean` | No | Whether the attempt is in lobby state |
+| `show_results` | `boolean` | No | Whether to show results view |
+| `should_show_controls` | `boolean` | No | Whether to show UI controls |
+| `is_own_attempt` | `boolean` | No | Whether this is the actor's own attempt |
+| `current_chat_id` | `string` | No | ID of the current chat |
+| `has_messages` | `boolean` | No | Whether the chat has messages |
+| `available_continuation_options` | [`AvailableContinuationOptions-Output`](/api-reference/attempt/types#availablecontinuationoptions-output) | No | Continuation options for infinite mode |
+| `rubric_structure` | [`RubricStructureData`](/api-reference/attempt/types#rubricstructuredata) | No | Rubric structure data |
+| `training_id` | `string` | No | UUID of the training |
+| `chat_entry_id` | `string` | No | UUID of the chat entry |
+| `resources` | [`AttemptResources-Output`](/api-reference/attempt/types#attemptresources-output) | No | Resource maps keyed by ID |
+| `entries` | [`AttemptEntries-Output`](/api-reference/attempt/types#attemptentries-output) | No | Entry payloads by type |

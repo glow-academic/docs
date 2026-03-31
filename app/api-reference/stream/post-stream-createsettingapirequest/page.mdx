@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateSettingApiRequest`
+
+Schema: CreateSettingApiRequest
+
+## Request Body (`CreateSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`CreateSettingItem`](/api-reference/stream/types#createsettingitem)[] | Yes | List of settings to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createsettingapirequest Schema Stream Createsettingapirequest Post"
+}
+```

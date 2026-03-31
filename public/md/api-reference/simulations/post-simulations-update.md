@@ -1,0 +1,17 @@
+# `POST` `/simulations/update`
+
+Update Simulation
+
+Update simulations using composable infra architecture.
+
+## Request Body (`UpdateSimulationApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | [`UpdateSimulationItem`](/api-reference/simulations/types#updatesimulationitem)[] | Yes | List of simulations to update |
+
+## Response (`UpdateSimulationApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](/api-reference/simulations/types#simulationresultitem)[] | Yes | List of operation results |

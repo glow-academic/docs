@@ -1,0 +1,15 @@
+# `glow instances remove`
+
+Remove a configured instance
+
+## Usage
+
+```bash
+glow instances remove name <name>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `name` | Yes | Instance name |

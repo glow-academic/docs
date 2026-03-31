@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateAgentApiRequest`
+
+Schema: CreateAgentApiRequest
+
+## Request Body (`CreateAgentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `agents` | [`CreateAgentItem`](/api-reference/stream/types#createagentitem)[] | Yes | List of agents to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createagentapirequest Schema Stream Createagentapirequest Post"
+}
+```

@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicateSettingApiRequest`
+
+Schema: DuplicateSettingApiRequest
+
+## Request Body (`DuplicateSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | Yes | UUID of the setting to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicatesettingapirequest Schema Stream Duplicatesettingapirequest Post"
+}
+```

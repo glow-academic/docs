@@ -1,0 +1,30 @@
+# `POST` `/parameters/get`
+
+Get Parameter
+
+Get parameter information using the canonical shared parameter operation.
+
+## Request Body (`GetParameterApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter unique identifier |
+| `draft_id` | `string` | No | Draft unique identifier |
+
+## Response (`GetParameterApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `parameter_exists` | `boolean` | No | Whether the parameter exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason editing is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group identifier for the parameter |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `fields_step_show_ai_generate` | `boolean` | No | Show AI generate for fields step |
+| `names` | [`ParameterNameSection`](/api-reference/parameters/types#parameternamesection) | No | Name section with resources |
+| `descriptions` | [`ParameterDescriptionSection`](/api-reference/parameters/types#parameterdescriptionsection) | No | Description section with resources |
+| `flags` | [`ParameterFlagSection`](/api-reference/parameters/types#parameterflagsection) | No | Flag section with configs |
+| `departments` | [`ParameterDepartmentSection`](/api-reference/parameters/types#parameterdepartmentsection) | No | Department section with resources |
+| `fields` | [`ParameterFieldSection`](/api-reference/parameters/types#parameterfieldsection) | No | Field section with resources |

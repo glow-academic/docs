@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateProviderApiRequest`
+
+Schema: UpdateProviderApiRequest
+
+## Request Body (`UpdateProviderApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `providers` | [`UpdateProviderItem`](/api-reference/stream/types#updateprovideritem)[] | Yes | List of providers to update |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updateproviderapirequest Schema Stream Updateproviderapirequest Post"
+}
+```

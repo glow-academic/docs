@@ -1,0 +1,22 @@
+# `POST` `/stream/GetRubricApiRequest`
+
+Schema: GetRubricApiRequest
+
+## Request Body (`GetRubricApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_id` | `string` | No | Rubric UUID to retrieve |
+| `draft_id` | `string` | No | Draft UUID to load from |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getrubricapirequest Schema Stream Getrubricapirequest Post"
+}
+```

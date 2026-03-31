@@ -1,0 +1,16 @@
+export default {
+  'post-settings-search': 'POST /search',
+  'post-settings-get': 'POST /get',
+  'post-settings-create': 'POST /create',
+  'post-settings-update': 'POST /update',
+  'post-settings-duplicate': 'POST /duplicate',
+  'post-settings-delete': 'POST /delete',
+  'patch-settings-draft': 'PATCH /draft',
+  'post-settings-drafts': 'POST /drafts',
+  'post-settings-export': 'POST /export',
+  'post-settings-csv': 'POST /csv',
+  'post-settings-docs': 'POST /docs',
+  'post-settings-refresh': 'POST /refresh',
+  'post-settings-decrypt': 'POST /decrypt',
+  'types': 'Types',
+}

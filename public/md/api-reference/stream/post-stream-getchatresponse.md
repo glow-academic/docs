@@ -1,0 +1,39 @@
+# `POST` `/stream/GetChatResponse`
+
+Schema: GetChatResponse
+
+## Request Body (`GetChatResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_entry_id` | `string` | Yes | UUID of the chat entry |
+| `attempt_id` | `string` | No | UUID of the attempt |
+| `group_id` | `string` | Yes | UUID of the group |
+| `draft_version` | `integer` | No | Current draft version number |
+| `names` | [`ChatNameSection`](/api-reference/stream/types#chatnamesection) | No | Name section data |
+| `descriptions` | [`ChatDescriptionSection`](/api-reference/stream/types#chatdescriptionsection) | No | Description section data |
+| `flags` | [`ChatFlagSection`](/api-reference/stream/types#chatflagsection) | No | Flag section data |
+| `departments` | [`ChatDepartmentSection`](/api-reference/stream/types#chatdepartmentsection) | No | Department section data |
+| `personas` | [`ChatPersonaSection`](/api-reference/stream/types#chatpersonasection) | No | Persona section data |
+| `documents` | [`ChatDocumentSection`](/api-reference/stream/types#chatdocumentsection) | No | Document section data |
+| `parameter_fields` | [`ChatParameterFieldSection`](/api-reference/stream/types#chatparameterfieldsection) | No | Parameter field section data |
+| `scenarios` | [`ChatScenarioSection`](/api-reference/stream/types#chatscenariosection) | No | Scenario section data |
+| `fields` | [`ChatFieldSection`](/api-reference/stream/types#chatfieldsection) | No | Field section data |
+| `questions` | [`ChatQuestionSection`](/api-reference/stream/types#chatquestionsection) | No | Question section data |
+| `options` | [`ChatOptionSection`](/api-reference/stream/types#chatoptionsection) | No | Option section data |
+| `videos` | [`ChatVideoSection`](/api-reference/stream/types#chatvideosection) | No | Video section data |
+| `images` | [`ChatImageSection`](/api-reference/stream/types#chatimagesection) | No | Image section data |
+| `problem_statements` | [`ChatProblemStatementSection`](/api-reference/stream/types#chatproblemstatementsection) | No | Problem statement section data |
+| `objectives` | [`ChatObjectiveSection`](/api-reference/stream/types#chatobjectivesection) | No | Objective section data |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getchatresponse Schema Stream Getchatresponse Post"
+}
+```

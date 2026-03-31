@@ -1,0 +1,16 @@
+export default {
+  'post-test-get': 'POST /get',
+  'post-test-join': 'POST /join',
+  'post-test-leave': 'POST /leave',
+  'post-test-archive': 'POST /archive',
+  'post-test-refresh': 'POST /refresh',
+  'post-test-export': 'POST /export',
+  'post-test-docs': 'POST /docs',
+  'post-test-start': 'POST /start',
+  'post-test-next': 'POST /next',
+  'post-test-run': 'POST /run',
+  'post-test-end': 'POST /end',
+  'post-test-stop': 'POST /stop',
+  'post-test-search': 'POST /search',
+  'types': 'Types',
+}

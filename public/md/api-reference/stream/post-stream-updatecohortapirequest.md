@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateCohortApiRequest`
+
+Schema: UpdateCohortApiRequest
+
+## Request Body (`UpdateCohortApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohorts` | [`UpdateCohortItem`](/api-reference/stream/types#updatecohortitem)[] | Yes | List of cohorts to update |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updatecohortapirequest Schema Stream Updatecohortapirequest Post"
+}
+```

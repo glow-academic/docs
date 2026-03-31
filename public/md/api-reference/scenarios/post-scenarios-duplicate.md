@@ -1,0 +1,19 @@
+# `POST` `/scenarios/duplicate`
+
+Duplicate Scenario
+
+Duplicate a scenario — composable infra architecture.
+
+## Request Body (`DuplicateScenarioApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | Yes | UUID of the scenario to duplicate |
+
+## Response (`DuplicateScenarioApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `scenario_id` | `string` | Yes | UUID of the duplicated scenario |
+| `message` | `string` | Yes | Human-readable result message |

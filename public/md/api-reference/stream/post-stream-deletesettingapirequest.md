@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteSettingApiRequest`
+
+Schema: DeleteSettingApiRequest
+
+## Request Body (`DeleteSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_ids` | `string`[] | Yes | UUIDs of settings to delete |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deletesettingapirequest Schema Stream Deletesettingapirequest Post"
+}
+```

@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateEvalApiRequest`
+
+Schema: UpdateEvalApiRequest
+
+## Request Body (`UpdateEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `evals` | [`UpdateEvalItem`](/api-reference/stream/types#updateevalitem)[] | Yes | List of evals to update |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updateevalapirequest Schema Stream Updateevalapirequest Post"
+}
+```

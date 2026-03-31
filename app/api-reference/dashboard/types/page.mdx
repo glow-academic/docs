@@ -1,0 +1,751 @@
+# Dashboard Types
+
+## `AnalyticsFacets-Output`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+## `AnalyticsFilterField`
+
+Visibility/disabled state for a single filter field.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `visible` | `boolean` | No | Whether the filter field is visible |
+| `disabled` | `boolean` | No | Whether the filter field is disabled |
+
+---
+
+## `AnalyticsFilterFields`
+
+Per-page filter field visibility configuration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_range` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Date range filter config |
+| `departments` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Department filter config |
+| `cohorts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Cohort filter config |
+| `roles` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Role filter config |
+| `attempts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Attempt filter config |
+
+---
+
+## `AnalyticsFilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+
+---
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `DashboardFieldMeta`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field_id` | `string` | No | Field identifier |
+| `name` | `string` | No | Field display name |
+| `description` | `string` | No | Field description |
+| `parameter_id` | `string` | No | Parent parameter ID |
+| `parameter_name` | `string` | No | Parent parameter name |
+
+---
+
+## `DashboardFooterMetrics-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_performance` | [`FooterScenarioPerformance`](#footerscenarioperformance) | No | Scenario attribute performance data |
+| `scenario_stats` | [`FooterScenarioStats`](#footerscenariostats) | No | Numeric scenario statistics |
+| `scenario_simulation_performance` | [`FooterScenarioSimulationPerformance`](#footerscenariosimulationperformance) | No | Per-simulation scenario performance |
+| `scenario_composition` | [`FooterScenarioComposition`](#footerscenariocomposition) | No | Scenario composition analysis |
+
+---
+
+## `DashboardHeaderMetric`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `current_value` | `number` \| `integer` | No | Current metric value |
+| `trend_data` | [`DashboardTrendPoint`](#dashboardtrendpoint)[] | No | Time-series trend data points |
+| `has_data` | `boolean` | No | Whether metric has any data |
+| `trend_analysis` | `string` | No | Textual trend analysis summary |
+| `status` | `string` | No | Metric status indicator |
+
+---
+
+## `DashboardHeaderMetrics-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `average_score` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Average score metric |
+| `completion_percentage` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Completion percentage metric |
+| `first_attempt_pass_rate` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | First attempt pass rate metric |
+| `highest_score` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Highest score metric |
+| `messages_per_session` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Messages per session metric |
+| `persona_response_times` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Persona response times metric |
+| `session_efficiency` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Session efficiency metric |
+| `stagnation_rate` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Stagnation rate metric |
+| `time_spent` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Time spent metric |
+| `total_attempts` | [`DashboardHeaderMetric`](#dashboardheadermetric) | No | Total attempts metric |
+
+---
+
+## `DashboardInsights`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_trend` | `string` | No | Rubric trend insight text |
+| `rubric_heatmap` | `string` | No | Rubric heatmap insight text |
+| `attempt_improvement` | `string` | No | Attempt improvement insight text |
+| `skill_performance` | `string` | No | Skill performance insight text |
+| `scenario_performance` | `string` | No | Scenario performance insight text |
+| `scenario_stats` | `string` | No | Scenario stats insight text |
+| `scenario_simulation_performance` | `string` | No | Scenario simulation insight text |
+| `scenario_composition` | `string` | No | Scenario composition insight text |
+| `persona` | `object` | No | Per-persona insights |
+| `cohort` | `object` | No | Per-cohort insights |
+
+---
+
+## `DashboardParameterMeta`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter identifier |
+| `name` | `string` | No | Parameter display name |
+| `description` | `string` | No | Parameter description |
+| `numerical` | `boolean` | No | Whether parameter is numerical |
+| `document_parameter` | `boolean` | No | Whether parameter is document-type |
+| `persona_parameter` | `boolean` | No | Whether parameter is persona-type |
+
+---
+
+## `DashboardPrimaryMetrics-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_heatmap` | [`PrimaryRubricHeatmap-Output`](#primaryrubricheatmap-output) | No | Rubric correlation heatmap data |
+| `rubric_trend` | [`PrimaryRubricTrend`](#primaryrubrictrend) | No | Rubric trend over time |
+| `skill_performance` | [`SecondarySkillPerformance-Output`](#secondaryskillperformance-output) | No | Skill performance radar data |
+
+---
+
+## `DashboardRubricMeta`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_id` | `string` | No | Rubric identifier |
+| `name` | `string` | No | Rubric display name |
+| `description` | `string` | No | Rubric description |
+
+---
+
+## `DashboardScenarioMeta`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | Scenario identifier |
+| `name` | `string` | No | Scenario display name |
+| `description` | `string` | No | Scenario description |
+
+---
+
+## `DashboardSecondaryMetrics-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `persona_performance` | [`PrimaryPersonaPerformance-Output`](#primarypersonaperformance-output) | No | Persona performance data |
+| `cohort_performance` | [`SecondaryCohortPerformance`](#secondarycohortperformance) | No | Cohort performance data |
+| `attempt_improvement` | [`SecondaryAttemptImprovement`](#secondaryattemptimprovement) | No | Attempt improvement data |
+
+---
+
+## `DashboardSimulationMeta`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | Simulation identifier |
+| `name` | `string` | No | Simulation display name |
+| `description` | `string` | No | Simulation description |
+| `department_ids` | `string`[] | No | Associated department IDs |
+| `time_limit` | `integer` | No | Time limit in seconds |
+
+---
+
+## `DashboardThresholds`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `number` | No | Success threshold value |
+| `warning` | `number` | No | Warning threshold value |
+| `danger` | `number` | No | Danger threshold value |
+
+---
+
+## `DashboardTrendPoint`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date` | `string` \| `string` | No | Date of the trend data point |
+| `value` | `number` | No | Metric value at this point |
+| `count` | `integer` | No | Number of observations |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `FilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Internal value for the filter option |
+| `label` | `string` | No | Display label for the filter option |
+| `count` | `integer` | No | Number of matching records |
+
+---
+
+## `FooterNumericAttemptFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter identifier |
+| `level_label` | `string` | No | Numeric level label |
+| `level_value` | `number` | No | Numeric level value |
+| `score` | `number` | No | Score value |
+| `attempts` | `integer` | No | Number of attempts |
+
+---
+
+## `FooterNumericScenarioFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter identifier |
+| `scenario_id` | `string` | No | Associated scenario ID |
+| `level_label` | `string` | No | Numeric level label |
+| `level_value` | `number` | No | Numeric level value |
+
+---
+
+## `FooterScenarioAttributeAttemptFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter identifier |
+| `parameter_item_id` | `string` | No | Parameter item identifier |
+| `date` | `string` | No | Date of the attempt fact |
+| `timestamp` | `integer` | No | Unix timestamp |
+| `avg_score` | `number` | No | Average score |
+| `attempts` | `integer` | No | Number of attempts |
+| `passed_attempts` | `integer` | No | Number of passing attempts |
+
+---
+
+## `FooterScenarioAttributeScenarioFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter identifier |
+| `parameter_item_id` | `string` | No | Parameter item identifier |
+| `scenario_id` | `string` | No | Associated scenario ID |
+
+---
+
+## `FooterScenarioComposition`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_summaries` | [`FooterScenarioCompositionSummary`](#footerscenariocompositionsummary)[] | No | Per-scenario composition summaries |
+| `chat_parameter_facts` | [`FooterScenarioCompositionParamFact`](#footerscenariocompositionparamfact)[] | No | Chat parameter composition facts |
+| `valid_scenario_ids` | `string`[] | No | Valid scenario IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `FooterScenarioCompositionParamFact`
+
+Parameter counts per (scenario, group) — group is 'high' or 'low'.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | Associated scenario ID |
+| `group` | `string` | No | Score group (high or low) |
+| `parameter_id` | `string` | No | Parameter identifier |
+| `parameter_item_id` | `string` | No | Parameter item identifier |
+| `chat_count` | `integer` | No | Number of chats in this group |
+
+---
+
+## `FooterScenarioCompositionSummary`
+
+Per-scenario summary with high/low chat split.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | Associated scenario ID |
+| `name` | `string` | No | Scenario display name |
+| `total_chats` | `integer` | No | Total number of chats |
+| `high_count` | `integer` | No | Count of high-scoring chats |
+| `low_count` | `integer` | No | Count of low-scoring chats |
+| `high_avg_score` | `number` | No | Average score of high group |
+| `low_avg_score` | `number` | No | Average score of low group |
+
+---
+
+## `FooterScenarioPerformance`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attribute_attempt_facts` | [`FooterScenarioAttributeAttemptFact`](#footerscenarioattributeattemptfact)[] | No | Attribute-level attempt facts |
+| `attribute_scenario_facts` | [`FooterScenarioAttributeScenarioFact`](#footerscenarioattributescenariofact)[] | No | Attribute-level scenario facts |
+| `valid_parameter_ids` | `string`[] | No | Valid parameter IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `FooterScenarioSimulationFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | Associated scenario ID |
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `simulation_name` | `string` | No | Simulation display name |
+| `avg_score` | `number` | No | Average score |
+| `success_rate` | `number` | No | Success rate percentage |
+| `total_attempts` | `integer` | No | Total number of attempts |
+| `completed_attempts` | `integer` | No | Number of completed attempts |
+
+---
+
+## `FooterScenarioSimulationPerformance`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_facts` | [`FooterScenarioSimulationFact`](#footerscenariosimulationfact)[] | No | Per-simulation scenario facts |
+| `valid_scenario_ids` | `string`[] | No | Valid scenario IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `FooterScenarioStats`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `numeric_attempt_facts` | [`FooterNumericAttemptFact`](#footernumericattemptfact)[] | No | Numeric parameter attempt facts |
+| `numeric_scenario_facts` | [`FooterNumericScenarioFact`](#footernumericscenariofact)[] | No | Numeric parameter scenario facts |
+| `valid_numeric_parameter_ids` | `string`[] | No | Valid numeric parameter IDs |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `HistoryItem`
+
+Single attempt row in history list.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | UUID of the attempt |
+| `date` | `string` | No | Formatted date string of the attempt |
+| `profile_id` | `string` | No | UUID of the profile who took the attempt |
+| `profile_name` | `string` | No | Display name of the profile |
+| `simulation_id` | `string` | No | UUID of the simulation |
+| `simulation_name` | `string` | No | Display name of the simulation |
+| `num_scenarios` | `integer` | No | Total number of scenarios in the attempt |
+| `num_scenarios_completed` | `integer` | No | Number of scenarios completed |
+| `infinite_mode` | `boolean` | No | Whether the attempt is in infinite mode |
+| `time_limit` | `integer` | No | Time limit in seconds |
+| `persona_names_junction` | `string`[] | No | Persona names from junction table |
+| `persona_colors_junction` | `string`[] | No | Persona colors from junction table |
+| `scenario_ids` | `string`[] | No | UUIDs of associated scenarios |
+| `scenario_titles` | `string`[] | No | Titles of associated scenarios |
+| `department_ids` | `string`[] | No | Associated department IDs |
+| `score` | `integer` | No | Overall attempt score |
+| `score_status` | `string` | No | Score status label (e.g. pass, fail) |
+| `pass_pct` | `integer` | No | Pass percentage threshold |
+| `show_view` | `boolean` | No | Whether the view action is available |
+| `show_continue` | `boolean` | No | Whether the continue action is available |
+| `is_archived` | `boolean` | No | Whether the attempt is archived |
+| `practice_simulation` | `boolean` | No | Whether this is a practice simulation |
+| `practice_scenario_id` | `string` | No | UUID of the practice scenario |
+
+---
+
+## `HistoryResponse`
+
+Paginated attempt history list.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `data` | [`HistoryItem`](#historyitem)[] | No | List of history items |
+| `total_count` | `integer` | No | Total number of matching records |
+| `page` | `integer` | No | Current page number |
+| `page_size` | `integer` | No | Items per page |
+| `total_pages` | `integer` | No | Total number of pages |
+| `simulation_options` | [`FilterOption`](#filteroption)[] | No | Filter options for simulations |
+| `scenario_options` | [`FilterOption`](#filteroption)[] | No | Filter options for scenarios |
+| `profile_options` | [`FilterOption`](#filteroption)[] | No | Filter options for profiles |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `PersonaChartRow`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Persona display name |
+| `score` | `number` | No | Average score for persona |
+| `sessions` | `integer` | No | Number of sessions |
+| `color` | `string` | No | Chart color for persona |
+| `trend_data` | [`PersonaTrendPoint`](#personatrendpoint)[] | No | Trend data points for persona |
+| `simulation_ids` | `string`[] | No | Associated simulation IDs |
+| `status` | `string` | No | Row status indicator |
+
+---
+
+## `PersonaColorJunction`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `persona_name` | `string` | No | Persona display name |
+| `color` | `string` | No | Assigned chart color |
+
+---
+
+## `PersonaTrendPoint`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date` | `string` | No | Date of the trend point |
+| `score` | `number` | No | Score value at this point |
+| `timestamp` | `integer` | No | Unix timestamp of the point |
+| `simulation_id` | `string` | No | Associated simulation ID |
+
+---
+
+## `PrimaryPersonaPerformance-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chart_data` | [`PersonaChartRow`](#personachartrow)[] | No | Persona performance chart rows |
+| `valid_simulation_ids` | `string`[] | No | Valid simulation IDs in scope |
+| `persona_colors_junction` | [`PersonaColorJunction`](#personacolorjunction)[] | No | Persona-to-color mappings |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `PrimaryRubricHeatmap-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `matrices` | [`RubricHeatmapMatrix-Output`](#rubricheatmapmatrix-output)[] | No | Heatmap matrices per rubric |
+| `valid_rubric_ids` | `string`[] | No | Valid rubric IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `PrimaryRubricTrend`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `trend_data` | [`PrimaryRubricTrendPoint`](#primaryrubrictrendpoint)[] | No | Rubric trend time-series data |
+| `valid_rubric_ids` | `string`[] | No | Valid rubric IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `PrimaryRubricTrendPoint`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date` | `string` | No | Date of the trend point |
+| `standard_group_id` | `string` | No | Standard group identifier |
+| `standard_group_name` | `string` | No | Standard group display name |
+| `avg_pct` | `number` | No | Average percentage score |
+
+---
+
+## `RubricHeatmapCell`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_id` | `string` | No | Rubric ID for this cell |
+| `correlation` | `number` | No | Correlation coefficient |
+| `p_value` | `number` | No | Statistical p-value |
+| `color` | `string` | No | Cell display color |
+| `strength` | `string` | No | Correlation strength label |
+| `data_points` | `integer` | No | Number of data points |
+
+---
+
+## `RubricHeatmapMatrix-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_id` | `string` | No | Rubric ID for this matrix |
+| `standard_groups` | [`RubricHeatmapStandardGroup`](#rubricheatmapstandardgroup)[] | No | Standard groups as axes |
+| `matrix` | [`RubricHeatmapMatrixRow`](#rubricheatmapmatrixrow)[] | No | Correlation matrix rows |
+| `insights` | `string` | No | Generated insights text |
+| `has_data` | `boolean` | No | Whether matrix has data |
+
+---
+
+## `RubricHeatmapMatrixRow`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cells` | [`RubricHeatmapCell`](#rubricheatmapcell)[] | No | Cells in this heatmap row |
+
+---
+
+## `RubricHeatmapStandardGroup`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Standard group identifier |
+| `name` | `string` | No | Standard group name |
+| `short_name` | `string` | No | Abbreviated display name |
+| `rubric_id` | `string` | No | Parent rubric ID |
+
+---
+
+## `SecondaryAttemptImprovement`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chart_data` | [`SecondaryAttemptImprovementChart`](#secondaryattemptimprovementchart)[] | No | Attempt improvement chart data |
+| `facts` | [`SecondaryAttemptImprovementFact`](#secondaryattemptimprovementfact)[] | No | Per-simulation attempt facts |
+| `valid_simulation_ids` | `string`[] | No | Valid simulation IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `SecondaryAttemptImprovementChart`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt` | `string` | No | Attempt number label |
+| `average_score` | `number` | No | Average score for this attempt |
+| `average_time` | `number` | No | Average time in minutes |
+| `pass_rate` | `number` | No | Pass rate for this attempt |
+
+---
+
+## `SecondaryAttemptImprovementFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `attempt_no` | `integer` | No | Attempt number |
+| `avg_grade` | `number` | No | Average grade for this attempt |
+| `avg_minutes` | `number` | No | Average duration in minutes |
+| `pass_rate` | `number` | No | Pass rate for this attempt |
+
+---
+
+## `SecondaryCohortDaily`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date` | `string` | No | Date of the daily aggregate |
+| `avg_score` | `number` | No | Average score for the day |
+| `cohort_id` | `string` | No | Associated cohort ID |
+
+---
+
+## `SecondaryCohortData`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Cohort identifier |
+| `name` | `string` | No | Cohort display name |
+| `pass_rate` | `number` | No | Cohort pass rate percentage |
+| `avg_percentage_score` | `number` | No | Average percentage score |
+| `total_students` | `integer` | No | Total students in cohort |
+| `passed_students` | `integer` | No | Number of students who passed |
+| `total_attempts` | `integer` | No | Total number of attempts |
+| `passed_attempts` | `integer` | No | Number of passing attempts |
+| `simulation_count` | `integer` | No | Number of simulations attempted |
+| `required_simulations` | `integer` | No | Number of required simulations |
+| `status` | `string` | No | Cohort status indicator |
+
+---
+
+## `SecondaryCohortPerformance`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohort_data` | [`SecondaryCohortData`](#secondarycohortdata)[] | No | Per-cohort aggregate data |
+| `daily_data` | [`SecondaryCohortDaily`](#secondarycohortdaily)[] | No | Daily cohort aggregates |
+| `simulation_facts` | [`SecondarySimulationFact`](#secondarysimulationfact)[] | No | Per-simulation cohort facts |
+| `daily_facts` | [`SecondaryDailyFact`](#secondarydailyfact)[] | No | Daily simulation facts |
+| `valid_simulation_ids` | `string`[] | No | Valid simulation IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `SecondaryDailyFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date` | `string` | No | Date of the daily fact |
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `avg_score` | `number` | No | Average score for the day |
+
+---
+
+## `SecondaryGroupFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | No | Standard group identifier |
+| `group_name` | `string` | No | Standard group name |
+| `group_description` | `string` | No | Standard group description |
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `score` | `number` | No | Raw score value |
+| `points` | `number` | No | Points earned |
+| `avg_pct` | `number` | No | Average percentage score |
+
+---
+
+## `SecondaryRadarPoint`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `metric` | `string` | No | Metric name for radar axis |
+| `description` | `string` | No | Metric description |
+| `value` | `number` | No | Metric value |
+| `full_mark` | `number` | No | Maximum possible value |
+
+---
+
+## `SecondarySimulationFact`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohort_id` | `string` | No | Associated cohort ID |
+| `simulation_id` | `string` | No | Associated simulation ID |
+| `pass_rate` | `number` | No | Pass rate for this simulation |
+| `avg_score` | `number` | No | Average score for this simulation |
+| `attempts` | `integer` | No | Number of attempts |
+
+---
+
+## `SecondarySkillPackage`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_id` | `string` | No | Rubric ID for this package |
+| `radar_data` | [`SecondaryRadarPoint`](#secondaryradarpoint)[] | No | Radar chart data points |
+| `group_facts` | [`SecondaryGroupFact`](#secondarygroupfact)[] | No | Per-group performance facts |
+
+---
+
+## `SecondarySkillPerformance-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `packages` | [`SecondarySkillPackage`](#secondaryskillpackage)[] | No | Skill performance packages per rubric |
+| `valid_rubric_ids` | `string`[] | No | Valid rubric IDs in scope |
+| `status` | `string` | No | Section status indicator |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---

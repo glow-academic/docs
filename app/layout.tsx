@@ -1,6 +1,11 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import { AuthButton } from '@/components/AuthButton'
+import { DepartmentPicker } from '@/components/DepartmentPicker'
+import { CodePersonalizer } from '@/components/CodePersonalizer'
+import { getSession } from '@/lib/api/server'
+import { getVisibleSlugs, type UserContext } from '@/lib/authorization'
 import 'nextra-theme-docs/style.css'
 import './custom.css'
 
@@ -9,18 +14,55 @@ export const metadata = {
   description: 'Documentation for the Glow conversational AI training platform',
 }
 
+/** Filter pageMap to only show pages the user can access.
+ *  Also hides separators when the user isn't authenticated. */
+function filterPageMap(pageMap: any[], visibleSlugs: Set<string>): any[] {
+  // If '*' is in the set, user is authenticated — show everything
+  if (visibleSlugs.has('*')) return pageMap
+
+  return pageMap.filter((item) => {
+    if (item.name === 'index' || item.route === '/') return true
+    // Hide separators for unauthenticated users
+    if (item.type === 'separator') return false
+    // Only filter at the top level — check the first path segment
+    const slug = (item.route || item.name || '').replace(/^\//, '').split('/')[0]
+    if (slug && !visibleSlugs.has(slug)) return false
+    return true
+  })
+}
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  // Build user context from session
+  const session = await getSession()
+  let userContext: UserContext = {
+    isAuthenticated: false,
+  }
+
+  if (session?.user) {
+    userContext.isAuthenticated = true
+  }
+
+  // Get full page map, then filter by authorization
+  const fullPageMap = await getPageMap()
+  const visibleSlugs = new Set(getVisibleSlugs(userContext))
+  const filteredPageMap = filterPageMap([...fullPageMap], visibleSlugs)
+
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <Head />
       <body>
         <Layout
-          navbar={<Navbar logo={<b>Glow</b>} />}
-          pageMap={await getPageMap()}
+          navbar={
+            <Navbar logo={<b>Glow</b>}>
+              <DepartmentPicker />
+              <AuthButton />
+            </Navbar>
+          }
+          pageMap={filteredPageMap}
           editLink={null}
           feedback={{ content: null }}
           sidebar={{ defaultMenuCollapseLevel: 1 }}
@@ -35,6 +77,7 @@ export default async function RootLayout({
             </Footer>
           }
         >
+          <CodePersonalizer />
           {children}
         </Layout>
       </body>

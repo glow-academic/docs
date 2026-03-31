@@ -1,0 +1,31 @@
+# `POST` `/stream/PatchProviderDraftApiRequest`
+
+Schema: PatchProviderDraftApiRequest
+
+## Request Body (`PatchProviderDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft ID to update |
+| `expected_version` | `integer` | No | Expected draft version for concurrency |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | Name resource identifier |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | Description resource identifier |
+| `flag_id` | `string` | No | Flag option identifier |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `endpoint_ids` | `string`[] | No | Endpoint resource identifiers |
+| `key_ids` | `string`[] | No | API key resource identifiers |
+| `value_ids` | `string`[] | No | Value resource identifiers |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchproviderdraftapirequest Schema Stream Patchproviderdraftapirequest Post"
+}
+```

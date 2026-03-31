@@ -1,0 +1,17 @@
+# `POST` `/auths/delete`
+
+Delete Auth
+
+Bulk delete auths — composable infra architecture.
+
+## Request Body (`DeleteAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_ids` | `string`[] | Yes | UUIDs of auth providers to delete |
+
+## Response (`DeleteAuthApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteAuthResult`](/api-reference/auths/types#deleteauthresult)[] | Yes | Per-item deletion results |

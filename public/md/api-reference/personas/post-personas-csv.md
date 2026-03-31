@@ -1,0 +1,20 @@
+# `POST` `/personas/csv`
+
+Parse Persona Csv
+
+Parse a CSV file and return mapped items for preview.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+## Response (`ParsePersonaCsvApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreatePersonaItem`](/api-reference/personas/types#createpersonaitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |

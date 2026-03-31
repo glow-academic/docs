@@ -1,0 +1,20 @@
+# `POST` `/rubrics/csv`
+
+Parse Rubric Csv
+
+Parse a CSV file and return mapped items for preview.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+## Response (`ParseRubricCsvApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateRubricItem`](/api-reference/rubrics/types#createrubricitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |

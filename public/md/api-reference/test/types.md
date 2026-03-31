@@ -1,0 +1,342 @@
+# Test Types
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `GetTestFeedbackResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `feedback_id` | `string` | Yes | — |
+| `grade_id` | `string` | Yes | — |
+| `total` | `integer` | Yes | — |
+| `feedback` | `string` | Yes | — |
+| `total_points` | `integer` | Yes | — |
+| `pass_points` | `integer` | Yes | — |
+| `created_at` | `string` | Yes | — |
+
+---
+
+## `GetTestGradeResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `invocation_id` | `string` | Yes | — |
+| `run_id` | `string` | Yes | — |
+| `created_at` | `string` | Yes | — |
+| `updated_at` | `string` | Yes | — |
+| `passed` | `boolean` | Yes | — |
+| `score` | `integer` | Yes | — |
+| `time_taken` | `integer` | Yes | — |
+| `generated` | `boolean` | Yes | — |
+| `mcp` | `boolean` | Yes | — |
+| `active` | `boolean` | Yes | — |
+| `call_id` | `string` | Yes | — |
+
+---
+
+## `GetTestInvocationGroupsResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `test_invocation_id` | `string` | Yes | — |
+| `created_at` | `string` | Yes | — |
+| `updated_at` | `string` | Yes | — |
+| `generated` | `boolean` | Yes | — |
+| `mcp` | `boolean` | Yes | — |
+| `active` | `boolean` | Yes | — |
+| `agent_ids` | `string`[] | No | — |
+| `reasoning_level_ids` | `string`[] | No | — |
+| `temperature_level_ids` | `string`[] | No | — |
+| `voice_ids` | `string`[] | No | — |
+| `prompt_ids` | `string`[] | No | — |
+| `instruction_ids` | `string`[] | No | — |
+| `tool_ids` | `string`[] | No | — |
+| `quality_ids` | `string`[] | No | — |
+| `modality_ids` | `string`[] | No | — |
+
+---
+
+## `GetTestInvocationResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | — |
+| `test_id` | `string` | Yes | — |
+| `group_id` | `string` | Yes | — |
+| `invocation_created_at` | `string` | Yes | — |
+| `invocation_title` | `string` | Yes | — |
+| `use_custom` | `boolean` | Yes | — |
+| `position` | `integer` | Yes | — |
+| `invocation_completed` | `boolean` | Yes | — |
+| `grade_id` | `string` | Yes | — |
+| `grade_score` | `number` | Yes | — |
+| `grade_passed` | `boolean` | Yes | — |
+| `grade_time_taken` | `number` | Yes | — |
+| `rubric_id` | `string` | Yes | — |
+| `agent_ids` | `string`[] | No | — |
+| `quality_id` | `string` | No | — |
+| `department_ids` | `string`[] | No | — |
+| `run_agent_ids` | `string`[] | No | — |
+| `group_agent_ids` | `string`[] | No | — |
+| `voice_id` | `string` | No | — |
+| `temperature_level_id` | `string` | No | — |
+| `reasoning_level_id` | `string` | No | — |
+| `modality_ids` | `string`[] | No | — |
+
+---
+
+## `GetTestInvocationRunsResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `test_invocation_id` | `string` | Yes | — |
+| `created_at` | `string` | Yes | — |
+| `updated_at` | `string` | Yes | — |
+| `generated` | `boolean` | Yes | — |
+| `mcp` | `boolean` | Yes | — |
+| `active` | `boolean` | Yes | — |
+| `agent_ids` | `string`[] | No | — |
+| `reasoning_level_ids` | `string`[] | No | — |
+| `temperature_level_ids` | `string`[] | No | — |
+| `voice_ids` | `string`[] | No | — |
+| `prompt_ids` | `string`[] | No | — |
+| `instruction_ids` | `string`[] | No | — |
+| `tool_ids` | `string`[] | No | — |
+| `quality_ids` | `string`[] | No | — |
+| `modality_ids` | `string`[] | No | — |
+
+---
+
+## `GetTestResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | — |
+| `eval_id` | `string` | Yes | — |
+| `profile_id` | `string` | Yes | — |
+| `department_ids` | `string`[] | Yes | — |
+| `test_name` | `string` | Yes | — |
+| `test_description` | `string` | Yes | — |
+| `num_invocations` | `integer` | Yes | — |
+| `infinite_mode` | `boolean` | Yes | — |
+| `is_dynamic` | `boolean` | Yes | — |
+| `archived` | `boolean` | Yes | — |
+| `test_created_at` | `string` | Yes | — |
+
+---
+
+## `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+## `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `SearchMessageResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `message_id` | `string` | Yes | UUID of the message |
+| `run_id` | `string` | Yes | UUID of the parent run |
+| `role` | `string` | Yes | Message role (e.g. user, assistant) |
+| `message_created_at` | `string` | Yes | Message creation timestamp |
+| `text_upload_ids` | `string`[] | Yes | UUIDs of text uploads |
+| `audio_upload_ids` | `string`[] | Yes | UUIDs of audio uploads |
+| `image_upload_ids` | `string`[] | Yes | UUIDs of image uploads |
+| `video_upload_ids` | `string`[] | Yes | UUIDs of video uploads |
+| `file_upload_ids` | `string`[] | Yes | UUIDs of file uploads |
+| `call_upload_ids` | `string`[] | Yes | UUIDs of call uploads |
+
+---
+
+## `SearchTestItem`
+
+Single test row in search results.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | UUID of the test |
+| `eval_id` | `string` | No | UUID of the eval |
+| `eval_name` | `string` | No | Name of the eval |
+| `eval_description` | `string` | No | Description of the eval |
+| `department_ids` | `string`[] | No | UUIDs of associated departments |
+| `test_name` | `string` | No | Name of the test |
+| `test_description` | `string` | No | Description of the test |
+| `num_invocations` | `integer` | No | Number of invocations |
+| `infinite_mode` | `boolean` | No | Whether infinite mode is enabled |
+| `is_dynamic` | `boolean` | No | Whether the test is dynamic |
+| `archived` | `boolean` | No | Whether the test is archived |
+| `created_at` | `string` | No | ISO timestamp when test was created |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+## `TestEntries`
+
+Entry payloads grouped by type.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `tests` | [`GetTestResponse`](#gettestresponse)[] | No | Test entry payloads |
+| `invocations` | [`GetTestInvocationResponse`](#gettestinvocationresponse)[] | No | Invocation entry payloads |
+| `runs` | [`GetTestInvocationRunsResponse`](#gettestinvocationrunsresponse)[] | No | Run entry payloads |
+| `groups` | [`GetTestInvocationGroupsResponse`](#gettestinvocationgroupsresponse)[] | No | Group entry payloads |
+| `grades` | [`GetTestGradeResponse`](#gettestgraderesponse)[] | No | Grade entry payloads |
+| `feedback` | [`GetTestFeedbackResponse`](#gettestfeedbackresponse)[] | No | Feedback entry payloads |
+| `messages` | [`SearchMessageResponse`](#searchmessageresponse)[] | No | Message entry payloads |
+
+---
+
+## `TestResources`
+
+Resource maps keyed by ID string.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `evals` | `object` | No | Eval resources keyed by ID |
+| `rubrics` | `object` | No | Rubric resources keyed by ID |
+| `agents` | `object` | No | Agent resources keyed by ID |
+| `models` | `object` | No | Model resources keyed by ID |
+| `voices` | `object` | No | Voice resources keyed by ID |
+| `temperature_levels` | `object` | No | Temperature level resources keyed by ID |
+| `reasoning_levels` | `object` | No | Reasoning level resources keyed by ID |
+| `modalities` | `object` | No | Modality resources keyed by ID |
+| `prompts` | `object` | No | Prompt resources keyed by ID |
+| `instructions` | `object` | No | Instruction resources keyed by ID |
+| `tools` | `object` | No | Tool resources keyed by ID |
+| `qualities` | `object` | No | Quality resources keyed by ID |
+
+---
+
+## `TestRunItem`
+
+A single run row for the UI table, derived from a benchmark invocation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | ID of the chat |
+| `invocation_id` | `string` | Yes | ID of the invocation |
+| `run_id` | `string` | No | ID of the run |
+| `group_id` | `string` | No | ID of the group |
+| `suite_entry_id` | `string` | No | ID of the suite entry |
+| `model_name` | `string` | No | Name of the model used |
+| `agent_name` | `string` | No | Name of the agent used |
+| `status` | `string` | No | Run status |
+| `grade_score` | `number` | No | Grade score for the run |
+| `grade_passed` | `boolean` | No | Whether the run passed grading |
+
+---
+
+## `TestStatusSummary`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `total` | `integer` | No | Total number of invocations |
+| `completed` | `integer` | No | Number of completed invocations |
+| `in_progress` | `integer` | No | Number of in-progress invocations |
+| `not_started` | `integer` | No | Number of not-started invocations |
+
+---

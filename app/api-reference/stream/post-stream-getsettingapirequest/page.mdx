@@ -1,0 +1,24 @@
+# `POST` `/stream/GetSettingApiRequest`
+
+Schema: GetSettingApiRequest
+
+## Request Body (`GetSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings_id` | `string` | No | UUID of the setting to retrieve |
+| `color_search` | `string` | No | Search query for color resources |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `mcp` | `boolean` | No | Whether request is from MCP client |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getsettingapirequest Schema Stream Getsettingapirequest Post"
+}
+```

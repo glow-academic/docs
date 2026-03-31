@@ -1,0 +1,20 @@
+# `POST` `/rubrics/export`
+
+Export Rubrics
+
+Export all rubrics as a clean, denormalized CSV.
+
+## Request Body (`ExportRubricApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubric_id` | `string` | No | — |
+
+## Response (`ExportRubricApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |

@@ -1,0 +1,15 @@
+export default {
+  'post-cohorts-search': 'POST /search',
+  'post-cohorts-get': 'POST /get',
+  'post-cohorts-create': 'POST /create',
+  'post-cohorts-update': 'POST /update',
+  'post-cohorts-duplicate': 'POST /duplicate',
+  'post-cohorts-delete': 'POST /delete',
+  'patch-cohorts-draft': 'PATCH /draft',
+  'post-cohorts-drafts': 'POST /drafts',
+  'post-cohorts-export': 'POST /export',
+  'post-cohorts-csv': 'POST /csv',
+  'post-cohorts-docs': 'POST /docs',
+  'post-cohorts-refresh': 'POST /refresh',
+  'types': 'Types',
+}

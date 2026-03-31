@@ -1,0 +1,37 @@
+# `POST` `/stream/GetSimulationApiResponse`
+
+Schema: GetSimulationApiResponse
+
+## Request Body (`GetSimulationApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `simulation_exists` | `boolean` | No | Whether the simulation exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason the simulation is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | UUID of the owning group |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `names` | [`SimulationNameSection`](/api-reference/stream/types#simulationnamesection) | No | Name section data |
+| `descriptions` | [`SimulationDescriptionSection`](/api-reference/stream/types#simulationdescriptionsection) | No | Description section data |
+| `flags` | [`SimulationFlagSection`](/api-reference/stream/types#simulationflagsection) | No | Flag section data |
+| `departments` | [`SimulationDepartmentSection`](/api-reference/stream/types#simulationdepartmentsection) | No | Department section data |
+| `scenarios` | [`SimulationScenarioSection`](/api-reference/stream/types#simulationscenariosection) | No | Scenario section data |
+| `scenario_flags` | [`SimulationScenarioFlagSection`](/api-reference/stream/types#simulationscenarioflagsection) | No | Scenario flag section data |
+| `scenario_positions` | [`SimulationScenarioPositionSection`](/api-reference/stream/types#simulationscenariopositionsection) | No | Scenario position section data |
+| `scenario_rubrics` | [`SimulationScenarioRubricSection`](/api-reference/stream/types#simulationscenariorubricsection) | No | Scenario rubric section data |
+| `scenario_time_limits` | [`SimulationScenarioTimeLimitSection`](/api-reference/stream/types#simulationscenariotimelimitsection) | No | Scenario time limit section data |
+| `rubrics` | [`SimulationRubric`](/api-reference/stream/types#simulationrubric)[] | No | Available rubric catalog items |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getsimulationapiresponse Schema Stream Getsimulationapiresponse Post"
+}
+```

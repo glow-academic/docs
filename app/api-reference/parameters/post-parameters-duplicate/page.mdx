@@ -1,0 +1,19 @@
+# `POST` `/parameters/duplicate`
+
+Duplicate Parameter
+
+Duplicate a parameter — composable infra architecture.
+
+## Request Body (`DuplicateParameterApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | Yes | Parameter identifier to duplicate |
+
+## Response (`DuplicateParameterApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `parameter_id` | `string` | Yes | New duplicated parameter identifier |
+| `message` | `string` | Yes | Result message |

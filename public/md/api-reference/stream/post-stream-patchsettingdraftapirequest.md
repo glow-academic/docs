@@ -1,0 +1,34 @@
+# `POST` `/stream/PatchSettingDraftApiRequest`
+
+Schema: PatchSettingDraftApiRequest
+
+## Request Body (`PatchSettingDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `color_ids` | `string`[] | No | Color resource UUIDs |
+| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
+| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `provider_key_ids` | `string`[] | No | Provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchsettingdraftapirequest Schema Stream Patchsettingdraftapirequest Post"
+}
+```

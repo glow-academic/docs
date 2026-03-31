@@ -1,0 +1,19 @@
+# `POST` `/attempt/stop`
+
+Attempt Stop
+
+Stop message generation for an attempt chat.
+
+## Request Body (`AttemptStopPayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | UUID of the chat to stop generating |
+
+## Response (`StopAttemptApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `success` | `boolean` | Yes | — |
+| `message` | `string` | No | — |

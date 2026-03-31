@@ -1,0 +1,282 @@
+# Agents
+
+Agents configure the AI engine that powers Glow simulations -- they control which language model is used, what tools are available, how grading rubrics are applied, and voice and reasoning settings.
+
+![Agents list showing agent cards with name, assigned model, and tool count](/screenshots/agents/list.png)
+
+## What is an Agent?
+
+An agent is the configuration layer between your training content and the underlying AI model. It does **not** contain personas -- personas are attached to [Scenarios](/glow/scenarios/guide), not agents. Instead, an agent defines the technical and behavioral parameters of the AI engine itself.
+
+An agent contains:
+
+- **Name** -- a descriptive identifier for this configuration (e.g., "Default Simulation Agent", "Advanced Grading Agent")
+- **Description** -- what this agent configuration is optimized for
+- **Models** -- which language model(s) to use for conversations and grading
+- **Tools** -- which tool integrations are available to the AI during the session
+- **Rubrics** -- which evaluation rubrics the agent uses for grading (e.g., Communication Skills, Policy Knowledge, De-escalation)
+- **Temperature Levels** -- controls response randomness (lower = more deterministic, higher = more creative)
+- **Reasoning Levels** -- controls depth of reasoning the model applies
+- **Voices** -- text-to-speech voice selection for audio-enabled simulations
+- **Prompts** -- system-level prompt configuration
+- **Instructions** -- agent-level behavioral instructions
+- **Flags** -- boolean configuration settings
+- **Departments** -- organizational groupings for access control
+- **Qualities** -- quality-level configuration for output
+
+### Agents vs. Personas
+
+This is a common point of confusion, so it is worth stating clearly:
+
+- **Personas** define *who the learner is talking to* -- the AI character's personality, speech patterns, and behavior. Personas are attached to scenarios.
+- **Agents** define *how the AI engine operates* -- the model, temperature, tools, and grading criteria. Agents are a separate configuration layer.
+
+A persona says "I am a confused student who starts sentences with 'Uh...'." An agent says "Use GPT-4o at temperature 0.7 with the de-escalation rubric."
+
+## Quick Start
+
+### Create via CLI
+
+Create a basic simulation agent:
+
+```bash
+glow agents create --body '{
+  "agents": [{
+    "name": "Default Simulation Agent",
+    "description": "Standard agent configuration for university training simulations"
+  }]
+}'
+```
+
+Search agents:
+
+```bash
+glow agents search
+```
+
+Get a specific agent:
+
+```bash
+glow agents get --body '{"agent_id": "your-agent-uuid"}'
+```
+
+### Create via API
+
+```bash
+curl -X POST https://<your-instance>/v5/agents/create \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "agents": [{
+      "name": "Default Simulation Agent",
+      "description": "Standard agent configuration for university training simulations"
+    }]
+  }'
+```
+
+Search agents:
+
+```bash
+curl -X POST https://<your-instance>/v5/agents/search \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"search": "simulation"}'
+```
+
+## How Agents Connect to the Workflow
+
+Agents operate alongside the content pipeline, providing the AI engine configuration that powers the entire system:
+
+| Step | Resource | Description |
+|------|----------|-------------|
+| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
+| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
+| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts; the **Agent** powers the AI conversation and grading |
+
+The agent is the engine that processes every message, generates persona responses, produces hints, and evaluates performance against rubrics.
+
+![Agent detail showing model selection, system prompt editor, temperature and reasoning level controls](/screenshots/agents/detail.png)
+
+## Configuring Models
+
+The model selection determines which AI model processes conversations and grading. Configure models through the draft endpoint:
+
+```bash
+glow agents draft --body '{
+  "input_draft_id": "agent-draft-uuid",
+  "model_ids": ["model-uuid-1"]
+}'
+```
+
+```bash
+curl -X PATCH https://<your-instance>/v5/agents/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "input_draft_id": "agent-draft-uuid",
+    "model_ids": ["model-uuid-1"]
+  }'
+```
+
+You can search agents by model using the `filter_model_ids` parameter:
+
+```bash
+curl -X POST https://<your-instance>/v5/agents/search \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"filter_model_ids": ["model-uuid-1"]}'
+```
+
+## Configuring Tools and Rubrics
+
+### Tools
+
+Tools extend the agent's capabilities during a simulation. Attach tools through the draft:
+
+```bash
+glow agents draft --body '{
+  "input_draft_id": "agent-draft-uuid",
+  "tool_ids": ["tool-uuid-1", "tool-uuid-2"]
+}'
+```
+
+Filter agents by tools:
+
+```bash
+glow agents search --body '{"filter_tool_ids": ["tool-uuid-1"]}'
+```
+
+### Rubrics
+
+Rubrics define the evaluation criteria the agent uses when grading learner performance. The university seed data includes rubrics like Communication Skills, Policy Knowledge, and De-escalation.
+
+```bash
+glow agents draft --body '{
+  "input_draft_id": "agent-draft-uuid",
+  "rubric_ids": ["communication-skills-uuid", "policy-knowledge-uuid", "de-escalation-uuid"]
+}'
+```
+
+```bash
+curl -X PATCH https://<your-instance>/v5/agents/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "input_draft_id": "agent-draft-uuid",
+    "rubric_ids": ["communication-skills-uuid", "de-escalation-uuid"]
+  }'
+```
+
+## Tuning Temperature and Reasoning
+
+### Temperature Levels
+
+Temperature controls the randomness of the AI's responses. Lower values produce more consistent, predictable responses. Higher values produce more varied, creative responses.
+
+```bash
+glow agents draft --body '{
+  "input_draft_id": "agent-draft-uuid",
+  "temperature_level_ids": ["temperature-level-uuid"]
+}'
+```
+
+For training simulations where consistency matters (e.g., policy training), use lower temperature. For open practice where variety is beneficial, consider higher temperature.
+
+### Reasoning Levels
+
+Reasoning levels control how much deliberation the AI applies before responding. Higher reasoning produces more thoughtful responses but takes longer.
+
+```bash
+glow agents draft --body '{
+  "input_draft_id": "agent-draft-uuid",
+  "reasoning_level_ids": ["reasoning-level-uuid"]
+}'
+```
+
+## Configuring Voices
+
+Voices determine the text-to-speech output when audio mode is enabled in a simulation. Different voices can match the persona's character (e.g., a younger voice for a student persona, a more authoritative voice for a professor).
+
+```bash
+glow agents draft --body '{
+  "input_draft_id": "agent-draft-uuid",
+  "voice_ids": ["voice-uuid"]
+}'
+```
+
+## Working with Drafts
+
+Agents use the same draft system as other Glow resources. All configuration changes go through the draft endpoint.
+
+```bash
+# Create or update a draft with full configuration
+glow agents draft --body '{
+  "input_draft_id": "existing-draft-uuid",
+  "expected_version": 3,
+  "name": "Advanced Grading Agent",
+  "description": "High-reasoning agent with strict rubric evaluation",
+  "model_ids": ["model-uuid"],
+  "tool_ids": ["tool-uuid-1"],
+  "rubric_ids": ["communication-uuid", "policy-uuid"],
+  "temperature_level_ids": ["low-temp-uuid"],
+  "reasoning_level_ids": ["high-reasoning-uuid"],
+  "voice_ids": ["voice-uuid"]
+}'
+```
+
+```bash
+# Via API
+curl -X PATCH https://<your-instance>/v5/agents/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "input_draft_id": "existing-draft-uuid",
+    "expected_version": 3,
+    "name": "Advanced Grading Agent",
+    "description": "High-reasoning agent with strict rubric evaluation"
+  }'
+```
+
+**List your drafts:**
+
+```bash
+# CLI
+glow agents list
+
+# API
+curl -X POST https://<your-instance>/v5/agents/drafts \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token"
+```
+
+## Common Operations
+
+| Task | CLI | API |
+|------|-----|-----|
+| List all agents | `glow agents search` | `POST /agents/search` |
+| Get one agent | `glow agents get --body '{"agent_id": "..."}'` | `POST /agents/get` |
+| Create agents | `glow agents create --body '{"agents": [...]}'` | `POST /agents/create` |
+| Update agents | `glow agents update --body '{"agents": [...]}'` | `POST /agents/update` |
+| Duplicate an agent | -- | `POST /agents/duplicate` |
+| Delete agents | `glow agents delete --body '{"agent_ids": [...]}'` | `POST /agents/delete` |
+| Save a draft | `glow agents draft --body '{...}'` | `PATCH /agents/draft` |
+| List drafts | `glow agents list` | `POST /agents/drafts` |
+| Export to CSV | `glow agents export` | `POST /agents/export` |
+
+## Related
+
+- [Agents API Reference](/glow/agents/api) -- full endpoint schemas and field definitions
+- [Agents CLI Reference](/glow/agents/cli) -- all CLI commands and flags
+- [Simulations Guide](/glow/simulations/guide) -- the training sessions that agents power
+- [Attempts Guide](/glow/attempt/guide) -- the runtime sessions where agents process messages and grade
+- [Personas Guide](/glow/personas/guide) -- the AI characters (attached to scenarios, not agents) that agents bring to life
+- [Scenarios Guide](/glow/scenarios/guide) -- the training situations that define persona and document context

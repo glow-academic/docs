@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateSettingApiResponse`
+
+Schema: UpdateSettingApiResponse
+
+## Request Body (`UpdateSettingApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](/api-reference/stream/types#settingresultitem)[] | Yes | Per-item update results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updatesettingapiresponse Schema Stream Updatesettingapiresponse Post"
+}
+```

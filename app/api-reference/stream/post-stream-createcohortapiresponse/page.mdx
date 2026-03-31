@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateCohortApiResponse`
+
+Schema: CreateCohortApiResponse
+
+## Request Body (`CreateCohortApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`CohortResultItem`](/api-reference/stream/types#cohortresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createcohortapiresponse Schema Stream Createcohortapiresponse Post"
+}
+```

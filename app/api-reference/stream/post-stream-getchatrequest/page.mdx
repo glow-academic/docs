@@ -1,0 +1,33 @@
+# `POST` `/stream/GetChatRequest`
+
+Schema: GetChatRequest
+
+## Request Body (`GetChatRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_entry_id` | `string` | Yes | UUID of the chat entry |
+| `attempt_id` | `string` | No | UUID of the attempt |
+| `draft_id` | `string` | No | UUID of the draft |
+| `description_search` | `string` | No | Search filter for descriptions |
+| `persona_search` | `string` | No | Search filter for personas |
+| `document_search` | `string` | No | Search filter for documents |
+| `problem_statement_search` | `string` | No | Search filter for problem statements |
+| `image_search` | `string` | No | Search filter for images |
+| `video_search` | `string` | No | Search filter for videos |
+| `question_search` | `string` | No | Search filter for questions |
+| `option_search` | `string` | No | Search filter for options |
+| `persona_show_selected` | `boolean` | No | Whether to show only selected personas |
+| `document_show_selected` | `boolean` | No | Whether to show only selected documents |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getchatrequest Schema Stream Getchatrequest Post"
+}
+```

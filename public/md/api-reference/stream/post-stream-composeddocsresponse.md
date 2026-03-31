@@ -1,0 +1,29 @@
+# `POST` `/stream/ComposedDocsResponse`
+
+Schema: ComposedDocsResponse
+
+## Request Body (`ComposedDocsResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Artifact name |
+| `type` | `string` | Yes | Artifact type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `artifact` | [`DocsResponse-Input`](/api-reference/stream/types#docsresponse-input) | No | Artifact tool documentation |
+| `entries` | [`DocsResponse-Input`](/api-reference/stream/types#docsresponse-input)[] | Yes | Entry documentation list |
+| `resources` | [`DocsResponse-Input`](/api-reference/stream/types#docsresponse-input)[] | Yes | Resource documentation list |
+| `permissions` | [`OperationInfo`](/api-reference/stream/types#operationinfo)[] | Yes | Permission function documentation |
+| `api_operations` | [`OperationInfo`](/api-reference/stream/types#operationinfo)[] | Yes | API operation documentation |
+| `page_metadata` | [`DocsApiResponse`](/api-reference/stream/types#docsapiresponse) | No | Page-level metadata from docs API |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Composeddocsresponse Schema Stream Composeddocsresponse Post"
+}
+```

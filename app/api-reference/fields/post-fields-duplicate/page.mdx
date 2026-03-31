@@ -1,0 +1,19 @@
+# `POST` `/fields/duplicate`
+
+Duplicate Field
+
+Duplicate a field — composable infra architecture.
+
+## Request Body (`DuplicateFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field_id` | `string` | Yes | UUID of the field to duplicate |
+
+## Response (`DuplicateFieldApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `field_id` | `string` | Yes | UUID of the newly created field |
+| `message` | `string` | Yes | Result message |

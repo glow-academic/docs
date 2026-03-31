@@ -1,0 +1,17 @@
+# `POST` `/parameters/update`
+
+Update Parameter
+
+Update parameters using composable infra architecture.
+
+## Request Body (`UpdateParameterApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameters` | [`UpdateParameterItem`](/api-reference/parameters/types#updateparameteritem)[] | Yes | List of parameters to update |
+
+## Response (`UpdateParameterApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ParameterResultItem`](/api-reference/parameters/types#parameterresultitem)[] | Yes | List of operation results |

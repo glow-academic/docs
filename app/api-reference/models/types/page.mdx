@@ -1,0 +1,472 @@
+# Models Types
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `CreateModelItem`
+
+Single model item for create — no model_id.
+
+Required fields (name): provide ID or value.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Optional pre-assigned identifier |
+| `name_id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Description text value |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `departments` | `string`[] | No | Department names to match |
+| `flag_ids` | `string`[] | No | Flag option identifiers |
+| `modality_ids` | `string`[] | No | Modality identifiers |
+| `pricing_ids` | `string`[] | No | Pricing tier identifiers |
+| `provider_ids` | `string`[] | No | Provider identifiers |
+| `quality_ids` | `string`[] | No | Quality level identifiers |
+| `reasoning_level_ids` | `string`[] | No | Reasoning level identifiers |
+| `temperature_level_ids` | `string`[] | No | Temperature level identifiers |
+| `value_ids` | `string`[] | No | Value resource identifiers |
+| `voice_ids` | `string`[] | No | Voice identifiers |
+| `model_ids` | `string`[] | No | Related model identifiers |
+
+---
+
+## `DeleteModelResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the deletion succeeded |
+| `model_id` | `string` | Yes | Deleted model identifier |
+| `message` | `string` | Yes | Result message |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `GetModelDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `modality_ids` | `string`[] | Yes | Associated modality UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `pricing_ids` | `string`[] | Yes | Associated pricing UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `provider_ids` | `string`[] | Yes | Associated provider UUIDs |
+| `quality_ids` | `string`[] | Yes | Associated quality UUIDs |
+| `reasoning_level_ids` | `string`[] | Yes | Associated reasoning level UUIDs |
+| `temperature_level_ids` | `string`[] | Yes | Associated temperature level UUIDs |
+| `value_ids` | `string`[] | Yes | Associated value UUIDs |
+| `voice_ids` | `string`[] | Yes | Associated voice UUIDs |
+
+---
+
+## `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+## `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+## `ListModelApiModel`
+
+Model type for list endpoint with computed permissions.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_id` | `string` | No | Model unique identifier |
+| `name` | `string` | No | Display name of the model |
+| `description` | `string` | No | Model description text |
+| `provider_id` | `string` | No | Associated provider identifier |
+| `provider_name` | `string` | No | Associated provider display name |
+| `base_url` | `string` | No | Base URL for the model API |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `is_inactive` | `boolean` | No | Whether the model is inactive |
+| `active` | `boolean` | No | Whether the model is currently active |
+| `image_model` | `boolean` | No | Whether this is an image model |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `can_duplicate` | `boolean` | No | Whether the current user can duplicate |
+| `can_delete` | `boolean` | No | Whether the current user can delete |
+| `updated_at` | `string` | No | Timestamp of last update |
+
+---
+
+## `ModelDepartmentSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned departments |
+| `resources` | `any`[] | No | Available departments |
+
+---
+
+## `ModelDescriptionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected description resource |
+| `resources` | `any`[] | No | Available description resources |
+
+---
+
+## `ModelDraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource identifier |
+| `description_id` | `string` | No | Resolved description resource identifier |
+| `flag_ids` | `string`[] | Yes | Flag option identifiers |
+| `department_ids` | `string`[] | Yes | Department identifiers |
+| `modality_ids` | `string`[] | Yes | Modality identifiers |
+| `pricing_ids` | `string`[] | Yes | Pricing tier identifiers |
+| `provider_ids` | `string`[] | Yes | Provider identifiers |
+| `quality_ids` | `string`[] | Yes | Quality level identifiers |
+| `reasoning_level_ids` | `string`[] | Yes | Reasoning level identifiers |
+| `temperature_level_ids` | `string`[] | Yes | Temperature level identifiers |
+| `value_ids` | `string`[] | Yes | Value resource identifiers |
+| `voice_ids` | `string`[] | Yes | Voice identifiers |
+
+---
+
+## `ModelFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Field name that caused the error |
+| `message` | `string` | Yes | Error message describing the issue |
+
+---
+
+## `ModelFlagConfig`
+
+Enriched flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `flag_option_id` | `string` | No | Option ID to use when enabling |
+| `show` | `boolean` | No | Whether to display this flag in the UI |
+| `required` | `boolean` | No | Whether this flag is required |
+| `generated` | `boolean` | No | Whether this flag was AI-generated |
+
+---
+
+## `ModelFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ModelFlagConfig`](#modelflagconfig)[] | No | Currently active flag configs |
+| `resources` | [`ModelFlagConfig`](#modelflagconfig)[] | No | Available flag configs |
+
+---
+
+## `ModelModalitySection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned modalities |
+| `resources` | `any`[] | No | Available modalities |
+
+---
+
+## `ModelNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected name resource |
+| `resources` | `any`[] | No | Available name resources |
+
+---
+
+## `ModelPricingSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned pricing tiers |
+| `resources` | `any`[] | No | Available pricing tiers |
+
+---
+
+## `ModelProviderSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected provider resource |
+| `resources` | `any`[] | No | Available provider resources |
+
+---
+
+## `ModelQualitySection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned quality levels |
+| `resources` | `any`[] | No | Available quality levels |
+
+---
+
+## `ModelReasoningLevelSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned reasoning levels |
+| `resources` | `any`[] | No | Available reasoning levels |
+
+---
+
+## `ModelResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `model_id` | `string` | No | Model unique identifier |
+| `message` | `string` | Yes | Result message |
+| `errors` | [`ModelFieldError`](#modelfielderror)[] | No | List of field-level errors |
+
+---
+
+## `ModelTemperatureLevelSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned temperature levels |
+| `resources` | `any`[] | No | Available temperature levels |
+
+---
+
+## `ModelValueSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | `any` | No | Currently selected value resource |
+| `resources` | `any`[] | No | Available value resources |
+
+---
+
+## `ModelVoiceSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | `any`[] | No | Currently assigned voices |
+| `resources` | `any`[] | No | Available voices |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+## `UpdateModelItem`
+
+Single model item for update — model_id required, all fields optional.
+
+Only provided fields are updated (partial update).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_id` | `string` | Yes | Target model identifier to update |
+| `name_id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Description text value |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `departments` | `string`[] | No | Department names to match |
+| `flag_ids` | `string`[] | No | Flag option identifiers |
+| `modality_ids` | `string`[] | No | Modality identifiers |
+| `pricing_ids` | `string`[] | No | Pricing tier identifiers |
+| `provider_ids` | `string`[] | No | Provider identifiers |
+| `quality_ids` | `string`[] | No | Quality level identifiers |
+| `reasoning_level_ids` | `string`[] | No | Reasoning level identifiers |
+| `temperature_level_ids` | `string`[] | No | Temperature level identifiers |
+| `value_ids` | `string`[] | No | Value resource identifiers |
+| `voice_ids` | `string`[] | No | Voice identifiers |
+| `model_ids` | `string`[] | No | Related model identifiers |
+
+---

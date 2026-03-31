@@ -1,0 +1,25 @@
+# `POST` `/stream/PatchAgentDraftApiResponse`
+
+Schema: PatchAgentDraftApiResponse
+
+## Request Body (`PatchAgentDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version number |
+| `message` | `string` | Yes | Human-readable result message |
+| `form_state` | [`AgentDraftFormState`](/api-reference/stream/types#agentdraftformstate) | No | Server-authoritative form state |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchagentdraftapiresponse Schema Stream Patchagentdraftapiresponse Post"
+}
+```

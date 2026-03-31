@@ -4,6 +4,8 @@ out/
 .DS_Store
 .env
 tsconfig.tsbuildinfo
+auth.db
+.env.local
 
 # Claude Code
 .claude/worktrees/

@@ -1,0 +1,11 @@
+# `POST` `/chat/drafts`
+
+Get Chat Drafts
+
+List chat drafts owned by the current profile.
+
+## Response (`GetChatDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetChatDraftResponse`](/api-reference/chat/types#getchatdraftresponse)[] | No | List of chat draft entries |

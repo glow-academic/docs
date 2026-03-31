@@ -1,0 +1,32 @@
+# `POST` `/stream/GeneratePayload`
+
+Schema: GeneratePayload
+
+## Request Body (`GeneratePayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `artifact_types` | [`ArtifactTypeItem`](/api-reference/stream/types#artifacttypeitem)[] | Yes | — |
+| `artifact_id` | `any` | No | — |
+| `draft_id` | `any` | No | — |
+| `resource_types` | [`ResourceTypeItem`](/api-reference/stream/types#resourcetypeitem)[] | Yes | — |
+| `entry_types` | [`EntryTypeItem`](/api-reference/stream/types#entrytypeitem)[] | No | — |
+| `user_instructions` | `string`[] | No | — |
+| `save` | `boolean` | No | — |
+| `run_id` | `string` | No | — |
+| `group_id` | `string` | No | — |
+| `modality` | `string` | No | — |
+| `extra_messages` | `object`[] | No | — |
+| `metadata` | `object` | No | — |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Generatepayload Schema Stream Generatepayload Post"
+}
+```

@@ -1,0 +1,25 @@
+# `POST` `/stream/PatchSimulationDraftApiResponse`
+
+Schema: PatchSimulationDraftApiResponse
+
+## Request Body (`PatchSimulationDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `new_version` | `integer` | Yes | New draft version number |
+| `message` | `string` | Yes | Human-readable result message |
+| `form_state` | [`SimulationDraftFormState`](/api-reference/stream/types#simulationdraftformstate) | No | Server-authoritative form state |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchsimulationdraftapiresponse Schema Stream Patchsimulationdraftapiresponse Post"
+}
+```

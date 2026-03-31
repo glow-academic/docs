@@ -1,0 +1,23 @@
+# `POST` `/stream/AttemptAssistantStartEvent`
+
+Schema: AttemptAssistantStartEvent
+
+## Request Body (`AttemptAssistantStartEvent`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | UUID of the chat |
+| `message_id` | `string` | Yes | UUID of the assistant message |
+| `created_at` | `string` | Yes | ISO 8601 timestamp of generation start |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Attemptassistantstartevent Schema Stream Attemptassistantstartevent Post"
+}
+```

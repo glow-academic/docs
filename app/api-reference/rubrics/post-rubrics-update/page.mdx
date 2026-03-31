@@ -1,0 +1,17 @@
+# `POST` `/rubrics/update`
+
+Update Rubric
+
+Update rubrics using composable infra architecture.
+
+## Request Body (`UpdateRubricApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubrics` | [`UpdateRubricItem`](/api-reference/rubrics/types#updaterubricitem)[] | Yes | List of rubrics to update |
+
+## Response (`UpdateRubricApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`RubricResultItem`](/api-reference/rubrics/types#rubricresultitem)[] | Yes | List of operation results |

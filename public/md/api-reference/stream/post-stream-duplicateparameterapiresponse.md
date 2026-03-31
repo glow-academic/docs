@@ -1,0 +1,23 @@
+# `POST` `/stream/DuplicateParameterApiResponse`
+
+Schema: DuplicateParameterApiResponse
+
+## Request Body (`DuplicateParameterApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `parameter_id` | `string` | Yes | New duplicated parameter identifier |
+| `message` | `string` | Yes | Result message |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicateparameterapiresponse Schema Stream Duplicateparameterapiresponse Post"
+}
+```

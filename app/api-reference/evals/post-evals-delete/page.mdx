@@ -1,0 +1,17 @@
+# `POST` `/evals/delete`
+
+Delete Eval
+
+Bulk delete evals — composable infra architecture.
+
+## Request Body (`DeleteEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `eval_ids` | `string`[] | Yes | Eval UUIDs to delete |
+
+## Response (`DeleteEvalApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteEvalResult`](/api-reference/evals/types#deleteevalresult)[] | Yes | List of operation results |

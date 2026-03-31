@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicateFieldApiRequest`
+
+Schema: DuplicateFieldApiRequest
+
+## Request Body (`DuplicateFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field_id` | `string` | Yes | UUID of the field to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicatefieldapirequest Schema Stream Duplicatefieldapirequest Post"
+}
+```

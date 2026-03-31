@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateSettingApiRequest`
+
+Schema: UpdateSettingApiRequest
+
+## Request Body (`UpdateSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`UpdateSettingItem`](/api-reference/stream/types#updatesettingitem)[] | Yes | List of settings to update |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updatesettingapirequest Schema Stream Updatesettingapirequest Post"
+}
+```

@@ -1,0 +1,18 @@
+# `POST` `/attempt/leave`
+
+Attempt Leave
+
+Leave a chat room, stopping real-time attempt updates.
+
+## Request Body (`AttemptLeaveRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `sid` | `string` | Yes | — |
+| `chat_id` | `string` | Yes | — |
+
+## Response (`AttemptLeaveResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |

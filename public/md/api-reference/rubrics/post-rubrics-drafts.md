@@ -1,0 +1,11 @@
+# `POST` `/rubrics/drafts`
+
+Get Rubric Drafts
+
+List rubric drafts owned by the current profile.
+
+## Response (`GetRubricDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetRubricDraftResponse`](/api-reference/rubrics/types#getrubricdraftresponse)[] | No | List of rubric draft entries |

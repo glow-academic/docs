@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateProviderApiResponse`
+
+Schema: CreateProviderApiResponse
+
+## Request Body (`CreateProviderApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ProviderResultItem`](/api-reference/stream/types#providerresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createproviderapiresponse Schema Stream Createproviderapiresponse Post"
+}
+```

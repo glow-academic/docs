@@ -1,0 +1,24 @@
+# `POST` `/stream/TestEndPayload`
+
+Schema: TestEndPayload
+
+## Request Body (`TestEndPayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | UUID of the test |
+| `test_invocation_id` | `string` | Yes | UUID of the test invocation |
+| `run_id` | `string` | Yes | UUID of the completed run for grading |
+| `grade` | `boolean` | No | Whether to grade this run |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Testendpayload Schema Stream Testendpayload Post"
+}
+```

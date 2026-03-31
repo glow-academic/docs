@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicateToolApiRequest`
+
+Schema: DuplicateToolApiRequest
+
+## Request Body (`DuplicateToolApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `tool_id` | `string` | Yes | Tool identifier to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicatetoolapirequest Schema Stream Duplicatetoolapirequest Post"
+}
+```

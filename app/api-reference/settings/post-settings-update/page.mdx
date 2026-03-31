@@ -1,0 +1,17 @@
+# `POST` `/settings/update`
+
+Update Setting
+
+Update settings using composable infra architecture.
+
+## Request Body (`UpdateSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`UpdateSettingItem`](/api-reference/settings/types#updatesettingitem)[] | Yes | List of settings to update |
+
+## Response (`UpdateSettingApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](/api-reference/settings/types#settingresultitem)[] | Yes | Per-item update results |

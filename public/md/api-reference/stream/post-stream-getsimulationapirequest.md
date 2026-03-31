@@ -1,0 +1,24 @@
+# `POST` `/stream/GetSimulationApiRequest`
+
+Schema: GetSimulationApiRequest
+
+## Request Body (`GetSimulationApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulation_id` | `string` | No | UUID of the simulation to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to retrieve |
+| `scenario_search` | `string` | No | Search text to filter scenarios |
+| `filter_scenario_ids` | `string`[] | No | Filter by scenario UUIDs |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getsimulationapirequest Schema Stream Getsimulationapirequest Post"
+}
+```

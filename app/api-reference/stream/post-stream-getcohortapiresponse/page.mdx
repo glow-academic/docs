@@ -1,0 +1,39 @@
+# `POST` `/stream/GetCohortApiResponse`
+
+Schema: GetCohortApiResponse
+
+## Request Body (`GetCohortApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current user |
+| `cohort_exists` | `boolean` | No | Whether the cohort exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason editing is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Associated group UUID |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
+| `simulations_step_show_ai_generate` | `boolean` | No | Whether to show AI generate for simulations step |
+| `profiles_step_show_ai_generate` | `boolean` | No | Whether to show AI generate for profiles step |
+| `names` | [`CohortNameSection`](/api-reference/stream/types#cohortnamesection) | No | Name section with resource and options |
+| `descriptions` | [`CohortDescriptionSection`](/api-reference/stream/types#cohortdescriptionsection) | No | Description section with resource and options |
+| `flags` | [`CohortFlagSection`](/api-reference/stream/types#cohortflagsection) | No | Flag section with resource and options |
+| `departments` | [`CohortDepartmentSection`](/api-reference/stream/types#cohortdepartmentsection) | No | Department section with selections and options |
+| `simulations` | [`CohortSimulationSection`](/api-reference/stream/types#cohortsimulationsection) | No | Simulation section with selections and options |
+| `simulation_positions` | [`CohortSimulationPositionSection`](/api-reference/stream/types#cohortsimulationpositionsection) | No | Simulation position section |
+| `simulation_availability` | [`CohortSimulationAvailabilitySection`](/api-reference/stream/types#cohortsimulationavailabilitysection) | No | Simulation availability section |
+| `profiles` | [`CohortProfileSection`](/api-reference/stream/types#cohortprofilesection) | No | Profile section with selections and options |
+| `profile_personas` | [`CohortProfilePersonaSection`](/api-reference/stream/types#cohortprofilepersonasection) | No | Profile persona section |
+| `personas` | [`GetPersonaResponse`](/api-reference/stream/types#getpersonaresponse)[] | No | List of available personas |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getcohortapiresponse Schema Stream Getcohortapiresponse Post"
+}
+```

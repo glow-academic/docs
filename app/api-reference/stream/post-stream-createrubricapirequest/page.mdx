@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateRubricApiRequest`
+
+Schema: CreateRubricApiRequest
+
+## Request Body (`CreateRubricApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rubrics` | [`CreateRubricItem`](/api-reference/stream/types#createrubricitem)[] | Yes | List of rubrics to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createrubricapirequest Schema Stream Createrubricapirequest Post"
+}
+```

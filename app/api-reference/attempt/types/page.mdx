@@ -1,0 +1,678 @@
+# Attempt Types
+
+## `AggregatedResults`
+
+Aggregated results for the attempt.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `total_score` | `number` | No | Total score across all chats |
+| `total_possible_points` | `number` | No | Maximum possible points |
+| `percentage` | `number` | No | Score as a percentage |
+| `passed` | `boolean` | No | Whether the attempt passed overall |
+| `chats_completed` | `integer` | No | Number of chats completed |
+| `total_chats` | `integer` | No | Total number of chats |
+
+---
+
+## `AnalysisEntry`
+
+Analysis entry for chat-level analysis content.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | No | Analysis content text |
+
+---
+
+## `AttemptData`
+
+Attempt-level data.
+
+cohort_id is only populated when practice=False.
+is_archived is only populated when practice=True.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the attempt |
+| `created_at` | `string` | No | ISO timestamp when attempt was created |
+| `infinite_mode` | `boolean` | No | Whether infinite mode is enabled |
+| `profile_id` | `string` | No | UUID of the user profile |
+| `profile_name` | `string` | No | Display name of the user profile |
+| `department_id` | `string` | No | UUID of the department |
+| `cohort_id` | `string` | No | UUID of the cohort (home mode only) |
+| `is_archived` | `boolean` | No | Whether the attempt is archived |
+
+---
+
+## `AttemptEntries-Output`
+
+Entry payloads grouped by entry type.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt` | [`GetAttemptResponse`](#getattemptresponse)[] | No | Attempt entry payloads |
+| `attempt_chat` | [`ChatData-Output`](#chatdata-output)[] | No | Chat entry payloads |
+| `attempt_message` | [`MessageData-Output`](#messagedata-output)[] | No | Message entry payloads |
+| `runs` | [`GetRunListViewResponse-Output`](#getrunlistviewresponse-output) | No | Runs list view response |
+
+---
+
+## `AttemptGradeAnalysisEntry`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Analysis text content |
+
+---
+
+## `AttemptGradeFeedbackEntry`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `feedback` | `string` | Yes | Feedback text content |
+| `total` | `integer` | No | Total score for this feedback entry |
+
+---
+
+## `AttemptGradeHighlightEntry`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `strength_id` | `string` | No | UUID of the parent strength |
+| `section` | `string` | Yes | Text section to highlight |
+| `idx` | `integer` | No | Index position of the highlight |
+
+---
+
+## `AttemptGradeImprovementEntry`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Name of the identified improvement area |
+| `description` | `string` | Yes | Description of the improvement |
+| `message_id` | `string` | No | UUID of the related message |
+
+---
+
+## `AttemptGradeReplacementEntry`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `improvement_id` | `string` | No | UUID of the parent improvement |
+| `section` | `string` | Yes | Original text section to replace |
+| `replace` | `string` | Yes | Replacement text |
+| `idx` | `integer` | No | Index position of the replacement |
+
+---
+
+## `AttemptGradeStrengthEntry`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Name of the identified strength |
+| `description` | `string` | Yes | Description of the strength |
+| `message_id` | `string` | No | UUID of the related message |
+
+---
+
+## `AttemptResources-Output`
+
+Resource maps keyed by ID string.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenarios` | `object` | No | Scenario resources keyed by ID |
+| `personas` | `object` | No | Persona resources keyed by ID |
+| `documents` | `object` | No | Document resources keyed by ID |
+| `images` | `object` | No | Image resources keyed by ID |
+| `videos` | `object` | No | Video resources keyed by ID |
+| `objectives` | `object` | No | Objective resources keyed by ID |
+| `questions` | `object` | No | Question resources keyed by ID |
+| `options` | `object` | No | Option resources keyed by ID |
+| `problem_statements` | `object` | No | Problem statement resources keyed by ID |
+| `rubrics` | `object` | No | Rubric resources keyed by ID |
+| `standard_groups` | `object` | No | Standard group resources keyed by ID |
+| `standards` | `object` | No | Standard resources keyed by ID |
+
+---
+
+## `AvailableContinuationOptions-Output`
+
+Available continuation options for an attempt.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ContinuationOption`](#continuationoption)[] | Yes | Available continuation option bundles |
+
+---
+
+## `ChatData-Output`
+
+Chat view data with IDs for related resources.
+
+Split into view categories:
+- Normal/General View: problem_statement, objectives, personas, images
+- Video/Quiz View: videos, questions, options, responses
+- Both Views: documents
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the chat |
+| `created_at` | `string` | No | ISO timestamp when chat was created |
+| `completed` | `boolean` | No | Whether the chat is completed |
+| `is_current` | `boolean` | No | Whether this is the current chat |
+| `position` | `integer` | No | Position index of the chat |
+| `grade` | [`GradeData`](#gradedata) | No | Grade data for the chat |
+| `feedbacks` | [`FeedbackEntry`](#feedbackentry)[] | No | Standard-level feedback entries |
+| `analyses` | [`AnalysisEntry`](#analysisentry)[] | No | Chat-level analysis content |
+| `show_problem_statement` | `boolean` | No | Whether to show the problem statement |
+| `show_objectives` | `boolean` | No | Whether to show objectives |
+| `copy_paste_allowed` | `boolean` | No | Whether copy-paste is allowed |
+| `text_enabled` | `boolean` | No | Whether text input is enabled |
+| `audio_enabled` | `boolean` | No | Whether audio input is enabled |
+| `grading_state` | [`GradingStateData`](#gradingstatedata) | No | Current grading state data |
+| `dynamic_rubric` | [`DynamicRubricData`](#dynamicrubricdata) | No | Dynamic rubric data |
+| `scenario_id` | `string` | No | UUID of the associated scenario |
+| `problem_statement_id` | `string` | No | UUID of the problem statement |
+| `objective_ids` | `string`[] | No | UUIDs of associated objectives |
+| `persona_ids` | `string`[] | No | UUIDs of associated personas |
+| `image_ids` | `string`[] | No | UUIDs of associated images |
+| `video_ids` | `string`[] | No | UUIDs of associated videos |
+| `question_ids` | `string`[] | No | UUIDs of associated questions |
+| `option_ids` | `string`[] | No | UUIDs of associated options |
+| `responses` | [`QuizResponse`](#quizresponse)[] | No | Quiz responses for the chat |
+| `document_ids` | `string`[] | No | UUIDs of associated documents |
+| `rubric_id` | `string` | No | UUID of the rubric |
+| `standard_group_ids` | `string`[] | No | UUIDs of standard groups |
+| `standard_ids` | `string`[] | No | UUIDs of standards |
+
+---
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `ContentEntry-Output`
+
+Content entry with computed display fields.
+
+Each content has its own display info (name/icon/color) computed from
+persona metadata on the server. Client renders each content with its
+own persona styling.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | No | Content text of the entry |
+| `name` | `string` | No | Display name (user or persona) |
+| `color` | `string` | No | Persona color for display |
+| `icon` | `string` | No | Icon identifier for display |
+| `created_at` | `string` | No | ISO timestamp when content was created |
+
+---
+
+## `ContinuationOption`
+
+A bundle of consecutive scenarios that can be reused from previous attempts.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenarios` | [`PreviousChatOption`](#previouschatoption)[] | Yes | Scenarios in this continuation bundle |
+| `total_score` | `number` | Yes | Combined score across scenarios |
+| `total_percentage` | `number` | No | Combined score as a percentage |
+| `total_time` | `number` | Yes | Combined time across scenarios |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `DynamicRubricData`
+
+Dynamic rubric information for a chat.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | No | UUID of the chat |
+| `score` | `number` | No | Overall rubric score |
+| `passed` | `boolean` | No | Whether the rubric was passed |
+| `time_taken` | `number` | No | Time taken in seconds |
+| `skill_scores` | [`SkillScore`](#skillscore)[] | No | Scores per skill |
+| `skill_feedbacks` | [`SkillFeedback`](#skillfeedback)[] | No | Feedback per skill |
+| `total_possible_points` | `number` | No | Maximum possible points |
+
+---
+
+## `FeedbackEntry`
+
+Feedback by standard for grading state.
+
+standard_group_id is derived from standards metadata lookup.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the feedback entry |
+| `standard_id` | `string` | No | UUID of the associated standard |
+| `standard_group_id` | `string` | No | UUID of the standard group |
+| `total` | `number` | No | Total score for this standard |
+| `feedback` | `string` | No | Feedback text for this standard |
+
+---
+
+## `GetAttemptResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | — |
+| `simulation_id` | `string` | Yes | — |
+| `profile_id` | `string` | Yes | — |
+| `user_persona_id` | `string` | Yes | — |
+| `personas_id` | `string` | Yes | — |
+| `cohort_id` | `string` | Yes | — |
+| `department_id` | `string` | Yes | — |
+| `practice` | `boolean` | Yes | — |
+| `attempt_created_at` | `string` | Yes | — |
+| `infinite_mode` | `boolean` | Yes | — |
+| `num_chats` | `integer` | Yes | — |
+| `is_archived` | `boolean` | Yes | — |
+| `scenario_ids` | `string`[] | Yes | — |
+| `chat_entry_id` | `string` | Yes | — |
+| `attempt_chat_id` | `string` | Yes | — |
+
+---
+
+## `GetRunListViewResponse-Output`
+
+Response containing run list data.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `items` | [`RunViewItem`](#runviewitem)[] | No | Run data items |
+| `total_count` | `integer` | No | Total count before pagination |
+
+---
+
+## `GradeData`
+
+Grade information for a chat (no id - not a resource).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `score` | `number` | No | Grade score achieved |
+| `passed` | `boolean` | No | Whether the grade is passing |
+| `description` | `string` | No | Grade description text |
+| `time_taken` | `integer` | No | Time taken in seconds |
+| `total_points` | `number` | No | Total available points |
+| `pass_points` | `number` | No | Points required to pass |
+
+---
+
+## `GradingStateData`
+
+Grading state for a chat in Record format.
+
+All fields are Records keyed by standard_id strings.
+This is the exact format the client needs - no transformation required.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `achieved_standards` | `object` | No | Map of standard_id to achieved status |
+| `passed_standards` | `object` | No | Map of standard_id to passed status |
+| `feedback_by_standard_id` | `object` | No | Map of standard_id to feedback text |
+
+---
+
+## `HighlightEntry`
+
+Highlight entry within a strength.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `section` | `string` | No | Highlighted text section |
+| `idx` | `integer` | No | Index position of the highlight |
+
+---
+
+## `HintEntry-Output`
+
+Hint entry (practice mode only, message_id implied by parent).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `hint` | `string` | No | Hint text for practice mode |
+| `idx` | `integer` | No | Index position of the hint |
+
+---
+
+## `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+## `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+## `MessageData-Output`
+
+Message with contents, feedbacks, and hints.
+
+- contents: Array of content entries with display info (name/icon/color)
+- feedbacks: Unified strengths/improvements (only present after grading)
+- hints: Practice mode hints (only present in practice mode)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the message |
+| `chat_id` | `string` | No | UUID of the parent chat |
+| `type` | `string` | No | Message type: 'query' or 'response' |
+| `created_at` | `string` | No | ISO timestamp when message was created |
+| `completed` | `boolean` | No | Whether the message is complete |
+| `contents` | [`ContentEntry-Output`](#contententry-output)[] | No | Content entries with display info |
+| `feedbacks` | [`MessageFeedbackEntry`](#messagefeedbackentry)[] | No | Unified strength and improvement feedbacks |
+| `hints` | [`HintEntry-Output`](#hintentry-output)[] | No | Hints for practice mode |
+| `parent_message_id` | `string` | No | UUID of the parent message in tree |
+| `sibling_index` | `integer` | No | Index among sibling messages |
+| `sibling_count` | `integer` | No | Total number of sibling messages |
+
+---
+
+## `MessageFeedbackEntry`
+
+Unified feedback entry for messages (strength or improvement).
+
+Combines strengths and improvements into a single type with a `type` field.
+- type="strength": has highlights (sections to highlight as good)
+- type="improvement": has replaces (sections to replace with suggestions)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | Unique ID: \{message_id\}-\{type\}-\{index\} |
+| `name` | `string` | No | Name of the feedback item |
+| `description` | `string` | No | Description of the feedback |
+| `type` | `string` | No | Feedback type: 'strength' or 'improvement' |
+| `highlights` | [`HighlightEntry`](#highlightentry)[] | No | Highlighted sections for strengths |
+| `replaces` | [`ReplacementEntry`](#replacemententry)[] | No | Replacement suggestions for improvements |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `PreviousChatOption`
+
+A single chat_entry's best previous graded attempt_chat.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_entry_id` | `string` | No | ID of the chat entry |
+| `scenario_name` | `string` | No | Name of the scenario |
+| `attempt_chat_id` | `string` | No | ID of the attempt chat |
+| `score` | `number` | No | Score achieved |
+| `percentage` | `number` | No | Score as a percentage |
+| `time_taken` | `number` | No | Time taken in seconds |
+| `position` | `integer` | No | Position in the sequence |
+
+---
+
+## `QuizResponse`
+
+Quiz response entry.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `question_id` | `string` | No | UUID of the answered question |
+| `option_id` | `string` | No | UUID of the selected option |
+| `completed` | `boolean` | No | Whether the response is complete |
+| `created_at` | `string` | No | Timestamp when response was created |
+
+---
+
+## `ReplacementEntry`
+
+Replacement entry within an improvement.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `section` | `string` | No | Original text section to replace |
+| `replace` | `string` | No | Replacement text |
+| `idx` | `integer` | No | Index position of the replacement |
+
+---
+
+## `RubricStructureData`
+
+Rubric structure data in Record format.
+
+All fields are Records keyed by standard_group_id or standard_id strings.
+This is the exact format the client needs - no transformation required.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `standard_groups` | `object` | No | Map of group_id to standard_id lists |
+| `standard_groups_mapping` | `object` | No | Map of group_id to group metadata |
+| `standards_mapping` | `object` | No | Map of standard_id to standard metadata |
+
+---
+
+## `RunPricingItem`
+
+Single pricing entry for a run. Cost computed at runtime.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `pricing_type` | `string` | No | Type of pricing (e.g. input, output, cached) |
+| `count` | `integer` | No | Token count for this pricing type |
+| `pricing_id` | `string` | No | UUID of the pricing configuration |
+
+---
+
+## `RunViewItem`
+
+Single run from the run list.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run_id` | `string` | Yes | UUID of the run |
+| `group_id` | `string` | No | UUID of the owning group |
+| `profiles_id` | `string` | No | UUID of the profile that created the run |
+| `input_tokens` | `integer` | No | Number of input tokens used |
+| `output_tokens` | `integer` | No | Number of output tokens generated |
+| `cached_input_tokens` | `integer` | No | Number of cached input tokens |
+| `run_created_at` | `string` | No | Run creation timestamp |
+| `agent_ids` | `string`[] | No | Agent UUIDs involved in the run |
+| `model_ids` | `string`[] | No | Model UUIDs used in the run |
+| `provider_ids` | `string`[] | No | Provider UUIDs used in the run |
+| `pricing` | [`RunPricingItem`](#runpricingitem)[] | No | Pricing breakdown entries |
+
+---
+
+## `SearchAttemptItem`
+
+Single attempt row in search results.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | UUID of the attempt |
+| `date` | `string` | No | ISO timestamp of the attempt |
+| `profile_id` | `string` | No | UUID of the user profile |
+| `profile_name` | `string` | No | Display name of the user profile |
+| `simulation_id` | `string` | No | UUID of the simulation |
+| `simulation_name` | `string` | No | Name of the simulation |
+| `department_id` | `string` | No | UUID of the department |
+| `cohort_id` | `string` | No | UUID of the cohort |
+| `practice` | `boolean` | No | Whether this is a practice attempt |
+| `infinite_mode` | `boolean` | No | Whether infinite mode is enabled |
+| `num_chats` | `integer` | No | Number of chats in the attempt |
+| `is_archived` | `boolean` | No | Whether the attempt is archived |
+| `scenario_ids` | `string`[] | No | UUIDs of associated scenarios |
+
+---
+
+## `SimulationData`
+
+Simulation metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the simulation |
+| `name` | `string` | No | Name of the simulation |
+| `description` | `string` | No | Description of the simulation |
+| `time_limit` | `integer` | No | Time limit in seconds |
+| `hints_enabled` | `boolean` | No | Whether hints are enabled |
+| `objectives_enabled` | `boolean` | No | Whether objectives are enabled |
+| `image_input_active` | `boolean` | No | Whether image input is active |
+| `copy_paste_allowed` | `boolean` | No | Whether copy-paste is allowed |
+| `practice_simulation` | `boolean` | No | Whether this is a practice simulation |
+| `rubric_id` | `string` | No | UUID of the associated rubric |
+
+---
+
+## `SkillFeedback`
+
+Skill feedback entry.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `skill_name` | `string` | No | Name of the skill |
+| `feedback` | `string` | No | Feedback text for the skill |
+
+---
+
+## `SkillScore`
+
+Skill score entry.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `skill_name` | `string` | No | Name of the skill |
+| `score` | `number` | No | Score for the skill |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+## `TimerData`
+
+Timer information.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `elapsed` | `integer` | No | Elapsed time in seconds |
+| `limit` | `integer` | No | Time limit in seconds |
+| `exceeded` | `boolean` | No | Whether the time limit was exceeded |
+| `formatted` | `string` | No | Formatted time string for display |
+| `negative` | `boolean` | No | Whether the timer can go negative |
+
+---
+
+## `app__routes__attempt__message__ContentEntry`
+
+Agent-provided content entry for a message.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | — |
+| `persona_id` | `string` | No | — |
+
+---
+
+## `app__routes__attempt__message__HintEntry`
+
+Agent-provided hint for a message.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `hint` | `string` | Yes | — |
+| `message_id` | `string` | No | — |
+
+---

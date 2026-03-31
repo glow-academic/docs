@@ -1,0 +1,17 @@
+# `POST` `/cohorts/delete`
+
+Delete Cohort
+
+Bulk delete cohorts — composable infra architecture.
+
+## Request Body (`DeleteCohortApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohort_ids` | `string`[] | Yes | Cohort UUIDs to delete |
+
+## Response (`DeleteCohortApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteCohortResult`](/api-reference/cohorts/types#deletecohortresult)[] | Yes | List of operation results |

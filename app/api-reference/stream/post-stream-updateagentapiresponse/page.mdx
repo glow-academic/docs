@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateAgentApiResponse`
+
+Schema: UpdateAgentApiResponse
+
+## Request Body (`UpdateAgentApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AgentResultItem`](/api-reference/stream/types#agentresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updateagentapiresponse Schema Stream Updateagentapiresponse Post"
+}
+```

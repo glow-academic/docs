@@ -1,0 +1,18 @@
+export default {
+  'post-documents-search': 'POST /search',
+  'post-documents-get': 'POST /get',
+  'post-documents-create': 'POST /create',
+  'post-documents-update': 'POST /update',
+  'post-documents-duplicate': 'POST /duplicate',
+  'post-documents-delete': 'POST /delete',
+  'patch-documents-draft': 'PATCH /draft',
+  'post-documents-drafts': 'POST /drafts',
+  'post-documents-docs': 'POST /docs',
+  'post-documents-refresh': 'POST /refresh',
+  'post-documents-export': 'POST /export',
+  'post-documents-csv': 'POST /csv',
+  'post-documents-upload': 'POST /upload',
+  'get-documents-download-upload-id': 'GET /download/{upload_id}',
+  'get-documents-preview-upload-id': 'GET /preview/{upload_id}',
+  'types': 'Types',
+}

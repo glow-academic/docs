@@ -1,0 +1,41 @@
+# `POST` `/stream/GetAgentApiResponse`
+
+Schema: GetAgentApiResponse
+
+## Request Body (`GetAgentApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `agent_exists` | `boolean` | No | Whether the agent exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason the agent is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | UUID of the owning group |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `general_show_ai_generate` | `boolean` | No | Show AI generate for general step |
+| `names` | [`AgentNameSection`](/api-reference/stream/types#agentnamesection) | No | Name section data |
+| `descriptions` | [`AgentDescriptionSection`](/api-reference/stream/types#agentdescriptionsection) | No | Description section data |
+| `models` | [`AgentModelSection`](/api-reference/stream/types#agentmodelsection) | No | Model section data |
+| `prompts` | [`AgentPromptSection`](/api-reference/stream/types#agentpromptsection) | No | Prompt section data |
+| `instructions` | [`AgentInstructionSection`](/api-reference/stream/types#agentinstructionsection) | No | Instruction section data |
+| `flags` | [`AgentFlagSection`](/api-reference/stream/types#agentflagsection) | No | Flag section data |
+| `departments` | [`AgentDepartmentSection`](/api-reference/stream/types#agentdepartmentsection) | No | Department section data |
+| `tools` | [`AgentToolSection`](/api-reference/stream/types#agenttoolsection) | No | Tool section data |
+| `temperature_levels` | [`AgentTemperatureLevelSection`](/api-reference/stream/types#agenttemperaturelevelsection) | No | Temperature level section data |
+| `reasoning_levels` | [`AgentReasoningLevelSection`](/api-reference/stream/types#agentreasoninglevelsection) | No | Reasoning level section data |
+| `voices` | [`AgentVoiceSection`](/api-reference/stream/types#agentvoicesection) | No | Voice section data |
+| `qualities` | [`AgentQualitySection`](/api-reference/stream/types#agentqualitysection) | No | Quality section data |
+| `rubrics` | [`AgentRubricSection`](/api-reference/stream/types#agentrubricsection) | No | Rubric section data |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getagentapiresponse Schema Stream Getagentapiresponse Post"
+}
+```

@@ -1,0 +1,15 @@
+# `glow admin billing status`
+
+Check billing status for an organization
+
+## Usage
+
+```bash
+glow admin billing status org_id <org_id>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `org_id` | Yes | Organization ID |

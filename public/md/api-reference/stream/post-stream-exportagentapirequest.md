@@ -1,0 +1,21 @@
+# `POST` `/stream/ExportAgentApiRequest`
+
+Schema: ExportAgentApiRequest
+
+## Request Body (`ExportAgentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `agent_id` | `string` | No | UUID of the agent to export |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportagentapirequest Schema Stream Exportagentapirequest Post"
+}
+```

@@ -1,0 +1,17 @@
+# `POST` `/parameters/delete`
+
+Delete Parameter
+
+Bulk delete parameters — composable infra architecture.
+
+## Request Body (`DeleteParameterApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_ids` | `string`[] | Yes | List of parameter IDs to delete |
+
+## Response (`DeleteParameterApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteParameterResult`](/api-reference/parameters/types#deleteparameterresult)[] | Yes | List of deletion results |

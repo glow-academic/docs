@@ -1,0 +1,36 @@
+# `POST` `/stream/GetSettingApiResponse`
+
+Schema: GetSettingApiResponse
+
+## Request Body (`GetSettingApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `setting_exists` | `boolean` | No | Whether the setting exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this setting |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `names` | [`SettingNameSection`](/api-reference/stream/types#settingnamesection) | No | Name section with resources |
+| `descriptions` | [`SettingDescriptionSection`](/api-reference/stream/types#settingdescriptionsection) | No | Description section with resources |
+| `colors` | [`SettingColorSection`](/api-reference/stream/types#settingcolorsection) | No | Color section with resources |
+| `flags` | [`SettingFlagSection`](/api-reference/stream/types#settingflagsection) | No | Flag section with configs |
+| `departments` | [`SettingDepartmentSection`](/api-reference/stream/types#settingdepartmentsection) | No | Department section with resources |
+| `profiles` | [`SettingProfileSection`](/api-reference/stream/types#settingprofilesection) | No | Profile section with resources |
+| `auths` | [`SettingAuthSection`](/api-reference/stream/types#settingauthsection) | No | Auth section with resources |
+| `provider_keys` | [`SettingProviderKeySection`](/api-reference/stream/types#settingproviderkeysection) | No | Provider key section with resources |
+| `auth_item_keys` | [`SettingAuthItemKeySection`](/api-reference/stream/types#settingauthitemkeysection) | No | Auth item key section with resources |
+| `systems` | [`SettingSystemSection`](/api-reference/stream/types#settingsystemsection) | No | System section with resources |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getsettingapiresponse Schema Stream Getsettingapiresponse Post"
+}
+```

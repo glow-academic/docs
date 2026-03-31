@@ -1,0 +1,20 @@
+# `POST` `/attempt/end-all`
+
+End All Attempt
+
+End all remaining chats in an attempt.
+
+## Request Body (`AttemptEndAllPayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | UUID of the attempt |
+
+## Response (`EndAllAttemptApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | — |
+| `success` | `boolean` | Yes | — |
+| `all_scenarios_complete` | `boolean` | No | — |
+| `message` | `string` | No | — |

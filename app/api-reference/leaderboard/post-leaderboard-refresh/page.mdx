@@ -1,0 +1,13 @@
+# `POST` `/leaderboard/refresh`
+
+Leaderboard Refresh
+
+Refresh leaderboard caches.
+
+## Response (`RefreshResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |

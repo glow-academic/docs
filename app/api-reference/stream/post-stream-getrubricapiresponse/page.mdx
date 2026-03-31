@@ -1,0 +1,35 @@
+# `POST` `/stream/GetRubricApiResponse`
+
+Schema: GetRubricApiResponse
+
+## Request Body (`GetRubricApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current user |
+| `rubric_exists` | `boolean` | No | Whether the rubric exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason editing is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Associated group UUID |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
+| `content_show_ai_generate` | `boolean` | No | Whether to show AI generate for content step |
+| `names` | [`RubricNameSection`](/api-reference/stream/types#rubricnamesection) | No | Name section with resource and options |
+| `descriptions` | [`RubricDescriptionSection`](/api-reference/stream/types#rubricdescriptionsection) | No | Description section with resource and options |
+| `flags` | [`RubricFlagSection`](/api-reference/stream/types#rubricflagsection) | No | Flag section with selections and options |
+| `departments` | [`RubricDepartmentSection`](/api-reference/stream/types#rubricdepartmentsection) | No | Department section with selections and options |
+| `points` | [`RubricPointsSection`](/api-reference/stream/types#rubricpointssection) | No | Points section with resource and options |
+| `standard_groups` | [`RubricStandardGroupsSection`](/api-reference/stream/types#rubricstandardgroupssection) | No | Standard groups section |
+| `standards` | [`RubricStandardsSection`](/api-reference/stream/types#rubricstandardssection) | No | Standards section |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getrubricapiresponse Schema Stream Getrubricapiresponse Post"
+}
+```

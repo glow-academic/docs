@@ -1,0 +1,151 @@
+# Departments
+
+Departments are the organizational boundary in Glow. They scope nearly every resource -- profiles, documents, parameters, fields, scenarios, simulations, and cohorts -- so that different groups within your institution can work independently.
+
+![Departments list showing department cards with name and associated resource counts](/screenshots/departments/list.png)
+
+## What is a Department?
+
+A department is a top-level organizational unit that controls visibility and access across Glow. Every resource is scoped to one or more departments, and profiles can only see and manage resources within their assigned departments.
+
+**University example:** The "University" department might be described as an "Innovative base of knowledge in the emerging field of computing." All CS-related resources -- profiles for Professor Smith and TA Johnson, parameters like Temperament and Class, documents like the Academic Integrity Policy -- are scoped to this department.
+
+## Quick Start
+
+### CLI
+
+```bash
+# List all departments
+glow departments list
+
+# Search departments
+glow departments search
+
+# Create a new department
+glow departments create --body '{
+  "departments": [
+    {
+      "name": "University",
+      "description": "Innovative base of knowledge in the emerging field of computing"
+    }
+  ]
+}'
+
+# Get a department by ID
+glow departments get --body '{"department_id": "dept-001"}'
+
+# Update an existing department
+glow departments update --body '{
+  "departments": [
+    {
+      "department_id": "dept-001",
+      "name": "University",
+      "description": "Updated description for the department"
+    }
+  ]
+}'
+
+# Delete a department
+glow departments delete --body '{"department_id": "dept-001"}'
+```
+
+### API
+
+All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
+
+```bash
+# Search departments
+curl -X POST https://<your-instance>/v5/departments/search \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "University",
+    "page_size": 10
+  }'
+
+# Create a department
+curl -X POST https://<your-instance>/v5/departments/create \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "departments": [
+      {
+        "name": "University",
+        "description": "Innovative base of knowledge in the emerging field of computing"
+      }
+    ]
+  }'
+```
+
+## How It Connects: The 5-Step Workflow
+
+Departments underpin every step of the Glow workflow by scoping resources:
+
+1. **Create Personas** -- Personas are scoped to a department.
+2. **Assign to Scenarios** -- Scenarios, documents, and their parameters/fields are all scoped to a department.
+3. **Add to Simulations** -- Simulations are scoped to a department.
+4. **Add to Cohorts** -- Cohorts are scoped to a department. Only profiles belonging to the same department can be added.
+5. **Run Attempts** -- Learners only see simulations within cohorts from their department.
+
+Departments connect to nearly everything. They are the first resource you should set up when configuring a new Glow instance.
+
+![Department detail showing associated personas, scenarios, and simulations](/screenshots/departments/detail.png)
+
+## What Departments Scope
+
+| Resource | How departments apply |
+|---|---|
+| **Profiles** | A profile belongs to one or more departments and can only manage resources within those departments |
+| **Documents** | Each document is scoped to a department |
+| **Parameters** | Each parameter is scoped to a department |
+| **Fields** | Each field is scoped to a department |
+| **Scenarios** | Scenarios inherit department scope |
+| **Simulations** | Simulations are scoped to a department |
+| **Cohorts** | Cohorts are scoped to a department; only same-department profiles can be members |
+
+## Settings
+
+Departments have a settings section that controls department-level configuration. Settings are managed through the `settings` field on the department get response and the `setting_ids` field on the draft endpoint.
+
+## Flags
+
+Departments support flags for additional configuration options. Flags can be used to enable or disable features at the department level.
+
+## Drafts
+
+Departments support the draft workflow. Changes are saved as a draft before being published.
+
+```bash
+# Save a department draft
+glow departments draft --body '{
+  "name": "University",
+  "description": "Innovative base of knowledge in the emerging field of computing"
+}'
+```
+
+Via the API, use `PATCH /departments/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, and `setting_ids`.
+
+## Common Operations
+
+| Task | CLI | API Endpoint |
+|---|---|---|
+| List all departments | `glow departments list` | `POST /departments/search` |
+| Get a department | `glow departments get --body '{...}'` | `POST /departments/get` |
+| Create departments | `glow departments create --body '{...}'` | `POST /departments/create` |
+| Update departments | `glow departments update --body '{...}'` | `POST /departments/update` |
+| Duplicate a department | -- | `POST /departments/duplicate` |
+| Delete departments | `glow departments delete --body '{...}'` | `POST /departments/delete` |
+| Export to CSV | `glow departments export` | `POST /departments/export` |
+| Save a draft | `glow departments draft --body '{...}'` | `PATCH /departments/draft` |
+| List drafts | -- | `POST /departments/drafts` |
+
+## Related
+
+- [Departments API](/glow/departments/api)
+- [Departments CLI](/glow/departments/cli)
+- [Profiles Guide](/glow/profiles/guide) -- profiles belong to departments
+- [Documents Guide](/glow/documents/guide) -- documents are scoped to departments
+- [Parameters Guide](/glow/parameters/guide) -- parameters are scoped to departments
+- [Cohorts Guide](/glow/cohorts/guide) -- cohorts are scoped to departments

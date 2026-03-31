@@ -1,0 +1,21 @@
+# `POST` `/stream/TestJoinPayload`
+
+Schema: TestJoinPayload
+
+## Request Body (`TestJoinPayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | UUID of the test invocation to join |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Testjoinpayload Schema Stream Testjoinpayload Post"
+}
+```

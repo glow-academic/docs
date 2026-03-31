@@ -1,0 +1,11 @@
+# `POST` `/documents/drafts`
+
+Get Document Drafts
+
+List document drafts owned by the current profile.
+
+## Response (`GetDocumentDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetDocumentDraftResponse`](/api-reference/documents/types#getdocumentdraftresponse)[] | No | List of document draft entries |

@@ -1,0 +1,32 @@
+# `POST` `/fields/get`
+
+Get Field
+
+Get field information using the canonical shared field operation.
+
+## Request Body (`GetFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field_id` | `string` | No | UUID of the field to retrieve |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `descriptions_search` | `string` | No | Search query for description resources |
+| `conditional_parameter_search` | `string` | No | Search query for conditional parameters |
+| `conditional_parameter_show_selected` | `boolean` | No | Whether to show only selected parameters |
+
+## Response (`GetFieldApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `field_exists` | `boolean` | No | Whether the field exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this field |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`FieldNameSection`](/api-reference/fields/types#fieldnamesection) | No | Name section with resources |
+| `descriptions` | [`FieldDescriptionSection`](/api-reference/fields/types#fielddescriptionsection) | No | Description section with resources |
+| `flags` | [`FieldFlagSection`](/api-reference/fields/types#fieldflagsection) | No | Flag section with configs |
+| `departments` | [`FieldDepartmentSection`](/api-reference/fields/types#fielddepartmentsection) | No | Department section with resources |
+| `conditional_parameters` | [`FieldConditionalParameterSection`](/api-reference/fields/types#fieldconditionalparametersection) | No | Conditional parameter section |

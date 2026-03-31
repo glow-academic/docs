@@ -1,0 +1,20 @@
+# `POST` `/settings/export`
+
+Export Settings
+
+Export all settings as a clean, denormalized CSV.
+
+## Request Body (`ExportSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | No | UUID of the setting to export |
+
+## Response (`ExportSettingApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |

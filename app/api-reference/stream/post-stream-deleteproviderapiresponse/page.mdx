@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteProviderApiResponse`
+
+Schema: DeleteProviderApiResponse
+
+## Request Body (`DeleteProviderApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteProviderResult`](/api-reference/stream/types#deleteproviderresult)[] | Yes | List of deletion results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deleteproviderapiresponse Schema Stream Deleteproviderapiresponse Post"
+}
+```

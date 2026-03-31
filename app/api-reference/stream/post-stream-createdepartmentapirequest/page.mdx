@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateDepartmentApiRequest`
+
+Schema: CreateDepartmentApiRequest
+
+## Request Body (`CreateDepartmentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `departments` | [`CreateDepartmentItem`](/api-reference/stream/types#createdepartmentitem)[] | Yes | List of departments to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createdepartmentapirequest Schema Stream Createdepartmentapirequest Post"
+}
+```

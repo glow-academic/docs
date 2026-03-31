@@ -1,0 +1,18 @@
+# `POST` `/attempt/audio/mute`
+
+Audio Mute
+
+Toggle microphone mute for an audio session.
+
+## Request Body (`AudioMutePayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `muted` | `boolean` | No | — |
+
+## Response (`AudioMuteResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `accepted` | `boolean` | Yes | — |

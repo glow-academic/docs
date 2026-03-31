@@ -1,0 +1,17 @@
+# `POST` `/tools/delete`
+
+Delete Tool
+
+Bulk delete tools — composable infra architecture.
+
+## Request Body (`DeleteToolApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `tool_ids` | `string`[] | Yes | List of tool IDs to delete |
+
+## Response (`DeleteToolApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteToolResult`](/api-reference/tools/types#deletetoolresult)[] | Yes | List of deletion results |

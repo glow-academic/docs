@@ -1,0 +1,22 @@
+# `POST` `/stream/GetParameterApiRequest`
+
+Schema: GetParameterApiRequest
+
+## Request Body (`GetParameterApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter unique identifier |
+| `draft_id` | `string` | No | Draft unique identifier |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getparameterapirequest Schema Stream Getparameterapirequest Post"
+}
+```

@@ -1,0 +1,18 @@
+export default {
+  'post-scenarios-get': 'POST /get',
+  'post-scenarios-search': 'POST /search',
+  'post-scenarios-create': 'POST /create',
+  'post-scenarios-csv': 'POST /csv',
+  'post-scenarios-update': 'POST /update',
+  'post-scenarios-duplicate': 'POST /duplicate',
+  'post-scenarios-delete': 'POST /delete',
+  'patch-scenarios-draft': 'PATCH /draft',
+  'post-scenarios-drafts': 'POST /drafts',
+  'post-scenarios-export': 'POST /export',
+  'post-scenarios-docs': 'POST /docs',
+  'post-scenarios-refresh': 'POST /refresh',
+  'post-scenarios-upload': 'POST /upload',
+  'get-scenarios-download-upload-id': 'GET /download/{upload_id}',
+  'get-scenarios-preview-upload-id': 'GET /preview/{upload_id}',
+  'types': 'Types',
+}

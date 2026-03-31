@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteEvalApiResponse`
+
+Schema: DeleteEvalApiResponse
+
+## Request Body (`DeleteEvalApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteEvalResult`](/api-reference/stream/types#deleteevalresult)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deleteevalapiresponse Schema Stream Deleteevalapiresponse Post"
+}
+```

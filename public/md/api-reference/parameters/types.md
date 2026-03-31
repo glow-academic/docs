@@ -1,0 +1,381 @@
+# Parameters Types
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `CreateParameterItem`
+
+Single parameter item for create — no parameter_id.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Optional pre-assigned identifier |
+| `name_id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Description text value |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `departments` | `string`[] | No | Department names to match |
+| `flag_ids` | `string`[] | No | Flag option identifiers |
+| `field_ids` | `string`[] | No | Field identifiers |
+
+---
+
+## `DeleteParameterResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the deletion succeeded |
+| `parameter_id` | `string` | Yes | Deleted parameter identifier |
+| `message` | `string` | Yes | Result message |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `GetParameterDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `field_ids` | `string`[] | Yes | Associated field UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+
+---
+
+## `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+## `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+## `ListParameterApiParameter`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | No | Parameter unique identifier |
+| `name` | `string` | No | Display name of the parameter |
+| `description` | `string` | No | Parameter description text |
+| `active` | `boolean` | No | Whether this parameter is currently active |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `scenario_ids` | `string`[] | No | Associated scenario identifiers |
+| `document_ids` | `string`[] | No | Associated document identifiers |
+| `num_items` | `integer` | No | Number of items in this parameter |
+| `sample_items` | `string`[] | No | Sample items for preview |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `can_duplicate` | `boolean` | No | Whether the current user can duplicate |
+| `can_delete` | `boolean` | No | Whether the current user can delete |
+| `updated_at` | `string` | No | Timestamp of last update |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `ParameterDepartmentResource`
+
+Department resource for parameter.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+## `ParameterDepartmentSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ParameterDepartmentResource`](#parameterdepartmentresource)[] | No | Currently assigned departments |
+| `resources` | [`ParameterDepartmentResource`](#parameterdepartmentresource)[] | No | Available departments |
+
+---
+
+## `ParameterDescriptionResource`
+
+Description resource for parameter.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+## `ParameterDescriptionSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | [`ParameterDescriptionResource`](#parameterdescriptionresource) | No | Currently selected description resource |
+| `resources` | [`ParameterDescriptionResource`](#parameterdescriptionresource)[] | No | Available description resources |
+
+---
+
+## `ParameterDraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource identifier |
+| `description_id` | `string` | No | Resolved description resource identifier |
+| `flag_ids` | `string`[] | Yes | Flag option identifiers |
+| `department_ids` | `string`[] | Yes | Department identifiers |
+| `field_ids` | `string`[] | Yes | Field identifiers |
+
+---
+
+## `ParameterFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Field name that caused the error |
+| `message` | `string` | Yes | Error message describing the issue |
+
+---
+
+## `ParameterFieldResource`
+
+Parameter field resource for parameter.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `field_id` | `string` | No | Associated field identifier |
+| `parameter_id` | `string` | No | Parent parameter identifier |
+| `name` | `string` | No | Field display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+## `ParameterFieldSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ParameterFieldResource`](#parameterfieldresource)[] | No | Currently assigned fields |
+| `resources` | [`ParameterFieldResource`](#parameterfieldresource)[] | No | Available fields |
+
+---
+
+## `ParameterFlagConfig`
+
+Enriched flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `flag_option_id` | `string` | No | Option ID to use when enabling |
+| `show` | `boolean` | No | Whether to display this flag in the UI |
+| `required` | `boolean` | No | Whether this flag is required |
+| `generated` | `boolean` | No | Whether this flag was AI-generated |
+
+---
+
+## `ParameterFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ParameterFlagConfig`](#parameterflagconfig)[] | No | Currently active flag configs |
+| `resources` | [`ParameterFlagConfig`](#parameterflagconfig)[] | No | Available flag configs |
+
+---
+
+## `ParameterNameResource`
+
+Name resource for parameter.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+
+---
+
+## `ParameterNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | [`ParameterNameResource`](#parameternameresource) | No | Currently selected name resource |
+| `resources` | [`ParameterNameResource`](#parameternameresource)[] | No | Available name resources |
+
+---
+
+## `ParameterResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `parameter_id` | `string` | No | Parameter unique identifier |
+| `message` | `string` | Yes | Result message |
+| `errors` | [`ParameterFieldError`](#parameterfielderror)[] | No | List of field-level errors |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+## `UpdateParameterItem`
+
+Single parameter item for update — parameter_id required, all fields optional.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `parameter_id` | `string` | Yes | Target parameter identifier to update |
+| `name_id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Description text value |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `departments` | `string`[] | No | Department names to match |
+| `flag_ids` | `string`[] | No | Flag option identifiers |
+| `field_ids` | `string`[] | No | Field identifiers |
+
+---

@@ -1,0 +1,27 @@
+# `POST` `/home/get`
+
+Home Get
+
+Get simulations available for home (operational).
+
+## Request Body (`GetHomeRequest`)
+
+```
+{
+  "properties": {},
+  "type": "object",
+  "title": "GetHomeRequest",
+  "description": "Request for home get endpoint — simulation cards only."
+}
+```
+
+## Response (`GetHomeResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Current user display name |
+| `items` | [`ChatSimulationOperational`](/api-reference/home/types#chatsimulationoperational)[] | No | Available simulation cards |
+| `rubrics` | [`RubricMapping`](/api-reference/home/types#rubricmapping)[] | No | Rubric mapping data |
+| `standard_groups` | [`StandardGroupMapping`](/api-reference/home/types#standardgroupmapping)[] | No | Standard group mapping data |
+| `standards` | [`StandardMapping`](/api-reference/home/types#standardmapping)[] | No | Standard mapping data |
+| `analytics` | [`AnalyticsFacets-Output`](/api-reference/home/types#analyticsfacets-output) | No | Inline analytics facets for SSR |

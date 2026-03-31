@@ -1,0 +1,26 @@
+# `POST` `/stream/PricingResponse`
+
+Schema: PricingResponse
+
+## Request Body (`PricingResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `daily` | [`PricingDailyItem-Input`](/api-reference/stream/types#pricingdailyitem-input)[] | No | Daily pricing aggregations |
+| `resources` | [`PricingResources`](/api-reference/stream/types#pricingresources) | No | Pricing resource metadata |
+| `total_count` | `integer` | No | Total number of matching records |
+| `model_options` | [`FilterOption`](/api-reference/stream/types#filteroption)[] | No | Model filter options |
+| `agent_options` | [`FilterOption`](/api-reference/stream/types#filteroption)[] | No | Agent filter options |
+| `analytics` | [`AnalyticsFacets-Input`](/api-reference/stream/types#analyticsfacets-input) | No | Inline analytics facets for SSR |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Pricingresponse Schema Stream Pricingresponse Post"
+}
+```

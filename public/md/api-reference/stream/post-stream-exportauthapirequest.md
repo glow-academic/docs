@@ -1,0 +1,21 @@
+# `POST` `/stream/ExportAuthApiRequest`
+
+Schema: ExportAuthApiRequest
+
+## Request Body (`ExportAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | No | UUID of the auth provider to export |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportauthapirequest Schema Stream Exportauthapirequest Post"
+}
+```

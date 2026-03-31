@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteAuthApiRequest`
+
+Schema: DeleteAuthApiRequest
+
+## Request Body (`DeleteAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_ids` | `string`[] | Yes | UUIDs of auth providers to delete |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deleteauthapirequest Schema Stream Deleteauthapirequest Post"
+}
+```

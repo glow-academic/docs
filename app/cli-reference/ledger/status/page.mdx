@@ -1,0 +1,15 @@
+# `glow ledger status`
+
+Show ledger chain status and statistics
+
+## Usage
+
+```bash
+glow ledger status --path <path>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--path` | Yes | Path to the ledger directory (env: `GLOW_LEDGER_PATH`) |

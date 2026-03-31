@@ -1,0 +1,158 @@
+# Group Types
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `GroupDetailCallItem`
+
+A tool/function call made during the run.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the call |
+| `template_name` | `string` | No | Name of the call template |
+| `file_path` | `string` | No | File path associated with the call |
+| `created_at` | `string` | Yes | Timestamp when the call was made |
+
+---
+
+## `GroupDetailMessageItem`
+
+A message with upload IDs by media type.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the message |
+| `role` | `string` | No | Role of the message sender |
+| `text_upload_ids` | `string`[] | No | Text upload UUIDs |
+| `audio_upload_ids` | `string`[] | No | Audio upload UUIDs |
+| `image_upload_ids` | `string`[] | No | Image upload UUIDs |
+| `video_upload_ids` | `string`[] | No | Video upload UUIDs |
+| `file_upload_ids` | `string`[] | No | File upload UUIDs |
+| `call_upload_ids` | `string`[] | No | Call upload UUIDs |
+| `calls` | [`GroupDetailCallItem`](#groupdetailcallitem)[] | No | Tool calls in this message |
+
+---
+
+## `GroupDetailResourceItem`
+
+A named resource (model, agent, or profile).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_id` | `string` | No | UUID of the model |
+| `agent_id` | `string` | No | UUID of the agent |
+| `profile_id` | `string` | No | UUID of the profile |
+| `name` | `string` | No | Display name of the resource |
+
+---
+
+## `GroupDetailRunItem`
+
+Run metadata for the detail response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the run |
+| `created_at` | `string` | Yes | Timestamp when the run was created |
+| `input_tokens` | `integer` | No | Number of input tokens consumed |
+| `output_tokens` | `integer` | No | Number of output tokens generated |
+| `cached_input_tokens` | `integer` | No | Number of cached input tokens |
+| `cost` | `number` | No | Cost of the run |
+| `model_id` | `string` | No | UUID of the model used |
+| `agent_id` | `string` | No | UUID of the agent used |
+| `profile_id` | `string` | No | UUID of the user profile |
+
+---
+
+## `GroupDetailRunWithMessages-Output`
+
+A run with its messages and context boundary.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run` | [`GroupDetailRunItem`](#groupdetailrunitem) | Yes | Run metadata |
+| `messages` | [`GroupDetailMessageItem`](#groupdetailmessageitem)[] | No | Messages in this run |
+| `previous_context_start_index` | `integer` | No | Index where previous context starts |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---

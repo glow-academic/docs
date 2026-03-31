@@ -1,0 +1,19 @@
+# `glow admin deploy create`
+
+Create a new Glow deployment
+
+## Usage
+
+```bash
+glow admin deploy create --license-id <license_id> --name <name> --subdomain <subdomain> [--base-domain] [--public]
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--license-id` | Yes | License ID to deploy under |
+| `--name` | Yes | Deployment name |
+| `--subdomain` | Yes | Subdomain (e.g. "acme" for acme.learn-loop.org) |
+| `--base-domain` | No | Base domain (default: learn-loop.org) |
+| `--public` | No | Make the repo public |

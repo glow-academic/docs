@@ -1,0 +1,13 @@
+# `POST` `/fields/refresh`
+
+Field Refresh
+
+Refresh field materialized views and invalidate caches.
+
+## Response (`RefreshResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |

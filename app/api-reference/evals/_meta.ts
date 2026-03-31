@@ -1,0 +1,15 @@
+export default {
+  'post-evals-search': 'POST /search',
+  'post-evals-get': 'POST /get',
+  'post-evals-create': 'POST /create',
+  'post-evals-update': 'POST /update',
+  'post-evals-duplicate': 'POST /duplicate',
+  'post-evals-delete': 'POST /delete',
+  'patch-evals-draft': 'PATCH /draft',
+  'post-evals-drafts': 'POST /drafts',
+  'post-evals-docs': 'POST /docs',
+  'post-evals-refresh': 'POST /refresh',
+  'post-evals-export': 'POST /export',
+  'post-evals-csv': 'POST /csv',
+  'types': 'Types',
+}

@@ -1,0 +1,23 @@
+# `POST` `/stream/GetSuiteRequest`
+
+Schema: GetSuiteRequest
+
+## Request Body (`GetSuiteRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | Test identifier |
+| `draft_id` | `string` | No | Optional draft identifier |
+| `descriptions_search` | `string` | No | Search string for descriptions |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getsuiterequest Schema Stream Getsuiterequest Post"
+}
+```

@@ -1,0 +1,30 @@
+# `POST` `/benchmark/search`
+
+Search Benchmark History
+
+Search benchmark test history with pagination and filters.
+
+## Request Body (`BenchmarkRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `department_ids` | `string`[] | No | Department IDs to filter by |
+| `history_page` | `integer` | No | History pagination page number |
+| `history_page_size` | `integer` | No | History items per page |
+| `history_eval_ids` | `string`[] | No | Eval IDs for history filter |
+| `history_search` | `string` | No | Search string for history |
+| `history_archived` | `boolean` | No | Filter by archived status |
+| `history_sort_by` | `string` | No | History sort field |
+| `history_sort_order` | `string` | No | History sort direction |
+
+## Response (`BenchmarkHistoryResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `data` | [`BenchmarkHistoryItem`](/api-reference/benchmark/types#benchmarkhistoryitem)[] | No | History items |
+| `total_count` | `integer` | No | Total number of matching records |
+| `page` | `integer` | No | Current page number |
+| `page_size` | `integer` | No | Items per page |
+| `eval_options` | [`FilterOption`](/api-reference/benchmark/types#filteroption)[] | No | Eval filter options |

@@ -1,0 +1,21 @@
+# `POST` `/stream/CreatePersonaApiRequest`
+
+Schema: CreatePersonaApiRequest
+
+## Request Body (`CreatePersonaApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `personas` | [`CreatePersonaItem`](/api-reference/stream/types#createpersonaitem)[] | Yes | List of persona items to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createpersonaapirequest Schema Stream Createpersonaapirequest Post"
+}
+```

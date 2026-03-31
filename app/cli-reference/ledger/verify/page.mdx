@@ -1,0 +1,15 @@
+# `glow ledger verify`
+
+Verify the integrity of a ledger chain
+
+## Usage
+
+```bash
+glow ledger verify --path <path>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--path` | Yes | Path to the ledger directory (env: `GLOW_LEDGER_PATH`) |

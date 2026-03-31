@@ -1,0 +1,23 @@
+# `POST` `/stream/DuplicateAuthApiResponse`
+
+Schema: DuplicateAuthApiResponse
+
+## Request Body (`DuplicateAuthApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `auth_id` | `string` | Yes | UUID of the newly created auth provider |
+| `message` | `string` | Yes | Result message |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicateauthapiresponse Schema Stream Duplicateauthapiresponse Post"
+}
+```

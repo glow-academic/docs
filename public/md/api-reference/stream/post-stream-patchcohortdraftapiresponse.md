@@ -1,0 +1,25 @@
+# `POST` `/stream/PatchCohortDraftApiResponse`
+
+Schema: PatchCohortDraftApiResponse
+
+## Request Body (`PatchCohortDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `draft_id` | `string` | Yes | Draft UUID |
+| `new_version` | `integer` | Yes | New draft version number after patch |
+| `message` | `string` | Yes | Human-readable result message |
+| `form_state` | [`CohortDraftFormState`](/api-reference/stream/types#cohortdraftformstate) | No | Server-authoritative form state |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchcohortdraftapiresponse Schema Stream Patchcohortdraftapiresponse Post"
+}
+```

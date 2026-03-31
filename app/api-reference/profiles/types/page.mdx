@@ -1,0 +1,412 @@
+# Profiles Types
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `CreateProfileItem`
+
+Single profile item for create — no profile_id.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Optional preset UUID for the new profile |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `request_limit_id` | `string` | No | UUID of the request limit resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
+| `email_ids` | `string`[] | No | Email resource UUIDs |
+| `role_ids` | `string`[] | No | Role resource UUIDs |
+
+---
+
+## `DeleteProfileResult`
+
+Per-item result within a bulk delete response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the deletion succeeded |
+| `profile_id` | `string` | Yes | UUID of the deleted profile |
+| `message` | `string` | Yes | Result message |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `GetProfileDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `version` | `integer` | Yes | Draft version number |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `group_id` | `string` | Yes | Generation group UUID |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `email_ids` | `string`[] | Yes | Associated email UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `request_limit_ids` | `string`[] | Yes | Associated request limit UUIDs |
+| `role_ids` | `string`[] | Yes | Associated role UUIDs |
+
+---
+
+## `ListFilterOption`
+
+Standardized option for list endpoint filter sections.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier for this filter option |
+| `name` | `string` | No | Display name |
+| `count` | `integer` | No | Number of matching records |
+| `hex_code` | `string` | No | Hex color code for display |
+| `value` | `string` | No | Internal value |
+| `type` | `string` | No | Option type discriminator |
+
+---
+
+## `ListFilterSection`
+
+Filter section with options and echoed request state.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
+| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
+| `search` | `string` | No | Active search text for filtering |
+
+---
+
+## `ListProfilesApiProfile`
+
+Profile type for list endpoint with computed permissions.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_id` | `string` | No | Unique profile identifier |
+| `emails` | `string`[] | No | All email addresses for the profile |
+| `primary_email` | `string` | No | Primary email address |
+| `name` | `string` | No | Profile display name |
+| `role` | `string` | No | User role (e.g. admin, user, viewer) |
+| `initials` | `string` | No | User initials for avatar display |
+| `department_ids` | `string`[] | No | Associated department IDs |
+| `primary_department_id` | `string` | No | Primary department ID |
+| `requests_per_day` | `integer` | No | Maximum requests allowed per day |
+| `can_edit` | `boolean` | No | Whether the actor can edit this profile |
+| `can_duplicate` | `boolean` | No | Whether the actor can duplicate this profile |
+| `can_delete` | `boolean` | No | Whether the actor can delete this profile |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `ProfileDepartmentResource`
+
+Department resource for profile.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique resource identifier |
+| `name` | `string` | No | Department display name |
+| `description` | `string` | No | Department description text |
+| `generated` | `boolean` | No | Whether the resource was AI-generated |
+
+---
+
+## `ProfileDepartmentSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ProfileDepartmentResource`](#profiledepartmentresource)[] | No | Currently assigned departments |
+| `resources` | [`ProfileDepartmentResource`](#profiledepartmentresource)[] | No | Available department resources |
+
+---
+
+## `ProfileDraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
+| `email_ids` | `string`[] | Yes | Assigned email resource UUIDs |
+| `role_ids` | `string`[] | Yes | Assigned role resource UUIDs |
+| `request_limit_ids` | `string`[] | Yes | Assigned request limit UUIDs |
+
+---
+
+## `ProfileEmailResource`
+
+Email resource for profile.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique resource identifier |
+| `email` | `string` | No | Email address |
+| `generated` | `boolean` | No | Whether the email was AI-generated |
+
+---
+
+## `ProfileEmailSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ProfileEmailResource`](#profileemailresource)[] | No | Currently assigned emails |
+| `resources` | [`ProfileEmailResource`](#profileemailresource)[] | No | Available email resources |
+
+---
+
+## `ProfileFieldError`
+
+Per-field error from value resolution.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `field` | `string` | Yes | Name of the field that failed validation |
+| `message` | `string` | Yes | Validation error message |
+
+---
+
+## `ProfileFlagConfig`
+
+Enriched profile flag config for direct client consumption.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `flag_option_id` | `string` | No | UUID of the selected flag option |
+| `show` | `boolean` | No | Whether the flag is visible to the client |
+| `required` | `boolean` | No | Whether the flag is required |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+
+---
+
+## `ProfileFlagSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ProfileFlagConfig`](#profileflagconfig) | No | Currently selected flag config |
+| `resources` | [`ProfileFlagConfig`](#profileflagconfig)[] | No | Available flag configs |
+
+---
+
+## `ProfileNameResource`
+
+Name resource for profile.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique resource identifier |
+| `name` | `string` | No | Profile display name |
+| `generated` | `boolean` | No | Whether the name was AI-generated |
+
+---
+
+## `ProfileNameSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | [`ProfileNameResource`](#profilenameresource) | No | Currently selected name resource |
+| `resources` | [`ProfileNameResource`](#profilenameresource)[] | No | Available name resources |
+
+---
+
+## `ProfileRequestLimitResource`
+
+Request limit resource for profile.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique resource identifier |
+| `requests_per_day` | `integer` | No | Maximum requests allowed per day |
+| `generated` | `boolean` | No | Whether the limit was AI-generated |
+
+---
+
+## `ProfileRequestLimitSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `resource` | [`ProfileRequestLimitResource`](#profilerequestlimitresource) | No | Currently selected request limit |
+| `resources` | [`ProfileRequestLimitResource`](#profilerequestlimitresource)[] | No | Available request limit resources |
+
+---
+
+## `ProfileResultItem`
+
+Per-item result within a bulk create/update response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the operation succeeded |
+| `profile_id` | `string` | No | UUID of the created or updated profile |
+| `message` | `string` | Yes | Result message |
+| `errors` | [`ProfileFieldError`](#profilefielderror)[] | No | Per-field validation errors |
+
+---
+
+## `ProfileRoleResource`
+
+Role resource for profile.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique resource identifier |
+| `role` | `string` | No | Role key (e.g. admin, user, viewer) |
+| `name` | `string` | No | Role display name |
+| `description` | `string` | No | Role description text |
+| `icon_value` | `string` | No | Icon identifier for the role |
+| `color_hex` | `string` | No | Hex color code for the role |
+
+---
+
+## `ProfileRoleSection`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `show` | `boolean` | No | Whether this section is visible in the UI |
+| `required` | `boolean` | No | Whether this section requires a selection |
+| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
+| `tool_id` | `string` | No | UUID of the create tool for this resource |
+| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
+| `current` | [`ProfileRoleResource`](#profileroleresource)[] | No | Currently assigned roles |
+| `resources` | [`ProfileRoleResource`](#profileroleresource)[] | No | Available role resources |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+## `UpdateProfileItem`
+
+Single profile item for update — profile_id required, all fields optional.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_id` | `string` | Yes | UUID of the profile to update |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Name value to resolve or create |
+| `request_limit_id` | `string` | No | UUID of the request limit resource |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
+| `email_ids` | `string`[] | No | Email resource UUIDs |
+| `role_ids` | `string`[] | No | Role resource UUIDs |
+
+---

@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateFieldApiRequest`
+
+Schema: CreateFieldApiRequest
+
+## Request Body (`CreateFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`CreateFieldItem`](/api-reference/stream/types#createfielditem)[] | Yes | List of fields to create |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createfieldapirequest Schema Stream Createfieldapirequest Post"
+}
+```

@@ -1,0 +1,15 @@
+export default {
+  'post-departments-get': 'POST /get',
+  'post-departments-search': 'POST /search',
+  'post-departments-create': 'POST /create',
+  'post-departments-update': 'POST /update',
+  'post-departments-duplicate': 'POST /duplicate',
+  'post-departments-delete': 'POST /delete',
+  'patch-departments-draft': 'PATCH /draft',
+  'post-departments-drafts': 'POST /drafts',
+  'post-departments-docs': 'POST /docs',
+  'post-departments-export': 'POST /export',
+  'post-departments-csv': 'POST /csv',
+  'post-departments-refresh': 'POST /refresh',
+  'types': 'Types',
+}

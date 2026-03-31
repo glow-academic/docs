@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteToolApiResponse`
+
+Schema: DeleteToolApiResponse
+
+## Request Body (`DeleteToolApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteToolResult`](/api-reference/stream/types#deletetoolresult)[] | Yes | List of deletion results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deletetoolapiresponse Schema Stream Deletetoolapiresponse Post"
+}
+```

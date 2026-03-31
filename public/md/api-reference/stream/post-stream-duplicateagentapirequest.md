@@ -1,0 +1,21 @@
+# `POST` `/stream/DuplicateAgentApiRequest`
+
+Schema: DuplicateAgentApiRequest
+
+## Request Body (`DuplicateAgentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `agent_id` | `string` | Yes | UUID of the agent to duplicate |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicateagentapirequest Schema Stream Duplicateagentapirequest Post"
+}
+```

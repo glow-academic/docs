@@ -1,0 +1,282 @@
+# Leaderboard Types
+
+## `AnalyticsFacets-Output`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+## `AnalyticsFilterField`
+
+Visibility/disabled state for a single filter field.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `visible` | `boolean` | No | Whether the filter field is visible |
+| `disabled` | `boolean` | No | Whether the filter field is disabled |
+
+---
+
+## `AnalyticsFilterFields`
+
+Per-page filter field visibility configuration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_range` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Date range filter config |
+| `departments` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Department filter config |
+| `cohorts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Cohort filter config |
+| `roles` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Role filter config |
+| `attempts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Attempt filter config |
+
+---
+
+## `AnalyticsFilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+
+---
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse-Output`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `FilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Internal value for the filter option |
+| `label` | `string` | No | Display label for the filter option |
+| `count` | `integer` | No | Number of matching records |
+
+---
+
+## `LeaderboardAccoladeWinner`
+
+Winner summary for a leaderboard accolade.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_id` | `string` | No | Winner profile identifier |
+| `name` | `string` | No | Winner display name |
+| `value` | `number` \| `integer` | No | Winning metric value |
+| `details` | `string` | No | Additional accolade details |
+
+---
+
+## `LeaderboardAccoladeWinners`
+
+Deterministic accolade winners computed server-side.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `highest_scorer` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Highest scorer accolade winner |
+| `perfect_score` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Perfect score accolade winner |
+| `longest_convo` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Longest conversation accolade winner |
+| `response_times` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Best response times accolade winner |
+| `quickest_pass` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Quickest pass accolade winner |
+| `the_persistent` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Most persistent accolade winner |
+| `marathon_runner` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Marathon runner accolade winner |
+| `rapid_riser` | [`LeaderboardAccoladeWinner`](#leaderboardaccoladewinner) | No | Rapid riser accolade winner |
+
+---
+
+## `LeaderboardDataRow`
+
+Normalized leaderboard row consumed by UI.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `rank` | `integer` | No | Leaderboard rank position |
+| `profile_id` | `string` | No | Profile identifier |
+| `name` | `string` | No | Profile display name |
+| `simulation_ids` | `string`[] | No | Associated simulation IDs |
+| `scenario_ids` | `string`[] | No | Associated scenario IDs |
+| `metrics_entry` | [`LeaderboardMetricsEntry`](#leaderboardmetricsentry) | No | Row-level metric values |
+
+---
+
+## `LeaderboardHeaderMetrics`
+
+Top-level leaderboard summary metrics.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `total_profiles` | [`LeaderboardMetric`](#leaderboardmetric) | No | Total profiles metric |
+| `total_attempts` | [`LeaderboardMetric`](#leaderboardmetric) | No | Total attempts metric |
+| `average_score` | [`LeaderboardMetric`](#leaderboardmetric) | No | Average score metric |
+| `perfect_scores` | [`LeaderboardMetric`](#leaderboardmetric) | No | Perfect scores metric |
+
+---
+
+## `LeaderboardMetric`
+
+Metric envelope expected by leaderboard UI.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `has_data` | `boolean` | No | Whether metric has any data |
+| `method` | `string` | No | Aggregation method used |
+| `current_value` | `number` \| `integer` | No | Current metric value |
+| `key_field` | `string` | No | Key field name for the metric |
+| `trend_data` | `string`[] | No | Trend data points |
+| `data_points` | `string`[] | No | Raw data point values |
+| `hover` | `string` | No | Hover tooltip text |
+
+---
+
+## `LeaderboardMetricsEntry`
+
+Row metrics for leaderboard cards and table.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `total_attempts` | [`LeaderboardMetric`](#leaderboardmetric) | No | Total attempts metric |
+| `highest_score_avg` | [`LeaderboardMetric`](#leaderboardmetric) | No | Highest score average metric |
+| `messages_per_session` | [`LeaderboardMetric`](#leaderboardmetric) | No | Messages per session metric |
+| `persona_response_seconds` | [`LeaderboardMetric`](#leaderboardmetric) | No | Persona response time metric |
+| `time_spent_minutes` | [`LeaderboardMetric`](#leaderboardmetric) | No | Time spent metric in minutes |
+| `improvement_rate_per_day` | [`LeaderboardMetric`](#leaderboardmetric) | No | Daily improvement rate metric |
+| `perfect_score_count` | [`LeaderboardMetric`](#leaderboardmetric) | No | Perfect score count metric |
+| `quickest_pass_minutes` | [`LeaderboardMetric`](#leaderboardmetric) | No | Quickest pass time metric |
+
+---
+
+## `LeaderboardResources`
+
+Resource metadata keyed by ID for normalized hydration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profiles` | `object` | No | Profile resources keyed by ID |
+| `simulations` | `object` | No | Simulation resources keyed by ID |
+| `scenarios` | `object` | No | Scenario resources keyed by ID |
+
+---
+
+## `LeaderboardSectionStatus`
+
+Section-level status metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `has_data` | `boolean` | No | Whether section has any data |
+| `status` | `string` | No | Section status indicator |
+| `note` | `string` | No | Optional status note |
+
+---
+
+## `LeaderboardSections-Output`
+
+Business-computed section skeletons (built in permissions.py).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `header_metrics` | [`LeaderboardHeaderMetrics`](#leaderboardheadermetrics) | No | Header summary metrics |
+| `rankings` | [`LeaderboardSectionStatus`](#leaderboardsectionstatus) | No | Rankings section status |
+| `accolades` | [`LeaderboardSectionStatus`](#leaderboardsectionstatus) | No | Accolades section status |
+| `trends` | [`LeaderboardSectionStatus`](#leaderboardsectionstatus) | No | Trends section status |
+| `filters` | [`LeaderboardSectionStatus`](#leaderboardsectionstatus) | No | Filters section status |
+| `accolade_winners` | [`LeaderboardAccoladeWinners`](#leaderboardaccoladewinners) | No | Computed accolade winners |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---

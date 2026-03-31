@@ -1,0 +1,17 @@
+# `POST` `/evals/create`
+
+Create Eval
+
+Create evals using composable infra architecture.
+
+## Request Body (`CreateEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `evals` | [`CreateEvalItem`](/api-reference/evals/types#createevalitem)[] | Yes | List of evals to create |
+
+## Response (`CreateEvalApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`EvalResultItem`](/api-reference/evals/types#evalresultitem)[] | Yes | List of operation results |

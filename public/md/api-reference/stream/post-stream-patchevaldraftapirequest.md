@@ -1,0 +1,30 @@
+# `POST` `/stream/PatchEvalDraftApiRequest`
+
+Schema: PatchEvalDraftApiRequest
+
+## Request Body (`PatchEvalDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to patch |
+| `expected_version` | `integer` | No | Expected draft version for concurrency control |
+| `name` | `string` | No | Name value to create a resource |
+| `name_id` | `string` | No | Existing name resource UUID |
+| `description` | `string` | No | Description value to create a resource |
+| `description_id` | `string` | No | Existing description resource UUID |
+| `flag_ids` | `string`[] | No | Flag option UUIDs |
+| `department_ids` | `string`[] | No | Department UUIDs |
+| `model_ids` | `string`[] | No | Model UUIDs |
+| `rubric_ids` | `string`[] | No | Rubric UUIDs |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchevaldraftapirequest Schema Stream Patchevaldraftapirequest Post"
+}
+```

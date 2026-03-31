@@ -1,0 +1,21 @@
+# `POST` `/stream/AttemptAudioStopPayload`
+
+Schema: AttemptAudioStopPayload
+
+## Request Body (`AttemptAudioStopPayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | UUID of the chat for voice session |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Attemptaudiostoppayload Schema Stream Attemptaudiostoppayload Post"
+}
+```

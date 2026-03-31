@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateRubricApiResponse`
+
+Schema: UpdateRubricApiResponse
+
+## Request Body (`UpdateRubricApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`RubricResultItem`](/api-reference/stream/types#rubricresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updaterubricapiresponse Schema Stream Updaterubricapiresponse Post"
+}
+```

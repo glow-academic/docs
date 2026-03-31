@@ -1,0 +1,30 @@
+# `POST` `/models/search`
+
+Search Model
+
+Search models — composable infra architecture.
+
+## Request Body (`SearchModelApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `filter_provider_ids` | `string`[] | No | — |
+| `filter_department_ids` | `string`[] | No | — |
+| `filter_agent_ids` | `string`[] | No | — |
+| `provider_search` | `string` | No | — |
+| `department_search` | `string` | No | — |
+| `agent_search` | `string` | No | — |
+| `page_size` | `integer` | No | — |
+| `page_offset` | `integer` | No | — |
+
+## Response (`ListModelApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `models` | [`ListModelApiModel`](/api-reference/models/types#listmodelapimodel)[] | No | List of model entries |
+| `provider_filter` | [`ListFilterSection`](/api-reference/models/types#listfiltersection) | No | Provider filter options |
+| `department_filter` | [`ListFilterSection`](/api-reference/models/types#listfiltersection) | No | Department filter options |
+| `agent_filter` | [`ListFilterSection`](/api-reference/models/types#listfiltersection) | No | Agent filter options |
+| `total_count` | `integer` | No | Total number of models |

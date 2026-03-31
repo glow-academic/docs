@@ -1,0 +1,21 @@
+# `POST` `/stream/TestStartedEvent`
+
+Schema: TestStartedEvent
+
+## Request Body (`TestStartedEvent`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | UUID of the created test |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Teststartedevent Schema Stream Teststartedevent Post"
+}
+```

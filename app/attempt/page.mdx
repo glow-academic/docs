@@ -1,0 +1,271 @@
+# Attempts
+
+Attempts represent a single learner's run through a simulation -- they track progress, messages, grading, and results across all scenarios in the session.
+
+## What is an Attempt?
+
+An attempt is created when a learner starts a [Simulation](/glow/simulations/guide). It acts as the top-level container for the entire training session, holding one [Chat](/glow/chat/guide) per scenario in the simulation. The attempt tracks whether the session is active, which scenario the learner is currently on, and the aggregated results when complete.
+
+An attempt contains:
+
+- **Attempt ID** -- unique identifier for this training run
+- **Simulation** -- the simulation being attempted, with its metadata
+- **Chats** -- one chat per scenario, each containing the conversation between the learner and the AI persona
+- **Timer** -- time tracking information for the session
+- **Aggregated Results** -- combined scores, feedback, strengths, and improvements across all chats
+- **Rubric Structure** -- the rubric definitions used for grading
+- **State Flags** -- `is_active`, `is_lobby`, `show_results`, `is_own_attempt`
+- **Current Chat Index** -- which scenario the learner is currently on
+- **Training ID** -- links the attempt to a cohort training assignment
+
+Attempts progress through a lifecycle: start, message, end (per chat), next (advance to next scenario), and grade.
+
+![Attempt lobby screen showing simulation name, scenario list, and start button](/screenshots/attempt/lobby.png)
+
+## Quick Start
+
+### Start an Attempt via CLI
+
+```bash
+glow attempt create --body '{
+  "home_id": "simulation-uuid"
+}'
+```
+
+Get attempt details:
+
+```bash
+glow attempt get --body '{"attempt_id": "your-attempt-uuid"}'
+```
+
+### Start an Attempt via API
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/start \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "home_id": "simulation-uuid"
+  }'
+```
+
+The response includes the `attempt_id` and `chat_entry_id` for the first scenario's chat.
+
+Get attempt details:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/get \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"attempt_id": "your-attempt-uuid"}'
+```
+
+## How Attempts Connect to the Workflow
+
+Attempts are **step 5** in the Glow content pipeline:
+
+| Step | Resource | Description |
+|------|----------|-------------|
+| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
+| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
+| **5. Run Attempts** | **Attempts** | **Learners start attempts and interact with AI personas in Chats** |
+
+## Attempt Lifecycle
+
+An attempt follows a defined lifecycle from start to completion:
+
+### 1. Start
+
+The learner launches a simulation. Glow creates an attempt and a chat for the first scenario.
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/start \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"home_id": "simulation-uuid"}'
+```
+
+The `practice_id` field can be used instead of `home_id` for practice-mode simulations. Set `infinite_mode` to `true` to allow unlimited conversation without ending.
+
+### 2. Send Messages
+
+The learner converses with the AI persona through the chat. Each message is sent via the message endpoint:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/message \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "attempt_id": "attempt-uuid",
+    "chat_id": "chat-uuid",
+    "message": "I understand this is a serious situation. Can you tell me what happened from your perspective?"
+  }'
+```
+
+The response includes the AI's reply (`assistant_content`) and any hints generated for the learner.
+
+![Active chat showing conversation with AI persona, message input, hint button, and timer](/screenshots/attempt/chat.png)
+
+### 3. End a Chat
+
+When the learner finishes a scenario (or time runs out), end the current chat:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/end \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "attempt_id": "attempt-uuid",
+    "chat_id": "chat-uuid",
+    "grade": true
+  }'
+```
+
+Setting `grade` to `true` triggers the AI grading engine. The response includes `score`, `passed`, and `grade_id`.
+
+### 4. Advance to Next Scenario
+
+If the simulation has multiple scenarios, advance to the next one:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/next \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"attempt_id": "attempt-uuid"}'
+```
+
+This returns a new `chat_id` for the next scenario.
+
+### 5. Grade
+
+Grading can happen automatically when ending a chat (with `grade: true`), or you can trigger it separately:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/grade \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "attempt_id": "attempt-uuid",
+    "chat_id": "chat-uuid"
+  }'
+```
+
+The grading endpoint also accepts pre-computed results (`score`, `passed`, `feedbacks`, `strengths`, `improvements`, `analyses`, `highlights`, `replacements`) for agent-driven workflows where grading is performed externally.
+
+![Attempt results showing per-criterion scores with named levels, feedback quotes, and overall pass/fail](/screenshots/attempt/results.png)
+
+![Detailed feedback view showing strengths, improvements, and specific conversation highlights](/screenshots/attempt/feedback-detail.png)
+
+## Real-Time Updates
+
+Attempts support real-time updates through a room-based system. Join a chat room to receive live updates:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/join \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "sid": "session-id",
+    "chat_id": "chat-uuid"
+  }'
+```
+
+Leave the room when done:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/leave \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "sid": "session-id",
+    "chat_id": "chat-uuid"
+  }'
+```
+
+## Managing Attempts
+
+### Archive Attempts
+
+Bulk archive or unarchive attempts to keep your workspace clean:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/archive \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "archived": true,
+    "simulation_ids": ["simulation-uuid"],
+    "start_date": "2025-01-01",
+    "end_date": "2025-06-30"
+  }'
+```
+
+You can filter by `attempt_ids`, `cohort_ids`, `department_ids`, `simulation_ids`, `scenario_ids`, or `profile_ids_filter`.
+
+### Export Attempt Data
+
+Export attempt data as a denormalized ZIP file for reporting:
+
+```bash
+# CLI
+glow attempt export
+
+# API
+curl -X POST https://<your-instance>/v5/attempt/export \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"attempt_id": "attempt-uuid"}'
+```
+
+### Stop Generation
+
+If the AI is generating a response and you need to stop it:
+
+```bash
+curl -X POST https://<your-instance>/v5/attempt/stop \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"chat_id": "chat-uuid"}'
+```
+
+## Common Operations
+
+| Task | CLI | API |
+|------|-----|-----|
+| Start an attempt | `glow attempt create --body '{...}'` | `POST /attempt/start` |
+| Get attempt details | `glow attempt get --body '{"attempt_id": "..."}'` | `POST /attempt/get` |
+| Send a message | -- | `POST /attempt/message` |
+| End a chat | -- | `POST /attempt/end` |
+| End all chats | -- | `POST /attempt/end-all` |
+| Next scenario | -- | `POST /attempt/next` |
+| Grade a chat | -- | `POST /attempt/grade` |
+| Stop generation | -- | `POST /attempt/stop` |
+| Archive attempts | -- | `POST /attempt/archive` |
+| Export attempt | `glow attempt export` | `POST /attempt/export` |
+| Join chat room | -- | `POST /attempt/join` |
+| Leave chat room | -- | `POST /attempt/leave` |
+| Refresh views | -- | `POST /attempt/refresh` |
+| Search attempts | `glow attempt search` | `POST /attempt/search` |
+
+## Related
+
+- [Attempts API Reference](/glow/attempt/api) -- full endpoint schemas and field definitions
+- [Attempts CLI Reference](/glow/attempt/cli) -- all CLI commands and flags
+- [Chat Guide](/glow/chat/guide) -- working with individual chats within an attempt
+- [Simulations Guide](/glow/simulations/guide) -- configuring the simulations that attempts run
+- [Scenarios Guide](/glow/scenarios/guide) -- the training situations within each simulation
+- [Agents Guide](/glow/agents/guide) -- configuring the AI engine that powers conversations and grading

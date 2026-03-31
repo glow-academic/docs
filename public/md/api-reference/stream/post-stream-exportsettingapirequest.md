@@ -1,0 +1,21 @@
+# `POST` `/stream/ExportSettingApiRequest`
+
+Schema: ExportSettingApiRequest
+
+## Request Body (`ExportSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | No | UUID of the setting to export |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Exportsettingapirequest Schema Stream Exportsettingapirequest Post"
+}
+```

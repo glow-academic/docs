@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateDocumentApiResponse`
+
+Schema: UpdateDocumentApiResponse
+
+## Request Body (`UpdateDocumentApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DocumentResultItem`](/api-reference/stream/types#documentresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updatedocumentapiresponse Schema Stream Updatedocumentapiresponse Post"
+}
+```

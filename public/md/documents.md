@@ -1,0 +1,172 @@
+# Documents
+
+Documents provide reference material that grounds AI-driven simulations in real institutional content. They attach to scenarios so the AI character can draw on policies, syllabi, and other materials during a conversation.
+
+![Documents list showing uploaded documents with name, type, and associated scenario count](/screenshots/documents/list.png)
+
+## What is a Document?
+
+A document is a piece of content -- such as a policy, syllabus, lab template, or homework assignment -- that gets attached to a scenario. When a learner runs a simulation, the AI character uses the document as context to stay accurate and on-topic.
+
+**University example:** An "Academic Integrity Policy" document ensures that when a student character asks about cheating consequences, the AI responds with the actual university policy rather than generic information. A "FERPA Policy" document gives the AI grounding in privacy regulations for scenarios involving student records.
+
+## Quick Start
+
+### CLI
+
+```bash
+# List all documents
+glow documents list
+
+# Search documents
+glow documents search
+
+![Document upload form showing name field, file upload area, and department selection](/screenshots/documents/create.png)
+
+# Create a new document
+glow documents create --body '{
+  "documents": [
+    {
+      "name": "Academic Integrity Policy",
+      "description": "University policy on academic honesty, plagiarism, and cheating"
+    }
+  ]
+}'
+
+# Get a document by ID
+glow documents get --body '{"document_id": "doc-456"}'
+
+# Update an existing document
+glow documents update --body '{
+  "documents": [
+    {
+      "document_id": "doc-456",
+      "name": "Academic Integrity Policy (Updated)"
+    }
+  ]
+}'
+
+# Delete a document
+glow documents delete --body '{"document_id": "doc-456"}'
+```
+
+### API
+
+All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
+
+```bash
+# Search documents
+curl -X POST https://<your-instance>/v5/documents/search \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "FERPA",
+    "page_size": 10
+  }'
+
+# Create a document
+curl -X POST https://<your-instance>/v5/documents/create \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "documents": [
+      {
+        "name": "FERPA Policy",
+        "description": "Family Educational Rights and Privacy Act guidelines for the university"
+      }
+    ]
+  }'
+```
+
+## How It Connects: The 5-Step Workflow
+
+Documents participate in step 2 of the Glow workflow:
+
+1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
+2. **Assign to Scenarios** -- Attach personas and *documents* to scenarios. Documents give the AI factual grounding.
+3. **Add to Simulations** -- Group scenarios into simulations.
+4. **Add to Cohorts** -- Assign profiles and simulations to a cohort.
+5. **Run Attempts** -- Learners launch simulations; the AI uses document content during the conversation.
+
+Documents connect to **scenarios**, not agents. A single document can be shared across multiple scenarios. For example, the Academic Integrity Policy might be referenced in both a "Student Caught Cheating" scenario and a "Grade Appeal" scenario.
+
+## Document Types and Templates
+
+Documents can represent many types of institutional content:
+
+| Template | Example Use |
+|---|---|
+| **Syllabus** | Course policies, grading criteria, schedule |
+| **Homework** | Assignment descriptions, rubrics, due dates |
+| **Lab** | Lab procedures, safety protocols, equipment guides |
+| **Policy** | Academic integrity, FERPA, code of conduct |
+
+**Example:** The CS-180 syllabus document contains the course schedule, grading breakdown, and late policy. When attached to a scenario about a student requesting a deadline extension, the AI character can reference the actual late policy from the syllabus.
+
+![Document detail showing document preview with content and linked scenarios](/screenshots/documents/detail.png)
+
+## Content Sections
+
+A document in Glow can include several types of content:
+
+- **Name and description** -- The document title and a summary of what it contains.
+- **Text content** -- The main body of the document, such as policy text or syllabus content.
+- **File uploads** -- Attached files like PDFs or Word documents that supplement the text content.
+- **Images** -- Visual content such as diagrams or charts.
+- **Parameters and fields** -- Link the document to specific parameter categories and field values for filtering and organization.
+- **Department** -- Scope the document to a department so it appears only for relevant users.
+
+## Uploading Files
+
+Documents support file uploads for rich content. Use the upload endpoint to attach files:
+
+```bash
+# Upload a file
+curl -X POST https://<your-instance>/v5/documents/upload \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/pdf" \
+  -H "X-Filename: academic_integrity_policy.pdf" \
+  --data-binary @academic_integrity_policy.pdf
+```
+
+The upload returns an `upload_id` that you can reference when creating or updating the document draft.
+
+## Drafts
+
+Documents support the draft workflow. Changes are saved as a draft before being published, allowing you to preview and iterate.
+
+```bash
+# Save a document draft
+glow documents draft --body '{
+  "name": "Academic Integrity Policy",
+  "description": "Updated policy for the 2026 academic year"
+}'
+```
+
+Via the API, use `PATCH /documents/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `file_ids`, `text_ids`, `department_ids`, `parameter_ids`, and `parameter_field_ids`.
+
+## Common Operations
+
+| Task | CLI | API Endpoint |
+|---|---|---|
+| List all documents | `glow documents list` | `POST /documents/search` |
+| Get a document | `glow documents get --body '{...}'` | `POST /documents/get` |
+| Create documents | `glow documents create --body '{...}'` | `POST /documents/create` |
+| Update documents | `glow documents update --body '{...}'` | `POST /documents/update` |
+| Duplicate a document | -- | `POST /documents/duplicate` |
+| Delete documents | `glow documents delete --body '{...}'` | `POST /documents/delete` |
+| Upload a file | -- | `POST /documents/upload` |
+| Export to CSV | `glow documents export` | `POST /documents/export` |
+| Save a draft | `glow documents draft --body '{...}'` | `PATCH /documents/draft` |
+| List drafts | -- | `POST /documents/drafts` |
+
+## Related
+
+- [Documents API](/glow/documents/api)
+- [Documents CLI](/glow/documents/cli)
+- [Parameters Guide](/glow/parameters/guide) -- parameters and fields that organize documents
+- [Fields Guide](/glow/fields/guide) -- field values attached to documents
+- [Departments Guide](/glow/departments/guide) -- scope documents to departments

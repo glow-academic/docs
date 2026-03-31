@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteParameterApiResponse`
+
+Schema: DeleteParameterApiResponse
+
+## Request Body (`DeleteParameterApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteParameterResult`](/api-reference/stream/types#deleteparameterresult)[] | Yes | List of deletion results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deleteparameterapiresponse Schema Stream Deleteparameterapiresponse Post"
+}
+```

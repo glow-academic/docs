@@ -1,0 +1,25 @@
+# `POST` `/stream/PatchToolDraftApiResponse`
+
+Schema: PatchToolDraftApiResponse
+
+## Request Body (`PatchToolDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | Draft unique identifier |
+| `new_version` | `integer` | Yes | New draft version after save |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`ToolDraftFormState`](/api-reference/stream/types#tooldraftformstate) | No | Server-authoritative form state |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchtooldraftapiresponse Schema Stream Patchtooldraftapiresponse Post"
+}
+```

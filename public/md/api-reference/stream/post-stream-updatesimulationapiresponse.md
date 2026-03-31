@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateSimulationApiResponse`
+
+Schema: UpdateSimulationApiResponse
+
+## Request Body (`UpdateSimulationApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](/api-reference/stream/types#simulationresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updatesimulationapiresponse Schema Stream Updatesimulationapiresponse Post"
+}
+```

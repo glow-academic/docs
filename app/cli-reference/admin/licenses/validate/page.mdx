@@ -1,0 +1,9 @@
+# `glow admin licenses validate`
+
+Validate your license key
+
+## Usage
+
+```bash
+glow admin licenses validate
+```

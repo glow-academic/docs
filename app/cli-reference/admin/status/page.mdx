@@ -1,0 +1,9 @@
+# `glow admin status`
+
+Show connection and authentication status
+
+## Usage
+
+```bash
+glow admin status
+```

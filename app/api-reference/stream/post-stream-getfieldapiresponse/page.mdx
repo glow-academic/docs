@@ -1,0 +1,32 @@
+# `POST` `/stream/GetFieldApiResponse`
+
+Schema: GetFieldApiResponse
+
+## Request Body (`GetFieldApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `field_exists` | `boolean` | No | Whether the field exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this field |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`FieldNameSection`](/api-reference/stream/types#fieldnamesection) | No | Name section with resources |
+| `descriptions` | [`FieldDescriptionSection`](/api-reference/stream/types#fielddescriptionsection) | No | Description section with resources |
+| `flags` | [`FieldFlagSection`](/api-reference/stream/types#fieldflagsection) | No | Flag section with configs |
+| `departments` | [`FieldDepartmentSection`](/api-reference/stream/types#fielddepartmentsection) | No | Department section with resources |
+| `conditional_parameters` | [`FieldConditionalParameterSection`](/api-reference/stream/types#fieldconditionalparametersection) | No | Conditional parameter section |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getfieldapiresponse Schema Stream Getfieldapiresponse Post"
+}
+```

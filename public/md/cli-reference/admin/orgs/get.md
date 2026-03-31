@@ -1,0 +1,15 @@
+# `glow admin orgs get`
+
+Get organization details
+
+## Usage
+
+```bash
+glow admin orgs get id <id>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `id` | Yes | Organization ID |

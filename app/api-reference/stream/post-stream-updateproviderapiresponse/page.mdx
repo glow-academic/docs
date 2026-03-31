@@ -1,0 +1,21 @@
+# `POST` `/stream/UpdateProviderApiResponse`
+
+Schema: UpdateProviderApiResponse
+
+## Request Body (`UpdateProviderApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ProviderResultItem`](/api-reference/stream/types#providerresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Updateproviderapiresponse Schema Stream Updateproviderapiresponse Post"
+}
+```

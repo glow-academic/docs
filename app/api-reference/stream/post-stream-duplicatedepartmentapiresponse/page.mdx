@@ -1,0 +1,23 @@
+# `POST` `/stream/DuplicateDepartmentApiResponse`
+
+Schema: DuplicateDepartmentApiResponse
+
+## Request Body (`DuplicateDepartmentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `department_id` | `string` | Yes | UUID of the newly created department |
+| `message` | `string` | Yes | Result message |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Duplicatedepartmentapiresponse Schema Stream Duplicatedepartmentapiresponse Post"
+}
+```

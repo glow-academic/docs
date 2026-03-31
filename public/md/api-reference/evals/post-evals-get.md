@@ -1,0 +1,35 @@
+# `POST` `/evals/get`
+
+Get Eval
+
+Get eval information using the canonical shared eval operation.
+
+## Request Body (`GetEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `eval_id` | `string` | No | Eval UUID to retrieve |
+| `draft_id` | `string` | No | Draft UUID to load from |
+
+## Response (`GetEvalApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current user |
+| `eval_exists` | `boolean` | No | Whether the eval exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason editing is disabled |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Associated group UUID |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
+| `model_show_ai_generate` | `boolean` | No | Whether to show AI generate for model step |
+| `names` | [`EvalNameSection`](/api-reference/evals/types#evalnamesection) | No | Name section with resource and options |
+| `descriptions` | [`EvalDescriptionSection`](/api-reference/evals/types#evaldescriptionsection) | No | Description section with resource and options |
+| `active_flags` | [`EvalFlagSection`](/api-reference/evals/types#evalflagsection) | No | Active flag section |
+| `dynamic_flags` | [`EvalFlagSection`](/api-reference/evals/types#evalflagsection) | No | Dynamic flag section |
+| `groups_flags` | [`EvalFlagSection`](/api-reference/evals/types#evalflagsection) | No | Groups flag section |
+| `departments` | [`EvalDepartmentSection`](/api-reference/evals/types#evaldepartmentsection) | No | Department section with selections and options |
+| `models` | [`EvalModelSection`](/api-reference/evals/types#evalmodelsection) | No | Model section with selections and options |
+| `model_flags` | [`EvalModelFlagSection`](/api-reference/evals/types#evalmodelflagsection) | No | Model flag section |
+| `model_rubrics` | [`EvalModelRubricSection`](/api-reference/evals/types#evalmodelrubricsection) | No | Model rubric section |
+| `model_positions` | [`EvalModelPositionSection`](/api-reference/evals/types#evalmodelpositionsection) | No | Model position section |

@@ -1,0 +1,229 @@
+# Test
+
+Test provides automated benchmark testing for TA training simulations -- running AI-driven evaluations without human interaction. It replays training scenarios against benchmarks, generates scores and feedback, and tracks results across multiple invocations.
+
+![Test list showing test suites with status, pass rate, and last run timestamp](/screenshots/test/list.png)
+
+## What is Test?
+
+Test is the automated evaluation system in Glow. Instead of requiring a human TA to interact with student personas, Test runs **auto-regressive replays** against a benchmark configuration. This is useful for:
+
+- Validating that simulation configurations produce expected outcomes
+- Regression testing after rubric or persona changes
+- Comparing AI model performance across different configurations
+- Generating baseline scores for new simulations before deploying to TAs
+
+A test has a lifecycle: **start** (create the test from a benchmark), **next** (find the next pending run), **run** (execute the replay), **end** (grade the invocation), and optionally **stop** (halt execution). Each test can have multiple **invocations**, each containing multiple runs.
+
+## Quick Start
+
+### CLI
+
+```bash
+# Search existing tests
+glow test search
+
+# Get a specific test with invocations and runs
+glow test get --body '{"test_id": "test-uuid"}'
+
+# Export test data
+glow test export --body '{"test_id": "test-uuid"}'
+```
+
+### API
+
+```bash
+# Start a new test from a benchmark
+curl -X POST https://<your-instance>/v5/test/start \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "benchmark_id": "benchmark-uuid",
+    "infinite_mode": false
+  }'
+
+# Get test detail
+curl -X POST https://<your-instance>/v5/test/get \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"test_id": "test-uuid"}'
+
+# Search tests with filters
+curl -X POST https://<your-instance>/v5/test/search \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "department_ids": ["dept-cs"],
+    "is_archived": false,
+    "page_size": 20,
+    "page_offset": 0
+  }'
+```
+
+## Test Lifecycle
+
+### 1. Start a Test
+
+`POST /test/start` creates a new test from a benchmark:
+
+```bash
+curl -X POST https://<your-instance>/v5/test/start \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "benchmark_id": "benchmark-uuid",
+    "infinite_mode": false
+  }'
+```
+
+Returns `test_id` -- the UUID of the newly created test.
+
+### 2. Get Next Run
+
+`POST /test/next` finds the next pending run:
+
+```bash
+curl -X POST https://<your-instance>/v5/test/next \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"test_id": "test-uuid"}'
+```
+
+Returns `invocation_id`, `run_id`, `current_run`, and `total_runs`.
+
+### 3. Run a Replay
+
+`POST /test/run` executes an auto-regressive replay. It returns immediately; progress is reported via WebSocket events.
+
+```bash
+curl -X POST https://<your-instance>/v5/test/run \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "test_id": "test-uuid",
+    "test_invocation_id": "invocation-uuid",
+    "run_id": "run-uuid"
+  }'
+```
+
+Returns `test_id`, `invocation_id`, `run_id`.
+
+### 4. End / Grade an Invocation
+
+`POST /test/end` completes an invocation and triggers grading:
+
+```bash
+curl -X POST https://<your-instance>/v5/test/end \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "test_id": "test-uuid",
+    "test_invocation_id": "invocation-uuid",
+    "run_id": "run-uuid",
+    "grade": true
+  }'
+```
+
+When `grade: true`, the AI generates a score, pass/fail status, and feedback. Alternatively, you can provide `score`, `passed`, and `feedback` directly to skip AI grading.
+
+Returns `invocation_id`, `grade_id`, `score`, `passed`, `feedback`.
+
+### 5. Stop a Test (Optional)
+
+`POST /test/stop` halts a running test invocation:
+
+```bash
+curl -X POST https://<your-instance>/v5/test/stop \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"invocation_id": "invocation-uuid"}'
+```
+
+Returns `invocation_id`, `success`, and an optional `message`.
+
+## Real-Time Updates
+
+During test execution, you can join an invocation room for live WebSocket updates:
+
+- **`POST /test/join`** -- Join the room: `{"sid": "socket-id", "invocation_id": "..."}`
+- **`POST /test/leave`** -- Leave the room: `{"sid": "socket-id", "invocation_id": "..."}`
+
+## Understanding the Test Detail Response
+
+The `/test/get` response includes:
+
+- **`test`** -- Test entry data (`GetTestResponse`)
+- **`status`** -- Overall test status
+- **`eval_name`**, **`eval_description`** -- Evaluation metadata
+- **`rubric_name`** -- Rubric being evaluated
+- **`infinite_mode`** -- Whether infinite mode is enabled
+- **`invocations`** -- Array of `GetTestInvocationResponse` objects
+- **`runs`** -- Array of `TestRunItem` objects derived from invocations
+- **`status_summary`** -- Summary of invocation statuses
+- **`show_controls`** -- Whether the UI should show start/stop/next controls
+- **`current_invocation_id`** -- ID of the active invocation
+- **`has_runs_or_groups`** -- Whether any runs have been executed
+- **`entries`** -- Entry payloads by type
+- **`resources`** -- Resource maps keyed by ID
+
+## Searching Tests
+
+`POST /test/search` supports filtering:
+
+| Filter | Field | Description |
+|---|---|---|
+| Eval IDs | `eval_ids` | Filter by evaluation configuration |
+| Departments | `department_ids` | Filter by department |
+| Archived | `is_archived` | Show archived or active tests |
+| Date range | `start_date`, `end_date` | Scope by creation date |
+| Text search | `eval_search`, `department_search` | Search by name |
+| Pagination | `page_size`, `page_offset` | Control page size |
+
+## Archiving Tests
+
+`POST /test/archive` archives or unarchives tests:
+
+```bash
+curl -X POST https://<your-instance>/v5/test/archive \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "test_ids": ["test-uuid-1", "test-uuid-2"],
+    "archived": true
+  }'
+```
+
+Returns `updated_count`.
+
+## Common Operations
+
+| Task | CLI | API Endpoint |
+|---|---|---|
+| Search tests | `glow test search` | `POST /test/search` |
+| Get test detail | `glow test get` | `POST /test/get` |
+| Start test | -- | `POST /test/start` |
+| Next run | -- | `POST /test/next` |
+| Run replay | -- | `POST /test/run` |
+| End/grade | -- | `POST /test/end` |
+| Stop test | -- | `POST /test/stop` |
+| Archive tests | -- | `POST /test/archive` |
+| Join room | -- | `POST /test/join` |
+| Leave room | -- | `POST /test/leave` |
+| Export | `glow test export` | `POST /test/export` |
+| Refresh | -- | `POST /test/refresh` |
+
+## Related
+
+- [Test API Reference](/glow/test/api)
+- [Test CLI Reference](/glow/test/cli)
+- [Invocation Guide](/glow/invocation/guide) -- AI model call tracking
+- [Group Guide](/glow/group/guide) -- generation group details

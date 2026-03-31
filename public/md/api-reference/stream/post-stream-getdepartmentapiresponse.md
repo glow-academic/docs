@@ -1,0 +1,31 @@
+# `POST` `/stream/GetDepartmentApiResponse`
+
+Schema: GetDepartmentApiResponse
+
+## Request Body (`GetDepartmentApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `department_exists` | `boolean` | No | Whether the department exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this department |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `draft_version` | `integer` | No | Current draft version number |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `names` | [`DepartmentNameSection`](/api-reference/stream/types#departmentnamesection) | No | Name section with resources |
+| `descriptions` | [`DepartmentDescriptionSection`](/api-reference/stream/types#departmentdescriptionsection) | No | Description section with resources |
+| `flags` | [`DepartmentFlagSection`](/api-reference/stream/types#departmentflagsection) | No | Flag section with configs |
+| `settings` | [`DepartmentSettingSection`](/api-reference/stream/types#departmentsettingsection) | No | Setting section with resources |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Getdepartmentapiresponse Schema Stream Getdepartmentapiresponse Post"
+}
+```

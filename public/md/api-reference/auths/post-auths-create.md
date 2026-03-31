@@ -1,0 +1,17 @@
+# `POST` `/auths/create`
+
+Create Auth
+
+Create auths using composable infra architecture.
+
+## Request Body (`CreateAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auths` | [`CreateAuthItem`](/api-reference/auths/types#createauthitem)[] | Yes | List of auth providers to create |
+
+## Response (`CreateAuthApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`AuthResultItem`](/api-reference/auths/types#authresultitem)[] | Yes | Per-item creation results |

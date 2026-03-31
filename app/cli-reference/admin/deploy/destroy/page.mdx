@@ -1,0 +1,15 @@
+# `glow admin deploy destroy`
+
+Destroy a stopped deployment (removes repo, DNS, and marks as destroyed)
+
+## Usage
+
+```bash
+glow admin deploy destroy id <id>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `id` | Yes | Deployment ID |

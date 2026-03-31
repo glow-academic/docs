@@ -1,0 +1,21 @@
+# `POST` `/stream/GetTestArtifactRequest`
+
+Schema: GetTestArtifactRequest
+
+## Request Body (`GetTestArtifactRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | UUID of the test to fetch |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Gettestartifactrequest Schema Stream Gettestartifactrequest Post"
+}
+```

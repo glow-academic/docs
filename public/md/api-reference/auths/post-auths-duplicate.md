@@ -1,0 +1,19 @@
+# `POST` `/auths/duplicate`
+
+Duplicate Auth
+
+Duplicate an auth — composable infra architecture.
+
+## Request Body (`DuplicateAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `auth_id` | `string` | Yes | UUID of the auth provider to duplicate |
+
+## Response (`DuplicateAuthApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `auth_id` | `string` | Yes | UUID of the newly created auth provider |
+| `message` | `string` | Yes | Result message |

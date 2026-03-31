@@ -1,0 +1,21 @@
+# `POST` `/stream/CreateScenarioApiResponse`
+
+Schema: CreateScenarioApiResponse
+
+## Request Body (`CreateScenarioApiResponse-Input`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ScenarioResultItem`](/api-reference/stream/types#scenarioresultitem)[] | Yes | List of operation results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Createscenarioapiresponse Schema Stream Createscenarioapiresponse Post"
+}
+```

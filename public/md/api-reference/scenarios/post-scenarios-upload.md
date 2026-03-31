@@ -1,0 +1,16 @@
+# `POST` `/scenarios/upload`
+
+Upload
+
+Stream-upload any file.
+
+Headers:
+  Content-Type: the file's actual MIME type
+  X-Filename: original filename (for extension + display)
+Body: raw file bytes (streamed).
+
+## Response (`UploadResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |

@@ -1,0 +1,21 @@
+# `POST` `/stream/DeleteSettingApiResponse`
+
+Schema: DeleteSettingApiResponse
+
+## Request Body (`DeleteSettingApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteSettingResult`](/api-reference/stream/types#deletesettingresult)[] | Yes | Per-item deletion results |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Deletesettingapiresponse Schema Stream Deletesettingapiresponse Post"
+}
+```

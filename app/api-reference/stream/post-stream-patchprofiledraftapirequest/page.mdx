@@ -1,0 +1,31 @@
+# `POST` `/stream/PatchProfileDraftApiRequest`
+
+Schema: PatchProfileDraftApiRequest
+
+## Request Body (`PatchProfileDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | Existing draft UUID to update |
+| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `email` | `string` | No | Email value to resolve or create |
+| `request_limit` | `integer` | No | Request limit value to resolve or create |
+| `flag_id` | `string` | No | UUID of the flag option |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `email_ids` | `string`[] | No | Email resource UUIDs |
+| `role_ids` | `string`[] | No | Role resource UUIDs |
+| `request_limit_ids` | `string`[] | No | Request limit resource UUIDs |
+
+## Response
+
+```
+{
+  "additionalProperties": {
+    "type": "boolean"
+  },
+  "type": "object",
+  "title": "Response Patchprofiledraftapirequest Schema Stream Patchprofiledraftapirequest Post"
+}
+```
