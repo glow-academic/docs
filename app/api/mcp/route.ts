@@ -7,10 +7,10 @@ import { canReadDoc, getVisibleSlugs, type UserContext } from "@/lib/authorizati
 
 const MD_DIR = join(process.cwd(), "public/md")
 
-// Keycloak JWKS for validating tokens forwarded by the MCP gateway
+// Glow API JWKS for validating tokens (Glow API is the OIDC provider for docs)
 const AUTH_ISSUER = process.env.AUTH_ISSUER || ""
 const JWKS = AUTH_ISSUER
-  ? createRemoteJWKSet(new URL(`${AUTH_ISSUER}/protocol/openid-connect/certs`))
+  ? createRemoteJWKSet(new URL(`${AUTH_ISSUER.replace(/\/$/, "")}/jwks`))
   : null
 
 async function getUserContext(): Promise<UserContext> {
@@ -18,14 +18,14 @@ async function getUserContext(): Promise<UserContext> {
     const hdrs = await headers()
     const authHeader = hdrs.get('authorization')
 
-    // Bearer token -- validate as Keycloak JWT (forwarded by MCP gateway)
+    // Bearer token — validate against Glow API JWKS
     if (authHeader?.startsWith('Bearer ') && JWKS) {
       try {
         const token = authHeader.slice(7)
-        await jwtVerify(token, JWKS, { issuer: AUTH_ISSUER })
+        await jwtVerify(token, JWKS)
         return { isAuthenticated: true }
       } catch {
-        // Token invalid or expired -- fall through
+        // Token invalid or expired — fall through
       }
     }
 
