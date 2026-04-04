@@ -1,0 +1,25 @@
+# `get_attempt`
+
+Get attempt detail with the canonical shared attempt bundle.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | UUID of the attempt to fetch |
+
+## Example
+
+```json
+{
+  "name": "get_attempt",
+  "arguments": {
+    "attempt_id": "<attempt_id>"
+  }
+}
+```
+
+## Related
+
+- [Attempt Guide](/attempt)
+- [API Endpoint](/api-reference/attempt/post-attempt-get)

@@ -1,0 +1,1946 @@
+{
+  "name": "Glow",
+  "tool_count": 29,
+  "tools": [
+    {
+      "name": "get_activity",
+      "description": "get activity",
+      "parameters": [
+        {
+          "name": "date_from",
+          "description": "Filter start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "date_to",
+          "description": "Filter end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department IDs to filter by",
+          "type": "array",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "roles",
+          "description": "Roles to filter by",
+          "type": "array",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "activity",
+      "operation": "get"
+    },
+    {
+      "name": "get_benchmark",
+      "description": "Get benchmark artifact data with the canonical shared benchmark operation.",
+      "parameters": [
+        {
+          "name": "start_date",
+          "description": "Filter start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "description": "Filter end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department IDs to filter by",
+          "type": "array",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_page",
+          "description": "History pagination page number",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "history_page_size",
+          "description": "History items per page",
+          "type": "integer",
+          "required": false,
+          "default": 10
+        },
+        {
+          "name": "history_eval_ids",
+          "description": "Eval IDs for history filter",
+          "type": "array",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_search",
+          "description": "Search string for history",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_archived",
+          "description": "Filter by archived status",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_sort_by",
+          "description": "History sort field",
+          "type": "string",
+          "required": false,
+          "default": "date"
+        },
+        {
+          "name": "history_sort_order",
+          "description": "History sort direction",
+          "type": "string",
+          "required": false,
+          "default": "desc"
+        }
+      ],
+      "artifact": "benchmark",
+      "operation": "get"
+    },
+    {
+      "name": "get_dashboard",
+      "description": "get dashboard",
+      "parameters": [
+        {
+          "name": "start_date",
+          "description": "Filter start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "description": "Filter end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "cohort_ids",
+          "description": "Cohort IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_ids",
+          "description": "Simulation IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "roles",
+          "description": "Roles to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_filters",
+          "description": "Simulation filter strings",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "actor_profile_id",
+          "description": "Acting user profile ID",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "target_profile_id",
+          "description": "Target profile ID to scope data",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "page_limit",
+          "description": "Max items per page",
+          "type": "integer",
+          "required": false,
+          "default": 50
+        },
+        {
+          "name": "page_offset",
+          "description": "Pagination offset",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "rubric_ids",
+          "description": "Rubric IDs for section picker",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "rubric_search",
+          "description": "Search string for rubrics",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_picker_ids",
+          "description": "Simulation picker IDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_picker_search",
+          "description": "Search string for simulations",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_ids",
+          "description": "Parameter IDs for section picker",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_search",
+          "description": "Search string for parameters",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_ids",
+          "description": "Scenario IDs for section picker",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_search",
+          "description": "Search string for scenarios",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_practice",
+          "description": "Filter to practice attempts only",
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "history_scenario_ids",
+          "description": "Scenario IDs for history filter",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_infinite_mode",
+          "description": "Filter by infinite mode status",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_show_archived",
+          "description": "Include archived attempts",
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "history_sort_by",
+          "description": "History sort field",
+          "type": "string",
+          "required": false,
+          "default": "date"
+        },
+        {
+          "name": "history_sort_order",
+          "description": "History sort direction",
+          "type": "string",
+          "required": false,
+          "default": "desc"
+        },
+        {
+          "name": "history_page",
+          "description": "History pagination page number",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "history_page_size",
+          "description": "History items per page",
+          "type": "integer",
+          "required": false,
+          "default": 20
+        },
+        {
+          "name": "history_simulation_search",
+          "description": "Search string for history simulations",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_scenario_search",
+          "description": "Search string for history scenarios",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "history_profile_search",
+          "description": "Search string for history profiles",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "dashboard",
+      "operation": "get"
+    },
+    {
+      "name": "get_leaderboard",
+      "description": "get leaderboard",
+      "parameters": [
+        {
+          "name": "start_date",
+          "description": "Filter start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "description": "Filter end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "cohort_ids",
+          "description": "Cohort IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_filters",
+          "description": "Simulation filter strings",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "target_profile_id",
+          "description": "Target profile ID to scope data",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "cohort_id",
+          "description": "Single cohort ID (deprecated)",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "leaderboard",
+      "operation": "get"
+    },
+    {
+      "name": "get_pricing",
+      "description": "Get pricing top chart \u2014 daily cost aggregation + filter options.",
+      "parameters": [
+        {
+          "name": "start_date",
+          "description": "Filter start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "description": "Filter end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "date_from",
+          "description": "Alias for start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "date_to",
+          "description": "Alias for end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "pricing",
+      "operation": "get"
+    },
+    {
+      "name": "search_reports",
+      "description": "Get reports artifact data via composable context resolver.",
+      "parameters": [
+        {
+          "name": "start_date",
+          "description": "Filter start date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "description": "Filter end date",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "cohort_ids",
+          "description": "Cohort IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_ids",
+          "description": "Simulation IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "roles",
+          "description": "Roles to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_filters",
+          "description": "Simulation filter strings",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "actor_profile_id",
+          "description": "Acting user profile ID",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "target_profile_id",
+          "description": "Target profile ID to scope data",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_ids",
+          "description": "Profile IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_ids",
+          "description": "Scenario IDs to filter by",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "search",
+          "description": "Search string",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "sort_by",
+          "description": "Sort field name",
+          "type": "string",
+          "required": false,
+          "default": "date"
+        },
+        {
+          "name": "sort_order",
+          "description": "Sort direction (asc or desc)",
+          "type": "string",
+          "required": false,
+          "default": "desc"
+        },
+        {
+          "name": "page_limit",
+          "description": "Max items per page",
+          "type": "integer",
+          "required": false,
+          "default": 50
+        },
+        {
+          "name": "page_offset",
+          "description": "Pagination offset",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        }
+      ],
+      "artifact": "reports",
+      "operation": "search"
+    },
+    {
+      "name": "get_attempt",
+      "description": "Get attempt detail with the canonical shared attempt bundle.",
+      "parameters": [
+        {
+          "name": "attempt_id",
+          "description": "UUID of the attempt to fetch",
+          "type": "string",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "attempt",
+      "operation": "get"
+    },
+    {
+      "name": "get_group",
+      "description": "Get detailed group information with all runs and messages.",
+      "parameters": [
+        {
+          "name": "group_id",
+          "description": "UUID of the group to fetch",
+          "type": "string",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "message_limit",
+          "description": "Maximum number of messages to return",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "message_offset",
+          "description": "Offset for message pagination",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "group",
+      "operation": "get"
+    },
+    {
+      "name": "get_session",
+      "description": "Get session detail with groups and timeline.",
+      "parameters": [
+        {
+          "name": "session_id",
+          "description": "UUID of the session to fetch",
+          "type": "string",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "session",
+      "operation": "get"
+    },
+    {
+      "name": "get_cohort",
+      "description": "Get cohort information using the canonical shared cohort operation.",
+      "parameters": [
+        {
+          "name": "cohort_id",
+          "description": "Cohort UUID to retrieve",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "descriptions_search",
+          "description": "Search query for descriptions",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_search",
+          "description": "Search query for simulations",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_show_selected",
+          "description": "Whether to show only selected simulations",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_search",
+          "description": "Search query for profiles",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_show_selected",
+          "description": "Whether to show only selected profiles",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "draft_id",
+          "description": "Draft UUID to load from",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "cohort",
+      "operation": "get"
+    },
+    {
+      "name": "search_cohort",
+      "description": "Search cohorts \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_profile_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_simulation_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_department_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "page_size",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": 10
+        },
+        {
+          "name": "page_offset",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": 0
+        }
+      ],
+      "artifact": "cohort",
+      "operation": "search"
+    },
+    {
+      "name": "delete_cohort",
+      "description": "Bulk delete cohorts \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "cohort_ids",
+          "description": "Cohort UUIDs to delete",
+          "type": "array",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "cohort",
+      "operation": "delete"
+    },
+    {
+      "name": "duplicate_cohort",
+      "description": "Duplicate a cohort \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "cohort_id",
+          "description": "Cohort UUID to duplicate",
+          "type": "string",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "cohort",
+      "operation": "duplicate"
+    },
+    {
+      "name": "draft_cohort",
+      "description": "Patch cohort draft \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "input_draft_id",
+          "description": "Existing draft UUID to patch",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "expected_version",
+          "description": "Expected draft version for concurrency control",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "name",
+          "description": "Name value to create a resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "name_id",
+          "description": "Existing name resource UUID",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "description": "Description value to create a resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description_id",
+          "description": "Existing description resource UUID",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_id",
+          "description": "Flag option UUID",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_ids",
+          "description": "Simulation UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_ids",
+          "description": "Profile UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_position_ids",
+          "description": "Existing simulation position UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_positions",
+          "description": "Simulation position values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_availability_ids",
+          "description": "Existing simulation availability UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_availability",
+          "description": "Simulation availability values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_persona_ids",
+          "description": "Existing profile persona UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "profile_personas",
+          "description": "Profile persona values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "cohort",
+      "operation": "draft"
+    },
+    {
+      "name": "get_persona",
+      "description": "Get persona information using the canonical shared persona operation.",
+      "parameters": [
+        {
+          "name": "persona_id",
+          "description": "UUID of the persona to retrieve",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "draft_id",
+          "description": "UUID of the draft to load instead of published state",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "color_search",
+          "description": "Filter color options by search text",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "icon_search",
+          "description": "Filter icon options by search text",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "descriptions_search",
+          "description": "Filter description options by search text",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "instructions_search",
+          "description": "Filter instruction options by search text",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_field_search",
+          "description": "Filter parameter field options by search text",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_ids",
+          "description": "Parameter group IDs to expand in the response",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "color_show_selected",
+          "description": "When true, only return currently selected colors",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "icon_show_selected",
+          "description": "When true, only return currently selected icons",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_field_show_selected",
+          "description": "When true, only return currently selected parameter fields",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "persona",
+      "operation": "get"
+    },
+    {
+      "name": "search_persona",
+      "description": "Search personas \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "search",
+          "description": "Full-text search query for personas",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_ids",
+          "description": "Filter by scenario UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "field_ids",
+          "description": "Filter by field UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_department_ids",
+          "description": "Filter by department UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_search",
+          "description": "Search text for scenario facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "field_search",
+          "description": "Search text for field facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_search",
+          "description": "Search text for department facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "color_search",
+          "description": "Search text for color facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "icon_search",
+          "description": "Search text for icon facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "voice_search",
+          "description": "Search text for voice facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "instruction_search",
+          "description": "Search text for instruction facet",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "page_size",
+          "description": "Number of results per page",
+          "type": "string",
+          "required": false,
+          "default": 12
+        },
+        {
+          "name": "page_offset",
+          "description": "Pagination offset",
+          "type": "string",
+          "required": false,
+          "default": 0
+        }
+      ],
+      "artifact": "persona",
+      "operation": "search"
+    },
+    {
+      "name": "delete_persona",
+      "description": "Bulk delete personas \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "persona_ids",
+          "description": "List of persona UUIDs to delete",
+          "type": "array",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "persona",
+      "operation": "delete"
+    },
+    {
+      "name": "duplicate_persona",
+      "description": "Duplicate a persona \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "persona_id",
+          "description": "UUID of the persona to duplicate",
+          "type": "string",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "persona",
+      "operation": "duplicate"
+    },
+    {
+      "name": "draft_persona",
+      "description": "Patch persona draft \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "input_draft_id",
+          "description": "Existing draft UUID to patch (omit to create a new draft)",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "expected_version",
+          "description": "Expected draft version for optimistic concurrency control",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "name",
+          "description": "Display name text (creates new name resource)",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "name_id",
+          "description": "UUID of an existing name resource to select",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "description": "Description text (creates new description resource)",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description_id",
+          "description": "UUID of an existing description resource to select",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "instructions",
+          "description": "Instruction template text (creates new instruction resource)",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "instructions_id",
+          "description": "UUID of an existing instruction resource to select",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "examples",
+          "description": "Example texts (creates new example resources)",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "example_ids",
+          "description": "Existing example resource UUIDs to select",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "color_id",
+          "description": "UUID of a color resource to select",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "icon_id",
+          "description": "UUID of an icon resource to select",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_id",
+          "description": "UUID of a flag option to set",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Department UUIDs to associate",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_field_ids",
+          "description": "Parameter field UUIDs to associate",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "voice_ids",
+          "description": "Voice resource UUIDs to associate",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "persona",
+      "operation": "draft"
+    },
+    {
+      "name": "get_scenario",
+      "description": "Get scenario information using the canonical shared scenario operation.",
+      "parameters": [
+        {
+          "name": "scenario_id",
+          "description": "UUID of the scenario to retrieve",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "document_ids",
+          "description": "Filter by document UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "problem_statement_ids",
+          "description": "Filter by problem statement UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_department_ids",
+          "description": "Filter by department UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_persona_ids",
+          "description": "Filter by persona UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_document_ids",
+          "description": "Filter by document UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_parameter_ids",
+          "description": "Filter by parameter UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_field_ids",
+          "description": "Filter by field UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "persona_search",
+          "description": "Search text to filter personas",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "document_search",
+          "description": "Search text to filter documents",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_search",
+          "description": "Search text to filter parameters",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description_search",
+          "description": "Search text to filter descriptions",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "problem_statement_search",
+          "description": "Search text to filter problem statements",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "image_search",
+          "description": "Search text to filter images",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "video_search",
+          "description": "Search text to filter videos",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "question_search",
+          "description": "Search text to filter questions",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "option_search",
+          "description": "Search text to filter options",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "persona_show_selected",
+          "description": "Show only selected personas",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "document_show_selected",
+          "description": "Show only selected documents",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_show_selected",
+          "description": "Show only selected parameters",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "field_show_selected_by_param",
+          "description": "Field-level show_selected filters by parameter",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "draft_id",
+          "description": "UUID of the draft to retrieve",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_ids",
+          "description": "Filter by parameter UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "scenario",
+      "operation": "get"
+    },
+    {
+      "name": "search_scenario",
+      "description": "Search scenarios \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "persona_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_department_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "persona_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "simulation_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "page_size",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": 10
+        },
+        {
+          "name": "page_offset",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": 0
+        }
+      ],
+      "artifact": "scenario",
+      "operation": "search"
+    },
+    {
+      "name": "delete_scenario",
+      "description": "Bulk delete scenarios \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "scenario_ids",
+          "description": "UUIDs of scenarios to delete",
+          "type": "array",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "scenario",
+      "operation": "delete"
+    },
+    {
+      "name": "duplicate_scenario",
+      "description": "Duplicate a scenario \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "scenario_id",
+          "description": "UUID of the scenario to duplicate",
+          "type": "string",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "scenario",
+      "operation": "duplicate"
+    },
+    {
+      "name": "draft_scenario",
+      "description": "Patch scenario draft \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "input_draft_id",
+          "description": "UUID of the input draft",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "expected_version",
+          "description": "Expected draft version for optimistic lock",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "name",
+          "description": "Display name value",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "name_id",
+          "description": "UUID of the name resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "description": "Description text value",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description_id",
+          "description": "UUID of the description resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "problem_statement",
+          "description": "Problem statement text value",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "problem_statement_id",
+          "description": "UUID of the problem statement resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "objectives",
+          "description": "Objective texts to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "objective_ids",
+          "description": "Existing objective UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "images",
+          "description": "Image values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "image_ids",
+          "description": "Existing image UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "videos",
+          "description": "Video values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "video_ids",
+          "description": "Existing video UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "questions",
+          "description": "Question values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "question_ids",
+          "description": "Existing question UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "options",
+          "description": "Option values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "option_ids",
+          "description": "Existing option UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_ids",
+          "description": "Associated flag UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Associated department UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "persona_ids",
+          "description": "Associated persona UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "document_ids",
+          "description": "Associated document UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "parameter_field_ids",
+          "description": "Associated parameter field UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "scenario",
+      "operation": "draft"
+    },
+    {
+      "name": "get_simulation",
+      "description": "Get simulation information using the canonical shared simulation operation.",
+      "parameters": [
+        {
+          "name": "simulation_id",
+          "description": "UUID of the simulation to retrieve",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "draft_id",
+          "description": "UUID of the draft to retrieve",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_search",
+          "description": "Search text to filter scenarios",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_scenario_ids",
+          "description": "Filter by scenario UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "simulation",
+      "operation": "get"
+    },
+    {
+      "name": "search_simulation",
+      "description": "Search simulations \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_scenario_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_cohort_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "filter_department_ids",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "cohort_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_search",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "page_size",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": 10
+        },
+        {
+          "name": "page_offset",
+          "description": "",
+          "type": "string",
+          "required": false,
+          "default": 0
+        }
+      ],
+      "artifact": "simulation",
+      "operation": "search"
+    },
+    {
+      "name": "delete_simulation",
+      "description": "Bulk delete simulations \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "simulation_ids",
+          "description": "UUIDs of simulations to delete",
+          "type": "array",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "simulation",
+      "operation": "delete"
+    },
+    {
+      "name": "duplicate_simulation",
+      "description": "Duplicate a simulation \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "simulation_id",
+          "description": "UUID of the simulation to duplicate",
+          "type": "string",
+          "required": true,
+          "default": null
+        }
+      ],
+      "artifact": "simulation",
+      "operation": "duplicate"
+    },
+    {
+      "name": "draft_simulation",
+      "description": "Patch simulation draft \u2014 composable infra architecture.",
+      "parameters": [
+        {
+          "name": "input_draft_id",
+          "description": "UUID of the input draft",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "expected_version",
+          "description": "Expected draft version for optimistic lock",
+          "type": "integer",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "name",
+          "description": "Display name value",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "name_id",
+          "description": "UUID of the name resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "description": "Description text value",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "description_id",
+          "description": "UUID of the description resource",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "flag_ids",
+          "description": "Associated flag UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "department_ids",
+          "description": "Associated department UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_ids",
+          "description": "Associated scenario UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_flag_ids",
+          "description": "Existing scenario flag UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_flags",
+          "description": "Scenario flag values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_position_ids",
+          "description": "Existing scenario position UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_positions",
+          "description": "Scenario position values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_rubric_ids",
+          "description": "Existing scenario rubric UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_rubrics",
+          "description": "Scenario rubric values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_time_limit_ids",
+          "description": "Existing scenario time limit UUIDs",
+          "type": "string",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scenario_time_limits",
+          "description": "Scenario time limit values to create",
+          "type": "string",
+          "required": false,
+          "default": null
+        }
+      ],
+      "artifact": "simulation",
+      "operation": "draft"
+    }
+  ]
+}

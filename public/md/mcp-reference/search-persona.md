@@ -1,0 +1,35 @@
+# `search_persona`
+
+Search personas — composable infra architecture.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Full-text search query for personas |
+| `scenario_ids` | `string` | No | Filter by scenario UUIDs |
+| `field_ids` | `string` | No | Filter by field UUIDs |
+| `filter_department_ids` | `string` | No | Filter by department UUIDs |
+| `scenario_search` | `string` | No | Search text for scenario facet |
+| `field_search` | `string` | No | Search text for field facet |
+| `department_search` | `string` | No | Search text for department facet |
+| `color_search` | `string` | No | Search text for color facet |
+| `icon_search` | `string` | No | Search text for icon facet |
+| `voice_search` | `string` | No | Search text for voice facet |
+| `instruction_search` | `string` | No | Search text for instruction facet |
+| `page_size` | `string` | No | Number of results per page (default: `12`) |
+| `page_offset` | `string` | No | Pagination offset (default: `0`) |
+
+## Example
+
+```json
+{
+  "name": "search_persona",
+  "arguments": {}
+}
+```
+
+## Related
+
+- [Persona Guide](/persona)
+- [API Endpoint](/api-reference/personas/post-personas-search)

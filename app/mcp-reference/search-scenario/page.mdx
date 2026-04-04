@@ -1,0 +1,32 @@
+# `search_scenario`
+
+Search scenarios — composable infra architecture.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `persona_ids` | `string` | No | — |
+| `simulation_ids` | `string` | No | — |
+| `filter_department_ids` | `string` | No | — |
+| `persona_search` | `string` | No | — |
+| `simulation_search` | `string` | No | — |
+| `department_search` | `string` | No | — |
+| `flag_search` | `string` | No | — |
+| `page_size` | `string` | No | — (default: `10`) |
+| `page_offset` | `string` | No | — (default: `0`) |
+
+## Example
+
+```json
+{
+  "name": "search_scenario",
+  "arguments": {}
+}
+```
+
+## Related
+
+- [Scenario Guide](/scenario)
+- [API Endpoint](/api-reference/scenarios/post-scenarios-search)

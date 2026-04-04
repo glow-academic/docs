@@ -9,6 +9,9 @@ specs:
   glow-api:
     repo: learnloopllc/glow-api
     asset: openapi.json
+  glow-mcp:
+    repo: learnloopllc/glow-api
+    asset: mcp-tools.json
   cli:
     repo: learnloopllc/glow-cli
     asset: cli-spec.json

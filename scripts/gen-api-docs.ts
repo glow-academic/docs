@@ -78,6 +78,11 @@ interface CliSpec extends CliCommand {
   media_actions?: CliCommand[]
 }
 
+// MCP tool spec types (from export-mcp-tools.py)
+interface McpToolParam { name: string; type: string; required: boolean; description?: string; default?: any }
+interface McpTool { name: string; description: string; parameters: McpToolParam[]; artifact?: string; operation?: string }
+interface McpSpec { name: string; tool_count: number; tools: McpTool[] }
+
 const HTTP_METHODS = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options']
 
 // ── OpenAPI resolution ──────────────────────────────────────────
@@ -293,6 +298,53 @@ function renderCliCommandPage(rootName: string, cmd: CliCommand, prefix: string)
   return lines
 }
 
+/** Render a single MCP tool reference page */
+function renderMcpToolPage(tool: McpTool, guideSlug?: string, apiEndpointPath?: string): string[] {
+  const lines: string[] = []
+
+  lines.push(`# \`${tool.name}\``)
+  lines.push('')
+  if (tool.description) { lines.push(escapeMdx(tool.description)); lines.push('') }
+
+  if (tool.parameters.length > 0) {
+    lines.push('## Parameters')
+    lines.push('')
+    lines.push('| Name | Type | Required | Description |')
+    lines.push('|---|---|---|---|')
+    for (const p of tool.parameters) {
+      const def = p.default !== undefined && p.default !== null ? ` (default: \`${p.default}\`)` : ''
+      lines.push(`| \`${p.name}\` | \`${p.type}\` | ${p.required ? 'Yes' : 'No'} | ${escapeMdx(p.description || '—')}${def} |`)
+    }
+    lines.push('')
+  } else {
+    lines.push('*No parameters.*')
+    lines.push('')
+  }
+
+  lines.push('## Example')
+  lines.push('')
+  lines.push('```json')
+  const exArgs: Record<string, any> = {}
+  for (const p of tool.parameters.filter(p => p.required)) {
+    exArgs[p.name] = p.type === 'integer' ? 0 : p.type === 'array' ? [] : `<${p.name}>`
+  }
+  lines.push(JSON.stringify({ name: tool.name, arguments: exArgs }, null, 2))
+  lines.push('```')
+  lines.push('')
+
+  const related: string[] = []
+  if (guideSlug) related.push(`- [${titleCase(guideSlug)} Guide](/${guideSlug})`)
+  if (apiEndpointPath) related.push(`- [API Endpoint](${apiEndpointPath})`)
+  if (related.length > 0) {
+    lines.push('## Related')
+    lines.push('')
+    lines.push(...related)
+    lines.push('')
+  }
+
+  return lines
+}
+
 // ── Display names ───────────────────────────────────────────────
 
 const DISPLAY_NAMES: Record<string, string> = {
@@ -347,8 +399,10 @@ function main() {
 
   let apiSpec: OpenAPISpec | null = null
   let cliSpec: CliSpec | null = null
+  let mcpSpec: McpSpec | null = null
   try { apiSpec = JSON.parse(readFileSync(join(specsDir, 'glow-api.json'), 'utf-8')) } catch (e: any) { console.log(`  skip: glow-api.json (${e.message})`) }
   try { cliSpec = JSON.parse(readFileSync(join(specsDir, 'cli.json'), 'utf-8')) } catch (e: any) { console.log(`  skip: cli.json (${e.message})`) }
+  try { mcpSpec = JSON.parse(readFileSync(join(specsDir, 'glow-mcp.json'), 'utf-8')) } catch (e: any) { console.log(`  skip: glow-mcp.json (${e.message})`) }
 
   if (!apiSpec) { console.log('No Glow API spec found'); return }
 
@@ -560,6 +614,65 @@ function main() {
     console.log(`  cli: ${totalCliCommands} command pages`)
   }
 
+  // ── MCP Reference ────────────────────────────────────────────
+  // Generate mcp-reference/ with per-tool pages from MCP tool spec
+
+  const mcpRefDir = join(appDir, 'mcp-reference')
+  rmSync(mcpRefDir, { recursive: true, force: true })
+  let totalMcpTools = 0
+
+  if (mcpSpec && mcpSpec.tools.length > 0) {
+    mkdirSync(mcpRefDir, { recursive: true })
+    const mcpRefMeta: Record<string, string> = {}
+
+    for (const tool of mcpSpec.tools) {
+      const toolSlug = slugify(tool.name)
+      const toolDir = join(mcpRefDir, toolSlug)
+      mkdirSync(toolDir, { recursive: true })
+
+      // Map artifact → guide page and API endpoint
+      let guideSlug: string | undefined
+      let apiEndpointPath: string | undefined
+
+      if (tool.artifact) {
+        guideSlug = tool.artifact
+
+        // Find matching API tag (try artifact name, then plural form)
+        const candidates = [tool.artifact, tool.artifact + 's']
+        for (const candidate of candidates) {
+          if (tagged.has(candidate)) {
+            const tagSlug = slugify(candidate)
+            const endpoints = tagged.get(candidate)!
+            for (const [path, method] of endpoints) {
+              if (path.endsWith(`/${tool.operation}`)) {
+                apiEndpointPath = `/api-reference/${tagSlug}/${endpointSlug(method, path)}`
+                break
+              }
+            }
+            if (!apiEndpointPath) apiEndpointPath = `/api-reference/${tagSlug}`
+            break
+          }
+        }
+      }
+
+      const lines = renderMcpToolPage(tool, guideSlug, apiEndpointPath)
+      writeFileSync(join(toolDir, 'page.mdx'), lines.join('\n'))
+      writeMdCopy(`/mcp-reference/${toolSlug}`, tool.name, lines.join('\n'))
+
+      mcpRefMeta[toolSlug] = tool.name
+      totalMcpTools++
+    }
+
+    const mcpMetaLines = ['export default {']
+    for (const [key, label] of Object.entries(mcpRefMeta)) {
+      mcpMetaLines.push(`  '${key}': '${label}',`)
+    }
+    mcpMetaLines.push('}', '')
+    writeFileSync(join(mcpRefDir, '_meta.ts'), mcpMetaLines.join('\n'))
+
+    console.log(`  mcp: ${totalMcpTools} tool pages`)
+  }
+
   // ── Guide placeholders ────────────────────────────────────────
 
   for (const [tag] of tagged) {
@@ -601,6 +714,21 @@ function main() {
       if (summary) { llmsLines.push(escapeMdx(summary)); llmsLines.push('') }
     }
   }
+  if (mcpSpec && mcpSpec.tools.length > 0) {
+    llmsLines.push('## MCP Tools', '')
+    for (const tool of mcpSpec.tools) {
+      llmsLines.push(`### \`${tool.name}\``, '')
+      if (tool.description) llmsLines.push(escapeMdx(tool.description), '')
+      if (tool.parameters.length > 0) {
+        llmsLines.push('| Name | Type | Required | Description |', '|---|---|---|---|')
+        for (const p of tool.parameters) {
+          llmsLines.push(`| \`${p.name}\` | \`${p.type}\` | ${p.required ? 'Yes' : 'No'} | ${escapeMdx(p.description || '—')} |`)
+        }
+        llmsLines.push('')
+      }
+      llmsLines.push('---', '')
+    }
+  }
   mkdirSync(join(ROOT, 'public'), { recursive: true })
   writeFileSync(join(ROOT, 'public/llms-full.txt'), llmsLines.join('\n'))
 
@@ -623,6 +751,12 @@ function main() {
     summary.push('', '## CLI Reference', '')
     for (const cmd of (cliSpec.subcommands || []).filter(c => !CLI_SKIP.has(c.name))) {
       summary.push(`- [${rootName} ${cmd.name}](/cli-reference/${cmd.name}.md)`)
+    }
+  }
+  if (mcpSpec && mcpSpec.tools.length > 0) {
+    summary.push('', '## MCP Reference', '')
+    for (const tool of mcpSpec.tools) {
+      summary.push(`- [${tool.name}](/mcp-reference/${slugify(tool.name)}.md)`)
     }
   }
   summary.push('')

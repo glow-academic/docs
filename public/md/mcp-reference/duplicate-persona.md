@@ -1,0 +1,25 @@
+# `duplicate_persona`
+
+Duplicate a persona — composable infra architecture.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `persona_id` | `string` | Yes | UUID of the persona to duplicate |
+
+## Example
+
+```json
+{
+  "name": "duplicate_persona",
+  "arguments": {
+    "persona_id": "<persona_id>"
+  }
+}
+```
+
+## Related
+
+- [Persona Guide](/persona)
+- [API Endpoint](/api-reference/personas/post-personas-duplicate)

@@ -1,0 +1,25 @@
+# `delete_simulation`
+
+Bulk delete simulations — composable infra architecture.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `simulation_ids` | `array` | Yes | UUIDs of simulations to delete |
+
+## Example
+
+```json
+{
+  "name": "delete_simulation",
+  "arguments": {
+    "simulation_ids": []
+  }
+}
+```
+
+## Related
+
+- [Simulation Guide](/simulation)
+- [API Endpoint](/api-reference/simulations/post-simulations-delete)

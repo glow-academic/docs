@@ -1,0 +1,25 @@
+# `get_session`
+
+Get session detail with groups and timeline.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `session_id` | `string` | Yes | UUID of the session to fetch |
+
+## Example
+
+```json
+{
+  "name": "get_session",
+  "arguments": {
+    "session_id": "<session_id>"
+  }
+}
+```
+
+## Related
+
+- [Session Guide](/session)
+- [API Endpoint](/api-reference/session/post-session-get)

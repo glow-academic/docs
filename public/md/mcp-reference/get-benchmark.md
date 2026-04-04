@@ -1,0 +1,32 @@
+# `get_benchmark`
+
+Get benchmark artifact data with the canonical shared benchmark operation.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `department_ids` | `array` | No | Department IDs to filter by |
+| `history_page` | `integer` | No | History pagination page number (default: `0`) |
+| `history_page_size` | `integer` | No | History items per page (default: `10`) |
+| `history_eval_ids` | `array` | No | Eval IDs for history filter |
+| `history_search` | `string` | No | Search string for history |
+| `history_archived` | `string` | No | Filter by archived status |
+| `history_sort_by` | `string` | No | History sort field (default: `date`) |
+| `history_sort_order` | `string` | No | History sort direction (default: `desc`) |
+
+## Example
+
+```json
+{
+  "name": "get_benchmark",
+  "arguments": {}
+}
+```
+
+## Related
+
+- [Benchmark Guide](/benchmark)
+- [API Endpoint](/api-reference/benchmark/post-benchmark-get)

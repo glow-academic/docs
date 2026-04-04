@@ -1,0 +1,39 @@
+# `draft_simulation`
+
+Patch simulation draft — composable infra architecture.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `input_draft_id` | `string` | No | UUID of the input draft |
+| `expected_version` | `integer` | No | Expected draft version for optimistic lock (default: `0`) |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_ids` | `string` | No | Associated flag UUIDs |
+| `department_ids` | `string` | No | Associated department UUIDs |
+| `scenario_ids` | `string` | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string` | No | Existing scenario flag UUIDs |
+| `scenario_flags` | `string` | No | Scenario flag values to create |
+| `scenario_position_ids` | `string` | No | Existing scenario position UUIDs |
+| `scenario_positions` | `string` | No | Scenario position values to create |
+| `scenario_rubric_ids` | `string` | No | Existing scenario rubric UUIDs |
+| `scenario_rubrics` | `string` | No | Scenario rubric values to create |
+| `scenario_time_limit_ids` | `string` | No | Existing scenario time limit UUIDs |
+| `scenario_time_limits` | `string` | No | Scenario time limit values to create |
+
+## Example
+
+```json
+{
+  "name": "draft_simulation",
+  "arguments": {}
+}
+```
+
+## Related
+
+- [Simulation Guide](/simulation)
+- [API Endpoint](/api-reference/simulations/patch-simulations-draft)

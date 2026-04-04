@@ -1,0 +1,25 @@
+# `duplicate_cohort`
+
+Duplicate a cohort — composable infra architecture.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `cohort_id` | `string` | Yes | Cohort UUID to duplicate |
+
+## Example
+
+```json
+{
+  "name": "duplicate_cohort",
+  "arguments": {
+    "cohort_id": "<cohort_id>"
+  }
+}
+```
+
+## Related
+
+- [Cohort Guide](/cohort)
+- [API Endpoint](/api-reference/cohorts/post-cohorts-duplicate)

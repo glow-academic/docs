@@ -9,8 +9,8 @@ on:
       origin:
         description: 'Docs origin URL (e.g. https://docs-glow-demo.learn-loop.org)'
         required: true
-      parent_deployment_id:
-        description: 'Parent API deployment UUID (for Docker network connectivity)'
+      instance_id:
+        description: 'Instance UUID (for Docker network connectivity)'
         required: true
       version:
         description: 'Image version (e.g. v1.0.0 or latest)'
@@ -119,12 +119,12 @@ jobs:
         run: |
           IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:\${DOCS_VERSION}"
           DOMAIN="${{ steps.parse-origin.outputs.domain }}"
-          PARENT_NETWORK="glow-${{ inputs.parent_deployment_id }}"
+          PARENT_NETWORK="glow-${{ inputs.instance_id }}"
 
           # Resolve parent API URL
           API_URL="${{ inputs.api_url }}"
           if [ -z "$API_URL" ]; then
-            API_URL="https://${{ inputs.parent_deployment_id }}.learn-loop.org"
+            API_URL="https://${{ inputs.instance_id }}.learn-loop.org"
           fi
 
           cat > "$DEPLOY_DIR/docker-compose.yml" <<COMPOSE
@@ -223,7 +223,7 @@ jobs:
 
           bash "$DEPLOY_DIR/scripts/provision.sh" deploy \
             --name "${{ inputs.deployment_id }}" \
-            --parent-deployment-id "${{ inputs.parent_deployment_id }}" \
+            --instance-id "${{ inputs.instance_id }}" \
             ${API_DOMAIN:+--api-domain "$API_DOMAIN"} \
             --subdomain "${{ steps.parse-origin.outputs.subdomain }}" \
             --base-domain "${{ steps.parse-origin.outputs.base-domain }}" \
