@@ -84,12 +84,16 @@ jobs:
         if: steps.check.outputs.released == 'true'
         run: |
           python3 -c "
-          import yaml, json
-          with open('compat.yml') as f:
-              data = yaml.safe_load(f)
-          data['version'] = '${{ steps.version.outputs.version }}'
+          import json
+          with open('api-versions.json') as f:
+              versions = json.load(f)
+          compat = {
+              'component': 'glow-docs',
+              'min_glow_api': versions['glow-api']['version'],
+              'version': '${{ steps.version.outputs.version }}',
+          }
           with open('compat.json', 'w') as f:
-              json.dump(data, f, indent=2)
+              json.dump(compat, f, indent=2)
           "
 
       - uses: docker/login-action@v4
