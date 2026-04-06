@@ -22,6 +22,7 @@
 - [Cohorts API](/api-reference/cohorts.md)
 - [Dashboard API](/api-reference/dashboard.md)
 - [Departments API](/api-reference/departments.md)
+- [Docs Proxy API](/api-reference/docs-proxy.md)
 - [Documents API](/api-reference/documents.md)
 - [Evals API](/api-reference/evals.md)
 - [Fields API](/api-reference/fields.md)
@@ -57,10 +58,11 @@
 - [glow unemulate](/cli-reference/unemulate.md)
 - [glow generate](/cli-reference/generate.md)
 - [glow stream](/cli-reference/stream.md)
+- [glow connect](/cli-reference/connect.md)
+- [glow disconnect](/cli-reference/disconnect.md)
+- [glow problem](/cli-reference/problem.md)
 - [glow instances](/cli-reference/instances.md)
 - [glow use](/cli-reference/use.md)
-- [glow ledger](/cli-reference/ledger.md)
-- [glow admin](/cli-reference/admin.md)
 
 ## MCP Reference
 

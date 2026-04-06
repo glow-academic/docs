@@ -8,6 +8,7 @@ export default {
   'cohorts': 'Cohorts',
   'dashboard': 'Dashboard',
   'departments': 'Departments',
+  'docs-proxy': 'Docs Proxy',
   'documents': 'Documents',
   'evals': 'Evals',
   'fields': 'Fields',

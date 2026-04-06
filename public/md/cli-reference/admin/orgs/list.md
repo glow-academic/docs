@@ -1,9 +1,0 @@
-# `glow admin orgs list`
-
-List your organizations
-
-## Usage
-
-```bash
-glow admin orgs list
-```

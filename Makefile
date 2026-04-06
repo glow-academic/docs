@@ -29,7 +29,7 @@ sync-types:
 	@curl -sf $(GLOW_CLI_URL)/cli-spec.json -o public/specs/cli.json && echo "  ✅ cli.json from $(GLOW_CLI_URL)" || echo "  ❌ cli: could not reach $(GLOW_CLI_URL)"
 	@API_VER=$$(jq -r '.info.version // "unknown"' public/specs/glow-api.json 2>/dev/null || echo "unknown") && \
 		CLI_VER=$$(jq -r '.version // "unknown"' public/specs/cli.json 2>/dev/null || echo "unknown") && \
-		echo "{\"glow-api\":{\"version\":\"$$API_VER\",\"synced_at\":\"$$(date -u +%%Y-%%m-%%dT%%H:%%M:%%SZ)\"},\"cli\":{\"version\":\"$$CLI_VER\",\"synced_at\":\"$$(date -u +%%Y-%%m-%%dT%%H:%%M:%%SZ)\"}}" | python3 -m json.tool > api-versions.json
+		echo "{\"glow-api\":{\"version\":\"$$API_VER\",\"synced_at\":\"$$(date -u +%Y-%m-%dT%H:%M:%SZ)\"},\"cli\":{\"version\":\"$$CLI_VER\",\"synced_at\":\"$$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}}" | python3 -m json.tool > api-versions.json
 	@echo ""
 	@echo "Generating docs..."
 	@bun run scripts/gen-api-docs.ts

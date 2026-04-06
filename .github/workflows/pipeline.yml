@@ -45,7 +45,7 @@ jobs:
       - name: Read version
         id: version
         run: |
-          VERSION=$(cat version.txt | tr -d '[:space:]')
+          VERSION=$(node -p "require('./package.json').version")
           BRANCH="${{ github.ref_name }}"
           if [ "$BRANCH" = "beta" ]; then
             TAG="v${VERSION}-beta"

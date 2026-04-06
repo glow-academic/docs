@@ -10,6 +10,7 @@ export default {
   'post-attempt-next': 'POST /next',
   'post-attempt-end': 'POST /end',
   'post-attempt-end-all': 'POST /end-all',
+  'post-attempt-expire': 'POST /expire',
   'post-attempt-message': 'POST /message',
   'post-attempt-grade': 'POST /grade',
   'post-attempt-stop': 'POST /stop',

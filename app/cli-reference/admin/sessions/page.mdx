@@ -1,9 +1,0 @@
-# `glow admin sessions`
-
-Show all active login sessions
-
-## Usage
-
-```bash
-glow admin sessions
-```

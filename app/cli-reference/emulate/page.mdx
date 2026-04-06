@@ -13,4 +13,4 @@ glow emulate target_profile_id <target_profile_id> [--ttl]
 | Flag | Required | Description |
 |---|---|---|
 | `target_profile_id` | Yes | Target profile ID to emulate |
-| `--ttl` | No | TTL in seconds |
+| `--ttl` | No | TTL in minutes (default: 120 = 2 hours) |

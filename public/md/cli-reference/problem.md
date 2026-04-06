@@ -1,0 +1,16 @@
+# `glow problem`
+
+Report a problem
+
+## Usage
+
+```bash
+glow problem --kind <kind> --message <message>
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--kind` | Yes | Problem type |
+| `--message` | Yes | Problem description |

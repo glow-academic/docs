@@ -124,6 +124,10 @@ End Attempt
 
 End All Attempt
 
+### `POST` `/attempt/expire`
+
+Expire
+
 ### `POST` `/attempt/message`
 
 Attempt Message
@@ -383,6 +387,12 @@ Parse Department Csv
 ### `POST` `/departments/refresh`
 
 Department Refresh
+
+## Docs Proxy
+
+### `POST` `/docs-mcp`
+
+Docs Mcp Proxy
 
 ## Documents
 

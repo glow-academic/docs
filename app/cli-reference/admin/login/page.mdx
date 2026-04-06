@@ -1,9 +1,0 @@
-# `glow admin login`
-
-Authenticate with LearnLoop API (OAuth)
-
-## Usage
-
-```bash
-glow admin login
-```
