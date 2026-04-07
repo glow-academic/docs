@@ -17,6 +17,9 @@ env:
 
 jobs:
   # ── Stage 1: Test ───────────────────────────────────────────
+  # Lightweight check — full build happens in the Docker image (release stage).
+  # A full `next build` with 946 MDX pages needs 8GB+ and takes ~7min;
+  # the Docker builder already handles this with NODE_OPTIONS.
   test:
     runs-on: self-hosted
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
@@ -25,8 +28,8 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      - name: Build
-        run: bun run build
+      - name: Typecheck
+        run: bunx tsc --noEmit
 
   # ── Stage 2: Release ────────────────────────────────────────
   release:
