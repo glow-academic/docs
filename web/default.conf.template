@@ -30,16 +30,14 @@ server {
         add_header Content-Type text/plain;
     }
 
-    # MCP proxy — forwards to Glow API's MCP endpoint.
-    # Works for airgapped deployments where only the docs site is public.
-    # MCP_BACKEND is set by docker-compose (defaults to glow-api:8000).
+    # MCP server — docs tools (search, API reference, CLI reference, etc.)
+    # Served by the Next.js app via MCP Streamable HTTP protocol.
+    # Auth handled by better-auth OAuth (docs domain) or Glow API JWT.
     location = /mcp {
-        set $mcp_backend "${MCP_BACKEND}";
-        proxy_pass         http://$mcp_backend/mcp/;
+        set $backend $app_backend;
+        proxy_pass         http://$backend;
         proxy_http_version 1.1;
-        # Send internal hostname to pass MCP DNS rebinding check;
-        # X-Forwarded-Host carries the real domain for OAuth URLs
-        proxy_set_header   Host              glow-api;
+        proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto $forwarded_proto;
@@ -52,50 +50,9 @@ server {
         proxy_send_timeout 3600;
     }
 
-    # MCP sub-paths (/.well-known, /mcp/sse, etc.)
-    location ^~ /mcp/ {
-        set $mcp_backend "${MCP_BACKEND}";
-        proxy_pass         http://$mcp_backend;
-        proxy_http_version 1.1;
-        proxy_set_header   Host              glow-api;
-        proxy_set_header   X-Real-IP         $remote_addr;
-        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Proto $forwarded_proto;
-        proxy_set_header   X-Forwarded-Host  $host;
-
-        proxy_buffering    off;
-        proxy_cache        off;
-        proxy_read_timeout 3600;
-        proxy_send_timeout 3600;
-    }
-
-    # MCP proxy auth — JWKS endpoint for token verification
-    location = /.well-known/learnloop-jwks.json {
-        set $mcp_backend "${MCP_BACKEND}";
-        proxy_pass http://$mcp_backend;
-        proxy_set_header Host glow-api;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Proto $forwarded_proto;
-    }
-
-    # MCP OAuth discovery (must be at root per RFC 8414)
-    location = /.well-known/oauth-authorization-server {
-        set $mcp_backend "${MCP_BACKEND}";
-        proxy_pass http://$mcp_backend;
-        proxy_set_header Host glow-api;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Proto $forwarded_proto;
-    }
-
-    location = /.well-known/oauth-protected-resource {
-        set $mcp_backend "${MCP_BACKEND}";
-        proxy_pass http://$mcp_backend;
-        proxy_set_header Host glow-api;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Proto $forwarded_proto;
-    }
-
     # Docs app — everything else
+    # This handles /.well-known/* (served by better-auth for OAuth discovery),
+    # /api/auth/* (better-auth OAuth endpoints), and all doc pages.
     location / {
         set $backend $app_backend;
         proxy_pass         http://$backend;
@@ -103,7 +60,7 @@ server {
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_set_header   X-Forwarded-Proto $forwarded_proto;
         proxy_set_header   X-Forwarded-Host  $host;
     }
 

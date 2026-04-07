@@ -21,7 +21,7 @@ const PUBLIC_PATHS = new Set([
 ])
 
 // Prefixes that are always public
-const PUBLIC_PREFIXES = ['/api/', '/_next', '/favicon.ico', '/.well-known']
+const PUBLIC_PREFIXES = ['/api/', '/_next', '/favicon.ico', '/.well-known', '/mcp']
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
