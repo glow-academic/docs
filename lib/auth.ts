@@ -24,7 +24,7 @@ export const auth = betterAuth({
     // Any MCP client can register via /api/auth/oauth2/register
     oidcProvider({
       allowDynamicClientRegistration: true,
-      loginPage: "/",
+      loginPage: "/auth/login",
     }),
   ],
 })
