@@ -26,10 +26,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - run: bun install --frozen-lockfile
+      - run: npm install --prefer-offline
 
       - name: Typecheck
-        run: bunx tsc --noEmit
+        run: npx tsc --noEmit
 
   # ── Stage 2: Release ────────────────────────────────────────
   release:
