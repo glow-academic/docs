@@ -6,7 +6,7 @@ export async function GET() {
     authorization_endpoint: `${DOCS_URL}/api/auth/oauth2/authorize`,
     token_endpoint: `${DOCS_URL}/api/auth/oauth2/token`,
     registration_endpoint: `${DOCS_URL}/api/auth/oauth2/register`,
-    scopes_supported: ["openid", "profile", "email", "mcp:tools", "mcp:docs"],
+    scopes_supported: ["openid", "profile", "email"],
     response_types_supported: ["code"],
     grant_types_supported: ["authorization_code"],
     token_endpoint_auth_methods_supported: ["client_secret_post", "client_secret_basic"],
