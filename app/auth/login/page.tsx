@@ -12,9 +12,7 @@ function LoginFlow() {
     triggered.current = true
 
     const params = searchParams.toString()
-    const callbackURL = params
-      ? `/api/auth/oauth2/authorize?${params}`
-      : "/"
+    const callbackURL = params ? `/api/auth/oauth2/authorize?${params}` : "/"
 
     fetch("/api/auth/sign-in/social", {
       method: "POST",
@@ -23,12 +21,8 @@ function LoginFlow() {
       body: JSON.stringify({ provider: "glow", callbackURL }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data.url) window.location.href = data.url
-      })
-      .catch(() => {
-        window.location.href = "/"
-      })
+      .then((data) => { if (data.url) window.location.href = data.url })
+      .catch(() => { window.location.href = "/" })
   }, [searchParams])
 
   return null
@@ -36,31 +30,22 @@ function LoginFlow() {
 
 export default function LoginPage() {
   return (
-    <div className="w-full max-w-sm mx-auto text-center">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8">
-        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mx-auto mb-4">
-          <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    <div style={{ textAlign: "center", maxWidth: "20rem", width: "100%", padding: "0 1rem" }}>
+      <div style={{ background: "white", borderRadius: "1rem", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", border: "1px solid #e5e7eb", padding: "2.5rem 2rem" }}>
+        <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#dbeafe", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
+          <svg width="20" height="20" fill="none" stroke="#3b82f6" viewBox="0 0 24 24" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
         </div>
-        <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
-          Signing in
-        </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-          Redirecting to Glow...
-        </p>
-        <div className="flex justify-center">
-          <div className="h-1.5 w-24 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-500 rounded-full animate-[loading_1.5s_ease-in-out_infinite]" style={{ width: "60%" }} />
-          </div>
+        <h1 style={{ fontSize: "1.125rem", fontWeight: 600, color: "#111827", marginBottom: "0.25rem" }}>Signing in</h1>
+        <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>Redirecting to Glow...</p>
+        <div style={{ height: 6, width: "6rem", background: "#e5e7eb", borderRadius: 3, margin: "0 auto", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: "40%", background: "#3b82f6", borderRadius: 3, animation: "slide 1.2s ease-in-out infinite" }} />
         </div>
       </div>
-      <p className="mt-4 text-xs text-gray-400 dark:text-gray-500">
-        Glow Docs
-      </p>
-      <Suspense>
-        <LoginFlow />
-      </Suspense>
+      <p style={{ marginTop: "1rem", fontSize: "0.75rem", color: "#9ca3af" }}>Glow Docs</p>
+      <style>{`@keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }`}</style>
+      <Suspense><LoginFlow /></Suspense>
     </div>
   )
 }
