@@ -19,7 +19,7 @@ COPY --from=deps /app/node_modules ./node_modules
 # Rebuild native modules (better-sqlite3) against this glibc
 RUN npm rebuild better-sqlite3
 COPY . .
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS="--max-old-space-size=8192"
 RUN npx next build
 
 ############################
