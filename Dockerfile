@@ -32,4 +32,6 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 EXPOSE 3000
-CMD ["node", "server.js"]
+# Create better-auth SQLite tables on startup (idempotent)
+COPY scripts/init-auth-db.js ./
+CMD ["node", "-e", "require('./init-auth-db.js'); require('child_process').execSync('node server.js', {stdio: 'inherit'})"]

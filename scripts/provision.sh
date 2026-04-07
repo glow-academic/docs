@@ -40,6 +40,11 @@ case "$COMMAND" in
     DOMAIN="${SUBDOMAIN}.${BASE_DOMAIN}"
     DEPLOY_NETWORK="glow-${INSTANCE_ID}"
 
+    # Skip API_DOMAIN if it matches DOMAIN (airgapped — same host)
+    if [ "${API_DOMAIN:-}" = "$DOMAIN" ]; then
+      API_DOMAIN=""
+    fi
+
     # Ensure external networks exist (API creates the deployment network;
     # this is a no-op if it already exists)
     docker network create "$DEPLOY_NETWORK" 2>/dev/null || true
@@ -72,24 +77,24 @@ services:
           memory: 512M
           cpus: '1.0'
     extra_hosts:
-    - ${DOMAIN}:host-gateway${API_DOMAIN:+
-    - ${API_DOMAIN}:host-gateway}
+      ${DOMAIN}: host-gateway${API_DOMAIN:+
+      ${API_DOMAIN}: host-gateway}
   app-blue:
     networks:
       deployment:
         aliases:
         - docs
     extra_hosts:
-    - ${DOMAIN}:host-gateway${API_DOMAIN:+
-    - ${API_DOMAIN}:host-gateway}
+      ${DOMAIN}: host-gateway${API_DOMAIN:+
+      ${API_DOMAIN}: host-gateway}
   app-green:
     networks:
       deployment:
         aliases:
         - docs
     extra_hosts:
-    - ${DOMAIN}:host-gateway${API_DOMAIN:+
-    - ${API_DOMAIN}:host-gateway}
+      ${DOMAIN}: host-gateway${API_DOMAIN:+
+      ${API_DOMAIN}: host-gateway}
   docker-gen:
     container_name: ${NAME}-docker-gen
 networks:
