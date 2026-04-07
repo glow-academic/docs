@@ -37,7 +37,9 @@ server {
         set $mcp_backend "${MCP_BACKEND}";
         proxy_pass         http://$mcp_backend/mcp/;
         proxy_http_version 1.1;
-        proxy_set_header   Host              $host;
+        # Send internal hostname to pass MCP DNS rebinding check;
+        # X-Forwarded-Host carries the real domain for OAuth URLs
+        proxy_set_header   Host              glow-api;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto $forwarded_proto;
@@ -55,7 +57,7 @@ server {
         set $mcp_backend "${MCP_BACKEND}";
         proxy_pass         http://$mcp_backend;
         proxy_http_version 1.1;
-        proxy_set_header   Host              $host;
+        proxy_set_header   Host              glow-api;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto $forwarded_proto;
@@ -71,7 +73,7 @@ server {
     location = /.well-known/learnloop-jwks.json {
         set $mcp_backend "${MCP_BACKEND}";
         proxy_pass http://$mcp_backend;
-        proxy_set_header Host $host;
+        proxy_set_header Host glow-api;
         proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Forwarded-Proto $forwarded_proto;
     }
@@ -80,7 +82,7 @@ server {
     location = /.well-known/oauth-authorization-server {
         set $mcp_backend "${MCP_BACKEND}";
         proxy_pass http://$mcp_backend;
-        proxy_set_header Host $host;
+        proxy_set_header Host glow-api;
         proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Forwarded-Proto $forwarded_proto;
     }
@@ -88,7 +90,7 @@ server {
     location = /.well-known/oauth-protected-resource {
         set $mcp_backend "${MCP_BACKEND}";
         proxy_pass http://$mcp_backend;
-        proxy_set_header Host $host;
+        proxy_set_header Host glow-api;
         proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Forwarded-Proto $forwarded_proto;
     }
