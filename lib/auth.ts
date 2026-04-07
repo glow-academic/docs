@@ -7,6 +7,9 @@ const db = new Database("./auth.db")
 export const auth = betterAuth({
   database: db,
   trustedOrigins: [process.env.BETTER_AUTH_URL || "http://localhost:3300"],
+  advanced: {
+    trustedProxyHeaders: true,
+  },
   plugins: [
     // Sign in users via the Glow instance's OIDC endpoints
     // The Glow API proxies /authorize, /token to Keycloak
