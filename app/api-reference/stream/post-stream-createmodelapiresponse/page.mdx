@@ -7,6 +7,7 @@ Schema: CreateModelApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ModelResultItem`](/api-reference/stream/types#modelresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

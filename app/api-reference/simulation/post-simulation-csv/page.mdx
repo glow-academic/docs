@@ -1,0 +1,20 @@
+# `POST` `/simulation/csv`
+
+Parse Simulation Csv
+
+Parse a CSV file and return mapped items for preview.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+## Response (`ParseSimulationCsvApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateSimulationItem`](/api-reference/simulation/types#createsimulationitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |

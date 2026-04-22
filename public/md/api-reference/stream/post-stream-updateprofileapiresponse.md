@@ -7,6 +7,7 @@ Schema: UpdateProfileApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ProfileResultItem`](/api-reference/stream/types#profileresultitem)[] | Yes | Per-item update results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

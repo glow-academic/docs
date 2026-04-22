@@ -7,6 +7,8 @@ Schema: DeleteParameterApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `parameter_ids` | `string`[] | Yes | List of parameter IDs to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
 
 ## Response
 

@@ -1,0 +1,14 @@
+# `POST` `/attempt/record/refresh`
+
+Record Refresh
+
+Refresh record caches.
+
+## Response (`RefreshResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `refreshed_views` | `string`[] | Yes | — |
+| `invalidated_tags` | `string`[] | Yes | — |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

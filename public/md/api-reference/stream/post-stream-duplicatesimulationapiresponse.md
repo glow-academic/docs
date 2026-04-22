@@ -9,6 +9,7 @@ Schema: DuplicateSimulationApiResponse
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `simulation_id` | `string` | Yes | UUID of the duplicated simulation |
 | `message` | `string` | Yes | Human-readable result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

@@ -22,4 +22,4 @@ Bulk delete scenarios — composable infra architecture.
 ## Related
 
 - [Scenario Guide](/scenario)
-- [API Endpoint](/api-reference/scenarios/post-scenarios-delete)
+- [API Endpoint](/api-reference/scenario/post-scenario-delete)

@@ -2,7 +2,7 @@
 
 Schema: GetModelApiResponse
 
-## Request Body (`GetModelApiResponse-Input`)
+## Request Body (`GetModelApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,23 +10,25 @@ Schema: GetModelApiResponse
 | `model_exists` | `boolean` | No | Whether the model exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Group identifier for the model |
+| `model_id` | `string` | No | Model identifier |
+| `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
 | `provider_show_ai_generate` | `boolean` | No | Show AI generate for provider step |
 | `features_show_ai_generate` | `boolean` | No | Show AI generate for features step |
-| `names` | [`ModelNameSection`](/api-reference/stream/types#modelnamesection) | No | Name section with resources |
-| `descriptions` | [`ModelDescriptionSection`](/api-reference/stream/types#modeldescriptionsection) | No | Description section with resources |
-| `values` | [`ModelValueSection`](/api-reference/stream/types#modelvaluesection) | No | Value section with resources |
-| `providers` | [`ModelProviderSection`](/api-reference/stream/types#modelprovidersection) | No | Provider section with resources |
-| `flags` | [`ModelFlagSection`](/api-reference/stream/types#modelflagsection) | No | Flag section with configs |
-| `departments` | [`ModelDepartmentSection`](/api-reference/stream/types#modeldepartmentsection) | No | Department section with resources |
-| `modalities` | [`ModelModalitySection`](/api-reference/stream/types#modelmodalitysection) | No | Modality section with resources |
-| `temperature_levels` | [`ModelTemperatureLevelSection`](/api-reference/stream/types#modeltemperaturelevelsection) | No | Temperature level section |
-| `pricing` | [`ModelPricingSection`](/api-reference/stream/types#modelpricingsection) | No | Pricing section with resources |
-| `reasoning_levels` | [`ModelReasoningLevelSection`](/api-reference/stream/types#modelreasoninglevelsection) | No | Reasoning level section |
-| `qualities` | [`ModelQualitySection`](/api-reference/stream/types#modelqualitysection) | No | Quality section with resources |
-| `voices` | [`ModelVoiceSection`](/api-reference/stream/types#modelvoicesection) | No | Voice section with resources |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`ModelNameResource`](/api-reference/stream/types#modelnameresource)[] | No | Name resources |
+| `descriptions` | [`ModelDescriptionResource`](/api-reference/stream/types#modeldescriptionresource)[] | No | Description resources |
+| `values` | [`ModelValueResource`](/api-reference/stream/types#modelvalueresource)[] | No | Value resources |
+| `providers` | [`ModelProviderResource`](/api-reference/stream/types#modelproviderresource)[] | No | Provider resources |
+| `flags` | [`ModelFlagConfig`](/api-reference/stream/types#modelflagconfig)[] | No | Flag configs |
+| `departments` | [`ModelDepartmentResource`](/api-reference/stream/types#modeldepartmentresource)[] | No | Department resources |
+| `modalities` | [`ModelModalityResource`](/api-reference/stream/types#modelmodalityresource)[] | No | Modality resources |
+| `temperature_levels` | [`ModelTemperatureLevelResource`](/api-reference/stream/types#modeltemperaturelevelresource)[] | No | Temperature level resources |
+| `pricing` | [`ModelPricingResource`](/api-reference/stream/types#modelpricingresource)[] | No | Pricing resources |
+| `reasoning_levels` | [`ModelReasoningLevelResource`](/api-reference/stream/types#modelreasoninglevelresource)[] | No | Reasoning level resources |
+| `qualities` | [`ModelQualityResource`](/api-reference/stream/types#modelqualityresource)[] | No | Quality resources |
+| `voices` | [`ModelVoiceResource`](/api-reference/stream/types#modelvoiceresource)[] | No | Voice resources |
 
 ## Response
 

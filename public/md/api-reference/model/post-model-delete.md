@@ -1,0 +1,20 @@
+# `POST` `/model/delete`
+
+Delete Model
+
+Bulk delete models — composable infra architecture.
+
+## Request Body (`DeleteModelApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_ids` | `string`[] | Yes | List of model IDs to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`DeleteModelApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteModelResult`](/api-reference/model/types#deletemodelresult)[] | Yes | List of deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

@@ -7,8 +7,9 @@ Schema: DuplicatePersonaApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
-| `persona_id` | `string` | Yes | UUID of the newly created duplicate persona |
+| `id` | `string` | Yes | UUID of the newly created duplicate persona |
 | `message` | `string` | Yes | Human-readable result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

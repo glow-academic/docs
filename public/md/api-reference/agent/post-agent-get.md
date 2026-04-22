@@ -1,0 +1,55 @@
+# `POST` `/agent/get`
+
+Get Agent
+
+Get agent information using the canonical shared agent operation.
+
+## Request Body (`GetAgentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the agent to retrieve |
+| `agent_id` | `string` | No | Legacy alias for the agent identifier |
+| `draft_id` | `string` | No | UUID of the draft to retrieve |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for names |
+| `descriptions` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for descriptions |
+| `models` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for models |
+| `prompts` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for prompts |
+| `instructions` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for instructions |
+| `flags` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for flags |
+| `departments` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for departments |
+| `tools` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for tools |
+| `temperature_levels` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for temperature levels |
+| `reasoning_levels` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for reasoning levels |
+| `voices` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for voices |
+| `qualities` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for qualities |
+| `rubrics` | [`app__infra__agent__types__SectionFilter`](/api-reference/agent/types#app-infra-agent-types-sectionfilter) | No | Filter options for rubrics |
+
+## Response (`GetAgentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `agent_exists` | `boolean` | No | Whether the agent exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit |
+| `disabled_reason` | `string` | No | Reason the agent is disabled |
+| `group_id` | `string` | No | UUID of the owning group |
+| `agent_id` | `string` | No | UUID of the selected agent |
+| `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
+| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
+| `general_show_ai_generate` | `boolean` | No | Show AI generate for general step |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`AgentNameResource`](/api-reference/agent/types#agentnameresource)[] | No | Name resources |
+| `descriptions` | [`AgentDescriptionResource`](/api-reference/agent/types#agentdescriptionresource)[] | No | Description resources |
+| `models` | [`AgentModelResource`](/api-reference/agent/types#agentmodelresource)[] | No | Model resources |
+| `prompts` | [`AgentPromptResource`](/api-reference/agent/types#agentpromptresource)[] | No | Prompt resources |
+| `instructions` | [`AgentInstructionResource`](/api-reference/agent/types#agentinstructionresource)[] | No | Instruction resources |
+| `flags` | [`AgentFlagConfig`](/api-reference/agent/types#agentflagconfig)[] | No | Flag resources |
+| `departments` | [`AgentDepartmentResource`](/api-reference/agent/types#agentdepartmentresource)[] | No | Department resources |
+| `tools` | [`AgentToolResource`](/api-reference/agent/types#agenttoolresource)[] | No | Tool resources |
+| `temperature_levels` | [`AgentTemperatureLevelResource`](/api-reference/agent/types#agenttemperaturelevelresource)[] | No | Temperature level resources |
+| `reasoning_levels` | [`AgentReasoningLevelResource`](/api-reference/agent/types#agentreasoninglevelresource)[] | No | Reasoning level resources |
+| `voices` | [`AgentVoiceResource`](/api-reference/agent/types#agentvoiceresource)[] | No | Voice resources |
+| `qualities` | [`AgentQualityResource`](/api-reference/agent/types#agentqualityresource)[] | No | Quality resources |
+| `rubrics` | [`AgentRubricResource`](/api-reference/agent/types#agentrubricresource)[] | No | Rubric resources |

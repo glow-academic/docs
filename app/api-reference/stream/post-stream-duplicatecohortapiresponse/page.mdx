@@ -9,6 +9,7 @@ Schema: DuplicateCohortApiResponse
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `cohort_id` | `string` | Yes | Newly created cohort UUID |
 | `message` | `string` | Yes | Human-readable result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

@@ -23,4 +23,4 @@ Get simulation information using the canonical shared simulation operation.
 ## Related
 
 - [Simulation Guide](/simulation)
-- [API Endpoint](/api-reference/simulations/post-simulations-get)
+- [API Endpoint](/api-reference/simulation/post-simulation-get)

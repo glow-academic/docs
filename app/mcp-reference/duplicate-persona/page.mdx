@@ -22,4 +22,4 @@ Duplicate a persona — composable infra architecture.
 ## Related
 
 - [Persona Guide](/persona)
-- [API Endpoint](/api-reference/personas/post-personas-duplicate)
+- [API Endpoint](/api-reference/persona/post-persona-duplicate)

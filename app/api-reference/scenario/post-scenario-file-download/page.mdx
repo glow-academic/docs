@@ -1,0 +1,17 @@
+# `POST` `/scenario/file/download`
+
+Download File
+
+Download a file by file resource ID with range support.
+
+## Request Body (`FileDownloadScenarioApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file_id` | `string` | Yes | UUID of the files_resource to download |
+
+## Response
+
+```
+{}
+```

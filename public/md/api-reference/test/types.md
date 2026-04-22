@@ -1,5 +1,148 @@
 # Test Types
 
+## `AnalyticsFacets-Output`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+## `AnalyticsFilterField`
+
+Visibility/disabled state for a single filter field.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `visible` | `boolean` | No | Whether the filter field is visible |
+| `disabled` | `boolean` | No | Whether the filter field is disabled |
+
+---
+
+## `AnalyticsFilterFields`
+
+Per-page filter field visibility configuration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_range` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Date range filter config |
+| `departments` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Department filter config |
+| `cohorts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Cohort filter config |
+| `roles` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Role filter config |
+| `attempts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Attempt filter config |
+
+---
+
+## `AnalyticsFilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+
+---
+
+## `BenchmarkDepartmentItem`
+
+Department resource for benchmark.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | Yes | Department identifier |
+| `name` | `string` | No | Department display name |
+| `description` | `string` | No | Department description |
+
+---
+
+## `BenchmarkEvalOperational`
+
+Eval card for the benchmark page — analogous to ChatSimulationOperational.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `eval_id` | `string` | Yes | Eval identifier |
+| `eval_name` | `string` | No | Eval display name |
+| `eval_description` | `string` | No | Eval description |
+| `model_ids` | `string`[] | No | Associated model IDs |
+| `total_tests` | `integer` | No | Total number of tests |
+| `archived_tests` | `integer` | No | Number of archived tests |
+| `total_invocations` | `integer` | No | Total number of invocations |
+| `completed_invocations` | `integer` | No | Number of completed invocations |
+| `highest_score` | `number` | No | Highest score achieved |
+| `has_passed` | `boolean` | No | Whether eval has been passed |
+| `status` | `string` | No | Eval status |
+| `infinite_mode` | `boolean` | No | Whether eval uses infinite mode |
+| `department_ids` | `string`[] | No | Associated department IDs |
+| `rubric_ids` | `string`[] | No | Associated rubric IDs |
+
+---
+
+## `BenchmarkHistoryItem`
+
+History row for a test — analogous to TestHistoryItem.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | Test identifier |
+| `eval_id` | `string` | No | Parent eval ID |
+| `eval_name` | `string` | No | Parent eval name |
+| `eval_description` | `string` | No | Parent eval description |
+| `created_at` | `string` | No | Test creation timestamp |
+| `archived` | `boolean` | No | Whether test is archived |
+| `infinite_mode` | `boolean` | No | Whether test uses infinite mode |
+| `total_invocations` | `integer` | No | Total number of invocations |
+| `completed_invocations` | `integer` | No | Number of completed invocations |
+| `pending_invocations` | `integer` | No | Number of pending invocations |
+| `best_score` | `number` | No | Best score across invocations |
+| `has_passed` | `boolean` | No | Whether test has been passed |
+| `status` | `string` | No | Test status |
+
+---
+
+## `BenchmarkHistoryResponse`
+
+Paginated history response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `data` | [`BenchmarkHistoryItem`](#benchmarkhistoryitem)[] | No | History items |
+| `total_count` | `integer` | No | Total number of matching records |
+| `page` | `integer` | No | Current page number |
+| `page_size` | `integer` | No | Items per page |
+| `eval_options` | [`FilterOption`](#filteroption)[] | No | Eval filter options |
+
+---
+
+## `CallerPermissions`
+
+Evaluated permissions for the current caller on this artifact type.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `can_create` | `boolean` | Yes | Whether the caller can create new artifacts |
+| `can_draft` | `boolean` | Yes | Whether the caller can create/update drafts |
+| `can_duplicate` | `boolean` | Yes | Whether the caller can duplicate artifacts |
+| `has_access` | `boolean` | No | Whether the caller can view this entity |
+| `can_edit` | `boolean` | No | Whether the caller can edit this entity |
+| `can_delete` | `boolean` | No | Whether the caller can delete this entity |
+| `disabled_reason` | `string` | No | Human-readable reason if editing is disabled |
+
+---
+
 ## `ColumnInfo`
 
 | Field | Type | Required | Description |
@@ -20,7 +163,7 @@
 
 ---
 
-## `DocsResponse-Output`
+## `DocsResponse`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -33,12 +176,98 @@
 
 ---
 
+## `FilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Internal value for the filter option |
+| `label` | `string` | No | Display label for the filter option |
+| `count` | `integer` | No | Number of matching records |
+
+---
+
+## `GenerateConfig`
+
+Developer configuration — all optional with sensible defaults.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `operations` | `string`[] | No | — |
+| `dangerous` | `boolean` | No | — |
+| `params` | `object` | No | — |
+| `group_id` | `string` | No | — |
+
+---
+
+## `GenerationsTestListItem`
+
+Single generation group in the test generations response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | UUID of the generation group |
+| `session_id` | `string` | No | UUID of the parent session |
+| `group_name` | `string` | No | Name of the generation group |
+| `created_at` | `string` | No | Timestamp of the generation |
+
+---
+
+## `GetInvocationDraftResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the draft |
+| `created_at` | `string` | Yes | Creation timestamp |
+| `generated` | `boolean` | Yes | Whether this was AI-generated |
+| `mcp` | `boolean` | Yes | Whether MCP tooling was used |
+| `active` | `boolean` | Yes | Whether this draft is active |
+| `session_id` | `string` | Yes | Associated session UUID |
+| `department_ids` | `string`[] | Yes | Associated department UUIDs |
+| `description_ids` | `string`[] | Yes | Associated description UUIDs |
+| `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
+| `key_ids` | `string`[] | Yes | Associated key UUIDs |
+| `modality_ids` | `string`[] | No | Associated modality UUIDs |
+| `quality_ids` | `string`[] | No | Associated quality UUIDs |
+| `model_flag_ids` | `string`[] | Yes | Associated model flag UUIDs |
+| `model_position_ids` | `string`[] | Yes | Associated model position UUIDs |
+| `model_rubric_ids` | `string`[] | Yes | Associated model rubric UUIDs |
+| `name_ids` | `string`[] | Yes | Associated name UUIDs |
+| `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `reasoning_level_ids` | `string`[] | Yes | Associated reasoning level UUIDs |
+| `temperature_level_ids` | `string`[] | Yes | Associated temperature level UUIDs |
+| `voice_ids` | `string`[] | Yes | Associated voice UUIDs |
+| `value_id` | `string` | No | Associated value UUID |
+| `pricing_ids` | `string`[] | Yes | Associated pricing UUIDs |
+| `endpoint_ids` | `string`[] | Yes | Associated endpoint UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_key_ids` | `string`[] | No | Pending key UUIDs |
+| `pending_modality_ids` | `string`[] | No | Pending modality UUIDs |
+| `pending_quality_ids` | `string`[] | No | Pending quality UUIDs |
+| `pending_model_flag_ids` | `string`[] | No | Pending model flag UUIDs |
+| `pending_model_position_ids` | `string`[] | No | Pending model position UUIDs |
+| `pending_model_rubric_ids` | `string`[] | No | Pending model rubric UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_reasoning_level_ids` | `string`[] | No | Pending reasoning level UUIDs |
+| `pending_temperature_level_ids` | `string`[] | No | Pending temperature level UUIDs |
+| `pending_voice_ids` | `string`[] | No | Pending voice UUIDs |
+| `pending_value_ids` | `string`[] | No | Pending value UUIDs |
+| `pending_pricing_ids` | `string`[] | No | Pending pricing UUIDs |
+| `pending_endpoint_ids` | `string`[] | No | Pending endpoint UUIDs |
+
+---
+
 ## `GetTestFeedbackResponse`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `feedback_id` | `string` | Yes | — |
 | `grade_id` | `string` | Yes | — |
+| `call_id` | `string` | Yes | — |
+| `tool_call_id` | `string` | Yes | — |
 | `total` | `integer` | Yes | — |
 | `feedback` | `string` | Yes | — |
 | `total_points` | `integer` | Yes | — |
@@ -53,7 +282,6 @@
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `invocation_id` | `string` | Yes | — |
-| `run_id` | `string` | Yes | — |
 | `created_at` | `string` | Yes | — |
 | `updated_at` | `string` | Yes | — |
 | `passed` | `boolean` | Yes | — |
@@ -146,6 +374,7 @@
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `test_id` | `string` | Yes | — |
+| `call_id` | `string` | Yes | — |
 | `eval_id` | `string` | Yes | — |
 | `profile_id` | `string` | Yes | — |
 | `department_ids` | `string`[] | Yes | — |
@@ -156,6 +385,244 @@
 | `is_dynamic` | `boolean` | Yes | — |
 | `archived` | `boolean` | Yes | — |
 | `test_created_at` | `string` | Yes | — |
+
+---
+
+## `GroupCall`
+
+Tool call referenced by a message.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `tool_name` | `string` | No | — |
+| `template_name` | `string` | No | — |
+
+---
+
+## `GroupMessage`
+
+Message within a run.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `role` | `string` | Yes | — |
+| `created_at` | `string` | No | — |
+| `text_ids` | `string`[] | No | — |
+| `audio_ids` | `string`[] | No | — |
+| `image_ids` | `string`[] | No | — |
+| `video_ids` | `string`[] | No | — |
+| `file_ids` | `string`[] | No | — |
+| `call_ids` | `string`[] | No | — |
+| `calls` | [`GroupCall`](#groupcall)[] | No | — |
+
+---
+
+## `GroupRun`
+
+Run within a group, with its messages.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `created_at` | `string` | No | — |
+| `messages` | [`GroupMessage`](#groupmessage)[] | No | — |
+
+---
+
+## `InvocationDepartmentResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationDescriptionResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationEndpointResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `base_url` | `string` | No | Endpoint base URL |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationFlagResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
+| `flag_option_id` | `string` | No | UUID of the selected flag option |
+| `show` | `boolean` | No | Whether the flag is visible to the client |
+| `required` | `boolean` | No | Whether the flag is required |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationKeyResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `key_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `key_masked` | `string` | No | Masked key preview |
+| `masked_key` | `string` | No | Masked key preview alias |
+| `active` | `boolean` | No | Whether this key is active |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationModalityResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `modality_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `modality` | `string` | No | Modality code |
+| `name` | `string` | No | Human-readable modality name |
+| `description` | `string` | No | Description text |
+| `is_input` | `boolean` | No | Whether this modality is input-facing |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationNameResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationPricingResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `pricing_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `pricing_type` | `string` | No | Pricing type |
+| `price` | `number` | No | Price amount |
+| `unit_name` | `string` | No | Unit name |
+| `unit_category` | `string` | No | Unit category |
+| `unit_value` | `integer` | No | Unit value |
+| `name` | `string` | No | Display label |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationQualityResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `quality_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `quality` | `string` | No | Quality label |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationReasoningLevelResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `reasoning_level` | `string` | No | Reasoning level label |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationTemperatureLevelResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `temperature` | `number` | No | Temperature numeric value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationValueResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `value` | `string` | No | Value text |
+| `type` | `string` | No | Value type |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationVoiceResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `voice` | `string` | No | Voice label |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -207,6 +674,21 @@ Filter section with options and echoed request state.
 
 ---
 
+## `OperationPrompts`
+
+Starter prompts keyed by operation name.
+
+Each key is an operation (e.g. "create", "search", "draft", "export")
+and the value is a list of starter prompts for that operation.
+The client picks from the operations the caller has permission for
+and rotates through them.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `prompts` | `object` | No | Map of operation name to starter prompts |
+
+---
+
 ## `PageMetaItem`
 
 | Field | Type | Required | Description |
@@ -227,6 +709,45 @@ Filter section with options and echoed request state.
 
 ---
 
+## `ProfileSummary`
+
+Caller identity derived from JWT — who you are on this page.
+
+Superset of the old six-field version: now carries everything the client
+needs so that ``/\{artifact\}/context`` fully replaces ``/profiles/context``
+and the extra ``getLayoutContextData`` round-trip can be dropped.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name of the authenticated user |
+| `role` | `string` | Yes | Role name (e.g. 'Super Administrator') |
+| `role_level` | `integer` | Yes | Role hierarchy level (0 = highest privilege) |
+| `department_ids` | `string`[] | Yes | Departments the user belongs to |
+| `artifact_access` | `string`[] | Yes | Artifact types this role can access (sidebar visibility) |
+| `role_permissions` | `any`[][] | Yes | Full (artifact, operation) permission tuples for granular page gating |
+| `is_active` | `boolean` | Yes | Whether the user's profile is active |
+| `id` | `string` | Yes | Profile UUID (SocketProvider, ProfileProvider) |
+| `theme` | [`ThemePrimitives`](#themeprimitives) | No | Theme primitives (ThemeHydrator) |
+| `session_id` | `string` | No | Current session UUID |
+| `is_emulation` | `boolean` | No | Whether user is in emulation mode (ProfileProvider) |
+| `role_resources` | [`QGetProfileContextV4RoleResource`](#qgetprofilecontextv4roleresource)[] | No | All role resources for emulation display (ProfileProvider) |
+| `scoped_roles` | `string`[] | No | Roles the user can emulate (ProfileProvider) |
+| `active` | `boolean` | No | Alias for is_active (ProfileProvider uses this name) |
+
+---
+
+## `QGetProfileContextV4RoleResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `role` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `icon_value` | `string` | No | — |
+| `color_hex` | `string` | No | — |
+
+---
+
 ## `SearchMessageResponse`
 
 | Field | Type | Required | Description |
@@ -235,12 +756,12 @@ Filter section with options and echoed request state.
 | `run_id` | `string` | Yes | UUID of the parent run |
 | `role` | `string` | Yes | Message role (e.g. user, assistant) |
 | `message_created_at` | `string` | Yes | Message creation timestamp |
-| `text_upload_ids` | `string`[] | Yes | UUIDs of text uploads |
-| `audio_upload_ids` | `string`[] | Yes | UUIDs of audio uploads |
-| `image_upload_ids` | `string`[] | Yes | UUIDs of image uploads |
-| `video_upload_ids` | `string`[] | Yes | UUIDs of video uploads |
-| `file_upload_ids` | `string`[] | Yes | UUIDs of file uploads |
-| `call_upload_ids` | `string`[] | Yes | UUIDs of call uploads |
+| `text_ids` | `string`[] | Yes | UUIDs of text resources |
+| `audio_ids` | `string`[] | Yes | UUIDs of audio resources |
+| `image_ids` | `string`[] | Yes | UUIDs of image resources |
+| `video_ids` | `string`[] | Yes | UUIDs of video resources |
+| `file_ids` | `string`[] | Yes | UUIDs of file resources |
+| `call_ids` | `string`[] | Yes | UUIDs of call resources |
 
 ---
 
@@ -287,6 +808,7 @@ Entry payloads grouped by type.
 | `grades` | [`GetTestGradeResponse`](#gettestgraderesponse)[] | No | Grade entry payloads |
 | `feedback` | [`GetTestFeedbackResponse`](#gettestfeedbackresponse)[] | No | Feedback entry payloads |
 | `messages` | [`SearchMessageResponse`](#searchmessageresponse)[] | No | Message entry payloads |
+| `calls` | `any`[] | No | Tool call entries from original run |
 
 ---
 
@@ -308,6 +830,7 @@ Resource maps keyed by ID string.
 | `instructions` | `object` | No | Instruction resources keyed by ID |
 | `tools` | `object` | No | Tool resources keyed by ID |
 | `qualities` | `object` | No | Quality resources keyed by ID |
+| `standard_groups` | `object` | No | Standard group resources keyed by ID |
 
 ---
 
@@ -338,5 +861,72 @@ A single run row for the UI table, derived from a benchmark invocation.
 | `completed` | `integer` | No | Number of completed invocations |
 | `in_progress` | `integer` | No | Number of in-progress invocations |
 | `not_started` | `integer` | No | Number of not-started invocations |
+
+---
+
+## `ThemePrimitives`
+
+Raw theme color primitives (hex values) from settings.
+
+General-purpose — not CSS-specific. Clients derive their own
+presentation tokens (oklch, CSS variables, etc.) from these.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `primary` | `string` | No | Primary color hex value |
+| `accent` | `string` | No | Accent color hex value |
+| `background` | `string` | No | Background color hex value |
+| `surface` | `string` | No | Surface color hex value |
+| `success` | `string` | No | Success state color hex value |
+| `warning` | `string` | No | Warning state color hex value |
+| `error` | `string` | No | Error state color hex value |
+| `chart1` | `string` | No | Chart color 1 hex value |
+| `chart2` | `string` | No | Chart color 2 hex value |
+| `chart3` | `string` | No | Chart color 3 hex value |
+| `chart4` | `string` | No | Chart color 4 hex value |
+| `chart5` | `string` | No | Chart color 5 hex value |
+
+---
+
+## `app__infra__invocation__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Saved name identifier |
+| `name` | `string` | No | Saved name value |
+| `description_id` | `string` | No | Saved description identifier |
+| `description` | `string` | No | Saved description value |
+| `value_id` | `string` | No | Saved value identifier |
+| `flag_ids` | `string`[] | No | Saved flag identifiers |
+| `department_ids` | `string`[] | No | Saved department identifiers |
+| `key_id` | `string` | No | Saved key identifier |
+| `endpoint_id` | `string` | No | Saved endpoint identifier |
+| `modality_ids` | `string`[] | No | Saved modality identifiers |
+| `temperature_level_id` | `string` | No | Saved temperature level identifier |
+| `pricing_id` | `string` | No | Saved pricing identifier |
+| `reasoning_level_id` | `string` | No | Saved reasoning level identifier |
+| `quality_ids` | `string`[] | No | Saved quality identifiers |
+| `voice_ids` | `string`[] | No | Saved voice identifiers |
+| `model_flag_ids` | `string`[] | No | Saved model flag identifiers |
+| `model_position_ids` | `string`[] | No | Saved model position identifiers |
+| `model_rubric_ids` | `string`[] | No | Saved model rubric identifiers |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__invocation__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for compatibility with shared filter parsing |
 
 ---

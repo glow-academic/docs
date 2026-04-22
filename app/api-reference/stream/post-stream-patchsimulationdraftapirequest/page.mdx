@@ -6,8 +6,8 @@ Schema: PatchSimulationDraftApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `input_draft_id` | `string` | No | UUID of the input draft |
-| `expected_version` | `integer` | No | Expected draft version for optimistic lock |
+| `draft_id` | `string` | No | Existing draft UUID to patch |
+| `input_draft_id` | `string` | No | Legacy alias for the input draft UUID |
 | `name` | `string` | No | Display name value |
 | `name_id` | `string` | No | UUID of the name resource |
 | `description` | `string` | No | Description text value |
@@ -23,6 +23,9 @@ Schema: PatchSimulationDraftApiRequest
 | `scenario_rubrics` | [`DraftScenarioRubricValue`](/api-reference/stream/types#draftscenariorubricvalue)[] | No | Scenario rubric values to create |
 | `scenario_time_limit_ids` | `string`[] | No | Existing scenario time limit UUIDs |
 | `scenario_time_limits` | [`DraftScenarioTimeLimitValue`](/api-reference/stream/types#draftscenariotimelimitvalue)[] | No | Scenario time limit values to create |
+| `pending_ids` | `string`[] | No | Resource IDs to keep as pending where supported by the tool layer |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant draft |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

@@ -7,6 +7,7 @@ Schema: UpdateProviderApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ProviderResultItem`](/api-reference/stream/types#providerresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

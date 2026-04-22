@@ -1,0 +1,22 @@
+# `POST` `/setting/duplicate`
+
+Duplicate Setting
+
+Duplicate a setting — composable infra architecture.
+
+## Request Body (`DuplicateSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `setting_id` | `string` | Yes | UUID of the setting to duplicate |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant duplicate |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`DuplicateSettingApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the duplication succeeded |
+| `setting_id` | `string` | Yes | UUID of the newly created setting |
+| `message` | `string` | Yes | Result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

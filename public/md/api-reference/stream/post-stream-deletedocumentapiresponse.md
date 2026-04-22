@@ -7,6 +7,7 @@ Schema: DeleteDocumentApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteDocumentResult`](/api-reference/stream/types#deletedocumentresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

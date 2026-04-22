@@ -6,8 +6,8 @@ Schema: PatchDocumentDraftApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `input_draft_id` | `string` | No | Existing draft UUID to patch |
-| `expected_version` | `integer` | No | Expected draft version for concurrency control |
+| `draft_id` | `string` | No | Existing draft UUID to patch |
+| `input_draft_id` | `string` | No | Legacy alias for existing draft UUID to patch |
 | `name` | `string` | No | Name value to create a resource |
 | `name_id` | `string` | No | Existing name resource UUID |
 | `description` | `string` | No | Description value to create a resource |
@@ -16,11 +16,15 @@ Schema: PatchDocumentDraftApiRequest
 | `file_ids` | `string`[] | No | Existing file resource UUIDs |
 | `texts` | [`DraftTextValue`](/api-reference/stream/types#drafttextvalue)[] | No | Text values to create resources |
 | `text_ids` | `string`[] | No | Existing text resource UUIDs |
+| `images` | [`app__infra__document__types__DraftImageValue`](/api-reference/stream/types#app-infra-document-types-draftimagevalue)[] | No | Image values to create resources |
 | `flag_ids` | `string`[] | No | Flag option UUIDs |
 | `department_ids` | `string`[] | No | Department UUIDs |
 | `image_ids` | `string`[] | No | Image UUIDs |
 | `parameter_field_ids` | `string`[] | No | Parameter field UUIDs |
 | `parameter_ids` | `string`[] | No | Parameter UUIDs |
+| `pending_ids` | `string`[] | No | Resource IDs to keep as pending where supported by the tool layer |
+| `idempotency_key` | `string` | No | Operation key for ack or retry |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

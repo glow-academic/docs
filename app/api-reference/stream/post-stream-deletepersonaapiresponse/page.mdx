@@ -7,6 +7,7 @@ Schema: DeletePersonaApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeletePersonaResult`](/api-reference/stream/types#deletepersonaresult)[] | Yes | Per-persona deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

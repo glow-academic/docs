@@ -6,10 +6,23 @@ Schema: GetSettingApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `settings_id` | `string` | No | UUID of the setting to retrieve |
-| `color_search` | `string` | No | Search query for color resources |
+| `id` | `string` | No | UUID of the setting to retrieve |
+| `setting_id` | `string` | No | Legacy setting identifier |
+| `settings_id` | `string` | No | Legacy alias for setting identifier |
 | `draft_id` | `string` | No | UUID of the draft to load |
-| `mcp` | `boolean` | No | Whether request is from MCP client |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for names |
+| `descriptions` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for descriptions |
+| `colors` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for colors |
+| `flags` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for flags |
+| `departments` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for departments |
+| `logins` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for logins |
+| `systems` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for systems |
+| `mcp` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for MCP configs |
+| `thresholds` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for thresholds |
+| `provider_keys` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for provider keys |
+| `auth_item_keys` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for auth item keys |
+| `auth_item_values` | [`app__infra__setting__types__SectionFilter`](/api-reference/stream/types#app-infra-setting-types-sectionfilter) | No | Filter options for auth item values |
 
 ## Response
 

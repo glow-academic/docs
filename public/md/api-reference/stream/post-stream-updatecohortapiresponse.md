@@ -7,6 +7,7 @@ Schema: UpdateCohortApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`CohortResultItem`](/api-reference/stream/types#cohortresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

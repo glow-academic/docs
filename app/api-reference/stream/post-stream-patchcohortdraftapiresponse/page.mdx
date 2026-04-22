@@ -2,15 +2,15 @@
 
 Schema: PatchCohortDraftApiResponse
 
-## Request Body (`PatchCohortDraftApiResponse`)
+## Request Body (`PatchCohortDraftApiResponse-Input`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `draft_id` | `string` | Yes | Draft UUID |
-| `new_version` | `integer` | Yes | New draft version number after patch |
+| `idempotency_key` | `string` | Yes | Idempotency key for this draft operation |
 | `message` | `string` | Yes | Human-readable result message |
-| `form_state` | [`CohortDraftFormState`](/api-reference/stream/types#cohortdraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__cohort__types__DraftFormState`](/api-reference/stream/types#app-infra-cohort-types-draftformstate) | No | Server-authoritative form state |
 
 ## Response
 

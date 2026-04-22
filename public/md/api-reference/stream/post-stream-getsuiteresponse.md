@@ -6,23 +6,28 @@ Schema: GetSuiteResponse
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `test_id` | `string` | Yes | Test identifier |
+| `actor_name` | `string` | No | Display name of the acting user |
+| `test_id` | `string` | No | Owning test identifier |
+| `invocation_id` | `string` | No | Invocation identifier |
 | `profile_has_access` | `boolean` | No | Whether profile has access |
-| `draft_version` | `integer` | No | Current draft version number |
+| `can_edit` | `boolean` | No | Whether the actor can edit this invocation draft |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
 | `group_id` | `string` | No | Associated group ID |
-| `names` | [`SuiteNameSection`](/api-reference/stream/types#suitenamesection) | No | Name section data |
-| `descriptions` | [`SuiteDescriptionSection`](/api-reference/stream/types#suitedescriptionsection) | No | Description section data |
-| `values` | [`SuiteValueSection`](/api-reference/stream/types#suitevaluesection) | No | Value section data |
-| `flags` | [`SuiteFlagSection`](/api-reference/stream/types#suiteflagsection) | No | Flag section data |
-| `departments` | [`SuiteDepartmentSection`](/api-reference/stream/types#suitedepartmentsection) | No | Department section data |
-| `keys` | [`SuiteKeySection`](/api-reference/stream/types#suitekeysection) | No | Key section data |
-| `endpoints` | [`SuiteEndpointSection`](/api-reference/stream/types#suiteendpointsection) | No | Endpoint section data |
-| `modalities` | [`SuiteModalitySection`](/api-reference/stream/types#suitemodalitysection) | No | Modality section data |
-| `temperature_levels` | [`SuiteTemperatureLevelSection`](/api-reference/stream/types#suitetemperaturelevelsection) | No | Temperature level section data |
-| `pricing` | [`SuitePricingSection`](/api-reference/stream/types#suitepricingsection) | No | Pricing section data |
-| `reasoning_levels` | [`SuiteReasoningLevelSection`](/api-reference/stream/types#suitereasoninglevelsection) | No | Reasoning level section data |
-| `qualities` | [`SuiteQualitySection`](/api-reference/stream/types#suitequalitysection) | No | Quality section data |
-| `voices` | [`SuiteVoiceSection`](/api-reference/stream/types#suitevoicesection) | No | Voice section data |
+| `show_ai_generate` | `boolean` | No | Whether to show AI generate anywhere |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`InvocationNameResource`](/api-reference/stream/types#invocationnameresource)[] | No | Name resources |
+| `descriptions` | [`InvocationDescriptionResource`](/api-reference/stream/types#invocationdescriptionresource)[] | No | Description resources |
+| `values` | [`InvocationValueResource`](/api-reference/stream/types#invocationvalueresource)[] | No | Value resources |
+| `flags` | [`InvocationFlagResource`](/api-reference/stream/types#invocationflagresource)[] | No | Flag resources |
+| `departments` | [`InvocationDepartmentResource`](/api-reference/stream/types#invocationdepartmentresource)[] | No | Department resources |
+| `keys` | [`InvocationKeyResource`](/api-reference/stream/types#invocationkeyresource)[] | No | Key resources |
+| `endpoints` | [`InvocationEndpointResource`](/api-reference/stream/types#invocationendpointresource)[] | No | Endpoint resources |
+| `modalities` | [`InvocationModalityResource`](/api-reference/stream/types#invocationmodalityresource)[] | No | Modality resources |
+| `temperature_levels` | [`InvocationTemperatureLevelResource`](/api-reference/stream/types#invocationtemperaturelevelresource)[] | No | Temperature level resources |
+| `pricing` | [`InvocationPricingResource`](/api-reference/stream/types#invocationpricingresource)[] | No | Pricing resources |
+| `reasoning_levels` | [`InvocationReasoningLevelResource`](/api-reference/stream/types#invocationreasoninglevelresource)[] | No | Reasoning level resources |
+| `qualities` | [`InvocationQualityResource`](/api-reference/stream/types#invocationqualityresource)[] | No | Quality resources |
+| `voices` | [`InvocationVoiceResource`](/api-reference/stream/types#invocationvoiceresource)[] | No | Voice resources |
 
 ## Response
 

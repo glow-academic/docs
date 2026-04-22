@@ -7,6 +7,7 @@ Schema: DeleteFieldApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteFieldResult`](/api-reference/stream/types#deletefieldresult)[] | Yes | Per-item deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

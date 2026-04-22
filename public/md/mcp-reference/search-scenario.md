@@ -29,4 +29,4 @@ Search scenarios — composable infra architecture.
 ## Related
 
 - [Scenario Guide](/scenario)
-- [API Endpoint](/api-reference/scenarios/post-scenarios-search)
+- [API Endpoint](/api-reference/scenario/post-scenario-search)

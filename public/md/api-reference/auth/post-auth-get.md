@@ -1,0 +1,41 @@
+# `POST` `/auth/get`
+
+Get Auth
+
+Get auth information using the canonical shared auth operation.
+
+## Request Body (`GetAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Auth identifier |
+| `auth_id` | `string` | No | Legacy alias for auth identifier |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for names section |
+| `descriptions` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for descriptions section |
+| `flags` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for flags section |
+| `departments` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for departments section |
+| `protocols` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for protocols section |
+| `slugs` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for slugs section |
+| `items` | [`app__infra__auth__types__SectionFilter`](/api-reference/auth/types#app-infra-auth-types-sectionfilter) | No | Filter options for items section |
+
+## Response (`GetAuthApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `auth_exists` | `boolean` | No | Whether the auth provider exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this auth |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `show_ai_generate` | `boolean` | No | Whether any auth resource supports AI generate |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`AuthNameResource`](/api-reference/auth/types#authnameresource)[] | No | Name resources |
+| `descriptions` | [`AuthDescriptionResource`](/api-reference/auth/types#authdescriptionresource)[] | No | Description resources |
+| `flags` | [`AuthFlagConfig`](/api-reference/auth/types#authflagconfig)[] | No | Flag configs |
+| `departments` | [`AuthDepartmentResource`](/api-reference/auth/types#authdepartmentresource)[] | No | Department resources |
+| `protocols` | [`AuthProtocolResource`](/api-reference/auth/types#authprotocolresource)[] | No | Protocol resources |
+| `slugs` | [`AuthSlugResource`](/api-reference/auth/types#authslugresource)[] | No | Slug resources |
+| `items` | [`AuthItemResource`](/api-reference/auth/types#authitemresource)[] | No | Auth item resources |

@@ -7,6 +7,7 @@ Schema: DeleteEvalApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteEvalResult`](/api-reference/stream/types#deleteevalresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

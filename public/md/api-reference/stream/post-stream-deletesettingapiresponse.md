@@ -7,6 +7,7 @@ Schema: DeleteSettingApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteSettingResult`](/api-reference/stream/types#deletesettingresult)[] | Yes | Per-item deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

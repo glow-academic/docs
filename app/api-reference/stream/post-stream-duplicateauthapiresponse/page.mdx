@@ -9,6 +9,7 @@ Schema: DuplicateAuthApiResponse
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
 | `auth_id` | `string` | Yes | UUID of the newly created auth provider |
 | `message` | `string` | Yes | Result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

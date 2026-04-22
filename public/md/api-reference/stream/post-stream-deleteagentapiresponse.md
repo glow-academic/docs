@@ -7,6 +7,7 @@ Schema: DeleteAgentApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteAgentResult`](/api-reference/stream/types#deleteagentresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

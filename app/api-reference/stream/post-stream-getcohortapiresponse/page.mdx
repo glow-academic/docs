@@ -2,7 +2,7 @@
 
 Schema: GetCohortApiResponse
 
-## Request Body (`GetCohortApiResponse-Input`)
+## Request Body (`GetCohortApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,21 +10,22 @@ Schema: GetCohortApiResponse
 | `cohort_exists` | `boolean` | No | Whether the cohort exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Associated group UUID |
-| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
-| `simulations_step_show_ai_generate` | `boolean` | No | Whether to show AI generate for simulations step |
-| `profiles_step_show_ai_generate` | `boolean` | No | Whether to show AI generate for profiles step |
-| `names` | [`CohortNameSection`](/api-reference/stream/types#cohortnamesection) | No | Name section with resource and options |
-| `descriptions` | [`CohortDescriptionSection`](/api-reference/stream/types#cohortdescriptionsection) | No | Description section with resource and options |
-| `flags` | [`CohortFlagSection`](/api-reference/stream/types#cohortflagsection) | No | Flag section with resource and options |
-| `departments` | [`CohortDepartmentSection`](/api-reference/stream/types#cohortdepartmentsection) | No | Department section with selections and options |
-| `simulations` | [`CohortSimulationSection`](/api-reference/stream/types#cohortsimulationsection) | No | Simulation section with selections and options |
-| `simulation_positions` | [`CohortSimulationPositionSection`](/api-reference/stream/types#cohortsimulationpositionsection) | No | Simulation position section |
-| `simulation_availability` | [`CohortSimulationAvailabilitySection`](/api-reference/stream/types#cohortsimulationavailabilitysection) | No | Simulation availability section |
-| `profiles` | [`CohortProfileSection`](/api-reference/stream/types#cohortprofilesection) | No | Profile section with selections and options |
-| `profile_personas` | [`CohortProfilePersonaSection`](/api-reference/stream/types#cohortprofilepersonasection) | No | Profile persona section |
-| `personas` | [`GetPersonaResponse`](/api-reference/stream/types#getpersonaresponse)[] | No | List of available personas |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available |
+| `names` | [`CohortNameResource`](/api-reference/stream/types#cohortnameresource)[] | No | Name resources with selected/suggested flags |
+| `descriptions` | [`CohortDescriptionResource`](/api-reference/stream/types#cohortdescriptionresource)[] | No | Description resources with selected/suggested flags |
+| `flags` | [`CohortFlagConfig`](/api-reference/stream/types#cohortflagconfig)[] | No | Flag resources with selected/suggested flags |
+| `departments` | [`CohortDepartment`](/api-reference/stream/types#cohortdepartment)[] | No | Department resources with selected/suggested flags |
+| `simulations` | [`CohortSimulation`](/api-reference/stream/types#cohortsimulation)[] | No | Simulation resources with selected/suggested flags |
+| `simulation_positions` | [`CohortSimulationPosition`](/api-reference/stream/types#cohortsimulationposition)[] | No | Simulation position resources with selected/suggested flags |
+| `simulation_availability` | [`CohortSimulationAvailability`](/api-reference/stream/types#cohortsimulationavailability)[] | No | Simulation availability resources with selected/suggested flags |
+| `profiles` | [`CohortProfile`](/api-reference/stream/types#cohortprofile)[] | No | Profile resources with selected/suggested flags |
+| `profile_personas` | [`CohortProfilePersona`](/api-reference/stream/types#cohortprofilepersona)[] | No | Profile persona resources with selected/suggested flags |
+| `personas` | [`CohortPersonaResource`](/api-reference/stream/types#cohortpersonaresource)[] | No | Persona resources with selected/suggested flags |
+| `pending_ids` | `string`[] | No | Pending resource IDs from the draft, when available |
+| `basic_show_ai_generate` | `boolean` | No | Legacy AI-generate flag for the basic step |
+| `simulations_step_show_ai_generate` | `boolean` | No | Legacy AI-generate flag for the simulations step |
+| `profiles_step_show_ai_generate` | `boolean` | No | Legacy AI-generate flag for the profiles step |
 
 ## Response
 

@@ -1,0 +1,22 @@
+# `POST` `/attempt/chat/analyses`
+
+Chat Analyses
+
+Create analysis items for the latest grade on a chat.
+
+## Request Body (`ChatAnalysesRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `analyses` | [`ChatAnalysisItem`](/api-reference/attempt/types#chatanalysisitem)[] | Yes | — |
+| `idempotency_key` | `string` | No | — |
+| `accept` | `boolean` | No | — |
+
+## Response (`ChatAnalysesResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `analysis_ids` | `string`[] | Yes | — |
+| `idempotency_key` | `string` | No | — |

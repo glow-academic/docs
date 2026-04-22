@@ -1,0 +1,20 @@
+# `POST` `/department/csv`
+
+Parse Department Csv
+
+Parse a CSV file and return mapped items for preview.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+## Response (`ParseDepartmentCsvApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `upload_id` | `string` | Yes | — |
+| `items` | [`CreateDepartmentItem`](/api-reference/department/types#createdepartmentitem)[] | Yes | — |
+| `mapped_fields` | `string`[] | Yes | — |
+| `row_count` | `integer` | Yes | — |

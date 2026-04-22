@@ -1,0 +1,29 @@
+# `POST` `/rubric/search`
+
+Search Rubric
+
+Search rubrics — composable infra architecture.
+
+## Request Body (`SearchRubricApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `filter_department_ids` | `string`[] | No | — |
+| `filter_simulation_ids` | `string`[] | No | — |
+| `department_search` | `string` | No | — |
+| `simulation_search` | `string` | No | — |
+| `page_size` | `integer` | No | — |
+| `page_offset` | `integer` | No | — |
+
+## Response (`ListRubricApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current user |
+| `rubrics` | [`ListRubricApiRubric`](/api-reference/rubric/types#listrubricapirubric)[] | No | List of rubrics |
+| `standard_groups` | [`ListRubricApiStandardGroup`](/api-reference/rubric/types#listrubricapistandardgroup)[] | No | List of standard groups |
+| `standards` | [`ListRubricApiStandard`](/api-reference/rubric/types#listrubricapistandard)[] | No | List of standards |
+| `department_filter` | [`ListFilterSection`](/api-reference/rubric/types#listfiltersection) | No | Filter options for departments in list UI |
+| `simulation_filter` | [`ListFilterSection`](/api-reference/rubric/types#listfiltersection) | No | Filter options for simulations in list UI |
+| `total_count` | `integer` | No | Total number of matching records |

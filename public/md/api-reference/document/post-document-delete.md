@@ -1,0 +1,20 @@
+# `POST` `/document/delete`
+
+Delete Document
+
+Bulk delete documents — composable infra architecture.
+
+## Request Body (`DeleteDocumentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `document_ids` | `string`[] | Yes | Document UUIDs to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
+
+## Response (`DeleteDocumentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteDocumentResult`](/api-reference/document/types#deletedocumentresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

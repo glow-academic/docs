@@ -2,14 +2,13 @@
 
 Attempt Leave
 
-Leave a chat room, stopping real-time attempt updates.
+Unsubscribe from events for a group.
 
 ## Request Body (`AttemptLeaveRequest`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `sid` | `string` | Yes | — |
-| `chat_id` | `string` | Yes | — |
+| `group_id` | `string` | Yes | — |
 
 ## Response (`AttemptLeaveResponse`)
 

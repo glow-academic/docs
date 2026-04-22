@@ -32,4 +32,4 @@ Search personas — composable infra architecture.
 ## Related
 
 - [Persona Guide](/persona)
-- [API Endpoint](/api-reference/personas/post-personas-search)
+- [API Endpoint](/api-reference/persona/post-persona-search)

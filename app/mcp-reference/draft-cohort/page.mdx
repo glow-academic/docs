@@ -35,4 +35,4 @@ Patch cohort draft — composable infra architecture.
 ## Related
 
 - [Cohort Guide](/cohort)
-- [API Endpoint](/api-reference/cohorts/patch-cohorts-draft)
+- [API Endpoint](/api-reference/cohort/patch-cohort-draft)

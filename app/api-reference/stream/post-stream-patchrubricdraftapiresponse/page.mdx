@@ -8,9 +8,9 @@ Schema: PatchRubricDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `draft_id` | `string` | Yes | Draft UUID |
-| `new_version` | `integer` | Yes | New draft version number after patch |
+| `idempotency_key` | `string` | No | Idempotency key for this draft operation |
 | `message` | `string` | Yes | Human-readable result message |
-| `form_state` | [`RubricDraftFormState`](/api-reference/stream/types#rubricdraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__rubric__types__DraftFormState`](/api-reference/stream/types#app-infra-rubric-types-draftformstate) | No | Server-authoritative form state |
 
 ## Response
 

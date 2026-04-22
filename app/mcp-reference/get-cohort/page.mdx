@@ -26,4 +26,4 @@ Get cohort information using the canonical shared cohort operation.
 ## Related
 
 - [Cohort Guide](/cohort)
-- [API Endpoint](/api-reference/cohorts/post-cohorts-get)
+- [API Endpoint](/api-reference/cohort/post-cohort-get)

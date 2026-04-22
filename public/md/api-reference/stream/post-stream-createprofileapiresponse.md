@@ -7,6 +7,7 @@ Schema: CreateProfileApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ProfileResultItem`](/api-reference/stream/types#profileresultitem)[] | Yes | Per-item creation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

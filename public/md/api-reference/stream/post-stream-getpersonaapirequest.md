@@ -6,17 +6,18 @@ Schema: GetPersonaApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `persona_id` | `string` | No | UUID of the persona to retrieve |
+| `id` | `string` | No | UUID of the persona to retrieve |
 | `draft_id` | `string` | No | UUID of the draft to load instead of published state |
-| `color_search` | `string` | No | Filter color options by search text |
-| `icon_search` | `string` | No | Filter icon options by search text |
-| `descriptions_search` | `string` | No | Filter description options by search text |
-| `instructions_search` | `string` | No | Filter instruction options by search text |
-| `parameter_field_search` | `string` | No | Filter parameter field options by search text |
-| `parameter_ids` | `string`[] | No | Parameter group IDs to expand in the response |
-| `color_show_selected` | `boolean` | No | When true, only return currently selected colors |
-| `icon_show_selected` | `boolean` | No | When true, only return currently selected icons |
-| `parameter_field_show_selected` | `boolean` | No | When true, only return currently selected parameter fields |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for names section |
+| `descriptions` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for descriptions section |
+| `colors` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for colors section |
+| `icons` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for icons section |
+| `instructions` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for instructions section |
+| `departments` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for departments section |
+| `examples` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for examples section |
+| `parameter_fields` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for parameter fields section |
+| `voices` | [`app__infra__persona__types__SectionFilter`](/api-reference/stream/types#app-infra-persona-types-sectionfilter) | No | Filter options for voices section |
 
 ## Response
 

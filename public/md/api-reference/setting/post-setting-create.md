@@ -1,0 +1,20 @@
+# `POST` `/setting/create`
+
+Create Setting
+
+Create settings using composable infra architecture.
+
+## Request Body (`CreateSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `settings` | [`CreateSettingItem`](/api-reference/setting/types#createsettingitem)[] | Yes | List of settings to create |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`CreateSettingApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SettingResultItem`](/api-reference/setting/types#settingresultitem)[] | Yes | Per-item creation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

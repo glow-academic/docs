@@ -2,79 +2,69 @@
 
 Complete API and CLI reference for the Glow platform.
 
-## Activity
+## Agent
 
-### `POST` `/activity/get`
+### `POST` `/agent/context`
 
-Get Activity
+Get Agent Context
 
-### `POST` `/activity/search`
-
-Search Activity
-
-### `POST` `/activity/refresh`
-
-Activity Refresh
-
-### `POST` `/activity/resolve`
-
-Resolve Problem
-
-### `POST` `/activity/export`
-
-Export Activity
-
-### `POST` `/activity/docs`
-
-Get Activity Docs Endpoint
-
-## Agents
-
-### `POST` `/agents/get`
+### `POST` `/agent/get`
 
 Get Agent
 
-### `POST` `/agents/search`
+### `POST` `/agent/search`
 
 Search Agent
 
-### `POST` `/agents/create`
+### `POST` `/agent/create`
 
 Create Agent
 
-### `POST` `/agents/update`
-
-Update Agent
-
-### `POST` `/agents/duplicate`
-
-Duplicate Agent
-
-### `POST` `/agents/delete`
-
-Delete Agent
-
-### `PATCH` `/agents/draft`
-
-Patch Agent Draft
-
-### `POST` `/agents/drafts`
-
-Get Agent Drafts
-
-### `POST` `/agents/docs`
-
-Get Agent Docs Endpoint
-
-### `POST` `/agents/export`
-
-Export Agents
-
-### `POST` `/agents/csv`
+### `POST` `/agent/csv`
 
 Parse Agent Csv
 
-### `POST` `/agents/refresh`
+### `POST` `/agent/update`
+
+Update Agent
+
+### `POST` `/agent/duplicate`
+
+Duplicate Agent
+
+### `POST` `/agent/delete`
+
+Delete Agent
+
+### `PATCH` `/agent/draft`
+
+Patch Agent Draft
+
+### `POST` `/agent/drafts`
+
+Get Agent Drafts
+
+### `POST` `/agent/export`
+
+Export Agents
+
+### `POST` `/agent/generate`
+
+Generate Agent
+
+### `POST` `/agent/generations`
+
+Generations Agent
+
+### `POST` `/agent/group`
+
+Group Agent
+
+### `POST` `/agent/problem`
+
+Problem Agent
+
+### `POST` `/agent/refresh`
 
 Agent Refresh
 
@@ -84,13 +74,9 @@ Agent Refresh
 
 Attempt Get
 
-### `POST` `/attempt/join`
+### `POST` `/attempt/search`
 
-Attempt Join
-
-### `POST` `/attempt/leave`
-
-Attempt Leave
+Search Attempt
 
 ### `POST` `/attempt/archive`
 
@@ -100,291 +86,441 @@ Archive Attempts
 
 Attempt Refresh
 
-### `POST` `/attempt/docs`
+### `POST` `/attempt/context`
 
-Get Attempt Docs Endpoint
+Get Attempt Context
 
 ### `POST` `/attempt/export`
 
 Export Attempt
 
+### `POST` `/attempt/generate`
+
+Generate Attempt
+
+### `POST` `/attempt/generations`
+
+Generations Attempt
+
+### `POST` `/attempt/group`
+
+Group Attempt
+
+### `POST` `/attempt/problem`
+
+Problem Attempt
+
 ### `POST` `/attempt/start`
 
 Start Attempt
 
-### `POST` `/attempt/next`
+### `POST` `/attempt/complete`
 
-Next Attempt
-
-### `POST` `/attempt/end`
-
-End Attempt
-
-### `POST` `/attempt/end-all`
-
-End All Attempt
-
-### `POST` `/attempt/expire`
-
-Expire
-
-### `POST` `/attempt/message`
-
-Attempt Message
-
-### `POST` `/attempt/grade`
-
-Attempt Grade
+Attempt Complete
 
 ### `POST` `/attempt/stop`
 
 Attempt Stop
 
-### `POST` `/attempt/response`
+### `GET` `/attempt/stream`
 
-Attempt Response
+Attempt Stream
 
-### `POST` `/attempt/use-previous`
+### `POST` `/attempt/join`
 
-Attempt Use Previous
+Attempt Join
 
-### `POST` `/attempt/audio/start`
+### `POST` `/attempt/leave`
 
-Audio Start
+Attempt Leave
 
-### `POST` `/attempt/audio/frame`
+### `POST` `/attempt/chat/create`
 
-Audio Frame
+Create Attempt Chat Endpoint
 
-### `POST` `/attempt/audio/stop`
+### `POST` `/attempt/chat/message`
 
-Audio Stop
+Chat Message
 
-### `POST` `/attempt/audio/mute`
+### `POST` `/attempt/chat/audio`
 
-Audio Mute
+Chat Audio
 
-### `POST` `/attempt/search`
+### `POST` `/attempt/chat/grade`
 
-Search Attempt
+Chat Grade
 
-### `GET` `/attempt/download/\{upload_id\}`
+### `POST` `/attempt/chat/response`
 
-Download
+Chat Response
 
-## Auths
+### `POST` `/attempt/chat/voice`
 
-### `POST` `/auths/get`
+Chat Voice
 
-Get Auth
+### `POST` `/attempt/chat/speak`
 
-### `POST` `/auths/search`
+Chat Speak
 
-Search Auth
+### `POST` `/attempt/chat/silence`
 
-### `POST` `/auths/create`
+Chat Silence
 
-Create Auth
+### `POST` `/attempt/chat/complete`
 
-### `POST` `/auths/update`
+Chat Complete
 
-Update Auth
+### `POST` `/attempt/chat/feedback`
 
-### `POST` `/auths/duplicate`
+Chat Feedback
 
-Duplicate Auth
+### `POST` `/attempt/chat/strengths`
 
-### `POST` `/auths/delete`
+Chat Strengths
 
-Delete Auth
+### `POST` `/attempt/chat/improvements`
 
-### `PATCH` `/auths/draft`
+Chat Improvements
 
-Patch Auth Draft
+### `POST` `/attempt/chat/analyses`
 
-### `POST` `/auths/drafts`
+Chat Analyses
 
-Get Auth Drafts
+### `POST` `/attempt/chat/hints`
 
-### `POST` `/auths/docs`
+Chat Hints
 
-Get Auth Docs Endpoint
-
-### `POST` `/auths/export`
-
-Export Auths
-
-### `POST` `/auths/refresh`
-
-Auth Refresh
-
-## Benchmark
-
-### `POST` `/benchmark/get`
-
-Get Benchmark
-
-### `POST` `/benchmark/search`
-
-Search Benchmark History
-
-### `POST` `/benchmark/refresh`
-
-Benchmark Refresh
-
-### `POST` `/benchmark/export`
-
-Export Benchmark
-
-### `POST` `/benchmark/docs`
-
-Get Benchmark Docs Endpoint
-
-## Chat
-
-### `POST` `/chat/get`
+### `POST` `/attempt/chat/get`
 
 Chat Get
 
-### `PATCH` `/chat/draft`
-
-Patch Chat Draft
-
-### `POST` `/chat/drafts`
-
-Get Chat Drafts
-
-### `POST` `/chat/export`
-
-Export Chat
-
-### `POST` `/chat/refresh`
+### `POST` `/attempt/chat/refresh`
 
 Chat Refresh
 
-### `POST` `/chat/docs`
+### `POST` `/attempt/chat/export`
 
-Get Chat Docs Endpoint
+Export Chat
 
-## Cohorts
+### `PATCH` `/attempt/draft`
 
-### `POST` `/cohorts/search`
+Patch Chat Draft
 
-Search Cohort
+### `POST` `/attempt/drafts`
 
-### `POST` `/cohorts/get`
+Get Chat Drafts
 
-Get Cohort
+### `POST` `/attempt/home/get`
 
-### `POST` `/cohorts/create`
+Home Get
 
-Create Cohort
+### `POST` `/attempt/home/search`
 
-### `POST` `/cohorts/update`
+Search Home
 
-Update Cohort
+### `POST` `/attempt/home/refresh`
 
-### `POST` `/cohorts/duplicate`
+Home Refresh
 
-Duplicate Cohort
+### `POST` `/attempt/home/export`
 
-### `POST` `/cohorts/delete`
+Export Home
 
-Delete Cohort
+### `POST` `/attempt/practice/get`
 
-### `PATCH` `/cohorts/draft`
+Practice Get
 
-Patch Cohort Draft
+### `POST` `/attempt/practice/search`
 
-### `POST` `/cohorts/drafts`
+Search Practice
 
-Get Cohort Drafts
+### `POST` `/attempt/practice/refresh`
 
-### `POST` `/cohorts/export`
+Practice Refresh
 
-Export Cohorts
+### `POST` `/attempt/practice/export`
 
-### `POST` `/cohorts/csv`
+Export Practice
 
-Parse Cohort Csv
-
-### `POST` `/cohorts/docs`
-
-Get Cohort Docs Endpoint
-
-### `POST` `/cohorts/refresh`
-
-Cohort Refresh
-
-## Dashboard
-
-### `POST` `/dashboard/get`
+### `POST` `/attempt/dashboard/get`
 
 Get Dashboard
 
-### `POST` `/dashboard/search`
+### `POST` `/attempt/dashboard/search`
 
 Search Dashboard
 
-### `POST` `/dashboard/refresh`
+### `POST` `/attempt/dashboard/refresh`
 
 Dashboard Refresh
 
-### `POST` `/dashboard/export`
+### `POST` `/attempt/dashboard/export`
 
 Export Dashboard
 
-### `POST` `/dashboard/docs`
+### `POST` `/attempt/leaderboard/get`
 
-Get Dashboard Docs Endpoint
+Get Leaderboard
 
-## Departments
+### `POST` `/attempt/leaderboard/search`
 
-### `POST` `/departments/get`
+Search Leaderboard
+
+### `POST` `/attempt/leaderboard/refresh`
+
+Leaderboard Refresh
+
+### `POST` `/attempt/leaderboard/export`
+
+Export Leaderboard
+
+### `POST` `/attempt/record/get`
+
+Get Record
+
+### `POST` `/attempt/record/search`
+
+Search Record
+
+### `POST` `/attempt/record/refresh`
+
+Record Refresh
+
+### `POST` `/attempt/record/export`
+
+Export Record
+
+### `POST` `/attempt/report/export`
+
+Export Reports
+
+### `POST` `/attempt/report/search`
+
+Get Reports
+
+### `POST` `/attempt/report/refresh`
+
+Reports Refresh
+
+### `POST` `/attempt/audio/upload`
+
+Upload Audio
+
+### `POST` `/attempt/audio/download`
+
+Download Audio
+
+### `POST` `/attempt/image/download`
+
+Download Image
+
+### `POST` `/attempt/video/download`
+
+Download Video
+
+### `POST` `/attempt/text/download`
+
+Download Text
+
+### `POST` `/attempt/file/download`
+
+Download File
+
+### `POST` `/attempt/file/preview`
+
+Preview File
+
+## Auth
+
+### `POST` `/auth/context`
+
+Get Auth Context
+
+### `POST` `/auth/get`
+
+Get Auth
+
+### `POST` `/auth/search`
+
+Search Auth
+
+### `POST` `/auth/create`
+
+Create Auth
+
+### `POST` `/auth/update`
+
+Update Auth
+
+### `POST` `/auth/duplicate`
+
+Duplicate Auth
+
+### `POST` `/auth/delete`
+
+Delete Auth
+
+### `PATCH` `/auth/draft`
+
+Patch Auth Draft
+
+### `POST` `/auth/drafts`
+
+Get Auth Drafts
+
+### `POST` `/auth/export`
+
+Export Auths
+
+### `POST` `/auth/generate`
+
+Generate Auth
+
+### `POST` `/auth/generations`
+
+Generations Auth
+
+### `POST` `/auth/group`
+
+Group Auth
+
+### `POST` `/auth/problem`
+
+Problem Auth
+
+### `POST` `/auth/refresh`
+
+Auth Refresh
+
+## Cohort
+
+### `POST` `/cohort/search`
+
+Search Cohort
+
+### `POST` `/cohort/get`
+
+Get Cohort
+
+### `POST` `/cohort/create`
+
+Create Cohort
+
+### `POST` `/cohort/update`
+
+Update Cohort
+
+### `POST` `/cohort/duplicate`
+
+Duplicate Cohort
+
+### `POST` `/cohort/delete`
+
+Delete Cohort
+
+### `PATCH` `/cohort/draft`
+
+Patch Cohort Draft
+
+### `POST` `/cohort/drafts`
+
+Get Cohort Drafts
+
+### `POST` `/cohort/export`
+
+Export Cohorts
+
+### `POST` `/cohort/csv`
+
+Parse Cohort Csv
+
+### `POST` `/cohort/context`
+
+Get Cohort Context
+
+### `POST` `/cohort/generate`
+
+Generate Cohort
+
+### `POST` `/cohort/generations`
+
+Generations Cohort
+
+### `POST` `/cohort/group`
+
+Group Cohort
+
+### `POST` `/cohort/problem`
+
+Problem Cohort
+
+### `POST` `/cohort/refresh`
+
+Cohort Refresh
+
+## Department
+
+### `POST` `/department/get`
 
 Get Department
 
-### `POST` `/departments/search`
+### `POST` `/department/search`
 
 Search Department
 
-### `POST` `/departments/create`
+### `POST` `/department/create`
 
 Create Department
 
-### `POST` `/departments/update`
+### `POST` `/department/update`
 
 Update Department
 
-### `POST` `/departments/duplicate`
+### `POST` `/department/duplicate`
 
 Duplicate Department
 
-### `POST` `/departments/delete`
+### `POST` `/department/delete`
 
 Delete Department
 
-### `PATCH` `/departments/draft`
+### `PATCH` `/department/draft`
 
 Patch Department Draft
 
-### `POST` `/departments/drafts`
+### `POST` `/department/drafts`
 
 Get Department Drafts
 
-### `POST` `/departments/docs`
+### `POST` `/department/context`
 
-Get Department Docs Endpoint
+Get Department Context
 
-### `POST` `/departments/export`
+### `POST` `/department/export`
 
 Export Departments
 
-### `POST` `/departments/csv`
+### `POST` `/department/csv`
 
 Parse Department Csv
 
-### `POST` `/departments/refresh`
+### `POST` `/department/generate`
+
+Generate Department
+
+### `POST` `/department/generations`
+
+Generations Department
+
+### `POST` `/department/group`
+
+Group Department
+
+### `POST` `/department/problem`
+
+Problem Department
+
+### `POST` `/department/refresh`
 
 Department Refresh
 
@@ -394,819 +530,857 @@ Department Refresh
 
 Docs Mcp Proxy
 
-## Documents
+## Document
 
-### `POST` `/documents/search`
+### `POST` `/document/search`
 
 Search Document
 
-### `POST` `/documents/get`
+### `POST` `/document/get`
 
 Get Document
 
-### `POST` `/documents/create`
+### `POST` `/document/create`
 
 Create Document
 
-### `POST` `/documents/update`
+### `POST` `/document/update`
 
 Update Document
 
-### `POST` `/documents/duplicate`
+### `POST` `/document/duplicate`
 
 Duplicate Document
 
-### `POST` `/documents/delete`
+### `POST` `/document/delete`
 
 Delete Document
 
-### `PATCH` `/documents/draft`
+### `PATCH` `/document/draft`
 
 Patch Document Draft
 
-### `POST` `/documents/drafts`
+### `POST` `/document/drafts`
 
 Get Document Drafts
 
-### `POST` `/documents/docs`
+### `POST` `/document/context`
 
-Get Document Docs Endpoint
+Get Document Context
 
-### `POST` `/documents/refresh`
+### `POST` `/document/generate`
+
+Generate Document
+
+### `POST` `/document/generations`
+
+Generations Document
+
+### `POST` `/document/group`
+
+Group Document
+
+### `POST` `/document/problem`
+
+Problem Document
+
+### `POST` `/document/refresh`
 
 Document Refresh
 
-### `POST` `/documents/export`
+### `POST` `/document/export`
 
 Export Documents
 
-### `POST` `/documents/csv`
+### `POST` `/document/csv`
 
 Parse Document Csv
 
-### `POST` `/documents/upload`
+### `POST` `/document/text/upload`
 
-Upload
+Upload Text
 
-### `GET` `/documents/download/\{upload_id\}`
+### `POST` `/document/text/download`
 
-Download
+Download Text
 
-### `GET` `/documents/preview/\{upload_id\}`
+### `POST` `/document/file/upload`
 
-Preview
+Upload File
 
-## Evals
+### `POST` `/document/file/download`
 
-### `POST` `/evals/search`
+Download File
+
+### `POST` `/document/file/preview`
+
+Preview File
+
+## Eval
+
+### `POST` `/eval/search`
 
 Search Eval
 
-### `POST` `/evals/get`
+### `POST` `/eval/get`
 
 Get Eval
 
-### `POST` `/evals/create`
+### `POST` `/eval/create`
 
 Create Eval
 
-### `POST` `/evals/update`
-
-Update Eval
-
-### `POST` `/evals/duplicate`
-
-Duplicate Eval
-
-### `POST` `/evals/delete`
-
-Delete Eval
-
-### `PATCH` `/evals/draft`
-
-Patch Eval Draft
-
-### `POST` `/evals/drafts`
-
-Get Eval Drafts
-
-### `POST` `/evals/docs`
-
-Get Eval Docs Endpoint
-
-### `POST` `/evals/refresh`
-
-Eval Refresh
-
-### `POST` `/evals/export`
-
-Export Evals
-
-### `POST` `/evals/csv`
+### `POST` `/eval/csv`
 
 Parse Eval Csv
 
-## Fields
+### `POST` `/eval/update`
 
-### `POST` `/fields/get`
+Update Eval
+
+### `POST` `/eval/duplicate`
+
+Duplicate Eval
+
+### `POST` `/eval/delete`
+
+Delete Eval
+
+### `PATCH` `/eval/draft`
+
+Patch Eval Draft
+
+### `POST` `/eval/drafts`
+
+Get Eval Drafts
+
+### `POST` `/eval/export`
+
+Export Evals
+
+### `POST` `/eval/generate`
+
+Generate Eval
+
+### `POST` `/eval/generations`
+
+Generations Eval
+
+### `POST` `/eval/context`
+
+Get Eval Context
+
+### `POST` `/eval/group`
+
+Group Eval
+
+### `POST` `/eval/problem`
+
+Problem Eval
+
+### `POST` `/eval/refresh`
+
+Eval Refresh
+
+## Field
+
+### `POST` `/field/get`
 
 Get Field
 
-### `POST` `/fields/search`
+### `POST` `/field/search`
 
 Search Field
 
-### `POST` `/fields/create`
+### `POST` `/field/create`
 
 Create Field
 
-### `POST` `/fields/update`
+### `POST` `/field/update`
 
 Update Field
 
-### `POST` `/fields/duplicate`
+### `POST` `/field/duplicate`
 
 Duplicate Field
 
-### `POST` `/fields/delete`
+### `POST` `/field/delete`
 
 Delete Field
 
-### `PATCH` `/fields/draft`
+### `PATCH` `/field/draft`
 
 Patch Field Draft
 
-### `POST` `/fields/drafts`
+### `POST` `/field/drafts`
 
 Get Field Drafts
 
-### `POST` `/fields/docs`
+### `POST` `/field/context`
 
-Get Field Docs Endpoint
+Get Field Context
 
-### `POST` `/fields/export`
+### `POST` `/field/export`
 
 Export Fields
 
-### `POST` `/fields/csv`
+### `POST` `/field/csv`
 
 Parse Field Csv
 
-### `POST` `/fields/refresh`
+### `POST` `/field/generate`
+
+Generate Field
+
+### `POST` `/field/generations`
+
+Generations Field
+
+### `POST` `/field/group`
+
+Group Field
+
+### `POST` `/field/problem`
+
+Problem Field
+
+### `POST` `/field/refresh`
 
 Field Refresh
 
-## Group
+## Model
 
-### `POST` `/group/get`
-
-Get Group
-
-### `POST` `/group/refresh`
-
-Group Refresh
-
-### `POST` `/group/docs`
-
-Get Group Docs Endpoint
-
-### `POST` `/group/export`
-
-Export Group
-
-### `GET` `/group/download/\{upload_id\}`
-
-Download
-
-## Health
-
-### `POST` `/health/get`
-
-Get Health
-
-### `POST` `/health/refresh`
-
-Health Refresh
-
-### `POST` `/health/export`
-
-Export Health
-
-### `POST` `/health/docs`
-
-Get Health Docs Endpoint
-
-## Home
-
-### `POST` `/home/get`
-
-Home Get
-
-### `POST` `/home/search`
-
-Search Home
-
-### `POST` `/home/refresh`
-
-Home Refresh
-
-### `POST` `/home/export`
-
-Export Home
-
-### `POST` `/home/docs`
-
-Get Home Docs Endpoint
-
-## Leaderboard
-
-### `POST` `/leaderboard/get`
-
-Get Leaderboard
-
-### `POST` `/leaderboard/search`
-
-Search Leaderboard
-
-### `POST` `/leaderboard/refresh`
-
-Leaderboard Refresh
-
-### `POST` `/leaderboard/export`
-
-Export Leaderboard
-
-### `POST` `/leaderboard/docs`
-
-Get Leaderboard Docs Endpoint
-
-## Models
-
-### `POST` `/models/get`
+### `POST` `/model/get`
 
 Get Model
 
-### `POST` `/models/search`
+### `POST` `/model/search`
 
 Search Model
 
-### `POST` `/models/create`
+### `POST` `/model/create`
 
 Create Model
 
-### `POST` `/models/update`
+### `POST` `/model/update`
 
 Update Model
 
-### `POST` `/models/duplicate`
+### `POST` `/model/duplicate`
 
 Duplicate Model
 
-### `POST` `/models/delete`
+### `POST` `/model/delete`
 
 Delete Model
 
-### `PATCH` `/models/draft`
+### `PATCH` `/model/draft`
 
 Patch Model Draft
 
-### `POST` `/models/drafts`
+### `POST` `/model/drafts`
 
 Get Model Drafts
 
-### `POST` `/models/docs`
+### `POST` `/model/context`
 
-Get Model Docs Endpoint
+Get Model Context
 
-### `POST` `/models/export`
+### `POST` `/model/export`
 
 Export Models
 
-### `POST` `/models/csv`
+### `POST` `/model/csv`
 
 Parse Model Csv
 
-### `POST` `/models/refresh`
+### `POST` `/model/generate`
+
+Generate Model
+
+### `POST` `/model/generations`
+
+Generations Model
+
+### `POST` `/model/group`
+
+Group Model
+
+### `POST` `/model/problem`
+
+Problem Model
+
+### `POST` `/model/refresh`
 
 Model Refresh
 
-## Parameters
+## Parameter
 
-### `POST` `/parameters/get`
+### `POST` `/parameter/get`
 
 Get Parameter
 
-### `POST` `/parameters/search`
+### `POST` `/parameter/search`
 
 Search Parameter
 
-### `POST` `/parameters/create`
+### `POST` `/parameter/create`
 
 Create Parameter
 
-### `POST` `/parameters/update`
+### `POST` `/parameter/update`
 
 Update Parameter
 
-### `POST` `/parameters/duplicate`
+### `POST` `/parameter/duplicate`
 
 Duplicate Parameter
 
-### `POST` `/parameters/delete`
+### `POST` `/parameter/context`
+
+Get Parameter Context
+
+### `POST` `/parameter/delete`
 
 Delete Parameter
 
-### `PATCH` `/parameters/draft`
+### `PATCH` `/parameter/draft`
 
 Patch Parameter Draft
 
-### `POST` `/parameters/drafts`
+### `POST` `/parameter/drafts`
 
 Get Parameter Drafts
 
-### `POST` `/parameters/docs`
-
-Get Parameter Docs Endpoint
-
-### `POST` `/parameters/export`
+### `POST` `/parameter/export`
 
 Export Parameters
 
-### `POST` `/parameters/csv`
+### `POST` `/parameter/csv`
 
 Parse Parameter Csv
 
-### `POST` `/parameters/refresh`
+### `POST` `/parameter/generate`
+
+Generate Parameter
+
+### `POST` `/parameter/generations`
+
+Generations Parameter
+
+### `POST` `/parameter/group`
+
+Group Parameter
+
+### `POST` `/parameter/problem`
+
+Problem Parameter
+
+### `POST` `/parameter/refresh`
 
 Parameter Refresh
 
-## Personas
+## Persona
 
-### `POST` `/personas/get`
+### `POST` `/persona/get`
 
 Get Persona
 
-### `POST` `/personas/search`
+### `POST` `/persona/search`
 
 Search Persona
 
-### `POST` `/personas/create`
+### `POST` `/persona/create`
 
 Create Persona
 
-### `POST` `/personas/csv`
+### `POST` `/persona/csv`
 
 Parse Persona Csv
 
-### `POST` `/personas/update`
+### `POST` `/persona/update`
 
 Update Persona
 
-### `POST` `/personas/duplicate`
+### `POST` `/persona/duplicate`
 
 Duplicate Persona
 
-### `POST` `/personas/delete`
+### `POST` `/persona/delete`
 
 Delete Persona
 
-### `PATCH` `/personas/draft`
+### `POST` `/persona/draft`
 
 Patch Persona Draft
 
-### `POST` `/personas/drafts`
+### `POST` `/persona/drafts`
 
 Get Persona Drafts
 
-### `POST` `/personas/docs`
+### `POST` `/persona/context`
 
-Get Persona Docs Endpoint
+Get Persona Context
 
-### `POST` `/personas/export`
+### `POST` `/persona/export`
 
 Export Personas
 
-### `POST` `/personas/refresh`
+### `POST` `/persona/generate`
+
+Generate Persona
+
+### `POST` `/persona/generations`
+
+Generations Persona
+
+### `POST` `/persona/group`
+
+Group Persona
+
+### `POST` `/persona/problem`
+
+Problem Persona
+
+### `POST` `/persona/refresh`
 
 Persona Refresh
 
-## Practice
+## Profile
 
-### `POST` `/practice/get`
-
-Practice Get
-
-### `POST` `/practice/search`
-
-Search Practice
-
-### `POST` `/practice/refresh`
-
-Practice Refresh
-
-### `POST` `/practice/export`
-
-Export Practice
-
-### `POST` `/practice/docs`
-
-Get Practice Docs Endpoint
-
-## Pricing
-
-### `POST` `/pricing/get`
-
-Get Pricing
-
-### `POST` `/pricing/search`
-
-Search Pricing
-
-### `POST` `/pricing/refresh`
-
-Pricing Refresh
-
-### `POST` `/pricing/export`
-
-Export Pricing
-
-### `POST` `/pricing/docs`
-
-Get Pricing Docs Endpoint
-
-## Profiles
-
-### `POST` `/profiles/get`
+### `POST` `/profile/get`
 
 Get Profile
 
-### `POST` `/profiles/search`
+### `POST` `/profile/search`
 
 Search Profile
 
-### `POST` `/profiles/create`
+### `POST` `/profile/create`
 
 Create Profile
 
-### `POST` `/profiles/update`
+### `POST` `/profile/update`
 
 Update Profile
 
-### `POST` `/profiles/duplicate`
+### `POST` `/profile/duplicate`
 
 Duplicate Profile
 
-### `PATCH` `/profiles/draft`
+### `PATCH` `/profile/draft`
 
 Patch Profile Draft
 
-### `POST` `/profiles/drafts`
+### `POST` `/profile/drafts`
 
 Get Profile Drafts
 
-### `POST` `/profiles/delete`
+### `POST` `/profile/delete`
 
 Delete Profile
 
-### `POST` `/profiles/docs`
-
-Get Profile Docs Endpoint
-
-### `POST` `/profiles/export`
+### `POST` `/profile/export`
 
 Export Profiles
 
-### `POST` `/profiles/refresh`
+### `POST` `/profile/generate`
+
+Generate Profile
+
+### `POST` `/profile/generations`
+
+Generations Profile
+
+### `POST` `/profile/group`
+
+Group Profile
+
+### `POST` `/profile/problem`
+
+Problem Profile
+
+### `POST` `/profile/refresh`
 
 Profile Refresh
 
-## Providers
+### `POST` `/profile/context`
 
-### `POST` `/providers/search`
+Get Profile Context
+
+### `POST` `/profile/emulate`
+
+Emulate Profile
+
+### `POST` `/profile/unemulate`
+
+Unemulate Profile
+
+## Provider
+
+### `POST` `/provider/search`
 
 Search Provider
 
-### `POST` `/providers/get`
+### `POST` `/provider/get`
 
 Get Provider
 
-### `POST` `/providers/create`
+### `POST` `/provider/create`
 
 Create Provider
 
-### `POST` `/providers/update`
+### `POST` `/provider/update`
 
 Update Provider
 
-### `POST` `/providers/duplicate`
+### `POST` `/provider/duplicate`
 
 Duplicate Provider
 
-### `POST` `/providers/delete`
+### `POST` `/provider/delete`
 
 Delete Provider
 
-### `PATCH` `/providers/draft`
+### `PATCH` `/provider/draft`
 
 Patch Provider Draft
 
-### `POST` `/providers/drafts`
+### `POST` `/provider/drafts`
 
 Get Provider Drafts
 
-### `POST` `/providers/docs`
+### `POST` `/provider/context`
 
-Get Provider Docs Endpoint
+Get Provider Context
 
-### `POST` `/providers/export`
+### `POST` `/provider/export`
 
 Export Providers
 
-### `POST` `/providers/csv`
+### `POST` `/provider/csv`
 
 Parse Provider Csv
 
-### `POST` `/providers/refresh`
+### `POST` `/provider/refresh`
 
 Provider Refresh
 
-### `POST` `/providers/decrypt`
+### `POST` `/provider/decrypt`
 
 Decrypt Provider Key
 
-## Record
+### `POST` `/provider/generate`
 
-### `POST` `/record/get`
+Generate Provider
 
-Get Record
+### `POST` `/provider/generations`
 
-### `POST` `/record/search`
+Generations Provider
 
-Search Record
+### `POST` `/provider/group`
 
-### `POST` `/record/refresh`
+Group Provider
 
-Record Refresh
+### `POST` `/provider/problem`
 
-### `POST` `/record/export`
+Problem Provider
 
-Export Record
+## Rubric
 
-### `POST` `/record/docs`
-
-Get Record Docs Endpoint
-
-## Reports
-
-### `POST` `/reports/export`
-
-Export Reports
-
-### `POST` `/reports/search`
-
-Get Reports
-
-### `POST` `/reports/refresh`
-
-Reports Refresh
-
-### `POST` `/reports/docs`
-
-Get Reports Docs Endpoint
-
-## Rubrics
-
-### `POST` `/rubrics/get`
+### `POST` `/rubric/get`
 
 Get Rubric
 
-### `POST` `/rubrics/search`
+### `POST` `/rubric/search`
 
 Search Rubric
 
-### `POST` `/rubrics/create`
+### `POST` `/rubric/context`
+
+Get Rubric Context
+
+### `POST` `/rubric/create`
 
 Create Rubric
 
-### `POST` `/rubrics/update`
+### `POST` `/rubric/update`
 
 Update Rubric
 
-### `POST` `/rubrics/duplicate`
+### `POST` `/rubric/duplicate`
 
 Duplicate Rubric
 
-### `POST` `/rubrics/delete`
+### `POST` `/rubric/delete`
 
 Delete Rubric
 
-### `PATCH` `/rubrics/draft`
+### `PATCH` `/rubric/draft`
 
 Patch Rubric Draft
 
-### `POST` `/rubrics/drafts`
+### `POST` `/rubric/drafts`
 
 Get Rubric Drafts
 
-### `POST` `/rubrics/docs`
-
-Get Rubric Docs Endpoint
-
-### `POST` `/rubrics/export`
+### `POST` `/rubric/export`
 
 Export Rubrics
 
-### `POST` `/rubrics/csv`
+### `POST` `/rubric/csv`
 
 Parse Rubric Csv
 
-### `POST` `/rubrics/refresh`
+### `POST` `/rubric/generate`
+
+Generate Rubric
+
+### `POST` `/rubric/generations`
+
+Generations Rubric
+
+### `POST` `/rubric/group`
+
+Group Rubric
+
+### `POST` `/rubric/problem`
+
+Problem Rubric
+
+### `POST` `/rubric/refresh`
 
 Rubric Refresh
 
-## Scenarios
+## Scenario
 
-### `POST` `/scenarios/get`
+### `POST` `/scenario/get`
 
 Get Scenario
 
-### `POST` `/scenarios/search`
+### `POST` `/scenario/search`
 
 Search Scenario
 
-### `POST` `/scenarios/create`
+### `POST` `/scenario/create`
 
 Create Scenario
 
-### `POST` `/scenarios/csv`
+### `POST` `/scenario/csv`
 
 Parse Scenario Csv
 
-### `POST` `/scenarios/update`
+### `POST` `/scenario/update`
 
 Update Scenario
 
-### `POST` `/scenarios/duplicate`
+### `POST` `/scenario/duplicate`
 
 Duplicate Scenario
 
-### `POST` `/scenarios/delete`
+### `POST` `/scenario/delete`
 
 Delete Scenario
 
-### `PATCH` `/scenarios/draft`
+### `PATCH` `/scenario/draft`
 
 Patch Scenario Draft
 
-### `POST` `/scenarios/drafts`
+### `POST` `/scenario/drafts`
 
 Get Scenario Drafts
 
-### `POST` `/scenarios/export`
+### `POST` `/scenario/export`
 
 Export Scenarios
 
-### `POST` `/scenarios/docs`
+### `POST` `/scenario/generate`
 
-Get Scenario Docs Endpoint
+Generate Scenario
 
-### `POST` `/scenarios/refresh`
+### `POST` `/scenario/generations`
+
+Generations Scenario
+
+### `POST` `/scenario/context`
+
+Get Scenario Context
+
+### `POST` `/scenario/group`
+
+Group Scenario
+
+### `POST` `/scenario/problem`
+
+Problem Scenario
+
+### `POST` `/scenario/refresh`
 
 Scenario Refresh
 
-### `POST` `/scenarios/upload`
+### `POST` `/scenario/image/upload`
 
-Upload
+Upload Image
 
-### `GET` `/scenarios/download/\{upload_id\}`
+### `POST` `/scenario/image/download`
 
-Download
+Download Image
 
-### `GET` `/scenarios/preview/\{upload_id\}`
+### `POST` `/scenario/video/upload`
 
-Preview
+Upload Video
 
-## Session
+### `POST` `/scenario/video/download`
 
-### `POST` `/session/get`
+Download Video
 
-Get Session
+### `POST` `/scenario/text/download`
 
-### `POST` `/session/refresh`
+Download Text
 
-Session Refresh
+### `POST` `/scenario/file/download`
 
-### `POST` `/session/docs`
+Download File
 
-Get Session Docs Endpoint
+### `POST` `/scenario/file/preview`
 
-### `POST` `/session/export`
+Preview File
 
-Export Session
+## Setting
 
-## Settings
-
-### `POST` `/settings/search`
+### `POST` `/setting/search`
 
 Search Setting
 
-### `POST` `/settings/get`
+### `POST` `/setting/get`
 
 Get Setting
 
-### `POST` `/settings/create`
+### `POST` `/setting/create`
 
 Create Setting
 
-### `POST` `/settings/update`
+### `POST` `/setting/update`
 
 Update Setting
 
-### `POST` `/settings/duplicate`
+### `POST` `/setting/duplicate`
 
 Duplicate Setting
 
-### `POST` `/settings/delete`
+### `POST` `/setting/delete`
 
 Delete Setting
 
-### `PATCH` `/settings/draft`
+### `PATCH` `/setting/draft`
 
 Patch Setting Draft
 
-### `POST` `/settings/drafts`
+### `POST` `/setting/drafts`
 
 Get Setting Drafts
 
-### `POST` `/settings/export`
+### `POST` `/setting/export`
 
 Export Settings
 
-### `POST` `/settings/csv`
+### `POST` `/setting/context`
+
+Get Setting Context
+
+### `POST` `/setting/csv`
 
 Parse Setting Csv
 
-### `POST` `/settings/docs`
+### `POST` `/setting/generate`
 
-Get Setting Docs Endpoint
+Generate Setting
 
-### `POST` `/settings/refresh`
+### `POST` `/setting/generations`
+
+Generations Setting
+
+### `POST` `/setting/group`
+
+Group Setting
+
+### `POST` `/setting/problem`
+
+Problem Setting
+
+### `POST` `/setting/refresh`
 
 Setting Refresh
 
-### `POST` `/settings/decrypt`
+### `POST` `/setting/decrypt`
 
 Decrypt Setting Key
 
-## Simulations
+## Simulation
 
-### `POST` `/simulations/get`
+### `POST` `/simulation/get`
 
 Get Simulation
 
-### `POST` `/simulations/search`
+### `POST` `/simulation/search`
 
 Search Simulation
 
-### `POST` `/simulations/create`
+### `POST` `/simulation/create`
 
 Create Simulation
 
-### `POST` `/simulations/csv`
+### `POST` `/simulation/context`
+
+Get Simulation Context
+
+### `POST` `/simulation/csv`
 
 Parse Simulation Csv
 
-### `POST` `/simulations/update`
+### `POST` `/simulation/update`
 
 Update Simulation
 
-### `POST` `/simulations/duplicate`
+### `POST` `/simulation/duplicate`
 
 Duplicate Simulation
 
-### `POST` `/simulations/delete`
+### `POST` `/simulation/delete`
 
 Delete Simulation
 
-### `PATCH` `/simulations/draft`
+### `PATCH` `/simulation/draft`
 
 Patch Simulation Draft
 
-### `POST` `/simulations/drafts`
+### `POST` `/simulation/drafts`
 
 Get Simulation Drafts
 
-### `POST` `/simulations/export`
+### `POST` `/simulation/export`
 
 Export Simulations
 
-### `POST` `/simulations/docs`
+### `POST` `/simulation/generate`
 
-Get Simulation Docs Endpoint
+Generate Simulation
 
-### `POST` `/simulations/refresh`
+### `POST` `/simulation/generations`
+
+Generations Simulation
+
+### `POST` `/simulation/problem`
+
+Problem Simulation
+
+### `POST` `/simulation/refresh`
 
 Simulation Refresh
+
+### `POST` `/simulation/group`
+
+Group Simulation
 
 ## Stream
 
@@ -1365,10 +1539,6 @@ Schema: BenchmarkRequest
 ### `POST` `/stream/BenchmarkResponse`
 
 Schema: BenchmarkResponse
-
-### `POST` `/stream/ComposedDocsResponse`
-
-Schema: ComposedDocsResponse
 
 ### `POST` `/stream/ConnectionConfirmedPayload`
 
@@ -2070,6 +2240,10 @@ Schema: GetHomeRequest
 
 Schema: GetHomeResponse
 
+### `POST` `/stream/GetInvocationApiRequest`
+
+Schema: GetInvocationApiRequest
+
 ### `POST` `/stream/GetModelApiRequest`
 
 Schema: GetModelApiRequest
@@ -2193,10 +2367,6 @@ Schema: GetSimulationApiResponse
 ### `POST` `/stream/GetSimulationDraftsApiResponse`
 
 Schema: GetSimulationDraftsApiResponse
-
-### `POST` `/stream/GetSuiteRequest`
-
-Schema: GetSuiteRequest
 
 ### `POST` `/stream/GetSuiteResponse`
 
@@ -2606,6 +2776,132 @@ Schema: UpdateToolApiRequest
 
 Schema: UpdateToolApiResponse
 
+## System
+
+### `POST` `/system/context`
+
+Get System Context
+
+### `POST` `/system/generate`
+
+Generate System
+
+### `POST` `/system/generations`
+
+Generations System
+
+### `POST` `/system/problem`
+
+Problem System
+
+### `POST` `/system/group/get`
+
+Get Group
+
+### `POST` `/system/group/search`
+
+Search Groups
+
+### `POST` `/system/group/refresh`
+
+Group Refresh
+
+### `POST` `/system/group/export`
+
+Export Group
+
+### `POST` `/system/group/name`
+
+Name Group
+
+### `POST` `/system/session/get`
+
+Get Session
+
+### `POST` `/system/session/refresh`
+
+Session Refresh
+
+### `POST` `/system/session/export`
+
+Export Session
+
+### `POST` `/system/health/get`
+
+Get Health
+
+### `POST` `/system/health/refresh`
+
+Health Refresh
+
+### `POST` `/system/health/export`
+
+Export Health
+
+### `POST` `/system/activity/get`
+
+Get Activity
+
+### `POST` `/system/activity/search`
+
+Search Activity
+
+### `POST` `/system/activity/refresh`
+
+Activity Refresh
+
+### `POST` `/system/activity/resolve`
+
+Resolve Problem
+
+### `POST` `/system/activity/export`
+
+Export Activity
+
+### `POST` `/system/pricing/get`
+
+Get Pricing
+
+### `POST` `/system/pricing/search`
+
+Search Pricing
+
+### `POST` `/system/pricing/refresh`
+
+Pricing Refresh
+
+### `POST` `/system/pricing/export`
+
+Export Pricing
+
+### `POST` `/system/audio/download`
+
+Download Audio
+
+### `POST` `/system/call/download`
+
+Download Call
+
+### `POST` `/system/file/download`
+
+Download File
+
+### `POST` `/system/file/preview`
+
+Preview File
+
+### `POST` `/system/image/download`
+
+Download Image
+
+### `POST` `/system/text/download`
+
+Download Text
+
+### `POST` `/system/video/download`
+
+Download Video
+
 ## Test
 
 ### `POST` `/test/get`
@@ -2632,9 +2928,9 @@ Test Refresh
 
 Export Test
 
-### `POST` `/test/docs`
+### `POST` `/test/context`
 
-Get Test Docs Endpoint
+Get Test Context
 
 ### `POST` `/test/start`
 
@@ -2660,53 +2956,141 @@ Stop Test
 
 Search Test
 
-## Tools
+### `POST` `/test/grade`
 
-### `POST` `/tools/search`
+Create Grade
+
+### `POST` `/test/feedback`
+
+Create Feedback
+
+### `POST` `/test/generate`
+
+Generate Test
+
+### `POST` `/test/generations`
+
+Generations Test
+
+### `POST` `/test/group`
+
+Group Test
+
+### `POST` `/test/problem`
+
+Problem Test
+
+### `POST` `/test/text/download`
+
+Test Text Download
+
+### `POST` `/test/call/download`
+
+Test Call Download
+
+### `POST` `/test/benchmark/get`
+
+Get Benchmark
+
+### `POST` `/test/benchmark/search`
+
+Search Benchmark History
+
+### `POST` `/test/benchmark/refresh`
+
+Benchmark Refresh
+
+### `POST` `/test/benchmark/export`
+
+Export Benchmark
+
+### `POST` `/test/invocation/get`
+
+Invocation Get
+
+### `PATCH` `/test/invocation/draft`
+
+Patch Invocation Draft
+
+### `POST` `/test/invocation/drafts`
+
+Get Invocation Drafts
+
+### `POST` `/test/invocation/refresh`
+
+Invocation Refresh
+
+### `POST` `/test/invocation/export`
+
+Export Invocation
+
+### `POST` `/test/invocation/decrypt`
+
+Decrypt Invocation Key
+
+## Tool
+
+### `POST` `/tool/search`
 
 Search Tool
 
-### `POST` `/tools/get`
+### `POST` `/tool/get`
 
 Get Tool
 
-### `POST` `/tools/create`
+### `POST` `/tool/create`
 
 Create Tool
 
-### `POST` `/tools/update`
+### `POST` `/tool/update`
 
 Update Tool
 
-### `POST` `/tools/duplicate`
+### `POST` `/tool/duplicate`
 
 Duplicate Tool
 
-### `POST` `/tools/delete`
+### `POST` `/tool/delete`
 
 Delete Tool
 
-### `PATCH` `/tools/draft`
+### `PATCH` `/tool/draft`
 
 Patch Tool Draft
 
-### `POST` `/tools/drafts`
+### `POST` `/tool/drafts`
 
 Get Tool Drafts
 
-### `POST` `/tools/export`
+### `POST` `/tool/export`
 
 Export Tools
 
-### `POST` `/tools/csv`
+### `POST` `/tool/generate`
+
+Generate Tool
+
+### `POST` `/tool/generations`
+
+Generations Tool
+
+### `POST` `/tool/csv`
 
 Parse Tool Csv
 
-### `POST` `/tools/docs`
+### `POST` `/tool/context`
 
-Get Tool Docs Endpoint
+Get Tool Context
 
-### `POST` `/tools/refresh`
+### `POST` `/tool/group`
+
+Group Tool
+
+### `POST` `/tool/problem`
+
+Problem Tool
+
+### `POST` `/tool/refresh`
 
 Tool Refresh
 

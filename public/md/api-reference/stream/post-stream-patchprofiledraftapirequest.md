@@ -6,17 +6,21 @@ Schema: PatchProfileDraftApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `draft_id` | `string` | No | Existing draft UUID to update |
 | `input_draft_id` | `string` | No | Existing draft UUID to update |
-| `expected_version` | `integer` | No | Expected draft version for optimistic locking |
 | `name` | `string` | No | Name value to resolve or create |
 | `name_id` | `string` | No | UUID of the name resource |
 | `email` | `string` | No | Email value to resolve or create |
-| `request_limit` | `integer` | No | Request limit value to resolve or create |
-| `flag_id` | `string` | No | UUID of the flag option |
+| `emails` | `string`[] | No | Email values to resolve or create |
+| `active_flag_id` | `string` | No | UUID of the flag option |
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `departments` | `string`[] | No | Department names to resolve |
 | `email_ids` | `string`[] | No | Email resource UUIDs |
-| `role_ids` | `string`[] | No | Role resource UUIDs |
-| `request_limit_ids` | `string`[] | No | Request limit resource UUIDs |
+| `role` | `string` | No | Role name to resolve |
+| `role_id` | `string` | No | Role resource UUID |
+| `pending_ids` | `string`[] | No | Resources to keep dormant |
+| `idempotency_key` | `string` | No | Idempotency key for draft writes |
+| `accept` | `boolean` | No | Whether to accept the pending draft state |
 
 ## Response
 

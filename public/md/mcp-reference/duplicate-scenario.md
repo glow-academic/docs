@@ -22,4 +22,4 @@ Duplicate a scenario — composable infra architecture.
 ## Related
 
 - [Scenario Guide](/scenario)
-- [API Endpoint](/api-reference/scenarios/post-scenarios-duplicate)
+- [API Endpoint](/api-reference/scenario/post-scenario-duplicate)

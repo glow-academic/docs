@@ -8,9 +8,9 @@ Schema: PatchDocumentDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `draft_id` | `string` | Yes | Draft UUID |
-| `new_version` | `integer` | Yes | New draft version number after patch |
+| `idempotency_key` | `string` | Yes | Idempotency key for this draft operation |
 | `message` | `string` | Yes | Human-readable result message |
-| `form_state` | [`DocumentDraftFormState`](/api-reference/stream/types#documentdraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__document__types__DraftFormState`](/api-reference/stream/types#app-infra-document-types-draftformstate) | No | Server-authoritative form state |
 
 ## Response
 

@@ -7,6 +7,8 @@ Schema: DuplicateScenarioApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `scenario_id` | `string` | Yes | UUID of the scenario to duplicate |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant duplicate |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

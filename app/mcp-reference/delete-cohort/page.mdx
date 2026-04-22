@@ -22,4 +22,4 @@ Bulk delete cohorts — composable infra architecture.
 ## Related
 
 - [Cohort Guide](/cohort)
-- [API Endpoint](/api-reference/cohorts/post-cohorts-delete)
+- [API Endpoint](/api-reference/cohort/post-cohort-delete)

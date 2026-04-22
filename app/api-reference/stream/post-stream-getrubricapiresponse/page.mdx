@@ -2,7 +2,7 @@
 
 Schema: GetRubricApiResponse
 
-## Request Body (`GetRubricApiResponse-Input`)
+## Request Body (`GetRubricApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,17 +10,18 @@ Schema: GetRubricApiResponse
 | `rubric_exists` | `boolean` | No | Whether the rubric exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Associated group UUID |
-| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
-| `content_show_ai_generate` | `boolean` | No | Whether to show AI generate for content step |
-| `names` | [`RubricNameSection`](/api-reference/stream/types#rubricnamesection) | No | Name section with resource and options |
-| `descriptions` | [`RubricDescriptionSection`](/api-reference/stream/types#rubricdescriptionsection) | No | Description section with resource and options |
-| `flags` | [`RubricFlagSection`](/api-reference/stream/types#rubricflagsection) | No | Flag section with selections and options |
-| `departments` | [`RubricDepartmentSection`](/api-reference/stream/types#rubricdepartmentsection) | No | Department section with selections and options |
-| `points` | [`RubricPointsSection`](/api-reference/stream/types#rubricpointssection) | No | Points section with resource and options |
-| `standard_groups` | [`RubricStandardGroupsSection`](/api-reference/stream/types#rubricstandardgroupssection) | No | Standard groups section |
-| `standards` | [`RubricStandardsSection`](/api-reference/stream/types#rubricstandardssection) | No | Standards section |
+| `show_ai_generate` | `boolean` | No | Whether any section supports AI generation |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for the basic step |
+| `content_show_ai_generate` | `boolean` | No | Whether to show AI generate for the content step |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`RubricNameResource`](/api-reference/stream/types#rubricnameresource)[] | No | Name resources |
+| `descriptions` | [`RubricDescriptionResource`](/api-reference/stream/types#rubricdescriptionresource)[] | No | Description resources |
+| `flags` | [`RubricFlagConfig`](/api-reference/stream/types#rubricflagconfig)[] | No | Flag configs |
+| `departments` | [`RubricDepartmentResource`](/api-reference/stream/types#rubricdepartmentresource)[] | No | Department resources |
+| `points` | [`RubricPointResource`](/api-reference/stream/types#rubricpointresource)[] | No | Point resources |
+| `standard_groups` | [`RubricStandardGroupResource`](/api-reference/stream/types#rubricstandardgroupresource)[] | No | Standard group resources |
+| `standards` | [`RubricStandardResource`](/api-reference/stream/types#rubricstandardresource)[] | No | Standard resources |
 
 ## Response
 

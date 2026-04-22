@@ -22,4 +22,4 @@ Bulk delete simulations — composable infra architecture.
 ## Related
 
 - [Simulation Guide](/simulation)
-- [API Endpoint](/api-reference/simulations/post-simulations-delete)
+- [API Endpoint](/api-reference/simulation/post-simulation-delete)

@@ -22,4 +22,3 @@ Get session detail with groups and timeline.
 ## Related
 
 - [Session Guide](/session)
-- [API Endpoint](/api-reference/session/post-session-get)

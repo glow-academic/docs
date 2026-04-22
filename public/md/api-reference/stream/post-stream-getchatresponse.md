@@ -6,25 +6,46 @@ Schema: GetChatResponse
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `chat_entry_id` | `string` | Yes | UUID of the chat entry |
-| `attempt_id` | `string` | No | UUID of the attempt |
-| `group_id` | `string` | Yes | UUID of the group |
-| `draft_version` | `integer` | No | Current draft version number |
-| `names` | [`ChatNameSection`](/api-reference/stream/types#chatnamesection) | No | Name section data |
-| `descriptions` | [`ChatDescriptionSection`](/api-reference/stream/types#chatdescriptionsection) | No | Description section data |
-| `flags` | [`ChatFlagSection`](/api-reference/stream/types#chatflagsection) | No | Flag section data |
-| `departments` | [`ChatDepartmentSection`](/api-reference/stream/types#chatdepartmentsection) | No | Department section data |
-| `personas` | [`ChatPersonaSection`](/api-reference/stream/types#chatpersonasection) | No | Persona section data |
-| `documents` | [`ChatDocumentSection`](/api-reference/stream/types#chatdocumentsection) | No | Document section data |
-| `parameter_fields` | [`ChatParameterFieldSection`](/api-reference/stream/types#chatparameterfieldsection) | No | Parameter field section data |
-| `scenarios` | [`ChatScenarioSection`](/api-reference/stream/types#chatscenariosection) | No | Scenario section data |
-| `fields` | [`ChatFieldSection`](/api-reference/stream/types#chatfieldsection) | No | Field section data |
-| `questions` | [`ChatQuestionSection`](/api-reference/stream/types#chatquestionsection) | No | Question section data |
-| `options` | [`ChatOptionSection`](/api-reference/stream/types#chatoptionsection) | No | Option section data |
-| `videos` | [`ChatVideoSection`](/api-reference/stream/types#chatvideosection) | No | Video section data |
-| `images` | [`ChatImageSection`](/api-reference/stream/types#chatimagesection) | No | Image section data |
-| `problem_statements` | [`ChatProblemStatementSection`](/api-reference/stream/types#chatproblemstatementsection) | No | Problem statement section data |
-| `objectives` | [`ChatObjectiveSection`](/api-reference/stream/types#chatobjectivesection) | No | Objective section data |
+| `actor_name` | `string` | No | Display name of the authenticated user |
+| `chat_exists` | `boolean` | No | Whether the chat template exists |
+| `can_edit` | `boolean` | No | Whether the current user can edit this draft |
+| `disabled_reason` | `string` | No | Human-readable reason if editing is disabled |
+| `group_id` | `string` | No | Group ID for generation and draft correlation |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available |
+| `profile_has_access` | `boolean` | No | Compatibility flag for current chat pages |
+| `simulation_name` | `string` | No | Optional simulation name for UI display |
+| `chat_entry_id` | `string` | No | Chat entry ID |
+| `attempt_id` | `string` | No | Attempt ID |
+| `names` | [`ChatNameResource`](/api-reference/stream/types#chatnameresource)[] | No | — |
+| `descriptions` | [`ChatDescriptionResource`](/api-reference/stream/types#chatdescriptionresource)[] | No | — |
+| `flags` | [`ChatFlagResource`](/api-reference/stream/types#chatflagresource)[] | No | — |
+| `departments` | [`ChatDepartmentResource`](/api-reference/stream/types#chatdepartmentresource)[] | No | — |
+| `personas` | [`ChatPersonaResource`](/api-reference/stream/types#chatpersonaresource)[] | No | — |
+| `documents` | [`ChatDocumentResource`](/api-reference/stream/types#chatdocumentresource)[] | No | — |
+| `parameter_fields` | [`ChatParameterFieldResource`](/api-reference/stream/types#chatparameterfieldresource)[] | No | — |
+| `scenarios` | [`ChatScenarioResource`](/api-reference/stream/types#chatscenarioresource)[] | No | — |
+| `fields` | [`ChatFieldResource`](/api-reference/stream/types#chatfieldresource)[] | No | — |
+| `questions` | [`ChatQuestionResource`](/api-reference/stream/types#chatquestionresource)[] | No | — |
+| `options` | [`ChatOptionResource`](/api-reference/stream/types#chatoptionresource)[] | No | — |
+| `videos` | [`ChatVideoResource`](/api-reference/stream/types#chatvideoresource)[] | No | — |
+| `images` | [`ChatImageResource`](/api-reference/stream/types#chatimageresource)[] | No | — |
+| `problem_statements` | [`ChatProblemStatementResource`](/api-reference/stream/types#chatproblemstatementresource)[] | No | — |
+| `objectives` | [`ChatObjectiveResource`](/api-reference/stream/types#chatobjectiveresource)[] | No | — |
+| `name_ids` | `string`[] | No | — |
+| `description_ids` | `string`[] | No | — |
+| `flag_ids` | `string`[] | No | — |
+| `department_ids` | `string`[] | No | — |
+| `persona_ids` | `string`[] | No | — |
+| `document_ids` | `string`[] | No | — |
+| `parameter_field_ids` | `string`[] | No | — |
+| `scenario_ids` | `string`[] | No | — |
+| `field_ids` | `string`[] | No | — |
+| `question_ids` | `string`[] | No | — |
+| `option_ids` | `string`[] | No | — |
+| `video_ids` | `string`[] | No | — |
+| `image_ids` | `string`[] | No | — |
+| `problem_statement_ids` | `string`[] | No | — |
+| `objective_ids` | `string`[] | No | — |
 
 ## Response
 

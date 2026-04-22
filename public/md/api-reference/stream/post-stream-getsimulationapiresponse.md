@@ -2,7 +2,7 @@
 
 Schema: GetSimulationApiResponse
 
-## Request Body (`GetSimulationApiResponse-Input`)
+## Request Body (`GetSimulationApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,18 +10,18 @@ Schema: GetSimulationApiResponse
 | `simulation_exists` | `boolean` | No | Whether the simulation exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason the simulation is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | UUID of the owning group |
-| `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
-| `names` | [`SimulationNameSection`](/api-reference/stream/types#simulationnamesection) | No | Name section data |
-| `descriptions` | [`SimulationDescriptionSection`](/api-reference/stream/types#simulationdescriptionsection) | No | Description section data |
-| `flags` | [`SimulationFlagSection`](/api-reference/stream/types#simulationflagsection) | No | Flag section data |
-| `departments` | [`SimulationDepartmentSection`](/api-reference/stream/types#simulationdepartmentsection) | No | Department section data |
-| `scenarios` | [`SimulationScenarioSection`](/api-reference/stream/types#simulationscenariosection) | No | Scenario section data |
-| `scenario_flags` | [`SimulationScenarioFlagSection`](/api-reference/stream/types#simulationscenarioflagsection) | No | Scenario flag section data |
-| `scenario_positions` | [`SimulationScenarioPositionSection`](/api-reference/stream/types#simulationscenariopositionsection) | No | Scenario position section data |
-| `scenario_rubrics` | [`SimulationScenarioRubricSection`](/api-reference/stream/types#simulationscenariorubricsection) | No | Scenario rubric section data |
-| `scenario_time_limits` | [`SimulationScenarioTimeLimitSection`](/api-reference/stream/types#simulationscenariotimelimitsection) | No | Scenario time limit section data |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available |
+| `basic_show_ai_generate` | `boolean` | No | Legacy basic-step AI generate flag |
+| `names` | [`SimulationNameResource`](/api-reference/stream/types#simulationnameresource)[] | No | Name resources with selected/suggested flags |
+| `descriptions` | [`SimulationDescriptionResource`](/api-reference/stream/types#simulationdescriptionresource)[] | No | Description resources with selected/suggested flags |
+| `flags` | [`SimulationFlagConfig`](/api-reference/stream/types#simulationflagconfig)[] | No | Flag configs with selected/suggested flags |
+| `departments` | [`SimulationDepartment`](/api-reference/stream/types#simulationdepartment)[] | No | Department resources with selected/suggested flags |
+| `scenarios` | [`SimulationScenario`](/api-reference/stream/types#simulationscenario)[] | No | Scenario resources with selected/suggested flags |
+| `scenario_flags` | [`SimulationScenarioFlag`](/api-reference/stream/types#simulationscenarioflag)[] | No | Scenario flag resources with selected/suggested flags |
+| `scenario_positions` | [`SimulationScenarioPosition`](/api-reference/stream/types#simulationscenarioposition)[] | No | Scenario position resources with selected/suggested flags |
+| `scenario_rubrics` | [`SimulationScenarioRubric`](/api-reference/stream/types#simulationscenariorubric)[] | No | Scenario rubric resources with selected/suggested flags |
+| `scenario_time_limits` | [`SimulationScenarioTimeLimit`](/api-reference/stream/types#simulationscenariotimelimit)[] | No | Scenario time limit resources with selected/suggested flags |
 | `rubrics` | [`SimulationRubric`](/api-reference/stream/types#simulationrubric)[] | No | Available rubric catalog items |
 
 ## Response

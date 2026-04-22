@@ -2,7 +2,7 @@
 
 Schema: GetToolApiResponse
 
-## Request Body (`GetToolApiResponse-Input`)
+## Request Body (`GetToolApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,20 +10,20 @@ Schema: GetToolApiResponse
 | `tool_exists` | `boolean` | No | Whether the tool exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Group identifier for the tool |
+| `tool_id` | `string` | No | Tool identifier |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
 | `args_show_ai_generate` | `boolean` | No | Show AI generate for args step |
-| `arg_positions_show_ai_generate` | `boolean` | No | Show AI generate for arg positions step |
-| `args_outputs_show_ai_generate` | `boolean` | No | Show AI generate for args outputs step |
-| `names` | [`ToolNameSection`](/api-reference/stream/types#toolnamesection) | No | Name section with resources |
-| `descriptions` | [`ToolDescriptionSection`](/api-reference/stream/types#tooldescriptionsection) | No | Description section with resources |
-| `flags` | [`ToolFlagSection`](/api-reference/stream/types#toolflagsection) | No | Flag section with configs |
-| `args` | [`ToolArgSection`](/api-reference/stream/types#toolargsection) | No | Argument section with resources |
-| `arg_positions` | [`ToolArgPositionSection`](/api-reference/stream/types#toolargpositionsection) | No | Argument position section |
-| `args_outputs` | [`ToolArgOutputSection`](/api-reference/stream/types#toolargoutputsection) | No | Argument output section |
-| `artifacts` | [`ToolArtifactSection`](/api-reference/stream/types#toolartifactsection) | No | Artifact section with resources |
-| `operations` | [`ToolOperationSection`](/api-reference/stream/types#tooloperationsection) | No | Operation section with resources |
+| `permissions_show_ai_generate` | `boolean` | No | Show AI generate for permissions step |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`ToolNameResource`](/api-reference/stream/types#toolnameresource)[] | No | Name resources |
+| `descriptions` | [`ToolDescriptionResource`](/api-reference/stream/types#tooldescriptionresource)[] | No | Description resources |
+| `flags` | [`ToolFlagConfig`](/api-reference/stream/types#toolflagconfig)[] | No | Flag configs |
+| `args` | [`ToolArgResource`](/api-reference/stream/types#toolargresource)[] | No | Argument resources |
+| `arg_positions` | [`ToolArgPositionResource`](/api-reference/stream/types#toolargpositionresource)[] | No | Argument position resources |
+| `args_outputs` | [`ToolArgOutputResource`](/api-reference/stream/types#toolargoutputresource)[] | No | Argument output resources |
+| `permissions` | [`ToolPermissionResource`](/api-reference/stream/types#toolpermissionresource)[] | No | Permission resources |
 
 ## Response
 

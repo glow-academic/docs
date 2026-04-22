@@ -22,4 +22,4 @@ Duplicate a cohort — composable infra architecture.
 ## Related
 
 - [Cohort Guide](/cohort)
-- [API Endpoint](/api-reference/cohorts/post-cohorts-duplicate)
+- [API Endpoint](/api-reference/cohort/post-cohort-duplicate)

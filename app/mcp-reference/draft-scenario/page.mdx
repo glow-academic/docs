@@ -42,4 +42,4 @@ Patch scenario draft — composable infra architecture.
 ## Related
 
 - [Scenario Guide](/scenario)
-- [API Endpoint](/api-reference/scenarios/patch-scenarios-draft)
+- [API Endpoint](/api-reference/scenario/patch-scenario-draft)

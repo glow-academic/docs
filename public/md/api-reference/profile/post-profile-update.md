@@ -1,0 +1,20 @@
+# `POST` `/profile/update`
+
+Update Profile
+
+Update profiles using composable infra architecture.
+
+## Request Body (`UpdateProfileApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profiles` | [`UpdateProfileItem`](/api-reference/profile/types#updateprofileitem)[] | Yes | List of profiles to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`UpdateProfileApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ProfileResultItem`](/api-reference/profile/types#profileresultitem)[] | Yes | Per-item update results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

@@ -7,6 +7,7 @@ Schema: UpdateAgentApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`AgentResultItem`](/api-reference/stream/types#agentresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

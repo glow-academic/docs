@@ -1,0 +1,23 @@
+# `POST` `/attempt/chat/message`
+
+Chat Message
+
+Create a message in an attempt chat.
+
+## Request Body (`ChatMessageRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `text` | `string` | Yes | — |
+| `persona_id` | `string` | No | — |
+| `parent_message_id` | `string` | No | — |
+| `auto_link_parent` | `boolean` | No | — |
+
+## Response (`ChatMessageResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `message_id` | `string` | Yes | — |
+| `content_ids` | `string`[] | Yes | — |

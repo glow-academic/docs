@@ -1,0 +1,18 @@
+# `POST` `/profile/unemulate`
+
+Unemulate Profile
+
+Exit emulation for a specific target profile.
+
+## Request Body (`UnemulateProfileApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `target_profile_id` | `string` | Yes | Profile ID to stop emulating |
+
+## Response (`UnemulateProfileApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `ok` | `boolean` | Yes | Whether unemulation succeeded |
+| `reason` | `string` | No | Reason if unemulation failed |

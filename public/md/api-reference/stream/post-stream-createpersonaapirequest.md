@@ -7,6 +7,8 @@ Schema: CreatePersonaApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `personas` | [`CreatePersonaItem`](/api-reference/stream/types#createpersonaitem)[] | Yes | List of persona items to create |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

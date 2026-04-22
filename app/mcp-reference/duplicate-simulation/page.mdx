@@ -22,4 +22,4 @@ Duplicate a simulation — composable infra architecture.
 ## Related
 
 - [Simulation Guide](/simulation)
-- [API Endpoint](/api-reference/simulations/post-simulations-duplicate)
+- [API Endpoint](/api-reference/simulation/post-simulation-duplicate)

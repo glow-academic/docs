@@ -1,0 +1,18 @@
+# `POST` `/attempt/chat/silence`
+
+Chat Silence
+
+End a voice session for an attempt chat.
+
+## Request Body (`ChatSilenceRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+
+## Response (`AudioStopInternalResult`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `stopped` | `boolean` | No | — |

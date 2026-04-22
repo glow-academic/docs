@@ -2,7 +2,7 @@
 
 Schema: GetFieldApiResponse
 
-## Request Body (`GetFieldApiResponse-Input`)
+## Request Body (`GetFieldApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,14 +10,15 @@ Schema: GetFieldApiResponse
 | `field_exists` | `boolean` | No | Whether the field exists |
 | `can_edit` | `boolean` | No | Whether the actor can edit this field |
 | `disabled_reason` | `string` | No | Reason editing is disabled, if any |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Group UUID for draft collaboration |
+| `show_ai_generate` | `boolean` | No | Whether to show AI generate button anywhere |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `names` | [`FieldNameSection`](/api-reference/stream/types#fieldnamesection) | No | Name section with resources |
-| `descriptions` | [`FieldDescriptionSection`](/api-reference/stream/types#fielddescriptionsection) | No | Description section with resources |
-| `flags` | [`FieldFlagSection`](/api-reference/stream/types#fieldflagsection) | No | Flag section with configs |
-| `departments` | [`FieldDepartmentSection`](/api-reference/stream/types#fielddepartmentsection) | No | Department section with resources |
-| `conditional_parameters` | [`FieldConditionalParameterSection`](/api-reference/stream/types#fieldconditionalparametersection) | No | Conditional parameter section |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`FieldNameResource`](/api-reference/stream/types#fieldnameresource)[] | No | Name resources |
+| `descriptions` | [`FieldDescriptionResource`](/api-reference/stream/types#fielddescriptionresource)[] | No | Description resources |
+| `flags` | [`FieldFlagConfig`](/api-reference/stream/types#fieldflagconfig)[] | No | Flag configs |
+| `departments` | [`FieldDepartmentResource`](/api-reference/stream/types#fielddepartmentresource)[] | No | Department resources |
+| `conditional_parameters` | [`FieldConditionalParameterResource`](/api-reference/stream/types#fieldconditionalparameterresource)[] | No | Conditional parameter resources |
 
 ## Response
 

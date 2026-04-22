@@ -23,4 +23,3 @@ Get pricing top chart — daily cost aggregation + filter options.
 ## Related
 
 - [Pricing Guide](/pricing)
-- [API Endpoint](/api-reference/pricing/post-pricing-get)

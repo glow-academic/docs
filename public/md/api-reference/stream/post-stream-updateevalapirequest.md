@@ -7,6 +7,8 @@ Schema: UpdateEvalApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `evals` | [`UpdateEvalItem`](/api-reference/stream/types#updateevalitem)[] | Yes | List of evals to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

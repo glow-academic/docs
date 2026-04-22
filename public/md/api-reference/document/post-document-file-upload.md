@@ -1,0 +1,17 @@
+# `POST` `/document/file/upload`
+
+Upload File
+
+Upload a file for later use in documents.
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | Yes | — |
+
+## Response (`FileUploadDocumentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file_id` | `string` | Yes | UUID of the created files_resource |

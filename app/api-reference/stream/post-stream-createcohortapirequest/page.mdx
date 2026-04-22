@@ -7,6 +7,8 @@ Schema: CreateCohortApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `cohorts` | [`CreateCohortItem`](/api-reference/stream/types#createcohortitem)[] | Yes | List of cohorts to create |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

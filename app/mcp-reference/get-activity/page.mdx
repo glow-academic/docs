@@ -23,4 +23,3 @@ get activity
 ## Related
 
 - [Activity Guide](/activity)
-- [API Endpoint](/api-reference/activity/post-activity-get)

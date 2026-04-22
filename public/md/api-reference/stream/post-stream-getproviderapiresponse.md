@@ -2,7 +2,7 @@
 
 Schema: GetProviderApiResponse
 
-## Request Body (`GetProviderApiResponse-Input`)
+## Request Body (`GetProviderApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,17 +10,19 @@ Schema: GetProviderApiResponse
 | `provider_exists` | `boolean` | No | Whether the provider exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Group identifier for the provider |
+| `provider_id` | `string` | No | Provider identifier |
+| `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
 | `integrations_show_ai_generate` | `boolean` | No | Show AI generate for integrations step |
-| `names` | [`ProviderNameSection`](/api-reference/stream/types#providernamesection) | No | Name section with resources |
-| `descriptions` | [`ProviderDescriptionSection`](/api-reference/stream/types#providerdescriptionsection) | No | Description section with resources |
-| `flags` | [`ProviderFlagSection`](/api-reference/stream/types#providerflagsection) | No | Flag section with configs |
-| `departments` | [`ProviderDepartmentSection`](/api-reference/stream/types#providerdepartmentsection) | No | Department section with resources |
-| `values` | [`ProviderValueSection`](/api-reference/stream/types#providervaluesection) | No | Value section with resources |
-| `endpoints` | [`ProviderEndpointSection`](/api-reference/stream/types#providerendpointsection) | No | Endpoint section with resources |
-| `keys` | [`ProviderKeySection`](/api-reference/stream/types#providerkeysection) | No | Key section with resources |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`ProviderNameResource`](/api-reference/stream/types#providernameresource)[] | No | Name resources |
+| `descriptions` | [`ProviderDescriptionResource`](/api-reference/stream/types#providerdescriptionresource)[] | No | Description resources |
+| `flags` | [`ProviderFlagConfig`](/api-reference/stream/types#providerflagconfig)[] | No | Flag configs |
+| `departments` | [`ProviderDepartmentResource`](/api-reference/stream/types#providerdepartmentresource)[] | No | Department resources |
+| `values` | [`ProviderValueResource`](/api-reference/stream/types#providervalueresource)[] | No | Value resources |
+| `endpoints` | [`ProviderEndpointResource`](/api-reference/stream/types#providerendpointresource)[] | No | Endpoint resources |
+| `keys` | [`ProviderKeyResource`](/api-reference/stream/types#providerkeyresource)[] | No | Key resources |
 
 ## Response
 

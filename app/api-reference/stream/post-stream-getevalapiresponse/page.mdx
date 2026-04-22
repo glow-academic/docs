@@ -2,7 +2,7 @@
 
 Schema: GetEvalApiResponse
 
-## Request Body (`GetEvalApiResponse-Input`)
+## Request Body (`GetEvalApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,20 +10,19 @@ Schema: GetEvalApiResponse
 | `eval_exists` | `boolean` | No | Whether the eval exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Associated group UUID |
-| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
-| `model_show_ai_generate` | `boolean` | No | Whether to show AI generate for model step |
-| `names` | [`EvalNameSection`](/api-reference/stream/types#evalnamesection) | No | Name section with resource and options |
-| `descriptions` | [`EvalDescriptionSection`](/api-reference/stream/types#evaldescriptionsection) | No | Description section with resource and options |
-| `active_flags` | [`EvalFlagSection`](/api-reference/stream/types#evalflagsection) | No | Active flag section |
-| `dynamic_flags` | [`EvalFlagSection`](/api-reference/stream/types#evalflagsection) | No | Dynamic flag section |
-| `groups_flags` | [`EvalFlagSection`](/api-reference/stream/types#evalflagsection) | No | Groups flag section |
-| `departments` | [`EvalDepartmentSection`](/api-reference/stream/types#evaldepartmentsection) | No | Department section with selections and options |
-| `models` | [`EvalModelSection`](/api-reference/stream/types#evalmodelsection) | No | Model section with selections and options |
-| `model_flags` | [`EvalModelFlagSection`](/api-reference/stream/types#evalmodelflagsection) | No | Model flag section |
-| `model_rubrics` | [`EvalModelRubricSection`](/api-reference/stream/types#evalmodelrubricsection) | No | Model rubric section |
-| `model_positions` | [`EvalModelPositionSection`](/api-reference/stream/types#evalmodelpositionsection) | No | Model position section |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for the basic step |
+| `model_show_ai_generate` | `boolean` | No | Whether to show AI generate for the model step |
+| `show_ai_generate` | `boolean` | No | Whether any AI generate action should be shown |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`EvalNameResource`](/api-reference/stream/types#evalnameresource)[] | No | Name resources |
+| `descriptions` | [`EvalDescriptionResource`](/api-reference/stream/types#evaldescriptionresource)[] | No | Description resources |
+| `flags` | [`EvalFlagConfig`](/api-reference/stream/types#evalflagconfig)[] | No | Flag configs |
+| `departments` | [`EvalDepartmentResource`](/api-reference/stream/types#evaldepartmentresource)[] | No | Department resources |
+| `models` | [`EvalModelResource`](/api-reference/stream/types#evalmodelresource)[] | No | Model resources |
+| `model_flags` | [`EvalModelFlagResource`](/api-reference/stream/types#evalmodelflagresource)[] | No | Model flag resources |
+| `model_rubrics` | [`EvalModelRubricResource`](/api-reference/stream/types#evalmodelrubricresource)[] | No | Model rubric resources |
+| `model_positions` | [`EvalModelPositionResource`](/api-reference/stream/types#evalmodelpositionresource)[] | No | Model position resources |
 
 ## Response
 

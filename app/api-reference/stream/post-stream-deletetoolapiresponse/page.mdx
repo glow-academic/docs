@@ -7,6 +7,7 @@ Schema: DeleteToolApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteToolResult`](/api-reference/stream/types#deletetoolresult)[] | Yes | List of deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

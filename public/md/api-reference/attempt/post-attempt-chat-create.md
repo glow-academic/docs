@@ -1,0 +1,41 @@
+# `POST` `/attempt/chat/create`
+
+Create Attempt Chat Endpoint
+
+Create a chat within an attempt.
+
+## Request Body (`CreateAttemptChatApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_id` | `string` | Yes | — |
+| `chat_id` | `string` | Yes | — |
+| `name_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description_id` | `string` | No | — |
+| `description` | `string` | No | — |
+| `problem_statement_id` | `string` | No | — |
+| `problem_statement` | `string` | No | — |
+| `video_id` | `string` | No | — |
+| `image_id` | `string` | No | — |
+| `personas_ids` | `string`[] | No | — |
+| `personas` | `string`[] | No | — |
+| `documents_ids` | `string`[] | No | — |
+| `documents` | `string`[] | No | — |
+| `parameter_fields_ids` | `string`[] | No | — |
+| `parameter_fields` | `string`[] | No | — |
+| `objectives_ids` | `string`[] | No | — |
+| `objectives` | `string`[] | No | — |
+| `questions_ids` | `string`[] | No | — |
+| `questions` | [`AttemptQuestionValue`](/api-reference/attempt/types#attemptquestionvalue)[] | No | — |
+| `options_ids` | `string`[] | No | — |
+| `previous_attempt_chat_id` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `accept` | `boolean` | No | — |
+
+## Response (`CreateAttemptChatApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_chat_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | — |

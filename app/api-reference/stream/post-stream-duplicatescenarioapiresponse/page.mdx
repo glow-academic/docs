@@ -9,6 +9,7 @@ Schema: DuplicateScenarioApiResponse
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `scenario_id` | `string` | Yes | UUID of the duplicated scenario |
 | `message` | `string` | Yes | Human-readable result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

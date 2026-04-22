@@ -7,6 +7,7 @@ Schema: UpdateRubricApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`RubricResultItem`](/api-reference/stream/types#rubricresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

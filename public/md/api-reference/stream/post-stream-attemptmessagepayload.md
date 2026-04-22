@@ -6,9 +6,10 @@ Schema: AttemptMessagePayload
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `attempt_id` | `string` | Yes | UUID of the attempt |
+| `attempt_id` | `string` | No | UUID of the attempt |
 | `chat_id` | `string` | Yes | UUID of the chat |
-| `message` | `string` | Yes | Text message content |
+| `message` | `string` | No | Text message content |
+| `text` | `string` | No | Text message content (alias for message) |
 | `parent_message_id` | `string` | No | UUID of the parent message for threading |
 
 ## Response

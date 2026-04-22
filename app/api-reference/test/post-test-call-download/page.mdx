@@ -1,0 +1,17 @@
+# `POST` `/test/call/download`
+
+Test Call Download
+
+Download call JSON for a test.
+
+## Request Body (`CallDownloadTestApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `call_id` | `string` | Yes | UUID of the call resource to download |
+
+## Response
+
+```
+{}
+```

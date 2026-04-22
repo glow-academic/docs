@@ -7,7 +7,6 @@ Schema: PatchScenarioDraftApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `input_draft_id` | `string` | No | UUID of the input draft |
-| `expected_version` | `integer` | No | Expected draft version for optimistic lock |
 | `name` | `string` | No | Display name value |
 | `name_id` | `string` | No | UUID of the name resource |
 | `description` | `string` | No | Description text value |
@@ -29,6 +28,9 @@ Schema: PatchScenarioDraftApiRequest
 | `persona_ids` | `string`[] | No | Associated persona UUIDs |
 | `document_ids` | `string`[] | No | Associated document UUIDs |
 | `parameter_field_ids` | `string`[] | No | Associated parameter field UUIDs |
+| `pending_ids` | `string`[] | No | Resource IDs to keep as pending (active=false on connection) |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant draft |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

@@ -1,0 +1,20 @@
+# `POST` `/eval/delete`
+
+Delete Eval
+
+Bulk delete evals — composable infra architecture.
+
+## Request Body (`DeleteEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `eval_ids` | `string`[] | Yes | Eval UUIDs to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`DeleteEvalApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteEvalResult`](/api-reference/eval/types#deleteevalresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

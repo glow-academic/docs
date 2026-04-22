@@ -1,0 +1,20 @@
+# `POST` `/simulation/update`
+
+Update Simulation
+
+Update simulations using composable infra architecture.
+
+## Request Body (`UpdateSimulationApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `simulations` | [`UpdateSimulationItem`](/api-reference/simulation/types#updatesimulationitem)[] | Yes | List of simulations to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`UpdateSimulationApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`SimulationResultItem`](/api-reference/simulation/types#simulationresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

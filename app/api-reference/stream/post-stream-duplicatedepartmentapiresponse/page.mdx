@@ -9,6 +9,7 @@ Schema: DuplicateDepartmentApiResponse
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
 | `department_id` | `string` | Yes | UUID of the newly created department |
 | `message` | `string` | Yes | Result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

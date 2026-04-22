@@ -2,7 +2,7 @@
 
 Schema: GetSettingApiResponse
 
-## Request Body (`GetSettingApiResponse-Input`)
+## Request Body (`GetSettingApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,18 +10,29 @@ Schema: GetSettingApiResponse
 | `setting_exists` | `boolean` | No | Whether the setting exists |
 | `can_edit` | `boolean` | No | Whether the actor can edit this setting |
 | `disabled_reason` | `string` | No | Reason editing is disabled, if any |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Group UUID for draft collaboration |
-| `names` | [`SettingNameSection`](/api-reference/stream/types#settingnamesection) | No | Name section with resources |
-| `descriptions` | [`SettingDescriptionSection`](/api-reference/stream/types#settingdescriptionsection) | No | Description section with resources |
-| `colors` | [`SettingColorSection`](/api-reference/stream/types#settingcolorsection) | No | Color section with resources |
-| `flags` | [`SettingFlagSection`](/api-reference/stream/types#settingflagsection) | No | Flag section with configs |
-| `departments` | [`SettingDepartmentSection`](/api-reference/stream/types#settingdepartmentsection) | No | Department section with resources |
-| `profiles` | [`SettingProfileSection`](/api-reference/stream/types#settingprofilesection) | No | Profile section with resources |
-| `auths` | [`SettingAuthSection`](/api-reference/stream/types#settingauthsection) | No | Auth section with resources |
-| `provider_keys` | [`SettingProviderKeySection`](/api-reference/stream/types#settingproviderkeysection) | No | Provider key section with resources |
-| `auth_item_keys` | [`SettingAuthItemKeySection`](/api-reference/stream/types#settingauthitemkeysection) | No | Auth item key section with resources |
-| `systems` | [`SettingSystemSection`](/api-reference/stream/types#settingsystemsection) | No | System section with resources |
+| `show_ai_generate` | `boolean` | No | Whether any section should show AI generate |
+| `basic_show_ai_generate` | `boolean` | No | Whether the basic section should show AI generate |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`SettingNameResource`](/api-reference/stream/types#settingnameresource)[] | No | Name resources |
+| `descriptions` | [`SettingDescriptionResource`](/api-reference/stream/types#settingdescriptionresource)[] | No | Description resources |
+| `colors` | [`SettingColorResource`](/api-reference/stream/types#settingcolorresource)[] | No | Color resources |
+| `flags` | [`SettingFlagConfig`](/api-reference/stream/types#settingflagconfig)[] | No | Flag configs |
+| `departments` | [`SettingDepartmentResource`](/api-reference/stream/types#settingdepartmentresource)[] | No | Department resources |
+| `logins` | [`SettingLoginsResource`](/api-reference/stream/types#settingloginsresource)[] | No | Logins resources |
+| `systems` | [`SettingSystemResource`](/api-reference/stream/types#settingsystemresource)[] | No | System resources |
+| `mcp` | [`SettingMcpResource`](/api-reference/stream/types#settingmcpresource)[] | No | MCP resources |
+| `thresholds` | [`SettingThresholdResource`](/api-reference/stream/types#settingthresholdresource)[] | No | Threshold resources |
+| `provider_keys` | [`SettingProviderKeyResource`](/api-reference/stream/types#settingproviderkeyresource)[] | No | Provider key resources |
+| `auth_item_keys` | [`SettingAuthItemKeyResource`](/api-reference/stream/types#settingauthitemkeyresource)[] | No | Auth item key resources |
+| `auth_item_values` | [`SettingAuthItemValueResource`](/api-reference/stream/types#settingauthitemvalueresource)[] | No | Auth item value resources |
+| `providers` | [`SettingProviderCatalogResource`](/api-reference/stream/types#settingprovidercatalogresource)[] | No | Provider catalog used by provider key editing |
+| `keys` | [`SettingKeyCatalogResource`](/api-reference/stream/types#settingkeycatalogresource)[] | No | Key catalog used by provider key and auth item key editing |
+| `items` | [`SettingItemCatalogResource`](/api-reference/stream/types#settingitemcatalogresource)[] | No | Claim item catalog used by auth item key/value editing |
+| `profiles` | [`SettingProfileCatalogResource`](/api-reference/stream/types#settingprofilecatalogresource)[] | No | Profile catalog used by logins editing |
+| `auths` | [`SettingAuthCatalogResource`](/api-reference/stream/types#settingauthcatalogresource)[] | No | Auth catalog used by logins and auth item editing |
+| `icons` | [`SettingIconCatalogResource`](/api-reference/stream/types#settingiconcatalogresource)[] | No | Icon catalog used by logins editing |
+| `agents` | [`SettingAgentCatalogResource`](/api-reference/stream/types#settingagentcatalogresource)[] | No | Agent catalog used by mcp and systems editing |
 
 ## Response
 

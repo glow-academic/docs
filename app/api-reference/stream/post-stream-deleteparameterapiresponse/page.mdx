@@ -7,6 +7,7 @@ Schema: DeleteParameterApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteParameterResult`](/api-reference/stream/types#deleteparameterresult)[] | Yes | List of deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

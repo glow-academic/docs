@@ -1,0 +1,17 @@
+# `POST` `/system/audio/download`
+
+Download Audio
+
+Download an audio file by audio resource ID with range support for seeking.
+
+## Request Body (`AudioDownloadGroupApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `audio_id` | `string` | Yes | UUID of the audios_resource to download |
+
+## Response
+
+```
+{}
+```

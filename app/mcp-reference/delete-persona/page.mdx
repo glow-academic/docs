@@ -22,4 +22,4 @@ Bulk delete personas — composable infra architecture.
 ## Related
 
 - [Persona Guide](/persona)
-- [API Endpoint](/api-reference/personas/post-personas-delete)
+- [API Endpoint](/api-reference/persona/post-persona-delete)

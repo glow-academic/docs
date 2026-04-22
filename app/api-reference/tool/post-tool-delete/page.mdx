@@ -1,0 +1,20 @@
+# `POST` `/tool/delete`
+
+Delete Tool
+
+Bulk delete tools — composable infra architecture.
+
+## Request Body (`DeleteToolApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `tool_ids` | `string`[] | Yes | List of tool IDs to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`DeleteToolApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteToolResult`](/api-reference/tool/types#deletetoolresult)[] | Yes | List of deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

@@ -6,8 +6,15 @@ Schema: GetProfileApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `target_profile_id` | `string` | No | UUID of the profile to retrieve |
+| `id` | `string` | No | UUID of the profile to retrieve |
+| `target_profile_id` | `string` | No | Legacy alias for profile UUID |
 | `draft_id` | `string` | No | UUID of the draft to load |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__profile__types__SectionFilter`](/api-reference/stream/types#app-infra-profile-types-sectionfilter) | No | Filter options for names section |
+| `emails` | [`app__infra__profile__types__SectionFilter`](/api-reference/stream/types#app-infra-profile-types-sectionfilter) | No | Filter options for emails section |
+| `flags` | [`app__infra__profile__types__SectionFilter`](/api-reference/stream/types#app-infra-profile-types-sectionfilter) | No | Filter options for flags section |
+| `departments` | [`app__infra__profile__types__SectionFilter`](/api-reference/stream/types#app-infra-profile-types-sectionfilter) | No | Filter options for departments section |
+| `roles` | [`app__infra__profile__types__SectionFilter`](/api-reference/stream/types#app-infra-profile-types-sectionfilter) | No | Filter options for roles section |
 
 ## Response
 

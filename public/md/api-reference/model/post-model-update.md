@@ -1,0 +1,20 @@
+# `POST` `/model/update`
+
+Update Model
+
+Update models using composable infra architecture.
+
+## Request Body (`UpdateModelApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `models` | [`UpdateModelItem`](/api-reference/model/types#updatemodelitem)[] | Yes | List of models to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`UpdateModelApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ModelResultItem`](/api-reference/model/types#modelresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

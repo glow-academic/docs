@@ -8,7 +8,7 @@ Schema: PatchScenarioDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `draft_id` | `string` | Yes | UUID of the saved draft |
-| `new_version` | `integer` | Yes | New draft version number |
+| `idempotency_key` | `string` | Yes | Idempotency key for this draft operation (same as draft entry ID) |
 | `message` | `string` | Yes | Human-readable result message |
 | `form_state` | [`ScenarioDraftFormState`](/api-reference/stream/types#scenariodraftformstate) | Yes | Server-authoritative form state |
 

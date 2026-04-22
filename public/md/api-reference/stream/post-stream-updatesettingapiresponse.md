@@ -7,6 +7,7 @@ Schema: UpdateSettingApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`SettingResultItem`](/api-reference/stream/types#settingresultitem)[] | Yes | Per-item update results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

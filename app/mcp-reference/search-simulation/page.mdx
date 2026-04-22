@@ -29,4 +29,4 @@ Search simulations — composable infra architecture.
 ## Related
 
 - [Simulation Guide](/simulation)
-- [API Endpoint](/api-reference/simulations/post-simulations-search)
+- [API Endpoint](/api-reference/simulation/post-simulation-search)

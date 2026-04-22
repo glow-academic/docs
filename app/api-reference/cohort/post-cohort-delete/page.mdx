@@ -1,0 +1,20 @@
+# `POST` `/cohort/delete`
+
+Delete Cohort
+
+Bulk delete cohorts — composable infra architecture.
+
+## Request Body (`DeleteCohortApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohort_ids` | `string`[] | Yes | Cohort UUIDs to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
+
+## Response (`DeleteCohortApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteCohortResult`](/api-reference/cohort/types#deletecohortresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

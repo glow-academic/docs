@@ -1,0 +1,22 @@
+# `POST` `/attempt/chat/feedback`
+
+Chat Feedback
+
+Create feedback items for the latest grade on a chat.
+
+## Request Body (`ChatFeedbackRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `feedbacks` | [`ChatFeedbackItem`](/api-reference/attempt/types#chatfeedbackitem)[] | Yes | — |
+| `idempotency_key` | `string` | No | — |
+| `accept` | `boolean` | No | — |
+
+## Response (`ChatFeedbackResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `feedback_ids` | `string`[] | Yes | — |
+| `idempotency_key` | `string` | No | — |

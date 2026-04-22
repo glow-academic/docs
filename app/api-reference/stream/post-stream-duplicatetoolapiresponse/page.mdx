@@ -9,6 +9,7 @@ Schema: DuplicateToolApiResponse
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
 | `tool_id` | `string` | Yes | New duplicated tool identifier |
 | `message` | `string` | Yes | Result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

@@ -29,10 +29,11 @@ Get attempt detail with the canonical shared attempt bundle.
 | `should_show_controls` | `boolean` | No | Whether to show UI controls |
 | `is_own_attempt` | `boolean` | No | Whether this is the actor's own attempt |
 | `current_chat_id` | `string` | No | ID of the current chat |
-| `has_messages` | `boolean` | No | Whether the chat has messages |
+| `has_messages` | `boolean` | No | Whether the current chat has gradeable content (messages or quiz responses) |
 | `available_continuation_options` | [`AvailableContinuationOptions-Output`](/api-reference/attempt/types#availablecontinuationoptions-output) | No | Continuation options for infinite mode |
 | `rubric_structure` | [`RubricStructureData`](/api-reference/attempt/types#rubricstructuredata) | No | Rubric structure data |
 | `training_id` | `string` | No | UUID of the training |
 | `chat_entry_id` | `string` | No | UUID of the chat entry |
+| `next_chat_entry_id` | `string` | No | UUID of the next chat entry to set up, None when all chats are complete |
 | `resources` | [`AttemptResources-Output`](/api-reference/attempt/types#attemptresources-output) | No | Resource maps keyed by ID |
 | `entries` | [`AttemptEntries-Output`](/api-reference/attempt/types#attemptentries-output) | No | Entry payloads by type |

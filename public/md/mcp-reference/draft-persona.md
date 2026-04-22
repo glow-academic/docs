@@ -35,4 +35,4 @@ Patch persona draft — composable infra architecture.
 ## Related
 
 - [Persona Guide](/persona)
-- [API Endpoint](/api-reference/personas/patch-personas-draft)
+- [API Endpoint](/api-reference/persona/post-persona-draft)

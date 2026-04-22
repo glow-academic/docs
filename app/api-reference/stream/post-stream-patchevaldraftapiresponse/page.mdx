@@ -8,9 +8,9 @@ Schema: PatchEvalDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `draft_id` | `string` | Yes | Draft UUID |
-| `new_version` | `integer` | Yes | New draft version number after patch |
+| `idempotency_key` | `string` | No | Operation key echoed back for client correlation |
 | `message` | `string` | Yes | Human-readable result message |
-| `form_state` | [`EvalDraftFormState`](/api-reference/stream/types#evaldraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__eval__types__DraftFormState`](/api-reference/stream/types#app-infra-eval-types-draftformstate) | No | Server-authoritative form state |
 
 ## Response
 

@@ -7,6 +7,7 @@ Schema: CreateDepartmentApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DepartmentResultItem`](/api-reference/stream/types#departmentresultitem)[] | Yes | Per-item creation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

@@ -7,6 +7,8 @@ Schema: UpdateFieldApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `fields` | [`UpdateFieldItem`](/api-reference/stream/types#updatefielditem)[] | Yes | List of fields to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response
 

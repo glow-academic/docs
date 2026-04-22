@@ -1,0 +1,39 @@
+# `POST` `/profile/get`
+
+Get Profile
+
+Get profile information using the canonical shared profile operation.
+
+## Request Body (`GetProfileApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the profile to retrieve |
+| `target_profile_id` | `string` | No | Legacy alias for profile UUID |
+| `draft_id` | `string` | No | UUID of the draft to load |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__profile__types__SectionFilter`](/api-reference/profile/types#app-infra-profile-types-sectionfilter) | No | Filter options for names section |
+| `emails` | [`app__infra__profile__types__SectionFilter`](/api-reference/profile/types#app-infra-profile-types-sectionfilter) | No | Filter options for emails section |
+| `flags` | [`app__infra__profile__types__SectionFilter`](/api-reference/profile/types#app-infra-profile-types-sectionfilter) | No | Filter options for flags section |
+| `departments` | [`app__infra__profile__types__SectionFilter`](/api-reference/profile/types#app-infra-profile-types-sectionfilter) | No | Filter options for departments section |
+| `roles` | [`app__infra__profile__types__SectionFilter`](/api-reference/profile/types#app-infra-profile-types-sectionfilter) | No | Filter options for roles section |
+
+## Response (`GetProfileApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `profile_exists` | `boolean` | No | Whether the profile exists |
+| `can_edit` | `boolean` | No | Whether the actor can edit this profile |
+| `disabled_reason` | `string` | No | Reason editing is disabled, if any |
+| `group_id` | `string` | No | Group UUID for draft collaboration |
+| `profile_id` | `string` | No | UUID of the profile |
+| `show_ai_generate` | `boolean` | No | Whether to show AI generate anywhere |
+| `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate on the basic step |
+| `contact_show_ai_generate` | `boolean` | No | Whether to show AI generate on the contact step |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`ProfileNameResource`](/api-reference/profile/types#profilenameresource)[] | No | Name resources |
+| `emails` | [`ProfileEmailResource`](/api-reference/profile/types#profileemailresource)[] | No | Email resources |
+| `flags` | [`ProfileFlagConfig`](/api-reference/profile/types#profileflagconfig)[] | No | Flag configs |
+| `departments` | [`ProfileDepartmentResource`](/api-reference/profile/types#profiledepartmentresource)[] | No | Department resources |
+| `roles` | [`ProfileRoleResource`](/api-reference/profile/types#profileroleresource)[] | No | Role resources |

@@ -1,0 +1,20 @@
+# `POST` `/agent/delete`
+
+Delete Agent
+
+Bulk delete agents — composable infra architecture.
+
+## Request Body (`DeleteAgentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `agent_ids` | `string`[] | Yes | UUIDs of agents to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`DeleteAgentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteAgentResult`](/api-reference/agent/types#deleteagentresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

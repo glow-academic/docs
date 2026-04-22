@@ -30,4 +30,4 @@ Get persona information using the canonical shared persona operation.
 ## Related
 
 - [Persona Guide](/persona)
-- [API Endpoint](/api-reference/personas/post-personas-get)
+- [API Endpoint](/api-reference/persona/post-persona-get)

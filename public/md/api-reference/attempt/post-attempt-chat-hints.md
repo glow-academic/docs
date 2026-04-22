@@ -1,0 +1,22 @@
+# `POST` `/attempt/chat/hints`
+
+Chat Hints
+
+Create hint items for messages in a chat.
+
+## Request Body (`ChatHintsRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_id` | `string` | Yes | — |
+| `hints` | [`ChatHintItem`](/api-reference/attempt/types#chathintitem)[] | Yes | — |
+| `idempotency_key` | `string` | No | — |
+| `accept` | `boolean` | No | — |
+
+## Response (`ChatHintsResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | — |
+| `hint_ids` | `string`[] | Yes | — |
+| `idempotency_key` | `string` | No | — |

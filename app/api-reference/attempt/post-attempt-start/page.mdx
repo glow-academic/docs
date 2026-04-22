@@ -2,20 +2,20 @@
 
 Start Attempt
 
-Create a new attempt using the canonical internal attempt orchestration.
+Create a new attempt from a home or practice entry.
 
-## Request Body (`AttemptStartPayload`)
+## Request Body (`AttemptStartRequest`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `home_id` | `string` | No | UUID of the home resource |
-| `practice_id` | `string` | No | UUID of the practice resource |
-| `infinite_mode` | `boolean` | No | Whether to run in infinite mode |
+| `home_id` | `string` | No | — |
+| `practice_id` | `string` | No | — |
+| `infinite_mode` | `boolean` | No | — |
 
-## Response (`StartAttemptApiResponse`)
+## Response (`AttemptStartResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `attempt_id` | `string` | Yes | — |
-| `chat_entry_id` | `string` | No | — |
-| `attempt_chat_id` | `string` | No | — |
+| `chat_id` | `string` | Yes | — |
+| `department_id` | `string` | No | — |

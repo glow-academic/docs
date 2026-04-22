@@ -7,6 +7,7 @@ Schema: DeleteSimulationApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteSimulationResult`](/api-reference/stream/types#deletesimulationresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

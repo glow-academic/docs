@@ -8,9 +8,9 @@ Schema: PatchSimulationDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `draft_id` | `string` | Yes | UUID of the saved draft |
-| `new_version` | `integer` | Yes | New draft version number |
+| `idempotency_key` | `string` | Yes | Idempotency key for this draft operation |
 | `message` | `string` | Yes | Human-readable result message |
-| `form_state` | [`SimulationDraftFormState`](/api-reference/stream/types#simulationdraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__simulation__types__DraftFormState`](/api-reference/stream/types#app-infra-simulation-types-draftformstate) | Yes | Server-authoritative form state |
 
 ## Response
 

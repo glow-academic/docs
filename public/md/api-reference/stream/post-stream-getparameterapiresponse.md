@@ -2,7 +2,7 @@
 
 Schema: GetParameterApiResponse
 
-## Request Body (`GetParameterApiResponse-Input`)
+## Request Body (`GetParameterApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,15 +10,16 @@ Schema: GetParameterApiResponse
 | `parameter_exists` | `boolean` | No | Whether the parameter exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Group identifier for the parameter |
+| `show_ai_generate` | `boolean` | No | Show AI generate if any resource supports it |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
 | `fields_step_show_ai_generate` | `boolean` | No | Show AI generate for fields step |
-| `names` | [`ParameterNameSection`](/api-reference/stream/types#parameternamesection) | No | Name section with resources |
-| `descriptions` | [`ParameterDescriptionSection`](/api-reference/stream/types#parameterdescriptionsection) | No | Description section with resources |
-| `flags` | [`ParameterFlagSection`](/api-reference/stream/types#parameterflagsection) | No | Flag section with configs |
-| `departments` | [`ParameterDepartmentSection`](/api-reference/stream/types#parameterdepartmentsection) | No | Department section with resources |
-| `fields` | [`ParameterFieldSection`](/api-reference/stream/types#parameterfieldsection) | No | Field section with resources |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`ParameterNameResource`](/api-reference/stream/types#parameternameresource)[] | No | Name resources |
+| `descriptions` | [`ParameterDescriptionResource`](/api-reference/stream/types#parameterdescriptionresource)[] | No | Description resources |
+| `flags` | [`ParameterFlagConfig`](/api-reference/stream/types#parameterflagconfig)[] | No | Flag configs |
+| `departments` | [`ParameterDepartmentResource`](/api-reference/stream/types#parameterdepartmentresource)[] | No | Department resources |
+| `parameter_fields` | [`ParameterFieldResource`](/api-reference/stream/types#parameterfieldresource)[] | No | Parameter field resources |
 
 ## Response
 

@@ -1,0 +1,20 @@
+# `POST` `/model/create`
+
+Create Model
+
+Create models using composable infra architecture.
+
+## Request Body (`CreateModelApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `models` | [`CreateModelItem`](/api-reference/model/types#createmodelitem)[] | Yes | List of models to create |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`CreateModelApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ModelResultItem`](/api-reference/model/types#modelresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

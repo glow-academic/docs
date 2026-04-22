@@ -2,7 +2,7 @@
 
 Schema: GetAgentApiResponse
 
-## Request Body (`GetAgentApiResponse-Input`)
+## Request Body (`GetAgentApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,23 +10,25 @@ Schema: GetAgentApiResponse
 | `agent_exists` | `boolean` | No | Whether the agent exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason the agent is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | UUID of the owning group |
+| `agent_id` | `string` | No | UUID of the selected agent |
+| `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
 | `general_show_ai_generate` | `boolean` | No | Show AI generate for general step |
-| `names` | [`AgentNameSection`](/api-reference/stream/types#agentnamesection) | No | Name section data |
-| `descriptions` | [`AgentDescriptionSection`](/api-reference/stream/types#agentdescriptionsection) | No | Description section data |
-| `models` | [`AgentModelSection`](/api-reference/stream/types#agentmodelsection) | No | Model section data |
-| `prompts` | [`AgentPromptSection`](/api-reference/stream/types#agentpromptsection) | No | Prompt section data |
-| `instructions` | [`AgentInstructionSection`](/api-reference/stream/types#agentinstructionsection) | No | Instruction section data |
-| `flags` | [`AgentFlagSection`](/api-reference/stream/types#agentflagsection) | No | Flag section data |
-| `departments` | [`AgentDepartmentSection`](/api-reference/stream/types#agentdepartmentsection) | No | Department section data |
-| `tools` | [`AgentToolSection`](/api-reference/stream/types#agenttoolsection) | No | Tool section data |
-| `temperature_levels` | [`AgentTemperatureLevelSection`](/api-reference/stream/types#agenttemperaturelevelsection) | No | Temperature level section data |
-| `reasoning_levels` | [`AgentReasoningLevelSection`](/api-reference/stream/types#agentreasoninglevelsection) | No | Reasoning level section data |
-| `voices` | [`AgentVoiceSection`](/api-reference/stream/types#agentvoicesection) | No | Voice section data |
-| `qualities` | [`AgentQualitySection`](/api-reference/stream/types#agentqualitysection) | No | Quality section data |
-| `rubrics` | [`AgentRubricSection`](/api-reference/stream/types#agentrubricsection) | No | Rubric section data |
+| `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `names` | [`AgentNameResource`](/api-reference/stream/types#agentnameresource)[] | No | Name resources |
+| `descriptions` | [`AgentDescriptionResource`](/api-reference/stream/types#agentdescriptionresource)[] | No | Description resources |
+| `models` | [`AgentModelResource`](/api-reference/stream/types#agentmodelresource)[] | No | Model resources |
+| `prompts` | [`AgentPromptResource`](/api-reference/stream/types#agentpromptresource)[] | No | Prompt resources |
+| `instructions` | [`AgentInstructionResource`](/api-reference/stream/types#agentinstructionresource)[] | No | Instruction resources |
+| `flags` | [`AgentFlagConfig`](/api-reference/stream/types#agentflagconfig)[] | No | Flag resources |
+| `departments` | [`AgentDepartmentResource`](/api-reference/stream/types#agentdepartmentresource)[] | No | Department resources |
+| `tools` | [`AgentToolResource`](/api-reference/stream/types#agenttoolresource)[] | No | Tool resources |
+| `temperature_levels` | [`AgentTemperatureLevelResource`](/api-reference/stream/types#agenttemperaturelevelresource)[] | No | Temperature level resources |
+| `reasoning_levels` | [`AgentReasoningLevelResource`](/api-reference/stream/types#agentreasoninglevelresource)[] | No | Reasoning level resources |
+| `voices` | [`AgentVoiceResource`](/api-reference/stream/types#agentvoiceresource)[] | No | Voice resources |
+| `qualities` | [`AgentQualityResource`](/api-reference/stream/types#agentqualityresource)[] | No | Quality resources |
+| `rubrics` | [`AgentRubricResource`](/api-reference/stream/types#agentrubricresource)[] | No | Rubric resources |
 
 ## Response
 

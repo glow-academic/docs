@@ -7,6 +7,7 @@ Schema: UpdateToolApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ToolResultItem`](/api-reference/stream/types#toolresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

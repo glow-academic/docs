@@ -1,0 +1,23 @@
+# `POST` `/test/grade`
+
+Create Grade
+
+Create a test grade.
+
+## Request Body (`CreateGradeApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | Test invocation to grade |
+| `run_id` | `string` | No | Run ID for audit linkage |
+| `score` | `integer` | No | Overall score |
+
+## Response
+
+```
+{
+  "additionalProperties": true,
+  "type": "object",
+  "title": "Response Create Grade Test Grade Post"
+}
+```

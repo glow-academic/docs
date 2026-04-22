@@ -1,0 +1,9 @@
+# `POST` `/attempt/dashboard/get`
+
+Get Dashboard
+
+## Response
+
+```
+{}
+```

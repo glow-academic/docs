@@ -1,0 +1,19 @@
+# `POST` `/attempt/chat/speak`
+
+Chat Speak
+
+Push audio bytes into a conversation's inbound buffer.
+
+## Request Body (`ChatSpeakRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `conversation_id` | `string` | No | — |
+| `chat_id` | `string` | No | — |
+| `audio` | `string` | Yes | — |
+
+## Response (`ChatSpeakResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `accepted` | `boolean` | Yes | — |

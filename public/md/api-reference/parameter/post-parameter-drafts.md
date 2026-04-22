@@ -1,0 +1,11 @@
+# `POST` `/parameter/drafts`
+
+Get Parameter Drafts
+
+List parameter drafts owned by the current profile.
+
+## Response (`GetParameterDraftsApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `entries` | [`GetParameterDraftResponse`](/api-reference/parameter/types#getparameterdraftresponse)[] | No | List of parameter draft entries |

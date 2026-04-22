@@ -26,4 +26,3 @@ get leaderboard
 ## Related
 
 - [Leaderboard Guide](/leaderboard)
-- [API Endpoint](/api-reference/leaderboard/post-leaderboard-get)

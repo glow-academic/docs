@@ -1,0 +1,17 @@
+# `POST` `/attempt/file/download`
+
+Download File
+
+Download a file by file entry ID.
+
+## Request Body (`FileDownloadAttemptApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file_id` | `string` | Yes | UUID of the files_entry to download |
+
+## Response
+
+```
+{}
+```

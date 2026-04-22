@@ -1,0 +1,24 @@
+# `POST` `/auth/search`
+
+Search Auth
+
+Search auths — composable infra architecture.
+
+## Request Body (`SearchAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | — |
+| `filter_department_ids` | `string`[] | No | — |
+| `department_search` | `string` | No | — |
+| `page_size` | `integer` | No | — |
+| `page_offset` | `integer` | No | — |
+
+## Response (`ListAuthApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the acting user |
+| `auths` | [`ListAuthApiAuth`](/api-reference/auth/types#listauthapiauth)[] | No | List of auth provider items |
+| `department_filter` | [`ListFilterSection`](/api-reference/auth/types#listfiltersection) | No | Filter options for departments |
+| `total_count` | `integer` | No | Total number of auth providers |

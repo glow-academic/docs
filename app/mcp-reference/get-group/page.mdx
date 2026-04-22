@@ -24,4 +24,3 @@ Get detailed group information with all runs and messages.
 ## Related
 
 - [Group Guide](/group)
-- [API Endpoint](/api-reference/group/post-group-get)

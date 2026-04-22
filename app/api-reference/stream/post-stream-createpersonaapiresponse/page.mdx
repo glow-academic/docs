@@ -7,6 +7,7 @@ Schema: CreatePersonaApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`PersonaResultItem`](/api-reference/stream/types#personaresultitem)[] | Yes | Per-persona creation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

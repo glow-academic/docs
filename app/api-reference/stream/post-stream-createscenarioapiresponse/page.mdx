@@ -7,6 +7,7 @@ Schema: CreateScenarioApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ScenarioResultItem`](/api-reference/stream/types#scenarioresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

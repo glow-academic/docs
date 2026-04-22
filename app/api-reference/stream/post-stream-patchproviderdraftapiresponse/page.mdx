@@ -8,9 +8,9 @@ Schema: PatchProviderDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the draft save succeeded |
 | `draft_id` | `string` | Yes | Draft unique identifier |
-| `new_version` | `integer` | Yes | New draft version after save |
+| `idempotency_key` | `string` | No | Operation key echoed back for client correlation |
 | `message` | `string` | Yes | Result message |
-| `form_state` | [`ProviderDraftFormState`](/api-reference/stream/types#providerdraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__provider__types__DraftFormState`](/api-reference/stream/types#app-infra-provider-types-draftformstate) | No | Server-authoritative form state |
 
 ## Response
 

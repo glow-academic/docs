@@ -49,4 +49,3 @@ get dashboard
 ## Related
 
 - [Dashboard Guide](/dashboard)
-- [API Endpoint](/api-reference/dashboard/post-dashboard-get)

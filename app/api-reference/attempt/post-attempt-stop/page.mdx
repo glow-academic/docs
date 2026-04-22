@@ -2,18 +2,16 @@
 
 Attempt Stop
 
-Stop message generation for an attempt chat.
+Cancel an active generation by group_id.
 
-## Request Body (`AttemptStopPayload`)
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `chat_id` | `string` | Yes | UUID of the chat to stop generating |
-
-## Response (`StopAttemptApiResponse`)
+## Request Body (`AttemptStopRequest`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `chat_id` | `string` | Yes | — |
+| `group_id` | `string` | Yes | — |
+
+## Response (`AttemptStopResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
 | `success` | `boolean` | Yes | — |
-| `message` | `string` | No | — |

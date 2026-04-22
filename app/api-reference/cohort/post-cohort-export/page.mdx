@@ -1,0 +1,20 @@
+# `POST` `/cohort/export`
+
+Export Cohorts
+
+Export all cohorts as a clean, denormalized CSV.
+
+## Request Body (`app__routes__cohort__export__ExportCohortApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `cohort_id` | `string` | No | — |
+
+## Response (`ExportCohortApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Suggested file name for download |
+| `mime_type` | `string` | Yes | MIME type of the exported content |
+| `row_count` | `integer` | Yes | Number of rows in the export |

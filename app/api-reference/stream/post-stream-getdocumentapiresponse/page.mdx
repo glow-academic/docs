@@ -2,7 +2,7 @@
 
 Schema: GetDocumentApiResponse
 
-## Request Body (`GetDocumentApiResponse-Input`)
+## Request Body (`GetDocumentApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -10,19 +10,20 @@ Schema: GetDocumentApiResponse
 | `document_exists` | `boolean` | No | Whether the document exists |
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
-| `draft_version` | `integer` | No | Current draft version number |
 | `group_id` | `string` | No | Associated group UUID |
+| `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
 | `content_show_ai_generate` | `boolean` | No | Whether to show AI generate for content step |
-| `names` | [`DocumentNameSection`](/api-reference/stream/types#documentnamesection) | No | Name section with resource and options |
-| `descriptions` | [`DocumentDescriptionSection`](/api-reference/stream/types#documentdescriptionsection) | No | Description section with resource and options |
-| `flags` | [`DocumentFlagSection`](/api-reference/stream/types#documentflagsection) | No | Flag section with selections and options |
-| `departments` | [`DocumentDepartmentSection`](/api-reference/stream/types#documentdepartmentsection) | No | Department section with selections and options |
-| `fields` | [`DocumentFieldSection`](/api-reference/stream/types#documentfieldsection) | No | Parameter field section |
-| `parameters` | [`DocumentParameterSection`](/api-reference/stream/types#documentparametersection) | No | Parameter section with selections and options |
-| `uploads` | [`DocumentUploadSection`](/api-reference/stream/types#documentuploadsection) | No | Upload section with selections and options |
-| `images` | [`DocumentImageSection`](/api-reference/stream/types#documentimagesection) | No | Image section with selections and options |
-| `texts` | [`DocumentTextSection`](/api-reference/stream/types#documenttextsection) | No | Text section with selections and options |
+| `pending_ids` | `string`[] | No | Pending resource IDs from the draft, when available |
+| `names` | [`DocumentNameResource`](/api-reference/stream/types#documentnameresource)[] | No | Name resources |
+| `descriptions` | [`DocumentDescriptionResource`](/api-reference/stream/types#documentdescriptionresource)[] | No | Description resources |
+| `flags` | [`DocumentFlagConfig`](/api-reference/stream/types#documentflagconfig)[] | No | Flag configs |
+| `departments` | [`DocumentDepartmentResource`](/api-reference/stream/types#documentdepartmentresource)[] | No | Department resources |
+| `parameter_fields` | [`DocumentParameterFieldResource`](/api-reference/stream/types#documentparameterfieldresource)[] | No | Parameter field resources |
+| `parameters` | [`DocumentParameterResource`](/api-reference/stream/types#documentparameterresource)[] | No | Parameter catalog resources |
+| `files` | [`DocumentFileResource`](/api-reference/stream/types#documentfileresource)[] | No | File resources |
+| `images` | [`DocumentImageResource`](/api-reference/stream/types#documentimageresource)[] | No | Image resources |
+| `texts` | [`DocumentTextResource`](/api-reference/stream/types#documenttextresource)[] | No | Text resources |
 
 ## Response
 

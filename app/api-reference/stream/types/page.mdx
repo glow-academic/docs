@@ -10,52 +10,30 @@ Activity resource metadata.
 
 ---
 
-## `AgentDepartmentSection`
+## `AgentDepartmentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected departments |
-| `resources` | `any`[] | No | Available department resources |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether the department was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentDescriptionSection`
+## `AgentDescriptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `AgentDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | UUID of the selected name resource |
-| `description_id` | `string` | No | UUID of the selected description resource |
-| `flag_ids` | `string`[] | Yes | Selected flag UUIDs |
-| `department_ids` | `string`[] | Yes | Selected department UUIDs |
-| `model_ids` | `string`[] | Yes | Selected model UUIDs |
-| `tool_ids` | `string`[] | Yes | Selected tool UUIDs |
-| `reasoning_level_ids` | `string`[] | Yes | Selected reasoning level UUIDs |
-| `temperature_level_ids` | `string`[] | Yes | Selected temperature level UUIDs |
-| `voice_ids` | `string`[] | Yes | Selected voice UUIDs |
-| `rubric_ids` | `string`[] | Yes | Selected rubric UUIDs |
+| `id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Agent description |
+| `generated` | `boolean` | No | Whether the description was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -80,115 +58,103 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Display label for the flag |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | UUID of the selected icon resource |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the flag option |
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentFlagSection`
+## `AgentInstructionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`AgentFlagConfig`](#agentflagconfig)[] | No | Currently selected flags |
-| `resources` | [`AgentFlagConfig`](#agentflagconfig)[] | No | Available flag configs |
+| `id` | `string` | No | Instruction resource identifier |
+| `template` | `string` | No | Instruction template |
+| `generated` | `boolean` | No | Whether the instruction was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentInstructionSection`
+## `AgentModelResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected instruction resource |
-| `resources` | `any`[] | No | Available instruction resources |
+| `id` | `string` | No | Model resource identifier |
+| `name` | `string` | No | Model name |
+| `description` | `string` | No | Model description |
+| `value` | `string` | No | Model value |
+| `provider_id` | `string` | No | Provider identifier |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `temperature_level_ids` | `string`[] | No | Associated temperature level identifiers |
+| `reasoning_level_ids` | `string`[] | No | Associated reasoning level identifiers |
+| `quality_ids` | `string`[] | No | Associated quality identifiers |
+| `voice_ids` | `string`[] | No | Associated voice identifiers |
+| `modality_ids` | `string`[] | No | Associated modality identifiers |
+| `generated` | `boolean` | No | Whether the model was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentModelSection`
+## `AgentNameResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected model resource |
-| `resources` | `any`[] | No | Available model resources |
+| `id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Agent name |
+| `generated` | `boolean` | No | Whether the name was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentNameSection`
+## `AgentPromptResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Prompt resource identifier |
+| `system_prompt` | `string` | No | Prompt system text |
+| `name` | `string` | No | Prompt name |
+| `description` | `string` | No | Prompt description |
+| `generated` | `boolean` | No | Whether the prompt was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentPromptSection`
+## `AgentQualityResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected prompt resource |
-| `resources` | `any`[] | No | Available prompt resources |
+| `id` | `string` | No | Quality resource identifier |
+| `quality` | `string` | No | Quality value |
+| `generated` | `boolean` | No | Whether the quality was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentQualitySection`
+## `AgentReasoningLevelResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected qualities |
-| `resources` | `any`[] | No | Available quality resources |
-
----
-
-## `AgentReasoningLevelSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected reasoning level |
-| `resources` | `any`[] | No | Available reasoning levels |
+| `id` | `string` | No | Reasoning level resource identifier |
+| `reasoning_level` | `string` | No | Reasoning level value |
+| `generated` | `boolean` | No | Whether the reasoning level was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -205,63 +171,69 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `AgentRubricSection`
+## `AgentRubricResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected rubrics |
-| `resources` | `any`[] | No | Available rubric resources |
+| `id` | `string` | No | Rubric resource identifier |
+| `name` | `string` | No | Rubric name |
+| `description` | `string` | No | Rubric description |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `total_points` | `integer` | No | Total points |
+| `pass_points` | `integer` | No | Passing points |
+| `simulation_rubric` | `boolean` | No | Whether this rubric is for simulation |
+| `video_rubric` | `boolean` | No | Whether this rubric is for video |
+| `standard_group_ids` | `string`[] | No | Associated standard group identifiers |
+| `generated` | `boolean` | No | Whether the rubric was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentTemperatureLevelSection`
+## `AgentTemperatureLevelResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected temperature level |
-| `resources` | `any`[] | No | Available temperature levels |
+| `id` | `string` | No | Temperature level resource identifier |
+| `temperature` | `number` | No | Temperature value |
+| `generated` | `boolean` | No | Whether the temperature level was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentToolSection`
+## `AgentToolResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected tools |
-| `resources` | `any`[] | No | Available tool resources |
+| `id` | `string` | No | Tool resource identifier |
+| `name` | `string` | No | Tool name |
+| `description` | `string` | No | Tool description |
+| `permission_ids` | `string`[] | No | Associated permission identifiers |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `args_ids` | `string`[] | No | Associated arg identifiers |
+| `args_output_ids` | `string`[] | No | Associated arg output identifiers |
+| `instruction_id` | `string` | No | Associated instruction identifier |
+| `agent_id` | `string` | No | Associated denormalized agent identifier |
+| `generated` | `boolean` | No | Whether the tool was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `AgentVoiceSection`
+## `AgentVoiceResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected voices |
-| `resources` | `any`[] | No | Available voice resources |
+| `id` | `string` | No | Voice resource identifier |
+| `voice` | `string` | No | Voice value |
+| `generated` | `boolean` | No | Whether the voice was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -362,17 +334,6 @@ Single group entry for a session.
 
 ---
 
-## `ArtifactTypeItem`
-
-Typed artifact operation reference.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | — |
-| `operation` | `"get"` \| `"list"` \| `"duplicate"` \| `"delete"` \| `"draft"` \| `"save"` \| `"docs"` \| `"export"` \| `"refresh"` | Yes | — |
-
----
-
 ## `AttemptData`
 
 Attempt-level data.
@@ -387,6 +348,7 @@ is_archived is only populated when practice=True.
 | `infinite_mode` | `boolean` | No | Whether infinite mode is enabled |
 | `profile_id` | `string` | No | UUID of the user profile |
 | `profile_name` | `string` | No | Display name of the user profile |
+| `user_persona_id` | `string` | No | UUID of the user's persona entry for this attempt |
 | `department_id` | `string` | No | UUID of the department |
 | `cohort_id` | `string` | No | UUID of the cohort (home mode only) |
 | `is_archived` | `boolean` | No | Whether the attempt is archived |
@@ -427,34 +389,34 @@ Resource maps keyed by ID string.
 
 ---
 
-## `AuthDescriptionSection`
+## `AuthDepartmentResource`
+
+Department resource for auth.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `AuthDraftFormState`
+## `AuthDescriptionResource`
 
-Server-authoritative form state returned after draft save.
+Description resource for auth.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource UUID |
-| `description_id` | `string` | No | Resolved description resource UUID |
-| `flag_id` | `string` | No | Resolved flag option UUID |
-| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
-| `protocol_ids` | `string`[] | Yes | Assigned protocol UUIDs |
-| `slug_ids` | `string`[] | Yes | Assigned slug UUIDs |
-| `item_ids` | `string`[] | Yes | Assigned auth item UUIDs |
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -479,25 +441,14 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the selected flag option |
 | `show` | `boolean` | No | Whether the flag is visible to the client |
 | `required` | `boolean` | No | Whether the flag is required |
 | `generated` | `boolean` | No | Whether the flag was AI-generated |
-
----
-
-## `AuthFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`AuthFlagConfig`](#authflagconfig)[] | No | Currently assigned flag configs |
-| `resources` | [`AuthFlagConfig`](#authflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -507,60 +458,45 @@ Auth item resource shape for client/editing.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `auth_item_id` | `string` | No | Unique auth item identifier |
+| `id` | `string` | No | Unique auth item identifier |
 | `name` | `string` | No | Auth item display name |
 | `description` | `string` | No | Auth item description text |
 | `position` | `integer` | No | Sort position within the auth provider |
-| `active` | `boolean` | No | Whether the auth item is active |
-| `value_masked` | `string` | No | Masked value for display |
-| `key_id` | `string` | No | UUID of the associated key |
 | `encrypted` | `boolean` | No | Whether the value is encrypted |
 | `generated` | `boolean` | No | Whether the item was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `AuthItemSection`
+## `AuthNameResource`
+
+Name resource for auth.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`AuthItemResource`](#authitemresource)[] | No | Currently assigned auth items |
-| `resources` | [`AuthItemResource`](#authitemresource)[] | No | Available auth item resources |
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `AuthNameSection`
+## `AuthProtocolResource`
+
+Protocol resource for auth.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
-
----
-
-## `AuthProtocolSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned protocols |
-| `resources` | `any`[] | No | Available protocol resources |
+| `id` | `string` | No | Protocol identifier |
+| `value` | `string` | No | Protocol value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -577,18 +513,18 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `AuthSlugSection`
+## `AuthSlugResource`
+
+Slug resource for auth.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned slugs |
-| `resources` | `any`[] | No | Available slug resources |
+| `id` | `string` | No | Slug identifier |
+| `value` | `string` | No | Slug value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -697,6 +633,15 @@ Split into view categories:
 | `copy_paste_allowed` | `boolean` | No | Whether copy-paste is allowed |
 | `text_enabled` | `boolean` | No | Whether text input is enabled |
 | `audio_enabled` | `boolean` | No | Whether audio input is enabled |
+| `hints_enabled` | `boolean` | No | Whether hints should be generated on replies |
+| `analyses_enabled` | `boolean` | No | Whether chat-level analyses run during grading |
+| `strengths_enabled` | `boolean` | No | Whether strengths are captured during grading |
+| `improvements_enabled` | `boolean` | No | Whether improvements are captured during grading |
+| `problem_statement_enabled` | `boolean` | No | Whether this chat has a problem statement capability |
+| `objectives_enabled` | `boolean` | No | Whether this chat has objectives capability |
+| `video_enabled` | `boolean` | No | Whether this chat has a video capability |
+| `images_enabled` | `boolean` | No | Whether this chat has an images capability |
+| `questions_enabled` | `boolean` | No | Whether this chat has a quiz/questions capability |
 | `grading_state` | [`GradingStateData`](#gradingstatedata) | No | Current grading state data |
 | `dynamic_rubric` | [`DynamicRubricData`](#dynamicrubricdata) | No | Dynamic rubric data |
 | `scenario_id` | `string` | No | UUID of the associated scenario |
@@ -715,185 +660,212 @@ Split into view categories:
 
 ---
 
-## `ChatDepartmentSection`
+## `ChatDepartmentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected departments |
-| `resources` | `any`[] | No | Available department resources |
+| `department_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatDescriptionSection`
+## `ChatDescriptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected descriptions |
-| `resources` | `any`[] | No | Available description resources |
+| `id` | `string` | No | — |
+| `description` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatDocumentSection`
+## `ChatDocumentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected documents |
-| `resources` | `any`[] | No | Available document resources |
+| `document_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `file_id` | `string` | No | — |
+| `text_id` | `string` | No | — |
+| `image_ids` | `string`[] | No | — |
+| `template` | `boolean` | No | — |
+| `parameter_field_ids` | `string`[] | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatFieldSection`
+## `ChatFieldResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected fields |
-| `resources` | `any`[] | No | Available field resources |
+| `field_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `value` | `string` | No | — |
+| `conditional_parameter_ids` | `string`[] | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatFlagSection`
+## `ChatFlagResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected flags |
-| `resources` | `any`[] | No | Available flag resources |
+| `id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `type` | `string` | No | — |
+| `icon` | `string` | No | — |
+| `value` | `boolean` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatImageSection`
+## `ChatImageResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected images |
-| `resources` | `any`[] | No | Available image resources |
+| `image_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatNameSection`
+## `ChatNameResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected names |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatObjectiveSection`
+## `ChatObjectiveResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected objectives |
-| `resources` | `any`[] | No | Available objective resources |
+| `id` | `string` | No | — |
+| `objective` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatOptionSection`
+## `ChatOptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected options |
-| `resources` | `any`[] | No | Available option resources |
+| `option_id` | `string` | No | — |
+| `option_text` | `string` | No | — |
+| `question_id` | `string` | No | — |
+| `is_correct` | `boolean` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatParameterFieldSection`
+## `ChatParameterFieldResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected parameter fields |
-| `resources` | `any`[] | No | Available parameter field resources |
+| `id` | `string` | No | — |
+| `field_id` | `string` | No | — |
+| `parameter_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `parameter_name` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatPersonaSection`
+## `ChatPersonaResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected personas |
-| `resources` | `any`[] | No | Available persona resources |
+| `persona_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `icon` | `string` | No | — |
+| `color` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatProblemStatementSection`
+## `ChatProblemStatementResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected problem statements |
-| `resources` | `any`[] | No | Available problem statement resources |
+| `problem_statement_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `problem_statement` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatQuestionSection`
+## `ChatQuestionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected questions |
-| `resources` | `any`[] | No | Available question resources |
+| `question_id` | `string` | No | — |
+| `question_text` | `string` | No | — |
+| `allow_multiple` | `boolean` | No | — |
+| `time` | `integer` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
-## `ChatScenarioSection`
+## `ChatScenarioResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected scenarios |
-| `resources` | `any`[] | No | Available scenario resources |
+| `scenario_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -933,16 +905,18 @@ Now serves as the unified type for home/practice simulation cards.
 
 ---
 
-## `ChatVideoSection`
+## `ChatVideoResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether to show this section |
-| `required` | `boolean` | No | Whether this section is required |
-| `suggestions` | `string`[] | No | Suggested resource IDs |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate option |
-| `current` | `any`[] | No | Currently selected videos |
-| `resources` | `any`[] | No | Available video resources |
+| `video_id` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `length_seconds` | `integer` | No | — |
+| `generated` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -956,21 +930,9 @@ Department for cohort.
 | `name` | `string` | No | Department name |
 | `description` | `string` | No | Department description |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `CohortDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`CohortDepartment`](#cohortdepartment)[] | No | Currently selected departments |
-| `resources` | [`CohortDepartment`](#cohortdepartment)[] | No | Available departments |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -983,41 +945,9 @@ Description resource for cohort.
 | `id` | `string` | No | Unique identifier |
 | `description` | `string` | No | Description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `CohortDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`CohortDescriptionResource`](#cohortdescriptionresource) | No | Currently selected description resource |
-| `resources` | [`CohortDescriptionResource`](#cohortdescriptionresource)[] | No | Available description resources |
-
----
-
-## `CohortDraftFormState`
-
-Full form state after draft patch — server is source of truth.
-
-Client replaces its local form state with this after every successful patch.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Selected name resource UUID |
-| `description_id` | `string` | No | Selected description resource UUID |
-| `flag_id` | `string` | No | Selected flag option UUID |
-| `department_ids` | `string`[] | No | Selected department UUIDs |
-| `simulation_ids` | `string`[] | No | Selected simulation UUIDs |
-| `simulation_position_ids` | `string`[] | No | Selected simulation position UUIDs |
-| `simulation_availability_ids` | `string`[] | No | Selected simulation availability UUIDs |
-| `profile_ids` | `string`[] | No | Selected profile UUIDs |
-| `profile_persona_ids` | `string`[] | No | Selected profile persona UUIDs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1042,25 +972,14 @@ Flag config for cohort — matches client FlagConfig interface.
 | `label` | `string` | No | Display label |
 | `description` | `string` | No | Flag description |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | Selected flag option UUID |
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `CohortFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`CohortFlagConfig`](#cohortflagconfig) | No | Currently selected flag config |
-| `resources` | [`CohortFlagConfig`](#cohortflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1073,21 +992,33 @@ Name resource for cohort.
 | `id` | `string` | No | Unique identifier |
 | `name` | `string` | No | Display name |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `CohortNameSection`
+## `CohortPersonaResource`
+
+Persona option exposed from cohort GET.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`CohortNameResource`](#cohortnameresource) | No | Currently selected name resource |
-| `resources` | [`CohortNameResource`](#cohortnameresource)[] | No | Available name resources |
+| `id` | `string` | No | Persona UUID |
+| `name` | `string` | No | Persona name |
+| `description` | `string` | No | Persona description |
+| `icon` | `string` | No | Persona icon |
+| `color` | `string` | No | Persona color |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `instructions` | `string` | No | Persona instructions |
+| `examples` | `string`[] | No | Persona examples |
+| `parameter_field_ids` | `string`[] | No | Associated parameter field UUIDs |
+| `active` | `boolean` | No | Whether the persona is active |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `mcp` | `boolean` | No | Whether created via MCP |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1102,6 +1033,9 @@ Profile for cohort.
 | `description` | `string` | No | Profile description |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `mcp` | `boolean` | No | Whether created via MCP |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1116,36 +1050,9 @@ Profile persona for cohort.
 | `persona_id` | `string` | No | Associated persona UUID |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `mcp` | `boolean` | No | Whether created via MCP |
-
----
-
-## `CohortProfilePersonaSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`CohortProfilePersona`](#cohortprofilepersona)[] | No | Currently selected profile personas |
-| `resources` | [`CohortProfilePersona`](#cohortprofilepersona)[] | No | Available profile personas |
-
----
-
-## `CohortProfileSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`CohortProfile`](#cohortprofile)[] | No | Currently selected profiles |
-| `resources` | [`CohortProfile`](#cohortprofile)[] | No | Available profiles |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1172,6 +1079,9 @@ Simulation for cohort.
 | `name` | `string` | No | Simulation name |
 | `description` | `string` | No | Simulation description |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1187,21 +1097,9 @@ Simulation availability for cohort.
 | `type` | `string` | No | Availability type |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `mcp` | `boolean` | No | Whether created via MCP |
-
----
-
-## `CohortSimulationAvailabilitySection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`CohortSimulationAvailability`](#cohortsimulationavailability)[] | No | Currently selected availability slots |
-| `resources` | [`CohortSimulationAvailability`](#cohortsimulationavailability)[] | No | Available availability slots |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -1211,50 +1109,32 @@ Simulation position for cohort.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Unique identifier |
 | `simulation_id` | `string` | No | Associated simulation UUID |
 | `value` | `integer` | No | Position value |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `mcp` | `boolean` | No | Whether created via MCP |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `CohortSimulationPositionSection`
+## `ContentEntry`
+
+Content entry with computed display fields.
+
+Each content has its own display info (name/icon/color) computed from
+persona metadata on the server. Client renders each content with its
+own persona styling.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`CohortSimulationPosition`](#cohortsimulationposition)[] | No | Currently selected simulation positions |
-| `resources` | [`CohortSimulationPosition`](#cohortsimulationposition)[] | No | Available simulation positions |
-
----
-
-## `CohortSimulationSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`CohortSimulation`](#cohortsimulation)[] | No | Currently selected simulations |
-| `resources` | [`CohortSimulation`](#cohortsimulation)[] | No | Available simulations |
-
----
-
-## `ColumnInfo`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | Column name |
-| `type` | `string` | Yes | Column data type |
-| `nullable` | `boolean` | Yes | Whether the column is nullable |
+| `content` | `string` | No | Content text of the entry |
+| `name` | `string` | No | Display name (user or persona) |
+| `color` | `string` | No | Persona color for display |
+| `icon` | `string` | No | Icon identifier for display |
+| `created_at` | `string` | No | ISO timestamp when content was created |
 
 ---
 
@@ -1280,19 +1160,62 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Client-provided UUID for the agent |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text value |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
 | `departments` | `string`[] | No | Department names for matching |
+| `active_flag` | `boolean` | No | Whether this agent is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 | `flag_ids` | `string`[] | No | Associated flag UUIDs |
-| `model_ids` | `string`[] | No | Associated model UUIDs |
+| `model_id` | `string` | No | Associated model UUID |
 | `reasoning_level_ids` | `string`[] | No | Associated reasoning level UUIDs |
 | `temperature_level_ids` | `string`[] | No | Associated temperature level UUIDs |
 | `tool_ids` | `string`[] | No | Associated tool UUIDs |
 | `voice_ids` | `string`[] | No | Associated voice UUIDs |
 | `agent_ids` | `string`[] | No | Associated agent resource UUIDs |
+| `rubric_ids` | `string`[] | No | Associated rubric UUIDs |
+| `prompt_id` | `string` | No | System prompt resource UUID |
+| `instruction_ids` | `string`[] | No | Instruction template resource UUIDs |
+
+---
+
+## `CreateArgInput`
+
+Inline arg creation input.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Argument name |
+| `field_type` | `string` | Yes | Argument type (string, number, boolean, array) |
+| `description` | `string` | No | Argument description |
+| `required` | `boolean` | No | Whether the argument is required |
+| `default_value` | `string` | No | Default value |
+
+---
+
+## `CreateArgPositionInput`
+
+Inline arg position creation input.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `args_id` | `string` | Yes | Argument resource ID this position belongs to |
+| `value` | `integer` | Yes | Position value |
+
+---
+
+## `CreateArgsOutputInput`
+
+Inline args output creation input.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `args_id` | `string` | Yes | Argument resource ID this output belongs to |
+| `name` | `string` | Yes | Output name |
+| `template` | `string` | No | Output template |
 
 ---
 
@@ -1305,6 +1228,7 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional preset UUID for the new auth provider |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Name value to resolve or create |
 | `description_id` | `string` | No | UUID of the description resource |
@@ -1331,6 +1255,7 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned UUID |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource UUID |
 | `name` | `string` | No | Name value for resolution |
 | `description_id` | `string` | No | Description resource UUID |
@@ -1342,7 +1267,8 @@ Required fields (name): provide ID or value.
 | `simulation_availability_ids` | `string`[] | No | Simulation availability UUIDs |
 | `profile_ids` | `string`[] | No | Profile UUIDs |
 | `profile_persona_ids` | `string`[] | No | Profile persona UUIDs |
-| `is_inactive` | `boolean` | No | Whether the cohort is inactive |
+| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
+| `active_flag` | `boolean` | No | Whether the cohort is active (resolved to flag_id) |
 | `departments` | `string`[] | No | Department names for resolution |
 | `simulations` | `string`[] | No | Simulation names for resolution |
 | `profiles` | `string`[] | No | Profile names for resolution |
@@ -1357,7 +1283,8 @@ Required fields (name): provide ID or value.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | `string` | No | Optional preset UUID for the new department |
+| `id` | `string` | No | Optional preset UUID for the new department artifact |
+| `resource_id` | `string` | No | Optional preset UUID for the departments_resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Name value to resolve or create |
 | `description_id` | `string` | No | UUID of the description resource |
@@ -1366,6 +1293,7 @@ Required fields (name): provide ID or value.
 | `active_flag` | `boolean` | No | Whether the department is active |
 | `settings_ids` | `string`[] | No | Setting UUIDs to assign |
 | `department_ids` | `string`[] | No | Sub-department UUIDs to assign |
+| `is_primary` | `boolean` | No | Whether this is the primary department |
 
 ---
 
@@ -1378,18 +1306,24 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned UUID |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource UUID |
 | `name` | `string` | No | Name value for resolution |
 | `description_id` | `string` | No | Description resource UUID |
 | `description` | `string` | No | Description value for resolution |
 | `flag_id` | `string` | No | Flag option UUID |
-| `is_inactive` | `boolean` | No | Whether the document is inactive |
+| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
+| `active_flag` | `boolean` | No | Whether the document is active (resolved to flag_id) |
+| `template_flag` | `boolean` | No | Whether this is a template document |
+| `template_flag_id` | `string` | No | Template flag resource UUID |
 | `department_ids` | `string`[] | No | Department UUIDs |
 | `departments` | `string`[] | No | Department names for resolution |
-| `field_ids` | `string`[] | No | Parameter field UUIDs |
+| `parameter_field_ids` | `string`[] | No | Parameter field UUIDs |
 | `upload_ids` | `string`[] | No | File upload UUIDs |
 | `image_ids` | `string`[] | No | Image UUIDs |
 | `text_ids` | `string`[] | No | Text resource UUIDs |
+| `file_id` | `string` | No | Files resource UUID for document file |
+| `text_id` | `string` | No | Texts resource UUID for document text |
 
 ---
 
@@ -1402,6 +1336,7 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned UUID |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource UUID |
 | `name` | `string` | No | Name value for resolution |
 | `description_id` | `string` | No | Description resource UUID |
@@ -1413,6 +1348,8 @@ Required fields (name): provide ID or value.
 | `model_flag_ids` | `string`[] | No | Model flag UUIDs |
 | `model_rubric_ids` | `string`[] | No | Model rubric UUIDs |
 | `model_position_ids` | `string`[] | No | Model position UUIDs |
+| `active_flag` | `boolean` | No | Whether this eval is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 
 ---
 
@@ -1425,10 +1362,13 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional preset UUID for the new field |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Name value to resolve or create |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description value to resolve or create |
+| `active_flag` | `boolean` | No | Whether this field is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 | `flag_id` | `string` | No | UUID of the flag option |
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
 | `departments` | `string`[] | No | Department names to resolve |
@@ -1446,20 +1386,24 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned identifier |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource identifier |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | Description resource identifier |
 | `description` | `string` | No | Description text value |
 | `department_ids` | `string`[] | No | Department identifiers |
 | `departments` | `string`[] | No | Department names to match |
+| `active_flag` | `boolean` | No | Whether this model is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 | `flag_ids` | `string`[] | No | Flag option identifiers |
 | `modality_ids` | `string`[] | No | Modality identifiers |
 | `pricing_ids` | `string`[] | No | Pricing tier identifiers |
-| `provider_ids` | `string`[] | No | Provider identifiers |
+| `provider_id` | `string` | No | Provider identifier |
 | `quality_ids` | `string`[] | No | Quality level identifiers |
 | `reasoning_level_ids` | `string`[] | No | Reasoning level identifiers |
 | `temperature_level_ids` | `string`[] | No | Temperature level identifiers |
-| `value_ids` | `string`[] | No | Value resource identifiers |
+| `value_id` | `string` | No | Value resource identifier |
+| `value` | `string` | No | Direct model value/identifier (e.g. the actual API model name) |
 | `voice_ids` | `string`[] | No | Voice identifiers |
 | `model_ids` | `string`[] | No | Related model identifiers |
 
@@ -1472,6 +1416,7 @@ Single parameter item for create — no parameter_id.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned identifier |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource identifier |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | Description resource identifier |
@@ -1480,6 +1425,10 @@ Single parameter item for create — no parameter_id.
 | `departments` | `string`[] | No | Department names to match |
 | `flag_ids` | `string`[] | No | Flag option identifiers |
 | `field_ids` | `string`[] | No | Field identifiers |
+| `persona_parameter` | `boolean` | No | Show on persona edit page |
+| `document_parameter` | `boolean` | No | Show on document edit page |
+| `scenario_parameter` | `boolean` | No | Show on scenario edit page |
+| `video_parameter` | `boolean` | No | Show on video edit page |
 
 ---
 
@@ -1492,6 +1441,7 @@ Required fields (name, color, icon, instructions): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Client-provided UUID for the new persona |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of an existing name resource |
 | `name` | `string` | No | Display name text (creates new resource if name_id not provided) |
 | `color_id` | `string` | No | UUID of an existing color resource |
@@ -1522,14 +1472,26 @@ Single profile item for create — no profile_id.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional preset UUID for the new profile |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Name value to resolve or create |
-| `request_limit_id` | `string` | No | UUID of the request limit resource |
-| `flag_id` | `string` | No | UUID of the flag option |
+| `active_flag_id` | `string` | No | UUID of the flag option |
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
 | `departments` | `string`[] | No | Department names to resolve |
 | `email_ids` | `string`[] | No | Email resource UUIDs |
-| `role_ids` | `string`[] | No | Role resource UUIDs |
+| `role_id` | `string` | No | Role resource UUID |
+
+---
+
+## `CreatePromptInput`
+
+Inline prompt creation input.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `system_prompt` | `string` | Yes | System prompt text |
+| `name` | `string` | No | Prompt name |
+| `description` | `string` | No | Prompt description |
 
 ---
 
@@ -1540,6 +1502,7 @@ Single provider item for create — no provider_id.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned identifier |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource identifier |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | Description resource identifier |
@@ -1550,7 +1513,10 @@ Single provider item for create — no provider_id.
 | `departments` | `string`[] | No | Department names to match |
 | `endpoint_ids` | `string`[] | No | Endpoint resource identifiers |
 | `key_ids` | `string`[] | No | API key resource identifiers |
-| `value_ids` | `string`[] | No | Value resource identifiers |
+| `value_id` | `string` | No | Value resource identifier |
+| `endpoint` | `string` | No | Provider API endpoint URL |
+| `key` | `string` | No | Provider API key |
+| `value` | `string` | No | Provider identifier value |
 
 ---
 
@@ -1561,14 +1527,21 @@ Single rubric item for create — no rubric_id.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned UUID |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource UUID |
 | `name` | `string` | No | Name value for resolution |
 | `description_id` | `string` | No | Description resource UUID |
 | `description` | `string` | No | Description value for resolution |
 | `active_flag_id` | `string` | No | Active flag option UUID |
 | `active_flag` | `boolean` | No | Active flag boolean value |
+| `simulation_rubric_flag` | `boolean` | No | Whether this is a simulation rubric |
+| `simulation_rubric_flag_id` | `string` | No | Simulation rubric flag resource UUID |
+| `video_rubric_flag` | `boolean` | No | Whether this is a video rubric |
+| `video_rubric_flag_id` | `string` | No | Video rubric flag resource UUID |
 | `department_ids` | `string`[] | No | Department UUIDs |
 | `departments` | `string`[] | No | Department names for resolution |
+| `total_points` | `integer` | No | Total points for rubric |
+| `pass_points` | `integer` | No | Points required to pass |
 | `point_ids` | `string`[] | No | Point UUIDs |
 | `standard_group_ids` | `string`[] | No | Standard group UUIDs |
 | `standard_ids` | `string`[] | No | Standard UUIDs |
@@ -1584,6 +1557,7 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Client-provided UUID for the scenario |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | UUID of the description resource |
@@ -1607,6 +1581,11 @@ Required fields (name): provide ID or value.
 | `question_ids` | `string`[] | No | Associated question UUIDs |
 | `option_ids` | `string`[] | No | Associated option UUIDs |
 | `active_flag` | `boolean` | No | Active flag boolean value |
+| `images_enabled_flag` | `boolean` | No | Whether images are enabled |
+| `objectives_enabled_flag` | `boolean` | No | Whether objectives are enabled |
+| `problem_statement_enabled_flag` | `boolean` | No | Whether problem statement is enabled |
+| `questions_enabled_flag` | `boolean` | No | Whether questions are enabled |
+| `video_enabled_flag` | `boolean` | No | Whether video is enabled |
 | `departments` | `string`[] | No | Department names for matching |
 | `personas` | `string`[] | No | Persona names for matching |
 | `documents` | `string`[] | No | Document names for matching |
@@ -1627,7 +1606,8 @@ Required fields (name): provide ID or value.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | `string` | No | Optional preset UUID for the new setting |
+| `id` | `string` | No | Optional preset UUID for the new setting artifact |
+| `resource_id` | `string` | No | Optional preset UUID for the settings_resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Name value to resolve or create |
 | `description_id` | `string` | No | UUID of the description resource |
@@ -1637,13 +1617,13 @@ Required fields (name): provide ID or value.
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
 | `departments` | `string`[] | No | Department names to resolve |
 | `color_ids` | `string`[] | No | Color resource UUIDs |
-| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
-| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `logins_ids` | `string`[] | No | Logins resource UUIDs to assign |
+| `system_ids` | `string`[] | No | System UUIDs to assign |
+| `mcp_id` | `string` | No | MCP resource UUID to assign (single) |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
 | `provider_key_ids` | `string`[] | No | Provider key UUIDs |
 | `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
 | `auth_item_value_ids` | `string`[] | No | Auth item value UUIDs |
-| `system_ids` | `string`[] | No | System UUIDs to assign |
-| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
 | `setting_resource_ids` | `string`[] | No | Setting resource UUIDs |
 
 ---
@@ -1657,19 +1637,21 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Client-provided UUID for the simulation |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text value |
-| `flag_ids` | `string`[] | No | Associated flag UUIDs |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
 | `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
 | `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
 | `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
 | `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
 | `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
-| `is_inactive` | `boolean` | No | Whether the simulation is inactive |
-| `is_practice` | `boolean` | No | Whether this is a practice simulation |
+| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
+| `active_flag` | `boolean` | No | Whether the simulation is active (resolved to flag_id) |
+| `practice_flag` | `boolean` | No | Whether this is a practice simulation |
+| `practice_flag_id` | `string` | No | Practice flag resource UUID |
 | `departments` | `string`[] | No | Department names for matching |
 | `scenarios` | `string`[] | No | Scenario names for matching |
 
@@ -1684,6 +1666,7 @@ Required fields (name): provide ID or value.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Optional pre-assigned identifier |
+| `resource_id` | `string` | No | Optional preset UUID for the resource snapshot |
 | `name_id` | `string` | No | Name resource identifier |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | Description resource identifier |
@@ -1693,9 +1676,11 @@ Required fields (name): provide ID or value.
 | `arg_positions_ids` | `string`[] | No | Argument position identifiers |
 | `args_ids` | `string`[] | No | Argument identifiers |
 | `args_outputs_ids` | `string`[] | No | Argument output identifiers |
-| `artifact_ids` | `string`[] | No | Artifact identifiers |
-| `operation_ids` | `string`[] | No | Operation identifiers |
+| `permission_ids` | `string`[] | No | Permission identifiers |
+| `instruction_id` | `string` | No | Response template instruction resource UUID |
 | `tool_ids` | `string`[] | No | Related tool identifiers |
+| `active_flag` | `boolean` | No | Whether this tool is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 
 ---
 
@@ -1968,7 +1953,7 @@ Per-item result within a bulk delete response.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the deletion succeeded |
-| `persona_id` | `string` | Yes | UUID of the deleted persona |
+| `id` | `string` | Yes | UUID of the deleted persona |
 | `message` | `string` | Yes | Human-readable result message |
 
 ---
@@ -2057,31 +2042,18 @@ Per-item result within a bulk delete response.
 
 ---
 
-## `DepartmentDescriptionSection`
+## `DepartmentDescriptionResource`
+
+Description resource for department.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `DepartmentDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource UUID |
-| `description_id` | `string` | No | Resolved description resource UUID |
-| `flag_id` | `string` | No | Resolved flag option UUID |
-| `setting_ids` | `string`[] | Yes | Assigned setting UUIDs |
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2106,40 +2078,29 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the selected flag option |
 | `show` | `boolean` | No | Whether the flag is visible to the client |
 | `required` | `boolean` | No | Whether the flag is required |
 | `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `DepartmentFlagSection`
+## `DepartmentNameResource`
+
+Name resource for department.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DepartmentFlagConfig`](#departmentflagconfig)[] | No | Currently assigned flag configs |
-| `resources` | [`DepartmentFlagConfig`](#departmentflagconfig)[] | No | Available flag configs |
-
----
-
-## `DepartmentNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2156,41 +2117,25 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `DepartmentSettingSection`
+## `DepartmentSettingResource`
+
+Setting resource for department.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned settings |
-| `resources` | `any`[] | No | Available setting resources |
-
----
-
-## `DocsApiResponse`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
-| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
-| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
-
----
-
-## `DocsResponse-Input`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | Resource or entry name |
-| `type` | `string` | Yes | Resource or entry type identifier |
-| `description` | `string` | Yes | Human-readable description |
-| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
-| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
-| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Setting display name |
+| `description` | `string` | No | Setting description |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `provider_key_ids` | `string`[] | No | Associated provider key identifiers |
+| `auth_ids` | `string`[] | No | Associated auth identifiers |
+| `system_ids` | `string`[] | No | Associated system identifiers |
+| `active` | `boolean` | No | Whether this setting is active |
+| `mcp` | `boolean` | No | Whether this setting used MCP |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2200,25 +2145,13 @@ Department resource for document.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | `string` | No | Unique identifier |
+| `department_id` | `string` | No | Department UUID |
 | `name` | `string` | No | Department name |
 | `description` | `string` | No | Department description |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `DocumentDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DocumentDepartmentResource`](#documentdepartmentresource)[] | No | Currently selected departments |
-| `resources` | [`DocumentDepartmentResource`](#documentdepartmentresource)[] | No | Available departments |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2231,39 +2164,9 @@ Description resource for document.
 | `id` | `string` | No | Unique identifier |
 | `description` | `string` | No | Description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `DocumentDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`DocumentDescriptionResource`](#documentdescriptionresource) | No | Currently selected description resource |
-| `resources` | [`DocumentDescriptionResource`](#documentdescriptionresource)[] | No | Available description resources |
-
----
-
-## `DocumentDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Selected name resource UUID |
-| `description_id` | `string` | No | Selected description resource UUID |
-| `flag_ids` | `string`[] | Yes | Selected flag option UUIDs |
-| `department_ids` | `string`[] | Yes | Selected department UUIDs |
-| `file_ids` | `string`[] | Yes | Selected file resource UUIDs |
-| `image_ids` | `string`[] | Yes | Selected image UUIDs |
-| `text_ids` | `string`[] | Yes | Selected text resource UUIDs |
-| `parameter_field_ids` | `string`[] | Yes | Selected parameter field UUIDs |
-| `parameter_ids` | `string`[] | Yes | Selected parameter UUIDs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2278,29 +2181,21 @@ Per-field error from value resolution.
 
 ---
 
-## `DocumentFieldSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DocumentParameterFieldResource`](#documentparameterfieldresource)[] | No | Currently selected parameter fields |
-| `resources` | [`DocumentParameterFieldResource`](#documentparameterfieldresource)[] | No | Available parameter fields |
-
----
-
 ## `DocumentFileResource`
 
-File (upload) resource for document.
+File resource for document.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Unique identifier |
+| `files_id` | `string` | No | File resource UUID |
+| `file_path` | `string` | No | Stored file path |
+| `mime_type` | `string` | No | File MIME type |
+| `size` | `integer` | No | File size in bytes |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2317,21 +2212,9 @@ Enriched flag config for direct client consumption.
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `DocumentFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DocumentFlagConfig`](#documentflagconfig)[] | No | Currently selected flag configs |
-| `resources` | [`DocumentFlagConfig`](#documentflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2342,22 +2225,16 @@ Image resource for document.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Unique identifier |
+| `image_id` | `string` | No | Image resource UUID |
+| `name` | `string` | No | Image name |
+| `description` | `string` | No | Image description |
+| `file_path` | `string` | No | Stored file path |
+| `mime_type` | `string` | No | File MIME type |
+| `size` | `integer` | No | File size in bytes |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `DocumentImageSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DocumentImageResource`](#documentimageresource)[] | No | Currently selected images |
-| `resources` | [`DocumentImageResource`](#documentimageresource)[] | No | Available images |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2370,21 +2247,9 @@ Name resource for document.
 | `id` | `string` | No | Unique identifier |
 | `name` | `string` | No | Display name |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `DocumentNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`DocumentNameResource`](#documentnameresource) | No | Currently selected name resource |
-| `resources` | [`DocumentNameResource`](#documentnameresource)[] | No | Available name resources |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2399,22 +2264,34 @@ Parameter field resource for document.
 | `parameter_id` | `string` | No | Associated parameter UUID |
 | `name` | `string` | No | Field name |
 | `description` | `string` | No | Field description |
+| `conditional_parameter_id` | `string` | No | Conditional parameter UUID for grouping |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `DocumentParameterSection`
+## `DocumentParameterResource`
+
+Parameter catalog item exposed to the client.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`GetParameterResponse`](#getparameterresponse)[] | No | Currently selected parameters |
-| `resources` | [`GetParameterResponse`](#getparameterresponse)[] | No | Available parameters |
+| `parameter_id` | `string` | No | Parameter UUID |
+| `name` | `string` | No | Parameter name |
+| `description` | `string` | No | Parameter description |
+| `value` | `string` | No | Parameter value |
+| `department_ids` | `string`[] | No | Department UUIDs |
+| `persona_parameter` | `boolean` | No | Whether this is a persona parameter |
+| `document_parameter` | `boolean` | No | Whether this is a document parameter |
+| `scenario_parameter` | `boolean` | No | Whether this is a scenario parameter |
+| `video_parameter` | `boolean` | No | Whether this is a video parameter |
+| `field_ids` | `string`[] | No | Associated field UUIDs |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2438,37 +2315,14 @@ Text resource for document.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | Unique identifier |
+| `texts_id` | `string` | No | Text resource UUID |
+| `file_path` | `string` | No | Stored file path |
+| `mime_type` | `string` | No | File MIME type |
+| `content` | `string` | No | Optional text content when available |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `DocumentTextSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DocumentTextResource`](#documenttextresource)[] | No | Currently selected text resources |
-| `resources` | [`DocumentTextResource`](#documenttextresource)[] | No | Available text resources |
-
----
-
-## `DocumentUploadSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`DocumentFileResource`](#documentfileresource)[] | No | Currently selected file uploads |
-| `resources` | [`DocumentFileResource`](#documentfileresource)[] | No | Available file uploads |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2482,27 +2336,6 @@ Server creates the full chain: files_resource → files_entry → file_uploads_e
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `upload_id` | `string` | Yes | Upload UUID from a finalized TUS upload |
-
----
-
-## `DraftFormState`
-
-Full form state after draft patch — server is source of truth.
-
-Client replaces its local form state with this after every successful patch.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Currently selected name resource UUID |
-| `description_id` | `string` | No | Currently selected description resource UUID |
-| `instructions_id` | `string` | No | Currently selected instruction resource UUID |
-| `color_id` | `string` | No | Currently selected color resource UUID |
-| `icon_id` | `string` | No | Currently selected icon resource UUID |
-| `active_flag_id` | `string` | No | Currently selected flag option UUID |
-| `department_ids` | `string`[] | No | Currently associated department UUIDs |
-| `example_ids` | `string`[] | No | Currently associated example resource UUIDs |
-| `parameter_field_ids` | `string`[] | No | Currently associated parameter field UUIDs |
-| `voice_ids` | `string`[] | No | Currently associated voice resource UUIDs |
 
 ---
 
@@ -2614,59 +2447,30 @@ Dynamic rubric information for a chat.
 
 ---
 
-## `EntryTypeItem`
-
-Typed entry operation reference.
+## `EvalDepartmentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | — |
-| `operation` | `"get"` \| `"search"` \| `"docs"` \| `"create"` \| `"refresh"` | Yes | — |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `EvalDepartmentSection`
+## `EvalDescriptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected departments |
-| `resources` | `any`[] | No | Available departments |
-
----
-
-## `EvalDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `EvalDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Selected name resource UUID |
-| `description_id` | `string` | No | Selected description resource UUID |
-| `flag_ids` | `string`[] | Yes | Selected flag option UUIDs |
-| `department_ids` | `string`[] | Yes | Selected department UUIDs |
-| `model_ids` | `string`[] | Yes | Selected model UUIDs |
-| `rubric_ids` | `string`[] | Yes | Selected rubric UUIDs |
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2683,108 +2487,93 @@ Per-field error from value resolution.
 
 ## `EvalFlagConfig`
 
-Enriched flag config for direct client consumption.
-
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `key` | `string` | Yes | Flag key identifier |
 | `label` | `string` | Yes | Display label |
 | `description` | `string` | No | Flag description |
 | `icon_id` | `string` | No | Icon identifier for the flag |
-| `flag_option_id` | `string` | No | Selected flag option UUID |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
+| `flag_option_id` | `string` | No | Flag resource UUID |
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `EvalFlagSection`
+## `EvalModelFlagResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`EvalFlagConfig`](#evalflagconfig) | No | Currently selected flag config |
-| `resources` | [`EvalFlagConfig`](#evalflagconfig)[] | No | Available flag configs |
+| `id` | `string` | No | Model-flag resource identifier |
+| `model_id` | `string` | No | Associated model identifier |
+| `flag_id` | `string` | No | Associated flag identifier |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `icon` | `string` | No | Icon identifier |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `EvalModelFlagSection`
+## `EvalModelPositionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected model flags |
-| `resources` | `any`[] | No | Available model flags |
+| `id` | `string` | No | Model-position resource identifier |
+| `model_id` | `string` | No | Associated model identifier |
+| `value` | `integer` \| `number` | No | Associated position value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `EvalModelPositionSection`
+## `EvalModelResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected model positions |
-| `resources` | `any`[] | No | Available model positions |
+| `id` | `string` | No | Model resource identifier |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `modality_ids` | `string`[] | No | Associated modality identifiers |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `EvalModelRubricSection`
+## `EvalModelRubricResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected model rubrics |
-| `resources` | `any`[] | No | Available model rubrics |
+| `id` | `string` | No | Model-rubric resource identifier |
+| `model_id` | `string` | No | Associated model identifier |
+| `rubric_id` | `string` | No | Associated rubric identifier |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `EvalModelSection`
+## `EvalNameResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected models |
-| `resources` | `any`[] | No | Available models |
-
----
-
-## `EvalNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2817,62 +2606,50 @@ standard_group_id is derived from standards metadata lookup.
 
 ---
 
-## `FieldConditionalParameterSection`
+## `FieldConditionalParameterResource`
+
+Conditional parameter resource for field.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`GetParameterResponse`](#getparameterresponse)[] | No | Currently assigned conditional parameters |
-| `resources` | [`GetParameterResponse`](#getparameterresponse)[] | No | Available conditional parameter resources |
+| `parameter_id` | `string` | No | Parameter identifier |
+| `name` | `string` | No | Parameter display name |
+| `description` | `string` | No | Parameter description |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `FieldDepartmentSection`
+## `FieldDepartmentResource`
+
+Department resource for field.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned departments |
-| `resources` | `any`[] | No | Available department resources |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `FieldDescriptionSection`
+## `FieldDescriptionResource`
+
+Description resource for field.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `FieldDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource UUID |
-| `description_id` | `string` | No | Resolved description resource UUID |
-| `flag_id` | `string` | No | Resolved flag option UUID |
-| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
-| `conditional_parameter_ids` | `string`[] | Yes | Assigned conditional parameter UUIDs |
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -2897,40 +2674,29 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the selected flag option |
 | `show` | `boolean` | No | Whether the flag is visible to the client |
 | `required` | `boolean` | No | Whether the flag is required |
 | `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `FieldFlagSection`
+## `FieldNameResource`
+
+Name resource for field.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`FieldFlagConfig`](#fieldflagconfig) | No | Currently selected flag config |
-| `resources` | [`FieldFlagConfig`](#fieldflagconfig)[] | No | Available flag configs |
-
----
-
-## `FieldNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -3098,12 +2864,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3117,6 +2881,23 @@ Per-scenario summary with high/low chat split.
 | `voice_ids` | `string`[] | Yes | Associated voice UUIDs |
 | `quality_ids` | `string`[] | Yes | Associated quality UUIDs |
 | `rubric_ids` | `string`[] | No | Associated rubric UUIDs |
+| `prompt_ids` | `string`[] | No | Associated prompt UUIDs |
+| `instruction_ids` | `string`[] | No | Associated instruction UUIDs |
+| `agent_ids` | `string`[] | No | Associated agent snapshot UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_model_ids` | `string`[] | No | Pending model UUIDs |
+| `pending_tool_ids` | `string`[] | No | Pending tool UUIDs |
+| `pending_reasoning_level_ids` | `string`[] | No | Pending reasoning level UUIDs |
+| `pending_temperature_level_ids` | `string`[] | No | Pending temperature level UUIDs |
+| `pending_voice_ids` | `string`[] | No | Pending voice UUIDs |
+| `pending_quality_ids` | `string`[] | No | Pending quality UUIDs |
+| `pending_rubric_ids` | `string`[] | No | Pending rubric UUIDs |
+| `pending_prompt_ids` | `string`[] | No | Pending prompt UUIDs |
+| `pending_instruction_ids` | `string`[] | No | Pending instruction UUIDs |
+| `pending_agent_ids` | `string`[] | No | Pending agent snapshot UUIDs |
 
 ---
 
@@ -3135,7 +2916,8 @@ Per-scenario summary with high/low chat split.
 | `attempt_created_at` | `string` | Yes | — |
 | `infinite_mode` | `boolean` | Yes | — |
 | `num_chats` | `integer` | Yes | — |
-| `is_archived` | `boolean` | Yes | — |
+| `is_archived` | `boolean` | No | — |
+| `is_completed` | `boolean` | No | — |
 | `scenario_ids` | `string`[] | Yes | — |
 | `chat_entry_id` | `string` | Yes | — |
 | `attempt_chat_id` | `string` | Yes | — |
@@ -3147,12 +2929,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3162,6 +2942,13 @@ Per-scenario summary with high/low chat split.
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `protocol_ids` | `string`[] | Yes | Associated protocol UUIDs |
 | `slug_ids` | `string`[] | Yes | Associated slug UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_item_ids` | `string`[] | No | Pending item UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_protocol_ids` | `string`[] | No | Pending protocol UUIDs |
+| `pending_slug_ids` | `string`[] | No | Pending slug UUIDs |
 
 ---
 
@@ -3170,12 +2957,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3186,26 +2971,39 @@ Per-scenario summary with high/low chat split.
 | `simulation_availability_ids` | `string`[] | Yes | Associated simulation availability UUIDs |
 | `simulation_position_ids` | `string`[] | Yes | Associated simulation position UUIDs |
 | `simulation_ids` | `string`[] | Yes | Associated simulation UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_profile_persona_ids` | `string`[] | No | Pending profile persona UUIDs |
+| `pending_profile_ids` | `string`[] | No | Pending profile UUIDs |
+| `pending_simulation_availability_ids` | `string`[] | No | Pending simulation availability UUIDs |
+| `pending_simulation_position_ids` | `string`[] | No | Pending simulation position UUIDs |
+| `pending_simulation_ids` | `string`[] | No | Pending simulation UUIDs |
 
 ---
 
 ## `GetDepartmentDraftResponse`
 
+Resolved department draft entry with selected and pending links.
+
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `setting_ids` | `string`[] | Yes | Associated setting UUIDs |
+| `pending_description_ids` | `string`[] | No | Inactive pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Inactive pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Inactive pending name UUIDs |
+| `pending_setting_ids` | `string`[] | No | Inactive pending setting UUIDs |
 
 ---
 
@@ -3214,12 +3012,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3231,6 +3027,15 @@ Per-scenario summary with high/low chat split.
 | `parameter_ids` | `string`[] | Yes | Associated parameter UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `text_ids` | `string`[] | Yes | Associated text UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_file_ids` | `string`[] | No | Pending file UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_image_ids` | `string`[] | No | Pending image UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_parameter_field_ids` | `string`[] | No | Pending parameter field UUIDs |
+| `pending_parameter_ids` | `string`[] | No | Pending parameter UUIDs |
+| `pending_text_ids` | `string`[] | No | Pending text UUIDs |
 
 ---
 
@@ -3239,12 +3044,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3253,6 +3056,18 @@ Per-scenario summary with high/low chat split.
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `rubric_ids` | `string`[] | Yes | Associated rubric UUIDs |
+| `model_flag_ids` | `string`[] | No | Associated model flag UUIDs |
+| `model_position_ids` | `string`[] | No | Associated model position UUIDs |
+| `model_rubric_ids` | `string`[] | No | Associated model rubric UUIDs |
+| `pending_department_ids` | `string`[] | No | Associated department UUIDs stored as inactive pending links |
+| `pending_description_ids` | `string`[] | No | Associated description UUIDs stored as inactive pending links |
+| `pending_flag_ids` | `string`[] | No | Associated flag UUIDs stored as inactive pending links |
+| `pending_model_ids` | `string`[] | No | Associated model UUIDs stored as inactive pending links |
+| `pending_name_ids` | `string`[] | No | Associated name UUIDs stored as inactive pending links |
+| `pending_rubric_ids` | `string`[] | No | Associated rubric UUIDs stored as inactive pending links |
+| `pending_model_flag_ids` | `string`[] | No | Pending model flag UUIDs |
+| `pending_model_position_ids` | `string`[] | No | Pending model position UUIDs |
+| `pending_model_rubric_ids` | `string`[] | No | Pending model rubric UUIDs |
 
 ---
 
@@ -3261,12 +3076,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `conditional_parameter_ids` | `string`[] | Yes | Associated conditional parameter UUIDs |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
@@ -3274,6 +3087,11 @@ Per-scenario summary with high/low chat split.
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `pending_conditional_parameter_ids` | `string`[] | No | Pending conditional parameter UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
 
 ---
 
@@ -3337,12 +3155,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3355,8 +3171,20 @@ Per-scenario summary with high/low chat split.
 | `quality_ids` | `string`[] | Yes | Associated quality UUIDs |
 | `reasoning_level_ids` | `string`[] | Yes | Associated reasoning level UUIDs |
 | `temperature_level_ids` | `string`[] | Yes | Associated temperature level UUIDs |
-| `value_ids` | `string`[] | Yes | Associated value UUIDs |
+| `value_id` | `string` | No | Associated value UUID |
 | `voice_ids` | `string`[] | Yes | Associated voice UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_modality_ids` | `string`[] | No | Pending modality UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_pricing_ids` | `string`[] | No | Pending pricing UUIDs |
+| `pending_provider_ids` | `string`[] | No | Pending provider UUIDs |
+| `pending_quality_ids` | `string`[] | No | Pending quality UUIDs |
+| `pending_reasoning_level_ids` | `string`[] | No | Pending reasoning level UUIDs |
+| `pending_temperature_level_ids` | `string`[] | No | Pending temperature level UUIDs |
+| `pending_value_ids` | `string`[] | No | Pending value UUIDs |
+| `pending_voice_ids` | `string`[] | No | Pending voice UUIDs |
 
 ---
 
@@ -3365,12 +3193,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3378,27 +3204,11 @@ Per-scenario summary with high/low chat split.
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
-
----
-
-## `GetParameterResponse`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | `string` | Yes | UUID of the parameter |
-| `name` | `string` | Yes | Parameter name |
-| `description` | `string` | Yes | Parameter description |
-| `value` | `string` | Yes | Parameter value |
-| `department_ids` | `string`[] | Yes | Associated department UUIDs |
-| `persona_parameter` | `boolean` | Yes | Whether this is a persona parameter |
-| `document_parameter` | `boolean` | Yes | Whether this is a document parameter |
-| `scenario_parameter` | `boolean` | Yes | Whether this is a scenario parameter |
-| `video_parameter` | `boolean` | Yes | Whether this is a video parameter |
-| `field_ids` | `string`[] | Yes | Associated field UUIDs |
-| `created_at` | `string` | Yes | Creation timestamp |
-| `active` | `boolean` | Yes | Whether the parameter is active |
-| `generated` | `boolean` | Yes | Whether the parameter was AI-generated |
-| `mcp` | `boolean` | Yes | Whether the parameter is from MCP |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_field_ids` | `string`[] | No | Pending field UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
 
 ---
 
@@ -3407,12 +3217,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `color_ids` | `string`[] | Yes | Associated color UUIDs |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
@@ -3425,26 +3233,16 @@ Per-scenario summary with high/low chat split.
 | `parameter_field_ids` | `string`[] | Yes | Associated parameter field UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `voice_ids` | `string`[] | Yes | Associated voice UUIDs |
-
----
-
-## `GetPersonaResponse`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | `string` | Yes | — |
-| `name` | `string` | Yes | — |
-| `description` | `string` | Yes | — |
-| `icon` | `string` | Yes | — |
-| `color` | `string` | Yes | — |
-| `department_ids` | `string`[] | Yes | — |
-| `instructions` | `string` | Yes | — |
-| `examples` | `string`[] | Yes | — |
-| `parameter_field_ids` | `string`[] | Yes | — |
-| `created_at` | `string` | Yes | — |
-| `active` | `boolean` | Yes | — |
-| `generated` | `boolean` | Yes | — |
-| `mcp` | `boolean` | Yes | — |
+| `pending_color_ids` | `string`[] | No | Pending color UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_example_ids` | `string`[] | No | Pending example UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_icon_ids` | `string`[] | No | Pending icon UUIDs |
+| `pending_instruction_ids` | `string`[] | No | Pending instruction UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_parameter_field_ids` | `string`[] | No | Pending parameter field UUIDs |
+| `pending_voice_ids` | `string`[] | No | Pending voice UUIDs |
 
 ---
 
@@ -3453,20 +3251,22 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `email_ids` | `string`[] | Yes | Associated email UUIDs |
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
-| `request_limit_ids` | `string`[] | Yes | Associated request limit UUIDs |
 | `role_ids` | `string`[] | Yes | Associated role UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_email_ids` | `string`[] | No | Pending email UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_role_ids` | `string`[] | No | Pending role UUIDs |
 
 ---
 
@@ -3475,12 +3275,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3489,7 +3287,14 @@ Per-scenario summary with high/low chat split.
 | `key_ids` | `string`[] | Yes | Associated key UUIDs |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
-| `value_ids` | `string`[] | Yes | Associated value UUIDs |
+| `value_id` | `string` | No | Associated value UUID |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_endpoint_ids` | `string`[] | No | Pending endpoint UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_key_ids` | `string`[] | No | Pending key UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_value_ids` | `string`[] | No | Pending value UUIDs |
 
 ---
 
@@ -3498,12 +3303,10 @@ Per-scenario summary with high/low chat split.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3513,6 +3316,13 @@ Per-scenario summary with high/low chat split.
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `standard_group_ids` | `string`[] | Yes | Associated standard group UUIDs |
 | `standard_ids` | `string`[] | Yes | Associated standard UUIDs |
+| `pending_department_ids` | `string`[] | No | Associated pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Associated pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Associated pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Associated pending name UUIDs |
+| `pending_point_ids` | `string`[] | No | Associated pending point UUIDs |
+| `pending_standard_group_ids` | `string`[] | No | Associated pending standard group UUIDs |
+| `pending_standard_ids` | `string`[] | No | Associated pending standard UUIDs |
 
 ---
 
@@ -3532,12 +3342,10 @@ Response containing run list data.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3553,6 +3361,19 @@ Response containing run list data.
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `question_ids` | `string`[] | Yes | Associated question UUIDs |
 | `video_ids` | `string`[] | Yes | Associated video UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_problem_statement_ids` | `string`[] | No | Pending problem statement UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_persona_ids` | `string`[] | No | Pending persona UUIDs |
+| `pending_document_ids` | `string`[] | No | Pending document UUIDs |
+| `pending_objective_ids` | `string`[] | No | Pending objective UUIDs |
+| `pending_image_ids` | `string`[] | No | Pending image UUIDs |
+| `pending_video_ids` | `string`[] | No | Pending video UUIDs |
+| `pending_question_ids` | `string`[] | No | Pending question UUIDs |
+| `pending_option_ids` | `string`[] | No | Pending option UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_parameter_field_ids` | `string`[] | No | Pending parameter field UUIDs |
 
 ---
 
@@ -3561,12 +3382,10 @@ Response containing run list data.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `agent_ids` | `string`[] | Yes | Associated agent UUIDs |
 | `auth_item_key_ids` | `string`[] | Yes | Associated auth item key UUIDs |
@@ -3580,6 +3399,22 @@ Response containing run list data.
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
 | `provider_key_ids` | `string`[] | Yes | Associated provider key UUIDs |
 | `threshold_ids` | `string`[] | Yes | Associated threshold UUIDs |
+| `mcp_ids` | `string`[] | No | — |
+| `logins_ids` | `string`[] | No | — |
+| `pending_agent_ids` | `string`[] | No | Pending agent UUIDs |
+| `pending_auth_item_key_ids` | `string`[] | No | Pending auth item key UUIDs |
+| `pending_auth_ids` | `string`[] | No | Pending auth UUIDs |
+| `pending_color_ids` | `string`[] | No | Pending color UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_item_ids` | `string`[] | No | Pending item UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_profile_ids` | `string`[] | No | Pending profile UUIDs |
+| `pending_provider_key_ids` | `string`[] | No | Pending provider key UUIDs |
+| `pending_threshold_ids` | `string`[] | No | Pending threshold UUIDs |
+| `pending_mcp_ids` | `string`[] | No | — |
+| `pending_logins_ids` | `string`[] | No | — |
 
 ---
 
@@ -3588,12 +3423,10 @@ Response containing run list data.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -3605,6 +3438,15 @@ Response containing run list data.
 | `scenario_rubric_ids` | `string`[] | Yes | Associated scenario rubric UUIDs |
 | `scenario_time_limit_ids` | `string`[] | Yes | Associated scenario time limit UUIDs |
 | `scenario_ids` | `string`[] | Yes | Associated scenario UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_scenario_flag_ids` | `string`[] | No | Pending scenario flag UUIDs |
+| `pending_scenario_position_ids` | `string`[] | No | Pending scenario position UUIDs |
+| `pending_scenario_rubric_ids` | `string`[] | No | Pending scenario rubric UUIDs |
+| `pending_scenario_time_limit_ids` | `string`[] | No | Pending scenario time limit UUIDs |
+| `pending_scenario_ids` | `string`[] | No | Pending scenario UUIDs |
 
 ---
 
@@ -3614,6 +3456,8 @@ Response containing run list data.
 |---|---|---|---|
 | `feedback_id` | `string` | Yes | — |
 | `grade_id` | `string` | Yes | — |
+| `call_id` | `string` | Yes | — |
+| `tool_call_id` | `string` | Yes | — |
 | `total` | `integer` | Yes | — |
 | `feedback` | `string` | Yes | — |
 | `total_points` | `integer` | Yes | — |
@@ -3628,7 +3472,6 @@ Response containing run list data.
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `invocation_id` | `string` | Yes | — |
-| `run_id` | `string` | Yes | — |
 | `created_at` | `string` | Yes | — |
 | `updated_at` | `string` | Yes | — |
 | `passed` | `boolean` | Yes | — |
@@ -3721,6 +3564,7 @@ Response containing run list data.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `test_id` | `string` | Yes | — |
+| `call_id` | `string` | Yes | — |
 | `eval_id` | `string` | Yes | — |
 | `profile_id` | `string` | Yes | — |
 | `department_ids` | `string`[] | Yes | — |
@@ -3739,23 +3583,32 @@ Response containing run list data.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | UUID of the draft |
-| `version` | `integer` | Yes | Draft version number |
 | `created_at` | `string` | Yes | Creation timestamp |
 | `generated` | `boolean` | Yes | Whether this was AI-generated |
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
-| `group_id` | `string` | Yes | Generation group UUID |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `arg_position_ids` | `string`[] | Yes | Associated arg position UUIDs |
 | `arg_ids` | `string`[] | Yes | Associated arg UUIDs |
 | `args_output_ids` | `string`[] | Yes | Associated args output UUIDs |
-| `artifact_ids` | `string`[] | Yes | Associated artifact UUIDs |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
 | `name_ids` | `string`[] | Yes | Associated name UUIDs |
-| `operation_ids` | `string`[] | Yes | Associated operation UUIDs |
+| `instruction_ids` | `string`[] | No | Associated instruction UUIDs |
+| `permission_ids` | `string`[] | Yes | Associated permission UUIDs |
 | `profile_ids` | `string`[] | Yes | Associated profile UUIDs |
+| `agent_ids` | `string`[] | No | Associated agent UUIDs |
+| `pending_arg_position_ids` | `string`[] | No | Pending arg position UUIDs |
+| `pending_arg_ids` | `string`[] | No | Pending arg UUIDs |
+| `pending_args_output_ids` | `string`[] | No | Pending args output UUIDs |
+| `pending_department_ids` | `string`[] | No | Pending department UUIDs |
+| `pending_description_ids` | `string`[] | No | Pending description UUIDs |
+| `pending_flag_ids` | `string`[] | No | Pending flag UUIDs |
+| `pending_name_ids` | `string`[] | No | Pending name UUIDs |
+| `pending_instruction_ids` | `string`[] | No | Pending instruction UUIDs |
+| `pending_permission_ids` | `string`[] | No | Pending permission UUIDs |
+| `pending_agent_ids` | `string`[] | No | Pending agent UUIDs |
 
 ---
 
@@ -3804,18 +3657,18 @@ A tool/function call made during the run.
 
 ## `GroupDetailMessageItem`
 
-A message with upload IDs by media type.
+A message with resource IDs by media type.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | No | UUID of the message |
 | `role` | `string` | No | Role of the message sender |
-| `text_upload_ids` | `string`[] | No | Text upload UUIDs |
-| `audio_upload_ids` | `string`[] | No | Audio upload UUIDs |
-| `image_upload_ids` | `string`[] | No | Image upload UUIDs |
-| `video_upload_ids` | `string`[] | No | Video upload UUIDs |
-| `file_upload_ids` | `string`[] | No | File upload UUIDs |
-| `call_upload_ids` | `string`[] | No | Call upload UUIDs |
+| `text_ids` | `string`[] | No | Text resource UUIDs |
+| `audio_ids` | `string`[] | No | Audio resource UUIDs |
+| `image_ids` | `string`[] | No | Image resource UUIDs |
+| `video_ids` | `string`[] | No | Video resource UUIDs |
+| `file_ids` | `string`[] | No | File resource UUIDs |
+| `call_ids` | `string`[] | No | Call resource UUIDs |
 | `calls` | [`GroupDetailCallItem`](#groupdetailcallitem)[] | No | Tool calls in this message |
 
 ---
@@ -3885,6 +3738,17 @@ Highlight entry within a strength.
 
 ---
 
+## `HintEntry`
+
+Hint entry (practice mode only, message_id implied by parent).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `hint` | `string` | No | Hint text for practice mode |
+| `idx` | `integer` | No | Index position of the hint |
+
+---
+
 ## `HistoryItem`
 
 Single attempt row in history list.
@@ -3931,6 +3795,201 @@ Paginated attempt history list.
 | `simulation_options` | [`FilterOption`](#filteroption)[] | No | Filter options for simulations |
 | `scenario_options` | [`FilterOption`](#filteroption)[] | No | Filter options for scenarios |
 | `profile_options` | [`FilterOption`](#filteroption)[] | No | Filter options for profiles |
+
+---
+
+## `InvocationDepartmentResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationDescriptionResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationEndpointResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `base_url` | `string` | No | Endpoint base URL |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationFlagResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
+| `flag_option_id` | `string` | No | UUID of the selected flag option |
+| `show` | `boolean` | No | Whether the flag is visible to the client |
+| `required` | `boolean` | No | Whether the flag is required |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationKeyResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `key_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `key_masked` | `string` | No | Masked key preview |
+| `masked_key` | `string` | No | Masked key preview alias |
+| `active` | `boolean` | No | Whether this key is active |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationModalityResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `modality_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `modality` | `string` | No | Modality code |
+| `name` | `string` | No | Human-readable modality name |
+| `description` | `string` | No | Description text |
+| `is_input` | `boolean` | No | Whether this modality is input-facing |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationNameResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationPricingResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `pricing_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `pricing_type` | `string` | No | Pricing type |
+| `price` | `number` | No | Price amount |
+| `unit_name` | `string` | No | Unit name |
+| `unit_category` | `string` | No | Unit category |
+| `unit_value` | `integer` | No | Unit value |
+| `name` | `string` | No | Display label |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationQualityResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `quality_id` | `string` | No | Resource identifier alias for picker compatibility |
+| `quality` | `string` | No | Quality label |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationReasoningLevelResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `reasoning_level` | `string` | No | Reasoning level label |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationTemperatureLevelResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `temperature` | `number` | No | Temperature numeric value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationValueResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `value` | `string` | No | Value text |
+| `type` | `string` | No | Value type |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationVoiceResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Unique identifier |
+| `voice` | `string` | No | Voice label |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -4047,9 +4106,9 @@ Message with contents, feedbacks, and hints.
 | `type` | `string` | No | Message type: 'query' or 'response' |
 | `created_at` | `string` | No | ISO timestamp when message was created |
 | `completed` | `boolean` | No | Whether the message is complete |
-| `contents` | [`app__infra__attempt__types__ContentEntry`](#app-infra-attempt-types-contententry)[] | No | Content entries with display info |
+| `contents` | [`ContentEntry`](#contententry)[] | No | Content entries with display info |
 | `feedbacks` | [`MessageFeedbackEntry`](#messagefeedbackentry)[] | No | Unified strength and improvement feedbacks |
-| `hints` | [`app__infra__attempt__types__HintEntry`](#app-infra-attempt-types-hintentry)[] | No | Hints for practice mode |
+| `hints` | [`HintEntry`](#hintentry)[] | No | Hints for practice mode |
 | `parent_message_id` | `string` | No | UUID of the parent message in tree |
 | `sibling_index` | `integer` | No | Index among sibling messages |
 | `sibling_count` | `integer` | No | Total number of sibling messages |
@@ -4075,54 +4134,30 @@ Combines strengths and improvements into a single type with a `type` field.
 
 ---
 
-## `ModelDepartmentSection`
+## `ModelDepartmentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned departments |
-| `resources` | `any`[] | No | Available departments |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether the department was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelDescriptionSection`
+## `ModelDescriptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `ModelDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource identifier |
-| `description_id` | `string` | No | Resolved description resource identifier |
-| `flag_ids` | `string`[] | Yes | Flag option identifiers |
-| `department_ids` | `string`[] | Yes | Department identifiers |
-| `modality_ids` | `string`[] | Yes | Modality identifiers |
-| `pricing_ids` | `string`[] | Yes | Pricing tier identifiers |
-| `provider_ids` | `string`[] | Yes | Provider identifiers |
-| `quality_ids` | `string`[] | Yes | Quality level identifiers |
-| `reasoning_level_ids` | `string`[] | Yes | Reasoning level identifiers |
-| `temperature_level_ids` | `string`[] | Yes | Temperature level identifiers |
-| `value_ids` | `string`[] | Yes | Value resource identifiers |
-| `voice_ids` | `string`[] | Yes | Voice identifiers |
+| `id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Model description |
+| `generated` | `boolean` | No | Whether the description was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -4147,6 +4182,7 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | Option ID to use when enabling |
 | `show` | `boolean` | No | Whether to display this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
@@ -4154,108 +4190,89 @@ Enriched flag config for direct client consumption.
 
 ---
 
-## `ModelFlagSection`
+## `ModelModalityResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ModelFlagConfig`](#modelflagconfig)[] | No | Currently active flag configs |
-| `resources` | [`ModelFlagConfig`](#modelflagconfig)[] | No | Available flag configs |
+| `id` | `string` | No | Modality resource identifier |
+| `modality` | `string` | No | Modality name |
+| `is_input` | `boolean` | No | Whether this is an input modality |
+| `generated` | `boolean` | No | Whether the modality was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelModalitySection`
+## `ModelNameResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned modalities |
-| `resources` | `any`[] | No | Available modalities |
+| `id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Model display name |
+| `generated` | `boolean` | No | Whether the name was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelNameSection`
+## `ModelPricingResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Pricing resource identifier |
+| `pricing_type` | `string` | No | Pricing type |
+| `price` | `number` | No | Pricing amount |
+| `unit_name` | `string` | No | Pricing unit name |
+| `unit_category` | `string` | No | Pricing unit category |
+| `unit_value` | `number` | No | Pricing unit value |
+| `generated` | `boolean` | No | Whether the pricing resource was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelPricingSection`
+## `ModelProviderResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned pricing tiers |
-| `resources` | `any`[] | No | Available pricing tiers |
+| `id` | `string` | No | Provider resource identifier |
+| `name` | `string` | No | Provider display name |
+| `description` | `string` | No | Provider description |
+| `value` | `string` | No | Provider value |
+| `base_url` | `string` | No | Provider endpoint |
+| `generated` | `boolean` | No | Whether the provider was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelProviderSection`
+## `ModelQualityResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected provider resource |
-| `resources` | `any`[] | No | Available provider resources |
+| `id` | `string` | No | Quality resource identifier |
+| `quality` | `string` | No | Quality label |
+| `generated` | `boolean` | No | Whether the quality was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelQualitySection`
+## `ModelReasoningLevelResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned quality levels |
-| `resources` | `any`[] | No | Available quality levels |
-
----
-
-## `ModelReasoningLevelSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned reasoning levels |
-| `resources` | `any`[] | No | Available reasoning levels |
+| `id` | `string` | No | Reasoning level resource identifier |
+| `reasoning_level` | `string` | No | Reasoning level label |
+| `generated` | `boolean` | No | Whether the reasoning level was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -4272,89 +4289,43 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `ModelTemperatureLevelSection`
+## `ModelTemperatureLevelResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned temperature levels |
-| `resources` | `any`[] | No | Available temperature levels |
+| `id` | `string` | No | Temperature level resource identifier |
+| `temperature` | `string` | No | Temperature level label |
+| `generated` | `boolean` | No | Whether the temperature level was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelValueSection`
+## `ModelValueResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected value resource |
-| `resources` | `any`[] | No | Available value resources |
+| `id` | `string` | No | Value resource identifier |
+| `value` | `string` | No | Model value |
+| `value_type` | `string` | No | Stored value type |
+| `generated` | `boolean` | No | Whether the value was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ModelVoiceSection`
+## `ModelVoiceResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned voices |
-| `resources` | `any`[] | No | Available voices |
-
----
-
-## `MvInfo`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | Materialized view name |
-| `definition` | `string` | Yes | SQL definition of the view |
-| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
-
----
-
-## `OperationInfo`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | Operation name |
-| `description` | `string` | Yes | Human-readable description of the operation |
-| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
-| `returns` | `object` | No | Return type schema |
-
----
-
-## `PageMetaItem`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `title` | `string` | Yes | — |
-| `description` | `string` | Yes | — |
-
----
-
-## `ParamInfo`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | Parameter name |
-| `type` | `string` | Yes | Parameter data type |
-| `required` | `boolean` | Yes | Whether the parameter is required |
-| `default` | `any` | No | Default value if not required |
+| `id` | `string` | No | Voice resource identifier |
+| `voice` | `string` | No | Voice label |
+| `generated` | `boolean` | No | Whether the voice was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -4364,25 +4335,13 @@ Department resource for parameter.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | `string` | No | Unique identifier |
+| `department_id` | `string` | No | Department identifier |
 | `name` | `string` | No | Department name |
 | `description` | `string` | No | Department description |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ParameterDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ParameterDepartmentResource`](#parameterdepartmentresource)[] | No | Currently assigned departments |
-| `resources` | [`ParameterDepartmentResource`](#parameterdepartmentresource)[] | No | Available departments |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -4395,35 +4354,9 @@ Description resource for parameter.
 | `id` | `string` | No | Unique identifier |
 | `description` | `string` | No | Description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ParameterDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ParameterDescriptionResource`](#parameterdescriptionresource) | No | Currently selected description resource |
-| `resources` | [`ParameterDescriptionResource`](#parameterdescriptionresource)[] | No | Available description resources |
-
----
-
-## `ParameterDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource identifier |
-| `description_id` | `string` | No | Resolved description resource identifier |
-| `flag_ids` | `string`[] | Yes | Flag option identifiers |
-| `department_ids` | `string`[] | Yes | Department identifiers |
-| `field_ids` | `string`[] | Yes | Field identifiers |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -4448,22 +4381,12 @@ Parameter field resource for parameter.
 | `field_id` | `string` | No | Associated field identifier |
 | `parameter_id` | `string` | No | Parent parameter identifier |
 | `name` | `string` | No | Field display name |
+| `description` | `string` | No | Field description |
+| `conditional_parameter_id` | `string` | No | Conditional parameter identifier |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ParameterFieldSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ParameterFieldResource`](#parameterfieldresource)[] | No | Currently assigned fields |
-| `resources` | [`ParameterFieldResource`](#parameterfieldresource)[] | No | Available fields |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -4477,25 +4400,14 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | Option ID to use when enabling |
 | `show` | `boolean` | No | Whether to display this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this flag was AI-generated |
-
----
-
-## `ParameterFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ParameterFlagConfig`](#parameterflagconfig)[] | No | Currently active flag configs |
-| `resources` | [`ParameterFlagConfig`](#parameterflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -4508,21 +4420,9 @@ Name resource for parameter.
 | `id` | `string` | No | Unique identifier |
 | `name` | `string` | No | Display name |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ParameterNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ParameterNameResource`](#parameternameresource) | No | Currently selected name resource |
-| `resources` | [`ParameterNameResource`](#parameternameresource)[] | No | Available name resources |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -4573,21 +4473,9 @@ Color resource for persona.
 | `description` | `string` | No | — |
 | `hex_code` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaColorSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`PersonaColorResource`](#personacolorresource) | No | — |
-| `resources` | [`PersonaColorResource`](#personacolorresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4601,21 +4489,9 @@ Department resource for persona.
 | `name` | `string` | No | — |
 | `description` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`PersonaDepartmentResource`](#personadepartmentresource)[] | No | — |
-| `resources` | [`PersonaDepartmentResource`](#personadepartmentresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4628,21 +4504,9 @@ Description resource for persona.
 | `id` | `string` | No | — |
 | `description` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`PersonaDescriptionResource`](#personadescriptionresource) | No | — |
-| `resources` | [`PersonaDescriptionResource`](#personadescriptionresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4655,21 +4519,9 @@ Example resource for persona.
 | `id` | `string` | No | — |
 | `example` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaExampleSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`PersonaExampleResource`](#personaexampleresource)[] | No | — |
-| `resources` | [`PersonaExampleResource`](#personaexampleresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4694,25 +4546,13 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | — |
 | `description` | `string` | No | — |
 | `icon_id` | `string` | No | — |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | — |
 | `show` | `boolean` | No | — |
 | `required` | `boolean` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`PersonaFlagConfig`](#personaflagconfig) | No | — |
-| `resources` | [`PersonaFlagConfig`](#personaflagconfig)[] | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4727,21 +4567,9 @@ Icon resource for persona.
 | `description` | `string` | No | — |
 | `value` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaIconSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`PersonaIconResource`](#personaiconresource) | No | — |
-| `resources` | [`PersonaIconResource`](#personaiconresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4754,21 +4582,9 @@ Instruction resource for persona.
 | `id` | `string` | No | — |
 | `template` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaInstructionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`PersonaInstructionResource`](#personainstructionresource) | No | — |
-| `resources` | [`PersonaInstructionResource`](#personainstructionresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4781,21 +4597,9 @@ Name resource for persona.
 | `id` | `string` | No | — |
 | `name` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`PersonaNameResource`](#personanameresource) | No | — |
-| `resources` | [`PersonaNameResource`](#personanameresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4810,37 +4614,11 @@ Parameter field resource for persona.
 | `parameter_id` | `string` | No | — |
 | `name` | `string` | No | — |
 | `description` | `string` | No | — |
+| `conditional_parameter_id` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaParameterFieldSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`PersonaParameterFieldResource`](#personaparameterfieldresource)[] | No | — |
-| `resources` | [`PersonaParameterFieldResource`](#personaparameterfieldresource)[] | No | — |
-
----
-
-## `PersonaParameterSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`GetParameterResponse`](#getparameterresponse)[] | No | — |
-| `resources` | [`GetParameterResponse`](#getparameterresponse)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4851,7 +4629,7 @@ Per-item result within a bulk create/update response.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the operation succeeded for this item |
-| `persona_id` | `string` | No | UUID of the affected persona |
+| `id` | `string` | No | UUID of the affected persona |
 | `message` | `string` | Yes | Human-readable result message |
 | `errors` | [`PersonaFieldError`](#personafielderror)[] | No | Per-field validation errors, if any |
 
@@ -4877,21 +4655,9 @@ Voice resource for persona.
 | `id` | `string` | No | — |
 | `voice` | `string` | No | — |
 | `generated` | `boolean` | No | — |
-
----
-
-## `PersonaVoiceSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`PersonaVoiceResource`](#personavoiceresource)[] | No | — |
-| `resources` | [`PersonaVoiceResource`](#personavoiceresource)[] | No | — |
+| `suggested` | `boolean` | No | — |
+| `selected` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -4983,40 +4749,13 @@ Department resource for profile.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | `string` | No | Unique resource identifier |
+| `department_id` | `string` | No | Unique resource identifier |
 | `name` | `string` | No | Department display name |
 | `description` | `string` | No | Department description text |
 | `generated` | `boolean` | No | Whether the resource was AI-generated |
-
----
-
-## `ProfileDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ProfileDepartmentResource`](#profiledepartmentresource)[] | No | Currently assigned departments |
-| `resources` | [`ProfileDepartmentResource`](#profiledepartmentresource)[] | No | Available department resources |
-
----
-
-## `ProfileDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource UUID |
-| `flag_id` | `string` | No | Resolved flag option UUID |
-| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
-| `email_ids` | `string`[] | Yes | Assigned email resource UUIDs |
-| `role_ids` | `string`[] | Yes | Assigned role resource UUIDs |
-| `request_limit_ids` | `string`[] | Yes | Assigned request limit UUIDs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5029,21 +4768,9 @@ Email resource for profile.
 | `id` | `string` | No | Unique resource identifier |
 | `email` | `string` | No | Email address |
 | `generated` | `boolean` | No | Whether the email was AI-generated |
-
----
-
-## `ProfileEmailSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ProfileEmailResource`](#profileemailresource)[] | No | Currently assigned emails |
-| `resources` | [`ProfileEmailResource`](#profileemailresource)[] | No | Available email resources |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5068,25 +4795,14 @@ Enriched profile flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the selected flag option |
 | `show` | `boolean` | No | Whether the flag is visible to the client |
 | `required` | `boolean` | No | Whether the flag is required |
 | `generated` | `boolean` | No | Whether the flag was AI-generated |
-
----
-
-## `ProfileFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ProfileFlagConfig`](#profileflagconfig) | No | Currently selected flag config |
-| `resources` | [`ProfileFlagConfig`](#profileflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5099,48 +4815,9 @@ Name resource for profile.
 | `id` | `string` | No | Unique resource identifier |
 | `name` | `string` | No | Profile display name |
 | `generated` | `boolean` | No | Whether the name was AI-generated |
-
----
-
-## `ProfileNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ProfileNameResource`](#profilenameresource) | No | Currently selected name resource |
-| `resources` | [`ProfileNameResource`](#profilenameresource)[] | No | Available name resources |
-
----
-
-## `ProfileRequestLimitResource`
-
-Request limit resource for profile.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | `string` | No | Unique resource identifier |
-| `requests_per_day` | `integer` | No | Maximum requests allowed per day |
-| `generated` | `boolean` | No | Whether the limit was AI-generated |
-
----
-
-## `ProfileRequestLimitSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ProfileRequestLimitResource`](#profilerequestlimitresource) | No | Currently selected request limit |
-| `resources` | [`ProfileRequestLimitResource`](#profilerequestlimitresource)[] | No | Available request limit resources |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5167,23 +4844,14 @@ Role resource for profile.
 | `role` | `string` | No | Role key (e.g. admin, user, viewer) |
 | `name` | `string` | No | Role display name |
 | `description` | `string` | No | Role description text |
-| `icon_value` | `string` | No | Icon identifier for the role |
-| `color_hex` | `string` | No | Hex color code for the role |
-
----
-
-## `ProfileRoleSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ProfileRoleResource`](#profileroleresource)[] | No | Currently assigned roles |
-| `resources` | [`ProfileRoleResource`](#profileroleresource)[] | No | Available role resources |
+| `icon_id` | `string` | No | Icon identifier for the role |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
+| `color_id` | `string` | No | Color identifier for the role |
+| `level` | `integer` | No | Role level for assignment filtering |
+| `generated` | `boolean` | No | Whether the role was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5203,64 +4871,43 @@ Per-profile aggregate stats for the summary card.
 
 ---
 
-## `ProviderDepartmentSection`
+## `ProviderDepartmentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned departments |
-| `resources` | `any`[] | No | Available departments |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether the department was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ProviderDescriptionSection`
+## `ProviderDescriptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
+| `id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Provider description |
+| `generated` | `boolean` | No | Whether the description was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ProviderDraftFormState`
-
-Server-authoritative form state returned after draft save.
+## `ProviderEndpointResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource identifier |
-| `description_id` | `string` | No | Resolved description resource identifier |
-| `flag_id` | `string` | No | Flag option identifier |
-| `department_ids` | `string`[] | Yes | Department identifiers |
-| `endpoint_ids` | `string`[] | Yes | Endpoint resource identifiers |
-| `key_ids` | `string`[] | Yes | API key resource identifiers |
-| `value_ids` | `string`[] | Yes | Value resource identifiers |
-
----
-
-## `ProviderEndpointSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected endpoint resource |
-| `resources` | `any`[] | No | Available endpoint resources |
+| `id` | `string` | No | Endpoint resource identifier |
+| `base_url` | `string` | No | Endpoint base URL |
+| `generated` | `boolean` | No | Whether the endpoint was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -5285,55 +4932,42 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | Option ID to use when enabling |
 | `show` | `boolean` | No | Whether to display this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ProviderFlagSection`
+## `ProviderKeyResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ProviderFlagConfig`](#providerflagconfig)[] | No | Currently active flag configs |
-| `resources` | [`ProviderFlagConfig`](#providerflagconfig)[] | No | Available flag configs |
+| `id` | `string` | No | Key resource identifier |
+| `key` | `string` | No | Provider key value |
+| `name` | `string` | No | Key display name |
+| `description` | `string` | No | Key description |
+| `generated` | `boolean` | No | Whether the key was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ProviderKeySection`
+## `ProviderNameResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected key resource |
-| `resources` | `any`[] | No | Available key resources |
-
----
-
-## `ProviderNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Provider display name |
+| `generated` | `boolean` | No | Whether the name was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -5350,18 +4984,17 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `ProviderValueSection`
+## `ProviderValueResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected value resource |
-| `resources` | `any`[] | No | Available value resources |
+| `id` | `string` | No | Value resource identifier |
+| `value` | `string` | No | Provider value |
+| `value_type` | `string` | No | Stored value type |
+| `generated` | `boolean` | No | Whether the value was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -5402,60 +5035,38 @@ Replacement entry within an improvement.
 
 ---
 
-## `ResourceTypeItem`
+## `RubricDepartmentResource`
 
-Typed resource operation reference.
+Department resource for rubric.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | Yes | — |
-| `operation` | `"get"` \| `"create"` \| `"link"` \| `"search"` \| `"docs"` | Yes | — |
+| `department_id` | `string` | No | Department identifier |
+| `id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `department_ids` | `string`[] | No | Associated department identifiers |
+| `setting_ids` | `string`[] | No | Associated setting identifiers |
+| `is_primary` | `boolean` | No | Whether this is the primary department |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `RubricDepartmentSection`
+## `RubricDescriptionResource`
+
+Description resource for rubric.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected departments |
-| `resources` | `any`[] | No | Available departments |
-
----
-
-## `RubricDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `RubricDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Selected name resource UUID |
-| `description_id` | `string` | No | Selected description resource UUID |
-| `flag_id` | `string` | No | Selected flag option UUID |
-| `department_ids` | `string`[] | Yes | Selected department UUIDs |
-| `point_ids` | `string`[] | Yes | Selected point UUIDs |
-| `standard_group_ids` | `string`[] | Yes | Selected standard group UUIDs |
-| `standard_ids` | `string`[] | Yes | Selected standard UUIDs |
+| `id` | `string` | No | Unique identifier |
+| `description` | `string` | No | Description text |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5480,25 +5091,14 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Display label |
 | `description` | `string` | No | Flag description |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | Selected flag option UUID |
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `RubricFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`RubricFlagConfig`](#rubricflagconfig)[] | No | Currently selected flag configs |
-| `resources` | [`RubricFlagConfig`](#rubricflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5558,33 +5158,34 @@ Rubric metadata mapping rubric to its standard groups.
 
 ---
 
-## `RubricNameSection`
+## `RubricNameResource`
+
+Name resource for rubric.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `id` | `string` | No | Unique identifier |
+| `name` | `string` | No | Display name |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `RubricPointsSection`
+## `RubricPointResource`
+
+Point resource for rubric.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected points resource |
-| `resources` | `any`[] | No | Available points resources |
+| `id` | `string` | No | Unique identifier |
+| `value` | `integer` | No | Point value |
+| `type` | `string` | No | Point type |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5601,33 +5202,42 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `RubricStandardGroupsSection`
+## `RubricStandardGroupResource`
+
+Standard group resource for rubric.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected standard groups |
-| `resources` | `any`[] | No | Available standard groups |
+| `id` | `string` | No | Unique identifier |
+| `standard_group_id` | `string` | No | Standard group identifier |
+| `name` | `string` | No | Standard group name |
+| `short_name` | `string` | No | Standard group short name |
+| `description` | `string` | No | Standard group description |
+| `points` | `integer` | No | Total points for this group |
+| `pass_points` | `integer` | No | Pass points for this group |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
-## `RubricStandardsSection`
+## `RubricStandardResource`
+
+Standard resource for rubric.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently selected standards |
-| `resources` | `any`[] | No | Available standards |
+| `id` | `string` | No | Unique identifier |
+| `standard_id` | `string` | No | Standard identifier |
+| `standard_group_id` | `string` | No | Parent standard group identifier |
+| `name` | `string` | No | Standard name |
+| `description` | `string` | No | Standard description |
+| `points` | `integer` | No | Points for this standard |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -5688,21 +5298,9 @@ Department for scenario.
 | `name` | `string` | No | Department name |
 | `description` | `string` | No | Department description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioDepartment`](#scenariodepartment)[] | No | Currently selected departments |
-| `resources` | [`ScenarioDepartment`](#scenariodepartment)[] | No | Available departments |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5715,21 +5313,9 @@ Description resource for scenario.
 | `id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ScenarioDescriptionResource`](#scenariodescriptionresource) | No | Currently selected description resource |
-| `resources` | [`ScenarioDescriptionResource`](#scenariodescriptionresource)[] | No | Available description resources |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5742,6 +5328,7 @@ Document for scenario.
 | `document_id` | `string` | No | UUID of the document |
 | `name` | `string` | No | Document name |
 | `description` | `string` | No | Document description text |
+| `file_id` | `string` | No | UUID of the files_resource (used for download) |
 | `file_path` | `string` | No | Storage path of the file |
 | `mime_type` | `string` | No | MIME type of the document |
 | `upload_id` | `string` | No | UUID of the associated upload |
@@ -5751,21 +5338,10 @@ Document for scenario.
 | `parent_document_id` | `string` | No | UUID of the parent document |
 | `video_document` | `boolean` | No | Has linked parameter with video enabled |
 | `non_video_document` | `boolean` | No | Has linked parameter with video disabled |
-
----
-
-## `ScenarioDocumentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioDocument`](#scenariodocument)[] | No | Currently selected documents |
-| `resources` | [`ScenarioDocument`](#scenariodocument)[] | No | Available documents |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5799,6 +5375,7 @@ Field for scenario.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | UUID of the parameter_fields_resource junction row; required by the client picker to select a field |
 | `field_id` | `string` | No | UUID of the field |
 | `name` | `string` | No | Field name |
 | `description` | `string` | No | Field description text |
@@ -5806,6 +5383,9 @@ Field for scenario.
 | `parameter_name` | `string` | No | Name of the linked parameter |
 | `conditional_parameter_ids` | `string`[] | No | Conditional parameter UUIDs |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5820,17 +5400,6 @@ Per-field error from value resolution.
 
 ---
 
-## `ScenarioFieldParamFilter`
-
-Field parameter filter for show_selected filtering.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `parameter_id` | `string` | No | UUID of the parameter to filter by |
-| `show_selected` | `boolean` | No | Whether to show only selected items |
-
----
-
 ## `ScenarioFlagConfig`
 
 Enriched flag config for direct client consumption.
@@ -5841,26 +5410,15 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Display label for the flag |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | UUID of the selected icon resource |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the flag option to use when enabling |
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 | `video_flag` | `boolean` | No | Whether this flag only shows when video is enabled |
-
----
-
-## `ScenarioFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioFlagConfig`](#scenarioflagconfig)[] | No | Currently selected flags |
-| `resources` | [`ScenarioFlagConfig`](#scenarioflagconfig)[] | No | Available flag configs |
 
 ---
 
@@ -5876,21 +5434,9 @@ Image for scenario.
 | `mime_type` | `string` | No | MIME type of the image |
 | `upload_id` | `string` | No | UUID of the associated upload |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioImageSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioImage`](#scenarioimage)[] | No | Currently selected images |
-| `resources` | [`ScenarioImage`](#scenarioimage)[] | No | Available images |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5903,21 +5449,9 @@ Name resource for scenario.
 | `id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Display name |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ScenarioNameResource`](#scenarionameresource) | No | Currently selected name resource |
-| `resources` | [`ScenarioNameResource`](#scenarionameresource)[] | No | Available name resources |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5930,21 +5464,9 @@ Objective for scenario.
 | `id` | `string` | No | UUID of the objective |
 | `objective` | `string` | No | Objective text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioObjectiveSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioObjective`](#scenarioobjective)[] | No | Currently selected objectives |
-| `resources` | [`ScenarioObjective`](#scenarioobjective)[] | No | Available objectives |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -5959,69 +5481,9 @@ Option for scenario.
 | `is_correct` | `boolean` | No | Whether this is the correct option |
 | `question_id` | `string` | No | UUID of the parent question |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioOptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioOption`](#scenariooption)[] | No | Currently selected options |
-| `resources` | [`ScenarioOption`](#scenariooption)[] | No | Available options |
-
----
-
-## `ScenarioParameter`
-
-Parameter for scenario.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `parameter_id` | `string` | No | UUID of the parameter |
-| `name` | `string` | No | Parameter name |
-| `description` | `string` | No | Parameter description text |
-| `document_parameter` | `boolean` | No | Whether this is a document parameter |
-| `persona_parameter` | `boolean` | No | Whether this is a persona parameter |
-| `scenario_parameter` | `boolean` | No | Whether this is a scenario parameter |
-| `video_parameter` | `boolean` | No | Whether this is a video parameter |
-| `non_video_parameter` | `boolean` | No | Inverse of video_parameter for frontend filtering |
-| `conditional` | `boolean` | No | Whether this parameter is conditional |
-
----
-
-## `ScenarioParameterFieldSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioField`](#scenariofield)[] | No | Currently selected parameter fields |
-| `resources` | [`ScenarioField`](#scenariofield)[] | No | Available parameter fields |
-
----
-
-## `ScenarioParameterSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioParameter`](#scenarioparameter)[] | No | Currently selected parameters |
-| `resources` | [`ScenarioParameter`](#scenarioparameter)[] | No | Available parameters |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -6042,21 +5504,10 @@ Persona for scenario.
 | `example` | `string` | No | Example text for the persona |
 | `video_persona` | `boolean` | No | Has linked parameter with video enabled |
 | `non_video_persona` | `boolean` | No | Has linked parameter with video disabled |
-
----
-
-## `ScenarioPersonaSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioPersona`](#scenariopersona)[] | No | Currently selected personas |
-| `resources` | [`ScenarioPersona`](#scenariopersona)[] | No | Available personas |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -6070,21 +5521,9 @@ Problem statement for scenario.
 | `name` | `string` | No | Problem statement name |
 | `problem_statement` | `string` | No | Problem statement text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioProblemStatementSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`ScenarioProblemStatement`](#scenarioproblemstatement) | No | Currently selected problem statement |
-| `resources` | [`ScenarioProblemStatement`](#scenarioproblemstatement)[] | No | Available problem statements |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -6098,21 +5537,9 @@ Question for scenario.
 | `question_text` | `string` | No | Question text content |
 | `allow_multiple` | `boolean` | No | Whether multiple answers are allowed |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioQuestionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioQuestion`](#scenarioquestion)[] | No | Currently selected questions |
-| `resources` | [`ScenarioQuestion`](#scenarioquestion)[] | No | Available questions |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -6141,21 +5568,9 @@ Video for scenario.
 | `mime_type` | `string` | No | MIME type of the video |
 | `upload_id` | `string` | No | UUID of the associated upload |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `ScenarioVideoSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ScenarioVideo`](#scenariovideo)[] | No | Currently selected videos |
-| `resources` | [`ScenarioVideo`](#scenariovideo)[] | No | Available videos |
+| `selected` | `boolean` | No | — |
+| `suggested` | `boolean` | No | — |
+| `pending` | `boolean` | No | — |
 
 ---
 
@@ -6167,12 +5582,12 @@ Video for scenario.
 | `run_id` | `string` | Yes | UUID of the parent run |
 | `role` | `string` | Yes | Message role (e.g. user, assistant) |
 | `message_created_at` | `string` | Yes | Message creation timestamp |
-| `text_upload_ids` | `string`[] | Yes | UUIDs of text uploads |
-| `audio_upload_ids` | `string`[] | Yes | UUIDs of audio uploads |
-| `image_upload_ids` | `string`[] | Yes | UUIDs of image uploads |
-| `video_upload_ids` | `string`[] | Yes | UUIDs of video uploads |
-| `file_upload_ids` | `string`[] | Yes | UUIDs of file uploads |
-| `call_upload_ids` | `string`[] | Yes | UUIDs of call uploads |
+| `text_ids` | `string`[] | Yes | UUIDs of text resources |
+| `audio_ids` | `string`[] | Yes | UUIDs of audio resources |
+| `image_ids` | `string`[] | Yes | UUIDs of image resources |
+| `video_ids` | `string`[] | Yes | UUIDs of video resources |
+| `file_ids` | `string`[] | Yes | UUIDs of file resources |
+| `call_ids` | `string`[] | Yes | UUIDs of call resources |
 
 ---
 
@@ -6333,97 +5748,97 @@ Single event in the unified session timeline.
 
 ---
 
-## `SettingAuthItemKeySection`
+## `SettingAgentCatalogResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned auth item keys |
-| `resources` | `any`[] | No | Available auth item key resources |
+| `agent_id` | `string` | No | Agent identifier |
+| `name` | `string` | No | Agent display name |
+| `description` | `string` | No | Agent description |
 
 ---
 
-## `SettingAuthSection`
+## `SettingAuthCatalogResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned auth providers |
-| `resources` | `any`[] | No | Available auth resources |
+| `auth_id` | `string` | No | Auth provider identifier |
+| `name` | `string` | No | Auth display name |
+| `description` | `string` | No | Auth description |
+| `slug` | `string` | No | Auth slug |
+| `protocol` | `string` | No | Auth protocol |
 
 ---
 
-## `SettingColorSection`
+## `SettingAuthItemKeyResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned colors |
-| `resources` | `any`[] | No | Available color resources |
+| `id` | `string` | No | Auth item key identifier |
+| `auth_id` | `string` | No | Auth identifier |
+| `item_id` | `string` | No | Item identifier |
+| `key_id` | `string` | No | Key identifier |
+| `generated` | `boolean` | No | Whether the auth-item-key pair was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `SettingDepartmentSection`
+## `SettingAuthItemValueResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned departments |
-| `resources` | `any`[] | No | Available department resources |
+| `id` | `string` | No | Auth item value identifier |
+| `auth_id` | `string` | No | Auth provider identifier |
+| `item_id` | `string` | No | Claim item identifier |
+| `value` | `string` | No | Literal claim value |
+| `generated` | `boolean` | No | Whether the value was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `SettingDescriptionSection`
+## `SettingColorResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `object` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
+| `id` | `string` | No | Color resource identifier |
+| `name` | `string` | No | Color display name |
+| `description` | `string` | No | Color description |
+| `hex_code` | `string` | No | Hex color value |
+| `generated` | `boolean` | No | Whether the color was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `SettingDraftFormState`
-
-Server-authoritative form state returned after draft save.
+## `SettingDepartmentResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource UUID |
-| `description_id` | `string` | No | Resolved description resource UUID |
-| `flag_id` | `string` | No | Resolved flag option UUID |
-| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
-| `color_ids` | `string`[] | Yes | Assigned color UUIDs |
-| `profile_ids` | `string`[] | Yes | Assigned profile UUIDs |
-| `auth_ids` | `string`[] | Yes | Assigned auth provider UUIDs |
-| `provider_key_ids` | `string`[] | Yes | Assigned provider key UUIDs |
-| `auth_item_key_ids` | `string`[] | Yes | Assigned auth item key UUIDs |
-| `threshold_ids` | `string`[] | Yes | Assigned threshold UUIDs |
+| `department_id` | `string` | No | Department identifier |
+| `name` | `string` | No | Department name |
+| `description` | `string` | No | Department description |
+| `generated` | `boolean` | No | Whether the department was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
+
+---
+
+## `SettingDescriptionResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Setting description |
+| `generated` | `boolean` | No | Whether the description was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -6440,78 +5855,137 @@ Per-field error from value resolution.
 
 ## `SettingFlagConfig`
 
-Enriched flag config for direct client consumption.
-
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `key` | `string` | Yes | Flag key identifier (e.g. 'active') |
-| `label` | `string` | Yes | Human-readable flag label (e.g. 'Active') |
+| `key` | `string` | Yes | Flag key identifier |
+| `label` | `string` | Yes | Human-readable flag label |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the flag option to use when enabling |
 | `show` | `boolean` | No | Whether the flag is visible to the client |
 | `required` | `boolean` | No | Whether the flag is required |
 | `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `SettingFlagSection`
+## `SettingIconCatalogResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SettingFlagConfig`](#settingflagconfig) | No | Currently selected flag config |
-| `resources` | [`SettingFlagConfig`](#settingflagconfig)[] | No | Available flag configs |
+| `icon_id` | `string` | No | Icon identifier |
+| `name` | `string` | No | Icon display name |
+| `description` | `string` | No | Icon description |
+| `value` | `string` | No | Icon value (SVG markup or slug) |
 
 ---
 
-## `SettingNameSection`
+## `SettingItemCatalogResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `object` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
+| `item_id` | `string` | No | Claim item identifier |
+| `name` | `string` | No | Claim item display name (e.g. clientId) |
+| `description` | `string` | No | Claim item description |
+| `encrypted` | `boolean` | No | Whether the item value must be stored encrypted |
+| `position` | `integer` | No | Display ordering position |
 
 ---
 
-## `SettingProfileSection`
+## `SettingKeyCatalogResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned profiles |
-| `resources` | `any`[] | No | Available profile resources |
+| `key_id` | `string` | No | Key identifier |
+| `name` | `string` | No | Key display name |
+| `description` | `string` | No | Key description |
+| `masked_key` | `string` | No | Masked key value for display |
 
 ---
 
-## `SettingProviderKeySection`
+## `SettingLoginsResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned provider keys |
-| `resources` | `any`[] | No | Available provider key resources |
+| `logins_id` | `string` | No | Logins resource identifier |
+| `profile_id` | `string` | No | Profile for test login |
+| `auth_id` | `string` | No | Auth provider for OIDC login |
+| `icon_id` | `string` | No | Icon for login button |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
+| `display_name` | `string` | No | Display text for login button |
+| `login_type` | `string` | No | Login type: 'auth' or 'profile' |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
+
+---
+
+## `SettingMcpResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `mcp_id` | `string` | No | MCP resource identifier |
+| `agent_id` | `string` | No | Agent providing MCP tools |
+| `name` | `string` | No | MCP config display name |
+| `description` | `string` | No | MCP config description |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
+
+---
+
+## `SettingNameResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Setting display name |
+| `generated` | `boolean` | No | Whether the name was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
+
+---
+
+## `SettingProfileCatalogResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_id` | `string` | No | Profile identifier |
+| `name` | `string` | No | Profile display name |
+| `description` | `string` | No | Profile description |
+
+---
+
+## `SettingProviderCatalogResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `provider_id` | `string` | No | Provider identifier |
+| `name` | `string` | No | Provider display name |
+| `description` | `string` | No | Provider description |
+
+---
+
+## `SettingProviderKeyResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Provider key identifier |
+| `provider_id` | `string` | No | Provider identifier |
+| `key_id` | `string` | No | Key identifier |
+| `key` | `string` | No | Key value |
+| `name` | `string` | No | Key display name |
+| `description` | `string` | No | Key description |
+| `generated` | `boolean` | No | Whether the provider-key pair was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -6528,18 +6002,34 @@ Per-item result within a bulk create/update response.
 
 ---
 
-## `SettingSystemSection`
+## `SettingSystemResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned systems |
-| `resources` | `any`[] | No | Available system resources |
+| `system_id` | `string` | No | System identifier |
+| `name` | `string` | No | System display name |
+| `description` | `string` | No | System description |
+| `agent_ids` | `string`[] | No | Linked agent identifiers |
+| `resolution_strategy` | `string` | No | Resolution strategy |
+| `resolution_threshold` | `number` | No | Resolution threshold |
+| `generated` | `boolean` | No | Whether the system was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
+
+---
+
+## `SettingThresholdResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Threshold resource identifier |
+| `type` | `string` | No | Threshold type (e.g. 'success') |
+| `value` | `integer` | No | Threshold integer value |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -6572,21 +6062,9 @@ Department for simulation.
 | `name` | `string` | No | Department name |
 | `description` | `string` | No | Department description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationDepartment`](#simulationdepartment)[] | No | Currently selected departments |
-| `resources` | [`SimulationDepartment`](#simulationdepartment)[] | No | Available departments |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6599,41 +6077,9 @@ Description resource for simulation.
 | `id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`SimulationDescriptionResource`](#simulationdescriptionresource) | No | Currently selected description resource |
-| `resources` | [`SimulationDescriptionResource`](#simulationdescriptionresource)[] | No | Available description resources |
-
----
-
-## `SimulationDraftFormState`
-
-Full form state after draft patch — server is source of truth.
-
-Client replaces its local form state with this after every successful patch.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | UUID of the selected name resource |
-| `description_id` | `string` | No | UUID of the selected description resource |
-| `flag_ids` | `string`[] | No | Selected flag UUIDs |
-| `department_ids` | `string`[] | No | Selected department UUIDs |
-| `scenario_ids` | `string`[] | No | Selected scenario UUIDs |
-| `scenario_flag_ids` | `string`[] | No | Selected scenario flag UUIDs |
-| `scenario_position_ids` | `string`[] | No | Selected scenario position UUIDs |
-| `scenario_rubric_ids` | `string`[] | No | Selected scenario rubric UUIDs |
-| `scenario_time_limit_ids` | `string`[] | No | Selected scenario time limit UUIDs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6658,25 +6104,14 @@ Enriched flag config for direct client consumption.
 | `label` | `string` | Yes | Display label for the flag |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | UUID of the selected icon resource |
+| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
 | `flag_option_id` | `string` | No | UUID of the flag option |
 | `show` | `boolean` | No | Whether to show this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationFlagConfig`](#simulationflagconfig)[] | No | Currently selected flags |
-| `resources` | [`SimulationFlagConfig`](#simulationflagconfig)[] | No | Available flag configs |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6689,21 +6124,9 @@ Name resource for simulation.
 | `id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Display name |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | [`SimulationNameResource`](#simulationnameresource) | No | Currently selected name resource |
-| `resources` | [`SimulationNameResource`](#simulationnameresource)[] | No | Available name resources |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6751,6 +6174,9 @@ Scenario for simulation.
 | `show_copy_paste` | `boolean` | No | Whether to show copy/paste |
 | `show_images` | `boolean` | No | Whether to show images |
 | `show_questions` | `boolean` | No | Whether to show questions |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6767,21 +6193,9 @@ Scenario flag (denormalized: includes flag name/description/icon).
 | `description` | `string` | No | Flag description text |
 | `icon` | `string` | No | Icon identifier for the flag |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationScenarioFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationScenarioFlag`](#simulationscenarioflag)[] | No | Currently selected scenario flags |
-| `resources` | [`SimulationScenarioFlag`](#simulationscenarioflag)[] | No | Available scenario flags |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6795,21 +6209,9 @@ Scenario position.
 | `scenario_id` | `string` | No | UUID of the parent scenario |
 | `value` | `integer` | No | Position value |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationScenarioPositionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationScenarioPosition`](#simulationscenarioposition)[] | No | Currently selected scenario positions |
-| `resources` | [`SimulationScenarioPosition`](#simulationscenarioposition)[] | No | Available scenario positions |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6823,36 +6225,9 @@ Scenario rubric.
 | `scenario_id` | `string` | No | UUID of the parent scenario |
 | `rubric_id` | `string` | No | UUID of the rubric resource |
 | `generated` | `boolean` | No | Whether this was AI-generated |
-
----
-
-## `SimulationScenarioRubricSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationScenarioRubric`](#simulationscenariorubric)[] | No | Currently selected scenario rubrics |
-| `resources` | [`SimulationScenarioRubric`](#simulationscenariorubric)[] | No | Available scenario rubrics |
-
----
-
-## `SimulationScenarioSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationScenario`](#simulationscenario)[] | No | Currently selected scenarios |
-| `resources` | [`SimulationScenario`](#simulationscenario)[] | No | Available scenarios |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6867,21 +6242,9 @@ Scenario time limit.
 | `time_limit_seconds` | `integer` | No | Time limit in seconds |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `negative` | `boolean` | No | Whether the time limit is negative |
-
----
-
-## `SimulationScenarioTimeLimitSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`SimulationScenarioTimeLimit`](#simulationscenariotimelimit)[] | No | Currently selected scenario time limits |
-| `resources` | [`SimulationScenarioTimeLimit`](#simulationscenariotimelimit)[] | No | Available scenario time limits |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
 
 ---
 
@@ -6935,171 +6298,6 @@ Standard metadata for sidebar/legend.
 
 ---
 
-## `SuiteDepartmentSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected department items |
-| `resources` | `any`[] | No | Available department resources |
-
----
-
-## `SuiteDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected description items |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `SuiteEndpointSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected endpoint items |
-| `resources` | `any`[] | No | Available endpoint resources |
-
----
-
-## `SuiteFlagSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected flag items |
-| `resources` | `any`[] | No | Available flag resources |
-
----
-
-## `SuiteKeySection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected key items |
-| `resources` | `any`[] | No | Available key resources |
-
----
-
-## `SuiteModalitySection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected modality items |
-| `resources` | `any`[] | No | Available modality resources |
-
----
-
-## `SuiteNameSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected name items |
-| `resources` | `any`[] | No | Available name resources |
-
----
-
-## `SuitePricingSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected pricing items |
-| `resources` | `any`[] | No | Available pricing resources |
-
----
-
-## `SuiteQualitySection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected quality items |
-| `resources` | `any`[] | No | Available quality resources |
-
----
-
-## `SuiteReasoningLevelSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected reasoning levels |
-| `resources` | `any`[] | No | Available reasoning level resources |
-
----
-
-## `SuiteTemperatureLevelSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected temperature levels |
-| `resources` | `any`[] | No | Available temperature level resources |
-
----
-
-## `SuiteValueSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected value items |
-| `resources` | `any`[] | No | Available value resources |
-
----
-
-## `SuiteVoiceSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether section is visible |
-| `required` | `boolean` | No | Whether section is required |
-| `show_ai_generate` | `boolean` | No | Whether to show AI generate button |
-| `current` | `any`[] | No | Currently selected voice items |
-| `resources` | `any`[] | No | Available voice resources |
-
----
-
-## `TableInfo`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name` | `string` | Yes | Table name |
-| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
-
----
-
 ## `TestEntries`
 
 Entry payloads grouped by type.
@@ -7113,6 +6311,7 @@ Entry payloads grouped by type.
 | `grades` | [`GetTestGradeResponse`](#gettestgraderesponse)[] | No | Grade entry payloads |
 | `feedback` | [`GetTestFeedbackResponse`](#gettestfeedbackresponse)[] | No | Feedback entry payloads |
 | `messages` | [`SearchMessageResponse`](#searchmessageresponse)[] | No | Message entry payloads |
+| `calls` | `any`[] | No | Tool call entries from original run |
 
 ---
 
@@ -7134,6 +6333,7 @@ Resource maps keyed by ID string.
 | `instructions` | `object` | No | Instruction resources keyed by ID |
 | `tools` | `object` | No | Tool resources keyed by ID |
 | `qualities` | `object` | No | Quality resources keyed by ID |
+| `standard_groups` | `object` | No | Standard group resources keyed by ID |
 
 ---
 
@@ -7205,96 +6405,62 @@ Timer information.
 
 ---
 
-## `ToolArgOutputSection`
+## `ToolArgOutputResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned argument outputs |
-| `resources` | `any`[] | No | Available argument outputs |
+| `id` | `string` | No | Argument output resource identifier |
+| `args_id` | `string` | No | Associated argument identifier |
+| `name` | `string` | No | Output template name |
+| `template` | `string` | No | Output template body |
+| `generated` | `boolean` | No | Whether the output template was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ToolArgPositionSection`
+## `ToolArgPositionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned argument positions |
-| `resources` | `any`[] | No | Available argument positions |
+| `id` | `string` | No | Argument position resource identifier |
+| `args_id` | `string` | No | Associated argument identifier |
+| `value` | `integer` | No | Position value |
+| `generated` | `boolean` | No | Whether the argument position was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ToolArgSection`
+## `ToolArgResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned arguments |
-| `resources` | `any`[] | No | Available arguments |
+| `id` | `string` | No | Argument resource identifier |
+| `name` | `string` | No | Argument name |
+| `description` | `string` | No | Argument description |
+| `field_type` | `string` | No | Argument field type |
+| `required` | `boolean` | No | Whether the argument is required |
+| `default_value` | `string` | No | Argument default value |
+| `generated` | `boolean` | No | Whether the argument was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ToolArtifactSection`
+## `ToolDescriptionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned artifacts |
-| `resources` | `any`[] | No | Available artifacts |
-
----
-
-## `ToolDescriptionSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected description resource |
-| `resources` | `any`[] | No | Available description resources |
-
----
-
-## `ToolDraftFormState`
-
-Server-authoritative form state returned after draft save.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `name_id` | `string` | No | Resolved name resource identifier |
-| `description_id` | `string` | No | Resolved description resource identifier |
-| `flag_ids` | `string`[] | Yes | Flag option identifiers |
-| `department_ids` | `string`[] | Yes | Department identifiers |
-| `arg_ids` | `string`[] | Yes | Argument identifiers |
-| `arg_position_ids` | `string`[] | Yes | Argument position identifiers |
-| `args_output_ids` | `string`[] | Yes | Argument output identifiers |
-| `artifact_ids` | `string`[] | Yes | Artifact identifiers |
-| `operation_ids` | `string`[] | Yes | Operation identifiers |
+| `id` | `string` | No | Description resource identifier |
+| `description` | `string` | No | Tool description |
+| `generated` | `boolean` | No | Whether the description was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -7323,51 +6489,38 @@ Enriched flag config for direct client consumption.
 | `show` | `boolean` | No | Whether to display this flag in the UI |
 | `required` | `boolean` | No | Whether this flag is required |
 | `generated` | `boolean` | No | Whether this flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ToolFlagSection`
+## `ToolNameResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | [`ToolFlagConfig`](#toolflagconfig) | No | Currently active flag config |
-| `resources` | [`ToolFlagConfig`](#toolflagconfig)[] | No | Available flag configs |
+| `id` | `string` | No | Name resource identifier |
+| `name` | `string` | No | Tool display name |
+| `generated` | `boolean` | No | Whether the name was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
-## `ToolNameSection`
+## `ToolPermissionResource`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `resource` | `any` | No | Currently selected name resource |
-| `resources` | `any`[] | No | Available name resources |
-
----
-
-## `ToolOperationSection`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `show` | `boolean` | No | Whether this section is visible in the UI |
-| `required` | `boolean` | No | Whether this section requires a selection |
-| `suggestions` | `string`[] | No | Suggested resource UUIDs for this section |
-| `show_ai_generate` | `boolean` | No | Whether AI generation is available for this section |
-| `tool_id` | `string` | No | UUID of the create tool for this resource |
-| `link_tool_id` | `string` | No | UUID of the link tool for this resource |
-| `current` | `any`[] | No | Currently assigned operations |
-| `resources` | `any`[] | No | Available operations |
+| `id` | `string` | No | Permission resource identifier |
+| `artifact` | `string` | No | Permission artifact type |
+| `operation` | `string` | No | Permission operation |
+| `name` | `string` | No | Permission display name |
+| `description` | `string` | No | Permission description |
+| `generated` | `boolean` | No | Whether the permission was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -7397,8 +6550,10 @@ Single agent item for update — agent_id required, all fields optional.
 | `description` | `string` | No | Description text value |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
 | `departments` | `string`[] | No | Department names for matching |
+| `active_flag` | `boolean` | No | Whether this agent is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 | `flag_ids` | `string`[] | No | Associated flag UUIDs |
-| `model_ids` | `string`[] | No | Associated model UUIDs |
+| `model_id` | `string` | No | Associated model UUID |
 | `reasoning_level_ids` | `string`[] | No | Associated reasoning level UUIDs |
 | `temperature_level_ids` | `string`[] | No | Associated temperature level UUIDs |
 | `tool_ids` | `string`[] | No | Associated tool UUIDs |
@@ -7449,7 +6604,8 @@ Single cohort item for update — cohort_id required, all fields optional.
 | `simulation_availability_ids` | `string`[] | No | Simulation availability UUIDs |
 | `profile_ids` | `string`[] | No | Profile UUIDs |
 | `profile_persona_ids` | `string`[] | No | Profile persona UUIDs |
-| `is_inactive` | `boolean` | No | Whether the cohort is inactive |
+| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
+| `active_flag` | `boolean` | No | Whether the cohort is active (resolved to flag_id) |
 | `departments` | `string`[] | No | Department names for resolution |
 | `simulations` | `string`[] | No | Simulation names for resolution |
 | `profiles` | `string`[] | No | Profile names for resolution |
@@ -7488,10 +6644,13 @@ Only provided fields are updated (partial update).
 | `description_id` | `string` | No | Description resource UUID |
 | `description` | `string` | No | Description value for resolution |
 | `flag_id` | `string` | No | Flag option UUID |
-| `is_inactive` | `boolean` | No | Whether the document is inactive |
+| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
+| `active_flag` | `boolean` | No | Whether the document is active (resolved to flag_id) |
+| `template_flag` | `boolean` | No | Whether this is a template document |
+| `template_flag_id` | `string` | No | Template flag resource UUID |
 | `department_ids` | `string`[] | No | Department UUIDs |
 | `departments` | `string`[] | No | Department names for resolution |
-| `field_ids` | `string`[] | No | Parameter field UUIDs |
+| `parameter_field_ids` | `string`[] | No | Parameter field UUIDs |
 | `upload_ids` | `string`[] | No | File upload UUIDs |
 | `image_ids` | `string`[] | No | Image UUIDs |
 | `text_ids` | `string`[] | No | Text resource UUIDs |
@@ -7518,6 +6677,8 @@ Only provided fields are updated (partial update).
 | `model_flag_ids` | `string`[] | No | Model flag UUIDs |
 | `model_rubric_ids` | `string`[] | No | Model rubric UUIDs |
 | `model_position_ids` | `string`[] | No | Model position UUIDs |
+| `active_flag` | `boolean` | No | Whether this eval is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 
 ---
 
@@ -7534,6 +6695,8 @@ Only provided fields are updated (partial update).
 | `name` | `string` | No | Name value to resolve or create |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description value to resolve or create |
+| `active_flag` | `boolean` | No | Whether this field is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 | `flag_id` | `string` | No | UUID of the flag option |
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
 | `departments` | `string`[] | No | Department names to resolve |
@@ -7557,14 +6720,16 @@ Only provided fields are updated (partial update).
 | `description` | `string` | No | Description text value |
 | `department_ids` | `string`[] | No | Department identifiers |
 | `departments` | `string`[] | No | Department names to match |
+| `active_flag` | `boolean` | No | Whether this model is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 | `flag_ids` | `string`[] | No | Flag option identifiers |
 | `modality_ids` | `string`[] | No | Modality identifiers |
 | `pricing_ids` | `string`[] | No | Pricing tier identifiers |
-| `provider_ids` | `string`[] | No | Provider identifiers |
+| `provider_id` | `string` | No | Provider identifier |
 | `quality_ids` | `string`[] | No | Quality level identifiers |
 | `reasoning_level_ids` | `string`[] | No | Reasoning level identifiers |
 | `temperature_level_ids` | `string`[] | No | Temperature level identifiers |
-| `value_ids` | `string`[] | No | Value resource identifiers |
+| `value_id` | `string` | No | Value resource identifier |
 | `voice_ids` | `string`[] | No | Voice identifiers |
 | `model_ids` | `string`[] | No | Related model identifiers |
 
@@ -7590,13 +6755,13 @@ Single parameter item for update — parameter_id required, all fields optional.
 
 ## `UpdatePersonaItem`
 
-Single persona item for update — persona_id required, all fields optional.
+Single persona item for update — id required, all fields optional.
 
 Only provided fields are updated (partial update).
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `persona_id` | `string` | Yes | UUID of the persona to update (required) |
+| `id` | `string` | Yes | UUID of the persona to update (required) |
 | `name_id` | `string` | No | UUID of an existing name resource to select |
 | `name` | `string` | No | Display name text (creates new resource if name_id not provided) |
 | `color_id` | `string` | No | UUID of an existing color resource to select |
@@ -7629,12 +6794,11 @@ Single profile item for update — profile_id required, all fields optional.
 | `profile_id` | `string` | Yes | UUID of the profile to update |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Name value to resolve or create |
-| `request_limit_id` | `string` | No | UUID of the request limit resource |
-| `flag_id` | `string` | No | UUID of the flag option |
+| `active_flag_id` | `string` | No | UUID of the flag option |
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
 | `departments` | `string`[] | No | Department names to resolve |
 | `email_ids` | `string`[] | No | Email resource UUIDs |
-| `role_ids` | `string`[] | No | Role resource UUIDs |
+| `role_id` | `string` | No | Role resource UUID |
 
 ---
 
@@ -7655,7 +6819,7 @@ Single provider item for update — provider_id required, all fields optional.
 | `departments` | `string`[] | No | Department names to match |
 | `endpoint_ids` | `string`[] | No | Endpoint resource identifiers |
 | `key_ids` | `string`[] | No | API key resource identifiers |
-| `value_ids` | `string`[] | No | Value resource identifiers |
+| `value_id` | `string` | No | Value resource identifier |
 
 ---
 
@@ -7672,6 +6836,10 @@ Single rubric item for update — rubric_id required, all fields optional.
 | `description` | `string` | No | Description value for resolution |
 | `active_flag_id` | `string` | No | Active flag option UUID |
 | `active_flag` | `boolean` | No | Active flag boolean value |
+| `simulation_rubric_flag` | `boolean` | No | Whether this is a simulation rubric |
+| `simulation_rubric_flag_id` | `string` | No | Simulation rubric flag resource UUID |
+| `video_rubric_flag` | `boolean` | No | Whether this is a video rubric |
+| `video_rubric_flag_id` | `string` | No | Video rubric flag resource UUID |
 | `department_ids` | `string`[] | No | Department UUIDs |
 | `departments` | `string`[] | No | Department names for resolution |
 | `point_ids` | `string`[] | No | Point UUIDs |
@@ -7712,6 +6880,11 @@ Only provided fields are updated (partial update).
 | `question_ids` | `string`[] | No | Associated question UUIDs |
 | `option_ids` | `string`[] | No | Associated option UUIDs |
 | `active_flag` | `boolean` | No | Active flag boolean value |
+| `images_enabled_flag` | `boolean` | No | Whether images are enabled |
+| `objectives_enabled_flag` | `boolean` | No | Whether objectives are enabled |
+| `problem_statement_enabled_flag` | `boolean` | No | Whether problem statement is enabled |
+| `questions_enabled_flag` | `boolean` | No | Whether questions are enabled |
+| `video_enabled_flag` | `boolean` | No | Whether video is enabled |
 | `departments` | `string`[] | No | Department names for matching |
 | `personas` | `string`[] | No | Persona names for matching |
 | `documents` | `string`[] | No | Document names for matching |
@@ -7742,13 +6915,13 @@ Only provided fields are updated (partial update).
 | `department_ids` | `string`[] | No | Department UUIDs to assign |
 | `departments` | `string`[] | No | Department names to resolve |
 | `color_ids` | `string`[] | No | Color resource UUIDs |
-| `profile_ids` | `string`[] | No | Profile UUIDs to assign |
-| `auth_ids` | `string`[] | No | Auth provider UUIDs |
+| `logins_ids` | `string`[] | No | Logins resource UUIDs to assign |
+| `system_ids` | `string`[] | No | System UUIDs to assign |
+| `mcp_id` | `string` | No | MCP resource UUID to assign (single) |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
 | `provider_key_ids` | `string`[] | No | Provider key UUIDs |
 | `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
 | `auth_item_value_ids` | `string`[] | No | Auth item value UUIDs |
-| `system_ids` | `string`[] | No | System UUIDs to assign |
-| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
 | `setting_resource_ids` | `string`[] | No | Setting resource UUIDs |
 
 ---
@@ -7766,15 +6939,16 @@ Only provided fields are updated (partial update).
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text value |
-| `flag_ids` | `string`[] | No | Associated flag UUIDs |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
 | `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
 | `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
 | `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
 | `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
 | `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
-| `is_inactive` | `boolean` | No | Whether the simulation is inactive |
-| `is_practice` | `boolean` | No | Whether this is a practice simulation |
+| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
+| `active_flag` | `boolean` | No | Whether the simulation is active (resolved to flag_id) |
+| `practice_flag` | `boolean` | No | Whether this is a practice simulation |
+| `practice_flag_id` | `string` | No | Practice flag resource UUID |
 | `departments` | `string`[] | No | Department names for matching |
 | `scenarios` | `string`[] | No | Scenario names for matching |
 
@@ -7798,38 +6972,531 @@ Only provided fields are updated (partial update).
 | `arg_positions_ids` | `string`[] | No | Argument position identifiers |
 | `args_ids` | `string`[] | No | Argument identifiers |
 | `args_outputs_ids` | `string`[] | No | Argument output identifiers |
-| `artifact_ids` | `string`[] | No | Artifact identifiers |
-| `operation_ids` | `string`[] | No | Operation identifiers |
+| `permission_ids` | `string`[] | No | Permission identifiers |
 | `tool_ids` | `string`[] | No | Related tool identifiers |
+| `active_flag` | `boolean` | No | Whether this tool is active |
+| `active_flag_id` | `string` | No | Active flag resource UUID |
 
 ---
 
-## `app__infra__attempt__types__ContentEntry`
+## `app__infra__agent__types__DraftFormState`
 
-Content entry with computed display fields.
-
-Each content has its own display info (name/icon/color) computed from
-persona metadata on the server. Client renders each content with its
-own persona styling.
+Server-authoritative form state returned after draft save.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `content` | `string` | No | Content text of the entry |
-| `name` | `string` | No | Display name (user or persona) |
-| `color` | `string` | No | Persona color for display |
-| `icon` | `string` | No | Icon identifier for display |
-| `created_at` | `string` | No | ISO timestamp when content was created |
+| `name_id` | `string` | No | UUID of the selected name resource |
+| `name` | `string` | No | Resolved name value |
+| `description_id` | `string` | No | UUID of the selected description resource |
+| `description` | `string` | No | Resolved description value |
+| `flag_ids` | `string`[] | Yes | Selected flag UUIDs |
+| `active_flag_id` | `string` | No | Selected active flag UUID |
+| `department_ids` | `string`[] | Yes | Selected department UUIDs |
+| `model_id` | `string` | No | Selected model UUID |
+| `tool_ids` | `string`[] | Yes | Selected tool UUIDs |
+| `reasoning_level_id` | `string` | No | Selected reasoning level UUID |
+| `temperature_level_id` | `string` | No | Selected temperature level UUID |
+| `voice_ids` | `string`[] | Yes | Selected voice UUIDs |
+| `quality_ids` | `string`[] | Yes | Selected quality UUIDs |
+| `rubric_ids` | `string`[] | Yes | Selected rubric UUIDs |
+| `prompt_id` | `string` | No | Selected prompt UUID when provided |
+| `instruction_id` | `string` | No | Selected instruction UUID when provided |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
 
 ---
 
-## `app__infra__attempt__types__HintEntry`
-
-Hint entry (practice mode only, message_id implied by parent).
+## `app__infra__agent__types__SectionFilter`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `hint` | `string` | No | Hint text for practice mode |
-| `idx` | `integer` | No | Index position of the hint |
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+
+---
+
+## `app__infra__auth__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Echoed name value |
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `description` | `string` | No | Echoed description value |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `department_ids` | `string`[] | No | Assigned department UUIDs |
+| `protocol_ids` | `string`[] | No | Assigned protocol UUIDs |
+| `slug_ids` | `string`[] | No | Assigned slug UUIDs |
+| `item_ids` | `string`[] | No | Assigned auth item UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__auth__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Unused for auth; present for shared request compatibility |
+
+---
+
+## `app__infra__chat__types__SectionFilter`
+
+Per-section filter options for chat GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in the response |
+| `parameter_ids` | `string`[] | No | Parameter IDs to filter parameter_fields by |
+
+---
+
+## `app__infra__cohort__types__DraftFormState`
+
+Full form state after draft patch — server is source of truth.
+
+Client replaces its local form state with this after every successful patch.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Selected name resource UUID |
+| `name` | `string` | No | Name value that was saved |
+| `description_id` | `string` | No | Selected description resource UUID |
+| `description` | `string` | No | Description value that was saved |
+| `flag_id` | `string` | No | Selected flag option UUID |
+| `flag` | `string` | No | Flag value that was saved |
+| `active_flag_id` | `string` | No | Selected active flag option UUID |
+| `active_flag` | `boolean` | No | Whether the active flag was enabled |
+| `department_ids` | `string`[] | No | Selected department UUIDs |
+| `departments` | `string`[] | No | Department values that were saved |
+| `simulation_ids` | `string`[] | No | Selected simulation UUIDs |
+| `simulations` | `string`[] | No | Simulation values that were saved |
+| `simulation_position_ids` | `string`[] | No | Selected simulation position UUIDs |
+| `simulation_positions` | [`DraftSimulationPositionValue`](#draftsimulationpositionvalue)[] | No | Simulation position values that were saved |
+| `simulation_availability_ids` | `string`[] | No | Selected simulation availability UUIDs |
+| `simulation_availability` | [`DraftSimulationAvailabilityValue`](#draftsimulationavailabilityvalue)[] | No | Simulation availability values that were saved |
+| `profile_ids` | `string`[] | No | Selected profile UUIDs |
+| `profiles` | `string`[] | No | Profile values that were saved |
+| `profile_persona_ids` | `string`[] | No | Selected profile persona UUIDs |
+| `profile_personas` | [`DraftProfilePersonaValue`](#draftprofilepersonavalue)[] | No | Profile persona values that were saved |
+| `pending_ids` | `string`[] | No | Pending resource IDs retained on the draft |
+
+---
+
+## `app__infra__cohort__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for parity with persona pattern |
+
+---
+
+## `app__infra__department__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `name` | `string` | No | Echoed name value |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `description` | `string` | No | Echoed description value |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `active_flag_id` | `string` | No | Resolved active flag option UUID |
+| `setting_ids` | `string`[] | No | Assigned setting UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__department__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for compatibility with shared filter parsing |
+
+---
+
+## `app__infra__document__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | No | Echoed unresolved name value |
+| `name_id` | `string` | No | Selected name resource UUID |
+| `description` | `string` | No | Echoed unresolved description value |
+| `description_id` | `string` | No | Selected description resource UUID |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs |
+| `department_ids` | `string`[] | No | Selected department UUIDs |
+| `file_ids` | `string`[] | No | Selected file resource UUIDs |
+| `image_ids` | `string`[] | No | Selected image UUIDs |
+| `text_ids` | `string`[] | No | Selected text resource UUIDs |
+| `parameter_field_ids` | `string`[] | No | Selected parameter field UUIDs |
+| `parameter_ids` | `string`[] | No | Selected parameter UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource UUIDs where supported |
+
+---
+
+## `app__infra__document__types__DraftImageValue`
+
+Value for creating an image via the draft endpoint.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Image name |
+| `description` | `string` | Yes | Image description text |
+| `upload_id` | `string` | No | Associated upload UUID |
+
+---
+
+## `app__infra__document__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Parameter group IDs for parameter field hydration |
+
+---
+
+## `app__infra__eval__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Selected name resource UUID |
+| `name` | `string` | No | Echoed selected name value |
+| `description_id` | `string` | No | Selected description resource UUID |
+| `description` | `string` | No | Echoed selected description value |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs |
+| `department_ids` | `string`[] | No | Selected department UUIDs |
+| `model_ids` | `string`[] | No | Selected model UUIDs |
+| `model_flag_ids` | `string`[] | No | Selected model flag UUIDs |
+| `model_position_ids` | `string`[] | No | Selected model position UUIDs |
+| `model_rubric_ids` | `string`[] | No | Selected model rubric UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__eval__types__SectionFilter`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for compatibility with shared filter parsing |
+
+---
+
+## `app__infra__field__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `name` | `string` | No | Echoed name value |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `description` | `string` | No | Echoed description value |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `active_flag_id` | `string` | No | Resolved active flag option UUID |
+| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
+| `conditional_parameter_ids` | `string`[] | Yes | Assigned conditional parameter UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__field__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Parameter group IDs to filter by where relevant |
+
+---
+
+## `app__infra__invocation__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for compatibility with shared filter parsing |
+
+---
+
+## `app__infra__model__types__DraftFormState`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource identifier |
+| `name` | `string` | No | Resolved name value |
+| `description_id` | `string` | No | Resolved description resource identifier |
+| `description` | `string` | No | Resolved description value |
+| `value_id` | `string` | No | Resolved value resource identifier |
+| `value` | `string` | No | Resolved model value |
+| `provider_id` | `string` | No | Resolved provider identifier |
+| `provider` | `string` | No | Resolved provider name |
+| `flag_ids` | `string`[] | Yes | Flag option identifiers |
+| `active_flag_id` | `string` | No | Resolved active flag identifier |
+| `modalities_enabled_flag_id` | `string` | No | Resolved modalities enabled flag identifier |
+| `temperature_enabled_flag_id` | `string` | No | Resolved temperature enabled flag identifier |
+| `pricing_enabled_flag_id` | `string` | No | Resolved pricing enabled flag identifier |
+| `voices_enabled_flag_id` | `string` | No | Resolved voices enabled flag identifier |
+| `reasoning_levels_enabled_flag_id` | `string` | No | Resolved reasoning levels enabled flag identifier |
+| `qualities_enabled_flag_id` | `string` | No | Resolved qualities enabled flag identifier |
+| `department_ids` | `string`[] | Yes | Department identifiers |
+| `modality_ids` | `string`[] | Yes | Modality identifiers |
+| `pricing_ids` | `string`[] | Yes | Pricing tier identifiers |
+| `quality_ids` | `string`[] | Yes | Quality level identifiers |
+| `reasoning_level_ids` | `string`[] | Yes | Reasoning level identifiers |
+| `temperature_level_ids` | `string`[] | Yes | Temperature level identifiers |
+| `voice_ids` | `string`[] | Yes | Voice identifiers |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__model__types__SectionFilter`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+
+---
+
+## `app__infra__parameter__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource identifier |
+| `name` | `string` | No | Echoed name value |
+| `description_id` | `string` | No | Resolved description resource identifier |
+| `description` | `string` | No | Echoed description value |
+| `flag_ids` | `string`[] | Yes | Flag option identifiers |
+| `department_ids` | `string`[] | Yes | Department identifiers |
+| `field_ids` | `string`[] | Yes | Field identifiers |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__parameter__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Parameter group IDs to filter by (parameter_fields section only) |
+
+---
+
+## `app__infra__persona__types__DraftFormState`
+
+Full form state after draft patch — server is source of truth.
+
+Client replaces its local form state with this after every successful patch.
+Includes both resolved IDs and echoed values for AI model feedback.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Currently selected name resource UUID |
+| `name` | `string` | No | Name value that was saved |
+| `description_id` | `string` | No | Currently selected description resource UUID |
+| `description` | `string` | No | Description value that was saved |
+| `instructions_id` | `string` | No | Currently selected instruction resource UUID |
+| `instructions` | `string` | No | Instructions value that was saved |
+| `color_id` | `string` | No | Currently selected color resource UUID |
+| `color` | `string` | No | Color value that was saved (hex code) |
+| `icon_id` | `string` | No | Currently selected icon resource UUID |
+| `icon` | `string` | No | Icon value that was saved |
+| `active_flag_id` | `string` | No | Currently selected flag option UUID |
+| `department_ids` | `string`[] | No | Currently associated department UUIDs |
+| `example_ids` | `string`[] | No | Currently associated example resource UUIDs |
+| `parameter_field_ids` | `string`[] | No | Currently associated parameter field UUIDs |
+| `voice_ids` | `string`[] | No | Currently associated voice resource UUIDs |
+
+---
+
+## `app__infra__persona__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Parameter group IDs to filter by (parameter_fields section only) |
+
+---
+
+## `app__infra__profile__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `name` | `string` | No | Resolved name value |
+| `flag_id` | `string` | No | Resolved flag option UUID |
+| `active_flag_id` | `string` | No | Resolved flag option UUID |
+| `departments` | `string`[] | No | Resolved department names |
+| `department_ids` | `string`[] | Yes | Assigned department UUIDs |
+| `emails` | `string`[] | No | Resolved email values |
+| `email_ids` | `string`[] | Yes | Assigned email resource UUIDs |
+| `role` | `string` | No | Assigned role name |
+| `role_id` | `string` | No | Assigned role resource UUID |
+| `pending_ids` | `string`[] | No | Pending resource UUIDs |
+
+---
+
+## `app__infra__profile__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+
+---
+
+## `app__infra__provider__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource identifier |
+| `name` | `string` | No | Resolved name value |
+| `description_id` | `string` | No | Resolved description resource identifier |
+| `description` | `string` | No | Resolved description value |
+| `flag_id` | `string` | No | Legacy flag option identifier |
+| `active_flag_id` | `string` | No | Flag option identifier |
+| `departments` | `string`[] | No | Resolved department names |
+| `department_ids` | `string`[] | Yes | Department identifiers |
+| `endpoint` | `string` | No | Resolved endpoint value |
+| `endpoint_id` | `string` | No | Resolved endpoint resource identifier |
+| `endpoint_ids` | `string`[] | Yes | Endpoint resource identifiers |
+| `key` | `string` | No | Resolved key value |
+| `key_name` | `string` | No | Resolved key display name |
+| `key_description` | `string` | No | Resolved key description |
+| `key_id` | `string` | No | Resolved key resource identifier |
+| `key_ids` | `string`[] | Yes | API key resource identifiers |
+| `value` | `string` | No | Resolved value |
+| `value_id` | `string` | No | Value resource identifier |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__provider__types__SectionFilter`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+
+---
+
+## `app__infra__rubric__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Selected name resource UUID |
+| `name` | `string` | No | Echoed name value |
+| `description_id` | `string` | No | Selected description resource UUID |
+| `description` | `string` | No | Echoed description value |
+| `flag_id` | `string` | No | Selected flag option UUID |
+| `active_flag_id` | `string` | No | Selected active flag option UUID |
+| `department_ids` | `string`[] | No | Selected department UUIDs |
+| `point_ids` | `string`[] | No | Selected point UUIDs |
+| `standard_group_ids` | `string`[] | No | Selected standard group UUIDs |
+| `standard_ids` | `string`[] | No | Selected standard UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__rubric__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for compatibility with shared filter parsing |
 
 ---
 
@@ -7878,5 +7545,115 @@ Value for creating a video via the draft endpoint.
 | `description` | `string` | Yes | Video description text |
 | `upload_id` | `string` | No | UUID of the associated upload |
 | `length_seconds` | `integer` | No | Video length in seconds |
+
+---
+
+## `app__infra__setting__types__DraftFormState`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource UUID |
+| `name` | `string` | No | Echoed name value when available |
+| `description_id` | `string` | No | Resolved description resource UUID |
+| `description` | `string` | No | Echoed description value when available |
+| `active_flag_id` | `string` | No | Resolved active flag option UUID |
+| `flag_id` | `string` | No | Legacy alias for the active flag option UUID |
+| `department_ids` | `string`[] | No | Assigned department UUIDs |
+| `color_ids` | `string`[] | No | Assigned color UUIDs |
+| `logins_ids` | `string`[] | No | Assigned logins resource UUIDs |
+| `system_ids` | `string`[] | No | Assigned system UUIDs |
+| `mcp_id` | `string` | No | Assigned MCP resource UUID |
+| `threshold_ids` | `string`[] | No | Assigned threshold UUIDs |
+| `provider_key_ids` | `string`[] | No | Assigned provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Assigned auth item key UUIDs |
+| `auth_item_value_ids` | `string`[] | No | Assigned auth item value UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__setting__types__SectionFilter`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for compatibility with shared filter parsing |
+
+---
+
+## `app__infra__simulation__types__DraftFormState`
+
+Full form state after draft patch — server is source of truth.
+
+Client replaces its local form state with this after every successful patch.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | UUID of the selected name resource |
+| `name` | `string` | No | Saved name value |
+| `description_id` | `string` | No | UUID of the selected description resource |
+| `description` | `string` | No | Saved description value |
+| `flag_ids` | `string`[] | No | Selected flag UUIDs |
+| `department_ids` | `string`[] | No | Selected department UUIDs |
+| `scenario_ids` | `string`[] | No | Selected scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Selected scenario flag UUIDs |
+| `scenario_position_ids` | `string`[] | No | Selected scenario position UUIDs |
+| `scenario_rubric_ids` | `string`[] | No | Selected scenario rubric UUIDs |
+| `scenario_time_limit_ids` | `string`[] | No | Selected scenario time limit UUIDs |
+| `pending_ids` | `string`[] | No | Pending resource UUIDs (empty until tool-layer support exists) |
+
+---
+
+## `app__infra__simulation__types__SectionFilter`
+
+Per-section filter options for GET requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
+| `parameter_ids` | `string`[] | No | Reserved for parity with persona pattern |
+
+---
+
+## `app__infra__tool__types__DraftFormState`
+
+Server-authoritative form state returned after draft save.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name_id` | `string` | No | Resolved name resource identifier |
+| `name` | `string` | No | Resolved name value |
+| `description_id` | `string` | No | Resolved description resource identifier |
+| `description` | `string` | No | Resolved description value |
+| `active_flag_id` | `string` | No | Flag option identifier |
+| `flag_ids` | `string`[] | Yes | Flag option identifiers |
+| `department_ids` | `string`[] | Yes | Department identifiers |
+| `arg_ids` | `string`[] | Yes | Argument identifiers |
+| `arg_position_ids` | `string`[] | Yes | Argument position identifiers |
+| `args_output_ids` | `string`[] | Yes | Argument output identifiers |
+| `args_outputs_ids` | `string`[] | Yes | Legacy alias for argument output identifiers |
+| `instruction_id` | `string` | No | Instruction resource identifier |
+| `instruction_ids` | `string`[] | No | Instruction resource identifiers |
+| `permission_ids` | `string`[] | Yes | Permission identifiers |
+| `pending_ids` | `string`[] | No | Pending resource identifiers |
+
+---
+
+## `app__infra__tool__types__SectionFilter`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Filter options by search text |
+| `limit` | `integer` | No | Max options to return |
+| `selected` | `boolean` | No | Only return selected items |
+| `suggested` | `boolean` | No | Only return suggested items |
+| `include` | `boolean` | No | Include this section in response (default true) |
 
 ---

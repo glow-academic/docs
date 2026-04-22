@@ -1,0 +1,20 @@
+# `POST` `/scenario/update`
+
+Update Scenario
+
+Update scenarios using composable infra architecture.
+
+## Request Body (`UpdateScenarioApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenarios` | [`UpdateScenarioItem`](/api-reference/scenario/types#updatescenarioitem)[] | Yes | List of scenarios to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`UpdateScenarioApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`ScenarioResultItem`](/api-reference/scenario/types#scenarioresultitem)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

@@ -42,4 +42,4 @@ Get scenario information using the canonical shared scenario operation.
 ## Related
 
 - [Scenario Guide](/scenario)
-- [API Endpoint](/api-reference/scenarios/post-scenarios-get)
+- [API Endpoint](/api-reference/scenario/post-scenario-get)

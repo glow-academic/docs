@@ -29,4 +29,3 @@ Get benchmark artifact data with the canonical shared benchmark operation.
 ## Related
 
 - [Benchmark Guide](/benchmark)
-- [API Endpoint](/api-reference/benchmark/post-benchmark-get)

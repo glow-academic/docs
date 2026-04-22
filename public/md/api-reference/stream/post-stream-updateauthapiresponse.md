@@ -7,6 +7,7 @@ Schema: UpdateAuthApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`AuthResultItem`](/api-reference/stream/types#authresultitem)[] | Yes | Per-item update results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

@@ -7,6 +7,7 @@ Schema: ExportPersonaApiRequest
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `persona_id` | `string` | No | UUID of a specific persona to export (omit for bulk export) |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
 | `search` | `string` | No | Filter personas by search text |
 | `scenario_ids` | `string`[] | No | Filter to personas used in these scenarios |
 | `field_ids` | `string`[] | No | Filter to personas with these fields |

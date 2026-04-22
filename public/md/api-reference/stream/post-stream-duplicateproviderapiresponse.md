@@ -9,6 +9,7 @@ Schema: DuplicateProviderApiResponse
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
 | `provider_id` | `string` | Yes | New duplicated provider identifier |
 | `message` | `string` | Yes | Result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

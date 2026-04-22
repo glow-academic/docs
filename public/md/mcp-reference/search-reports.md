@@ -35,4 +35,3 @@ Get reports artifact data via composable context resolver.
 ## Related
 
 - [Reports Guide](/reports)
-- [API Endpoint](/api-reference/reports/post-reports-search)

@@ -36,4 +36,4 @@ Patch simulation draft — composable infra architecture.
 ## Related
 
 - [Simulation Guide](/simulation)
-- [API Endpoint](/api-reference/simulations/patch-simulations-draft)
+- [API Endpoint](/api-reference/simulation/patch-simulation-draft)

@@ -6,8 +6,17 @@ Schema: GetToolApiRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `tool_id` | `string` | No | Tool unique identifier |
+| `id` | `string` | No | Tool unique identifier |
+| `tool_id` | `string` | No | Legacy alias for tool unique identifier |
 | `draft_id` | `string` | No | Draft unique identifier |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+| `names` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for names |
+| `descriptions` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for descriptions |
+| `flags` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for flags |
+| `args` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for args |
+| `arg_positions` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for arg positions |
+| `args_outputs` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for arg outputs |
+| `permissions` | [`app__infra__tool__types__SectionFilter`](/api-reference/stream/types#app-infra-tool-types-sectionfilter) | No | Filter options for permissions |
 
 ## Response
 

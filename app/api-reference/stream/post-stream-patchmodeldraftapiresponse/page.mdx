@@ -8,9 +8,9 @@ Schema: PatchModelDraftApiResponse
 |---|---|---|---|
 | `success` | `boolean` | Yes | Whether the draft save succeeded |
 | `draft_id` | `string` | Yes | Draft unique identifier |
-| `new_version` | `integer` | Yes | New draft version after save |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 | `message` | `string` | Yes | Result message |
-| `form_state` | [`ModelDraftFormState`](/api-reference/stream/types#modeldraftformstate) | No | Server-authoritative form state |
+| `form_state` | [`app__infra__model__types__DraftFormState`](/api-reference/stream/types#app-infra-model-types-draftformstate) | No | Server-authoritative form state |
 
 ## Response
 

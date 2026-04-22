@@ -1,0 +1,551 @@
+# System Types
+
+## `ActivityResources`
+
+Activity resource metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profiles` | `object` | No | Profile resources keyed by ID |
+
+---
+
+## `AnalyticsFacets-Output`
+
+Resolved analytics facets — embeddable in any artifact response.
+
+Contains filter field visibility, available options for dropdowns,
+and date range boundaries. Returned inline from artifact get/search
+responses so each page has its filter facets ready for SSR.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
+| `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
+| `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
+| `role_options` | `string`[] | No | Available role options |
+| `attempt_options` | `string`[] | No | Available attempt options |
+| `date_range_earliest` | `string` | No | Earliest available date for filtering |
+| `date_range_latest` | `string` | No | Latest available date for filtering |
+
+---
+
+## `AnalyticsFilterField`
+
+Visibility/disabled state for a single filter field.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `visible` | `boolean` | No | Whether the filter field is visible |
+| `disabled` | `boolean` | No | Whether the filter field is disabled |
+
+---
+
+## `AnalyticsFilterFields`
+
+Per-page filter field visibility configuration.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_range` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Date range filter config |
+| `departments` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Department filter config |
+| `cohorts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Cohort filter config |
+| `roles` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Role filter config |
+| `attempts` | [`AnalyticsFilterField`](#analyticsfilterfield) | No | Attempt filter config |
+
+---
+
+## `AnalyticsFilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+
+---
+
+## `ArtifactSessionGroup-Output`
+
+Single group entry for a session.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | UUID of the group |
+| `group_name` | `string` | No | Name of the group |
+| `first_run_at` | `string` | No | Timestamp of the first run |
+| `last_run_at` | `string` | No | Timestamp of the last run |
+| `run_count` | `integer` | No | Number of runs in the group |
+| `total_tokens` | `integer` | No | Total tokens used in the group |
+| `total_cost` | `string` | No | Total cost of the group |
+
+---
+
+## `CallerPermissions`
+
+Evaluated permissions for the current caller on this artifact type.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `can_create` | `boolean` | Yes | Whether the caller can create new artifacts |
+| `can_draft` | `boolean` | Yes | Whether the caller can create/update drafts |
+| `can_duplicate` | `boolean` | Yes | Whether the caller can duplicate artifacts |
+| `has_access` | `boolean` | No | Whether the caller can view this entity |
+| `can_edit` | `boolean` | No | Whether the caller can edit this entity |
+| `can_delete` | `boolean` | No | Whether the caller can delete this entity |
+| `disabled_reason` | `string` | No | Human-readable reason if editing is disabled |
+
+---
+
+## `ColumnInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Column name |
+| `type` | `string` | Yes | Column data type |
+| `nullable` | `boolean` | Yes | Whether the column is nullable |
+
+---
+
+## `DocsApiResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `list` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `detail` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+| `new` | [`PageMetaItem`](#pagemetaitem) | Yes | — |
+
+---
+
+## `DocsResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Resource or entry name |
+| `type` | `string` | Yes | Resource or entry type identifier |
+| `description` | `string` | Yes | Human-readable description |
+| `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
+| `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
+| `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `FilterOption`
+
+A single filter option for dropdown selectors.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Internal value for the filter option |
+| `label` | `string` | No | Display label for the filter option |
+| `count` | `integer` | No | Number of matching records |
+
+---
+
+## `GenerateConfig`
+
+Developer configuration — all optional with sensible defaults.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `operations` | `string`[] | No | — |
+| `dangerous` | `boolean` | No | — |
+| `params` | `object` | No | — |
+| `group_id` | `string` | No | — |
+
+---
+
+## `GenerationsSystemListItem`
+
+Single generation group in the system generations response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | UUID of the generation group |
+| `session_id` | `string` | No | UUID of the parent session |
+| `group_name` | `string` | No | Name of the generation group |
+| `created_at` | `string` | No | Timestamp of the generation |
+
+---
+
+## `GetHealthResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_hour` | `string` | Yes | — |
+| `service` | `string` | Yes | — |
+| `check_count` | `integer` | Yes | — |
+| `ok_count` | `integer` | Yes | — |
+| `fail_count` | `integer` | Yes | — |
+| `uptime_percent` | `number` | Yes | — |
+| `avg_latency_ms` | `number` | Yes | — |
+| `min_latency_ms` | `number` | Yes | — |
+| `max_latency_ms` | `number` | Yes | — |
+| `latest_ok` | `boolean` | Yes | — |
+| `latest_error` | `string` | Yes | — |
+
+---
+
+## `GetMetricsSearchResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_hour` | `string` | Yes | — |
+| `sample_count` | `integer` | Yes | — |
+| `avg_cpu_percent` | `number` | Yes | — |
+| `min_cpu_percent` | `number` | Yes | — |
+| `max_cpu_percent` | `number` | Yes | — |
+| `avg_latency_ms` | `number` | Yes | — |
+| `min_latency_ms` | `number` | Yes | — |
+| `max_latency_ms` | `number` | Yes | — |
+| `avg_memory_bytes` | `integer` | Yes | — |
+| `min_memory_bytes` | `integer` | Yes | — |
+| `max_memory_bytes` | `integer` | Yes | — |
+| `max_requests_total` | `integer` | Yes | — |
+| `max_errors_total` | `integer` | Yes | — |
+
+---
+
+## `GroupDetailCallItem`
+
+A tool/function call made during the run.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the call |
+| `template_name` | `string` | No | Name of the call template |
+| `file_path` | `string` | No | File path associated with the call |
+| `created_at` | `string` | Yes | Timestamp when the call was made |
+
+---
+
+## `GroupDetailMessageItem`
+
+A message with resource IDs by media type.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the message |
+| `role` | `string` | No | Role of the message sender |
+| `text_ids` | `string`[] | No | Text resource UUIDs |
+| `audio_ids` | `string`[] | No | Audio resource UUIDs |
+| `image_ids` | `string`[] | No | Image resource UUIDs |
+| `video_ids` | `string`[] | No | Video resource UUIDs |
+| `file_ids` | `string`[] | No | File resource UUIDs |
+| `call_ids` | `string`[] | No | Call resource UUIDs |
+| `calls` | [`GroupDetailCallItem`](#groupdetailcallitem)[] | No | Tool calls in this message |
+
+---
+
+## `GroupDetailResourceItem`
+
+A named resource (model, agent, or profile).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_id` | `string` | No | UUID of the model |
+| `agent_id` | `string` | No | UUID of the agent |
+| `profile_id` | `string` | No | UUID of the profile |
+| `name` | `string` | No | Display name of the resource |
+
+---
+
+## `GroupDetailRunItem`
+
+Run metadata for the detail response.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | UUID of the run |
+| `created_at` | `string` | Yes | Timestamp when the run was created |
+| `input_tokens` | `integer` | No | Number of input tokens consumed |
+| `output_tokens` | `integer` | No | Number of output tokens generated |
+| `cached_input_tokens` | `integer` | No | Number of cached input tokens |
+| `cost` | `number` | No | Cost of the run |
+| `model_id` | `string` | No | UUID of the model used |
+| `agent_id` | `string` | No | UUID of the agent used |
+| `profile_id` | `string` | No | UUID of the user profile |
+
+---
+
+## `GroupDetailRunWithMessages-Output`
+
+A run with its messages and context boundary.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run` | [`GroupDetailRunItem`](#groupdetailrunitem) | Yes | Run metadata |
+| `messages` | [`GroupDetailMessageItem`](#groupdetailmessageitem)[] | No | Messages in this run |
+| `previous_context_start_index` | `integer` | No | Index where previous context starts |
+
+---
+
+## `GroupListItem`
+
+Single group in the list response with hydrated metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | UUID of the group |
+| `session_id` | `string` | No | UUID of the parent session |
+| `profile_id` | `string` | No | UUID of the user profile |
+| `group_name` | `string` | No | Name of the group |
+| `first_run_at` | `string` | No | Timestamp of the first run |
+| `last_run_at` | `string` | No | Timestamp of the last run |
+| `run_count` | `integer` | No | Number of runs in the group |
+| `unique_agents` | `integer` | No | Number of unique agents used |
+| `unique_models` | `integer` | No | Number of unique models used |
+| `total_input_tokens` | `integer` | No | Total input tokens consumed |
+| `total_output_tokens` | `integer` | No | Total output tokens generated |
+| `total_tokens` | `integer` | No | Total tokens used |
+| `total_cost` | `string` | No | Total cost of the group |
+| `agent_ids` | `string`[] | No | UUIDs of agents used |
+| `model_ids` | `string`[] | No | UUIDs of models used |
+| `profile_name` | `string` | No | Display name of the user profile |
+| `agent_names` | `string`[] | No | Names of agents used |
+| `model_names` | `string`[] | No | Names of models used |
+
+---
+
+## `HealthViews`
+
+Health view data.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `service_hourly` | [`GetHealthResponse`](#gethealthresponse)[] | No | Hourly service health entries |
+| `metrics_hourly` | [`GetMetricsSearchResponse`](#getmetricssearchresponse)[] | No | Hourly metrics entries |
+
+---
+
+## `MvInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Materialized view name |
+| `definition` | `string` | Yes | SQL definition of the view |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the view |
+
+---
+
+## `OperationInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Operation name |
+| `description` | `string` | Yes | Human-readable description of the operation |
+| `params` | [`ParamInfo`](#paraminfo)[] | Yes | List of operation parameters |
+| `returns` | `object` | No | Return type schema |
+
+---
+
+## `OperationPrompts`
+
+Starter prompts keyed by operation name.
+
+Each key is an operation (e.g. "create", "search", "draft", "export")
+and the value is a list of starter prompts for that operation.
+The client picks from the operations the caller has permission for
+and rotates through them.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `prompts` | `object` | No | Map of operation name to starter prompts |
+
+---
+
+## `PageMetaItem`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | Yes | — |
+| `description` | `string` | Yes | — |
+
+---
+
+## `ParamInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Parameter name |
+| `type` | `string` | Yes | Parameter data type |
+| `required` | `boolean` | Yes | Whether the parameter is required |
+| `default` | `any` | No | Default value if not required |
+
+---
+
+## `PricingDailyItem-Output`
+
+A single day+model aggregation bucket.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_key` | `string` | Yes | Date bucket key |
+| `model_id` | `string` | No | Associated model identifier |
+| `total_cost` | `string` | No | Total cost for this bucket |
+| `run_count` | `integer` | No | Number of runs in this bucket |
+
+---
+
+## `PricingGroupItem`
+
+A single group row in the pricing list.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | Pricing group identifier |
+| `session_id` | `string` | No | Associated session ID |
+| `group_name` | `string` | No | Group display name |
+| `first_run_at` | `string` | No | Timestamp of first run |
+| `last_run_at` | `string` | No | Timestamp of last run |
+| `run_count` | `integer` | No | Number of runs in the group |
+| `total_input_tokens` | `integer` | No | Total input tokens consumed |
+| `total_output_tokens` | `integer` | No | Total output tokens generated |
+| `total_tokens` | `integer` | No | Total tokens used |
+| `total_cost` | `string` | No | Total cost for the group |
+| `agent_ids` | `string`[] | No | Associated agent IDs |
+| `model_ids` | `string`[] | No | Associated model IDs |
+| `agent_names` | `string`[] | No | Associated agent names |
+| `model_names` | `string`[] | No | Associated model names |
+
+---
+
+## `PricingResources`
+
+Pricing resource metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `agents` | `object` | No | Agent resources keyed by ID |
+| `models` | `object` | No | Model resources keyed by ID |
+
+---
+
+## `ProfileSummary`
+
+Caller identity derived from JWT — who you are on this page.
+
+Superset of the old six-field version: now carries everything the client
+needs so that ``/\{artifact\}/context`` fully replaces ``/profiles/context``
+and the extra ``getLayoutContextData`` round-trip can be dropped.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Display name of the authenticated user |
+| `role` | `string` | Yes | Role name (e.g. 'Super Administrator') |
+| `role_level` | `integer` | Yes | Role hierarchy level (0 = highest privilege) |
+| `department_ids` | `string`[] | Yes | Departments the user belongs to |
+| `artifact_access` | `string`[] | Yes | Artifact types this role can access (sidebar visibility) |
+| `role_permissions` | `any`[][] | Yes | Full (artifact, operation) permission tuples for granular page gating |
+| `is_active` | `boolean` | Yes | Whether the user's profile is active |
+| `id` | `string` | Yes | Profile UUID (SocketProvider, ProfileProvider) |
+| `theme` | [`ThemePrimitives`](#themeprimitives) | No | Theme primitives (ThemeHydrator) |
+| `session_id` | `string` | No | Current session UUID |
+| `is_emulation` | `boolean` | No | Whether user is in emulation mode (ProfileProvider) |
+| `role_resources` | [`QGetProfileContextV4RoleResource`](#qgetprofilecontextv4roleresource)[] | No | All role resources for emulation display (ProfileProvider) |
+| `scoped_roles` | `string`[] | No | Roles the user can emulate (ProfileProvider) |
+| `active` | `boolean` | No | Alias for is_active (ProfileProvider uses this name) |
+
+---
+
+## `ProfileSummaryItem`
+
+Per-profile aggregate stats for the summary card.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `profile_id` | `string` | No | Profile identifier |
+| `profile_name` | `string` | No | Profile display name |
+| `sessions_count` | `integer` | No | Number of sessions |
+| `logins_count` | `integer` | No | Number of logins |
+| `grants_count` | `integer` | No | Number of grants |
+| `problems_count` | `integer` | No | Number of problems |
+| `activity_count` | `integer` | No | Total activity count |
+
+---
+
+## `QGetProfileContextV4RoleResource`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `role` | `string` | No | — |
+| `name` | `string` | No | — |
+| `description` | `string` | No | — |
+| `icon_value` | `string` | No | — |
+| `color_hex` | `string` | No | — |
+
+---
+
+## `SessionListItem`
+
+Single session in the list response with hydrated metadata.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `session_id` | `string` | Yes | UUID of the session |
+| `profile_id` | `string` | No | UUID of the user profile |
+| `profile_name` | `string` | No | Display name of the user profile |
+| `session_created_at` | `string` | No | Timestamp when session was created |
+| `session_updated_at` | `string` | No | Timestamp when session was last updated |
+| `active` | `boolean` | No | Whether the session is active |
+| `group_count` | `integer` | No | Number of groups in the session |
+| `run_count` | `integer` | No | Number of runs in the session |
+| `first_run_at` | `string` | No | Timestamp of the first run |
+| `last_run_at` | `string` | No | Timestamp of the last run |
+| `total_tokens` | `integer` | No | Total tokens used in the session |
+| `total_cost` | `string` | No | Total cost of the session |
+| `chat_count` | `integer` | No | Number of chats in the session |
+| `attempt_count` | `integer` | No | Number of attempts in the session |
+| `message_count` | `integer` | No | Number of messages in the session |
+| `problem_count` | `integer` | No | Number of problems in the session |
+
+---
+
+## `SessionTimelineItem`
+
+Single event in the unified session timeline.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `event_type` | `string` | No | Type of the timeline event |
+| `entity_id` | `string` | No | UUID of the related entity |
+| `entity_name` | `string` | No | Name of the related entity |
+| `created_at` | `string` | No | Timestamp when the event occurred |
+| `extra_1` | `string` | No | Additional context field 1 |
+| `extra_2` | `string` | No | Additional context field 2 |
+
+---
+
+## `TableInfo`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Table name |
+| `columns` | [`ColumnInfo`](#columninfo)[] | Yes | List of columns in the table |
+
+---
+
+## `ThemePrimitives`
+
+Raw theme color primitives (hex values) from settings.
+
+General-purpose — not CSS-specific. Clients derive their own
+presentation tokens (oklch, CSS variables, etc.) from these.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `primary` | `string` | No | Primary color hex value |
+| `accent` | `string` | No | Accent color hex value |
+| `background` | `string` | No | Background color hex value |
+| `surface` | `string` | No | Surface color hex value |
+| `success` | `string` | No | Success state color hex value |
+| `warning` | `string` | No | Warning state color hex value |
+| `error` | `string` | No | Error state color hex value |
+| `chart1` | `string` | No | Chart color 1 hex value |
+| `chart2` | `string` | No | Chart color 2 hex value |
+| `chart3` | `string` | No | Chart color 3 hex value |
+| `chart4` | `string` | No | Chart color 4 hex value |
+| `chart5` | `string` | No | Chart color 5 hex value |
+
+---

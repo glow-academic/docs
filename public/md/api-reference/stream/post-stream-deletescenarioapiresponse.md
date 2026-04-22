@@ -7,6 +7,7 @@ Schema: DeleteScenarioApiResponse
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`DeleteScenarioResult`](/api-reference/stream/types#deletescenarioresult)[] | Yes | List of operation results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

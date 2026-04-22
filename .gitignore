@@ -10,3 +10,4 @@ auth.db
 # Claude Code
 .claude/worktrees/
 .claude/plans/
+.claude/

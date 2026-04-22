@@ -1,0 +1,20 @@
+# `POST` `/department/delete`
+
+Delete Department
+
+Bulk delete departments — composable infra architecture.
+
+## Request Body (`DeleteDepartmentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `department_ids` | `string`[] | Yes | UUIDs of departments to delete |
+| `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`DeleteDepartmentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`DeleteDepartmentResult`](/api-reference/department/types#deletedepartmentresult)[] | Yes | Per-item deletion results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

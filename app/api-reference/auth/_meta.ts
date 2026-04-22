@@ -1,0 +1,18 @@
+export default {
+  'post-auth-context': 'POST /context',
+  'post-auth-get': 'POST /get',
+  'post-auth-search': 'POST /search',
+  'post-auth-create': 'POST /create',
+  'post-auth-update': 'POST /update',
+  'post-auth-duplicate': 'POST /duplicate',
+  'post-auth-delete': 'POST /delete',
+  'patch-auth-draft': 'PATCH /draft',
+  'post-auth-drafts': 'POST /drafts',
+  'post-auth-export': 'POST /export',
+  'post-auth-generate': 'POST /generate',
+  'post-auth-generations': 'POST /generations',
+  'post-auth-group': 'POST /group',
+  'post-auth-problem': 'POST /problem',
+  'post-auth-refresh': 'POST /refresh',
+  'types': 'Types',
+}

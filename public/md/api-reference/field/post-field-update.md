@@ -1,0 +1,20 @@
+# `POST` `/field/update`
+
+Update Field
+
+Update fields using composable infra architecture.
+
+## Request Body (`UpdateFieldApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `fields` | [`UpdateFieldItem`](/api-reference/field/types#updatefielditem)[] | Yes | List of fields to update |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`UpdateFieldApiResponse-Output`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `results` | [`FieldResultItem`](/api-reference/field/types#fieldresultitem)[] | Yes | Per-item update results |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

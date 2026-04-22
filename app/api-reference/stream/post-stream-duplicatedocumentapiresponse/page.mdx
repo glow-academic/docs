@@ -9,6 +9,7 @@ Schema: DuplicateDocumentApiResponse
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `document_id` | `string` | Yes | Newly created document UUID |
 | `message` | `string` | Yes | Human-readable result message |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
 
 ## Response
 

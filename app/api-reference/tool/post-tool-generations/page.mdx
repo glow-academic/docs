@@ -1,0 +1,23 @@
+# `POST` `/tool/generations`
+
+Generations Tool
+
+List tool generation groups — composable infra architecture.
+
+## Request Body (`GenerationsToolApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `search` | `string` | No | Name search (ILIKE) |
+| `date_from` | `string` | No | Start date filter |
+| `date_to` | `string` | No | End date filter |
+| `page_limit` | `integer` | No | Maximum items per page |
+| `page_offset` | `integer` | No | Offset for pagination |
+
+## Response (`GenerationsToolApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `actor_name` | `string` | No | Display name of the current actor |
+| `items` | [`GenerationsToolListItem`](/api-reference/tool/types#generationstoollistitem)[] | No | Generation groups |
+| `total_count` | `integer` | No | Total number of matching generations |

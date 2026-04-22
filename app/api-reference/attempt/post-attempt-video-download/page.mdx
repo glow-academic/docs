@@ -1,0 +1,17 @@
+# `POST` `/attempt/video/download`
+
+Download Video
+
+Download a video file by video entry ID with range support for seeking.
+
+## Request Body (`VideoDownloadAttemptApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `video_id` | `string` | Yes | UUID of the videos_entry to download |
+
+## Response
+
+```
+{}
+```

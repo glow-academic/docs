@@ -6,19 +6,26 @@ Schema: GetChatRequest
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `chat_entry_id` | `string` | Yes | UUID of the chat entry |
-| `attempt_id` | `string` | No | UUID of the attempt |
-| `draft_id` | `string` | No | UUID of the draft |
-| `description_search` | `string` | No | Search filter for descriptions |
-| `persona_search` | `string` | No | Search filter for personas |
-| `document_search` | `string` | No | Search filter for documents |
-| `problem_statement_search` | `string` | No | Search filter for problem statements |
-| `image_search` | `string` | No | Search filter for images |
-| `video_search` | `string` | No | Search filter for videos |
-| `question_search` | `string` | No | Search filter for questions |
-| `option_search` | `string` | No | Search filter for options |
-| `persona_show_selected` | `boolean` | No | Whether to show only selected personas |
-| `document_show_selected` | `boolean` | No | Whether to show only selected documents |
+| `id` | `string` | No | Chat entry ID |
+| `chat_entry_id` | `string` | No | Legacy alias for the chat entry ID |
+| `attempt_id` | `string` | No | Attempt ID |
+| `draft_id` | `string` | No | Draft ID |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads |
+| `names` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `descriptions` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `flags` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `departments` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `personas` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `documents` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `parameter_fields` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `scenarios` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `fields` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `questions` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `options` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `videos` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `images` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `problem_statements` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
+| `objectives` | [`app__infra__chat__types__SectionFilter`](/api-reference/stream/types#app-infra-chat-types-sectionfilter) | No | — |
 
 ## Response
 
