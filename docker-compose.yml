@@ -6,13 +6,13 @@ services:
     restart: unless-stopped
     environment:
       - HOSTNAME=0.0.0.0
-      - INTERNAL_API_BASE=http://glow-api:8000
+      - INTERNAL_API_BASE=http://glow-nginx:80
       - NODE_ENV=production
       - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:-}
       - BETTER_AUTH_URL=${ORIGIN:-http://localhost:3300}
       - AUTH_CLIENT_ID=${AUTH_CLIENT_ID:-glow-docs}
       - AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET:-}
-      - GLOW_API_URL=${GLOW_API_URL:-http://glow-api:8000}
+      - GLOW_API_URL=${GLOW_API_URL:-http://glow-nginx:80}
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
       interval: 10s
@@ -27,13 +27,13 @@ services:
     restart: unless-stopped
     environment:
       - HOSTNAME=0.0.0.0
-      - INTERNAL_API_BASE=http://glow-api:8000
+      - INTERNAL_API_BASE=http://glow-nginx:80
       - NODE_ENV=production
       - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:-}
       - BETTER_AUTH_URL=${ORIGIN:-http://localhost:3300}
       - AUTH_CLIENT_ID=${AUTH_CLIENT_ID:-glow-docs}
       - AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET:-}
-      - GLOW_API_URL=${GLOW_API_URL:-http://glow-api:8000}
+      - GLOW_API_URL=${GLOW_API_URL:-http://glow-nginx:80}
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
       interval: 10s
@@ -51,7 +51,7 @@ services:
       - app-green
     environment:
       - ACTIVE_ENV=${ACTIVE_ENV:-blue}
-      - MCP_BACKEND=${MCP_BACKEND:-glow-api:8000}
+      - MCP_BACKEND=${MCP_BACKEND:-glow-nginx:80}
     volumes:
       - ./web/default.conf.template:/etc/nginx/templates/default.conf.template:ro
       - ./web/generated:/etc/nginx/conf.d/generated:rw
