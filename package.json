@@ -8,7 +8,12 @@
     "start": "next start",
     "gen:llms": "node scripts/generate-llms-txt.mjs"
   },
+  "//": "better-auth + better-sqlite3 + jose + @modelcontextprotocol/sdk are unused at runtime (the code that imported them was deleted) but kept so bun resolves the exact dep tree learnloopllc-glow-docs builds against. Drop only if a build verifies clean without them.",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "better-auth": "^1.5.6",
+    "better-sqlite3": "^12.8.0",
+    "jose": "^6.2.2",
     "next": "^15.0.0",
     "nextra": "^4.0.0",
     "nextra-theme-docs": "^4.0.0",
@@ -17,6 +22,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "latest",
     "@types/react": "latest",
     "openapi-typescript": "^7.13.0",

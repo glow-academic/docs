@@ -10,13 +10,8 @@ export const metadata = {
   description: 'Documentation for the Glow conversational AI training platform',
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const pageMap = await getPageMap()
-
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <Head />
