@@ -63,7 +63,7 @@ glow use
 
 | Flag | Short | Env | Description |
 |---|---|---|---|
-| `--api-url` | — | `GLOW_API_URL` | LearnLoop API URL (central platform) |
+| `--api-url` | — | `GLOW_API_URL` | Glow API URL |
 | `--instance-url` | — | `GLOW_INSTANCE_URL` | Glow instance URL |
 | `--license-key` | — | `GLOW_LICENSE_KEY` | License key |
 | `--client-id` | — | `GLOW_CLIENT_ID` | OAuth client ID |

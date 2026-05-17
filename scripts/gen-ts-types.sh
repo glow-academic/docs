@@ -12,7 +12,7 @@ cd "$(dirname "$0")/.."
 
 echo "Generating TypeScript types from OpenAPI specs..."
 
-for spec in specs/learnloop-api.json specs/glow-api.json; do
+for spec in specs/glow-api.json; do
     name=$(basename "$spec" .json)
     output="generated/ts/${name}.ts"
 

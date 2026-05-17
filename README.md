@@ -1,0 +1,45 @@
+# Glow — Docs
+
+Glow is source-available for academic, research, educational, and other noncommercial use under the [PolyForm Noncommercial License 1.0.0](./LICENSE).
+
+Commercial use requires a separate written license from Purdue Research Foundation / Purdue University. Contact: ashok@learn-loop.org.
+
+This repository contains the **documentation site** — Nextra-powered, statically exported, deployed to GitHub Pages at <https://glow-academic.github.io/docs/>. It is one of four components in the Glow platform:
+
+| Component | What it is |
+|---|---|
+| [api](https://github.com/glow-academic/api) | FastAPI backend |
+| [client](https://github.com/glow-academic/client) | Next.js frontend |
+| [cli](https://github.com/glow-academic/cli) | Rust CLI — the canonical deploy + management tool |
+| **docs** (this repo) | Nextra docs site |
+
+## Local development
+
+```bash
+bun install
+bun run dev   # serves on http://localhost:3300
+```
+
+## Build (static export)
+
+```bash
+bun run build       # emits ./out/ — what GH Pages serves
+```
+
+The `.github/workflows/pages.yml` workflow runs this on every push to `main` and publishes to GitHub Pages.
+
+## Regenerating `llms.txt`
+
+`public/llms.txt` and `public/llms-full.txt` are checked-in so static export ships them as-is. When the MDX content changes, regenerate with:
+
+```bash
+bun run gen:llms
+```
+
+Commit the diff.
+
+## License
+
+This project is licensed under the [PolyForm Noncommercial License 1.0.0](./LICENSE).
+
+This is not an OSI-approved open-source license. It is intended to support academic and research dissemination while preserving separate commercial licensing rights.

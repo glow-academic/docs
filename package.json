@@ -1,17 +1,14 @@
 {
   "name": "glow-docs",
-  "version": "2.5.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3300",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "gen:llms": "node scripts/generate-llms-txt.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.29.0",
-    "better-auth": "^1.5.6",
-    "better-sqlite3": "^12.8.0",
-    "jose": "^6.2.2",
     "next": "^15.0.0",
     "nextra": "^4.0.0",
     "nextra-theme-docs": "^4.0.0",
@@ -20,7 +17,6 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "latest",
     "@types/react": "latest",
     "openapi-typescript": "^7.13.0",

@@ -1,10 +1,9 @@
 {
-    "glow-api": {
-        "version": "2.13.5",
-        "synced_at": "2026-04-22T12:54:45Z"
-    },
-    "cli": {
-        "version": "2.11.0",
-        "synced_at": "2026-04-22T12:54:45Z"
-    }
+  "_comment": "Records which api + cli versions this docs revision documents. Static docs has no runtime compat enforcement — this is for the maintainer to bump when re-generating from a new openapi.json + cli spec.",
+  "api": {
+    "version": "1.0.0"
+  },
+  "cli": {
+    "version": "1.0.0"
+  }
 }

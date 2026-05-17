@@ -1,0 +1,76 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one in-flight Pages deploy at a time, but don't cancel an
+# already-running one (so a quick second push waits its turn).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Cache bun's global install cache. Keyed on bun.lock so any
+      # dependency bump invalidates cleanly; restore-keys lets a fresh
+      # branch fall back to the most-recent cache rather than starting
+      # cold every time.
+      - name: Cache bun deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
+
+      - run: bun install --frozen-lockfile
+
+      # Cache Next.js's incremental build cache. Keyed on lockfile +
+      # source so an unchanged content tree reuses the prerender + bundle
+      # cache and a typical edit only rebuilds touched pages.
+      - name: Cache next build
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ hashFiles('**/*.mdx', '**/*.tsx', '**/*.ts', 'next.config.mjs') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
+            next-${{ runner.os }}-
+
+      - name: Build (static export)
+        run: bun run build
+
+      # GH Pages serves _next/* fine — but Jekyll mangles underscore
+      # paths by default, so disable Jekyll explicitly.
+      - run: touch out/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
