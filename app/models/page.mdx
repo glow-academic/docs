@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: models — replace public/demos/models.mp4 */}
+
 # Models
+
+<DemoVideo topic="models" />
 
 Models define the LLM configurations that power AI student personas during office hour simulations. Each model wraps a specific LLM (such as `gpt-4o` or `claude-3-opus`) with settings for temperature, reasoning level, modalities, and pricing, and links back to the provider that supplies the underlying API.
 
@@ -49,7 +53,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search models:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/models/search \
+curl -X POST https://<your-instance>/model/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -59,7 +63,7 @@ curl -X POST https://<your-instance>/v5/models/search \
 **Create a model:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/models/create \
+curl -X POST https://<your-instance>/model/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -98,7 +102,7 @@ Every model requires at least one provider. The `provider_ids` field connects th
 
 ```bash
 # Filter models by provider
-curl -X POST https://<your-instance>/v5/models/search \
+curl -X POST https://<your-instance>/model/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -159,21 +163,21 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all models | `glow models search` | `POST /models/search` |
-| Get model details | `glow models get --body '{"model_id": "..."}'` | `POST /models/get` |
-| Create model | `glow models create --body '{...}'` | `POST /models/create` |
-| Update model | `glow models update --body '{"model_id": "...", ...}'` | `POST /models/update` |
-| Duplicate model | `glow models create --body '{...}'` | `POST /models/duplicate` |
-| Delete model(s) | `glow models delete --body '{"model_id": "..."}'` | `POST /models/delete` |
-| Export to CSV | `glow models export` | `POST /models/export` |
-| Stage a draft | `glow models draft --body '{...}'` | `PATCH /models/draft` |
-| List drafts | `glow models list` | `POST /models/drafts` |
+| List all models | `glow models search` | `POST /model/search` |
+| Get model details | `glow models get --body '{"model_id": "..."}'` | `POST /model/get` |
+| Create model | `glow models create --body '{...}'` | `POST /model/create` |
+| Update model | `glow models update --body '{"model_id": "...", ...}'` | `POST /model/update` |
+| Duplicate model | `glow models create --body '{...}'` | `POST /model/duplicate` |
+| Delete model(s) | `glow models delete --body '{"model_id": "..."}'` | `POST /model/delete` |
+| Export to CSV | `glow models export` | `POST /model/export` |
+| Stage a draft | `glow models draft --body '{...}'` | `PATCH /model/draft` |
+| List drafts | `glow models list` | `POST /model/drafts` |
 
 ---
 
 ## Related
 
-- [Models API Reference](/glow/models/api) -- full endpoint and type documentation
-- [Models CLI Reference](/glow/models/cli) -- all CLI commands
-- [Providers Guide](/glow/providers/guide) -- set up the LLM backend a model connects to
-- [Evals Guide](/glow/evals/guide) -- evaluate model performance across simulations
+- [Models API Reference](/api-reference/model) -- full endpoint and type documentation
+- [Models CLI Reference](/cli-reference/model) -- all CLI commands
+- [Providers Guide](/provider) -- set up the LLM backend a model connects to
+- [Evals Guide](/eval) -- evaluate model performance across simulations
