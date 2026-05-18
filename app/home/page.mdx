@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: home — replace public/demos/home.mp4 */}
+{/* DEMO_VIDEO: home-overview */}
 
 # Home
 
-<DemoVideo topic="home" />
+<DemoVideo
+  topic="home-overview"
+  caption="The TA landing page — assigned simulation cards on top, attempt history table below, status chips and persona colors at a glance."
+/>
 
 Home is the TA landing page in Glow. It displays the training simulations assigned to the current TA, along with their progress status and attempt history. This is where TAs go to start, continue, or review their office-hours practice sessions.
 
@@ -55,7 +58,14 @@ curl -X POST https://<your-instance>/attempt/search \
   }'
 ```
 
+{/* DEMO_VIDEO: home-assigned */}
+
 ## Understanding the Simulation Cards
+
+<DemoVideo
+  topic="home-assigned"
+  caption="POST /attempt/home returning the assigned simulation deck — Confused/Aggressive/Passive/Happy cards with status, highest score, and pass threshold rendered live."
+/>
 
 The `POST /attempt/home` response includes:
 
@@ -78,7 +88,14 @@ The `POST /attempt/home` response includes:
 - **`standard_groups`** -- Standard group metadata: `name`, `description`, `points`, `pass_points`.
 - **`standards`** -- Individual standards: `name`, `description`, `points`, grouped by `standard_group_id`.
 
+{/* DEMO_VIDEO: home-history */}
+
 ## Understanding the Attempt History
+
+<DemoVideo
+  topic="home-history"
+  caption="Paginating the TA's attempt history, sorting by date, and using simulation_search to find a specific past attempt."
+/>
 
 ![Home attempt history showing individual scores per scenario with pass/fail indicators](/screenshots/home/attempt-history.png)
 
@@ -106,7 +123,14 @@ The `POST /attempt/search` response returns paginated `HistoryItem` rows:
 | Sorting | `sort_by`, `sort_order` | Sort by any column |
 | Pagination | `page`, `page_size` | Control page size |
 
+{/* DEMO_VIDEO: home-export */}
+
 ## Exporting
+
+<DemoVideo
+  topic="home-export"
+  caption="glow attempts export — downloading the denormalized ZIP with the TA's certificate of completion baked into the bundle."
+/>
 
 The export endpoint generates a denormalized ZIP that includes a certificate of completion:
 
