@@ -1,0 +1,244 @@
+{/* DEMO_VIDEO: streaming-overview — replace public/demos/streaming-overview.mp4 */}
+
+# Streaming
+
+Every artifact in Glow exposes the same live-events surface:
+`GET /<artifact>/watch` is a Server-Sent Events stream filtered to a
+single run. Long-running operations — generation, simulation
+playback, eval scoring, bulk imports — fire envelopes onto this
+channel, and the client disconnects when a terminal lifecycle event
+arrives.
+
+<DemoVideo
+  topic="streaming-overview"
+  caption="A persona generate run watched live: events stream in, the terminal .completed frame fires, the CLI exits 0."
+/>
+
+## What does watch do?
+
+`watch` is the canonical "give me events for this run" surface. The
+top-level `/stream` and `/generate` routes do not exist — streaming is
+always per-artifact. The URL shape is:
+
+```
+GET /<artifact>/watch?run_id=<uuid>&group_id=<uuid>
+```
+
+`run_id` is the optional filter that scopes the stream to a single
+execution; omit it to receive every event in the group (the
+front-end default for live tables). `group_id` may be omitted and
+the resolver derives it from `run_id`. Auth is the same bearer-token
+pattern as every other endpoint — pass `Authorization: Bearer
+<token>` and the `X-Api-Key` license header.
+
+---
+
+{/* DEMO_VIDEO: streaming-connect — replace public/demos/streaming-connect.mp4 */}
+
+## Connecting to a watch stream
+
+<DemoVideo
+  topic="streaming-connect"
+  caption="curl --no-buffer against /persona/watch with a real run_id — frames stream into the terminal as the generator emits them."
+/>
+
+The response is `Content-Type: text/event-stream`, kept open
+indefinitely until the server fires a terminal event or the client
+disconnects. A keep-alive comment (`: keep-alive\n\n`) is emitted
+every 15 seconds when there are no events.
+
+**Raw HTTP:**
+
+```bash
+curl -N https://<your-instance>/persona/watch?run_id=<run-uuid> \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Accept: text/event-stream"
+```
+
+**Browser:**
+
+```js
+const es = new EventSource(
+  `/persona/watch?run_id=${runId}`,
+  { withCredentials: true },
+);
+es.onmessage = (ev) => {
+  const envelope = JSON.parse(ev.data);
+  // envelope.event_type, envelope.artifact, envelope.payload …
+};
+```
+
+The route is `GET` (not `POST`) specifically so the browser's
+native `EventSource` works without a polyfill.
+
+---
+
+{/* DEMO_VIDEO: streaming-events — replace public/demos/streaming-events.mp4 */}
+
+## SSE event format
+
+<DemoVideo
+  topic="streaming-events"
+  caption="Side-by-side: a single SSE frame on the wire next to the parsed EventEnvelope it represents."
+/>
+
+Every frame is a single `data:` line carrying the JSON-serialized
+`EventEnvelope` followed by a blank line. The wire format does **not**
+use the SSE `event:` name field — the event type lives inside the
+envelope as `event_type` so multiplexing clients can wildcard-match
+in JavaScript (which `EventSource` named-channels can't do).
+
+```
+data: {"id":"evt_01J…","event_type":"persona.generate.started","artifact":"persona","operation":"generate","created_at":"2026-05-17T18:04:11.293Z","group_id":"…","run_id":"…","entity_id":null,"call_id":"…","tool_id":null,"payload":{"prompt":"Confused student in CS-180"}}
+
+data: {"id":"evt_01J…","event_type":"persona.generate.progress","artifact":"persona","operation":"generate","created_at":"2026-05-17T18:04:12.871Z","group_id":"…","run_id":"…","entity_id":"persona_01J…","call_id":"…","tool_id":null,"payload":{"step":"draft","percent":42}}
+
+data: {"id":"evt_01J…","event_type":"persona.generate.completed","artifact":"persona","operation":"generate","created_at":"2026-05-17T18:04:14.502Z","group_id":"…","run_id":"…","entity_id":"persona_01J…","call_id":"…","tool_id":null,"payload":{"persona_id":"persona_01J…","version":1}}
+```
+
+The `EventEnvelope` schema (Pydantic, defined once and shared across
+all 20 watch streams):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Globally-unique event id |
+| `event_type` | string | Dotted name — `<artifact>.<op>.<phase>` |
+| `artifact` | string | Source artifact (`persona`, `attempt`, …) |
+| `operation` | string | Operation that fired the event (`generate`, `update`, …) |
+| `created_at` | datetime | UTC ISO-8601 timestamp |
+| `group_id` | uuid \| null | Group the run belongs to |
+| `run_id` | uuid \| null | The run this envelope was filtered against |
+| `entity_id` | uuid \| null | The artifact row being mutated (when known) |
+| `call_id` | uuid \| null | Soft `*_calls_entry` ledger id |
+| `tool_id` | uuid \| null | Originating tool call (for LLM-triggered ops) |
+| `payload` | object | Operation-specific body |
+
+---
+
+{/* DEMO_VIDEO: streaming-terminal — replace public/demos/streaming-terminal.mp4 */}
+
+## Terminal events
+
+<DemoVideo
+  topic="streaming-terminal"
+  caption="A run that fails: the .failed envelope arrives, the CLI prints the payload, and exits with code 1 — no need to poll a status endpoint."
+/>
+
+Event types follow the convention `<artifact>.<operation>.<phase>`.
+The phase suffix tells the client when to disconnect:
+
+- `.completed` (or `.complete`) — operation finished successfully
+- `.failed` (or `.error`) — operation reached a terminal failure
+
+The CLI's `cmd_watch_run` detects these by suffix-matching the
+`event_type` and returns `ControlFlow::Break` from the SSE reader,
+which closes the underlying connection. Exit code is 0 on
+`.completed`, 1 on `.failed`. If the stream closes naturally
+without a terminal frame (e.g. the server's dedup/age window
+expires), that is also treated as success — the run is just no
+longer being watched.
+
+You don't have to wait for a terminal event — non-blocking consumers
+(live tables, dashboards) typically omit `run_id` and stay
+subscribed to the whole group, hydrating their UI on every envelope.
+
+---
+
+{/* DEMO_VIDEO: streaming-cli — replace public/demos/streaming-cli.mp4 */}
+
+## The `glow <art> watch <run_id>` CLI helper
+
+<DemoVideo
+  topic="streaming-cli"
+  caption="glow personas watch <run_id> in human and --json modes — same frames, two renderings, terminal frame breaks the loop."
+/>
+
+Every artifact's CLI namespace reserves `watch` as a sub-command
+that wraps the SSE GET:
+
+```bash
+# Block on a single run until it completes or fails
+glow personas watch 01J3K…
+
+# Scope the subscriber room explicitly (otherwise resolved from run_id)
+glow personas watch 01J3K… --group-id 01J3G…
+
+# Machine-readable: one JSON object per frame on stdout
+glow personas watch 01J3K… --json
+```
+
+The most common pattern — generate then watch — is fused into a
+single command via `--wait`:
+
+```bash
+glow personas generate --wait --body '{"prompt": "Confused CS-180 student"}'
+```
+
+Under the hood that fires `POST /persona/generate`, reads `run_id`
+out of the response, then immediately connects to `/persona/watch`
+and blocks until the terminal frame.
+
+---
+
+## Which artifacts have watch
+
+All 20 artifacts that ship watch endpoints use the **same** URL
+shape, query params, envelope, and terminal-event convention. The
+list: `agent`, `attempt`, `auth`, `cohort`, `department`, `document`,
+`eval`, `field`, `model`, `parameter`, `persona`, `profile`,
+`provider`, `rubric`, `scenario`, `setting`, `simulation`, `system`,
+`test`, `tool`. There is no top-level `/stream` or `/watch` route —
+always go through an artifact path.
+
+---
+
+## Common patterns
+
+### Generate then watch (manual)
+
+```bash
+# 1. Trigger
+RESP=$(curl -sX POST https://<host>/persona/generate \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Confused CS-180 student"}')
+RUN_ID=$(echo "$RESP" | jq -r .run_id)
+
+# 2. Block on the run
+curl -N "https://<host>/persona/watch?run_id=$RUN_ID" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Accept: text/event-stream"
+```
+
+See [Generation](/generation) for the full per-artifact `generate`
+contract and the `--wait` ergonomic.
+
+### Filter by `run_id` vs `group_id`
+
+| Goal | Pass | Behavior |
+|------|------|----------|
+| Wait for one operation to finish | `run_id` (+ optional `group_id`) | Stream stops at the terminal frame for that run |
+| Hydrate a live table for the whole group | `group_id` only | Every artifact event in the group — never closes on terminal frames |
+| Mirror a single entity across edits | `group_id` + client-side filter on `entity_id` | Cheaper than per-run streams when the UI is row-scoped |
+
+### Reconnecting
+
+The transport is unbuffered HTTP — there's no replay if the client
+drops. For at-least-once delivery, query the underlying artifact
+(`POST /<art>/get` or its `generations` endpoint) after reconnect to
+catch up, then re-subscribe.
+
+## Related
+
+- [Generation](/generation) — the per-artifact `generate` operations
+  that produce most watch traffic, plus the `--wait` fuse-into-one
+  ergonomic
+- [Personas CLI Reference](/cli-reference/personas) — `watch` action
+  documented inline alongside CRUD verbs (every artifact CLI mirrors
+  this shape)
+- [Personas API Reference](/api-reference/persona) — the per-artifact
+  `GET /persona/watch` schema; every other artifact's reference page
+  carries the same endpoint
+- [Patterns](/patterns) — cross-cutting conventions that show up on
+  every artifact (soft calls, bulk shape, watch)
