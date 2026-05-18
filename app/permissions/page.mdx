@@ -1,0 +1,254 @@
+{/* DEMO_VIDEO: permissions-overview — replace public/demos/permissions-overview.mp4 */}
+
+# Permissions & Roles
+
+Every request hitting a Glow API endpoint resolves to a **profile**,
+each profile carries exactly one **role**, and the role's
+**permissions** -- a list of `(artifact, operation)` tuples -- decide
+which routes that request can touch. The same tuple list is mirrored
+to the client in every `context` response so the UI can hide the
+buttons, sidebar entries, and routes the caller can't reach without
+making a round-trip just to discover a 403.
+
+<DemoVideo
+  topic="permissions-overview"
+  caption="A learner-role profile sees the Home / Practice / Leaderboard rail; an admin-role profile sees the same rail plus Training, Management, Intelligence, and Platform. Same client build, different role_permissions payload."
+/>
+
+## The model
+
+- A **profile** is a person (or a guest auto-provisioned at first
+  login -- see [Authentication](/authentication)).
+- A profile has exactly one **role** (the `role_id` on the profile
+  resource).
+- A role has a set of **permissions**. Each permission row in
+  `permissions_resource` is an `(artifact, operation)` pair --
+  e.g. `("persona", "create")`, `("attempt", "dashboard")`,
+  `("test", "invocation_run")`.
+- A role's `permission_ids` define what tuples are granted. The
+  server enforces the tuple at the route boundary; the client mirrors
+  the same check to filter the UI.
+
+Two derived shapes flow off this list:
+
+| Shape | Type | Used for |
+|-------|------|----------|
+| `role_permissions` | `[artifact, operation][]` | Per-button / per-route gating (the exact tuple check). |
+| `role_artifacts` | `string[]` (unique artifacts) | Coarse sidebar visibility -- *"is any operation on `persona` granted?"*. |
+
+`role_artifacts` is just `dict.fromkeys(p.artifact for p in perms)` --
+the deduplicated artifact projection of `role_permissions`. The wire
+uses `role_artifacts` for the top-level sidebar gate and
+`role_permissions` for the granular check.
+
+---
+
+{/* DEMO_VIDEO: permissions-resolve — replace public/demos/permissions-resolve.mp4 */}
+
+## How a request gets authorized
+
+<DemoVideo
+  topic="permissions-resolve"
+  caption="A request to POST /persona/create with a viewer-role token: middleware resolves the identity, the route's has_permission check rejects (persona, create), and the response is a 403 before any work runs."
+/>
+
+The flow is the same for every authenticated route:
+
+```
+  Authorization: Bearer <jwt>
+            │
+            ▼
+  ┌─────────────────────────┐
+  │ resolve_identity(token) │   verifies JWT signature, extracts
+  └─────────────────────────┘   profile_id (direct claim, email
+            │                   lookup, or Keycloak sub fallback)
+            ▼
+  ┌──────────────────────────────────┐
+  │ resolve_profile_identity_context │   hydrates the profile's
+  └──────────────────────────────────┘   role + permissions
+            │
+            ▼
+       ProfileIdentityContext
+         .role_permissions  =  [("persona", "create"), …]
+         .role_artifacts    =  ["persona", "attempt", …]
+            │
+            ▼
+  ┌──────────────────────────────┐
+  │ has_permission(role_perms,   │   route handler asserts
+  │   artifact, operation)       │   the tuple before doing work
+  └──────────────────────────────┘
+            │
+       granted? ──── no ───▶  403 Forbidden
+            │
+           yes
+            ▼
+        run handler
+```
+
+The server-side check is a one-liner used by every protected route:
+
+```python
+from app.infra.permissions_helpers import has_permission
+
+if not has_permission(profile.role_permissions, "persona", "create"):
+    raise PermissionDenied(...)
+```
+
+Same predicate, same tuple, everywhere. There is no implicit
+"admins bypass" branch -- admin roles simply have every tuple in
+their `permission_ids`.
+
+---
+
+{/* DEMO_VIDEO: permissions-context — replace public/demos/permissions-context.mp4 */}
+
+## `role_artifacts` in responses
+
+<DemoVideo
+  topic="permissions-context"
+  caption="DevTools network panel showing a /profile/context response — the role_artifacts list is the same data the sidebar filter reads from."
+/>
+
+Every artifact's `POST /<artifact>/context` (and the canonical
+`POST /profile/context`) returns the caller's permission projection.
+The relevant slice of `ProfileContextApiResponse`:
+
+```json
+{
+  "id": "f3c9…-profile-uuid",
+  "name": "Ashok S.",
+  "role": "Administrator",
+  "active": true,
+
+  "role_artifacts": [
+    "persona", "scenario", "simulation", "cohort",
+    "profile", "department", "agent", "model",
+    "attempt", "test", "system", "setting"
+  ],
+
+  "scoped_roles": ["Learner", "Instructor"],
+
+  "department_ids": ["dept-cs-uuid"],
+  "primary_department_id": "dept-cs-uuid",
+
+  "settings_id": "settings-uuid",
+  "session_id": "session-uuid",
+
+  "is_emulation": false,
+  "emulation_depth": 0
+}
+```
+
+`role_artifacts` is the coarse projection (one entry per artifact the
+role can touch at all). The fine-grained tuple list
+(`role_permissions`) is exposed through the per-artifact
+`/<artifact>/context` shapes when an operation-level gate is needed
+(chat sub-ops, invocation sub-ops, single-op collapsed views).
+`scoped_roles` lists role names the caller is allowed to *assign*
+to other profiles, used by the profile editor's role dropdown.
+
+The full schema is generated under
+[Profile Context API](/api-reference/profile/post-profile-context).
+
+---
+
+{/* DEMO_VIDEO: permissions-client-mirror — replace public/demos/permissions-client-mirror.mp4 */}
+
+## Mirroring on the client
+
+<DemoVideo
+  topic="permissions-client-mirror"
+  caption="The same SIDEBAR_SECTIONS array rendered for two different roles — entries the role lacks are dropped from the rail at render time, no flash."
+/>
+
+The client mirrors the server check so the UI never offers an action
+the server would reject. Reference implementation:
+`/lib/permissions.ts` + `/lib/sidebar-config.ts` in the
+`glow-academic-client` repo.
+
+Three predicates cover every gating site:
+
+```ts
+// 1. Top-level page guard — call in a server component after fetching context.
+guardPage(pathname, context.role_permissions);
+
+// 2. Sidebar item — collapsed VIEW children (home, dashboard, …) and
+//    compound sub-domains (chat_, invocation_) map to their parent
+//    artifact + op/prefix automatically.
+canAccessSidebarItem("persona", role_permissions);
+
+// 3. Arbitrary route check — used by middleware-style guards.
+canAccessPage("/training/personas", role_permissions);
+```
+
+The contract: **any UI element tied to a server-side operation should
+consult `role_permissions`**. If you add a new route, add a
+`PAGE_RULES` entry. If you add a new sidebar item, give it an
+`artifact` field that lines up with the permission catalog. The
+flatten-era reality is that single-op pages (e.g. `/home` ↔ `attempt,
+home`) match by exact op while compound sub-domains (`/chat/*`,
+`/invocation/*`) match by prefix -- see `findRuleForArtifact` for the
+mapping table.
+
+---
+
+## Defining a role
+
+Roles, permissions, and the join between them all live in
+`*_resource` tables hydrated through the standard artifact CRUD:
+
+- **Permission catalog** -- one row per `(artifact, operation)` pair.
+  Surfaced via `POST /permission/get` and `POST /permission/search`
+  (resource type defined in `core/app/tools/resources/permissions/`).
+  Catalog rows are seeded by the OpenAPI / route registry sweep at
+  deploy time -- you do not author them by hand.
+- **Role resource** -- one row per role (`Learner`, `Instructor`,
+  `Administrator`, …). Each role row carries:
+  - `name`, `description`, `level` (0 = highest privilege)
+  - `permission_ids[]` -- the tuple set the role grants
+  - `request_limit_ids[]` -- optional per-role rate limit
+- **Profile → role** -- the profile resource's `role_id` link
+  (single-select).
+
+Seed roles ship in `glow-deploy.yaml` per-instance. The role editor
+(`POST /profile/draft` with the inline `role_draft` payload) is the
+runtime path -- it can re-link an existing role or inline-create a
+new role + new request limits in one round-trip.
+
+`role.level` is an integer hierarchy used by helpers like
+`can_manage_level(user_level, target_level)`: a profile can only
+edit / delete / duplicate / emulate a profile whose role level is
+*strictly greater than* (= less privileged than) their own.
+
+---
+
+## Departments + scoping
+
+Departments are an **orthogonal** concept from roles. The role
+decides *which artifacts* the caller can touch at all
+(`(persona, create)` granted or not). The profile's
+`department_ids` and `primary_department_id` decide *which rows
+within each artifact* are visible -- nearly every artifact's
+search/get pipeline filters by department membership.
+
+The two combine multiplicatively:
+
+| | `(persona, create)` denied | `(persona, create)` granted |
+|---|---|---|
+| Not in dept CS | 403 | 200 -- creates in caller's primary dept |
+| In dept CS | 403 | 200 -- creates in CS (if scoped) |
+
+For the full scoping model see [Departments](/departments).
+
+---
+
+## Related
+
+- [Authentication](/authentication) -- how the Bearer JWT resolves to
+  the `profile_id` that drives the role lookup.
+- [Profile Context API](/api-reference/profile/post-profile-context)
+  -- canonical `role_artifacts` shape on the wire.
+- [Departments](/departments) -- the orthogonal row-scoping layer
+  that combines with role permissions.
+- [Profiles](/profiles) -- where the `role_id` link is set and the
+  role editor lives.
