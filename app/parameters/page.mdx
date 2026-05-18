@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: parameters — replace public/demos/parameters.mp4 */}
+
 # Parameters
+
+<DemoVideo topic="parameters" />
 
 Parameters define the dimensions along which simulation scenarios can vary. Each parameter is a category -- like Temperament or Crowdedness -- that contains a set of fields representing its possible values.
 
@@ -69,7 +73,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search parameters
-curl -X POST https://<your-instance>/v5/parameters/search \
+curl -X POST https://<your-instance>/parameter/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -79,7 +83,7 @@ curl -X POST https://<your-instance>/v5/parameters/search \
   }'
 
 # Create a parameter
-curl -X POST https://<your-instance>/v5/parameters/create \
+curl -X POST https://<your-instance>/parameter/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -128,7 +132,7 @@ Parameters support rich search and filtering. You can filter by:
 
 ```bash
 # Search parameters by field
-curl -X POST https://<your-instance>/v5/parameters/search \
+curl -X POST https://<your-instance>/parameter/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -150,26 +154,26 @@ glow parameters draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /parameters/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_ids`, `department_ids`, and `field_ids`.
+Via the API, use `PATCH /parameter/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_ids`, `department_ids`, and `field_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all parameters | `glow parameters list` | `POST /parameters/search` |
-| Get a parameter | `glow parameters get --body '{...}'` | `POST /parameters/get` |
-| Create parameters | `glow parameters create --body '{...}'` | `POST /parameters/create` |
-| Update parameters | `glow parameters update --body '{...}'` | `POST /parameters/update` |
-| Duplicate a parameter | -- | `POST /parameters/duplicate` |
-| Delete parameters | `glow parameters delete --body '{...}'` | `POST /parameters/delete` |
-| Export to CSV | `glow parameters export` | `POST /parameters/export` |
-| Save a draft | `glow parameters draft --body '{...}'` | `PATCH /parameters/draft` |
-| List drafts | -- | `POST /parameters/drafts` |
+| List all parameters | `glow parameters list` | `POST /parameter/search` |
+| Get a parameter | `glow parameters get --body '{...}'` | `POST /parameter/get` |
+| Create parameters | `glow parameters create --body '{...}'` | `POST /parameter/create` |
+| Update parameters | `glow parameters update --body '{...}'` | `POST /parameter/update` |
+| Duplicate a parameter | -- | `POST /parameter/duplicate` |
+| Delete parameters | `glow parameters delete --body '{...}'` | `POST /parameter/delete` |
+| Export to CSV | `glow parameters export` | `POST /parameter/export` |
+| Save a draft | `glow parameters draft --body '{...}'` | `PATCH /parameter/draft` |
+| List drafts | -- | `POST /parameter/drafts` |
 
 ## Related
 
-- [Parameters API](/glow/parameters/api)
-- [Parameters CLI](/glow/parameters/cli)
-- [Fields Guide](/glow/fields/guide) -- the values within each parameter
-- [Documents Guide](/glow/documents/guide) -- documents reference parameters and fields
-- [Departments Guide](/glow/departments/guide) -- scope parameters to departments
+- [Parameters API](/api-reference/parameter)
+- [Parameters CLI](/cli-reference/parameter)
+- [Fields Guide](/field) -- the values within each parameter
+- [Documents Guide](/document) -- documents reference parameters and fields
+- [Departments Guide](/department) -- scope parameters to departments
