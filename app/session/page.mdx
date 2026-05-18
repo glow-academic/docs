@@ -1,9 +1,10 @@
-{/* DEMO_VIDEO: session-overview — replace public/demos/session-overview.mp4 */}
+{/* DEMO_VIDEO: session-overview | playwright */}
 
 # Session
 
 <DemoVideo
   topic="session-overview"
+  kind="playwright"
   caption="Opening a session detail page — TA identity at the top, groups grid in the middle, full event timeline pinned to the right rail."
 />
 
@@ -74,12 +75,13 @@ curl -X POST https://<your-instance>/system/export \
   -d '{"target_session_id": "session-uuid"}'
 ```
 
-{/* DEMO_VIDEO: session-detail-view — replace public/demos/session-detail-view.mp4 */}
+{/* DEMO_VIDEO: session-detail-view | playwright */}
 
 ## Understanding the session detail response
 
 <DemoVideo
   topic="session-detail-view"
+  kind="playwright"
   caption="Walking through `GetSessionDetailResponse` field-by-field: profile_name, session_created_at, active, and the groups array hydrated inline."
 />
 
@@ -104,12 +106,13 @@ The **`groups`** array contains `ArtifactSessionGroup` objects, each representin
 - `total_tokens` -- Total tokens consumed
 - `total_cost` -- Dollar cost as a string
 
-{/* DEMO_VIDEO: session-timeline — replace public/demos/session-timeline.mp4 */}
+{/* DEMO_VIDEO: session-timeline | playwright */}
 
 ### Timeline
 
 <DemoVideo
   topic="session-timeline"
+  kind="playwright"
   caption="Scrolling the chronological event log — group_created, run_started, run_ended events stitched together with entity_name links back into the data."
 />
 
@@ -122,12 +125,13 @@ The **`timeline`** array contains `SessionTimelineItem` objects -- a chronologic
 - `created_at` -- Timestamp of the event
 - `extra_1`, `extra_2` -- Additional context fields
 
-{/* DEMO_VIDEO: session-navigate-to-group — replace public/demos/session-navigate-to-group.mp4 */}
+{/* DEMO_VIDEO: session-navigate-to-group | playwright */}
 
 ## Navigating from Activity to Session
 
 <DemoVideo
   topic="session-navigate-to-group"
+  kind="playwright"
   caption="The full drill path: Activity → pick a session_id → Session detail → click a group row → land on the Group detail page with runs + messages."
 />
 
