@@ -1,10 +1,27 @@
 # Session
 
+{/* DEMO_VIDEO: session — replace public/demos/session.mp4 */}
+
 # Session
 
-Session provides a detailed view of an individual TA training session, including the AI generation groups created during the session and a unified timeline of events. This is the drill-down view when you want to understand exactly what happened during a specific training session.
+<DemoVideo topic="session" />
 
-## What is Session?
+Session provides a detailed view of an individual TA training
+session, including the AI generation groups created during the
+session and a unified timeline of events. This is the drill-down view
+when you want to understand exactly what happened during a specific
+training session.
+
+Session is a **view on the system artifact**, exposed via two
+endpoints:
+
+* `POST /system/session` — single session detail (one row + timeline + groups).
+* `POST /system/sessions` — paginated list of all sessions.
+
+The CLI surfaces these as `glow system session` and
+`glow system sessions`.
+
+## What is a Session?
 
 A session represents a single visit by a TA to the Glow platform. During a session, the TA may interact with multiple student persona simulations, generating AI groups (collections of model calls) and producing a chronological timeline of events.
 
@@ -20,37 +37,43 @@ Session is useful when you need to:
 
 ```bash
 # Get session detail with groups and timeline
-glow session get --body '{"session_id": "session-uuid"}'
+glow system session --body '{"session_id": "session-uuid"}'
 
-# Export session data as a ZIP
-glow session export --body '{"target_session_id": "session-uuid"}'
+# Paginate the full session list
+glow system sessions --body '{"page_size": 25, "sort_order": "desc"}'
+
+# Export attempts associated with this session
+glow system export --body '{"target_session_id": "session-uuid"}'
 ```
 
 ### API
 
 ```bash
-# Get session detail
-curl -X POST https://<your-instance>/v5/session/get \
+# Get one session detail
+curl -X POST https://<your-instance>/system/session \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "session_id": "session-uuid"
-  }'
+  -d '{"session_id": "session-uuid"}'
 
-# Export session data
-curl -X POST https://<your-instance>/v5/session/export \
+# List sessions
+curl -X POST https://<your-instance>/system/sessions \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "target_session_id": "session-uuid"
-  }'
+  -d '{"page_size": 20}'
+
+# Export
+curl -X POST https://<your-instance>/system/export \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"target_session_id": "session-uuid"}'
 ```
 
-## Understanding the Session Detail Response
+## Understanding the session detail response
 
-The `/session/get` response includes:
+`POST /system/session` returns `GetSessionDetailResponse`:
 
 - **`session_exists`** -- Whether the requested session was found.
 - **`actor_name`** -- Display name of the current user viewing the session.
@@ -82,44 +105,32 @@ The **`timeline`** array contains `SessionTimelineItem` objects -- a chronologic
 
 ## Navigating from Activity to Session
 
-A common workflow is to start from the Activity page, identify a session of interest, then drill down:
+A common workflow is to start from the Activity page, paginate
+sessions, then drill into one:
 
 ```bash
-# Step 1: Search activity for sessions by a specific TA
-glow activity search --body '{"page": 1, "page_size": 10}'
+# Step 1: Paginate sessions (or use the Activity summary at /system/activity)
+glow system sessions --body '{"page_size": 10}'
 
 # Step 2: Pick a session_id from the results and get its detail
-glow session get --body '{"session_id": "abc-123"}'
+glow system session --body '{"session_id": "abc-123"}'
 
 # Step 3: Drill into a specific group
-glow group get --body '{"group_id": "group-uuid"}'
+glow system group --body '{"group_id": "group-uuid"}'
 ```
-
-## Exporting
-
-The export endpoint requires a `target_session_id` and returns a denormalized ZIP:
-
-```bash
-curl -X POST https://<your-instance>/v5/session/export \
-  -H "X-Api-Key: <api-key>" \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"target_session_id": "session-uuid"}'
-```
-
-The response includes `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get session detail | `glow session get` | `POST /session/get` |
-| Export session data | `glow session export` | `POST /session/export` |
-| Refresh caches | -- | `POST /session/refresh` |
+| Get one session detail | `glow system session` | `POST /system/session` |
+| List sessions (paginated) | `glow system sessions` | `POST /system/sessions` |
+| Export session data | `glow system export` | `POST /system/export` |
+| Refresh caches | `glow system refresh` | `POST /system/refresh` |
 
 ## Related
 
-- [Session API Reference](/glow/session/api)
-- [Session CLI Reference](/glow/session/cli)
-- [Activity Guide](/glow/activity/guide) -- find sessions via activity search
-- [Group Guide](/glow/group/guide) -- drill into a specific generation group
+- [System API Reference](/api-reference/system) — every system/* endpoint
+- [System CLI Reference](/cli-reference/system) — every `glow system ...` command
+- [Activity](/activity) — aggregate counts + per-profile breakdown
+- [Group](/group) — drill into a specific generation group within a session

@@ -1,12 +1,16 @@
 # Simulations
 
+{/* DEMO_VIDEO: simulations — replace public/demos/simulations.mp4 */}
+
 # Simulations
+
+<DemoVideo topic="simulations" />
 
 Simulations are complete training sessions that bundle one or more scenarios together with rubrics, time limits, and ordering -- they are what learners actually launch to begin practicing.
 
 ## What is a Simulation?
 
-A simulation is a runnable training package. It wraps one or more [Scenarios](/glow/scenarios/guide) and adds session-level configuration: which rubrics to evaluate against, how much time the learner has per scenario, the order scenarios appear, and behavioral flags.
+A simulation is a runnable training package. It wraps one or more [Scenarios](/scenario) and adds session-level configuration: which rubrics to evaluate against, how much time the learner has per scenario, the order scenarios appear, and behavioral flags.
 
 A simulation contains:
 
@@ -20,7 +24,7 @@ A simulation contains:
 - **Departments** -- organizational groupings for filtering and access control
 - **Flags** -- simulation-level boolean settings
 
-Simulations are assigned to Cohorts, which control which learners have access. When a learner starts a simulation, Glow creates an [Attempt](/glow/attempt/guide) with one [Chat](/glow/chat/guide) per scenario.
+Simulations are assigned to Cohorts, which control which learners have access. When a learner starts a simulation, Glow creates an [Attempt](/attempt) with one [Chat](/chat) per scenario.
 
 ![Simulations list showing simulation cards with name, scenario count, and active status](/screenshots/simulations/list.png)
 
@@ -72,7 +76,7 @@ glow simulations get --body '{"simulation_id": "your-simulation-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/simulations/create \
+curl -X POST https://<your-instance>/simulation/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -87,7 +91,7 @@ curl -X POST https://<your-instance>/v5/simulations/create \
 Configure scenarios via draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/simulations/draft \
+curl -X PATCH https://<your-instance>/simulation/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -106,11 +110,11 @@ Simulations are **step 3** in the Glow content pipeline:
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas, documents, and objectives |
 | **3. Add Scenarios to Simulations** | **Simulations** | **Bundle scenarios into a complete training session with rubrics and time limits** |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts and interact with AI in [Chats](/glow/chat/guide) |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
 
 ## Configuring Scenarios Within a Simulation
 
@@ -206,7 +210,7 @@ glow simulations draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/simulations/draft \
+curl -X PATCH https://<your-instance>/simulation/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -224,7 +228,7 @@ curl -X PATCH https://<your-instance>/v5/simulations/draft \
 glow simulations list
 
 # API
-curl -X POST https://<your-instance>/v5/simulations/drafts \
+curl -X POST https://<your-instance>/simulation/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -234,22 +238,22 @@ curl -X POST https://<your-instance>/v5/simulations/drafts \
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all simulations | `glow simulations search` | `POST /simulations/search` |
-| Get one simulation | `glow simulations get --body '{"simulation_id": "..."}'` | `POST /simulations/get` |
-| Create simulations | `glow simulations create --body '{"simulations": [...]}'` | `POST /simulations/create` |
-| Update simulations | `glow simulations update --body '{"simulations": [...]}'` | `POST /simulations/update` |
-| Duplicate a simulation | -- | `POST /simulations/duplicate` |
-| Delete simulations | `glow simulations delete --body '{"simulation_ids": [...]}'` | `POST /simulations/delete` |
-| Save a draft | `glow simulations draft --body '{...}'` | `PATCH /simulations/draft` |
-| List drafts | `glow simulations list` | `POST /simulations/drafts` |
-| Export to CSV | `glow simulations export` | `POST /simulations/export` |
-| Import from CSV | -- | `POST /simulations/csv` |
+| List all simulations | `glow simulations search` | `POST /simulation/search` |
+| Get one simulation | `glow simulations get --body '{"simulation_id": "..."}'` | `POST /simulation/get` |
+| Create simulations | `glow simulations create --body '{"simulations": [...]}'` | `POST /simulation/create` |
+| Update simulations | `glow simulations update --body '{"simulations": [...]}'` | `POST /simulation/update` |
+| Duplicate a simulation | -- | `POST /simulation/duplicate` |
+| Delete simulations | `glow simulations delete --body '{"simulation_ids": [...]}'` | `POST /simulation/delete` |
+| Save a draft | `glow simulations draft --body '{...}'` | `PATCH /simulation/draft` |
+| List drafts | `glow simulations list` | `POST /simulation/drafts` |
+| Export to CSV | `glow simulations export` | `POST /simulation/export` |
+| Import from CSV | -- | `POST /simulation/csv` |
 
 ## Related
 
-- [Simulations API Reference](/glow/simulations/api) -- full endpoint schemas and field definitions
-- [Simulations CLI Reference](/glow/simulations/cli) -- all CLI commands and flags
-- [Scenarios Guide](/glow/scenarios/guide) -- creating the training situations that simulations contain
-- [Personas Guide](/glow/personas/guide) -- the AI characters used within scenarios
-- [Attempts Guide](/glow/attempt/guide) -- what happens when a learner starts a simulation
-- [Agents Guide](/glow/agents/guide) -- configuring the AI engine that powers simulations
+- [Simulations API Reference](/api-reference/simulation) -- full endpoint schemas and field definitions
+- [Simulations CLI Reference](/cli-reference/simulation) -- all CLI commands and flags
+- [Scenarios Guide](/scenario) -- creating the training situations that simulations contain
+- [Personas Guide](/persona) -- the AI characters used within scenarios
+- [Attempts Guide](/attempt) -- what happens when a learner starts a simulation
+- [Agents Guide](/agent) -- configuring the AI engine that powers simulations

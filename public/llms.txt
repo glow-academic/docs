@@ -753,7 +753,7 @@
 
 ## Start
 
-- [Glow](/start.md)
+- [Start](/start.md)
 
 ## Tools
 

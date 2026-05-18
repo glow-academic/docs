@@ -1,73 +1,113 @@
-# Glow
+# Start
 
-# Glow
+{/* DEMO_VIDEO: start — replace public/demos/start.mp4 */}
 
-> **Glow API v2.6.0** — Generated from OpenAPI specification
+# Start
 
-Glow runs on each customer instance. It powers the web client and CLI for managing personas, agents, sessions, and other artifacts.
+Spin up a Glow instance from zero and make your first authenticated
+request. Pinned **Glow API v2.15.38** · **CLI v1.0.0** (see
+[api-versions.json](https://github.com/learnloopllc/glow-academic-docs/blob/main/api-versions.json) for the live pin).
 
-## Authentication
+<DemoVideo topic="start" caption="From `glow init` to a passing health check in two minutes." />
 
-All requests require authentication via one or both of:
+## 1 — Install the CLI
 
-| Scheme | Type | Header | Description |
-|---|---|---|---|
-| **BearerAuth** | HTTP bearer | `Authorization` | Keycloak-issued JWT token. Resolves the caller's profile and session. |
-
-## Base URL
-
-Each Glow instance has its own URL:
-
-```
-https://<your-instance>/v5
-```
-
-## Stream CLI
-
-### `glow stream`
-
-Stream events via SSE (Server-Sent Events)
+The `glow` CLI is the canonical entry point for deploying and operating
+an instance. Install via Homebrew (macOS / Linux):
 
 ```bash
-glow stream
+brew install learnloopllc/glow/glow
+glow --version  # → glow 1.0.0
 ```
 
-| Flag | Required | Description |
+Build-from-source instructions live in the
+[`glow-academic-cli` README](https://github.com/learnloopllc/glow-academic-cli).
+
+## 2 — Scaffold + deploy an instance
+
+```bash
+# Interactive wizard — writes ~/.glow/instances/<name>/glow-deploy.yaml
+glow init my-school
+
+# First-time deploy (pulls images, brings up postgres / api / client / keycloak)
+glow deploy my-school
+
+# Verify all containers are healthy
+glow status my-school
+```
+
+The wizard collects the origin URL, AI provider + key, seed template,
+and optional OIDC. Re-running `glow init <name>` overwrites the yaml
+idempotently.
+
+Lifecycle commands you'll use most:
+
+| Command | Purpose |
+|---|---|
+| `glow deploy <name>` | first-time bring-up |
+| `glow redeploy <name>` | roll a new version (auto-backup + blue/green swap) |
+| `glow stop <name>` / `start <name>` | pause/resume (data + network intact) |
+| `glow destroy <name>` | tear down containers + volumes (asks twice) |
+| `glow status <name>` | container state + per-service health |
+| `glow logs <name> [-f]` | tail `docker compose logs` |
+| `glow backup <name>` | manage local `pg_dump` snapshots |
+
+## 3 — Authenticate
+
+```bash
+# Opens a browser → Keycloak login → drops a token into ~/.config/glow
+glow login --instance-url https://my-school.example.com
+```
+
+After login, every command uses the stored bearer token automatically.
+Details + service-account flow: see [Authentication](/authentication).
+
+## 4 — Make your first call
+
+The CLI dispatches every artifact action through a generic plural-name
+pattern: `glow <plural-resource> <action>`. There is **no** top-level
+`/v5`, `/generate`, `/stream`, or `/health` route — those are reached
+through their owning artifact.
+
+```bash
+# List personas
+glow personas search
+
+# Get one
+glow personas get --body '{"persona_id": "your-persona-uuid"}'
+
+# Real health artifact (POST /system/health, returns rich status)
+glow system health
+
+# Who am I? (POST /<any-artifact>/context returns ComposedContextResponse)
+glow profiles context
+```
+
+Equivalent raw HTTP (no `/v5` prefix, singular paths):
+
+```bash
+curl -X POST https://my-school.example.com/persona/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -d '{}'
+```
+
+## CLI global flags
+
+| Flag | Env | Purpose |
 |---|---|---|
-| `--artifact` | Yes | Artifact type to stream |
-| `--operation` | Yes | Operation to stream (e.g. create, update, delete) |
-| `--entity-id` | No | Filter by entity ID |
-| `--cursor` | No | Cursor for resuming from a position |
+| `--instance-url <url>` | `GLOW_INSTANCE_URL` | override the active instance URL |
+| `--client-id <id>` | `GLOW_CLIENT_ID` | override the OAuth client ID |
+| `--json` | — | machine-readable output |
+| `-y`, `--yes` | — | skip confirmation prompts for destructive actions |
 
-## Instance Management
+(Legacy `--api-url` and `--license-key` flags have been removed — the
+license key now lives in `~/.glow/instances/<name>/glow-deploy.yaml` and
+the instance URL replaces what `--api-url` used to do.)
 
-### `glow instances`
+## Next
 
-Manage configured Glow instances
-
-```bash
-glow instances
-```
-
-### `glow use`
-
-Switch to a configured Glow instance
-
-```bash
-glow use
-```
-
-| Flag | Required | Description |
-|---|---|---|
-| `name` | Yes | Instance name (as configured with 'glow instances add') |
-
-## CLI Global Flags
-
-| Flag | Short | Env | Description |
-|---|---|---|---|
-| `--api-url` | — | `GLOW_API_URL` | Glow API URL |
-| `--instance-url` | — | `GLOW_INSTANCE_URL` | Glow instance URL |
-| `--license-key` | — | `GLOW_LICENSE_KEY` | License key |
-| `--client-id` | — | `GLOW_CLIENT_ID` | OAuth client ID |
-| `--json` | — | — | Output in JSON format |
-| `--yes` | `-y` | — | Skip confirmation prompts for destructive actions |
+- **[How It Works](/how-it-works)** — the simulation / persona / scenario / attempt loop
+- **[Tutorial](/tutorial)** — build your first simulation end-to-end
+- **[CLI Reference](/cli-reference)** — every command, auto-generated
+- **[API Reference](/api-reference)** — every endpoint, auto-generated

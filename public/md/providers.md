@@ -1,6 +1,10 @@
 # Providers
 
+{/* DEMO_VIDEO: providers — replace public/demos/providers.mp4 */}
+
 # Providers
+
+<DemoVideo topic="providers" />
 
 Providers represent the LLM backends that power Glow. Each provider encapsulates an external AI service -- such as OpenAI or Anthropic -- along with its API endpoints, authentication keys, and configuration values. Models connect to providers to gain access to these backends.
 
@@ -55,7 +59,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search providers:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/search \
+curl -X POST https://<your-instance>/provider/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -65,7 +69,7 @@ curl -X POST https://<your-instance>/v5/providers/search \
 **Create a provider:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/create \
+curl -X POST https://<your-instance>/provider/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -110,7 +114,7 @@ When you retrieve a provider with `GET`, the response includes an `endpoints` se
 Provider keys hold encrypted credentials. Keys are never returned in plaintext from list or search operations. To decrypt a key, use the dedicated decrypt endpoint:
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/decrypt \
+curl -X POST https://<your-instance>/provider/decrypt \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -131,7 +135,7 @@ The response returns the decrypted `key` value, the key `name`, and the `actor_n
 To quickly create a copy of an existing provider configuration:
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/duplicate \
+curl -X POST https://<your-instance>/provider/duplicate \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -145,7 +149,7 @@ The response returns a new `provider_id` for the duplicated provider.
 Delete multiple providers in a single call:
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/delete \
+curl -X POST https://<your-instance>/provider/delete \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -181,21 +185,21 @@ The draft endpoint uses `PATCH` semantics. Include `input_draft_id` and `expecte
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all providers | `glow providers search` | `POST /providers/search` |
-| Get provider details | `glow providers get --body '{"provider_id": "..."}'` | `POST /providers/get` |
-| Create provider | `glow providers create --body '{...}'` | `POST /providers/create` |
-| Update provider | `glow providers update --body '{"provider_id": "...", ...}'` | `POST /providers/update` |
-| Duplicate provider | -- | `POST /providers/duplicate` |
-| Delete provider(s) | `glow providers delete --body '{"provider_id": "..."}'` | `POST /providers/delete` |
-| Decrypt a key | -- | `POST /providers/decrypt` |
-| Export to CSV | `glow providers export` | `POST /providers/export` |
-| Stage a draft | `glow providers draft --body '{...}'` | `PATCH /providers/draft` |
-| List drafts | `glow providers list` | `POST /providers/drafts` |
+| List all providers | `glow providers search` | `POST /provider/search` |
+| Get provider details | `glow providers get --body '{"provider_id": "..."}'` | `POST /provider/get` |
+| Create provider | `glow providers create --body '{...}'` | `POST /provider/create` |
+| Update provider | `glow providers update --body '{"provider_id": "...", ...}'` | `POST /provider/update` |
+| Duplicate provider | -- | `POST /provider/duplicate` |
+| Delete provider(s) | `glow providers delete --body '{"provider_id": "..."}'` | `POST /provider/delete` |
+| Decrypt a key | -- | `POST /provider/decrypt` |
+| Export to CSV | `glow providers export` | `POST /provider/export` |
+| Stage a draft | `glow providers draft --body '{...}'` | `PATCH /provider/draft` |
+| List drafts | `glow providers list` | `POST /provider/drafts` |
 
 ---
 
 ## Related
 
-- [Providers API Reference](/glow/providers/api) -- full endpoint and type documentation
-- [Providers CLI Reference](/glow/providers/cli) -- all CLI commands
-- [Models Guide](/glow/models/guide) -- configure models that use these providers
+- [Providers API Reference](/api-reference/provider) -- full endpoint and type documentation
+- [Providers CLI Reference](/cli-reference/provider) -- all CLI commands
+- [Models Guide](/model) -- configure models that use these providers

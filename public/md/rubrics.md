@@ -1,6 +1,10 @@
 # Rubrics
 
+{/* DEMO_VIDEO: rubrics — replace public/demos/rubrics.mp4 */}
+
 # Rubrics
+
+<DemoVideo topic="rubrics" />
 
 Rubrics define the scoring criteria used to evaluate TA performance during office hour simulations. Each rubric organizes standards into groups, assigns point values, and sets passing thresholds -- giving evaluators a structured framework to assess how well a TA handled a student interaction.
 
@@ -60,7 +64,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search rubrics:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/rubrics/search \
+curl -X POST https://<your-instance>/rubric/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -70,7 +74,7 @@ curl -X POST https://<your-instance>/v5/rubrics/search \
 **Create a rubric:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/rubrics/create \
+curl -X POST https://<your-instance>/rubric/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -196,21 +200,21 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all rubrics | `glow rubrics search` | `POST /rubrics/search` |
-| Get rubric details | `glow rubrics get --body '{"rubric_id": "..."}'` | `POST /rubrics/get` |
-| Create rubric | `glow rubrics create --body '{...}'` | `POST /rubrics/create` |
-| Update rubric | `glow rubrics update --body '{"rubric_id": "...", ...}'` | `POST /rubrics/update` |
-| Duplicate rubric | -- | `POST /rubrics/duplicate` |
-| Delete rubric(s) | `glow rubrics delete --body '{"rubric_id": "..."}'` | `POST /rubrics/delete` |
-| Export to CSV | `glow rubrics export` | `POST /rubrics/export` |
-| Stage a draft | `glow rubrics draft --body '{...}'` | `PATCH /rubrics/draft` |
-| List drafts | `glow rubrics list` | `POST /rubrics/drafts` |
+| List all rubrics | `glow rubrics search` | `POST /rubric/search` |
+| Get rubric details | `glow rubrics get --body '{"rubric_id": "..."}'` | `POST /rubric/get` |
+| Create rubric | `glow rubrics create --body '{...}'` | `POST /rubric/create` |
+| Update rubric | `glow rubrics update --body '{"rubric_id": "...", ...}'` | `POST /rubric/update` |
+| Duplicate rubric | -- | `POST /rubric/duplicate` |
+| Delete rubric(s) | `glow rubrics delete --body '{"rubric_id": "..."}'` | `POST /rubric/delete` |
+| Export to CSV | `glow rubrics export` | `POST /rubric/export` |
+| Stage a draft | `glow rubrics draft --body '{...}'` | `PATCH /rubric/draft` |
+| List drafts | `glow rubrics list` | `POST /rubric/drafts` |
 
 ---
 
 ## Related
 
-- [Rubrics API Reference](/glow/rubrics/api) -- full endpoint and type documentation
-- [Rubrics CLI Reference](/glow/rubrics/cli) -- all CLI commands
-- [Evals Guide](/glow/evals/guide) -- use rubrics within automated evaluation runs
-- [Tools Guide](/glow/tools/guide) -- tools that agents use alongside rubric-scored behavior
+- [Rubrics API Reference](/api-reference/rubric) -- full endpoint and type documentation
+- [Rubrics CLI Reference](/cli-reference/rubric) -- all CLI commands
+- [Evals Guide](/eval) -- use rubrics within automated evaluation runs
+- [Tools Guide](/tool) -- tools that agents use alongside rubric-scored behavior

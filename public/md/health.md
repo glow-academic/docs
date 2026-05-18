@@ -1,6 +1,10 @@
 # Health
 
+{/* DEMO_VIDEO: health — replace public/demos/health.mp4 */}
+
 # Health
+
+<DemoVideo topic="health" />
 
 The Health resource provides service health monitoring and system metrics for your Glow instance. Use it to track uptime, latency, CPU, memory, and error rates over time. Health is an API-only resource with no CLI commands.
 
@@ -22,7 +26,7 @@ The health response includes two materialized views:
 **Fetch health data** for the last 7 days:
 
 ```bash
-curl -X POST https://<your-instance>/health/get \
+curl -X POST https://<your-instance>/system/health \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36,7 +40,7 @@ curl -X POST https://<your-instance>/health/get \
 **Filter by service:**
 
 ```bash
-curl -X POST https://<your-instance>/health/get \
+curl -X POST https://<your-instance>/system/health \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -85,7 +89,7 @@ Each `metrics_hourly` entry contains:
 **Refresh materialized views** to ensure health data is current:
 
 ```bash
-curl -X POST https://<your-instance>/health/refresh \
+curl -X POST https://<your-instance>/system/refresh \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -94,7 +98,7 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export health data** as a denormalized ZIP for offline analysis:
 
 ```bash
-curl -X POST https://<your-instance>/health/export \
+curl -X POST https://<your-instance>/system/export \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -104,12 +108,12 @@ Returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
 
 | Operation | Method | Endpoint |
 |---|---|---|
-| Get health data | `POST` | `/health/get` |
-| Refresh views | `POST` | `/health/refresh` |
-| Export data (ZIP) | `POST` | `/health/export` |
+| Get health data | `POST` | `POST /system/health` |
+| Refresh views | `POST` | `POST /system/refresh` |
+| Export data (ZIP) | `POST` | `POST /system/export` |
 | Get documentation | `POST` | `/health/docs` |
 
 ## Related
 
-- [Health API](/glow/health/api)
-- [Info Guide](/glow/info/guide) -- quick server status check
+- [Health API](/api-reference/system)
+- [Info Guide](/info) -- quick server status check

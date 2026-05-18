@@ -1,6 +1,10 @@
 # Practice
 
+{/* DEMO_VIDEO: practice — replace public/demos/practice.mp4 */}
+
 # Practice
+
+<DemoVideo topic="practice" />
 
 Practice provides open-ended training sessions where TAs can practice with student personas outside of graded assignments. Unlike Home (which shows assigned simulations), Practice surfaces all available practice simulations for self-directed skill development.
 
@@ -12,8 +16,8 @@ Practice lets TAs engage with Confused, Aggressive, Passive, and Happy student p
 
 Practice offers two views:
 
-1. **Simulation cards** (`/practice/get`) -- Available practice simulations with progress indicators, persona details, and rubric/standard mappings.
-2. **Attempt history** (`/practice/search`) -- Paginated history of the TA's practice attempts with scores, scenarios, and completion data.
+1. **Simulation cards** (`POST /attempt/practice`) -- Available practice simulations with progress indicators, persona details, and rubric/standard mappings.
+2. **Attempt history** (`POST /attempt/search`) -- Paginated history of the TA's practice attempts with scores, scenarios, and completion data.
 
 ## Quick Start
 
@@ -21,27 +25,27 @@ Practice offers two views:
 
 ```bash
 # Get available practice simulations
-glow practice get
+glow attempts practice
 
 # Search practice attempt history
-glow practice search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
+glow attempts search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
 
 # Export practice data
-glow practice export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get practice simulation cards
-curl -X POST https://<your-instance>/v5/practice/get \
+curl -X POST https://<your-instance>/attempt/practice \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search practice history
-curl -X POST https://<your-instance>/v5/practice/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -55,7 +59,7 @@ curl -X POST https://<your-instance>/v5/practice/search \
 
 ## Understanding the Simulation Cards
 
-The `/practice/get` response mirrors the Home response structure:
+The `POST /attempt/practice` response mirrors the Home response structure:
 
 - **`actor_name`** -- Display name of the current TA.
 - **`items`** -- Array of `ChatSimulationOperational` objects for practice simulations:
@@ -79,7 +83,7 @@ The `/practice/get` response mirrors the Home response structure:
 
 ![Practice results showing rubric scores, per-criterion feedback, and improvement suggestions](/screenshots/practice/results.png)
 
-The `/practice/search` endpoint returns paginated `HistoryItem` rows.
+The `POST /attempt/search` endpoint returns paginated `HistoryItem` rows.
 
 ### Filters
 
@@ -109,14 +113,14 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get practice simulations | `glow practice get` | `POST /practice/get` |
-| Search practice history | `glow practice search` | `POST /practice/search` |
-| Export data | `glow practice export` | `POST /practice/export` |
-| Refresh caches | -- | `POST /practice/refresh` |
+| Get practice simulations | `glow attempts practice` | `POST /attempt/practice` |
+| Search practice history | `glow attempts search` | `POST /attempt/search` |
+| Export data | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 
 ## Related
 
-- [Practice API Reference](/glow/practice/api)
-- [Practice CLI Reference](/glow/practice/cli)
-- [Home Guide](/glow/home/guide) -- assigned TA training
-- [Session Guide](/glow/session/guide) -- session detail view
+- [Practice API Reference](/api-reference/attempt)
+- [Practice CLI Reference](/cli-reference/attempts)
+- [Home Guide](/home) -- assigned TA training
+- [Session Guide](/session) -- session detail view

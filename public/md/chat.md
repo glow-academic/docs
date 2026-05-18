@@ -1,29 +1,40 @@
 # Chat
 
+{/* DEMO_VIDEO: chat — replace public/demos/chat.mp4 */}
+
 # Chat
 
-Chats are the individual conversations within an attempt -- each chat corresponds to one scenario and contains the full message history between the learner and the AI persona.
+<DemoVideo topic="chat" />
+
+Chats are the individual conversations within an attempt — each chat
+corresponds to one scenario and holds the full message history between
+the learner and the AI persona.
+
+Chat is a **sub-namespace on the attempt artifact**. Every operation
+is named `chat_<op>` and lives at `POST /attempt/chat_<op>`:
+`chat_get`, `chat_message`, `chat_grade`, `chat_draft`, etc. The CLI
+exposes them as `glow attempts chat <op>` for ergonomics; the wire
+path concatenates them under `/attempt/`.
 
 ## What is a Chat?
 
-A chat is a single conversational session between a learner and an AI persona within an [Attempt](/glow/attempt/guide). When a learner starts a simulation with three scenarios, three chats are created -- one per scenario. Each chat holds the message thread, the persona configuration, attached documents, and any customization applied at runtime.
+A chat is a single conversational session between a learner and an AI persona within an [Attempt](/api-reference/attempt). When a learner starts a simulation with three scenarios, three chats are created — one per scenario. Each chat holds the message thread, the persona configuration, attached documents, and any customization applied at runtime.
 
 A chat contains:
 
-- **Chat Entry ID** -- unique identifier for this conversation
-- **Attempt ID** -- the parent attempt this chat belongs to
-- **Names** -- display name for the chat session
-- **Descriptions** -- descriptive text for context
-- **Personas** -- the AI character(s) active in this chat (inherited from the scenario)
-- **Documents** -- reference materials available during the conversation
-- **Parameter Fields** -- resolved parameter values injected into persona instructions
-- **Scenarios** -- the scenario this chat is running
-- **Objectives** -- learning goals the chat is targeting
-- **Questions & Options** -- structured prompts for quiz-style interactions
-- **Images & Videos** -- media assets shown as context
-- **Problem Statements** -- the situation being addressed
-- **Flags** -- configuration flags for the chat session
-- **Departments** -- organizational groupings
+- **Chat Entry ID** — unique identifier for this conversation
+- **Attempt ID** — the parent attempt this chat belongs to
+- **Names / Descriptions** — display copy
+- **Personas** — the AI character(s) active in this chat (inherited from the scenario)
+- **Documents** — reference materials available during the conversation
+- **Parameter Fields** — resolved parameter values injected into persona instructions
+- **Scenarios** — the scenario this chat is running
+- **Objectives** — learning goals the chat is targeting
+- **Questions & Options** — structured prompts for quiz-style interactions
+- **Images & Videos** — media assets shown as context
+- **Problem Statements** — the situation being addressed
+- **Flags** — configuration flags for the chat session
+- **Departments** — organizational groupings
 
 Chats also support a draft system for customizing chat configurations before or during a session.
 
@@ -34,19 +45,13 @@ Chats also support a draft system for customizing chat configurations before or 
 ### Get Chat Details via CLI
 
 ```bash
-glow chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
-```
-
-Search chats:
-
-```bash
-glow chat search
+glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
 ```
 
 ### Get Chat Details via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/chat/get \
+curl -X POST https://<your-instance>/attempt/chat_get \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -60,14 +65,12 @@ The response includes all hydrated resources: personas, documents, parameter fie
 
 ### Export a Chat
 
-Export the chat transcript as a CSV:
-
 ```bash
 # CLI
-glow chat export
+glow attempts chat export --body '{"chat_entry_id": "..."}'
 
 # API
-curl -X POST https://<your-instance>/v5/chat/export \
+curl -X POST https://<your-instance>/attempt/chat_export \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -83,33 +86,61 @@ Chats are created automatically as part of **step 5** when a learner starts an a
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
-| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| **5. Run Attempts** | [Attempts](/glow/attempt/guide) | Learners start attempts; **Glow creates one Chat per scenario** |
+| 1. Create Personas | [Personas](/personas) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenarios) | Build training situations and attach personas, documents, and objectives |
+| 3. Add Scenarios to Simulations | [Simulations](/simulations) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | [Cohorts](/cohorts) | Assign simulations to groups of learners |
+| **5. Run Attempts** | [Attempts](/api-reference/attempt) | Learners start attempts; **Glow creates one Chat per scenario** |
 
-You do not create chats directly -- they are generated by the attempt system. However, you can read, customize, and export them.
+You do not create chats directly via `chat_create` in normal flows —
+the attempt's `POST /attempt/start` does it. `chat_create` is exposed
+for tooling that needs to seed chats outside the normal flow.
 
-## Interacting with a Chat
+## The chat sub-op surface
 
-The conversation flow within a chat is managed through the [Attempt API](/glow/attempt/api), not the Chat API directly. The Attempt endpoints handle:
+Every chat operation is a separate endpoint under `/attempt/chat_<op>`:
 
-![Voice mode interface showing audio waveform and speaking indicators](/screenshots/chat/voice-mode.png)
+| Sub-op | Endpoint | Purpose |
+|---|---|---|
+| `chat_get` | `POST /attempt/chat_get` | hydrate a single chat by id |
+| `chat_create` | `POST /attempt/chat_create` | create a new chat (rare) |
+| `chat_message` | `POST /attempt/chat_message` | send a user message |
+| `chat_response` | `POST /attempt/chat_response` | submit a structured question response |
+| `chat_grade` | `POST /attempt/chat_grade` | request grading |
+| `chat_complete` | `POST /attempt/chat_complete` | mark a chat completed |
+| `chat_hints` | `POST /attempt/chat_hints` | fetch hints |
+| `chat_feedback` | `POST /attempt/chat_feedback` | per-standard feedback |
+| `chat_strengths` / `chat_improvements` | `POST /attempt/chat_strengths` / `_improvements` | per-message strength/improvement breakdown |
+| `chat_analyses` | `POST /attempt/chat_analyses` | overall analyses |
+| `chat_audio` | `POST /attempt/chat_audio` | attach an audio resource to a message |
+| `chat_speak` / `chat_silence` / `chat_voice` | `POST /attempt/chat_speak` / `_silence` / `_voice` | live voice session control (see WS surface below) |
+| `chat_draft` / `chat_drafts` | `POST /attempt/chat_draft` (PATCH-like) / `chat_drafts` | edit draft / list drafts |
+| `chat_refresh` / `chat_export` | `POST /attempt/chat_refresh` / `chat_export` | invalidate cache / export transcript |
 
-- **Sending messages** -- `POST /attempt/message` with the `attempt_id`, `chat_id`, and `message`
-- **Ending a chat** -- `POST /attempt/end` to close the conversation and optionally trigger grading
-- **Grading** -- `POST /attempt/grade` to evaluate the learner's performance
-- **Stopping generation** -- `POST /attempt/stop` to halt an in-progress AI response
+CLI dispatch is symmetric — `glow attempts chat <op>` (e.g.
+`glow attempts chat message <chat_id> "..."`) maps 1:1 to
+`POST /attempt/chat_<op>`.
 
-The Chat API itself is focused on reading chat state and managing chat drafts.
+## Live REPL + voice (WS)
 
-## Searching and Filtering Chat Resources
-
-The `GET /chat/get` endpoint supports search filters to narrow down the resources shown for a chat:
+The same chat surface is also exposed over socket.io for live message
+flow. The CLI has an interactive REPL at:
 
 ```bash
-curl -X POST https://<your-instance>/v5/chat/get \
+# Open a socket.io REPL — type a line + Enter to send a chat_message
+glow attempts chat live <chat_id>
+```
+
+Voice (`glow attempts chat voice <chat_id>`) is gated on the `cpal` +
+`rodio` audio deps and is currently a deferred placeholder — see the
+deferred CLI capability tracking in the `glow-academic-cli` repo.
+
+## Searching and filtering chat resources
+
+`POST /attempt/chat_get` supports search filters to narrow down the resources shown for a chat:
+
+```bash
+curl -X POST https://<your-instance>/attempt/chat_get \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -137,26 +168,22 @@ Available search filters:
 | `persona_show_selected` | Show only currently selected personas |
 | `document_show_selected` | Show only currently selected documents |
 
-## Working with Drafts
+## Working with drafts
 
-Chat drafts let you customize a chat's configuration -- changing which personas, documents, parameters, and other resources are active. This is useful for creating variations of a chat or preparing custom configurations.
-
-**Create or update a chat draft:**
+Chat drafts let you customize a chat's configuration — changing which personas, documents, parameters, and other resources are active.
 
 ```bash
-# Via CLI
-glow chat draft --body '{
+# CLI
+glow attempts chat draft --body '{
   "name": "Custom FERPA Chat",
   "description": "Modified chat with additional documents",
   "persona_ids": ["concerned-student-uuid"],
   "document_ids": ["ferpa-policy-uuid", "supplemental-guide-uuid"],
   "parameter_field_ids": ["location-param-uuid"]
 }'
-```
 
-```bash
-# Via API
-curl -X PATCH https://<your-instance>/v5/chat/draft \
+# API
+curl -X POST https://<your-instance>/attempt/chat_draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -174,50 +201,32 @@ The draft endpoint supports optimistic concurrency through `expected_version` an
 
 ```bash
 # CLI
-glow chat list
+glow attempts chat drafts
 
 # API
-curl -X POST https://<your-instance>/v5/chat/drafts \
+curl -X POST https://<your-instance>/attempt/chat_drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
 ```
 
-**Draft fields you can customize:**
-
-| Field | Description |
-|-------|-------------|
-| `name` | Chat display name |
-| `description` | Chat description |
-| `persona_ids` | Which personas are active |
-| `document_ids` | Which reference documents are available |
-| `scenario_ids` | Which scenarios are linked |
-| `parameter_field_ids` | Which parameter fields are active |
-| `question_ids` / `questions` | Structured questions |
-| `option_ids` / `options` | Answer options for questions |
-| `image_ids` / `images` | Image assets |
-| `video_ids` / `videos` | Video assets |
-| `objective_ids` / `objectives` | Learning objectives |
-| `problem_statement_ids` | Problem statements |
-| `flag_ids` | Configuration flags |
-| `department_ids` | Department associations |
-
 ## Common Operations
 
 | Task | CLI | API |
 |------|-----|-----|
-| Get chat details | `glow chat get --body '{"chat_entry_id": "..."}'` | `POST /chat/get` |
-| Search chats | `glow chat search` | -- |
-| Export chat transcript | `glow chat export` | `POST /chat/export` |
-| Save a chat draft | `glow chat draft --body '{...}'` | `PATCH /chat/draft` |
-| List chat drafts | `glow chat list` | `POST /chat/drafts` |
-| Refresh views | -- | `POST /chat/refresh` |
+| Get chat details | `glow attempts chat get --body '{"chat_entry_id": "..."}'` | `POST /attempt/chat_get` |
+| Send a message | `glow attempts chat message <chat_id> "..."` | `POST /attempt/chat_message` |
+| Grade a chat | `glow attempts chat grade <chat_id>` | `POST /attempt/chat_grade` |
+| Live REPL (socket.io) | `glow attempts chat live <chat_id>` | (WebSocket — see CLI source) |
+| Export chat transcript | `glow attempts chat export` | `POST /attempt/chat_export` |
+| Save a chat draft | `glow attempts chat draft --body '{...}'` | `POST /attempt/chat_draft` |
+| List chat drafts | `glow attempts chat drafts` | `POST /attempt/chat_drafts` |
+| Refresh views | `glow attempts chat refresh` | `POST /attempt/chat_refresh` |
 
 ## Related
 
-- [Chat API Reference](/glow/chat/api) -- full endpoint schemas and field definitions
-- [Chat CLI Reference](/glow/chat/cli) -- all CLI commands and flags
-- [Attempts Guide](/glow/attempt/guide) -- the parent container that creates and manages chats
-- [Scenarios Guide](/glow/scenarios/guide) -- the training situations that each chat runs
-- [Personas Guide](/glow/personas/guide) -- the AI characters active in each chat
-- [Simulations Guide](/glow/simulations/guide) -- the training sessions that define which scenarios (and chats) are created
+- [Attempt API Reference](/api-reference/attempt) — every chat_* endpoint with full schemas
+- [Attempts CLI Reference](/cli-reference/attempts) — every `glow attempts ...` command
+- [Scenarios](/scenarios) — the training situations that each chat runs
+- [Personas](/personas) — the AI characters active in each chat
+- [Simulations](/simulations) — the training sessions that define which scenarios (and chats) are created

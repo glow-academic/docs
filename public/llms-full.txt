@@ -2,7 +2,11 @@
 
 Route: /activity
 
+{/* DEMO_VIDEO: activity — replace public/demos/activity.mp4 */}
+
 # Activity
+
+<DemoVideo topic="activity" />
 
 Activity tracks TA engagement across your Glow instance -- sessions, logins, emulations, and per-profile usage summaries. It gives program coordinators visibility into who is actively training and who may need follow-up.
 
@@ -12,8 +16,8 @@ Activity tracks TA engagement across your Glow instance -- sessions, logins, emu
 
 Activity provides two views of TA engagement:
 
-1. **Summary view** (`/activity/get`) -- Aggregate counts (sessions, active profiles, logins, emulations) plus a per-profile breakdown showing each TA's session count, login count, grants, problems, and total activity.
-2. **Session history** (`/activity/search`) -- Paginated table of individual sessions with details like token usage, run counts, chat counts, attempt counts, and cost.
+1. **Summary view** (`POST /system/activity`) -- Aggregate counts (sessions, active profiles, logins, emulations) plus a per-profile breakdown showing each TA's session count, login count, grants, problems, and total activity.
+2. **Session history** (`POST /system/sessions`) -- Paginated table of individual sessions with details like token usage, run counts, chat counts, attempt counts, and cost.
 
 This is the go-to resource when you need to answer questions like:
 - Which TAs have logged in this week?
@@ -26,23 +30,23 @@ This is the go-to resource when you need to answer questions like:
 
 ```bash
 # Get activity summary with engagement counts
-glow activity get
+glow system activity
 
 # Get activity for a specific date range
-glow activity get --body '{"date_from": "2025-01-01", "date_to": "2025-06-30"}'
+glow system activity --body '{"date_from": "2025-01-01", "date_to": "2025-06-30"}'
 
 # Search session history (paginated)
-glow activity search --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
+glow system sessions --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
 
 # Export all activity data as a ZIP
-glow activity export
+glow system export
 ```
 
 ### API
 
 ```bash
 # Get activity summary
-curl -X POST https://<your-instance>/v5/activity/get \
+curl -X POST https://<your-instance>/system/activity \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -53,7 +57,7 @@ curl -X POST https://<your-instance>/v5/activity/get \
   }'
 
 # Search session history
-curl -X POST https://<your-instance>/v5/activity/search \
+curl -X POST https://<your-instance>/system/sessions \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -77,7 +81,7 @@ curl -X POST https://<your-instance>/v5/activity/search \
 
 ## Understanding the Summary Response
 
-The `ActivityResponse` from `/activity/get` includes:
+The `ActivityResponse` from `POST /system/activity` includes:
 
 - **`sessions_count`** -- Total number of training sessions in the filtered window.
 - **`active_profiles_count`** -- Number of TAs who have been active.
@@ -91,7 +95,7 @@ The `ActivityResponse` from `/activity/get` includes:
 
 ## Understanding the Session History Response
 
-The `ListActivityResponse` from `/activity/search` returns paginated session rows:
+The `ListActivityResponse` from `POST /system/sessions` returns paginated session rows:
 
 Each `SessionListItem` includes:
 - `session_id`, `profile_id`, `profile_name`
@@ -107,7 +111,7 @@ Each `SessionListItem` includes:
 If a session surfaces a problem (e.g., a FERPA concern or inappropriate AI response), you can resolve it:
 
 ```bash
-curl -X POST https://<your-instance>/v5/activity/resolve \
+curl -X POST https://<your-instance>/activity/resolve \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -123,28 +127,28 @@ The response confirms `problem_id`, `resolved` status, and `updated_at` timestam
 
 ```bash
 # Refresh activity materialized views
-glow activity refresh
+glow system refresh
 
 # Export all activity data as a denormalized ZIP
-glow activity export
+glow system export
 ```
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Activity summary | `glow activity get` | `POST /activity/get` |
-| Session history | `glow activity search` | `POST /activity/search` |
+| Activity summary | `glow system activity` | `POST /system/activity` |
+| Session history | `glow system sessions` | `POST /system/sessions` |
 | Resolve a problem | -- | `POST /activity/resolve` |
-| Export data | `glow activity export` | `POST /activity/export` |
-| Refresh caches | -- | `POST /activity/refresh` |
+| Export data | `glow system export` | `POST /system/export` |
+| Refresh caches | -- | `POST /system/refresh` |
 
 ## Related
 
-- [Activity API Reference](/glow/activity/api)
-- [Activity CLI Reference](/glow/activity/cli)
-- [Session Guide](/glow/session/guide) -- detailed view of a single session
-- [Dashboard Guide](/glow/dashboard/guide) -- admin analytics hub
+- [Activity API Reference](/api-reference/system)
+- [Activity CLI Reference](/cli-reference/systems)
+- [Session Guide](/session) -- detailed view of a single session
+- [Dashboard Guide](/dashboard) -- admin analytics hub
 
 ---
 
@@ -152,7 +156,11 @@ glow activity export
 
 Route: /agents
 
+{/* DEMO_VIDEO: agents — replace public/demos/agents.mp4 */}
+
 # Agents
+
+<DemoVideo topic="agents" />
 
 Agents configure the AI engine that powers Glow simulations -- they control which language model is used, what tools are available, how grading rubrics are applied, and voice and reasoning settings.
 
@@ -160,7 +168,7 @@ Agents configure the AI engine that powers Glow simulations -- they control whic
 
 ## What is an Agent?
 
-An agent is the configuration layer between your training content and the underlying AI model. It does **not** contain personas -- personas are attached to [Scenarios](/glow/scenarios/guide), not agents. Instead, an agent defines the technical and behavioral parameters of the AI engine itself.
+An agent is the configuration layer between your training content and the underlying AI model. It does **not** contain personas -- personas are attached to [Scenarios](/scenario), not agents. Instead, an agent defines the technical and behavioral parameters of the AI engine itself.
 
 An agent contains:
 
@@ -217,7 +225,7 @@ glow agents get --body '{"agent_id": "your-agent-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/agents/create \
+curl -X POST https://<your-instance>/agent/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -232,7 +240,7 @@ curl -X POST https://<your-instance>/v5/agents/create \
 Search agents:
 
 ```bash
-curl -X POST https://<your-instance>/v5/agents/search \
+curl -X POST https://<your-instance>/agent/search \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -245,11 +253,11 @@ Agents operate alongside the content pipeline, providing the AI engine configura
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas, documents, and objectives |
+| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts; the **Agent** powers the AI conversation and grading |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts; the **Agent** powers the AI conversation and grading |
 
 The agent is the engine that processes every message, generates persona responses, produces hints, and evaluates performance against rubrics.
 
@@ -267,7 +275,7 @@ glow agents draft --body '{
 ```
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/agents/draft \
+curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -280,7 +288,7 @@ curl -X PATCH https://<your-instance>/v5/agents/draft \
 You can search agents by model using the `filter_model_ids` parameter:
 
 ```bash
-curl -X POST https://<your-instance>/v5/agents/search \
+curl -X POST https://<your-instance>/agent/search \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -318,7 +326,7 @@ glow agents draft --body '{
 ```
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/agents/draft \
+curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -387,7 +395,7 @@ glow agents draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/agents/draft \
+curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -406,7 +414,7 @@ curl -X PATCH https://<your-instance>/v5/agents/draft \
 glow agents list
 
 # API
-curl -X POST https://<your-instance>/v5/agents/drafts \
+curl -X POST https://<your-instance>/agent/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -416,24 +424,24 @@ curl -X POST https://<your-instance>/v5/agents/drafts \
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all agents | `glow agents search` | `POST /agents/search` |
-| Get one agent | `glow agents get --body '{"agent_id": "..."}'` | `POST /agents/get` |
-| Create agents | `glow agents create --body '{"agents": [...]}'` | `POST /agents/create` |
-| Update agents | `glow agents update --body '{"agents": [...]}'` | `POST /agents/update` |
-| Duplicate an agent | -- | `POST /agents/duplicate` |
-| Delete agents | `glow agents delete --body '{"agent_ids": [...]}'` | `POST /agents/delete` |
-| Save a draft | `glow agents draft --body '{...}'` | `PATCH /agents/draft` |
-| List drafts | `glow agents list` | `POST /agents/drafts` |
-| Export to CSV | `glow agents export` | `POST /agents/export` |
+| List all agents | `glow agents search` | `POST /agent/search` |
+| Get one agent | `glow agents get --body '{"agent_id": "..."}'` | `POST /agent/get` |
+| Create agents | `glow agents create --body '{"agents": [...]}'` | `POST /agent/create` |
+| Update agents | `glow agents update --body '{"agents": [...]}'` | `POST /agent/update` |
+| Duplicate an agent | -- | `POST /agent/duplicate` |
+| Delete agents | `glow agents delete --body '{"agent_ids": [...]}'` | `POST /agent/delete` |
+| Save a draft | `glow agents draft --body '{...}'` | `PATCH /agent/draft` |
+| List drafts | `glow agents list` | `POST /agent/drafts` |
+| Export to CSV | `glow agents export` | `POST /agent/export` |
 
 ## Related
 
-- [Agents API Reference](/glow/agents/api) -- full endpoint schemas and field definitions
-- [Agents CLI Reference](/glow/agents/cli) -- all CLI commands and flags
-- [Simulations Guide](/glow/simulations/guide) -- the training sessions that agents power
-- [Attempts Guide](/glow/attempt/guide) -- the runtime sessions where agents process messages and grade
-- [Personas Guide](/glow/personas/guide) -- the AI characters (attached to scenarios, not agents) that agents bring to life
-- [Scenarios Guide](/glow/scenarios/guide) -- the training situations that define persona and document context
+- [Agents API Reference](/api-reference/agent) -- full endpoint schemas and field definitions
+- [Agents CLI Reference](/cli-reference/agent) -- all CLI commands and flags
+- [Simulations Guide](/simulation) -- the training sessions that agents power
+- [Attempts Guide](/attempt) -- the runtime sessions where agents process messages and grade
+- [Personas Guide](/persona) -- the AI characters (attached to scenarios, not agents) that agents bring to life
+- [Scenarios Guide](/scenario) -- the training situations that define persona and document context
 
 ---
 
@@ -441,7 +449,12 @@ curl -X POST https://<your-instance>/v5/agents/drafts \
 
 Route: /annotated-example
 
+{/* DEMO_VIDEO: annotated-example — replace public/demos/annotated-example.mp4 */}
+
 # Annotated Example: What Good (and Bad) Looks Like
+
+<DemoVideo topic="annotated-example" />
+
 
 The most effective way to learn simulation design is to see what actually happens in practice. This page shows two real conversations from Glow — one excellent, one poor — with commentary explaining why the grading system scored them the way it did.
 
@@ -575,9 +588,9 @@ This is the core insight of the rubric design: the same five criteria (Adaptabil
 
 ## Next Steps
 
-- [How It Works](/glow/how-it-works) — understand the principles behind these rubric criteria
-- [Patterns & Best Practices](/glow/patterns) — learn how to design personas that create these kinds of interactions
-- [Tutorial](/glow/tutorial) — build a simulation with these four persona types
+- [How It Works](/how-it-works) — understand the principles behind these rubric criteria
+- [Patterns & Best Practices](/patterns) — learn how to design personas that create these kinds of interactions
+- [Tutorial](/tutorial) — build a simulation with these four persona types
 
 ---
 
@@ -35942,13 +35955,124 @@ Server-authoritative form state returned after draft save.
 
 Route: /authentication
 
+{/* DEMO_VIDEO: authentication — replace public/demos/authentication.mp4 */}
+
 # Authentication
-> This guide is a work in progress.
-## Overview
-Learn how to work with authentication in the Glow platform.
+
+Every Glow request needs a caller identity. The platform supports two
+schemes, both attached as HTTP headers:
+
+| Scheme | Header | Issued by | Resolves to |
+|---|---|---|---|
+| **BearerAuth** | `Authorization: Bearer <jwt>` | Keycloak (interactive) or service-account exchange | profile + session |
+| **ApiKeyAuth** | `X-Api-Key: <license-key>` | the instance's license seed | license context (rate limits, feature gates) |
+
+Most user-driven calls send **both** — bearer for who you are, api-key
+for what the license entitles. CLI flows handle both automatically
+after `glow login` writes the bearer to `~/.config/glow/tokens.json`
+and the license key is read from `~/.glow/instances/<name>/glow-deploy.yaml`.
+
+<DemoVideo topic="authentication" caption="OAuth round-trip: glow login → browser → callback → token stored." />
+
+## Interactive flow (`glow login`)
+
+```bash
+glow login --instance-url https://my-school.example.com
+```
+
+What happens:
+
+1. The CLI hits `GET /.well-known/openid-configuration` on the
+   instance to discover Keycloak endpoints.
+2. It spawns a localhost listener and opens your browser to the
+   `authorize_endpoint` with a generated `state` + `code_verifier`
+   (PKCE — no client secret needed for the public CLI client).
+3. Keycloak logs you in (or returns to your existing SSO session) and
+   redirects to `http://127.0.0.1:<port>/callback?code=…&state=…`.
+4. The CLI exchanges the code at `token_endpoint` for an access token
+   + refresh token and writes both to `~/.config/glow/tokens.json`,
+   keyed by instance URL.
+
+After login, every subsequent CLI call attaches `Authorization: Bearer
+<access_token>` automatically. The refresh token is used silently when
+the access token expires.
+
+## Service-account flow (`--token`)
+
+For CI / scripted use, mint a service-account JWT once and pass it
+explicitly:
+
+```bash
+glow login --instance-url https://my-school.example.com \
+  --token "$SERVICE_ACCOUNT_JWT"
+```
+
+This skips the browser dance and stores the token directly. The JWT
+must be signed by the same Keycloak realm and carry a
+`profile.is_service_account = true` claim.
+
+## Server-side logout
+
+```bash
+glow logout
+```
+
+Fires `GET /logout` on the instance (which writes a `logouts_entry`
+row so the next request mints a fresh session) and then clears the
+local `tokens.json`. The server-side call is best-effort — the local
+clear always runs even if the server is unreachable.
+
+## Raw HTTP
+
+If you're calling the API directly without the CLI, the canonical
+shape is:
+
+```bash
+curl -X POST https://my-school.example.com/persona/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -H "X-Api-Key: $GLOW_LICENSE_KEY" \
+  -d '{}'
+```
+
+`Authorization` alone works for most read paths; mutation endpoints
+typically require both headers.
+
+### Discovery endpoints
+
+| Endpoint | Purpose |
+|---|---|
+| `GET /.well-known/openid-configuration` | OIDC discovery doc (issuer, endpoints) |
+| `GET /jwks` | public signing keys for verifying issued JWTs |
+| `GET /authorize` | OAuth authorization endpoint (browser redirect) |
+| `GET /oidc_callback` | OAuth callback (used by browser flows) |
+| `POST /token` | code → access token / refresh exchange |
+| `GET /userinfo` | introspect the bearer's profile claims |
+| `GET /login` / `GET /logout` | bare browser-flow entry points |
+
+These mirror the standard OIDC surface — most clients only need
+`/.well-known/...` to bootstrap.
+
+## Multiple instances
+
+```bash
+glow login --instance-url https://school-a.example.com
+glow login --instance-url https://school-b.example.com
+
+# tokens.json now has both; the --instance-url flag (or GLOW_INSTANCE_URL
+# env var) selects which one a given command uses.
+GLOW_INSTANCE_URL=https://school-b.example.com glow personas search
+```
+
+Sessions are listed in the CLI via the `instance` config under
+`~/.config/glow/`. There's no first-class `glow sessions list` command
+today — read the file directly if needed.
+
 ## Related
-- [Authentication API](/glow/authentication/api)
-- [Authentication CLI](/glow/authentication/cli)
+
+- [Start](/start) — install + first-boot
+- [CLI Reference: login](/cli-reference/login/) · [logout](/cli-reference/logout/)
+- API Reference: [`POST /profile/context`](/api-reference/profile/post-profile-context/) returns the authenticated profile
 
 ---
 
@@ -35956,7 +36080,11 @@ Learn how to work with authentication in the Glow platform.
 
 Route: /auths
 
+{/* DEMO_VIDEO: auths — replace public/demos/auths.mp4 */}
+
 # Auths
+
+<DemoVideo topic="auths" />
 
 Auths manages authentication providers for your Glow instance -- the SSO configurations, login methods, and access controls that determine how TAs and administrators sign in. It supports full CRUD operations with a draft system for safe, staged edits.
 
@@ -36002,21 +36130,21 @@ glow auths export
 
 ```bash
 # Search all auth providers
-curl -X POST https://<your-instance>/v5/auths/search \
+curl -X POST https://<your-instance>/auth/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Get a specific auth provider
-curl -X POST https://<your-instance>/v5/auths/get \
+curl -X POST https://<your-instance>/auth/get \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"auth_id": "auth-uuid"}'
 
 # Create an auth provider
-curl -X POST https://<your-instance>/v5/auths/create \
+curl -X POST https://<your-instance>/auth/create \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -36032,7 +36160,7 @@ curl -X POST https://<your-instance>/v5/auths/create \
 
 ### Search
 
-`POST /auths/search` returns a paginated list of auth providers:
+`POST /auth/search` returns a paginated list of auth providers:
 
 - `actor_name` -- Current user's display name
 - `auths` -- Array of `ListAuthApiAuth` items
@@ -36049,7 +36177,7 @@ Optional filters:
 
 ### Get
 
-`POST /auths/get` returns a single auth provider composed of sections:
+`POST /auth/get` returns a single auth provider composed of sections:
 
 | Section | Field | Description |
 |---|---|---|
@@ -36069,10 +36197,10 @@ The response also includes:
 
 ### Create
 
-`POST /auths/create` accepts an array of `CreateAuthItem` objects:
+`POST /auth/create` accepts an array of `CreateAuthItem` objects:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/create \
+curl -X POST https://<your-instance>/auth/create \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -36088,14 +36216,14 @@ Returns per-item results in `results`.
 
 ### Update
 
-`POST /auths/update` accepts an array of `UpdateAuthItem` objects.
+`POST /auth/update` accepts an array of `UpdateAuthItem` objects.
 
 ### Duplicate
 
-`POST /auths/duplicate` clones an auth provider:
+`POST /auth/duplicate` clones an auth provider:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/duplicate \
+curl -X POST https://<your-instance>/auth/duplicate \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -36106,10 +36234,10 @@ Returns `success`, `auth_id` (new UUID), and `message`.
 
 ### Delete
 
-`POST /auths/delete` bulk-deletes auth providers:
+`POST /auth/delete` bulk-deletes auth providers:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/delete \
+curl -X POST https://<your-instance>/auth/delete \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -36122,10 +36250,10 @@ Auths supports a draft system with optimistic locking, following the same patter
 
 ### Saving a Draft
 
-`PATCH /auths/draft` creates or updates a draft:
+`PATCH /auth/draft` creates or updates a draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/auths/draft \
+curl -X PATCH https://<your-instance>/auth/draft \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -36153,10 +36281,10 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state`.
 
 ### Listing Drafts
 
-`POST /auths/drafts` returns all drafts owned by the current profile:
+`POST /auth/drafts` returns all drafts owned by the current profile:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/drafts \
+curl -X POST https://<your-instance>/auth/drafts \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
@@ -36173,22 +36301,22 @@ glow auths get --body '{"auth_id": "auth-uuid", "draft_id": "draft-uuid"}'
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List auth providers | `glow auths search` | `POST /auths/search` |
-| Get auth provider | `glow auths get` | `POST /auths/get` |
-| Create auth provider | `glow auths create` | `POST /auths/create` |
-| Update auth provider | `glow auths update` | `POST /auths/update` |
-| Duplicate auth | -- | `POST /auths/duplicate` |
-| Delete auths | `glow auths delete` | `POST /auths/delete` |
-| Save draft | `glow auths draft` | `PATCH /auths/draft` |
-| List drafts | -- | `POST /auths/drafts` |
-| Export | `glow auths export` | `POST /auths/export` |
-| View docs | -- | `POST /auths/docs` |
+| List auth providers | `glow auths search` | `POST /auth/search` |
+| Get auth provider | `glow auths get` | `POST /auth/get` |
+| Create auth provider | `glow auths create` | `POST /auth/create` |
+| Update auth provider | `glow auths update` | `POST /auth/update` |
+| Duplicate auth | -- | `POST /auth/duplicate` |
+| Delete auths | `glow auths delete` | `POST /auth/delete` |
+| Save draft | `glow auths draft` | `PATCH /auth/draft` |
+| List drafts | -- | `POST /auth/drafts` |
+| Export | `glow auths export` | `POST /auth/export` |
+| View docs | -- | `POST /auth/docs` |
 
 ## Related
 
-- [Auths API Reference](/glow/auths/api)
-- [Auths CLI Reference](/glow/auths/cli)
-- [Settings Guide](/glow/settings/guide) -- instance configuration (links auth providers)
+- [Auths API Reference](/api-reference/auth)
+- [Auths CLI Reference](/cli-reference/auth)
+- [Settings Guide](/setting) -- instance configuration (links auth providers)
 
 ---
 
@@ -36196,7 +36324,11 @@ glow auths get --body '{"auth_id": "auth-uuid", "draft_id": "draft-uuid"}'
 
 Route: /benchmark
 
+{/* DEMO_VIDEO: benchmark — replace public/demos/benchmark.mp4 */}
+
 # Benchmark
+
+<DemoVideo topic="benchmark" />
 
 The Benchmark resource provides test performance analytics across your Glow instance. Use it to review eval scores, track test history, and export data for reporting. Benchmark is an API-only resource with no CLI commands.
 
@@ -36217,7 +36349,7 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 **Fetch benchmark data** for the current semester:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/get \
+curl -X POST https://<your-instance>/test/benchmark \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36231,7 +36363,7 @@ The response includes `evals` (eval performance cards), `departments`, `history`
 **Filter by department:**
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/get \
+curl -X POST https://<your-instance>/test/benchmark \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36245,10 +36377,10 @@ curl -X POST https://<your-instance>/benchmark/get \
 
 ## Searching Test History
 
-Use `/benchmark/search` to paginate and filter test history independently of the full benchmark payload:
+Use `POST /test/search` to paginate and filter test history independently of the full benchmark payload:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/search \
+curl -X POST https://<your-instance>/test/search \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36265,7 +36397,7 @@ The response returns `data` (an array of `BenchmarkHistoryItem` objects), `total
 ### Filtering by Eval and Archive Status
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/search \
+curl -X POST https://<your-instance>/test/search \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36281,7 +36413,7 @@ curl -X POST https://<your-instance>/benchmark/search \
 **Refresh materialized views** to ensure benchmark data is up to date. This invalidates caches and rebuilds aggregated views:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/refresh \
+curl -X POST https://<your-instance>/test/refresh \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -36290,7 +36422,7 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export benchmark data** as a denormalized ZIP file for offline analysis or institutional reporting:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/export \
+curl -X POST https://<your-instance>/test/export \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -36300,16 +36432,16 @@ The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, 
 
 | Operation | Method | Endpoint |
 |---|---|---|
-| Get benchmark data | `POST` | `/benchmark/get` |
-| Search test history | `POST` | `/benchmark/search` |
-| Refresh views | `POST` | `/benchmark/refresh` |
-| Export data (ZIP) | `POST` | `/benchmark/export` |
+| Get benchmark data | `POST` | `POST /test/benchmark` |
+| Search test history | `POST` | `POST /test/search` |
+| Refresh views | `POST` | `POST /test/refresh` |
+| Export data (ZIP) | `POST` | `POST /test/export` |
 | Get documentation | `POST` | `/benchmark/docs` |
 
 ## Related
 
-- [Benchmark API](/glow/benchmark/api)
-- [Health Guide](/glow/health/guide) -- service-level monitoring
+- [Benchmark API](/api-reference/test)
+- [Health Guide](/health) -- service-level monitoring
 
 ---
 
@@ -36317,30 +36449,41 @@ The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, 
 
 Route: /chat
 
+{/* DEMO_VIDEO: chat — replace public/demos/chat.mp4 */}
+
 # Chat
 
-Chats are the individual conversations within an attempt -- each chat corresponds to one scenario and contains the full message history between the learner and the AI persona.
+<DemoVideo topic="chat" />
+
+Chats are the individual conversations within an attempt — each chat
+corresponds to one scenario and holds the full message history between
+the learner and the AI persona.
+
+Chat is a **sub-namespace on the attempt artifact**. Every operation
+is named `chat_<op>` and lives at `POST /attempt/chat_<op>`:
+`chat_get`, `chat_message`, `chat_grade`, `chat_draft`, etc. The CLI
+exposes them as `glow attempts chat <op>` for ergonomics; the wire
+path concatenates them under `/attempt/`.
 
 ## What is a Chat?
 
-A chat is a single conversational session between a learner and an AI persona within an [Attempt](/glow/attempt/guide). When a learner starts a simulation with three scenarios, three chats are created -- one per scenario. Each chat holds the message thread, the persona configuration, attached documents, and any customization applied at runtime.
+A chat is a single conversational session between a learner and an AI persona within an [Attempt](/api-reference/attempt). When a learner starts a simulation with three scenarios, three chats are created — one per scenario. Each chat holds the message thread, the persona configuration, attached documents, and any customization applied at runtime.
 
 A chat contains:
 
-- **Chat Entry ID** -- unique identifier for this conversation
-- **Attempt ID** -- the parent attempt this chat belongs to
-- **Names** -- display name for the chat session
-- **Descriptions** -- descriptive text for context
-- **Personas** -- the AI character(s) active in this chat (inherited from the scenario)
-- **Documents** -- reference materials available during the conversation
-- **Parameter Fields** -- resolved parameter values injected into persona instructions
-- **Scenarios** -- the scenario this chat is running
-- **Objectives** -- learning goals the chat is targeting
-- **Questions & Options** -- structured prompts for quiz-style interactions
-- **Images & Videos** -- media assets shown as context
-- **Problem Statements** -- the situation being addressed
-- **Flags** -- configuration flags for the chat session
-- **Departments** -- organizational groupings
+- **Chat Entry ID** — unique identifier for this conversation
+- **Attempt ID** — the parent attempt this chat belongs to
+- **Names / Descriptions** — display copy
+- **Personas** — the AI character(s) active in this chat (inherited from the scenario)
+- **Documents** — reference materials available during the conversation
+- **Parameter Fields** — resolved parameter values injected into persona instructions
+- **Scenarios** — the scenario this chat is running
+- **Objectives** — learning goals the chat is targeting
+- **Questions & Options** — structured prompts for quiz-style interactions
+- **Images & Videos** — media assets shown as context
+- **Problem Statements** — the situation being addressed
+- **Flags** — configuration flags for the chat session
+- **Departments** — organizational groupings
 
 Chats also support a draft system for customizing chat configurations before or during a session.
 
@@ -36351,19 +36494,13 @@ Chats also support a draft system for customizing chat configurations before or 
 ### Get Chat Details via CLI
 
 ```bash
-glow chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
-```
-
-Search chats:
-
-```bash
-glow chat search
+glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
 ```
 
 ### Get Chat Details via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/chat/get \
+curl -X POST https://<your-instance>/attempt/chat_get \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -36377,14 +36514,12 @@ The response includes all hydrated resources: personas, documents, parameter fie
 
 ### Export a Chat
 
-Export the chat transcript as a CSV:
-
 ```bash
 # CLI
-glow chat export
+glow attempts chat export --body '{"chat_entry_id": "..."}'
 
 # API
-curl -X POST https://<your-instance>/v5/chat/export \
+curl -X POST https://<your-instance>/attempt/chat_export \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -36400,33 +36535,61 @@ Chats are created automatically as part of **step 5** when a learner starts an a
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
-| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| **5. Run Attempts** | [Attempts](/glow/attempt/guide) | Learners start attempts; **Glow creates one Chat per scenario** |
+| 1. Create Personas | [Personas](/personas) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenarios) | Build training situations and attach personas, documents, and objectives |
+| 3. Add Scenarios to Simulations | [Simulations](/simulations) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | [Cohorts](/cohorts) | Assign simulations to groups of learners |
+| **5. Run Attempts** | [Attempts](/api-reference/attempt) | Learners start attempts; **Glow creates one Chat per scenario** |
 
-You do not create chats directly -- they are generated by the attempt system. However, you can read, customize, and export them.
+You do not create chats directly via `chat_create` in normal flows —
+the attempt's `POST /attempt/start` does it. `chat_create` is exposed
+for tooling that needs to seed chats outside the normal flow.
 
-## Interacting with a Chat
+## The chat sub-op surface
 
-The conversation flow within a chat is managed through the [Attempt API](/glow/attempt/api), not the Chat API directly. The Attempt endpoints handle:
+Every chat operation is a separate endpoint under `/attempt/chat_<op>`:
 
-![Voice mode interface showing audio waveform and speaking indicators](/screenshots/chat/voice-mode.png)
+| Sub-op | Endpoint | Purpose |
+|---|---|---|
+| `chat_get` | `POST /attempt/chat_get` | hydrate a single chat by id |
+| `chat_create` | `POST /attempt/chat_create` | create a new chat (rare) |
+| `chat_message` | `POST /attempt/chat_message` | send a user message |
+| `chat_response` | `POST /attempt/chat_response` | submit a structured question response |
+| `chat_grade` | `POST /attempt/chat_grade` | request grading |
+| `chat_complete` | `POST /attempt/chat_complete` | mark a chat completed |
+| `chat_hints` | `POST /attempt/chat_hints` | fetch hints |
+| `chat_feedback` | `POST /attempt/chat_feedback` | per-standard feedback |
+| `chat_strengths` / `chat_improvements` | `POST /attempt/chat_strengths` / `_improvements` | per-message strength/improvement breakdown |
+| `chat_analyses` | `POST /attempt/chat_analyses` | overall analyses |
+| `chat_audio` | `POST /attempt/chat_audio` | attach an audio resource to a message |
+| `chat_speak` / `chat_silence` / `chat_voice` | `POST /attempt/chat_speak` / `_silence` / `_voice` | live voice session control (see WS surface below) |
+| `chat_draft` / `chat_drafts` | `POST /attempt/chat_draft` (PATCH-like) / `chat_drafts` | edit draft / list drafts |
+| `chat_refresh` / `chat_export` | `POST /attempt/chat_refresh` / `chat_export` | invalidate cache / export transcript |
 
-- **Sending messages** -- `POST /attempt/message` with the `attempt_id`, `chat_id`, and `message`
-- **Ending a chat** -- `POST /attempt/end` to close the conversation and optionally trigger grading
-- **Grading** -- `POST /attempt/grade` to evaluate the learner's performance
-- **Stopping generation** -- `POST /attempt/stop` to halt an in-progress AI response
+CLI dispatch is symmetric — `glow attempts chat <op>` (e.g.
+`glow attempts chat message <chat_id> "..."`) maps 1:1 to
+`POST /attempt/chat_<op>`.
 
-The Chat API itself is focused on reading chat state and managing chat drafts.
+## Live REPL + voice (WS)
 
-## Searching and Filtering Chat Resources
-
-The `GET /chat/get` endpoint supports search filters to narrow down the resources shown for a chat:
+The same chat surface is also exposed over socket.io for live message
+flow. The CLI has an interactive REPL at:
 
 ```bash
-curl -X POST https://<your-instance>/v5/chat/get \
+# Open a socket.io REPL — type a line + Enter to send a chat_message
+glow attempts chat live <chat_id>
+```
+
+Voice (`glow attempts chat voice <chat_id>`) is gated on the `cpal` +
+`rodio` audio deps and is currently a deferred placeholder — see the
+deferred CLI capability tracking in the `glow-academic-cli` repo.
+
+## Searching and filtering chat resources
+
+`POST /attempt/chat_get` supports search filters to narrow down the resources shown for a chat:
+
+```bash
+curl -X POST https://<your-instance>/attempt/chat_get \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -36454,26 +36617,22 @@ Available search filters:
 | `persona_show_selected` | Show only currently selected personas |
 | `document_show_selected` | Show only currently selected documents |
 
-## Working with Drafts
+## Working with drafts
 
-Chat drafts let you customize a chat's configuration -- changing which personas, documents, parameters, and other resources are active. This is useful for creating variations of a chat or preparing custom configurations.
-
-**Create or update a chat draft:**
+Chat drafts let you customize a chat's configuration — changing which personas, documents, parameters, and other resources are active.
 
 ```bash
-# Via CLI
-glow chat draft --body '{
+# CLI
+glow attempts chat draft --body '{
   "name": "Custom FERPA Chat",
   "description": "Modified chat with additional documents",
   "persona_ids": ["concerned-student-uuid"],
   "document_ids": ["ferpa-policy-uuid", "supplemental-guide-uuid"],
   "parameter_field_ids": ["location-param-uuid"]
 }'
-```
 
-```bash
-# Via API
-curl -X PATCH https://<your-instance>/v5/chat/draft \
+# API
+curl -X POST https://<your-instance>/attempt/chat_draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -36491,53 +36650,35 @@ The draft endpoint supports optimistic concurrency through `expected_version` an
 
 ```bash
 # CLI
-glow chat list
+glow attempts chat drafts
 
 # API
-curl -X POST https://<your-instance>/v5/chat/drafts \
+curl -X POST https://<your-instance>/attempt/chat_drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
 ```
 
-**Draft fields you can customize:**
-
-| Field | Description |
-|-------|-------------|
-| `name` | Chat display name |
-| `description` | Chat description |
-| `persona_ids` | Which personas are active |
-| `document_ids` | Which reference documents are available |
-| `scenario_ids` | Which scenarios are linked |
-| `parameter_field_ids` | Which parameter fields are active |
-| `question_ids` / `questions` | Structured questions |
-| `option_ids` / `options` | Answer options for questions |
-| `image_ids` / `images` | Image assets |
-| `video_ids` / `videos` | Video assets |
-| `objective_ids` / `objectives` | Learning objectives |
-| `problem_statement_ids` | Problem statements |
-| `flag_ids` | Configuration flags |
-| `department_ids` | Department associations |
-
 ## Common Operations
 
 | Task | CLI | API |
 |------|-----|-----|
-| Get chat details | `glow chat get --body '{"chat_entry_id": "..."}'` | `POST /chat/get` |
-| Search chats | `glow chat search` | -- |
-| Export chat transcript | `glow chat export` | `POST /chat/export` |
-| Save a chat draft | `glow chat draft --body '{...}'` | `PATCH /chat/draft` |
-| List chat drafts | `glow chat list` | `POST /chat/drafts` |
-| Refresh views | -- | `POST /chat/refresh` |
+| Get chat details | `glow attempts chat get --body '{"chat_entry_id": "..."}'` | `POST /attempt/chat_get` |
+| Send a message | `glow attempts chat message <chat_id> "..."` | `POST /attempt/chat_message` |
+| Grade a chat | `glow attempts chat grade <chat_id>` | `POST /attempt/chat_grade` |
+| Live REPL (socket.io) | `glow attempts chat live <chat_id>` | (WebSocket — see CLI source) |
+| Export chat transcript | `glow attempts chat export` | `POST /attempt/chat_export` |
+| Save a chat draft | `glow attempts chat draft --body '{...}'` | `POST /attempt/chat_draft` |
+| List chat drafts | `glow attempts chat drafts` | `POST /attempt/chat_drafts` |
+| Refresh views | `glow attempts chat refresh` | `POST /attempt/chat_refresh` |
 
 ## Related
 
-- [Chat API Reference](/glow/chat/api) -- full endpoint schemas and field definitions
-- [Chat CLI Reference](/glow/chat/cli) -- all CLI commands and flags
-- [Attempts Guide](/glow/attempt/guide) -- the parent container that creates and manages chats
-- [Scenarios Guide](/glow/scenarios/guide) -- the training situations that each chat runs
-- [Personas Guide](/glow/personas/guide) -- the AI characters active in each chat
-- [Simulations Guide](/glow/simulations/guide) -- the training sessions that define which scenarios (and chats) are created
+- [Attempt API Reference](/api-reference/attempt) — every chat_* endpoint with full schemas
+- [Attempts CLI Reference](/cli-reference/attempts) — every `glow attempts ...` command
+- [Scenarios](/scenarios) — the training situations that each chat runs
+- [Personas](/personas) — the AI characters active in each chat
+- [Simulations](/simulations) — the training sessions that define which scenarios (and chats) are created
 
 ---
 
@@ -38501,7 +38642,11 @@ glow tools update --id <id>
 
 Route: /cohorts
 
+{/* DEMO_VIDEO: cohorts — replace public/demos/cohorts.mp4 */}
+
 # Cohorts
+
+<DemoVideo topic="cohorts" />
 
 Cohorts bring everything together. A cohort is a group of profiles (learners) assigned to a set of simulations. It is the final assembly step before learners can run simulation attempts.
 
@@ -38560,7 +38705,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search cohorts
-curl -X POST https://<your-instance>/v5/cohorts/search \
+curl -X POST https://<your-instance>/cohort/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -38570,7 +38715,7 @@ curl -X POST https://<your-instance>/v5/cohorts/search \
   }'
 
 # Create a cohort
-curl -X POST https://<your-instance>/v5/cohorts/create \
+curl -X POST https://<your-instance>/cohort/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -38643,7 +38788,7 @@ Cohorts support rich search and filtering:
 
 ```bash
 # Search cohorts by profile
-curl -X POST https://<your-instance>/v5/cohorts/search \
+curl -X POST https://<your-instance>/cohort/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -38665,28 +38810,28 @@ glow cohorts draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /cohorts/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, `simulation_ids`, `profile_ids`, `simulation_position_ids`, `simulation_positions`, `simulation_availability_ids`, `simulation_availability`, `profile_persona_ids`, and `profile_personas`.
+Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, `simulation_ids`, `profile_ids`, `simulation_position_ids`, `simulation_positions`, `simulation_availability_ids`, `simulation_availability`, `profile_persona_ids`, and `profile_personas`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all cohorts | `glow cohorts list` | `POST /cohorts/search` |
-| Get a cohort | `glow cohorts get --body '{...}'` | `POST /cohorts/get` |
-| Create cohorts | `glow cohorts create --body '{...}'` | `POST /cohorts/create` |
-| Update cohorts | `glow cohorts update --body '{...}'` | `POST /cohorts/update` |
-| Duplicate a cohort | -- | `POST /cohorts/duplicate` |
-| Delete cohorts | `glow cohorts delete --body '{...}'` | `POST /cohorts/delete` |
-| Export to CSV | `glow cohorts export` | `POST /cohorts/export` |
-| Save a draft | `glow cohorts draft --body '{...}'` | `PATCH /cohorts/draft` |
-| List drafts | -- | `POST /cohorts/drafts` |
+| List all cohorts | `glow cohorts list` | `POST /cohort/search` |
+| Get a cohort | `glow cohorts get --body '{...}'` | `POST /cohort/get` |
+| Create cohorts | `glow cohorts create --body '{...}'` | `POST /cohort/create` |
+| Update cohorts | `glow cohorts update --body '{...}'` | `POST /cohort/update` |
+| Duplicate a cohort | -- | `POST /cohort/duplicate` |
+| Delete cohorts | `glow cohorts delete --body '{...}'` | `POST /cohort/delete` |
+| Export to CSV | `glow cohorts export` | `POST /cohort/export` |
+| Save a draft | `glow cohorts draft --body '{...}'` | `PATCH /cohort/draft` |
+| List drafts | -- | `POST /cohort/drafts` |
 
 ## Related
 
-- [Cohorts API](/glow/cohorts/api)
-- [Cohorts CLI](/glow/cohorts/cli)
-- [Profiles Guide](/glow/profiles/guide) -- the people assigned to cohorts
-- [Departments Guide](/glow/departments/guide) -- cohorts are scoped to departments
+- [Cohorts API](/api-reference/cohort)
+- [Cohorts CLI](/cli-reference/cohort)
+- [Profiles Guide](/profile) -- the people assigned to cohorts
+- [Departments Guide](/department) -- cohorts are scoped to departments
 
 ---
 
@@ -38694,9 +38839,23 @@ Via the API, use `PATCH /cohorts/draft` with fields like `input_draft_id`, `expe
 
 Route: /dashboard
 
+{/* DEMO_VIDEO: dashboard — replace public/demos/dashboard.mp4 */}
+
 # Dashboard
 
-The Dashboard is the admin analytics hub for TA training programs. It provides a comprehensive view of training metrics across your institution -- header summaries, primary and secondary metric panels, rubric breakdowns, simulation overviews, and full attempt history -- so program coordinators can evaluate how TAs are performing in office-hours simulations.
+<DemoVideo topic="dashboard" />
+
+The Dashboard is the admin analytics hub for TA training programs.
+It returns a single bundled response — header summaries, primary and
+secondary metric panels, rubric breakdowns, simulation overviews, and
+inline attempt history — so program coordinators can evaluate how
+TAs are performing in office-hours simulations.
+
+Dashboard is a **view on the attempt artifact** — one endpoint
+(`POST /attempt/dashboard`) that takes a filter body and returns a
+`DashboardBundleResponse`. It is not its own artifact, so there is no
+`/dashboard/...` URL space; sibling operations (attempt search,
+export, refresh) live at the attempt root.
 
 ![Dashboard overview showing aggregate scores by rubric standard across all cohorts](/screenshots/dashboard/overview.png)
 
@@ -38719,23 +38878,22 @@ Dashboard returns `header_metrics` (total attempts, average score, completion pe
 
 ```bash
 # Fetch the full dashboard bundle (all metrics, rubrics, simulations)
-glow dashboard get
+glow attempts dashboard
 
-# Fetch dashboard scoped to a specific cohort and date range
-glow dashboard get --body '{"cohort_ids": ["cohort-abc"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+# Scope to a specific cohort and date range (body merges into the request)
+glow attempts dashboard --body '{"cohort_ids": ["cohort-abc"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
 
-# Search attempt history (paginated)
-glow dashboard search --body '{"page": 1, "page_size": 25, "sort_by": "score", "sort_order": "desc"}'
-
-# Export dashboard data as a ZIP
-glow dashboard export
+# Sibling operations on the attempt artifact (NOT under /dashboard)
+glow attempts search --body '{"page_size": 25, "sort_by": "score", "sort_order": "desc"}'
+glow attempts export
+glow attempts refresh
 ```
 
 ### API
 
 ```bash
-# Get dashboard bundle
-curl -X POST https://<your-instance>/v5/dashboard/get \
+# Get dashboard bundle — single endpoint, filters in the body
+curl -X POST https://<your-instance>/attempt/dashboard \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -38745,13 +38903,12 @@ curl -X POST https://<your-instance>/v5/dashboard/get \
     "end_date": "2025-06-30"
   }'
 
-# Search attempt history
-curl -X POST https://<your-instance>/v5/dashboard/search \
+# Search attempt history (separate endpoint on the attempt artifact)
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
-    "page": 1,
     "page_size": 20,
     "sort_order": "desc"
   }'
@@ -38759,7 +38916,7 @@ curl -X POST https://<your-instance>/v5/dashboard/search \
 
 ## Filtering and Scoping
 
-Dashboard supports composable filters so you can drill down to exactly the data you need:
+Dashboard supports composable filters in the body so you can drill down to exactly the data you need:
 
 | Filter | Field | Example |
 |---|---|---|
@@ -38789,12 +38946,13 @@ The `DashboardBundleResponse` is organized into sections:
 - **`history`** -- Inline paginated attempt history with `HistoryItem` rows.
 - **`analytics`** -- Filter facets (department options, cohort options, role options, date range boundaries) for rendering dropdowns.
 
-## History Search
+## Sibling: Attempt History Search
 
-The `/dashboard/search` endpoint returns paginated attempt history. This is useful for building tables of TA attempts:
+For larger paginated history tables, use the attempt search endpoint
+directly — it returns the same `HistoryItem` shape with full pagination:
 
 ```bash
-curl -X POST https://<your-instance>/v5/dashboard/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -38803,21 +38961,17 @@ curl -X POST https://<your-instance>/v5/dashboard/search \
     "scenario_ids": ["scenario-confused-student"],
     "sort_by": "date",
     "sort_order": "desc",
-    "page": 1,
     "page_size": 10
   }'
 ```
 
 Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_status` (pass/fail), `persona_names_junction`, `num_scenarios_completed`, and action flags like `show_view` and `show_continue`.
 
-## Refreshing and Exporting
+## Exporting
 
 ```bash
-# Refresh dashboard caches (admin only)
-glow dashboard refresh
-
-# Export all dashboard data as a denormalized ZIP
-glow dashboard export
+# Export attempts as a denormalized ZIP (sibling endpoint, not under dashboard)
+glow attempts export
 ```
 
 The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `mime_type`, and `row_count`.
@@ -38826,18 +38980,18 @@ The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `m
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Full dashboard metrics | `glow dashboard get` | `POST /dashboard/get` |
-| Search attempt history | `glow dashboard search` | `POST /dashboard/search` |
-| Export data | `glow dashboard export` | `POST /dashboard/export` |
-| Refresh caches | `glow dashboard refresh` | `POST /dashboard/refresh` |
-| View API docs | -- | `POST /dashboard/docs` |
+| Dashboard metric bundle | `glow attempts dashboard` | `POST /attempt/dashboard` |
+| Attempt history search | `glow attempts search` | `POST /attempt/search` |
+| Export attempts | `glow attempts export` | `POST /attempt/export` |
+| Refresh MV caches | `glow attempts refresh` | `POST /attempt/refresh` |
 
 ## Related
 
-- [Dashboard API Reference](/glow/dashboard/api)
-- [Dashboard CLI Reference](/glow/dashboard/cli)
-- [Reports Guide](/glow/reports/guide) -- aggregate training reports
-- [Record Guide](/glow/record/guide) -- single-TA dashboard view
+- [Attempt API Reference](/api-reference/attempt) — every endpoint on the attempt artifact
+- [Attempts CLI Reference](/cli-reference/attempts) — every `glow attempts ...` command
+- [Reports](/reports) — aggregate training reports (sibling view, `POST /attempt/report`)
+- [Leaderboard](/leaderboard) — score rankings (sibling view, `POST /attempt/leaderboard`)
+- [Practice](/practice) — practice-mode view (sibling view, `POST /attempt/practice`)
 
 ---
 
@@ -38845,7 +38999,11 @@ The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `m
 
 Route: /departments
 
+{/* DEMO_VIDEO: departments — replace public/demos/departments.mp4 */}
+
 # Departments
+
+<DemoVideo topic="departments" />
 
 Departments are the organizational boundary in Glow. They scope nearly every resource -- profiles, documents, parameters, fields, scenarios, simulations, and cohorts -- so that different groups within your institution can work independently.
 
@@ -38902,7 +39060,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search departments
-curl -X POST https://<your-instance>/v5/departments/search \
+curl -X POST https://<your-instance>/department/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -38912,7 +39070,7 @@ curl -X POST https://<your-instance>/v5/departments/search \
   }'
 
 # Create a department
-curl -X POST https://<your-instance>/v5/departments/create \
+curl -X POST https://<your-instance>/department/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -38972,30 +39130,30 @@ glow departments draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /departments/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, and `setting_ids`.
+Via the API, use `PATCH /department/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, and `setting_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all departments | `glow departments list` | `POST /departments/search` |
-| Get a department | `glow departments get --body '{...}'` | `POST /departments/get` |
-| Create departments | `glow departments create --body '{...}'` | `POST /departments/create` |
-| Update departments | `glow departments update --body '{...}'` | `POST /departments/update` |
-| Duplicate a department | -- | `POST /departments/duplicate` |
-| Delete departments | `glow departments delete --body '{...}'` | `POST /departments/delete` |
-| Export to CSV | `glow departments export` | `POST /departments/export` |
-| Save a draft | `glow departments draft --body '{...}'` | `PATCH /departments/draft` |
-| List drafts | -- | `POST /departments/drafts` |
+| List all departments | `glow departments list` | `POST /department/search` |
+| Get a department | `glow departments get --body '{...}'` | `POST /department/get` |
+| Create departments | `glow departments create --body '{...}'` | `POST /department/create` |
+| Update departments | `glow departments update --body '{...}'` | `POST /department/update` |
+| Duplicate a department | -- | `POST /department/duplicate` |
+| Delete departments | `glow departments delete --body '{...}'` | `POST /department/delete` |
+| Export to CSV | `glow departments export` | `POST /department/export` |
+| Save a draft | `glow departments draft --body '{...}'` | `PATCH /department/draft` |
+| List drafts | -- | `POST /department/drafts` |
 
 ## Related
 
-- [Departments API](/glow/departments/api)
-- [Departments CLI](/glow/departments/cli)
-- [Profiles Guide](/glow/profiles/guide) -- profiles belong to departments
-- [Documents Guide](/glow/documents/guide) -- documents are scoped to departments
-- [Parameters Guide](/glow/parameters/guide) -- parameters are scoped to departments
-- [Cohorts Guide](/glow/cohorts/guide) -- cohorts are scoped to departments
+- [Departments API](/api-reference/department)
+- [Departments CLI](/cli-reference/department)
+- [Profiles Guide](/profile) -- profiles belong to departments
+- [Documents Guide](/document) -- documents are scoped to departments
+- [Parameters Guide](/parameter) -- parameters are scoped to departments
+- [Cohorts Guide](/cohort) -- cohorts are scoped to departments
 
 ---
 
@@ -39003,7 +39161,11 @@ Via the API, use `PATCH /departments/draft` with fields like `input_draft_id`, `
 
 Route: /documents
 
+{/* DEMO_VIDEO: documents — replace public/demos/documents.mp4 */}
+
 # Documents
+
+<DemoVideo topic="documents" />
 
 Documents provide reference material that grounds AI-driven simulations in real institutional content. They attach to scenarios so the AI character can draw on policies, syllabi, and other materials during a conversation.
 
@@ -39061,7 +39223,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search documents
-curl -X POST https://<your-instance>/v5/documents/search \
+curl -X POST https://<your-instance>/document/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39071,7 +39233,7 @@ curl -X POST https://<your-instance>/v5/documents/search \
   }'
 
 # Create a document
-curl -X POST https://<your-instance>/v5/documents/create \
+curl -X POST https://<your-instance>/document/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39129,7 +39291,7 @@ Documents support file uploads for rich content. Use the upload endpoint to atta
 
 ```bash
 # Upload a file
-curl -X POST https://<your-instance>/v5/documents/upload \
+curl -X POST https://<your-instance>/document/upload \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/pdf" \
@@ -39151,30 +39313,30 @@ glow documents draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /documents/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `file_ids`, `text_ids`, `department_ids`, `parameter_ids`, and `parameter_field_ids`.
+Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `file_ids`, `text_ids`, `department_ids`, `parameter_ids`, and `parameter_field_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all documents | `glow documents list` | `POST /documents/search` |
-| Get a document | `glow documents get --body '{...}'` | `POST /documents/get` |
-| Create documents | `glow documents create --body '{...}'` | `POST /documents/create` |
-| Update documents | `glow documents update --body '{...}'` | `POST /documents/update` |
-| Duplicate a document | -- | `POST /documents/duplicate` |
-| Delete documents | `glow documents delete --body '{...}'` | `POST /documents/delete` |
-| Upload a file | -- | `POST /documents/upload` |
-| Export to CSV | `glow documents export` | `POST /documents/export` |
-| Save a draft | `glow documents draft --body '{...}'` | `PATCH /documents/draft` |
-| List drafts | -- | `POST /documents/drafts` |
+| List all documents | `glow documents list` | `POST /document/search` |
+| Get a document | `glow documents get --body '{...}'` | `POST /document/get` |
+| Create documents | `glow documents create --body '{...}'` | `POST /document/create` |
+| Update documents | `glow documents update --body '{...}'` | `POST /document/update` |
+| Duplicate a document | -- | `POST /document/duplicate` |
+| Delete documents | `glow documents delete --body '{...}'` | `POST /document/delete` |
+| Upload a file | -- | `POST /document/upload` |
+| Export to CSV | `glow documents export` | `POST /document/export` |
+| Save a draft | `glow documents draft --body '{...}'` | `PATCH /document/draft` |
+| List drafts | -- | `POST /document/drafts` |
 
 ## Related
 
-- [Documents API](/glow/documents/api)
-- [Documents CLI](/glow/documents/cli)
-- [Parameters Guide](/glow/parameters/guide) -- parameters and fields that organize documents
-- [Fields Guide](/glow/fields/guide) -- field values attached to documents
-- [Departments Guide](/glow/departments/guide) -- scope documents to departments
+- [Documents API](/api-reference/document)
+- [Documents CLI](/cli-reference/document)
+- [Parameters Guide](/parameter) -- parameters and fields that organize documents
+- [Fields Guide](/field) -- field values attached to documents
+- [Departments Guide](/department) -- scope documents to departments
 
 ---
 
@@ -39182,7 +39344,11 @@ Via the API, use `PATCH /documents/draft` with fields like `input_draft_id`, `ex
 
 Route: /evals
 
+{/* DEMO_VIDEO: evals — replace public/demos/evals.mp4 */}
+
 # Evals
+
+<DemoVideo topic="evals" />
 
 Evals assess how well TAs handled student interactions during office hour simulations. An eval brings together models, rubrics, and configuration flags to run automated scoring across simulation transcripts, producing actionable feedback on TA performance.
 
@@ -39240,7 +39406,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search evals:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/evals/search \
+curl -X POST https://<your-instance>/eval/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39250,7 +39416,7 @@ curl -X POST https://<your-instance>/v5/evals/search \
 **Create an eval:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/evals/create \
+curl -X POST https://<your-instance>/eval/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39367,25 +39533,25 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all evals | `glow evals search` | `POST /evals/search` |
-| Get eval details | `glow evals get --body '{"eval_id": "..."}'` | `POST /evals/get` |
-| Create eval | `glow evals create --body '{...}'` | `POST /evals/create` |
-| Update eval | `glow evals update --body '{"eval_id": "...", ...}'` | `POST /evals/update` |
-| Duplicate eval | -- | `POST /evals/duplicate` |
-| Delete eval(s) | `glow evals delete --body '{"eval_id": "..."}'` | `POST /evals/delete` |
-| Export to CSV | `glow evals export` | `POST /evals/export` |
-| Stage a draft | `glow evals draft --body '{...}'` | `PATCH /evals/draft` |
-| List drafts | `glow evals list` | `POST /evals/drafts` |
+| List all evals | `glow evals search` | `POST /eval/search` |
+| Get eval details | `glow evals get --body '{"eval_id": "..."}'` | `POST /eval/get` |
+| Create eval | `glow evals create --body '{...}'` | `POST /eval/create` |
+| Update eval | `glow evals update --body '{"eval_id": "...", ...}'` | `POST /eval/update` |
+| Duplicate eval | -- | `POST /eval/duplicate` |
+| Delete eval(s) | `glow evals delete --body '{"eval_id": "..."}'` | `POST /eval/delete` |
+| Export to CSV | `glow evals export` | `POST /eval/export` |
+| Stage a draft | `glow evals draft --body '{...}'` | `PATCH /eval/draft` |
+| List drafts | `glow evals list` | `POST /eval/drafts` |
 
 ---
 
 ## Related
 
-- [Evals API Reference](/glow/evals/api) -- full endpoint and type documentation
-- [Evals CLI Reference](/glow/evals/cli) -- all CLI commands
-- [Rubrics Guide](/glow/rubrics/guide) -- define scoring criteria used by evals
-- [Models Guide](/glow/models/guide) -- configure the evaluator models that power evals
-- [Providers Guide](/glow/providers/guide) -- set up LLM backends for evaluator models
+- [Evals API Reference](/api-reference/eval) -- full endpoint and type documentation
+- [Evals CLI Reference](/cli-reference/eval) -- all CLI commands
+- [Rubrics Guide](/rubric) -- define scoring criteria used by evals
+- [Models Guide](/model) -- configure the evaluator models that power evals
+- [Providers Guide](/provider) -- set up LLM backends for evaluator models
 
 ---
 
@@ -39393,7 +39559,11 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 Route: /fields
 
+{/* DEMO_VIDEO: fields — replace public/demos/fields.mp4 */}
+
 # Fields
+
+<DemoVideo topic="fields" />
 
 Fields are the specific values within a parameter. While parameters define categories like "Temperament" or "Class", fields define the individual options within those categories -- "Confused", "Happy", "CS-180", and so on.
 
@@ -39459,7 +39629,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search fields
-curl -X POST https://<your-instance>/v5/fields/search \
+curl -X POST https://<your-instance>/field/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39469,7 +39639,7 @@ curl -X POST https://<your-instance>/v5/fields/search \
   }'
 
 # Create a field
-curl -X POST https://<your-instance>/v5/fields/create \
+curl -X POST https://<your-instance>/field/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39521,7 +39691,7 @@ Fields support rich search and filtering:
 
 ```bash
 # Search fields by parameter
-curl -X POST https://<your-instance>/v5/fields/search \
+curl -X POST https://<your-instance>/field/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -39543,29 +39713,29 @@ glow fields draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /fields/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, and `conditional_parameter_ids`.
+Via the API, use `PATCH /field/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, and `conditional_parameter_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all fields | `glow fields list` | `POST /fields/search` |
-| Get a field | `glow fields get --body '{...}'` | `POST /fields/get` |
-| Create fields | `glow fields create --body '{...}'` | `POST /fields/create` |
-| Update fields | `glow fields update --body '{...}'` | `POST /fields/update` |
-| Duplicate a field | -- | `POST /fields/duplicate` |
-| Delete fields | `glow fields delete --body '{...}'` | `POST /fields/delete` |
-| Export to CSV | `glow fields export` | `POST /fields/export` |
-| Save a draft | `glow fields draft --body '{...}'` | `PATCH /fields/draft` |
-| List drafts | -- | `POST /fields/drafts` |
+| List all fields | `glow fields list` | `POST /field/search` |
+| Get a field | `glow fields get --body '{...}'` | `POST /field/get` |
+| Create fields | `glow fields create --body '{...}'` | `POST /field/create` |
+| Update fields | `glow fields update --body '{...}'` | `POST /field/update` |
+| Duplicate a field | -- | `POST /field/duplicate` |
+| Delete fields | `glow fields delete --body '{...}'` | `POST /field/delete` |
+| Export to CSV | `glow fields export` | `POST /field/export` |
+| Save a draft | `glow fields draft --body '{...}'` | `PATCH /field/draft` |
+| List drafts | -- | `POST /field/drafts` |
 
 ## Related
 
-- [Fields API](/glow/fields/api)
-- [Fields CLI](/glow/fields/cli)
-- [Parameters Guide](/glow/parameters/guide) -- the categories that contain fields
-- [Documents Guide](/glow/documents/guide) -- documents reference fields
-- [Departments Guide](/glow/departments/guide) -- scope fields to departments
+- [Fields API](/api-reference/field)
+- [Fields CLI](/cli-reference/field)
+- [Parameters Guide](/parameter) -- the categories that contain fields
+- [Documents Guide](/document) -- documents reference fields
+- [Departments Guide](/department) -- scope fields to departments
 
 ---
 
@@ -39573,9 +39743,26 @@ Via the API, use `PATCH /fields/draft` with fields like `input_draft_id`, `expec
 
 Route: /group
 
+{/* DEMO_VIDEO: group — replace public/demos/group.mp4 */}
+
 # Group
 
-Group provides detailed information about an AI generation group -- the collection of model calls (runs) and messages produced during a training interaction. This is the deepest level of inspection for understanding exactly what the AI generated and how it was used.
+<DemoVideo topic="group" />
+
+Group provides detailed information about an AI generation group —
+the collection of model calls (runs) and messages produced during a
+training interaction. This is the deepest level of inspection for
+understanding exactly what the AI generated and how it was used.
+
+Group is a **view on the system artifact**, exposed via two endpoints:
+
+* `POST /system/group` — single group detail (lean resolve or full
+  detail tree depending on `include_detail` in the body).
+* `POST /system/groups` — paginated list of all groups (also surfaces
+  cost / pricing data; this is what powers the [Pricing](/pricing)
+  page's group-history table).
+
+The CLI surfaces these as `glow system group` and `glow system groups`.
 
 ## What is Group?
 
@@ -39593,49 +39780,54 @@ Groups are essential for debugging AI behavior, auditing training interactions f
 ### CLI
 
 ```bash
-# Get group detail with all runs and messages
-glow group get --body '{"group_id": "group-uuid"}'
+# Lean resolve — group identity only (cheap path used by audit linking)
+glow system group --body '{"group_id": "group-uuid"}'
 
-# Get group with message pagination
-glow group get --body '{"group_id": "group-uuid", "message_limit": 50, "message_offset": 0}'
+# Full detail tree with all runs + messages
+glow system group --body '{"group_id": "group-uuid", "include_detail": true, "message_limit": 50}'
+
+# Paginate all groups (used by Pricing's group-history table)
+glow system groups --body '{"page_size": 25}'
 
 # Export group data as a ZIP
-glow group export --body '{"group_id": "group-uuid"}'
+glow system export --body '{"target_group_id": "group-uuid"}'
 ```
 
 ### API
 
 ```bash
-# Get group detail
-curl -X POST https://<your-instance>/v5/group/get \
+# Get one group (set include_detail for the full tree)
+curl -X POST https://<your-instance>/system/group \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
     "group_id": "group-uuid",
+    "include_detail": true,
     "message_limit": 100,
     "message_offset": 0
   }'
 
-# Export group data
-curl -X POST https://<your-instance>/v5/group/export \
+# List groups (pricing / cost view)
+curl -X POST https://<your-instance>/system/groups \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{"group_id": "group-uuid"}'
+  -d '{"page_size": 20}'
 ```
 
-## Request Parameters
+## Request fields
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `group_id` | `string` | Yes | UUID of the group to fetch |
-| `message_limit` | `integer` | No | Maximum number of messages to return |
+| `include_detail` | `boolean` | No | `true` returns the full detail tree (runs + messages). Default `false` returns lean identity for audit linking. |
+| `message_limit` | `integer` | No | Maximum number of messages to return (when `include_detail=true`) |
 | `message_offset` | `integer` | No | Offset for message pagination |
 
-## Understanding the Group Detail Response
+## Understanding the detail response
 
-The `/group/get` response includes:
+The full-detail response (`include_detail=true`) includes:
 
 - **`group_exists`** -- Whether the group was found.
 - **`actor_name`** -- Display name of the current user.
@@ -39669,19 +39861,26 @@ Each run has:
 - **`agents`** -- Agents used, each with `agent_id` and `name`.
 - **`profiles`** -- Profiles involved, each with `profile_id` and `name`.
 
-## Downloading Media
+## Downloading media
 
-Messages may reference uploaded media via their `*_upload_ids` fields. To download the actual content:
+Messages reference uploaded media via their `*_upload_ids` fields. The
+canonical download path is the system artifact's media endpoints:
 
-```
-GET /group/download/{upload_id}
-```
+| Media kind | Endpoint |
+|---|---|
+| audio | `POST /system/audio_download` |
+| image | `POST /system/image_download` |
+| video | `POST /system/video_download` |
+| file | `POST /system/file_download` |
+| text | `POST /system/text_download` |
 
-This endpoint supports range requests for large files.
+Each takes the relevant `<kind>_upload_id` in the body and supports
+range requests for large files.
 
-## AI Generation Flow
+## AI generation flow
 
-Groups are created as part of the AI generation flow, which produces stream events:
+Groups are created as part of the AI generation flow, which produces
+stream events (delivered over SSE via `POST /<artifact>/watch`):
 
 1. **`GenerationProgressEvent`** -- Reports `completed_resources` / `total_resources` and `percentage`.
 2. **`GenerationCompleteEvent`** -- Indicates success or failure for an `artifact_type`.
@@ -39695,18 +39894,19 @@ Each event references the `group_id` and `run_id`.
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get group detail | `glow group get` | `POST /group/get` |
-| Export group data | `glow group export` | `POST /group/export` |
-| Download media | -- | `GET /group/download/{upload_id}` |
-| Refresh caches | -- | `POST /group/refresh` |
+| Get one group (lean) | `glow system group` | `POST /system/group` |
+| Get one group (full detail) | `glow system group --body '{"include_detail":true}'` | `POST /system/group` |
+| List groups (pricing) | `glow system groups` | `POST /system/groups` |
+| Export group data | `glow system export` | `POST /system/export` |
+| Refresh caches | `glow system refresh` | `POST /system/refresh` |
 
 ## Related
 
-- [Group API Reference](/glow/group/api)
-- [Group CLI Reference](/glow/group/cli)
-- [Session Guide](/glow/session/guide) -- session-level view containing groups
-- [Invocation Guide](/glow/invocation/guide) -- AI model call tracking
-- [Pricing Guide](/glow/pricing/guide) -- cost tracking for groups
+- [System API Reference](/api-reference/system) — every system/* endpoint
+- [System CLI Reference](/cli-reference/system) — every `glow system ...` command
+- [Session](/session) — session-level view that lists groups
+- [Pricing](/pricing) — aggregated cost view across all groups
+- [Invocation](/invocation) — AI model call tracking inside tests
 
 ---
 
@@ -39714,7 +39914,11 @@ Each event references the `group_id` and `run_id`.
 
 Route: /health
 
+{/* DEMO_VIDEO: health — replace public/demos/health.mp4 */}
+
 # Health
+
+<DemoVideo topic="health" />
 
 The Health resource provides service health monitoring and system metrics for your Glow instance. Use it to track uptime, latency, CPU, memory, and error rates over time. Health is an API-only resource with no CLI commands.
 
@@ -39736,7 +39940,7 @@ The health response includes two materialized views:
 **Fetch health data** for the last 7 days:
 
 ```bash
-curl -X POST https://<your-instance>/health/get \
+curl -X POST https://<your-instance>/system/health \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -39750,7 +39954,7 @@ curl -X POST https://<your-instance>/health/get \
 **Filter by service:**
 
 ```bash
-curl -X POST https://<your-instance>/health/get \
+curl -X POST https://<your-instance>/system/health \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -39799,7 +40003,7 @@ Each `metrics_hourly` entry contains:
 **Refresh materialized views** to ensure health data is current:
 
 ```bash
-curl -X POST https://<your-instance>/health/refresh \
+curl -X POST https://<your-instance>/system/refresh \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -39808,7 +40012,7 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export health data** as a denormalized ZIP for offline analysis:
 
 ```bash
-curl -X POST https://<your-instance>/health/export \
+curl -X POST https://<your-instance>/system/export \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -39818,15 +40022,15 @@ Returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
 
 | Operation | Method | Endpoint |
 |---|---|---|
-| Get health data | `POST` | `/health/get` |
-| Refresh views | `POST` | `/health/refresh` |
-| Export data (ZIP) | `POST` | `/health/export` |
+| Get health data | `POST` | `POST /system/health` |
+| Refresh views | `POST` | `POST /system/refresh` |
+| Export data (ZIP) | `POST` | `POST /system/export` |
 | Get documentation | `POST` | `/health/docs` |
 
 ## Related
 
-- [Health API](/glow/health/api)
-- [Info Guide](/glow/info/guide) -- quick server status check
+- [Health API](/api-reference/system)
+- [Info Guide](/info) -- quick server status check
 
 ---
 
@@ -39834,7 +40038,11 @@ Returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
 
 Route: /home
 
+{/* DEMO_VIDEO: home — replace public/demos/home.mp4 */}
+
 # Home
+
+<DemoVideo topic="home" />
 
 Home is the TA landing page in Glow. It displays the training simulations assigned to the current TA, along with their progress status and attempt history. This is where TAs go to start, continue, or review their office-hours practice sessions.
 
@@ -39844,8 +40052,8 @@ Home is the TA landing page in Glow. It displays the training simulations assign
 
 Home provides two views for TAs:
 
-1. **Simulation cards** (`/home/get`) -- A list of assigned simulations showing the TA's name, each simulation's persona (Confused, Aggressive, Passive, or Happy student), progress status (not-started, in-progress, passed), highest score, and pass threshold.
-2. **Attempt history** (`/home/search`) -- A paginated table of the TA's past attempts, with scores, scenario details, and actions (view, continue).
+1. **Simulation cards** (`POST /attempt/home`) -- A list of assigned simulations showing the TA's name, each simulation's persona (Confused, Aggressive, Passive, or Happy student), progress status (not-started, in-progress, passed), highest score, and pass threshold.
+2. **Attempt history** (`POST /attempt/search`) -- A paginated table of the TA's past attempts, with scores, scenario details, and actions (view, continue).
 
 Home also returns rubric and standard mappings so the UI can display which Communication Skills, Policy Knowledge, and De-escalation standards are being assessed for each simulation.
 
@@ -39855,27 +40063,27 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 
 ```bash
 # Get assigned simulations for the current TA
-glow home get
+glow attempts home
 
 # Search the TA's attempt history
-glow home search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
+glow attempts search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
 
 # Export home data with certificate
-glow home export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get simulation cards
-curl -X POST https://<your-instance>/v5/home/get \
+curl -X POST https://<your-instance>/attempt/home \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search attempt history
-curl -X POST https://<your-instance>/v5/home/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -39889,7 +40097,7 @@ curl -X POST https://<your-instance>/v5/home/search \
 
 ## Understanding the Simulation Cards
 
-The `/home/get` response includes:
+The `POST /attempt/home` response includes:
 
 - **`actor_name`** -- Display name of the currently logged-in TA.
 - **`items`** -- Array of `ChatSimulationOperational` objects, one per assigned simulation:
@@ -39914,7 +40122,7 @@ The `/home/get` response includes:
 
 ![Home attempt history showing individual scores per scenario with pass/fail indicators](/screenshots/home/attempt-history.png)
 
-The `/home/search` response returns paginated `HistoryItem` rows:
+The `POST /attempt/search` response returns paginated `HistoryItem` rows:
 
 - `attempt_id`, `date` -- Attempt identity and formatted date
 - `simulation_id`, `simulation_name` -- Which simulation was attempted
@@ -39943,7 +40151,7 @@ The `/home/search` response returns paginated `HistoryItem` rows:
 The export endpoint generates a denormalized ZIP that includes a certificate of completion:
 
 ```bash
-glow home export
+glow attempts export
 ```
 
 The response includes `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
@@ -39952,17 +40160,17 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get assigned simulations | `glow home get` | `POST /home/get` |
-| Search attempt history | `glow home search` | `POST /home/search` |
-| Export with certificate | `glow home export` | `POST /home/export` |
-| Refresh caches | -- | `POST /home/refresh` |
+| Get assigned simulations | `glow attempts home` | `POST /attempt/home` |
+| Search attempt history | `glow attempts search` | `POST /attempt/search` |
+| Export with certificate | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 
 ## Related
 
-- [Home API Reference](/glow/home/api)
-- [Home CLI Reference](/glow/home/cli)
-- [Practice Guide](/glow/practice/guide) -- open practice with student personas
-- [Record Guide](/glow/record/guide) -- individual TA training history (admin view)
+- [Home API Reference](/api-reference/attempt)
+- [Home CLI Reference](/cli-reference/attempts)
+- [Practice Guide](/practice) -- open practice with student personas
+- [Record Guide](/record) -- individual TA training history (admin view)
 
 ---
 
@@ -39970,9 +40178,13 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 Route: /how-it-works
 
+{/* DEMO_VIDEO: how-it-works — replace public/demos/how-it-works.mp4 */}
+
 # How AI Simulation Training Works
 
 This page explains the ideas behind simulation-based training — why it works, what the building blocks are, and how to think about designing effective simulations. You don't need any technical background to follow along.
+
+<DemoVideo topic="how-it-works" caption="An attempt from start to grade — persona, scenario, rubric, feedback." />
 
 ## Why Simulation Training Works
 
@@ -40146,10 +40358,10 @@ Even within education, the framework extends beyond CS. Glow has been used with 
 
 ## Next Steps
 
-- [Design Your First Simulation](/glow/tutorial) — a hands-on tutorial that walks through building a complete simulation from scratch
-- [Annotated Example](/glow/annotated-example) — see what excellent and poor conversations actually look like, with rubric scores and commentary
-- [Patterns & Best Practices](/glow/patterns) — quick recipes for common design challenges
-- [Start](/glow/start) — set up your Glow instance and start building
+- [Design Your First Simulation](/tutorial) — a hands-on tutorial that walks through building a complete simulation from scratch
+- [Annotated Example](/annotated-example) — see what excellent and poor conversations actually look like, with rubric scores and commentary
+- [Patterns & Best Practices](/patterns) — quick recipes for common design challenges
+- [Start](/start) — set up your Glow instance and start building
 
 ---
 
@@ -40157,147 +40369,151 @@ Even within education, the framework extends beyond CS. Glow has been used with 
 
 Route: /invocation
 
+{/* DEMO_VIDEO: invocation — replace public/demos/invocation.mp4 */}
+
 # Invocation
 
-Invocation provides visibility into AI model configurations and their operational parameters. In the context of Glow, an invocation represents the configuration and execution context for AI model calls -- the models, endpoints, pricing, quality settings, and modalities used to power TA training simulations.
+<DemoVideo topic="invocation" />
 
-![Invocation list showing recent model calls with agent name, tokens used, and latency](/screenshots/invocation/list.png)
+Invocations are the per-row units inside a test — each one represents
+a single AI model call made during a benchmark or batch run, with its
+own configuration, status, trace, and grading.
 
-## What is Invocation?
+Invocation is a **sub-namespace on the test artifact**. Every operation
+is named `invocation_<op>` and lives at `POST /test/invocation_<op>`:
+`invocation_get`, `invocation_run`, `invocation_complete`, etc. The
+CLI surfaces them as `glow tests invocation <op>`.
 
-An invocation ties together the configuration details needed to make AI model calls during TA training:
+## What is an Invocation?
 
-- **Names** and **Descriptions** -- Identity for the model configuration
-- **Values** -- Configuration values (e.g., system prompts, persona definitions)
-- **Flags** -- Feature toggles
-- **Departments** -- Department-level scoping
-- **Keys** -- API keys for the model provider
-- **Endpoints** -- Model API endpoint URLs
-- **Modalities** -- Supported input/output types (text, audio, image, video)
-- **Temperature Levels** -- Temperature settings for AI response generation
-- **Pricing** -- Cost-per-token configuration
-- **Reasoning Levels** -- Reasoning depth settings
-- **Qualities** -- Quality tier settings
-- **Voices** -- Voice configuration for audio modalities
+An invocation captures everything needed to make and grade one AI
+model call inside a test:
 
-Invocations are used by the Test system to configure which model and parameters are used for automated benchmark runs, and by the broader platform to manage AI provider configurations.
+- **`invocation_id`** — unique identifier
+- **`test_id`** — the parent test
+- **`model` / `agent` / `provider`** — what's being called
+- **`modalities`** — text / audio / image / video supported
+- **`status`** — queued / running / completed / failed / terminated
+- **`trace`** — full execution trace (prompts, intermediate calls, responses)
+- **`scores`** — per-rubric-standard scores when graded
+
+Invocations are created when a test fans out (e.g., one invocation per
+scenario × model combination). They run independently and report back
+into the parent test for aggregation in the [Benchmark](/benchmark)
+view.
+
+## The invocation sub-op surface
+
+| Sub-op | Endpoint | Purpose |
+|---|---|---|
+| `invocation_get` | `POST /test/invocation_get` | hydrate one invocation by id |
+| `invocation_create` | `POST /test/invocation_create` | seed a new invocation (rare; tests fan out automatically) |
+| `invocation_run` | `POST /test/invocation_run` | start / re-fire an invocation |
+| `invocation_complete` | `POST /test/invocation_complete` | mark complete |
+| `invocation_terminate` | `POST /test/invocation_terminate` | terminate an in-flight invocation |
+| `invocation_trace` | `POST /test/invocation_trace` | fetch the full execution trace |
+| `invocation_draft` / `invocations` | `POST /test/invocation_draft` / `POST /test/invocations` | edit draft / list invocations |
+
+The list endpoint is plural (`POST /test/invocations`) since it
+returns a row collection, while the single-target ops use the
+singular concatenated form.
 
 ## Quick Start
 
 ### CLI
 
 ```bash
-# List all invocations
-glow invocation search
+# Hydrate a single invocation
+glow tests invocation get --body '{"invocation_id": "invocation-uuid"}'
 
-# Get a specific invocation
-glow invocation get --body '{"invocation_id": "invocation-uuid"}'
+# Fan out / re-fire an invocation
+glow tests invocation run --body '{"invocation_id": "invocation-uuid"}'
 
-# Export invocation data
-glow invocation export
+# Pull the full trace
+glow tests invocation trace --body '{"invocation_id": "invocation-uuid"}'
+
+# List invocations for a test
+glow tests invocations --body '{"test_id": "test-uuid"}'
 ```
 
 ### API
 
 ```bash
-# Get invocation detail (via suite endpoint)
-curl -X POST https://<your-instance>/v5/stream/GetSuiteRequest \
+# Get invocation detail
+curl -X POST https://<your-instance>/test/invocation_get \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "test_id": "test-uuid"
-  }'
-```
+  -d '{"invocation_id": "invocation-uuid"}'
 
-## Understanding the Invocation Response
-
-The `GetSuiteResponse` contains the full configuration for an invocation:
-
-- **`test_id`** -- The test this invocation belongs to
-- **`profile_has_access`** -- Whether the current profile can view this invocation
-- **`draft_version`** -- Current draft version number
-- **`group_id`** -- Associated generation group ID
-
-### Configuration Sections
-
-Each section follows a consistent structure with `show` (visibility), `required` (whether the field is mandatory), `show_ai_generate` (whether AI generation is available), `current` (selected items), and `resources` (available options).
-
-| Section | Field | Description |
-|---|---|---|
-| Names | `names` | Model configuration name |
-| Descriptions | `descriptions` | Human-readable description |
-| Values | `values` | Configuration values (prompts, parameters) |
-| Flags | `flags` | Feature toggles |
-| Departments | `departments` | Department scoping |
-| Keys | `keys` | API provider keys |
-| Endpoints | `endpoints` | Model API endpoint URLs |
-| Modalities | `modalities` | Supported I/O types (text, audio, image, video) |
-| Temperature Levels | `temperature_levels` | AI generation temperature settings |
-| Pricing | `pricing` | Cost-per-token configuration |
-| Reasoning Levels | `reasoning_levels` | AI reasoning depth settings |
-| Qualities | `qualities` | Quality tier configuration |
-| Voices | `voices` | Voice settings for audio output |
-
-## Invocations in the Test Flow
-
-Invocations are central to the automated testing system. When a test is started, each benchmark scenario creates an invocation that specifies:
-
-1. Which AI model to use (via `endpoints` and `keys`)
-2. How the model should behave (via `temperature_levels`, `reasoning_levels`, `qualities`)
-3. What input modalities are supported (via `modalities`)
-4. What the cost parameters are (via `pricing`)
-
-During test execution, each invocation produces runs that are tracked in the test detail view. The test's `GetTestArtifactResponse` includes an `invocations` array with per-invocation results.
-
-## Searching Invocations
-
-Use the CLI to list and filter invocations:
-
-```bash
-# List all invocations
-glow invocation search
-
-# Get a specific invocation by ID
-glow invocation get --body '{"invocation_id": "invocation-uuid"}'
-```
-
-The search endpoint uses the standard descriptions search pattern. You can also use `descriptions_search` when fetching via the suite endpoint:
-
-```bash
-curl -X POST https://<your-instance>/v5/stream/GetSuiteRequest \
+# List invocations (paginated)
+curl -X POST https://<your-instance>/test/invocations \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "test_id": "test-uuid",
-    "descriptions_search": "gpt-4"
-  }'
+  -d '{"test_id": "test-uuid", "page_size": 25}'
 ```
 
-## Exporting
+## Invocations in the test flow
+
+When a test runs, the server fans out one invocation per benchmark
+cell (typically: scenario × model × agent). Each invocation:
+
+1. Resolves the model + agent configuration from the test setup
+2. Issues the model call(s) — recorded in `trace`
+3. Grades the resulting transcript against the test's rubric
+4. Writes per-standard scores back onto the row
+5. Reports `status = completed` (or `failed` / `terminated`)
+
+The parent test's response aggregates invocations into
+`AggregatedResults` for benchmark UIs.
+
+## Status lifecycle
+
+| Status | Meaning |
+|---|---|
+| `queued` | created, not yet started |
+| `running` | model call in flight |
+| `completed` | model call done, scores written |
+| `failed` | model call errored — see `trace` for details |
+| `terminated` | cancelled via `invocation_terminate` |
+
+Use `invocation_run` to (re-)kick a queued or failed invocation; use
+`invocation_terminate` to stop a `running` one safely.
+
+## Trace
 
 ```bash
-# Export invocation data
-glow invocation export
+curl -X POST https://<your-instance>/test/invocation_trace \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"invocation_id": "invocation-uuid"}'
 ```
+
+Returns the full call chain — prompts sent, intermediate tool calls,
+responses received — formatted for replay or audit.
 
 ## Common Operations
 
-| Task | CLI | API Endpoint |
+| Task | CLI | API |
 |---|---|---|
-| List invocations | `glow invocation search` | `POST /invocation/search` |
-| Get invocation | `glow invocation get` | `POST /invocation/get` |
-| Get suite config | -- | `POST /stream/GetSuiteRequest` |
-| Export | `glow invocation export` | `POST /invocation/export` |
+| Get one invocation | `glow tests invocation get` | `POST /test/invocation_get` |
+| List invocations | `glow tests invocations` | `POST /test/invocations` |
+| Run / re-fire | `glow tests invocation run` | `POST /test/invocation_run` |
+| Terminate | `glow tests invocation terminate` | `POST /test/invocation_terminate` |
+| Fetch trace | `glow tests invocation trace` | `POST /test/invocation_trace` |
+| Mark complete | `glow tests invocation complete` | `POST /test/invocation_complete` |
+| Save draft | `glow tests invocation draft` | `POST /test/invocation_draft` |
+| List drafts | `glow tests invocation drafts` | `POST /test/invocation_drafts` |
 
 ## Related
 
-- [Invocation API Reference](/glow/invocation/api)
-- [Invocation CLI Reference](/glow/invocation/cli)
-- [Test Guide](/glow/test/guide) -- automated benchmark testing
-- [Group Guide](/glow/group/guide) -- AI generation group details
-- [Pricing Guide](/glow/pricing/guide) -- cost tracking for AI model calls
+- [Test API Reference](/api-reference/test) — every invocation_* endpoint with full schemas
+- [Tests CLI Reference](/cli-reference/tests) — every `glow tests ...` command
+- [Benchmark](/benchmark) — the aggregated view across all invocations in a test
+- [Pricing](/pricing) — cost tracking for invocation runs
+- [Group](/group) — generation group rows that capture invocation cost
 
 ---
 
@@ -40305,7 +40521,11 @@ glow invocation export
 
 Route: /leaderboard
 
+{/* DEMO_VIDEO: leaderboard — replace public/demos/leaderboard.mp4 */}
+
 # Leaderboard
+
+<DemoVideo topic="leaderboard" />
 
 The Leaderboard ranks TAs by training performance, highlighting top performers and awarding accolades. It helps program coordinators identify which TAs are excelling and which may need additional support with office-hours simulations.
 
@@ -40331,23 +40551,23 @@ Leaderboard answers questions like:
 
 ```bash
 # Get the full leaderboard with header metrics and accolades
-glow leaderboard get
+glow attempts leaderboard
 
 # Get leaderboard filtered by cohort and date range
-glow leaderboard get --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+glow attempts leaderboard --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
 
 # Search leaderboard rankings (paginated, sortable)
-glow leaderboard search --body '{"sort_by": "highest_score_avg", "sort_order": "desc", "page_limit": 25}'
+glow attempts search --body '{"sort_by": "highest_score_avg", "sort_order": "desc", "page_limit": 25}'
 
 # Export leaderboard data
-glow leaderboard export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get leaderboard summary
-curl -X POST https://<your-instance>/v5/leaderboard/get \
+curl -X POST https://<your-instance>/attempt/leaderboard \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -40358,7 +40578,7 @@ curl -X POST https://<your-instance>/v5/leaderboard/get \
   }'
 
 # Search ranked profiles
-curl -X POST https://<your-instance>/v5/leaderboard/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -40387,7 +40607,7 @@ curl -X POST https://<your-instance>/v5/leaderboard/search \
 
 ## Understanding the Leaderboard Summary
 
-The `/leaderboard/get` response includes:
+The `POST /attempt/leaderboard` response includes:
 
 ### `sections`
 
@@ -40411,7 +40631,7 @@ Resource metadata keyed by ID: `profiles`, `simulations`, `scenarios`.
 
 ## Understanding Search Results
 
-The `/leaderboard/search` response returns `LeaderboardDataRow` items:
+The `POST /attempt/search` response returns `LeaderboardDataRow` items:
 
 - `rank` -- Position on the leaderboard
 - `profile_id`, `name` -- TA identity
@@ -40430,17 +40650,17 @@ The `/leaderboard/search` response returns `LeaderboardDataRow` items:
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Leaderboard summary | `glow leaderboard get` | `POST /leaderboard/get` |
-| Search rankings | `glow leaderboard search` | `POST /leaderboard/search` |
-| Export data | `glow leaderboard export` | `POST /leaderboard/export` |
-| Refresh caches | -- | `POST /leaderboard/refresh` |
+| Leaderboard summary | `glow attempts leaderboard` | `POST /attempt/leaderboard` |
+| Search rankings | `glow attempts search` | `POST /attempt/search` |
+| Export data | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 
 ## Related
 
-- [Leaderboard API Reference](/glow/leaderboard/api)
-- [Leaderboard CLI Reference](/glow/leaderboard/cli)
-- [Reports Guide](/glow/reports/guide) -- full training reports
-- [Record Guide](/glow/record/guide) -- single-TA performance view
+- [Leaderboard API Reference](/api-reference/attempt)
+- [Leaderboard CLI Reference](/cli-reference/attempts)
+- [Reports Guide](/reports) -- full training reports
+- [Record Guide](/record) -- single-TA performance view
 
 ---
 
@@ -40448,7 +40668,11 @@ The `/leaderboard/search` response returns `LeaderboardDataRow` items:
 
 Route: /models
 
+{/* DEMO_VIDEO: models — replace public/demos/models.mp4 */}
+
 # Models
+
+<DemoVideo topic="models" />
 
 Models define the LLM configurations that power AI student personas during office hour simulations. Each model wraps a specific LLM (such as `gpt-4o` or `claude-3-opus`) with settings for temperature, reasoning level, modalities, and pricing, and links back to the provider that supplies the underlying API.
 
@@ -40499,7 +40723,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search models:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/models/search \
+curl -X POST https://<your-instance>/model/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -40509,7 +40733,7 @@ curl -X POST https://<your-instance>/v5/models/search \
 **Create a model:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/models/create \
+curl -X POST https://<your-instance>/model/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -40548,7 +40772,7 @@ Every model requires at least one provider. The `provider_ids` field connects th
 
 ```bash
 # Filter models by provider
-curl -X POST https://<your-instance>/v5/models/search \
+curl -X POST https://<your-instance>/model/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -40609,24 +40833,24 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all models | `glow models search` | `POST /models/search` |
-| Get model details | `glow models get --body '{"model_id": "..."}'` | `POST /models/get` |
-| Create model | `glow models create --body '{...}'` | `POST /models/create` |
-| Update model | `glow models update --body '{"model_id": "...", ...}'` | `POST /models/update` |
-| Duplicate model | `glow models create --body '{...}'` | `POST /models/duplicate` |
-| Delete model(s) | `glow models delete --body '{"model_id": "..."}'` | `POST /models/delete` |
-| Export to CSV | `glow models export` | `POST /models/export` |
-| Stage a draft | `glow models draft --body '{...}'` | `PATCH /models/draft` |
-| List drafts | `glow models list` | `POST /models/drafts` |
+| List all models | `glow models search` | `POST /model/search` |
+| Get model details | `glow models get --body '{"model_id": "..."}'` | `POST /model/get` |
+| Create model | `glow models create --body '{...}'` | `POST /model/create` |
+| Update model | `glow models update --body '{"model_id": "...", ...}'` | `POST /model/update` |
+| Duplicate model | `glow models create --body '{...}'` | `POST /model/duplicate` |
+| Delete model(s) | `glow models delete --body '{"model_id": "..."}'` | `POST /model/delete` |
+| Export to CSV | `glow models export` | `POST /model/export` |
+| Stage a draft | `glow models draft --body '{...}'` | `PATCH /model/draft` |
+| List drafts | `glow models list` | `POST /model/drafts` |
 
 ---
 
 ## Related
 
-- [Models API Reference](/glow/models/api) -- full endpoint and type documentation
-- [Models CLI Reference](/glow/models/cli) -- all CLI commands
-- [Providers Guide](/glow/providers/guide) -- set up the LLM backend a model connects to
-- [Evals Guide](/glow/evals/guide) -- evaluate model performance across simulations
+- [Models API Reference](/api-reference/model) -- full endpoint and type documentation
+- [Models CLI Reference](/cli-reference/model) -- all CLI commands
+- [Providers Guide](/provider) -- set up the LLM backend a model connects to
+- [Evals Guide](/eval) -- evaluate model performance across simulations
 
 ---
 
@@ -40634,16 +40858,45 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 Route: /
 
+{/* DEMO_VIDEO: index — replace public/demos/index.mp4 */}
+
 # Glow Documentation
 
-Documentation for the Glow conversational AI training platform.
+Documentation for the **Glow** conversational AI training platform — an
+academic, self-hostable system for designing and running
+persona-driven simulations with full grading + analytics.
 
-## Getting Started
+<DemoVideo topic="index" caption="Glow in 60 seconds — the end-to-end attempt loop." />
 
-- **[Start](/start)** — Set up and configure your Glow instance
-- **[How It Works](/how-it-works)** — Learn about AI simulation training
-- **[Tutorial](/tutorial)** — Design your first simulation
-- **[Patterns](/patterns)** — Patterns and best practices
+## Getting started
+
+- **[Start](/start)** — install + first-boot of a Glow instance
+- **[How It Works](/how-it-works)** — the simulation, persona, scenario, attempt loop
+- **[Tutorial](/tutorial)** — design your first simulation end-to-end
+- **[Patterns](/patterns)** — proven patterns + anti-patterns
+- **[Annotated Example](/annotated-example)** — a real seed walked through line-by-line
+- **[Authentication](/authentication)** — sessions, bearer tokens, license keys
+
+## Reference
+
+- **[API Reference](/api-reference)** — every HTTP endpoint, auto-generated from OpenAPI
+- **[CLI Reference](/cli-reference)** — every `glow` command, auto-generated from the CLI spec
+
+## Sidebar layout
+
+The left-hand nav mirrors the [client sidebar](/start) so what
+you see in the product UI maps 1-for-1 to a docs section:
+
+| Sidebar group | What lives there |
+|---|---|
+| **Learner** | Home · Chat · Practice · Leaderboard |
+| **Analytics** | Dashboard · Reports · Activity · Pricing |
+| **Training** | Cohorts · Simulations · Scenarios · Personas |
+| **Management** | Profiles · Documents · Parameters · Fields |
+| **Intelligence** | Agents · Models · Providers · Tools |
+| **System** | Auths · Departments · Evals · Rubrics |
+| **Ops** | Health · Benchmark · Invocation |
+| **Internals** | Session · Group (server-side, no client UI) |
 
 ---
 
@@ -40651,7 +40904,11 @@ Documentation for the Glow conversational AI training platform.
 
 Route: /parameters
 
+{/* DEMO_VIDEO: parameters — replace public/demos/parameters.mp4 */}
+
 # Parameters
+
+<DemoVideo topic="parameters" />
 
 Parameters define the dimensions along which simulation scenarios can vary. Each parameter is a category -- like Temperament or Crowdedness -- that contains a set of fields representing its possible values.
 
@@ -40722,7 +40979,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search parameters
-curl -X POST https://<your-instance>/v5/parameters/search \
+curl -X POST https://<your-instance>/parameter/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -40732,7 +40989,7 @@ curl -X POST https://<your-instance>/v5/parameters/search \
   }'
 
 # Create a parameter
-curl -X POST https://<your-instance>/v5/parameters/create \
+curl -X POST https://<your-instance>/parameter/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -40781,7 +41038,7 @@ Parameters support rich search and filtering. You can filter by:
 
 ```bash
 # Search parameters by field
-curl -X POST https://<your-instance>/v5/parameters/search \
+curl -X POST https://<your-instance>/parameter/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -40803,29 +41060,29 @@ glow parameters draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /parameters/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_ids`, `department_ids`, and `field_ids`.
+Via the API, use `PATCH /parameter/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_ids`, `department_ids`, and `field_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all parameters | `glow parameters list` | `POST /parameters/search` |
-| Get a parameter | `glow parameters get --body '{...}'` | `POST /parameters/get` |
-| Create parameters | `glow parameters create --body '{...}'` | `POST /parameters/create` |
-| Update parameters | `glow parameters update --body '{...}'` | `POST /parameters/update` |
-| Duplicate a parameter | -- | `POST /parameters/duplicate` |
-| Delete parameters | `glow parameters delete --body '{...}'` | `POST /parameters/delete` |
-| Export to CSV | `glow parameters export` | `POST /parameters/export` |
-| Save a draft | `glow parameters draft --body '{...}'` | `PATCH /parameters/draft` |
-| List drafts | -- | `POST /parameters/drafts` |
+| List all parameters | `glow parameters list` | `POST /parameter/search` |
+| Get a parameter | `glow parameters get --body '{...}'` | `POST /parameter/get` |
+| Create parameters | `glow parameters create --body '{...}'` | `POST /parameter/create` |
+| Update parameters | `glow parameters update --body '{...}'` | `POST /parameter/update` |
+| Duplicate a parameter | -- | `POST /parameter/duplicate` |
+| Delete parameters | `glow parameters delete --body '{...}'` | `POST /parameter/delete` |
+| Export to CSV | `glow parameters export` | `POST /parameter/export` |
+| Save a draft | `glow parameters draft --body '{...}'` | `PATCH /parameter/draft` |
+| List drafts | -- | `POST /parameter/drafts` |
 
 ## Related
 
-- [Parameters API](/glow/parameters/api)
-- [Parameters CLI](/glow/parameters/cli)
-- [Fields Guide](/glow/fields/guide) -- the values within each parameter
-- [Documents Guide](/glow/documents/guide) -- documents reference parameters and fields
-- [Departments Guide](/glow/departments/guide) -- scope parameters to departments
+- [Parameters API](/api-reference/parameter)
+- [Parameters CLI](/cli-reference/parameter)
+- [Fields Guide](/field) -- the values within each parameter
+- [Documents Guide](/document) -- documents reference parameters and fields
+- [Departments Guide](/department) -- scope parameters to departments
 
 ---
 
@@ -40833,7 +41090,12 @@ Via the API, use `PATCH /parameters/draft` with fields like `input_draft_id`, `e
 
 Route: /patterns
 
+{/* DEMO_VIDEO: patterns — replace public/demos/patterns.mp4 */}
+
 # Patterns & Best Practices
+
+<DemoVideo topic="patterns" />
+
 
 Short, actionable recipes for common simulation design challenges. Each pattern stands on its own — read the ones relevant to what you're working on.
 
@@ -40950,7 +41212,7 @@ When the rubric levels are specific enough, the AI produces feedback that quotes
 **Content Mastery — Good (4/5):**
 > "Accurately guided the student to articulate Euclid's algorithm and the prime factorization approach, including the optimization of testing divisors up to `i*i <= n`. Emphasized algorithmic steps and correctness, though did not proactively provide structured summaries or check understanding at multiple points."
 
-Notice how specific the feedback is — it names exact quotes, specific techniques, and precise gaps. This is only possible when the rubric levels have clear behavioral anchors. Vague criteria like "communicates well" would produce vague feedback like "communication was adequate." See the [Annotated Example](/glow/annotated-example) page for full conversations with rubric scores.
+Notice how specific the feedback is — it names exact quotes, specific techniques, and precise gaps. This is only possible when the rubric levels have clear behavioral anchors. Vague criteria like "communicates well" would produce vague feedback like "communication was adequate." See the [Annotated Example](/annotated-example) page for full conversations with rubric scores.
 
 ### Separate Different Skills Into Different Groups
 
@@ -41095,12 +41357,12 @@ The same conversation gets very different scores on different runs.
 
 ## Next Steps
 
-- [Design Your First Simulation](/glow/tutorial) — apply these patterns in a hands-on tutorial
-- [How It Works](/glow/how-it-works) — understand the principles behind simulation training
-- [Personas Guide](/glow/personas/guide) — full reference for persona configuration
-- [Rubrics Guide](/glow/rubrics/guide) — full reference for rubric design
-- [Parameters Guide](/glow/parameters/guide) — full reference for dynamic parameter fields
-- [Benchmark Guide](/glow/benchmark/guide) — evaluate AI providers for your use case
+- [Design Your First Simulation](/tutorial) — apply these patterns in a hands-on tutorial
+- [How It Works](/how-it-works) — understand the principles behind simulation training
+- [Personas Guide](/personas) — full reference for persona configuration
+- [Rubrics Guide](/rubrics) — full reference for rubric design
+- [Parameters Guide](/parameters) — full reference for dynamic parameter fields
+- [Benchmark Guide](/benchmark) — evaluate AI providers for your use case
 
 ---
 
@@ -41108,7 +41370,11 @@ The same conversation gets very different scores on different runs.
 
 Route: /personas
 
+{/* DEMO_VIDEO: personas — replace public/demos/personas.mp4 */}
+
 # Personas
+
+<DemoVideo topic="personas" />
 
 Personas are the AI-driven characters that learners interact with during training simulations -- they define who the learner is talking to and how that character behaves.
 
@@ -41125,7 +41391,7 @@ A persona is a reusable AI character definition that controls the personality, b
 - **Parameter Fields** -- dynamic placeholders (like `{{class}}`, `{{location}}`, `{{intensity}}`) that inject scenario-specific values into instructions at runtime
 - **Departments** -- organizational groupings for filtering and access control
 
-Personas are assigned to [Scenarios](/glow/scenarios/guide), not directly to simulations or agents. A single persona can appear in many scenarios.
+Personas are assigned to [Scenarios](/scenario), not directly to simulations or agents. A single persona can appear in many scenarios.
 
 ![Personas list showing cards for each persona with name, color, icon, and description](/screenshots/personas/list.png)
 
@@ -41162,7 +41428,7 @@ glow personas get --body '{"persona_id": "your-persona-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/personas/create \
+curl -X POST https://<your-instance>/persona/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -41178,7 +41444,7 @@ curl -X POST https://<your-instance>/v5/personas/create \
 Search personas:
 
 ```bash
-curl -X POST https://<your-instance>/v5/personas/search \
+curl -X POST https://<your-instance>/persona/search \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -41192,10 +41458,10 @@ Personas are **step 1** in the Glow content pipeline:
 | Step | Resource | Description |
 |------|----------|-------------|
 | **1. Create Personas** | **Personas** | **Define AI characters with instructions, examples, and parameter fields** |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas to them |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas to them |
+| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts and interact with persona-driven AI in [Chats](/glow/chat/guide) |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with persona-driven AI in [Chats](/chat) |
 
 ## Writing Effective Instructions
 
@@ -41315,7 +41581,7 @@ glow personas draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/personas/draft \
+curl -X PATCH https://<your-instance>/persona/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -41332,7 +41598,7 @@ curl -X PATCH https://<your-instance>/v5/personas/draft \
 glow personas list
 
 # API
-curl -X POST https://<your-instance>/v5/personas/drafts \
+curl -X POST https://<your-instance>/persona/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -41344,24 +41610,24 @@ The draft response includes `draft_id`, `new_version`, and `form_state` so your 
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all personas | `glow personas search` | `POST /personas/search` |
-| Get one persona | `glow personas get --body '{"persona_id": "..."}' ` | `POST /personas/get` |
-| Create personas | `glow personas create --body '{"personas": [...]}'` | `POST /personas/create` |
-| Update personas | `glow personas update --body '{"personas": [...]}'` | `POST /personas/update` |
-| Duplicate a persona | -- | `POST /personas/duplicate` |
-| Delete personas | `glow personas delete --body '{"persona_ids": [...]}'` | `POST /personas/delete` |
-| Save a draft | `glow personas draft --body '{...}'` | `PATCH /personas/draft` |
-| List drafts | `glow personas list` | `POST /personas/drafts` |
-| Export to CSV | `glow personas export` | `POST /personas/export` |
-| Import from CSV | -- | `POST /personas/csv` |
+| List all personas | `glow personas search` | `POST /persona/search` |
+| Get one persona | `glow personas get --body '{"persona_id": "..."}' ` | `POST /persona/get` |
+| Create personas | `glow personas create --body '{"personas": [...]}'` | `POST /persona/create` |
+| Update personas | `glow personas update --body '{"personas": [...]}'` | `POST /persona/update` |
+| Duplicate a persona | -- | `POST /persona/duplicate` |
+| Delete personas | `glow personas delete --body '{"persona_ids": [...]}'` | `POST /persona/delete` |
+| Save a draft | `glow personas draft --body '{...}'` | `PATCH /persona/draft` |
+| List drafts | `glow personas list` | `POST /persona/drafts` |
+| Export to CSV | `glow personas export` | `POST /persona/export` |
+| Import from CSV | -- | `POST /persona/csv` |
 
 ## Related
 
-- [Personas API Reference](/glow/personas/api) -- full endpoint schemas and field definitions
-- [Personas CLI Reference](/glow/personas/cli) -- all CLI commands and flags
-- [Scenarios Guide](/glow/scenarios/guide) -- building training situations that use personas
-- [Simulations Guide](/glow/simulations/guide) -- bundling scenarios into complete training sessions
-- [Cohorts Guide](/glow/cohorts/guide) -- assigning profile personas so the AI adapts to each learner
+- [Personas API Reference](/api-reference/persona) -- full endpoint schemas and field definitions
+- [Personas CLI Reference](/cli-reference/persona) -- all CLI commands and flags
+- [Scenarios Guide](/scenario) -- building training situations that use personas
+- [Simulations Guide](/simulation) -- bundling scenarios into complete training sessions
+- [Cohorts Guide](/cohort) -- assigning profile personas so the AI adapts to each learner
 
 ---
 
@@ -41369,7 +41635,11 @@ The draft response includes `draft_id`, `new_version`, and `form_state` so your 
 
 Route: /practice
 
+{/* DEMO_VIDEO: practice — replace public/demos/practice.mp4 */}
+
 # Practice
+
+<DemoVideo topic="practice" />
 
 Practice provides open-ended training sessions where TAs can practice with student personas outside of graded assignments. Unlike Home (which shows assigned simulations), Practice surfaces all available practice simulations for self-directed skill development.
 
@@ -41381,8 +41651,8 @@ Practice lets TAs engage with Confused, Aggressive, Passive, and Happy student p
 
 Practice offers two views:
 
-1. **Simulation cards** (`/practice/get`) -- Available practice simulations with progress indicators, persona details, and rubric/standard mappings.
-2. **Attempt history** (`/practice/search`) -- Paginated history of the TA's practice attempts with scores, scenarios, and completion data.
+1. **Simulation cards** (`POST /attempt/practice`) -- Available practice simulations with progress indicators, persona details, and rubric/standard mappings.
+2. **Attempt history** (`POST /attempt/search`) -- Paginated history of the TA's practice attempts with scores, scenarios, and completion data.
 
 ## Quick Start
 
@@ -41390,27 +41660,27 @@ Practice offers two views:
 
 ```bash
 # Get available practice simulations
-glow practice get
+glow attempts practice
 
 # Search practice attempt history
-glow practice search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
+glow attempts search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
 
 # Export practice data
-glow practice export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get practice simulation cards
-curl -X POST https://<your-instance>/v5/practice/get \
+curl -X POST https://<your-instance>/attempt/practice \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search practice history
-curl -X POST https://<your-instance>/v5/practice/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -41424,7 +41694,7 @@ curl -X POST https://<your-instance>/v5/practice/search \
 
 ## Understanding the Simulation Cards
 
-The `/practice/get` response mirrors the Home response structure:
+The `POST /attempt/practice` response mirrors the Home response structure:
 
 - **`actor_name`** -- Display name of the current TA.
 - **`items`** -- Array of `ChatSimulationOperational` objects for practice simulations:
@@ -41448,7 +41718,7 @@ The `/practice/get` response mirrors the Home response structure:
 
 ![Practice results showing rubric scores, per-criterion feedback, and improvement suggestions](/screenshots/practice/results.png)
 
-The `/practice/search` endpoint returns paginated `HistoryItem` rows.
+The `POST /attempt/search` endpoint returns paginated `HistoryItem` rows.
 
 ### Filters
 
@@ -41478,17 +41748,17 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get practice simulations | `glow practice get` | `POST /practice/get` |
-| Search practice history | `glow practice search` | `POST /practice/search` |
-| Export data | `glow practice export` | `POST /practice/export` |
-| Refresh caches | -- | `POST /practice/refresh` |
+| Get practice simulations | `glow attempts practice` | `POST /attempt/practice` |
+| Search practice history | `glow attempts search` | `POST /attempt/search` |
+| Export data | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 
 ## Related
 
-- [Practice API Reference](/glow/practice/api)
-- [Practice CLI Reference](/glow/practice/cli)
-- [Home Guide](/glow/home/guide) -- assigned TA training
-- [Session Guide](/glow/session/guide) -- session detail view
+- [Practice API Reference](/api-reference/attempt)
+- [Practice CLI Reference](/cli-reference/attempts)
+- [Home Guide](/home) -- assigned TA training
+- [Session Guide](/session) -- session detail view
 
 ---
 
@@ -41496,7 +41766,11 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 
 Route: /pricing
 
+{/* DEMO_VIDEO: pricing — replace public/demos/pricing.mp4 */}
+
 # Pricing
+
+<DemoVideo topic="pricing" />
 
 Pricing tracks the AI costs associated with running TA training simulations. It aggregates cost data by day and model, and provides a paginated history of generation groups with token counts and dollar amounts.
 
@@ -41506,8 +41780,8 @@ Pricing tracks the AI costs associated with running TA training simulations. It 
 
 Every time a TA interacts with a student persona during an office-hours simulation, Glow makes AI model calls that consume tokens and incur costs. Pricing gives administrators visibility into this spending with:
 
-1. **Daily cost chart** (`/pricing/get`) -- Daily aggregations showing `total_cost` and `run_count` per model, with filter options for models and agents.
-2. **Group history** (`/pricing/search`) -- Paginated table of AI generation groups showing per-group token counts, costs, and associated models/agents.
+1. **Daily cost chart** (`POST /system/pricing`) -- Daily aggregations showing `total_cost` and `run_count` per model, with filter options for models and agents.
+2. **Group history** (`POST /system/groups`) -- Paginated table of AI generation groups showing per-group token counts, costs, and associated models/agents.
 
 This helps institutions monitor budget consumption, compare model costs, and forecast future spending for their TA training programs.
 
@@ -41517,23 +41791,23 @@ This helps institutions monitor budget consumption, compare model costs, and for
 
 ```bash
 # Get daily cost chart data
-glow pricing get
+glow system pricing
 
 # Get pricing for a specific date range
-glow pricing get --body '{"start_date": "2025-01-01", "end_date": "2025-01-31"}'
+glow system pricing --body '{"start_date": "2025-01-01", "end_date": "2025-01-31"}'
 
 # Search group history (paginated)
-glow pricing search --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
+glow system groups --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
 
 # Export pricing data
-glow pricing export
+glow system export
 ```
 
 ### API
 
 ```bash
 # Get daily cost aggregations
-curl -X POST https://<your-instance>/v5/pricing/get \
+curl -X POST https://<your-instance>/system/pricing \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -41543,7 +41817,7 @@ curl -X POST https://<your-instance>/v5/pricing/get \
   }'
 
 # Search group history
-curl -X POST https://<your-instance>/v5/pricing/search \
+curl -X POST https://<your-instance>/system/groups \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -41565,7 +41839,7 @@ curl -X POST https://<your-instance>/v5/pricing/search \
 
 ## Understanding the Daily Cost Response
 
-The `/pricing/get` response includes:
+The `POST /system/pricing` response includes:
 
 - **`daily`** -- Array of `PricingDailyItem` buckets:
   - `date_key` -- Date bucket (e.g., `"2025-01-15"`)
@@ -41582,7 +41856,7 @@ The `/pricing/get` response includes:
 
 ## Understanding Group History
 
-The `/pricing/search` response returns paginated `PricingGroupItem` rows:
+The `POST /system/groups` response returns paginated `PricingGroupItem` rows:
 
 - `group_id` -- UUID of the generation group
 - `session_id` -- Associated session
@@ -41600,7 +41874,7 @@ The `/pricing/search` response returns paginated `PricingGroupItem` rows:
 
 ```bash
 # Export all pricing data as a denormalized ZIP
-glow pricing export
+glow system export
 ```
 
 The response includes `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
@@ -41609,17 +41883,17 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Daily cost chart | `glow pricing get` | `POST /pricing/get` |
-| Group history | `glow pricing search` | `POST /pricing/search` |
-| Export data | `glow pricing export` | `POST /pricing/export` |
-| Refresh caches | -- | `POST /pricing/refresh` |
+| Daily cost chart | `glow system pricing` | `POST /system/pricing` |
+| Group history | `glow system groups` | `POST /system/groups` |
+| Export data | `glow system export` | `POST /system/export` |
+| Refresh caches | -- | `POST /system/refresh` |
 
 ## Related
 
-- [Pricing API Reference](/glow/pricing/api)
-- [Pricing CLI Reference](/glow/pricing/cli)
-- [Invocation Guide](/glow/invocation/guide) -- individual AI model call tracking
-- [Group Guide](/glow/group/guide) -- AI generation group details
+- [Pricing API Reference](/api-reference/system)
+- [Pricing CLI Reference](/cli-reference/systems)
+- [Invocation Guide](/invocation) -- individual AI model call tracking
+- [Group Guide](/group) -- AI generation group details
 
 ---
 
@@ -41627,7 +41901,11 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 Route: /profiles
 
+{/* DEMO_VIDEO: profiles — replace public/demos/profiles.mp4 */}
+
 # Profiles
+
+<DemoVideo topic="profiles" />
 
 Profiles represent the people who use Glow -- instructors, teaching assistants, and administrators. Every user in your institution gets a profile that determines what they can access and how they interact with simulations through cohorts.
 
@@ -41687,7 +41965,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search profiles
-curl -X POST https://<your-instance>/v5/profiles/search \
+curl -X POST https://<your-instance>/profile/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41698,7 +41976,7 @@ curl -X POST https://<your-instance>/v5/profiles/search \
   }'
 
 # Create a profile
-curl -X POST https://<your-instance>/v5/profiles/create \
+curl -X POST https://<your-instance>/profile/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41764,28 +42042,28 @@ glow profiles draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /profiles/draft` with fields like `input_draft_id`, `expected_version`, `name`, `email`, `flag_id`, `department_ids`, and `role_ids`.
+Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expected_version`, `name`, `email`, `flag_id`, `department_ids`, and `role_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all profiles | `glow profiles list` | `POST /profiles/search` |
-| Get a profile | `glow profiles get --body '{...}'` | `POST /profiles/get` |
-| Create profiles | `glow profiles create --body '{...}'` | `POST /profiles/create` |
-| Update profiles | `glow profiles update --body '{...}'` | `POST /profiles/update` |
-| Duplicate a profile | -- | `POST /profiles/duplicate` |
-| Delete profiles | `glow profiles delete --body '{...}'` | `POST /profiles/delete` |
-| Export to CSV | `glow profiles export` | `POST /profiles/export` |
-| Save a draft | `glow profiles draft --body '{...}'` | `PATCH /profiles/draft` |
-| List drafts | -- | `POST /profiles/drafts` |
+| List all profiles | `glow profiles list` | `POST /profile/search` |
+| Get a profile | `glow profiles get --body '{...}'` | `POST /profile/get` |
+| Create profiles | `glow profiles create --body '{...}'` | `POST /profile/create` |
+| Update profiles | `glow profiles update --body '{...}'` | `POST /profile/update` |
+| Duplicate a profile | -- | `POST /profile/duplicate` |
+| Delete profiles | `glow profiles delete --body '{...}'` | `POST /profile/delete` |
+| Export to CSV | `glow profiles export` | `POST /profile/export` |
+| Save a draft | `glow profiles draft --body '{...}'` | `PATCH /profile/draft` |
+| List drafts | -- | `POST /profile/drafts` |
 
 ## Related
 
-- [Profiles API](/glow/profiles/api)
-- [Profiles CLI](/glow/profiles/cli)
-- [Cohorts Guide](/glow/cohorts/guide) -- assign profiles to cohorts
-- [Departments Guide](/glow/departments/guide) -- manage department membership
+- [Profiles API](/api-reference/profile)
+- [Profiles CLI](/cli-reference/profile)
+- [Cohorts Guide](/cohort) -- assign profiles to cohorts
+- [Departments Guide](/department) -- manage department membership
 
 ---
 
@@ -41793,7 +42071,11 @@ Via the API, use `PATCH /profiles/draft` with fields like `input_draft_id`, `exp
 
 Route: /providers
 
+{/* DEMO_VIDEO: providers — replace public/demos/providers.mp4 */}
+
 # Providers
+
+<DemoVideo topic="providers" />
 
 Providers represent the LLM backends that power Glow. Each provider encapsulates an external AI service -- such as OpenAI or Anthropic -- along with its API endpoints, authentication keys, and configuration values. Models connect to providers to gain access to these backends.
 
@@ -41848,7 +42130,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search providers:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/search \
+curl -X POST https://<your-instance>/provider/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41858,7 +42140,7 @@ curl -X POST https://<your-instance>/v5/providers/search \
 **Create a provider:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/create \
+curl -X POST https://<your-instance>/provider/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41903,7 +42185,7 @@ When you retrieve a provider with `GET`, the response includes an `endpoints` se
 Provider keys hold encrypted credentials. Keys are never returned in plaintext from list or search operations. To decrypt a key, use the dedicated decrypt endpoint:
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/decrypt \
+curl -X POST https://<your-instance>/provider/decrypt \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41924,7 +42206,7 @@ The response returns the decrypted `key` value, the key `name`, and the `actor_n
 To quickly create a copy of an existing provider configuration:
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/duplicate \
+curl -X POST https://<your-instance>/provider/duplicate \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41938,7 +42220,7 @@ The response returns a new `provider_id` for the duplicated provider.
 Delete multiple providers in a single call:
 
 ```bash
-curl -X POST https://<your-instance>/v5/providers/delete \
+curl -X POST https://<your-instance>/provider/delete \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -41974,24 +42256,24 @@ The draft endpoint uses `PATCH` semantics. Include `input_draft_id` and `expecte
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all providers | `glow providers search` | `POST /providers/search` |
-| Get provider details | `glow providers get --body '{"provider_id": "..."}'` | `POST /providers/get` |
-| Create provider | `glow providers create --body '{...}'` | `POST /providers/create` |
-| Update provider | `glow providers update --body '{"provider_id": "...", ...}'` | `POST /providers/update` |
-| Duplicate provider | -- | `POST /providers/duplicate` |
-| Delete provider(s) | `glow providers delete --body '{"provider_id": "..."}'` | `POST /providers/delete` |
-| Decrypt a key | -- | `POST /providers/decrypt` |
-| Export to CSV | `glow providers export` | `POST /providers/export` |
-| Stage a draft | `glow providers draft --body '{...}'` | `PATCH /providers/draft` |
-| List drafts | `glow providers list` | `POST /providers/drafts` |
+| List all providers | `glow providers search` | `POST /provider/search` |
+| Get provider details | `glow providers get --body '{"provider_id": "..."}'` | `POST /provider/get` |
+| Create provider | `glow providers create --body '{...}'` | `POST /provider/create` |
+| Update provider | `glow providers update --body '{"provider_id": "...", ...}'` | `POST /provider/update` |
+| Duplicate provider | -- | `POST /provider/duplicate` |
+| Delete provider(s) | `glow providers delete --body '{"provider_id": "..."}'` | `POST /provider/delete` |
+| Decrypt a key | -- | `POST /provider/decrypt` |
+| Export to CSV | `glow providers export` | `POST /provider/export` |
+| Stage a draft | `glow providers draft --body '{...}'` | `PATCH /provider/draft` |
+| List drafts | `glow providers list` | `POST /provider/drafts` |
 
 ---
 
 ## Related
 
-- [Providers API Reference](/glow/providers/api) -- full endpoint and type documentation
-- [Providers CLI Reference](/glow/providers/cli) -- all CLI commands
-- [Models Guide](/glow/models/guide) -- configure models that use these providers
+- [Providers API Reference](/api-reference/provider) -- full endpoint and type documentation
+- [Providers CLI Reference](/cli-reference/provider) -- all CLI commands
+- [Models Guide](/model) -- configure models that use these providers
 
 ---
 
@@ -41999,7 +42281,11 @@ The draft endpoint uses `PATCH` semantics. Include `input_draft_id` and `expecte
 
 Route: /reports
 
+{/* DEMO_VIDEO: reports — replace public/demos/reports.mp4 */}
+
 # Reports
+
+<DemoVideo topic="reports" />
 
 Reports provides structured training analytics on TA performance across your institution. It computes overview tables, leaderboard rankings, trend charts, and detailed attempt history -- all filterable by date range, cohort, department, simulation, and scenario.
 
@@ -42025,20 +42311,20 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 
 ```bash
 # Fetch the full reports bundle
-glow reports search
+glow attempts report
 
 # Fetch reports filtered by cohort and date range
-glow reports search --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+glow attempts report --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
 
 # Export all reports data as a ZIP
-glow reports export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get reports with filters
-curl -X POST https://<your-instance>/v5/reports/search \
+curl -X POST https://<your-instance>/attempt/report \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -42096,12 +42382,12 @@ Resource metadata keyed by ID for hydrating IDs into display names:
 
 ```bash
 # Refresh materialized views and caches
-curl -X POST https://<your-instance>/v5/reports/refresh \
+curl -X POST https://<your-instance>/attempt/refresh \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 
 # Export all reports data as a denormalized ZIP
-curl -X POST https://<your-instance>/v5/reports/export \
+curl -X POST https://<your-instance>/attempt/export \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
@@ -42112,17 +42398,17 @@ The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `ro
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get reports data | `glow reports search` | `POST /reports/search` |
-| Export data | `glow reports export` | `POST /reports/export` |
-| Refresh caches | -- | `POST /reports/refresh` |
+| Get reports data | `glow attempts report` | `POST /attempt/report` |
+| Export data | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 | View API docs | -- | `POST /reports/docs` |
 
 ## Related
 
-- [Reports API Reference](/glow/reports/api)
-- [Reports CLI Reference](/glow/reports/cli)
-- [Dashboard Guide](/glow/dashboard/guide) -- admin analytics hub
-- [Leaderboard Guide](/glow/leaderboard/guide) -- TA performance rankings
+- [Reports API Reference](/api-reference/attempt)
+- [Reports CLI Reference](/cli-reference/attempts)
+- [Dashboard Guide](/dashboard) -- admin analytics hub
+- [Leaderboard Guide](/leaderboard) -- TA performance rankings
 
 ---
 
@@ -42130,7 +42416,11 @@ The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `ro
 
 Route: /rubrics
 
+{/* DEMO_VIDEO: rubrics — replace public/demos/rubrics.mp4 */}
+
 # Rubrics
+
+<DemoVideo topic="rubrics" />
 
 Rubrics define the scoring criteria used to evaluate TA performance during office hour simulations. Each rubric organizes standards into groups, assigns point values, and sets passing thresholds -- giving evaluators a structured framework to assess how well a TA handled a student interaction.
 
@@ -42190,7 +42480,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search rubrics:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/rubrics/search \
+curl -X POST https://<your-instance>/rubric/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -42200,7 +42490,7 @@ curl -X POST https://<your-instance>/v5/rubrics/search \
 **Create a rubric:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/rubrics/create \
+curl -X POST https://<your-instance>/rubric/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -42326,24 +42616,24 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all rubrics | `glow rubrics search` | `POST /rubrics/search` |
-| Get rubric details | `glow rubrics get --body '{"rubric_id": "..."}'` | `POST /rubrics/get` |
-| Create rubric | `glow rubrics create --body '{...}'` | `POST /rubrics/create` |
-| Update rubric | `glow rubrics update --body '{"rubric_id": "...", ...}'` | `POST /rubrics/update` |
-| Duplicate rubric | -- | `POST /rubrics/duplicate` |
-| Delete rubric(s) | `glow rubrics delete --body '{"rubric_id": "..."}'` | `POST /rubrics/delete` |
-| Export to CSV | `glow rubrics export` | `POST /rubrics/export` |
-| Stage a draft | `glow rubrics draft --body '{...}'` | `PATCH /rubrics/draft` |
-| List drafts | `glow rubrics list` | `POST /rubrics/drafts` |
+| List all rubrics | `glow rubrics search` | `POST /rubric/search` |
+| Get rubric details | `glow rubrics get --body '{"rubric_id": "..."}'` | `POST /rubric/get` |
+| Create rubric | `glow rubrics create --body '{...}'` | `POST /rubric/create` |
+| Update rubric | `glow rubrics update --body '{"rubric_id": "...", ...}'` | `POST /rubric/update` |
+| Duplicate rubric | -- | `POST /rubric/duplicate` |
+| Delete rubric(s) | `glow rubrics delete --body '{"rubric_id": "..."}'` | `POST /rubric/delete` |
+| Export to CSV | `glow rubrics export` | `POST /rubric/export` |
+| Stage a draft | `glow rubrics draft --body '{...}'` | `PATCH /rubric/draft` |
+| List drafts | `glow rubrics list` | `POST /rubric/drafts` |
 
 ---
 
 ## Related
 
-- [Rubrics API Reference](/glow/rubrics/api) -- full endpoint and type documentation
-- [Rubrics CLI Reference](/glow/rubrics/cli) -- all CLI commands
-- [Evals Guide](/glow/evals/guide) -- use rubrics within automated evaluation runs
-- [Tools Guide](/glow/tools/guide) -- tools that agents use alongside rubric-scored behavior
+- [Rubrics API Reference](/api-reference/rubric) -- full endpoint and type documentation
+- [Rubrics CLI Reference](/cli-reference/rubric) -- all CLI commands
+- [Evals Guide](/eval) -- use rubrics within automated evaluation runs
+- [Tools Guide](/tool) -- tools that agents use alongside rubric-scored behavior
 
 ---
 
@@ -42351,13 +42641,17 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 Route: /scenarios
 
+{/* DEMO_VIDEO: scenarios — replace public/demos/scenarios.mp4 */}
+
 # Scenarios
+
+<DemoVideo topic="scenarios" />
 
 Scenarios are the training situations that learners encounter -- they combine personas, documents, objectives, and context into a single interactive exercise.
 
 ## What is a Scenario?
 
-A scenario defines a specific training situation. It pairs one or more [Personas](/glow/personas/guide) with contextual information -- reference documents, problem statements, learning objectives, questions, and parameter values -- to create a focused interaction that tests a particular skill.
+A scenario defines a specific training situation. It pairs one or more [Personas](/persona) with contextual information -- reference documents, problem statements, learning objectives, questions, and parameter values -- to create a focused interaction that tests a particular skill.
 
 A scenario contains:
 
@@ -42374,7 +42668,7 @@ A scenario contains:
 - **Departments** -- organizational groupings for access control and filtering
 - **Flags** -- boolean configuration settings
 
-Scenarios are added to [Simulations](/glow/simulations/guide), which are then assigned to Cohorts for learner access.
+Scenarios are added to [Simulations](/simulation), which are then assigned to Cohorts for learner access.
 
 ![Scenarios list showing scenario cards with names, associated personas, and document counts](/screenshots/scenarios/list.png)
 
@@ -42418,7 +42712,7 @@ glow scenarios get --body '{"scenario_id": "your-scenario-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/scenarios/create \
+curl -X POST https://<your-instance>/scenario/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -42443,11 +42737,11 @@ Scenarios are **step 2** in the Glow content pipeline:
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
 | **2. Assign to Scenarios** | **Scenarios** | **Build training situations and attach personas, documents, and objectives** |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts and interact with AI in [Chats](/glow/chat/guide) |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
 
 ## Attaching Personas to Scenarios
 
@@ -42467,7 +42761,7 @@ glow scenarios draft --body '{
 **Via API:**
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/scenarios/draft \
+curl -X PATCH https://<your-instance>/scenario/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -42557,7 +42851,7 @@ glow scenarios draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/scenarios/draft \
+curl -X PATCH https://<your-instance>/scenario/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -42574,7 +42868,7 @@ curl -X PATCH https://<your-instance>/v5/scenarios/draft \
 glow scenarios list
 
 # API
-curl -X POST https://<your-instance>/v5/scenarios/drafts \
+curl -X POST https://<your-instance>/scenario/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -42584,25 +42878,25 @@ curl -X POST https://<your-instance>/v5/scenarios/drafts \
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all scenarios | `glow scenarios search` | `POST /scenarios/search` |
-| Get one scenario | `glow scenarios get --body '{"scenario_id": "..."}'` | `POST /scenarios/get` |
-| Create scenarios | `glow scenarios create --body '{"scenarios": [...]}'` | `POST /scenarios/create` |
-| Update scenarios | `glow scenarios update --body '{"scenarios": [...]}'` | `POST /scenarios/update` |
-| Duplicate a scenario | -- | `POST /scenarios/duplicate` |
-| Delete scenarios | `glow scenarios delete --body '{"scenario_ids": [...]}'` | `POST /scenarios/delete` |
-| Save a draft | `glow scenarios draft --body '{...}'` | `PATCH /scenarios/draft` |
-| List drafts | `glow scenarios list` | `POST /scenarios/drafts` |
-| Export to CSV | `glow scenarios export` | `POST /scenarios/export` |
-| Import from CSV | -- | `POST /scenarios/csv` |
-| Upload media | `glow scenarios image upload` | `POST /scenarios/upload` |
+| List all scenarios | `glow scenarios search` | `POST /scenario/search` |
+| Get one scenario | `glow scenarios get --body '{"scenario_id": "..."}'` | `POST /scenario/get` |
+| Create scenarios | `glow scenarios create --body '{"scenarios": [...]}'` | `POST /scenario/create` |
+| Update scenarios | `glow scenarios update --body '{"scenarios": [...]}'` | `POST /scenario/update` |
+| Duplicate a scenario | -- | `POST /scenario/duplicate` |
+| Delete scenarios | `glow scenarios delete --body '{"scenario_ids": [...]}'` | `POST /scenario/delete` |
+| Save a draft | `glow scenarios draft --body '{...}'` | `PATCH /scenario/draft` |
+| List drafts | `glow scenarios list` | `POST /scenario/drafts` |
+| Export to CSV | `glow scenarios export` | `POST /scenario/export` |
+| Import from CSV | -- | `POST /scenario/csv` |
+| Upload media | `glow scenarios image upload` | `POST /scenario/upload` |
 
 ## Related
 
-- [Scenarios API Reference](/glow/scenarios/api) -- full endpoint schemas and field definitions
-- [Scenarios CLI Reference](/glow/scenarios/cli) -- all CLI commands and flags
-- [Personas Guide](/glow/personas/guide) -- creating the AI characters that scenarios use
-- [Simulations Guide](/glow/simulations/guide) -- bundling scenarios into complete training sessions
-- [Attempts Guide](/glow/attempt/guide) -- how learners run through scenarios
+- [Scenarios API Reference](/api-reference/scenario) -- full endpoint schemas and field definitions
+- [Scenarios CLI Reference](/cli-reference/scenario) -- all CLI commands and flags
+- [Personas Guide](/persona) -- creating the AI characters that scenarios use
+- [Simulations Guide](/simulation) -- bundling scenarios into complete training sessions
+- [Attempts Guide](/attempt) -- how learners run through scenarios
 
 ---
 
@@ -42610,11 +42904,28 @@ curl -X POST https://<your-instance>/v5/scenarios/drafts \
 
 Route: /session
 
+{/* DEMO_VIDEO: session — replace public/demos/session.mp4 */}
+
 # Session
 
-Session provides a detailed view of an individual TA training session, including the AI generation groups created during the session and a unified timeline of events. This is the drill-down view when you want to understand exactly what happened during a specific training session.
+<DemoVideo topic="session" />
 
-## What is Session?
+Session provides a detailed view of an individual TA training
+session, including the AI generation groups created during the
+session and a unified timeline of events. This is the drill-down view
+when you want to understand exactly what happened during a specific
+training session.
+
+Session is a **view on the system artifact**, exposed via two
+endpoints:
+
+* `POST /system/session` — single session detail (one row + timeline + groups).
+* `POST /system/sessions` — paginated list of all sessions.
+
+The CLI surfaces these as `glow system session` and
+`glow system sessions`.
+
+## What is a Session?
 
 A session represents a single visit by a TA to the Glow platform. During a session, the TA may interact with multiple student persona simulations, generating AI groups (collections of model calls) and producing a chronological timeline of events.
 
@@ -42630,37 +42941,43 @@ Session is useful when you need to:
 
 ```bash
 # Get session detail with groups and timeline
-glow session get --body '{"session_id": "session-uuid"}'
+glow system session --body '{"session_id": "session-uuid"}'
 
-# Export session data as a ZIP
-glow session export --body '{"target_session_id": "session-uuid"}'
+# Paginate the full session list
+glow system sessions --body '{"page_size": 25, "sort_order": "desc"}'
+
+# Export attempts associated with this session
+glow system export --body '{"target_session_id": "session-uuid"}'
 ```
 
 ### API
 
 ```bash
-# Get session detail
-curl -X POST https://<your-instance>/v5/session/get \
+# Get one session detail
+curl -X POST https://<your-instance>/system/session \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "session_id": "session-uuid"
-  }'
+  -d '{"session_id": "session-uuid"}'
 
-# Export session data
-curl -X POST https://<your-instance>/v5/session/export \
+# List sessions
+curl -X POST https://<your-instance>/system/sessions \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "target_session_id": "session-uuid"
-  }'
+  -d '{"page_size": 20}'
+
+# Export
+curl -X POST https://<your-instance>/system/export \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"target_session_id": "session-uuid"}'
 ```
 
-## Understanding the Session Detail Response
+## Understanding the session detail response
 
-The `/session/get` response includes:
+`POST /system/session` returns `GetSessionDetailResponse`:
 
 - **`session_exists`** -- Whether the requested session was found.
 - **`actor_name`** -- Display name of the current user viewing the session.
@@ -42692,47 +43009,35 @@ The **`timeline`** array contains `SessionTimelineItem` objects -- a chronologic
 
 ## Navigating from Activity to Session
 
-A common workflow is to start from the Activity page, identify a session of interest, then drill down:
+A common workflow is to start from the Activity page, paginate
+sessions, then drill into one:
 
 ```bash
-# Step 1: Search activity for sessions by a specific TA
-glow activity search --body '{"page": 1, "page_size": 10}'
+# Step 1: Paginate sessions (or use the Activity summary at /system/activity)
+glow system sessions --body '{"page_size": 10}'
 
 # Step 2: Pick a session_id from the results and get its detail
-glow session get --body '{"session_id": "abc-123"}'
+glow system session --body '{"session_id": "abc-123"}'
 
 # Step 3: Drill into a specific group
-glow group get --body '{"group_id": "group-uuid"}'
+glow system group --body '{"group_id": "group-uuid"}'
 ```
-
-## Exporting
-
-The export endpoint requires a `target_session_id` and returns a denormalized ZIP:
-
-```bash
-curl -X POST https://<your-instance>/v5/session/export \
-  -H "X-Api-Key: <api-key>" \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"target_session_id": "session-uuid"}'
-```
-
-The response includes `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get session detail | `glow session get` | `POST /session/get` |
-| Export session data | `glow session export` | `POST /session/export` |
-| Refresh caches | -- | `POST /session/refresh` |
+| Get one session detail | `glow system session` | `POST /system/session` |
+| List sessions (paginated) | `glow system sessions` | `POST /system/sessions` |
+| Export session data | `glow system export` | `POST /system/export` |
+| Refresh caches | `glow system refresh` | `POST /system/refresh` |
 
 ## Related
 
-- [Session API Reference](/glow/session/api)
-- [Session CLI Reference](/glow/session/cli)
-- [Activity Guide](/glow/activity/guide) -- find sessions via activity search
-- [Group Guide](/glow/group/guide) -- drill into a specific generation group
+- [System API Reference](/api-reference/system) — every system/* endpoint
+- [System CLI Reference](/cli-reference/system) — every `glow system ...` command
+- [Activity](/activity) — aggregate counts + per-profile breakdown
+- [Group](/group) — drill into a specific generation group within a session
 
 ---
 
@@ -42740,7 +43045,11 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 Route: /settings
 
+{/* DEMO_VIDEO: settings — replace public/demos/settings.mp4 */}
+
 # Settings
+
+<DemoVideo topic="settings" />
 
 Settings manages your Glow instance configuration -- names, descriptions, colors, feature flags, departments, profiles, auth providers, provider keys, and system options. It supports full CRUD operations, a draft system with optimistic locking, and encrypted key management.
 
@@ -42783,21 +43092,21 @@ glow settings export
 
 ```bash
 # Search all settings
-curl -X POST https://<your-instance>/v5/settings/search \
+curl -X POST https://<your-instance>/setting/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Get a specific setting
-curl -X POST https://<your-instance>/v5/settings/get \
+curl -X POST https://<your-instance>/setting/get \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"settings_id": "setting-uuid"}'
 
 # Create settings
-curl -X POST https://<your-instance>/v5/settings/create \
+curl -X POST https://<your-instance>/setting/create \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -42813,7 +43122,7 @@ curl -X POST https://<your-instance>/v5/settings/create \
 
 ### Search
 
-`POST /settings/search` returns a list of all settings with:
+`POST /setting/search` returns a list of all settings with:
 - `actor_name` -- Current user's display name
 - `user_role` -- Current user's role
 - `settings` -- Array of `ListSettingApiSetting` items
@@ -42821,7 +43130,7 @@ curl -X POST https://<your-instance>/v5/settings/create \
 
 ### Get
 
-`POST /settings/get` returns a single setting composed of sections:
+`POST /setting/get` returns a single setting composed of sections:
 
 | Section | Field | Description |
 |---|---|---|
@@ -42840,18 +43149,18 @@ The response also includes `can_edit`, `disabled_reason`, `draft_version`, and `
 
 ### Create
 
-`POST /settings/create` accepts an array of `CreateSettingItem` objects and returns per-item results.
+`POST /setting/create` accepts an array of `CreateSettingItem` objects and returns per-item results.
 
 ### Update
 
-`POST /settings/update` accepts an array of `UpdateSettingItem` objects and returns per-item results.
+`POST /setting/update` accepts an array of `UpdateSettingItem` objects and returns per-item results.
 
 ### Duplicate
 
-`POST /settings/duplicate` clones a setting:
+`POST /setting/duplicate` clones a setting:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/duplicate \
+curl -X POST https://<your-instance>/setting/duplicate \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -42862,10 +43171,10 @@ Returns `success`, `setting_id` (new UUID), and `message`.
 
 ### Delete
 
-`POST /settings/delete` bulk-deletes settings by ID array:
+`POST /setting/delete` bulk-deletes settings by ID array:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/delete \
+curl -X POST https://<your-instance>/setting/delete \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -42878,10 +43187,10 @@ Settings supports a draft system with optimistic locking for safe concurrent edi
 
 ### Saving a Draft
 
-`PATCH /settings/draft` creates or updates a draft:
+`PATCH /setting/draft` creates or updates a draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/settings/draft \
+curl -X PATCH https://<your-instance>/setting/draft \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -42905,10 +43214,10 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state` (ser
 
 ### Listing Drafts
 
-`POST /settings/drafts` returns all drafts owned by the current profile:
+`POST /setting/drafts` returns all drafts owned by the current profile:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/drafts \
+curl -X POST https://<your-instance>/setting/drafts \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
@@ -42926,7 +43235,7 @@ glow settings get --body '{"settings_id": "setting-uuid", "draft_id": "draft-uui
 Settings can store encrypted provider keys. To decrypt:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/decrypt \
+curl -X POST https://<your-instance>/setting/decrypt \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -42943,7 +43252,7 @@ Returns `key` (decrypted value), `name`, and `actor_name`.
 Settings supports bulk import via CSV:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/csv \
+curl -X POST https://<your-instance>/setting/csv \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -F "file=@settings.csv"
@@ -42955,24 +43264,24 @@ Returns `upload_id`, `items` (parsed setting items), `mapped_fields`, and `row_c
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List settings | `glow settings search` | `POST /settings/search` |
-| Get setting | `glow settings get` | `POST /settings/get` |
-| Create setting | `glow settings create` | `POST /settings/create` |
-| Update setting | `glow settings update` | `POST /settings/update` |
-| Duplicate setting | -- | `POST /settings/duplicate` |
-| Delete settings | `glow settings delete` | `POST /settings/delete` |
-| Save draft | `glow settings draft` | `PATCH /settings/draft` |
-| List drafts | -- | `POST /settings/drafts` |
-| Decrypt key | -- | `POST /settings/decrypt` |
-| CSV import | -- | `POST /settings/csv` |
-| Export | `glow settings export` | `POST /settings/export` |
-| Refresh | -- | `POST /settings/refresh` |
+| List settings | `glow settings search` | `POST /setting/search` |
+| Get setting | `glow settings get` | `POST /setting/get` |
+| Create setting | `glow settings create` | `POST /setting/create` |
+| Update setting | `glow settings update` | `POST /setting/update` |
+| Duplicate setting | -- | `POST /setting/duplicate` |
+| Delete settings | `glow settings delete` | `POST /setting/delete` |
+| Save draft | `glow settings draft` | `PATCH /setting/draft` |
+| List drafts | -- | `POST /setting/drafts` |
+| Decrypt key | -- | `POST /setting/decrypt` |
+| CSV import | -- | `POST /setting/csv` |
+| Export | `glow settings export` | `POST /setting/export` |
+| Refresh | -- | `POST /setting/refresh` |
 
 ## Related
 
-- [Settings API Reference](/glow/settings/api)
-- [Settings CLI Reference](/glow/settings/cli)
-- [Auths Guide](/glow/auths/guide) -- auth provider management
+- [Settings API Reference](/api-reference/setting)
+- [Settings CLI Reference](/cli-reference/settings)
+- [Auths Guide](/auths) -- auth provider management
 
 ---
 
@@ -42980,13 +43289,17 @@ Returns `upload_id`, `items` (parsed setting items), `mapped_fields`, and `row_c
 
 Route: /simulations
 
+{/* DEMO_VIDEO: simulations — replace public/demos/simulations.mp4 */}
+
 # Simulations
+
+<DemoVideo topic="simulations" />
 
 Simulations are complete training sessions that bundle one or more scenarios together with rubrics, time limits, and ordering -- they are what learners actually launch to begin practicing.
 
 ## What is a Simulation?
 
-A simulation is a runnable training package. It wraps one or more [Scenarios](/glow/scenarios/guide) and adds session-level configuration: which rubrics to evaluate against, how much time the learner has per scenario, the order scenarios appear, and behavioral flags.
+A simulation is a runnable training package. It wraps one or more [Scenarios](/scenario) and adds session-level configuration: which rubrics to evaluate against, how much time the learner has per scenario, the order scenarios appear, and behavioral flags.
 
 A simulation contains:
 
@@ -43000,7 +43313,7 @@ A simulation contains:
 - **Departments** -- organizational groupings for filtering and access control
 - **Flags** -- simulation-level boolean settings
 
-Simulations are assigned to Cohorts, which control which learners have access. When a learner starts a simulation, Glow creates an [Attempt](/glow/attempt/guide) with one [Chat](/glow/chat/guide) per scenario.
+Simulations are assigned to Cohorts, which control which learners have access. When a learner starts a simulation, Glow creates an [Attempt](/attempt) with one [Chat](/chat) per scenario.
 
 ![Simulations list showing simulation cards with name, scenario count, and active status](/screenshots/simulations/list.png)
 
@@ -43052,7 +43365,7 @@ glow simulations get --body '{"simulation_id": "your-simulation-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/simulations/create \
+curl -X POST https://<your-instance>/simulation/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -43067,7 +43380,7 @@ curl -X POST https://<your-instance>/v5/simulations/create \
 Configure scenarios via draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/simulations/draft \
+curl -X PATCH https://<your-instance>/simulation/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -43086,11 +43399,11 @@ Simulations are **step 3** in the Glow content pipeline:
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas, documents, and objectives |
 | **3. Add Scenarios to Simulations** | **Simulations** | **Bundle scenarios into a complete training session with rubrics and time limits** |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts and interact with AI in [Chats](/glow/chat/guide) |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
 
 ## Configuring Scenarios Within a Simulation
 
@@ -43186,7 +43499,7 @@ glow simulations draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/simulations/draft \
+curl -X PATCH https://<your-instance>/simulation/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -43204,7 +43517,7 @@ curl -X PATCH https://<your-instance>/v5/simulations/draft \
 glow simulations list
 
 # API
-curl -X POST https://<your-instance>/v5/simulations/drafts \
+curl -X POST https://<your-instance>/simulation/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -43214,103 +43527,143 @@ curl -X POST https://<your-instance>/v5/simulations/drafts \
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all simulations | `glow simulations search` | `POST /simulations/search` |
-| Get one simulation | `glow simulations get --body '{"simulation_id": "..."}'` | `POST /simulations/get` |
-| Create simulations | `glow simulations create --body '{"simulations": [...]}'` | `POST /simulations/create` |
-| Update simulations | `glow simulations update --body '{"simulations": [...]}'` | `POST /simulations/update` |
-| Duplicate a simulation | -- | `POST /simulations/duplicate` |
-| Delete simulations | `glow simulations delete --body '{"simulation_ids": [...]}'` | `POST /simulations/delete` |
-| Save a draft | `glow simulations draft --body '{...}'` | `PATCH /simulations/draft` |
-| List drafts | `glow simulations list` | `POST /simulations/drafts` |
-| Export to CSV | `glow simulations export` | `POST /simulations/export` |
-| Import from CSV | -- | `POST /simulations/csv` |
+| List all simulations | `glow simulations search` | `POST /simulation/search` |
+| Get one simulation | `glow simulations get --body '{"simulation_id": "..."}'` | `POST /simulation/get` |
+| Create simulations | `glow simulations create --body '{"simulations": [...]}'` | `POST /simulation/create` |
+| Update simulations | `glow simulations update --body '{"simulations": [...]}'` | `POST /simulation/update` |
+| Duplicate a simulation | -- | `POST /simulation/duplicate` |
+| Delete simulations | `glow simulations delete --body '{"simulation_ids": [...]}'` | `POST /simulation/delete` |
+| Save a draft | `glow simulations draft --body '{...}'` | `PATCH /simulation/draft` |
+| List drafts | `glow simulations list` | `POST /simulation/drafts` |
+| Export to CSV | `glow simulations export` | `POST /simulation/export` |
+| Import from CSV | -- | `POST /simulation/csv` |
 
 ## Related
 
-- [Simulations API Reference](/glow/simulations/api) -- full endpoint schemas and field definitions
-- [Simulations CLI Reference](/glow/simulations/cli) -- all CLI commands and flags
-- [Scenarios Guide](/glow/scenarios/guide) -- creating the training situations that simulations contain
-- [Personas Guide](/glow/personas/guide) -- the AI characters used within scenarios
-- [Attempts Guide](/glow/attempt/guide) -- what happens when a learner starts a simulation
-- [Agents Guide](/glow/agents/guide) -- configuring the AI engine that powers simulations
+- [Simulations API Reference](/api-reference/simulation) -- full endpoint schemas and field definitions
+- [Simulations CLI Reference](/cli-reference/simulation) -- all CLI commands and flags
+- [Scenarios Guide](/scenario) -- creating the training situations that simulations contain
+- [Personas Guide](/persona) -- the AI characters used within scenarios
+- [Attempts Guide](/attempt) -- what happens when a learner starts a simulation
+- [Agents Guide](/agent) -- configuring the AI engine that powers simulations
 
 ---
 
-# Glow
+# Start
 
 Route: /start
 
-# Glow
+{/* DEMO_VIDEO: start — replace public/demos/start.mp4 */}
 
-> **Glow API v2.6.0** — Generated from OpenAPI specification
+# Start
 
-Glow runs on each customer instance. It powers the web client and CLI for managing personas, agents, sessions, and other artifacts.
+Spin up a Glow instance from zero and make your first authenticated
+request. Pinned **Glow API v2.15.38** · **CLI v1.0.0** (see
+[api-versions.json](https://github.com/learnloopllc/glow-academic-docs/blob/main/api-versions.json) for the live pin).
 
-## Authentication
+<DemoVideo topic="start" caption="From `glow init` to a passing health check in two minutes." />
 
-All requests require authentication via one or both of:
+## 1 — Install the CLI
 
-| Scheme | Type | Header | Description |
-|---|---|---|---|
-| **BearerAuth** | HTTP bearer | `Authorization` | Keycloak-issued JWT token. Resolves the caller's profile and session. |
-
-## Base URL
-
-Each Glow instance has its own URL:
-
-```
-https://<your-instance>/v5
-```
-
-## Stream CLI
-
-### `glow stream`
-
-Stream events via SSE (Server-Sent Events)
+The `glow` CLI is the canonical entry point for deploying and operating
+an instance. Install via Homebrew (macOS / Linux):
 
 ```bash
-glow stream
+brew install learnloopllc/glow/glow
+glow --version  # → glow 1.0.0
 ```
 
-| Flag | Required | Description |
+Build-from-source instructions live in the
+[`glow-academic-cli` README](https://github.com/learnloopllc/glow-academic-cli).
+
+## 2 — Scaffold + deploy an instance
+
+```bash
+# Interactive wizard — writes ~/.glow/instances/<name>/glow-deploy.yaml
+glow init my-school
+
+# First-time deploy (pulls images, brings up postgres / api / client / keycloak)
+glow deploy my-school
+
+# Verify all containers are healthy
+glow status my-school
+```
+
+The wizard collects the origin URL, AI provider + key, seed template,
+and optional OIDC. Re-running `glow init <name>` overwrites the yaml
+idempotently.
+
+Lifecycle commands you'll use most:
+
+| Command | Purpose |
+|---|---|
+| `glow deploy <name>` | first-time bring-up |
+| `glow redeploy <name>` | roll a new version (auto-backup + blue/green swap) |
+| `glow stop <name>` / `start <name>` | pause/resume (data + network intact) |
+| `glow destroy <name>` | tear down containers + volumes (asks twice) |
+| `glow status <name>` | container state + per-service health |
+| `glow logs <name> [-f]` | tail `docker compose logs` |
+| `glow backup <name>` | manage local `pg_dump` snapshots |
+
+## 3 — Authenticate
+
+```bash
+# Opens a browser → Keycloak login → drops a token into ~/.config/glow
+glow login --instance-url https://my-school.example.com
+```
+
+After login, every command uses the stored bearer token automatically.
+Details + service-account flow: see [Authentication](/authentication).
+
+## 4 — Make your first call
+
+The CLI dispatches every artifact action through a generic plural-name
+pattern: `glow <plural-resource> <action>`. There is **no** top-level
+`/v5`, `/generate`, `/stream`, or `/health` route — those are reached
+through their owning artifact.
+
+```bash
+# List personas
+glow personas search
+
+# Get one
+glow personas get --body '{"persona_id": "your-persona-uuid"}'
+
+# Real health artifact (POST /system/health, returns rich status)
+glow system health
+
+# Who am I? (POST /<any-artifact>/context returns ComposedContextResponse)
+glow profiles context
+```
+
+Equivalent raw HTTP (no `/v5` prefix, singular paths):
+
+```bash
+curl -X POST https://my-school.example.com/persona/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -d '{}'
+```
+
+## CLI global flags
+
+| Flag | Env | Purpose |
 |---|---|---|
-| `--artifact` | Yes | Artifact type to stream |
-| `--operation` | Yes | Operation to stream (e.g. create, update, delete) |
-| `--entity-id` | No | Filter by entity ID |
-| `--cursor` | No | Cursor for resuming from a position |
+| `--instance-url <url>` | `GLOW_INSTANCE_URL` | override the active instance URL |
+| `--client-id <id>` | `GLOW_CLIENT_ID` | override the OAuth client ID |
+| `--json` | — | machine-readable output |
+| `-y`, `--yes` | — | skip confirmation prompts for destructive actions |
 
-## Instance Management
+(Legacy `--api-url` and `--license-key` flags have been removed — the
+license key now lives in `~/.glow/instances/<name>/glow-deploy.yaml` and
+the instance URL replaces what `--api-url` used to do.)
 
-### `glow instances`
+## Next
 
-Manage configured Glow instances
-
-```bash
-glow instances
-```
-
-### `glow use`
-
-Switch to a configured Glow instance
-
-```bash
-glow use
-```
-
-| Flag | Required | Description |
-|---|---|---|
-| `name` | Yes | Instance name (as configured with 'glow instances add') |
-
-## CLI Global Flags
-
-| Flag | Short | Env | Description |
-|---|---|---|---|
-| `--api-url` | — | `GLOW_API_URL` | Glow API URL |
-| `--instance-url` | — | `GLOW_INSTANCE_URL` | Glow instance URL |
-| `--license-key` | — | `GLOW_LICENSE_KEY` | License key |
-| `--client-id` | — | `GLOW_CLIENT_ID` | OAuth client ID |
-| `--json` | — | — | Output in JSON format |
-| `--yes` | `-y` | — | Skip confirmation prompts for destructive actions |
+- **[How It Works](/how-it-works)** — the simulation / persona / scenario / attempt loop
+- **[Tutorial](/tutorial)** — build your first simulation end-to-end
+- **[CLI Reference](/cli-reference)** — every command, auto-generated
+- **[API Reference](/api-reference)** — every endpoint, auto-generated
 
 ---
 
@@ -43318,7 +43671,11 @@ glow use
 
 Route: /tools
 
+{/* DEMO_VIDEO: tools — replace public/demos/tools.mp4 */}
+
 # Tools
+
+<DemoVideo topic="tools" />
 
 Tools give agents the ability to take actions and look up information during office hour simulations. A tool might check a student's enrollment status, look up assignment deadlines, or retrieve course policies -- enabling the AI agent to respond with accurate, real-time data rather than relying solely on its training.
 
@@ -43375,7 +43732,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search tools:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/tools/search \
+curl -X POST https://<your-instance>/tool/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -43385,7 +43742,7 @@ curl -X POST https://<your-instance>/v5/tools/search \
 **Create a tool:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/tools/create \
+curl -X POST https://<your-instance>/tool/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -43478,24 +43835,24 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all tools | `glow tools search` | `POST /tools/search` |
-| Get tool details | `glow tools get --body '{"tool_id": "..."}'` | `POST /tools/get` |
-| Create tool | `glow tools create --body '{...}'` | `POST /tools/create` |
-| Update tool | `glow tools update --body '{"tool_id": "...", ...}'` | `POST /tools/update` |
-| Duplicate tool | -- | `POST /tools/duplicate` |
-| Delete tool(s) | `glow tools delete --body '{"tool_id": "..."}'` | `POST /tools/delete` |
-| Export to CSV | `glow tools export` | `POST /tools/export` |
-| Stage a draft | `glow tools draft --body '{...}'` | `PATCH /tools/draft` |
-| List drafts | `glow tools list` | `POST /tools/drafts` |
+| List all tools | `glow tools search` | `POST /tool/search` |
+| Get tool details | `glow tools get --body '{"tool_id": "..."}'` | `POST /tool/get` |
+| Create tool | `glow tools create --body '{...}'` | `POST /tool/create` |
+| Update tool | `glow tools update --body '{"tool_id": "...", ...}'` | `POST /tool/update` |
+| Duplicate tool | -- | `POST /tool/duplicate` |
+| Delete tool(s) | `glow tools delete --body '{"tool_id": "..."}'` | `POST /tool/delete` |
+| Export to CSV | `glow tools export` | `POST /tool/export` |
+| Stage a draft | `glow tools draft --body '{...}'` | `PATCH /tool/draft` |
+| List drafts | `glow tools list` | `POST /tool/drafts` |
 
 ---
 
 ## Related
 
-- [Tools API Reference](/glow/tools/api) -- full endpoint and type documentation
-- [Tools CLI Reference](/glow/tools/cli) -- all CLI commands
-- [Models Guide](/glow/models/guide) -- models that power the agents using these tools
-- [Rubrics Guide](/glow/rubrics/guide) -- rubrics that score agent behavior alongside tool usage
+- [Tools API Reference](/api-reference/tool) -- full endpoint and type documentation
+- [Tools CLI Reference](/cli-reference/tool) -- all CLI commands
+- [Models Guide](/model) -- models that power the agents using these tools
+- [Rubrics Guide](/rubric) -- rubrics that score agent behavior alongside tool usage
 
 ---
 
@@ -43503,7 +43860,11 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 Route: /tutorial
 
+{/* DEMO_VIDEO: tutorial — replace public/demos/tutorial.mp4 */}
+
 # Design Your First Simulation
+
+<DemoVideo topic="tutorial" caption="Building a simulation end-to-end: rubric → persona → scenario → cohort." />
 
 This tutorial walks through building a complete simulation from scratch. By the end, you'll have a working training scenario with AI characters, a grading rubric, and a cohort of learners ready to practice.
 
@@ -43560,7 +43921,7 @@ glow rubrics create --body '{
 }'
 ```
 
-Then add standard groups and standards for each level. See the [Rubrics Guide](/glow/rubrics/guide) for the full API.
+Then add standard groups and standards for each level. See the [Rubrics Guide](/rubrics) for the full API.
 
 ## Step 2: Create Your Personas
 
@@ -43807,18 +44168,18 @@ Attempts (each TA practices, gets graded, sees detailed feedback)
 ```
 
 From here, you can:
-- Add more scenarios by [using parameters](/glow/parameters/guide) to generate variations (same persona, different course material)
+- Add more scenarios by [using parameters](/parameters) to generate variations (same persona, different course material)
 - Create a second simulation for advanced TAs with higher-intensity personas
 - Switch from practice mode to formal assessment once TAs are ready
 - Enable voice mode for more realistic interpersonal practice
-- Use the [benchmark](/glow/benchmark/guide) system to evaluate different AI providers
+- Use the [benchmark](/benchmark) system to evaluate different AI providers
 
 ## Next Steps
 
-- [Patterns & Best Practices](/glow/patterns) — tips for making personas more realistic, rubrics more precise, and scenarios more effective
-- [How It Works](/glow/how-it-works) — deeper understanding of why simulation training works
-- [Simulations Guide](/glow/simulations/guide) — full reference for simulation configuration
-- [Rubrics Guide](/glow/rubrics/guide) — full reference for rubric design
-- [Personas Guide](/glow/personas/guide) — full reference for persona configuration
+- [Patterns & Best Practices](/patterns) — tips for making personas more realistic, rubrics more precise, and scenarios more effective
+- [How It Works](/how-it-works) — deeper understanding of why simulation training works
+- [Simulations Guide](/simulations) — full reference for simulation configuration
+- [Rubrics Guide](/rubrics) — full reference for rubric design
+- [Personas Guide](/personas) — full reference for persona configuration
 
 ---

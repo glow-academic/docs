@@ -1,6 +1,10 @@
 # Design Your First Simulation
 
+{/* DEMO_VIDEO: tutorial — replace public/demos/tutorial.mp4 */}
+
 # Design Your First Simulation
+
+<DemoVideo topic="tutorial" caption="Building a simulation end-to-end: rubric → persona → scenario → cohort." />
 
 This tutorial walks through building a complete simulation from scratch. By the end, you'll have a working training scenario with AI characters, a grading rubric, and a cohort of learners ready to practice.
 
@@ -57,7 +61,7 @@ glow rubrics create --body '{
 }'
 ```
 
-Then add standard groups and standards for each level. See the [Rubrics Guide](/glow/rubrics/guide) for the full API.
+Then add standard groups and standards for each level. See the [Rubrics Guide](/rubrics) for the full API.
 
 ## Step 2: Create Your Personas
 
@@ -304,16 +308,16 @@ Attempts (each TA practices, gets graded, sees detailed feedback)
 ```
 
 From here, you can:
-- Add more scenarios by [using parameters](/glow/parameters/guide) to generate variations (same persona, different course material)
+- Add more scenarios by [using parameters](/parameters) to generate variations (same persona, different course material)
 - Create a second simulation for advanced TAs with higher-intensity personas
 - Switch from practice mode to formal assessment once TAs are ready
 - Enable voice mode for more realistic interpersonal practice
-- Use the [benchmark](/glow/benchmark/guide) system to evaluate different AI providers
+- Use the [benchmark](/benchmark) system to evaluate different AI providers
 
 ## Next Steps
 
-- [Patterns & Best Practices](/glow/patterns) — tips for making personas more realistic, rubrics more precise, and scenarios more effective
-- [How It Works](/glow/how-it-works) — deeper understanding of why simulation training works
-- [Simulations Guide](/glow/simulations/guide) — full reference for simulation configuration
-- [Rubrics Guide](/glow/rubrics/guide) — full reference for rubric design
-- [Personas Guide](/glow/personas/guide) — full reference for persona configuration
+- [Patterns & Best Practices](/patterns) — tips for making personas more realistic, rubrics more precise, and scenarios more effective
+- [How It Works](/how-it-works) — deeper understanding of why simulation training works
+- [Simulations Guide](/simulations) — full reference for simulation configuration
+- [Rubrics Guide](/rubrics) — full reference for rubric design
+- [Personas Guide](/personas) — full reference for persona configuration

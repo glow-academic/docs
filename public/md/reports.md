@@ -1,6 +1,10 @@
 # Reports
 
+{/* DEMO_VIDEO: reports — replace public/demos/reports.mp4 */}
+
 # Reports
+
+<DemoVideo topic="reports" />
 
 Reports provides structured training analytics on TA performance across your institution. It computes overview tables, leaderboard rankings, trend charts, and detailed attempt history -- all filterable by date range, cohort, department, simulation, and scenario.
 
@@ -26,20 +30,20 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 
 ```bash
 # Fetch the full reports bundle
-glow reports search
+glow attempts report
 
 # Fetch reports filtered by cohort and date range
-glow reports search --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+glow attempts report --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
 
 # Export all reports data as a ZIP
-glow reports export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get reports with filters
-curl -X POST https://<your-instance>/v5/reports/search \
+curl -X POST https://<your-instance>/attempt/report \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -97,12 +101,12 @@ Resource metadata keyed by ID for hydrating IDs into display names:
 
 ```bash
 # Refresh materialized views and caches
-curl -X POST https://<your-instance>/v5/reports/refresh \
+curl -X POST https://<your-instance>/attempt/refresh \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 
 # Export all reports data as a denormalized ZIP
-curl -X POST https://<your-instance>/v5/reports/export \
+curl -X POST https://<your-instance>/attempt/export \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
@@ -113,14 +117,14 @@ The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `ro
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get reports data | `glow reports search` | `POST /reports/search` |
-| Export data | `glow reports export` | `POST /reports/export` |
-| Refresh caches | -- | `POST /reports/refresh` |
+| Get reports data | `glow attempts report` | `POST /attempt/report` |
+| Export data | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 | View API docs | -- | `POST /reports/docs` |
 
 ## Related
 
-- [Reports API Reference](/glow/reports/api)
-- [Reports CLI Reference](/glow/reports/cli)
-- [Dashboard Guide](/glow/dashboard/guide) -- admin analytics hub
-- [Leaderboard Guide](/glow/leaderboard/guide) -- TA performance rankings
+- [Reports API Reference](/api-reference/attempt)
+- [Reports CLI Reference](/cli-reference/attempts)
+- [Dashboard Guide](/dashboard) -- admin analytics hub
+- [Leaderboard Guide](/leaderboard) -- TA performance rankings

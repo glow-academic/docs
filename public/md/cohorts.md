@@ -1,6 +1,10 @@
 # Cohorts
 
+{/* DEMO_VIDEO: cohorts — replace public/demos/cohorts.mp4 */}
+
 # Cohorts
+
+<DemoVideo topic="cohorts" />
 
 Cohorts bring everything together. A cohort is a group of profiles (learners) assigned to a set of simulations. It is the final assembly step before learners can run simulation attempts.
 
@@ -59,7 +63,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search cohorts
-curl -X POST https://<your-instance>/v5/cohorts/search \
+curl -X POST https://<your-instance>/cohort/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -69,7 +73,7 @@ curl -X POST https://<your-instance>/v5/cohorts/search \
   }'
 
 # Create a cohort
-curl -X POST https://<your-instance>/v5/cohorts/create \
+curl -X POST https://<your-instance>/cohort/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -142,7 +146,7 @@ Cohorts support rich search and filtering:
 
 ```bash
 # Search cohorts by profile
-curl -X POST https://<your-instance>/v5/cohorts/search \
+curl -X POST https://<your-instance>/cohort/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -164,25 +168,25 @@ glow cohorts draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /cohorts/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, `simulation_ids`, `profile_ids`, `simulation_position_ids`, `simulation_positions`, `simulation_availability_ids`, `simulation_availability`, `profile_persona_ids`, and `profile_personas`.
+Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, `simulation_ids`, `profile_ids`, `simulation_position_ids`, `simulation_positions`, `simulation_availability_ids`, `simulation_availability`, `profile_persona_ids`, and `profile_personas`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all cohorts | `glow cohorts list` | `POST /cohorts/search` |
-| Get a cohort | `glow cohorts get --body '{...}'` | `POST /cohorts/get` |
-| Create cohorts | `glow cohorts create --body '{...}'` | `POST /cohorts/create` |
-| Update cohorts | `glow cohorts update --body '{...}'` | `POST /cohorts/update` |
-| Duplicate a cohort | -- | `POST /cohorts/duplicate` |
-| Delete cohorts | `glow cohorts delete --body '{...}'` | `POST /cohorts/delete` |
-| Export to CSV | `glow cohorts export` | `POST /cohorts/export` |
-| Save a draft | `glow cohorts draft --body '{...}'` | `PATCH /cohorts/draft` |
-| List drafts | -- | `POST /cohorts/drafts` |
+| List all cohorts | `glow cohorts list` | `POST /cohort/search` |
+| Get a cohort | `glow cohorts get --body '{...}'` | `POST /cohort/get` |
+| Create cohorts | `glow cohorts create --body '{...}'` | `POST /cohort/create` |
+| Update cohorts | `glow cohorts update --body '{...}'` | `POST /cohort/update` |
+| Duplicate a cohort | -- | `POST /cohort/duplicate` |
+| Delete cohorts | `glow cohorts delete --body '{...}'` | `POST /cohort/delete` |
+| Export to CSV | `glow cohorts export` | `POST /cohort/export` |
+| Save a draft | `glow cohorts draft --body '{...}'` | `PATCH /cohort/draft` |
+| List drafts | -- | `POST /cohort/drafts` |
 
 ## Related
 
-- [Cohorts API](/glow/cohorts/api)
-- [Cohorts CLI](/glow/cohorts/cli)
-- [Profiles Guide](/glow/profiles/guide) -- the people assigned to cohorts
-- [Departments Guide](/glow/departments/guide) -- cohorts are scoped to departments
+- [Cohorts API](/api-reference/cohort)
+- [Cohorts CLI](/cli-reference/cohort)
+- [Profiles Guide](/profile) -- the people assigned to cohorts
+- [Departments Guide](/department) -- cohorts are scoped to departments

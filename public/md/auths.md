@@ -1,6 +1,10 @@
 # Auths
 
+{/* DEMO_VIDEO: auths — replace public/demos/auths.mp4 */}
+
 # Auths
+
+<DemoVideo topic="auths" />
 
 Auths manages authentication providers for your Glow instance -- the SSO configurations, login methods, and access controls that determine how TAs and administrators sign in. It supports full CRUD operations with a draft system for safe, staged edits.
 
@@ -46,21 +50,21 @@ glow auths export
 
 ```bash
 # Search all auth providers
-curl -X POST https://<your-instance>/v5/auths/search \
+curl -X POST https://<your-instance>/auth/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Get a specific auth provider
-curl -X POST https://<your-instance>/v5/auths/get \
+curl -X POST https://<your-instance>/auth/get \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"auth_id": "auth-uuid"}'
 
 # Create an auth provider
-curl -X POST https://<your-instance>/v5/auths/create \
+curl -X POST https://<your-instance>/auth/create \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -76,7 +80,7 @@ curl -X POST https://<your-instance>/v5/auths/create \
 
 ### Search
 
-`POST /auths/search` returns a paginated list of auth providers:
+`POST /auth/search` returns a paginated list of auth providers:
 
 - `actor_name` -- Current user's display name
 - `auths` -- Array of `ListAuthApiAuth` items
@@ -93,7 +97,7 @@ Optional filters:
 
 ### Get
 
-`POST /auths/get` returns a single auth provider composed of sections:
+`POST /auth/get` returns a single auth provider composed of sections:
 
 | Section | Field | Description |
 |---|---|---|
@@ -113,10 +117,10 @@ The response also includes:
 
 ### Create
 
-`POST /auths/create` accepts an array of `CreateAuthItem` objects:
+`POST /auth/create` accepts an array of `CreateAuthItem` objects:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/create \
+curl -X POST https://<your-instance>/auth/create \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -132,14 +136,14 @@ Returns per-item results in `results`.
 
 ### Update
 
-`POST /auths/update` accepts an array of `UpdateAuthItem` objects.
+`POST /auth/update` accepts an array of `UpdateAuthItem` objects.
 
 ### Duplicate
 
-`POST /auths/duplicate` clones an auth provider:
+`POST /auth/duplicate` clones an auth provider:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/duplicate \
+curl -X POST https://<your-instance>/auth/duplicate \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -150,10 +154,10 @@ Returns `success`, `auth_id` (new UUID), and `message`.
 
 ### Delete
 
-`POST /auths/delete` bulk-deletes auth providers:
+`POST /auth/delete` bulk-deletes auth providers:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/delete \
+curl -X POST https://<your-instance>/auth/delete \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -166,10 +170,10 @@ Auths supports a draft system with optimistic locking, following the same patter
 
 ### Saving a Draft
 
-`PATCH /auths/draft` creates or updates a draft:
+`PATCH /auth/draft` creates or updates a draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/auths/draft \
+curl -X PATCH https://<your-instance>/auth/draft \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -197,10 +201,10 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state`.
 
 ### Listing Drafts
 
-`POST /auths/drafts` returns all drafts owned by the current profile:
+`POST /auth/drafts` returns all drafts owned by the current profile:
 
 ```bash
-curl -X POST https://<your-instance>/v5/auths/drafts \
+curl -X POST https://<your-instance>/auth/drafts \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
@@ -217,19 +221,19 @@ glow auths get --body '{"auth_id": "auth-uuid", "draft_id": "draft-uuid"}'
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List auth providers | `glow auths search` | `POST /auths/search` |
-| Get auth provider | `glow auths get` | `POST /auths/get` |
-| Create auth provider | `glow auths create` | `POST /auths/create` |
-| Update auth provider | `glow auths update` | `POST /auths/update` |
-| Duplicate auth | -- | `POST /auths/duplicate` |
-| Delete auths | `glow auths delete` | `POST /auths/delete` |
-| Save draft | `glow auths draft` | `PATCH /auths/draft` |
-| List drafts | -- | `POST /auths/drafts` |
-| Export | `glow auths export` | `POST /auths/export` |
-| View docs | -- | `POST /auths/docs` |
+| List auth providers | `glow auths search` | `POST /auth/search` |
+| Get auth provider | `glow auths get` | `POST /auth/get` |
+| Create auth provider | `glow auths create` | `POST /auth/create` |
+| Update auth provider | `glow auths update` | `POST /auth/update` |
+| Duplicate auth | -- | `POST /auth/duplicate` |
+| Delete auths | `glow auths delete` | `POST /auth/delete` |
+| Save draft | `glow auths draft` | `PATCH /auth/draft` |
+| List drafts | -- | `POST /auth/drafts` |
+| Export | `glow auths export` | `POST /auth/export` |
+| View docs | -- | `POST /auth/docs` |
 
 ## Related
 
-- [Auths API Reference](/glow/auths/api)
-- [Auths CLI Reference](/glow/auths/cli)
-- [Settings Guide](/glow/settings/guide) -- instance configuration (links auth providers)
+- [Auths API Reference](/api-reference/auth)
+- [Auths CLI Reference](/cli-reference/auth)
+- [Settings Guide](/setting) -- instance configuration (links auth providers)

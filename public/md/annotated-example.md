@@ -1,6 +1,11 @@
 # Annotated Example: What Good (and Bad) Looks Like
 
+{/* DEMO_VIDEO: annotated-example — replace public/demos/annotated-example.mp4 */}
+
 # Annotated Example: What Good (and Bad) Looks Like
+
+<DemoVideo topic="annotated-example" />
+
 
 The most effective way to learn simulation design is to see what actually happens in practice. This page shows two real conversations from Glow — one excellent, one poor — with commentary explaining why the grading system scored them the way it did.
 
@@ -134,6 +139,6 @@ This is the core insight of the rubric design: the same five criteria (Adaptabil
 
 ## Next Steps
 
-- [How It Works](/glow/how-it-works) — understand the principles behind these rubric criteria
-- [Patterns & Best Practices](/glow/patterns) — learn how to design personas that create these kinds of interactions
-- [Tutorial](/glow/tutorial) — build a simulation with these four persona types
+- [How It Works](/how-it-works) — understand the principles behind these rubric criteria
+- [Patterns & Best Practices](/patterns) — learn how to design personas that create these kinds of interactions
+- [Tutorial](/tutorial) — build a simulation with these four persona types

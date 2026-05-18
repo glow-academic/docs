@@ -1,6 +1,10 @@
 # Departments
 
+{/* DEMO_VIDEO: departments — replace public/demos/departments.mp4 */}
+
 # Departments
+
+<DemoVideo topic="departments" />
 
 Departments are the organizational boundary in Glow. They scope nearly every resource -- profiles, documents, parameters, fields, scenarios, simulations, and cohorts -- so that different groups within your institution can work independently.
 
@@ -57,7 +61,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search departments
-curl -X POST https://<your-instance>/v5/departments/search \
+curl -X POST https://<your-instance>/department/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -67,7 +71,7 @@ curl -X POST https://<your-instance>/v5/departments/search \
   }'
 
 # Create a department
-curl -X POST https://<your-instance>/v5/departments/create \
+curl -X POST https://<your-instance>/department/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -127,27 +131,27 @@ glow departments draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /departments/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, and `setting_ids`.
+Via the API, use `PATCH /department/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, and `setting_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all departments | `glow departments list` | `POST /departments/search` |
-| Get a department | `glow departments get --body '{...}'` | `POST /departments/get` |
-| Create departments | `glow departments create --body '{...}'` | `POST /departments/create` |
-| Update departments | `glow departments update --body '{...}'` | `POST /departments/update` |
-| Duplicate a department | -- | `POST /departments/duplicate` |
-| Delete departments | `glow departments delete --body '{...}'` | `POST /departments/delete` |
-| Export to CSV | `glow departments export` | `POST /departments/export` |
-| Save a draft | `glow departments draft --body '{...}'` | `PATCH /departments/draft` |
-| List drafts | -- | `POST /departments/drafts` |
+| List all departments | `glow departments list` | `POST /department/search` |
+| Get a department | `glow departments get --body '{...}'` | `POST /department/get` |
+| Create departments | `glow departments create --body '{...}'` | `POST /department/create` |
+| Update departments | `glow departments update --body '{...}'` | `POST /department/update` |
+| Duplicate a department | -- | `POST /department/duplicate` |
+| Delete departments | `glow departments delete --body '{...}'` | `POST /department/delete` |
+| Export to CSV | `glow departments export` | `POST /department/export` |
+| Save a draft | `glow departments draft --body '{...}'` | `PATCH /department/draft` |
+| List drafts | -- | `POST /department/drafts` |
 
 ## Related
 
-- [Departments API](/glow/departments/api)
-- [Departments CLI](/glow/departments/cli)
-- [Profiles Guide](/glow/profiles/guide) -- profiles belong to departments
-- [Documents Guide](/glow/documents/guide) -- documents are scoped to departments
-- [Parameters Guide](/glow/parameters/guide) -- parameters are scoped to departments
-- [Cohorts Guide](/glow/cohorts/guide) -- cohorts are scoped to departments
+- [Departments API](/api-reference/department)
+- [Departments CLI](/cli-reference/department)
+- [Profiles Guide](/profile) -- profiles belong to departments
+- [Documents Guide](/document) -- documents are scoped to departments
+- [Parameters Guide](/parameter) -- parameters are scoped to departments
+- [Cohorts Guide](/cohort) -- cohorts are scoped to departments
