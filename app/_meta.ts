@@ -1,22 +1,14 @@
-// Sidebar config — mirrors the client's sidebar groupings so a user
-// looking at the product UI can find the matching doc in the same
-// group. Source of truth for product groupings:
-//   /Users/.../glow-academic-client/lib/sidebar-config.ts
+// Sidebar config — organized by API/CLI taxonomy so a developer
+// calling /persona/search or ``glow attempts dashboard`` lands in the
+// same group they'd find the docs under. The client sidebar is a
+// product-facing organization (Learner / Analytics / etc.); this
+// docs site is dev-facing (api-reference + cli-reference dominate),
+// so the API/CLI shape is the right mental model here.
 //
-// Notable mappings:
-//   * docs "System" (auths/departments/evals/rubrics) ==
-//     client "System" (renamed from old docs "Platform")
-//   * docs "Learner" (home/chat/practice/leaderboard) ==
-//     client top-level leaves Home/Practice/Leaderboard (+ chat,
-//     which has no client sidebar leaf but is the heart of the
-//     attempt flow so keeps a top-spot in docs)
-//   * docs "Analytics" (dashboard/reports/activity/pricing) ==
-//     client "Analytics" group
-//   * docs "Ops" (health/benchmark/invocation) ==
-//     client top-level Health + Benchmark leaves; invocation joins
-//     since it's the test-fanout sibling of benchmark
-//   * docs "Internals" (session/group) — server-side concepts
-//     with no client sidebar presence; surface here for API users.
+// Final group is "Platform" (cross-cutting artifacts: auths,
+// departments, evals, rubrics). The client's equivalent group will
+// rename System → Platform to match (avoids collision with the system
+// artifact / system-namespace ops).
 export default {
   // ── Getting started ─────────────────────────────────────────
   index: 'Introduction',
@@ -28,58 +20,55 @@ export default {
   authentication: 'Authentication',
   settings: 'Settings',
 
-  // ── Learner-facing (client top-level leaves + chat) ─────────
-  '---learner': { type: 'separator', title: 'Learner' },
-  home: 'Home',
+  // ── Attempt artifact — chat namespace + view ops ────────────
+  '---attempt': { type: 'separator', title: 'Attempt' },
   chat: 'Chat',
+  home: 'Home',
   practice: 'Practice',
-  leaderboard: 'Leaderboard',
-
-  // ── Analytics (mirrors client "Analytics" group) ────────────
-  '---analytics': { type: 'separator', title: 'Analytics' },
   dashboard: 'Dashboard',
   reports: 'Reports',
-  activity: 'Activity',
-  pricing: 'Pricing',
+  leaderboard: 'Leaderboard',
 
-  // ── Training (mirrors client "Training" group) ──────────────
+  // ── Test artifact — invocation namespace + view ops ─────────
+  '---test': { type: 'separator', title: 'Test' },
+  benchmark: 'Benchmark',
+  invocation: 'Invocation',
+
+  // ── System artifact — flat namespace of cross-artifact ops ──
+  '---system': { type: 'separator', title: 'System' },
+  activity: 'Activity',
+  health: 'Health',
+  pricing: 'Pricing',
+  session: 'Session',
+  group: 'Group',
+
+  // ── Training artifacts ──────────────────────────────────────
   '---training': { type: 'separator', title: 'Training' },
   cohorts: 'Cohorts',
-  simulations: 'Simulations',
-  scenarios: 'Scenarios',
   personas: 'Personas',
+  scenarios: 'Scenarios',
+  simulations: 'Simulations',
 
-  // ── Management (mirrors client "Management" group) ──────────
+  // ── Management artifacts ────────────────────────────────────
   '---management': { type: 'separator', title: 'Management' },
-  profiles: 'Profiles',
   documents: 'Documents',
-  parameters: 'Parameters',
   fields: 'Fields',
+  parameters: 'Parameters',
+  profiles: 'Profiles',
 
-  // ── Intelligence (mirrors client "Intelligence" group) ──────
+  // ── Intelligence artifacts ──────────────────────────────────
   '---intelligence': { type: 'separator', title: 'Intelligence' },
   agents: 'Agents',
   models: 'Models',
   providers: 'Providers',
   tools: 'Tools',
 
-  // ── System (renamed from "Platform" — matches client) ───────
-  '---system': { type: 'separator', title: 'System' },
+  // ── Platform artifacts (cross-cutting) ──────────────────────
+  '---platform': { type: 'separator', title: 'Platform' },
   auths: 'Auths',
   departments: 'Departments',
   evals: 'Evals',
   rubrics: 'Rubrics',
-
-  // ── Ops (client's Health + Benchmark leaves, + invocation) ──
-  '---ops': { type: 'separator', title: 'Ops' },
-  health: 'Health',
-  benchmark: 'Benchmark',
-  invocation: 'Invocation',
-
-  // ── Internals (server-side, no client sidebar presence) ─────
-  '---internals': { type: 'separator', title: 'Internals' },
-  session: 'Session',
-  group: 'Group',
 
   // ── Reference (auto-generated) ──────────────────────────────
   '---ref': { type: 'separator', title: 'Reference' },
