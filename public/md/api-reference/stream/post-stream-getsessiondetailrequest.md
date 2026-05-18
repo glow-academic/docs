@@ -1,5 +1,7 @@
 # `POST` `/stream/GetSessionDetailRequest`
 
+# `POST` `/stream/GetSessionDetailRequest`
+
 Schema: GetSessionDetailRequest
 
 ## Request Body (`GetSessionDetailRequest`)

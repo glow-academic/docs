@@ -1,5 +1,7 @@
 # `POST` `/stream/GeneratePayload`
 
+# `POST` `/stream/GeneratePayload`
+
 Schema: GeneratePayload
 
 ## Request Body (`GeneratePayload`)

@@ -1,5 +1,7 @@
 # `POST` `/profile/duplicate`
 
+# `POST` `/profile/duplicate`
+
 Duplicate Profile
 
 Duplicate a profile — composable infra architecture.

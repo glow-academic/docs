@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateDepartmentApiResponse`
 
+# `POST` `/stream/CreateDepartmentApiResponse`
+
 Schema: CreateDepartmentApiResponse
 
 ## Request Body (`CreateDepartmentApiResponse-Input`)

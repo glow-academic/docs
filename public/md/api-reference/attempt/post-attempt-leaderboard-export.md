@@ -1,5 +1,7 @@
 # `POST` `/attempt/leaderboard/export`
 
+# `POST` `/attempt/leaderboard/export`
+
 Export Leaderboard
 
 Export all leaderboard data as a clean, denormalized ZIP.

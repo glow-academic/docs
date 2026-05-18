@@ -1,5 +1,7 @@
 # `POST` `/agent/generate`
 
+# `POST` `/agent/generate`
+
 Generate Agent
 
 Trigger agent generation. Returns immediately; progress via events.

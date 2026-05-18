@@ -1,5 +1,7 @@
 # `POST` `/stream/GenerationMediaCompleteEvent`
 
+# `POST` `/stream/GenerationMediaCompleteEvent`
+
 Schema: GenerationMediaCompleteEvent
 
 ## Request Body (`GenerationMediaCompleteEvent`)

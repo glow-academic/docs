@@ -1,5 +1,7 @@
 # Attempts
 
+# Attempts
+
 Attempts represent a single learner's run through a simulation -- they track progress, messages, grading, and results across all scenarios in the session.
 
 ## What is an Attempt?

@@ -1,5 +1,7 @@
 # `POST` `/scenario/search`
 
+# `POST` `/scenario/search`
+
 Search Scenario
 
 Search scenarios — composable infra architecture.

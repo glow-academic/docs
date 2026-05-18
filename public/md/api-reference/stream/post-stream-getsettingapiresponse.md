@@ -1,5 +1,7 @@
 # `POST` `/stream/GetSettingApiResponse`
 
+# `POST` `/stream/GetSettingApiResponse`
+
 Schema: GetSettingApiResponse
 
 ## Request Body (`GetSettingApiResponse`)

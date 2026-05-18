@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptAudioStopPayload`
 
+# `POST` `/stream/AttemptAudioStopPayload`
+
 Schema: AttemptAudioStopPayload
 
 ## Request Body (`AttemptAudioStopPayload`)

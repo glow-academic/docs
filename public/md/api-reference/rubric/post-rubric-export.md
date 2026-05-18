@@ -1,5 +1,7 @@
 # `POST` `/rubric/export`
 
+# `POST` `/rubric/export`
+
 Export Rubrics
 
 Export a rubric as a PDF (optionally filled with grade data).

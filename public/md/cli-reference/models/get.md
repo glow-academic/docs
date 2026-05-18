@@ -1,0 +1,11 @@
+# `glow models get`
+
+# `glow models get`
+
+Get AI model configurations.
+
+## Usage
+
+```bash
+glow models get --id <id>
+```

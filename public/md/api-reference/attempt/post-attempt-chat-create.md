@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/create`
 
+# `POST` `/attempt/chat/create`
+
 Create Attempt Chat Endpoint
 
 Create a chat within an attempt.

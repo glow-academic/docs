@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateAuthApiResponse`
 
+# `POST` `/stream/DuplicateAuthApiResponse`
+
 Schema: DuplicateAuthApiResponse
 
 ## Request Body (`DuplicateAuthApiResponse`)

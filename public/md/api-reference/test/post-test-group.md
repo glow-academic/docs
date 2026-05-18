@@ -1,5 +1,7 @@
 # `POST` `/test/group`
 
+# `POST` `/test/group`
+
 Group Test
 
 Resolve or create a test group with optional naming.

@@ -1,5 +1,7 @@
 # `POST` `/cohort/export`
 
+# `POST` `/cohort/export`
+
 Export Cohorts
 
 Export all cohorts as a clean, denormalized CSV.

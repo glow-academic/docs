@@ -1,5 +1,7 @@
 # `POST` `/stream/GetInvocationApiRequest`
 
+# `POST` `/stream/GetInvocationApiRequest`
+
 Schema: GetInvocationApiRequest
 
 ## Request Body (`GetInvocationApiRequest`)

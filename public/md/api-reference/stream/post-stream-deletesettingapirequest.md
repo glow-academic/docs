@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteSettingApiRequest`
 
+# `POST` `/stream/DeleteSettingApiRequest`
+
 Schema: DeleteSettingApiRequest
 
 ## Request Body (`DeleteSettingApiRequest`)

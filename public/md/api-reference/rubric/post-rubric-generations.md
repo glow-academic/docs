@@ -1,5 +1,7 @@
 # `POST` `/rubric/generations`
 
+# `POST` `/rubric/generations`
+
 Generations Rubric
 
 List rubric generation groups — composable infra architecture.

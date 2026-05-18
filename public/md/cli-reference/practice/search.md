@@ -1,0 +1,11 @@
+# `glow practice search`
+
+# `glow practice search`
+
+Search Practice sessions.
+
+## Usage
+
+```bash
+glow practice search
+```

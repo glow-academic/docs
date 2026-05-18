@@ -1,5 +1,7 @@
 # `POST` `/stream/GetDepartmentApiRequest`
 
+# `POST` `/stream/GetDepartmentApiRequest`
+
 Schema: GetDepartmentApiRequest
 
 ## Request Body (`GetDepartmentApiRequest`)

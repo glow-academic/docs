@@ -1,5 +1,7 @@
 # `POST` `/system/activity/get`
 
+# `POST` `/system/activity/get`
+
 Get Activity
 
 ## Request Body (`ActivityRequest`)

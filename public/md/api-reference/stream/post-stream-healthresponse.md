@@ -1,5 +1,7 @@
 # `POST` `/stream/HealthResponse`
 
+# `POST` `/stream/HealthResponse`
+
 Schema: HealthResponse
 
 ## Request Body (`HealthResponse-Input`)

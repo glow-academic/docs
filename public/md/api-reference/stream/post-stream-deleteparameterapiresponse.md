@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteParameterApiResponse`
 
+# `POST` `/stream/DeleteParameterApiResponse`
+
 Schema: DeleteParameterApiResponse
 
 ## Request Body (`DeleteParameterApiResponse`)

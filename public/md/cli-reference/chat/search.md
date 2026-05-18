@@ -1,0 +1,11 @@
+# `glow chat search`
+
+# `glow chat search`
+
+Search Chat sessions.
+
+## Usage
+
+```bash
+glow chat search
+```

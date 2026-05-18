@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptAssistantStartEvent`
 
+# `POST` `/stream/AttemptAssistantStartEvent`
+
 Schema: AttemptAssistantStartEvent
 
 ## Request Body (`AttemptAssistantStartEvent`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateDocumentApiRequest`
 
+# `POST` `/stream/CreateDocumentApiRequest`
+
 Schema: CreateDocumentApiRequest
 
 ## Request Body (`CreateDocumentApiRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/rubric/update`
 
+# `POST` `/rubric/update`
+
 Update Rubric
 
 Update rubrics using composable infra architecture.

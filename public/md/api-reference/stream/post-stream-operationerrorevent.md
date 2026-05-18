@@ -1,5 +1,7 @@
 # `POST` `/stream/OperationErrorEvent`
 
+# `POST` `/stream/OperationErrorEvent`
+
 Schema: OperationErrorEvent
 
 ## Request Body (`OperationErrorEvent`)

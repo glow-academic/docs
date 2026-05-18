@@ -1,5 +1,7 @@
 # `POST` `/model/context`
 
+# `POST` `/model/context`
+
 Get Model Context
 
 Get page context for the model artifact.

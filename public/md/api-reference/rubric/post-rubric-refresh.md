@@ -1,5 +1,7 @@
 # `POST` `/rubric/refresh`
 
+# `POST` `/rubric/refresh`
+
 Rubric Refresh
 
 Refresh rubric materialized views and invalidate caches.

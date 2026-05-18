@@ -1,5 +1,7 @@
 # `POST` `/model/generate`
 
+# `POST` `/model/generate`
+
 Generate Model
 
 Trigger model generation. Returns immediately; progress via events.

@@ -1,5 +1,7 @@
 # `POST` `/test/refresh`
 
+# `POST` `/test/refresh`
+
 Test Refresh
 
 Refresh test materialized views and invalidate caches.

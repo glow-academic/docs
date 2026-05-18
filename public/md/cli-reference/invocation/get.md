@@ -1,0 +1,11 @@
+# `glow invocation get`
+
+# `glow invocation get`
+
+Get AI invocation records.
+
+## Usage
+
+```bash
+glow invocation get --id <id>
+```

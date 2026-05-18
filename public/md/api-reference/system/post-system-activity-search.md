@@ -1,5 +1,7 @@
 # `POST` `/system/activity/search`
 
+# `POST` `/system/activity/search`
+
 Search Activity
 
 Get activity session history (bottom table, paginated).

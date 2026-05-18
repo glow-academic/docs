@@ -1,0 +1,11 @@
+# `glow evals create`
+
+# `glow evals create`
+
+Create Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals create --body '\{...\}'
+```

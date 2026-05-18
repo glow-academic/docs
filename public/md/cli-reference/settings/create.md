@@ -1,0 +1,11 @@
+# `glow settings create`
+
+# `glow settings create`
+
+Create Instance settings.
+
+## Usage
+
+```bash
+glow settings create --body '\{...\}'
+```

@@ -1,0 +1,11 @@
+# `glow record delete`
+
+# `glow record delete`
+
+Delete Records.
+
+## Usage
+
+```bash
+glow record delete --id <id>
+```

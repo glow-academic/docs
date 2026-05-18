@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportAuthApiResponse`
 
+# `POST` `/stream/ExportAuthApiResponse`
+
 Schema: ExportAuthApiResponse
 
 ## Request Body (`ExportAuthApiResponse`)

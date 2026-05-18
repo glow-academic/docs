@@ -1,5 +1,7 @@
 # `glow use`
 
+# `glow use`
+
 Switch to a configured Glow instance
 
 ## Usage

@@ -1,0 +1,11 @@
+# `glow simulations get`
+
+# `glow simulations get`
+
+Get Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations get --id <id>
+```

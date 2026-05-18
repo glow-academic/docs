@@ -1,5 +1,7 @@
 # `POST` `/rubric/duplicate`
 
+# `POST` `/rubric/duplicate`
+
 Duplicate Rubric
 
 Duplicate a rubric — composable infra architecture.

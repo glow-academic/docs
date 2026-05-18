@@ -1,5 +1,7 @@
 # `glow generate`
 
+# `glow generate`
+
 Generate content for a group
 
 ## Usage

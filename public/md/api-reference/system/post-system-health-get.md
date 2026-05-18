@@ -1,5 +1,7 @@
 # `POST` `/system/health/get`
 
+# `POST` `/system/health/get`
+
 Get Health
 
 Get health artifact data.

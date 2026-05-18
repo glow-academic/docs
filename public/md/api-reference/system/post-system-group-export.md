@@ -1,5 +1,7 @@
 # `POST` `/system/group/export`
 
+# `POST` `/system/group/export`
+
 Export Group
 
 Export group data as a clean, denormalized ZIP.

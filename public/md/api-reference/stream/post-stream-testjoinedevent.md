@@ -1,5 +1,7 @@
 # `POST` `/stream/TestJoinedEvent`
 
+# `POST` `/stream/TestJoinedEvent`
+
 Schema: TestJoinedEvent
 
 ## Request Body (`TestJoinedEvent`)

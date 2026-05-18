@@ -1,5 +1,7 @@
 # `POST` `/cohort/get`
 
+# `POST` `/cohort/get`
+
 Get Cohort
 
 Get cohort information using the canonical shared cohort operation.

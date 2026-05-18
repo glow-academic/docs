@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteDocumentApiResponse`
 
+# `POST` `/stream/DeleteDocumentApiResponse`
+
 Schema: DeleteDocumentApiResponse
 
 ## Request Body (`DeleteDocumentApiResponse`)

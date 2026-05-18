@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportCohortApiResponse`
 
+# `POST` `/stream/ExportCohortApiResponse`
+
 Schema: ExportCohortApiResponse
 
 ## Request Body (`ExportCohortApiResponse`)

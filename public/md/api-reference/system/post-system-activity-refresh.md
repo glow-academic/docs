@@ -1,5 +1,7 @@
 # `POST` `/system/activity/refresh`
 
+# `POST` `/system/activity/refresh`
+
 Activity Refresh
 
 Refresh activity materialized views and invalidate caches.

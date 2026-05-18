@@ -1,5 +1,7 @@
 # `POST` `/cohort/generate`
 
+# `POST` `/cohort/generate`
+
 Generate Cohort
 
 Trigger cohort generation. Returns immediately; progress via events.

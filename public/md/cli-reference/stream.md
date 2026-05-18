@@ -1,5 +1,7 @@
 # `glow stream`
 
+# `glow stream`
+
 Stream events via SSE (Server-Sent Events)
 
 ## Usage

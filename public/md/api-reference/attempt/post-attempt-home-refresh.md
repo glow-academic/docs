@@ -1,5 +1,7 @@
 # `POST` `/attempt/home/refresh`
 
+# `POST` `/attempt/home/refresh`
+
 Home Refresh
 
 Refresh home materialized views and invalidate caches.

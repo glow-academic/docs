@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptAudioEndedEvent`
 
+# `POST` `/stream/AttemptAudioEndedEvent`
+
 Schema: AttemptAudioEndedEvent
 
 ## Request Body (`AttemptAudioEndedEvent`)

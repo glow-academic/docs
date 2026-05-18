@@ -1,0 +1,11 @@
+# `glow personas delete`
+
+# `glow personas delete`
+
+Delete AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas delete --id <id>
+```

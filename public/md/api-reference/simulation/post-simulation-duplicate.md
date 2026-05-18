@@ -1,5 +1,7 @@
 # `POST` `/simulation/duplicate`
 
+# `POST` `/simulation/duplicate`
+
 Duplicate Simulation
 
 Duplicate a simulation — composable infra architecture.

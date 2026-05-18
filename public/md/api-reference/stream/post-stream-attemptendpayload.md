@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptEndPayload`
 
+# `POST` `/stream/AttemptEndPayload`
+
 Schema: AttemptEndPayload
 
 ## Request Body (`AttemptEndPayload`)

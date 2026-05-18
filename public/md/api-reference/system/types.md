@@ -1,5 +1,7 @@
 # System Types
 
+# System Types
+
 ## `ActivityResources`
 
 Activity resource metadata.

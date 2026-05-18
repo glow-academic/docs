@@ -1,0 +1,11 @@
+# `glow fields update`
+
+# `glow fields update`
+
+Update Custom fields.
+
+## Usage
+
+```bash
+glow fields update --id <id>
+```

@@ -1,0 +1,11 @@
+# `glow benchmarks search`
+
+# `glow benchmarks search`
+
+Search Performance benchmarks.
+
+## Usage
+
+```bash
+glow benchmarks search
+```

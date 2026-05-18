@@ -1,5 +1,7 @@
 # How AI Simulation Training Works
 
+# How AI Simulation Training Works
+
 This page explains the ideas behind simulation-based training — why it works, what the building blocks are, and how to think about designing effective simulations. You don't need any technical background to follow along.
 
 ## Why Simulation Training Works

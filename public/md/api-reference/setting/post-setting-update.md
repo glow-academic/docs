@@ -1,5 +1,7 @@
 # `POST` `/setting/update`
 
+# `POST` `/setting/update`
+
 Update Setting
 
 Update settings using composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/tool/generations`
 
+# `POST` `/tool/generations`
+
 Generations Tool
 
 List tool generation groups — composable infra architecture.

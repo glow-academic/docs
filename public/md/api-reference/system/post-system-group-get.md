@@ -1,5 +1,7 @@
 # `POST` `/system/group/get`
 
+# `POST` `/system/group/get`
+
 Get Group
 
 Get detailed group information with all runs and messages.

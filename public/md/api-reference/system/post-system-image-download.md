@@ -1,5 +1,7 @@
 # `POST` `/system/image/download`
 
+# `POST` `/system/image/download`
+
 Download Image
 
 Download an image file by image resource ID.

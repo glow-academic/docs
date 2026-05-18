@@ -1,5 +1,7 @@
 # `POST` `/test/leave`
 
+# `POST` `/test/leave`
+
 Test Leave
 
 Leave a test invocation room, stopping real-time updates.

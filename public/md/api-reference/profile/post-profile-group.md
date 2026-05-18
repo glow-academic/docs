@@ -1,5 +1,7 @@
 # `POST` `/profile/group`
 
+# `POST` `/profile/group`
+
 Group Profile
 
 Resolve or create a profile group with optional naming.

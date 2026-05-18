@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptNextPayload`
 
+# `POST` `/stream/AttemptNextPayload`
+
 Schema: AttemptNextPayload
 
 ## Request Body (`AttemptNextPayload`)

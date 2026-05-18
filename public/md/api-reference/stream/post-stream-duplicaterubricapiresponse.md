@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateRubricApiResponse`
 
+# `POST` `/stream/DuplicateRubricApiResponse`
+
 Schema: DuplicateRubricApiResponse
 
 ## Request Body (`DuplicateRubricApiResponse`)

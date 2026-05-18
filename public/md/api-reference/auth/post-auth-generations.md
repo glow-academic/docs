@@ -1,5 +1,7 @@
 # `POST` `/auth/generations`
 
+# `POST` `/auth/generations`
+
 Generations Auth
 
 List auth generation groups — composable infra architecture.

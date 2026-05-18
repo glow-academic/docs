@@ -1,5 +1,7 @@
 # `POST` `/provider/create`
 
+# `POST` `/provider/create`
+
 Create Provider
 
 Create providers using composable infra architecture.

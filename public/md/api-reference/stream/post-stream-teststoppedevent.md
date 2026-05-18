@@ -1,5 +1,7 @@
 # `POST` `/stream/TestStoppedEvent`
 
+# `POST` `/stream/TestStoppedEvent`
+
 Schema: TestStoppedEvent
 
 ## Request Body (`TestStoppedEvent`)

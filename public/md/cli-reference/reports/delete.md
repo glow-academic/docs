@@ -1,0 +1,11 @@
+# `glow reports delete`
+
+# `glow reports delete`
+
+Delete Report generation.
+
+## Usage
+
+```bash
+glow reports delete --id <id>
+```

@@ -1,5 +1,7 @@
 # `POST` `/stream/EmulateProfileApiResponse`
 
+# `POST` `/stream/EmulateProfileApiResponse`
+
 Schema: EmulateProfileApiResponse
 
 ## Request Body (`EmulateProfileApiResponse`)

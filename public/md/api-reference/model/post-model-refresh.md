@@ -1,5 +1,7 @@
 # `POST` `/model/refresh`
 
+# `POST` `/model/refresh`
+
 Model Refresh
 
 Refresh model materialized views and invalidate caches.

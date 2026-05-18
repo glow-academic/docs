@@ -1,5 +1,7 @@
 # `POST` `/attempt/generations`
 
+# `POST` `/attempt/generations`
+
 Generations Attempt
 
 List attempt generation groups — composable infra architecture.

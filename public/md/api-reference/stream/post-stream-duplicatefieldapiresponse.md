@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateFieldApiResponse`
 
+# `POST` `/stream/DuplicateFieldApiResponse`
+
 Schema: DuplicateFieldApiResponse
 
 ## Request Body (`DuplicateFieldApiResponse`)

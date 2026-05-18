@@ -1,5 +1,7 @@
 # `POST` `/attempt/generate`
 
+# `POST` `/attempt/generate`
+
 Generate Attempt
 
 Trigger attempt generation. Returns immediately; progress via events.

@@ -1,5 +1,7 @@
 # Test Types
 
+# Test Types
+
 ## `AnalyticsFacets-Output`
 
 Resolved analytics facets — embeddable in any artifact response.

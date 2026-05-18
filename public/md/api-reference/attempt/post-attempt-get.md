@@ -1,5 +1,7 @@
 # `POST` `/attempt/get`
 
+# `POST` `/attempt/get`
+
 Attempt Get
 
 Get attempt detail with the canonical shared attempt bundle.

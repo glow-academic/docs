@@ -1,0 +1,11 @@
+# `glow leaderboard search`
+
+# `glow leaderboard search`
+
+Search Leaderboard data.
+
+## Usage
+
+```bash
+glow leaderboard search
+```

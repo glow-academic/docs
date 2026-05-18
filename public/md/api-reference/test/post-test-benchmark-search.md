@@ -1,5 +1,7 @@
 # `POST` `/test/benchmark/search`
 
+# `POST` `/test/benchmark/search`
+
 Search Benchmark History
 
 Search benchmark test history with pagination and filters.

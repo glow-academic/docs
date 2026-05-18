@@ -1,5 +1,7 @@
 # `POST` `/profile/search`
 
+# `POST` `/profile/search`
+
 Search Profile
 
 Search profiles — composable infra architecture.

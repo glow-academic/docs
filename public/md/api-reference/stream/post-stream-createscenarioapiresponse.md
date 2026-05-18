@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateScenarioApiResponse`
 
+# `POST` `/stream/CreateScenarioApiResponse`
+
 Schema: CreateScenarioApiResponse
 
 ## Request Body (`CreateScenarioApiResponse-Input`)

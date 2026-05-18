@@ -1,0 +1,11 @@
+# `glow rubrics create`
+
+# `glow rubrics create`
+
+Create Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics create --body '\{...\}'
+```

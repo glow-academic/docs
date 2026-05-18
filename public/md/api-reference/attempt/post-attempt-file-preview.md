@@ -1,5 +1,7 @@
 # `POST` `/attempt/file/preview`
 
+# `POST` `/attempt/file/preview`
+
 Preview File
 
 Return a PNG preview of the first page of a PDF upload.

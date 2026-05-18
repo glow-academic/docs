@@ -1,5 +1,7 @@
 # `POST` `/stream/LeaderboardResponse`
 
+# `POST` `/stream/LeaderboardResponse`
+
 Schema: LeaderboardResponse
 
 ## Request Body (`LeaderboardResponse-Input`)

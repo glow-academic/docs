@@ -1,5 +1,7 @@
 # `POST` `/system/pricing/search`
 
+# `POST` `/system/pricing/search`
+
 Search Pricing
 
 Get pricing group history (bottom table, paginated).

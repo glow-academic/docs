@@ -1,5 +1,7 @@
 # `POST` `/simulation/create`
 
+# `POST` `/simulation/create`
+
 Create Simulation
 
 Create simulations using composable infra architecture.

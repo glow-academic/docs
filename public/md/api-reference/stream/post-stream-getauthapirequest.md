@@ -1,5 +1,7 @@
 # `POST` `/stream/GetAuthApiRequest`
 
+# `POST` `/stream/GetAuthApiRequest`
+
 Schema: GetAuthApiRequest
 
 ## Request Body (`GetAuthApiRequest`)

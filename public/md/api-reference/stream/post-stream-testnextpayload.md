@@ -1,5 +1,7 @@
 # `POST` `/stream/TestNextPayload`
 
+# `POST` `/stream/TestNextPayload`
+
 Schema: TestNextPayload
 
 ## Request Body (`TestNextPayload`)

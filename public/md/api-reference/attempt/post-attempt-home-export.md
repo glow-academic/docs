@@ -1,5 +1,7 @@
 # `POST` `/attempt/home/export`
 
+# `POST` `/attempt/home/export`
+
 Export Home
 
 Export all home data as a clean, denormalized ZIP with certificate.

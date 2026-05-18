@@ -1,5 +1,7 @@
 # `POST` `/stream/GetToolApiRequest`
 
+# `POST` `/stream/GetToolApiRequest`
+
 Schema: GetToolApiRequest
 
 ## Request Body (`GetToolApiRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/GetPracticeResponse`
 
+# `POST` `/stream/GetPracticeResponse`
+
 Schema: GetPracticeResponse
 
 ## Request Body (`GetPracticeResponse-Input`)

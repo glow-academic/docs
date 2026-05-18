@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateProfileApiResponse`
 
+# `POST` `/stream/DuplicateProfileApiResponse`
+
 Schema: DuplicateProfileApiResponse
 
 ## Request Body (`DuplicateProfileApiResponse`)

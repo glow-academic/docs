@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateRubricApiRequest`
 
+# `POST` `/stream/UpdateRubricApiRequest`
+
 Schema: UpdateRubricApiRequest
 
 ## Request Body (`UpdateRubricApiRequest`)

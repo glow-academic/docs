@@ -1,5 +1,7 @@
 # `POST` `/parameter/generate`
 
+# `POST` `/parameter/generate`
+
 Generate Parameter
 
 Trigger parameter generation. Returns immediately; progress via events.

@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptEndedEvent`
 
+# `POST` `/stream/AttemptEndedEvent`
+
 Schema: AttemptEndedEvent
 
 ## Request Body (`AttemptEndedEvent`)

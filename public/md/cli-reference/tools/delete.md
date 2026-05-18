@@ -1,0 +1,11 @@
+# `glow tools delete`
+
+# `glow tools delete`
+
+Delete Tool integrations.
+
+## Usage
+
+```bash
+glow tools delete --id <id>
+```

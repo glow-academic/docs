@@ -1,5 +1,7 @@
 # `POST` `/system/pricing/refresh`
 
+# `POST` `/system/pricing/refresh`
+
 Pricing Refresh
 
 Refresh pricing materialized views and invalidate caches.

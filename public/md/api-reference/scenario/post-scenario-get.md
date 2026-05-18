@@ -1,5 +1,7 @@
 # `POST` `/scenario/get`
 
+# `POST` `/scenario/get`
+
 Get Scenario
 
 Get scenario information using the canonical shared scenario operation.

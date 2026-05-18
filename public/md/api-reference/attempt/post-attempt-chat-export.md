@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/export`
 
+# `POST` `/attempt/chat/export`
+
 Export Chat
 
 Export a single chat as a clean, denormalized CSV.

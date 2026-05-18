@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/response`
 
+# `POST` `/attempt/chat/response`
+
 Chat Response
 
 Submit a video question response.

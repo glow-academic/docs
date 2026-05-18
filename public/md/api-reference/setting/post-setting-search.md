@@ -1,5 +1,7 @@
 # `POST` `/setting/search`
 
+# `POST` `/setting/search`
+
 Search Setting
 
 Search settings — composable infra architecture.

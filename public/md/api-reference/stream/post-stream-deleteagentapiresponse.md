@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteAgentApiResponse`
 
+# `POST` `/stream/DeleteAgentApiResponse`
+
 Schema: DeleteAgentApiResponse
 
 ## Request Body (`DeleteAgentApiResponse`)

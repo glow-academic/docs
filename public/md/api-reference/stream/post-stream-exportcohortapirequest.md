@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportCohortApiRequest`
 
+# `POST` `/stream/ExportCohortApiRequest`
+
 Schema: ExportCohortApiRequest
 
 ## Request Body (`app__infra__cohort__types__ExportCohortApiRequest`)

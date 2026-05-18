@@ -1,5 +1,7 @@
 # `POST` `/stream/RecordRequest`
 
+# `POST` `/stream/RecordRequest`
+
 Schema: RecordRequest
 
 ## Request Body (`RecordRequest`)

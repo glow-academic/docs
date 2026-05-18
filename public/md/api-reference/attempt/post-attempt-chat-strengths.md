@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/strengths`
 
+# `POST` `/attempt/chat/strengths`
+
 Chat Strengths
 
 Create strength items (with optional inline highlights) for the latest grade.

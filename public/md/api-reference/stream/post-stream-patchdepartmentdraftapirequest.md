@@ -1,5 +1,7 @@
 # `POST` `/stream/PatchDepartmentDraftApiRequest`
 
+# `POST` `/stream/PatchDepartmentDraftApiRequest`
+
 Schema: PatchDepartmentDraftApiRequest
 
 ## Request Body (`PatchDepartmentDraftApiRequest`)

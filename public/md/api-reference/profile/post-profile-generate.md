@@ -1,5 +1,7 @@
 # `POST` `/profile/generate`
 
+# `POST` `/profile/generate`
+
 Generate Profile
 
 Trigger profile generation. Returns immediately; progress via events.

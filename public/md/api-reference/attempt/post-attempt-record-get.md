@@ -1,5 +1,7 @@
 # `POST` `/attempt/record/get`
 
+# `POST` `/attempt/record/get`
+
 Get Record
 
 Get record profile report — dashboard metrics for a single profile.

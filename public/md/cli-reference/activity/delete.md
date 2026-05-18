@@ -1,0 +1,11 @@
+# `glow activity delete`
+
+# `glow activity delete`
+
+Delete Activity logs.
+
+## Usage
+
+```bash
+glow activity delete --id <id>
+```

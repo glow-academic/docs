@@ -1,0 +1,11 @@
+# `glow home get`
+
+# `glow home get`
+
+Get Home page data.
+
+## Usage
+
+```bash
+glow home get --id <id>
+```

@@ -1,5 +1,7 @@
 # `glow health`
 
+# `glow health`
+
 Check Glow instance health
 
 ## Usage

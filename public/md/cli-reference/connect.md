@@ -1,5 +1,7 @@
 # `glow connect`
 
+# `glow connect`
+
 Create a stream session (returns session ID)
 
 ## Usage

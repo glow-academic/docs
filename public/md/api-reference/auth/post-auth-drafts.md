@@ -1,5 +1,7 @@
 # `POST` `/auth/drafts`
 
+# `POST` `/auth/drafts`
+
 Get Auth Drafts
 
 List auth drafts owned by the current profile.

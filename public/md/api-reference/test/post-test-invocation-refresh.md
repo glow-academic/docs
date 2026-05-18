@@ -1,5 +1,7 @@
 # `POST` `/test/invocation/refresh`
 
+# `POST` `/test/invocation/refresh`
+
 Invocation Refresh
 
 Refresh invocation materialized views and invalidate caches.

@@ -1,5 +1,7 @@
 # `POST` `/attempt/leaderboard/search`
 
+# `POST` `/attempt/leaderboard/search`
+
 Search Leaderboard
 
 Get leaderboard profile rows (bottom table, paginated).

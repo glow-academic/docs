@@ -1,5 +1,7 @@
 # `POST` `/stream/PatchSettingDraftApiRequest`
 
+# `POST` `/stream/PatchSettingDraftApiRequest`
+
 Schema: PatchSettingDraftApiRequest
 
 ## Request Body (`PatchSettingDraftApiRequest`)

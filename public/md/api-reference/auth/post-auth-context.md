@@ -1,5 +1,7 @@
 # `POST` `/auth/context`
 
+# `POST` `/auth/context`
+
 Get Auth Context
 
 Get page context for the auth artifact.

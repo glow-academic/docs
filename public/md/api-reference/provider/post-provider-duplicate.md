@@ -1,5 +1,7 @@
 # `POST` `/provider/duplicate`
 
+# `POST` `/provider/duplicate`
+
 Duplicate Provider
 
 Duplicate a provider — composable infra architecture.

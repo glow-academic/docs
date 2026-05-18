@@ -1,5 +1,7 @@
 # `POST` `/rubric/group`
 
+# `POST` `/rubric/group`
+
 Group Rubric
 
 Resolve or create a rubric group with optional naming.

@@ -1,5 +1,7 @@
 # Patterns & Best Practices
 
+# Patterns & Best Practices
+
 Short, actionable recipes for common simulation design challenges. Each pattern stands on its own — read the ones relevant to what you're working on.
 
 ## Making Personas Feel Real

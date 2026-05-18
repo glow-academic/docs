@@ -1,5 +1,7 @@
 # `POST` `/scenario/file/preview`
 
+# `POST` `/scenario/file/preview`
+
 Preview File
 
 Return a PNG preview of the first page of a PDF file resource.

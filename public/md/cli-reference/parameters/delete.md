@@ -1,0 +1,11 @@
+# `glow parameters delete`
+
+# `glow parameters delete`
+
+Delete Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters delete --id <id>
+```

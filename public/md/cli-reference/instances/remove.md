@@ -1,5 +1,7 @@
 # `glow instances remove`
 
+# `glow instances remove`
+
 Remove a configured instance
 
 ## Usage

@@ -1,5 +1,7 @@
 # `POST` `/stream/ProfileContextApiResponse`
 
+# `POST` `/stream/ProfileContextApiResponse`
+
 Schema: ProfileContextApiResponse
 
 ## Request Body (`ProfileContextApiResponse`)

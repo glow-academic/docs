@@ -1,5 +1,7 @@
 # `POST` `/stream/PricingRequest`
 
+# `POST` `/stream/PricingRequest`
+
 Schema: PricingRequest
 
 ## Request Body (`PricingRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/TestGroupPayload`
 
+# `POST` `/stream/TestGroupPayload`
+
 Schema: TestGroupPayload
 
 ## Request Body (`TestGroupPayload`)

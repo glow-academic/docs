@@ -1,5 +1,7 @@
 # `POST` `/attempt/report/refresh`
 
+# `POST` `/attempt/report/refresh`
+
 Reports Refresh
 
 Refresh reports caches.

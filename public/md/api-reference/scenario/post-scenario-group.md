@@ -1,5 +1,7 @@
 # `POST` `/scenario/group`
 
+# `POST` `/scenario/group`
+
 Group Scenario
 
 Resolve or create a scenario group with optional naming.

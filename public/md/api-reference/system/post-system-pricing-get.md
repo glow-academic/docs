@@ -1,5 +1,7 @@
 # `POST` `/system/pricing/get`
 
+# `POST` `/system/pricing/get`
+
 Get Pricing
 
 Get pricing top chart — daily cost aggregation + filter options.

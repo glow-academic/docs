@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateProviderApiRequest`
 
+# `POST` `/stream/CreateProviderApiRequest`
+
 Schema: CreateProviderApiRequest
 
 ## Request Body (`CreateProviderApiRequest`)

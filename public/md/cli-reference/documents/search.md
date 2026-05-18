@@ -1,0 +1,11 @@
+# `glow documents search`
+
+# `glow documents search`
+
+Search Document management.
+
+## Usage
+
+```bash
+glow documents search
+```

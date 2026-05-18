@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptUserCompleteEvent`
 
+# `POST` `/stream/AttemptUserCompleteEvent`
+
 Schema: AttemptUserCompleteEvent
 
 ## Request Body (`AttemptUserCompleteEvent`)

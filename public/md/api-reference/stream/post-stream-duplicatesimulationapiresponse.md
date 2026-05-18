@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateSimulationApiResponse`
 
+# `POST` `/stream/DuplicateSimulationApiResponse`
+
 Schema: DuplicateSimulationApiResponse
 
 ## Request Body (`DuplicateSimulationApiResponse`)

@@ -1,0 +1,11 @@
+# `glow session get`
+
+# `glow session get`
+
+Get Session management.
+
+## Usage
+
+```bash
+glow session get --id <id>
+```

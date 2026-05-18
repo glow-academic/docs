@@ -1,0 +1,11 @@
+# `glow tools update`
+
+# `glow tools update`
+
+Update Tool integrations.
+
+## Usage
+
+```bash
+glow tools update --id <id>
+```

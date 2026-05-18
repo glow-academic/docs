@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptJoinedEvent`
 
+# `POST` `/stream/AttemptJoinedEvent`
+
 Schema: AttemptJoinedEvent
 
 ## Request Body (`AttemptJoinedEvent`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateProfileApiRequest`
 
+# `POST` `/stream/CreateProfileApiRequest`
+
 Schema: CreateProfileApiRequest
 
 ## Request Body (`CreateProfileApiRequest`)

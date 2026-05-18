@@ -1,5 +1,7 @@
 # `POST` `/system/activity/resolve`
 
+# `POST` `/system/activity/resolve`
+
 Resolve Problem
 
 Resolve or unresolve a problem entry.

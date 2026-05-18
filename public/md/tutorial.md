@@ -1,5 +1,7 @@
 # Design Your First Simulation
 
+# Design Your First Simulation
+
 This tutorial walks through building a complete simulation from scratch. By the end, you'll have a working training scenario with AI characters, a grading rubric, and a cohort of learners ready to practice.
 
 We'll use a concrete example — training teaching assistants for university office hours — but the same process applies to any domain where people practice interpersonal skills.

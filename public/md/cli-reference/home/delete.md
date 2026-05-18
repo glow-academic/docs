@@ -1,0 +1,11 @@
+# `glow home delete`
+
+# `glow home delete`
+
+Delete Home page data.
+
+## Usage
+
+```bash
+glow home delete --id <id>
+```

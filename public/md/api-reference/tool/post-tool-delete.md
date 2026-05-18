@@ -1,5 +1,7 @@
 # `POST` `/tool/delete`
 
+# `POST` `/tool/delete`
+
 Delete Tool
 
 Bulk delete tools — composable infra architecture.

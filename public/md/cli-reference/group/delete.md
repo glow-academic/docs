@@ -1,0 +1,11 @@
+# `glow group delete`
+
+# `glow group delete`
+
+Delete Group management.
+
+## Usage
+
+```bash
+glow group delete --id <id>
+```

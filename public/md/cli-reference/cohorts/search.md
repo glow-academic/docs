@@ -1,0 +1,11 @@
+# `glow cohorts search`
+
+# `glow cohorts search`
+
+Search User cohorts.
+
+## Usage
+
+```bash
+glow cohorts search
+```

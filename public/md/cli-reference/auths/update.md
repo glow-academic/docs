@@ -1,0 +1,11 @@
+# `glow auths update`
+
+# `glow auths update`
+
+Update Authentication records.
+
+## Usage
+
+```bash
+glow auths update --id <id>
+```

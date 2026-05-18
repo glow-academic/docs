@@ -1,5 +1,7 @@
 # `POST` `/scenario/problem`
 
+# `POST` `/scenario/problem`
+
 Problem Scenario
 
 Report a scenario problem — composable infra architecture.

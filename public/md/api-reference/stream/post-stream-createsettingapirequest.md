@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateSettingApiRequest`
 
+# `POST` `/stream/CreateSettingApiRequest`
+
 Schema: CreateSettingApiRequest
 
 ## Request Body (`CreateSettingApiRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/profile/update`
 
+# `POST` `/profile/update`
+
 Update Profile
 
 Update profiles using composable infra architecture.

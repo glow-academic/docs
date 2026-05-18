@@ -1,5 +1,7 @@
 # `POST` `/setting/duplicate`
 
+# `POST` `/setting/duplicate`
+
 Duplicate Setting
 
 Duplicate a setting — composable infra architecture.

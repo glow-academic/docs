@@ -1,5 +1,7 @@
 # `POST` `/stream/GetGroupDetailRequest`
 
+# `POST` `/stream/GetGroupDetailRequest`
+
 Schema: GetGroupDetailRequest
 
 ## Request Body (`GetGroupDetailRequest`)

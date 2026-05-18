@@ -1,5 +1,7 @@
 # `POST` `/stream/DashboardRequest`
 
+# `POST` `/stream/DashboardRequest`
+
 Schema: DashboardRequest
 
 ## Request Body (`DashboardRequest`)

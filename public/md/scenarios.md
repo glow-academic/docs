@@ -1,0 +1,254 @@
+# Scenarios
+
+# Scenarios
+
+Scenarios are the training situations that learners encounter -- they combine personas, documents, objectives, and context into a single interactive exercise.
+
+## What is a Scenario?
+
+A scenario defines a specific training situation. It pairs one or more [Personas](/glow/personas/guide) with contextual information -- reference documents, problem statements, learning objectives, questions, and parameter values -- to create a focused interaction that tests a particular skill.
+
+A scenario contains:
+
+- **Name** -- a descriptive title (e.g., "Academic Integrity Training")
+- **Description** -- what the scenario covers and why it matters
+- **Problem Statement** -- the situation the learner faces (e.g., "A student was caught cheating on the CS-251 midterm exam")
+- **Personas** -- the AI characters the learner will interact with (linked via junction table)
+- **Documents** -- reference materials available during the simulation (e.g., Academic Integrity Policy, FERPA Policy)
+- **Objectives** -- specific learning goals the scenario is designed to address
+- **Parameters** -- runtime values like class, location, intensity that fill persona `{{placeholders}}`
+- **Parameter Fields** -- the parameter definitions available for this scenario
+- **Questions & Options** -- structured prompts and multiple-choice options (for video-based or quiz-style scenarios)
+- **Images & Videos** -- media assets used as scenario context
+- **Departments** -- organizational groupings for access control and filtering
+- **Flags** -- boolean configuration settings
+
+Scenarios are added to [Simulations](/glow/simulations/guide), which are then assigned to Cohorts for learner access.
+
+![Scenarios list showing scenario cards with names, associated personas, and document counts](/screenshots/scenarios/list.png)
+
+## Quick Start
+
+### Create via CLI
+
+![Scenario creation form showing name, problem statement, persona selection, and objectives](/screenshots/scenarios/create.png)
+
+Create an "Academic Integrity Training" scenario:
+
+```bash
+glow scenarios create --body '{
+  "scenarios": [{
+    "name": "Academic Integrity Training",
+    "description": "Practice handling a student caught cheating on an exam",
+    "problem_statement": "A student in CS-251 was caught cheating on the midterm exam. You are meeting with the student during office hours to discuss the incident.",
+    "objectives": [
+      "Apply the academic integrity policy correctly",
+      "Maintain a professional and empathetic tone",
+      "Document the conversation outcome"
+    ],
+    "persona_ids": ["confused-student-uuid"],
+    "document_ids": ["academic-integrity-policy-uuid"]
+  }]
+}'
+```
+
+Search scenarios:
+
+```bash
+glow scenarios search
+```
+
+Get a specific scenario:
+
+```bash
+glow scenarios get --body '{"scenario_id": "your-scenario-uuid"}'
+```
+
+### Create via API
+
+```bash
+curl -X POST https://<your-instance>/v5/scenarios/create \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "scenarios": [{
+      "name": "Academic Integrity Training",
+      "description": "Practice handling a student caught cheating on an exam",
+      "problem_statement": "A student in CS-251 was caught cheating on the midterm exam.",
+      "objectives": [
+        "Apply the academic integrity policy correctly",
+        "Maintain a professional and empathetic tone"
+      ],
+      "persona_ids": ["confused-student-uuid"],
+      "document_ids": ["academic-integrity-policy-uuid"]
+    }]
+  }'
+```
+
+## How Scenarios Connect to the Workflow
+
+Scenarios are **step 2** in the Glow content pipeline:
+
+| Step | Resource | Description |
+|------|----------|-------------|
+| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
+| **2. Assign to Scenarios** | **Scenarios** | **Build training situations and attach personas, documents, and objectives** |
+| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
+| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts and interact with AI in [Chats](/glow/chat/guide) |
+
+## Attaching Personas to Scenarios
+
+![Scenario detail page showing problem statement, linked personas, documents, and objectives](/screenshots/scenarios/detail.png)
+
+Personas are linked to scenarios through a junction relationship. A single scenario can have multiple personas (e.g., an "Upset Student" and a "Professor" in the same training). The scenario determines which persona(s) the learner interacts with.
+
+**Add personas when creating or updating a scenario:**
+
+```bash
+glow scenarios draft --body '{
+  "input_draft_id": "scenario-draft-uuid",
+  "persona_ids": ["confused-student-uuid", "aggressive-student-uuid"]
+}'
+```
+
+**Via API:**
+
+```bash
+curl -X PATCH https://<your-instance>/v5/scenarios/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "input_draft_id": "scenario-draft-uuid",
+    "persona_ids": ["confused-student-uuid", "aggressive-student-uuid"]
+  }'
+```
+
+When filtering scenarios, you can search by which personas they contain:
+
+```bash
+glow scenarios search --body '{"persona_ids": ["confused-student-uuid"]}'
+```
+
+## Attaching Documents and Objectives
+
+![Scenario document attachment showing uploaded documents with preview](/screenshots/scenarios/documents.png)
+
+Documents give the AI context about policies and procedures. Objectives define what the learner should demonstrate.
+
+**Example: FERPA Training scenario**
+
+```bash
+glow scenarios create --body '{
+  "scenarios": [{
+    "name": "FERPA Training",
+    "description": "Practice responding to a FERPA violation where a grade sheet was left visible",
+    "problem_statement": "A grade sheet with student names and scores was left visible on a desk in a shared office. Another student noticed it and reported the issue.",
+    "objectives": [
+      "Identify the FERPA violation",
+      "Explain the correct procedure for handling grade information",
+      "Reassure the reporting student"
+    ],
+    "persona_ids": ["concerned-student-uuid"],
+    "document_ids": ["ferpa-policy-uuid"]
+  }]
+}'
+```
+
+## Working with Parameters
+
+Scenarios supply the parameter values that fill persona `{{placeholders}}`. If a persona's instructions reference `{{class}}` and `{{location}}`, the scenario provides the actual values (e.g., CS-251, Lawson).
+
+When editing a scenario draft, associate parameter fields and their values:
+
+```bash
+glow scenarios draft --body '{
+  "input_draft_id": "scenario-draft-uuid",
+  "parameter_field_ids": ["class-param-uuid", "location-param-uuid", "intensity-param-uuid"]
+}'
+```
+
+This makes the scenario supply concrete values for each parameter when the simulation runs, allowing the same persona to behave differently across scenarios.
+
+## Scenario Types in Practice
+
+The university seed data illustrates two common patterns:
+
+**Structured training scenarios** focus on a specific policy or skill:
+- Academic Integrity Training -- student caught cheating on CS-251 midterm
+- FERPA Training -- grade sheet left visible in shared office
+- Upset Student Training -- student upset about a grade during office hours
+
+**Open practice scenarios** provide general practice with a particular personality type:
+- Confused Practice -- practice with a student who asks many questions
+- Happy Practice -- practice with a positive, encouraging student
+- Passive Practice -- practice with a disengaged, minimal-response student
+- Aggressive Practice -- practice with a confrontational student
+- General Practice -- open-ended practice
+
+## Working with Drafts
+
+Scenarios use the same draft system as other Glow resources. Edit through the draft endpoint and publish when ready.
+
+```bash
+# Create or update a draft
+glow scenarios draft --body '{
+  "name": "Updated FERPA Training",
+  "description": "Updated description with new policy references",
+  "problem_statement": "A grade sheet was left visible...",
+  "objectives": ["Identify the violation", "Apply correct procedure"],
+  "persona_ids": ["concerned-student-uuid"],
+  "document_ids": ["ferpa-policy-uuid"]
+}'
+```
+
+```bash
+# Via API
+curl -X PATCH https://<your-instance>/v5/scenarios/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "name": "Updated FERPA Training",
+    "description": "Updated description with new policy references"
+  }'
+```
+
+**List your drafts:**
+
+```bash
+# CLI
+glow scenarios list
+
+# API
+curl -X POST https://<your-instance>/v5/scenarios/drafts \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token"
+```
+
+## Common Operations
+
+| Task | CLI | API |
+|------|-----|-----|
+| List all scenarios | `glow scenarios search` | `POST /scenarios/search` |
+| Get one scenario | `glow scenarios get --body '{"scenario_id": "..."}'` | `POST /scenarios/get` |
+| Create scenarios | `glow scenarios create --body '{"scenarios": [...]}'` | `POST /scenarios/create` |
+| Update scenarios | `glow scenarios update --body '{"scenarios": [...]}'` | `POST /scenarios/update` |
+| Duplicate a scenario | -- | `POST /scenarios/duplicate` |
+| Delete scenarios | `glow scenarios delete --body '{"scenario_ids": [...]}'` | `POST /scenarios/delete` |
+| Save a draft | `glow scenarios draft --body '{...}'` | `PATCH /scenarios/draft` |
+| List drafts | `glow scenarios list` | `POST /scenarios/drafts` |
+| Export to CSV | `glow scenarios export` | `POST /scenarios/export` |
+| Import from CSV | -- | `POST /scenarios/csv` |
+| Upload media | `glow scenarios image upload` | `POST /scenarios/upload` |
+
+## Related
+
+- [Scenarios API Reference](/glow/scenarios/api) -- full endpoint schemas and field definitions
+- [Scenarios CLI Reference](/glow/scenarios/cli) -- all CLI commands and flags
+- [Personas Guide](/glow/personas/guide) -- creating the AI characters that scenarios use
+- [Simulations Guide](/glow/simulations/guide) -- bundling scenarios into complete training sessions
+- [Attempts Guide](/glow/attempt/guide) -- how learners run through scenarios

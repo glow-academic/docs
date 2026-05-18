@@ -1,5 +1,7 @@
 # Attempt Types
 
+# Attempt Types
+
 ## `AggregatedResults`
 
 Aggregated results for the attempt.

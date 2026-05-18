@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/silence`
 
+# `POST` `/attempt/chat/silence`
+
 Chat Silence
 
 End a voice session for an attempt chat.

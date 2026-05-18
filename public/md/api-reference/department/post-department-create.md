@@ -1,5 +1,7 @@
 # `POST` `/department/create`
 
+# `POST` `/department/create`
+
 Create Department
 
 Create departments using composable infra architecture.

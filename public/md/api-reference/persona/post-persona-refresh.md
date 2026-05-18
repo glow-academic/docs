@@ -1,5 +1,7 @@
 # `POST` `/persona/refresh`
 
+# `POST` `/persona/refresh`
+
 Persona Refresh
 
 Refresh persona materialized views and invalidate caches.

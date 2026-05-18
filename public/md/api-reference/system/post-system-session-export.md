@@ -1,5 +1,7 @@
 # `POST` `/system/session/export`
 
+# `POST` `/system/session/export`
+
 Export Session
 
 Export session data as a clean, denormalized ZIP.

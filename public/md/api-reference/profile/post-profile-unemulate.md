@@ -1,5 +1,7 @@
 # `POST` `/profile/unemulate`
 
+# `POST` `/profile/unemulate`
+
 Unemulate Profile
 
 Exit emulation for a specific target profile.

@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptAssistantHintsEvent`
 
+# `POST` `/stream/AttemptAssistantHintsEvent`
+
 Schema: AttemptAssistantHintsEvent
 
 ## Request Body (`AttemptAssistantHintsEvent`)

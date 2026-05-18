@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateDocumentApiRequest`
 
+# `POST` `/stream/UpdateDocumentApiRequest`
+
 Schema: UpdateDocumentApiRequest
 
 ## Request Body (`UpdateDocumentApiRequest`)

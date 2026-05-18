@@ -1,5 +1,7 @@
 # `POST` `/stream/BenchmarkResponse`
 
+# `POST` `/stream/BenchmarkResponse`
+
 Schema: BenchmarkResponse
 
 ## Request Body (`BenchmarkResponse-Input`)

@@ -1,0 +1,11 @@
+# `glow activity create`
+
+# `glow activity create`
+
+Create Activity logs.
+
+## Usage
+
+```bash
+glow activity create --body '\{...\}'
+```

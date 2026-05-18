@@ -1,0 +1,11 @@
+# `glow scenarios delete`
+
+# `glow scenarios delete`
+
+Delete Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios delete --id <id>
+```

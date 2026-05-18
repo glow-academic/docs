@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptAssistantProgressEvent`
 
+# `POST` `/stream/AttemptAssistantProgressEvent`
+
 Schema: AttemptAssistantProgressEvent
 
 ## Request Body (`AttemptAssistantProgressEvent`)

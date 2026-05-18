@@ -1,5 +1,7 @@
 # `POST` `/agent/generations`
 
+# `POST` `/agent/generations`
+
 Generations Agent
 
 List agent generation groups — composable infra architecture.

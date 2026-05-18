@@ -1,5 +1,7 @@
 # `POST` `/stream/GetSimulationDraftsApiResponse`
 
+# `POST` `/stream/GetSimulationDraftsApiResponse`
+
 Schema: GetSimulationDraftsApiResponse
 
 ## Request Body (`GetSimulationDraftsApiResponse`)

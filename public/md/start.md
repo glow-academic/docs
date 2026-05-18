@@ -1,5 +1,7 @@
 # Glow
 
+# Glow
+
 > **Glow API v2.6.0** — Generated from OpenAPI specification
 
 Glow runs on each customer instance. It powers the web client and CLI for managing personas, agents, sessions, and other artifacts.

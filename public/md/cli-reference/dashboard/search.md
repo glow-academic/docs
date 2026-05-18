@@ -1,0 +1,11 @@
+# `glow dashboard search`
+
+# `glow dashboard search`
+
+Search Dashboard data.
+
+## Usage
+
+```bash
+glow dashboard search
+```

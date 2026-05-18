@@ -1,0 +1,11 @@
+# `glow auths delete`
+
+# `glow auths delete`
+
+Delete Authentication records.
+
+## Usage
+
+```bash
+glow auths delete --id <id>
+```

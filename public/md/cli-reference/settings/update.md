@@ -1,0 +1,11 @@
+# `glow settings update`
+
+# `glow settings update`
+
+Update Instance settings.
+
+## Usage
+
+```bash
+glow settings update --id <id>
+```

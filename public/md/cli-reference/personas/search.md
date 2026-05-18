@@ -1,0 +1,11 @@
+# `glow personas search`
+
+# `glow personas search`
+
+Search AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas search
+```

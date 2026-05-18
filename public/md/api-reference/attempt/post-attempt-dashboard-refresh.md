@@ -1,5 +1,7 @@
 # `POST` `/attempt/dashboard/refresh`
 
+# `POST` `/attempt/dashboard/refresh`
+
 Dashboard Refresh
 
 Refresh dashboard caches (no materialized views).

@@ -1,5 +1,7 @@
 # `POST` `/test/archive`
 
+# `POST` `/test/archive`
+
 Archive Test Artifacts
 
 Archive or unarchive benchmark tests by IDs.

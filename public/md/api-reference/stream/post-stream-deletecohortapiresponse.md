@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteCohortApiResponse`
 
+# `POST` `/stream/DeleteCohortApiResponse`
+
 Schema: DeleteCohortApiResponse
 
 ## Request Body (`DeleteCohortApiResponse`)

@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/refresh`
 
+# `POST` `/attempt/chat/refresh`
+
 Chat Refresh
 
 Refresh chat materialized views and invalidate caches.

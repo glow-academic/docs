@@ -1,0 +1,11 @@
+# `glow record update`
+
+# `glow record update`
+
+Update Records.
+
+## Usage
+
+```bash
+glow record update --id <id>
+```

@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateSettingApiRequest`
 
+# `POST` `/stream/DuplicateSettingApiRequest`
+
 Schema: DuplicateSettingApiRequest
 
 ## Request Body (`DuplicateSettingApiRequest`)

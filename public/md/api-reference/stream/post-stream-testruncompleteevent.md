@@ -1,5 +1,7 @@
 # `POST` `/stream/TestRunCompleteEvent`
 
+# `POST` `/stream/TestRunCompleteEvent`
+
 Schema: TestRunCompleteEvent
 
 ## Request Body (`TestRunCompleteEvent`)

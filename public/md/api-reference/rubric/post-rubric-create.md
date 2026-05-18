@@ -1,5 +1,7 @@
 # `POST` `/rubric/create`
 
+# `POST` `/rubric/create`
+
 Create Rubric
 
 Create rubrics using composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/test/benchmark/export`
 
+# `POST` `/test/benchmark/export`
+
 Export Benchmark
 
 Export all benchmark data as a clean, denormalized ZIP.

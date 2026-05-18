@@ -1,0 +1,11 @@
+# `glow invocation create`
+
+# `glow invocation create`
+
+Create AI invocation records.
+
+## Usage
+
+```bash
+glow invocation create --body '\{...\}'
+```

@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateDocumentApiResponse`
 
+# `POST` `/stream/CreateDocumentApiResponse`
+
 Schema: CreateDocumentApiResponse
 
 ## Request Body (`CreateDocumentApiResponse-Input`)

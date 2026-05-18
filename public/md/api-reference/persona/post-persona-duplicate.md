@@ -1,5 +1,7 @@
 # `POST` `/persona/duplicate`
 
+# `POST` `/persona/duplicate`
+
 Duplicate Persona
 
 Duplicate a persona — composable infra architecture.

@@ -1,0 +1,11 @@
+# `glow cohorts get`
+
+# `glow cohorts get`
+
+Get User cohorts.
+
+## Usage
+
+```bash
+glow cohorts get --id <id>
+```

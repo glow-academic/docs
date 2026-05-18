@@ -1,5 +1,7 @@
 # `POST` `/attempt/refresh`
 
+# `POST` `/attempt/refresh`
+
 Attempt Refresh
 
 Refresh attempt materialized views and invalidate caches.

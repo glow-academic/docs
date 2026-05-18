@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptGradePayload`
 
+# `POST` `/stream/AttemptGradePayload`
+
 Schema: AttemptGradePayload
 
 ## Request Body (`AttemptGradePayload`)

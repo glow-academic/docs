@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateParameterApiRequest`
 
+# `POST` `/stream/DuplicateParameterApiRequest`
+
 Schema: DuplicateParameterApiRequest
 
 ## Request Body (`DuplicateParameterApiRequest`)

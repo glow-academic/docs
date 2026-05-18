@@ -1,5 +1,7 @@
 # `POST` `/rubric/delete`
 
+# `POST` `/rubric/delete`
+
 Delete Rubric
 
 Bulk delete rubrics — composable infra architecture.

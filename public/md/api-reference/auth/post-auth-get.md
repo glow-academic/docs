@@ -1,5 +1,7 @@
 # `POST` `/auth/get`
 
+# `POST` `/auth/get`
+
 Get Auth
 
 Get auth information using the canonical shared auth operation.

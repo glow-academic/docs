@@ -1,5 +1,7 @@
 # `POST` `/attempt/dashboard/search`
 
+# `POST` `/attempt/dashboard/search`
+
 Search Dashboard
 
 Get dashboard attempt history (paginated).

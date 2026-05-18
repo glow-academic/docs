@@ -1,5 +1,7 @@
 # `POST` `/stream/PricingResponse`
 
+# `POST` `/stream/PricingResponse`
+
 Schema: PricingResponse
 
 ## Request Body (`PricingResponse-Input`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteScenarioApiRequest`
 
+# `POST` `/stream/DeleteScenarioApiRequest`
+
 Schema: DeleteScenarioApiRequest
 
 ## Request Body (`DeleteScenarioApiRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateSettingApiRequest`
 
+# `POST` `/stream/UpdateSettingApiRequest`
+
 Schema: UpdateSettingApiRequest
 
 ## Request Body (`UpdateSettingApiRequest`)

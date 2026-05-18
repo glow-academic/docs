@@ -1,5 +1,7 @@
 # `POST` `/stream/PatchFieldDraftApiResponse`
 
+# `POST` `/stream/PatchFieldDraftApiResponse`
+
 Schema: PatchFieldDraftApiResponse
 
 ## Request Body (`PatchFieldDraftApiResponse`)

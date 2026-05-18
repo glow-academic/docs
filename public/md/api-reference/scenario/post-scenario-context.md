@@ -1,5 +1,7 @@
 # `POST` `/scenario/context`
 
+# `POST` `/scenario/context`
+
 Get Scenario Context
 
 Get page context for the scenario artifact.

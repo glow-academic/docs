@@ -1,0 +1,11 @@
+# `glow simulations update`
+
+# `glow simulations update`
+
+Update Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations update --id <id>
+```

@@ -1,5 +1,7 @@
 # `POST` `/stream/ActivityResponse`
 
+# `POST` `/stream/ActivityResponse`
+
 Schema: ActivityResponse
 
 ## Request Body (`ActivityResponse-Input`)

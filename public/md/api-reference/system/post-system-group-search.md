@@ -1,5 +1,7 @@
 # `POST` `/system/group/search`
 
+# `POST` `/system/group/search`
+
 Search Groups
 
 Search groups — composable infra architecture.

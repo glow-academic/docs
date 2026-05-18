@@ -1,5 +1,7 @@
 # `POST` `/eval/delete`
 
+# `POST` `/eval/delete`
+
 Delete Eval
 
 Bulk delete evals — composable infra architecture.

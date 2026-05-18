@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptChatStartedEvent`
 
+# `POST` `/stream/AttemptChatStartedEvent`
+
 Schema: AttemptChatStartedEvent
 
 ## Request Body (`AttemptChatStartedEvent`)

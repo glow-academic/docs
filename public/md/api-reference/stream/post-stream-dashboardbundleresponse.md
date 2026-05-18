@@ -1,5 +1,7 @@
 # `POST` `/stream/DashboardBundleResponse`
 
+# `POST` `/stream/DashboardBundleResponse`
+
 Schema: DashboardBundleResponse
 
 ## Request Body (`DashboardBundleResponse-Input`)

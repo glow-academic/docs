@@ -1,5 +1,7 @@
 # `POST` `/system/pricing/export`
 
+# `POST` `/system/pricing/export`
+
 Export Pricing
 
 Export all pricing data as a clean, denormalized ZIP.

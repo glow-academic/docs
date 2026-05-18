@@ -1,5 +1,7 @@
 # `POST` `/document/text/upload`
 
+# `POST` `/document/text/upload`
+
 Upload Text
 
 Upload a text file for later use in documents.

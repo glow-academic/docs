@@ -1,0 +1,11 @@
+# `glow auths get`
+
+# `glow auths get`
+
+Get Authentication records.
+
+## Usage
+
+```bash
+glow auths get --id <id>
+```

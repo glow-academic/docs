@@ -1,5 +1,7 @@
 # `POST` `/provider/delete`
 
+# `POST` `/provider/delete`
+
 Delete Provider
 
 Bulk delete providers — composable infra architecture.

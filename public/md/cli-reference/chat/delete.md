@@ -1,0 +1,11 @@
+# `glow chat delete`
+
+# `glow chat delete`
+
+Delete Chat sessions.
+
+## Usage
+
+```bash
+glow chat delete --id <id>
+```

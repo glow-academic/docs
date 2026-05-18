@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptJoinPayload`
 
+# `POST` `/stream/AttemptJoinPayload`
+
 Schema: AttemptJoinPayload
 
 ## Request Body (`AttemptJoinPayload`)

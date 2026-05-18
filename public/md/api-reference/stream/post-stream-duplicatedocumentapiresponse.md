@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateDocumentApiResponse`
 
+# `POST` `/stream/DuplicateDocumentApiResponse`
+
 Schema: DuplicateDocumentApiResponse
 
 ## Request Body (`DuplicateDocumentApiResponse`)

@@ -1,5 +1,7 @@
 # `POST` `/simulation/refresh`
 
+# `POST` `/simulation/refresh`
+
 Simulation Refresh
 
 Refresh simulation materialized views and invalidate caches.

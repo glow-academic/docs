@@ -1,5 +1,7 @@
 # `POST` `/cohort/create`
 
+# `POST` `/cohort/create`
+
 Create Cohort
 
 Create cohorts using composable infra architecture.

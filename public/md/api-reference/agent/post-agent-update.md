@@ -1,5 +1,7 @@
 # `POST` `/agent/update`
 
+# `POST` `/agent/update`
+
 Update Agent
 
 Update agents using composable infra architecture.

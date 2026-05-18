@@ -1,5 +1,7 @@
 # `POST` `/setting/generations`
 
+# `POST` `/setting/generations`
+
 Generations Setting
 
 List setting generation groups — composable infra architecture.

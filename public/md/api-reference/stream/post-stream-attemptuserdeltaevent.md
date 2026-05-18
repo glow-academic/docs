@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptUserDeltaEvent`
 
+# `POST` `/stream/AttemptUserDeltaEvent`
+
 Schema: AttemptUserDeltaEvent
 
 ## Request Body (`AttemptUserDeltaEvent`)

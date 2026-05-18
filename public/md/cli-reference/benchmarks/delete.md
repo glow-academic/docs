@@ -1,0 +1,11 @@
+# `glow benchmarks delete`
+
+# `glow benchmarks delete`
+
+Delete Performance benchmarks.
+
+## Usage
+
+```bash
+glow benchmarks delete --id <id>
+```

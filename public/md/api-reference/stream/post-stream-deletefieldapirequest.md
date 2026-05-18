@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteFieldApiRequest`
 
+# `POST` `/stream/DeleteFieldApiRequest`
+
 Schema: DeleteFieldApiRequest
 
 ## Request Body (`DeleteFieldApiRequest`)

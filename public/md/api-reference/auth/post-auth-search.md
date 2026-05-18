@@ -1,5 +1,7 @@
 # `POST` `/auth/search`
 
+# `POST` `/auth/search`
+
 Search Auth
 
 Search auths — composable infra architecture.

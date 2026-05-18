@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateAgentApiRequest`
 
+# `POST` `/stream/DuplicateAgentApiRequest`
+
 Schema: DuplicateAgentApiRequest
 
 ## Request Body (`DuplicateAgentApiRequest`)

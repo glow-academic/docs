@@ -1,5 +1,7 @@
 # `POST` `/stream/GenerationErrorEvent`
 
+# `POST` `/stream/GenerationErrorEvent`
+
 Schema: GenerationErrorEvent
 
 ## Request Body (`GenerationErrorEvent`)

@@ -1,5 +1,7 @@
 # `POST` `/profile/context`
 
+# `POST` `/profile/context`
+
 Get Profile Context
 
 Get page context for the profile artifact.

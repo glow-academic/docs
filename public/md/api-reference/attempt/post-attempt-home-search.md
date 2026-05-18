@@ -1,5 +1,7 @@
 # `POST` `/attempt/home/search`
 
+# `POST` `/attempt/home/search`
+
 Search Home
 
 Get paginated attempt history for home.

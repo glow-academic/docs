@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteProfileApiRequest`
 
+# `POST` `/stream/DeleteProfileApiRequest`
+
 Schema: DeleteProfileApiRequest
 
 ## Request Body (`DeleteProfileApiRequest`)

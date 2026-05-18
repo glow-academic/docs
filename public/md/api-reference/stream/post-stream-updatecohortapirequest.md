@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateCohortApiRequest`
 
+# `POST` `/stream/UpdateCohortApiRequest`
+
 Schema: UpdateCohortApiRequest
 
 ## Request Body (`UpdateCohortApiRequest`)

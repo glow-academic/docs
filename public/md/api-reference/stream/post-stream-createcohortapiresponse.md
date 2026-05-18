@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateCohortApiResponse`
 
+# `POST` `/stream/CreateCohortApiResponse`
+
 Schema: CreateCohortApiResponse
 
 ## Request Body (`CreateCohortApiResponse-Input`)

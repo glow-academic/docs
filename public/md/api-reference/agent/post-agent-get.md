@@ -1,5 +1,7 @@
 # `POST` `/agent/get`
 
+# `POST` `/agent/get`
+
 Get Agent
 
 Get agent information using the canonical shared agent operation.

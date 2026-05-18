@@ -1,5 +1,7 @@
 # `POST` `/auth/update`
 
+# `POST` `/auth/update`
+
 Update Auth
 
 Update auths using composable infra architecture.

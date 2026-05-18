@@ -1,5 +1,7 @@
 # `POST` `/agent/search`
 
+# `POST` `/agent/search`
+
 Search Agent
 
 Search agents — composable infra architecture.

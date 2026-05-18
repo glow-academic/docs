@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptGradeCompleteEvent`
 
+# `POST` `/stream/AttemptGradeCompleteEvent`
+
 Schema: AttemptGradeCompleteEvent
 
 ## Request Body (`AttemptGradeCompleteEvent`)

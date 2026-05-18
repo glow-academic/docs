@@ -1,5 +1,7 @@
 # `glow disconnect`
 
+# `glow disconnect`
+
 Destroy a stream session
 
 ## Usage

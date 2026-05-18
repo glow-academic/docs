@@ -1,5 +1,7 @@
 # `GET` `/stream/`
 
+# `GET` `/stream/`
+
 Stream Events
 
 Stream artifact events via SSE, scoped to the session's joined entities.

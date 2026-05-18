@@ -1,5 +1,7 @@
 # `POST` `/attempt/archive`
 
+# `POST` `/attempt/archive`
+
 Archive Attempts
 
 Bulk archive or unarchive attempts (simulation or benchmark).

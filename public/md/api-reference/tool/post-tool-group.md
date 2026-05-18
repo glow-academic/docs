@@ -1,5 +1,7 @@
 # `POST` `/tool/group`
 
+# `POST` `/tool/group`
+
 Group Tool
 
 Resolve or create a tool group with optional naming.

@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportRubricApiResponse`
 
+# `POST` `/stream/ExportRubricApiResponse`
+
 Schema: ExportRubricApiResponse
 
 ## Request Body (`ExportRubricApiResponse`)

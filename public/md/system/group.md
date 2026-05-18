@@ -1,0 +1,136 @@
+# Group
+
+# Group
+
+Group provides detailed information about an AI generation group -- the collection of model calls (runs) and messages produced during a training interaction. This is the deepest level of inspection for understanding exactly what the AI generated and how it was used.
+
+## What is Group?
+
+When a TA interacts with a student persona simulation, Glow creates a **group** that tracks all AI model runs and messages in that interaction. A group contains:
+
+- Multiple **runs**, each representing a single AI model invocation with input/output token counts and cost
+- **Messages** within each run, organized by role (system, user, assistant) with support for text, audio, image, video, and file uploads
+- **Tool calls** made during the interaction
+- Metadata about which **models**, **agents**, and **profiles** participated
+
+Groups are essential for debugging AI behavior, auditing training interactions for academic integrity, reviewing FERPA-sensitive conversations, and understanding token consumption patterns.
+
+## Quick Start
+
+### CLI
+
+```bash
+# Get group detail with all runs and messages
+glow group get --body '{"group_id": "group-uuid"}'
+
+# Get group with message pagination
+glow group get --body '{"group_id": "group-uuid", "message_limit": 50, "message_offset": 0}'
+
+# Export group data as a ZIP
+glow group export --body '{"group_id": "group-uuid"}'
+```
+
+### API
+
+```bash
+# Get group detail
+curl -X POST https://<your-instance>/v5/group/get \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "group_id": "group-uuid",
+    "message_limit": 100,
+    "message_offset": 0
+  }'
+
+# Export group data
+curl -X POST https://<your-instance>/v5/group/export \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"group_id": "group-uuid"}'
+```
+
+## Request Parameters
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | UUID of the group to fetch |
+| `message_limit` | `integer` | No | Maximum number of messages to return |
+| `message_offset` | `integer` | No | Offset for message pagination |
+
+## Understanding the Group Detail Response
+
+The `/group/get` response includes:
+
+- **`group_exists`** -- Whether the group was found.
+- **`actor_name`** -- Display name of the current user.
+- **`group_name`** -- Display name of the group.
+- **`total_message_count`** -- Total messages in the group (for pagination).
+
+### Runs
+
+The **`runs`** array contains `GroupDetailRunWithMessages` objects:
+
+Each run has:
+- **`run`** -- Run metadata:
+  - `id` -- UUID of the run
+  - `created_at` -- Timestamp
+  - `input_tokens`, `output_tokens`, `cached_input_tokens` -- Token counts
+  - `cost` -- Dollar cost of this run
+  - `model_id` -- Which AI model was used
+  - `agent_id` -- Which agent processed the run
+  - `profile_id` -- Which user triggered the run
+- **`messages`** -- Array of `GroupDetailMessageItem` objects:
+  - `id` -- UUID
+  - `role` -- Message role (system, user, assistant)
+  - `text_upload_ids` -- UUIDs for text content
+  - `audio_upload_ids`, `image_upload_ids`, `video_upload_ids`, `file_upload_ids` -- Media upload UUIDs
+  - `calls` -- Tool/function calls made, each with `id`, `template_name`, `file_path`, `created_at`
+- **`previous_context_start_index`** -- Where previous context starts in the message array (for understanding context windows)
+
+### Resources
+
+- **`models`** -- Models used, each with `model_id` and `name`.
+- **`agents`** -- Agents used, each with `agent_id` and `name`.
+- **`profiles`** -- Profiles involved, each with `profile_id` and `name`.
+
+## Downloading Media
+
+Messages may reference uploaded media via their `*_upload_ids` fields. To download the actual content:
+
+```
+GET /group/download/{upload_id}
+```
+
+This endpoint supports range requests for large files.
+
+## AI Generation Flow
+
+Groups are created as part of the AI generation flow, which produces stream events:
+
+1. **`GenerationProgressEvent`** -- Reports `completed_resources` / `total_resources` and `percentage`.
+2. **`GenerationCompleteEvent`** -- Indicates success or failure for an `artifact_type`.
+3. **`GenerationSavedEvent`** -- Confirms the artifact was saved.
+4. **`GenerationErrorEvent`** -- Reports errors with `message` details.
+5. **`GenerationMediaProgressEvent`** / **`GenerationMediaCompleteEvent`** -- Track image/video generation.
+
+Each event references the `group_id` and `run_id`.
+
+## Common Operations
+
+| Task | CLI | API Endpoint |
+|---|---|---|
+| Get group detail | `glow group get` | `POST /group/get` |
+| Export group data | `glow group export` | `POST /group/export` |
+| Download media | -- | `GET /group/download/{upload_id}` |
+| Refresh caches | -- | `POST /group/refresh` |
+
+## Related
+
+- [Group API Reference](/glow/group/api)
+- [Group CLI Reference](/glow/group/cli)
+- [Session Guide](/glow/session/guide) -- session-level view containing groups
+- [Invocation Guide](/glow/invocation/guide) -- AI model call tracking
+- [Pricing Guide](/glow/pricing/guide) -- cost tracking for groups

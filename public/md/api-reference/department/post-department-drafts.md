@@ -1,5 +1,7 @@
 # `POST` `/department/drafts`
 
+# `POST` `/department/drafts`
+
 Get Department Drafts
 
 List department drafts owned by the current profile.

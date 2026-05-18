@@ -1,5 +1,7 @@
 # `POST` `/document/search`
 
+# `POST` `/document/search`
+
 Search Document
 
 Search documents — composable infra architecture.

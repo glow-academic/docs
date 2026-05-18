@@ -1,5 +1,7 @@
 # `POST` `/department/duplicate`
 
+# `POST` `/department/duplicate`
+
 Duplicate Department
 
 Duplicate a department — composable infra architecture.

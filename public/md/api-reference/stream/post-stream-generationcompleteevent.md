@@ -1,5 +1,7 @@
 # `POST` `/stream/GenerationCompleteEvent`
 
+# `POST` `/stream/GenerationCompleteEvent`
+
 Schema: GenerationCompleteEvent
 
 ## Request Body (`GenerationCompleteEvent`)

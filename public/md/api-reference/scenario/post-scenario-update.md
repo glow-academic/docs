@@ -1,5 +1,7 @@
 # `POST` `/scenario/update`
 
+# `POST` `/scenario/update`
+
 Update Scenario
 
 Update scenarios using composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/stream/CreateAuthApiResponse`
 
+# `POST` `/stream/CreateAuthApiResponse`
+
 Schema: CreateAuthApiResponse
 
 ## Request Body (`CreateAuthApiResponse-Input`)

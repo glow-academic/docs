@@ -1,5 +1,7 @@
 # `POST` `/rubric/drafts`
 
+# `POST` `/rubric/drafts`
+
 Get Rubric Drafts
 
 List rubric drafts owned by the current profile.

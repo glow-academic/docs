@@ -1,5 +1,7 @@
 # `POST` `/stream/GetAuthDraftsApiResponse`
 
+# `POST` `/stream/GetAuthDraftsApiResponse`
+
 Schema: GetAuthDraftsApiResponse
 
 ## Request Body (`GetAuthDraftsApiResponse`)

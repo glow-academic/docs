@@ -1,5 +1,7 @@
 # `POST` `/attempt/text/download`
 
+# `POST` `/attempt/text/download`
+
 Download Text
 
 Download a text file by text entry ID.

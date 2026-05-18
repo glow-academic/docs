@@ -1,5 +1,7 @@
 # `POST` `/stream/TestRunStartEvent`
 
+# `POST` `/stream/TestRunStartEvent`
+
 Schema: TestRunStartEvent
 
 ## Request Body (`TestRunStartEvent`)

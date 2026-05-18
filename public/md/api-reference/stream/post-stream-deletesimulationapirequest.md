@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteSimulationApiRequest`
 
+# `POST` `/stream/DeleteSimulationApiRequest`
+
 Schema: DeleteSimulationApiRequest
 
 ## Request Body (`DeleteSimulationApiRequest`)

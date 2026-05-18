@@ -1,5 +1,7 @@
 # `POST` `/test/stop`
 
+# `POST` `/test/stop`
+
 Stop Test
 
 Stop current test execution.

@@ -1,5 +1,7 @@
 # `POST` `/parameter/duplicate`
 
+# `POST` `/parameter/duplicate`
+
 Duplicate Parameter
 
 Duplicate a parameter — composable infra architecture.

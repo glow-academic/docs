@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportAgentApiResponse`
 
+# `POST` `/stream/ExportAgentApiResponse`
+
 Schema: ExportAgentApiResponse
 
 ## Request Body (`ExportAgentApiResponse`)

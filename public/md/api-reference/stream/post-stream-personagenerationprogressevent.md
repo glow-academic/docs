@@ -1,5 +1,7 @@
 # `POST` `/stream/PersonaGenerationProgressEvent`
 
+# `POST` `/stream/PersonaGenerationProgressEvent`
+
 Schema: PersonaGenerationProgressEvent
 
 ## Request Body (`PersonaGenerationProgressEvent`)

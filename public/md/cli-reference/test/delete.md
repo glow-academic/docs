@@ -1,0 +1,11 @@
+# `glow test delete`
+
+# `glow test delete`
+
+Delete Test sessions.
+
+## Usage
+
+```bash
+glow test delete --id <id>
+```

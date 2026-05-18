@@ -1,5 +1,7 @@
 # `POST` `/simulation/problem`
 
+# `POST` `/simulation/problem`
+
 Problem Simulation
 
 Report a simulation problem — composable infra architecture.

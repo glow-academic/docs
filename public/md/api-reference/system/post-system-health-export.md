@@ -1,5 +1,7 @@
 # `POST` `/system/health/export`
 
+# `POST` `/system/health/export`
+
 Export Health
 
 Export all health data as a clean, denormalized ZIP.

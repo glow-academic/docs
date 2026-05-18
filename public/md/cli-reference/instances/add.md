@@ -1,5 +1,7 @@
 # `glow instances add`
 
+# `glow instances add`
+
 Add a new instance
 
 ## Usage

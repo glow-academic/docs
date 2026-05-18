@@ -1,0 +1,11 @@
+# `glow pricing delete`
+
+# `glow pricing delete`
+
+Delete Pricing information.
+
+## Usage
+
+```bash
+glow pricing delete --id <id>
+```

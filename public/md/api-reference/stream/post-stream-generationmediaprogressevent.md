@@ -1,5 +1,7 @@
 # `POST` `/stream/GenerationMediaProgressEvent`
 
+# `POST` `/stream/GenerationMediaProgressEvent`
+
 Schema: GenerationMediaProgressEvent
 
 ## Request Body (`GenerationMediaProgressEvent`)

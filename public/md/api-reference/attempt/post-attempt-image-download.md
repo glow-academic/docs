@@ -1,5 +1,7 @@
 # `POST` `/attempt/image/download`
 
+# `POST` `/attempt/image/download`
+
 Download Image
 
 Download an image file by image entry ID.

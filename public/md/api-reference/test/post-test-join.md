@@ -1,5 +1,7 @@
 # `POST` `/test/join`
 
+# `POST` `/test/join`
+
 Test Join
 
 Join a test invocation room for real-time updates.

@@ -1,5 +1,7 @@
 # `POST` `/stream/HealthRequest`
 
+# `POST` `/stream/HealthRequest`
+
 Schema: HealthRequest
 
 ## Request Body (`HealthRequest`)

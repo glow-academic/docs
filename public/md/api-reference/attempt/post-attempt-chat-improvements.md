@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/improvements`
 
+# `POST` `/attempt/chat/improvements`
+
 Chat Improvements
 
 Create improvement items (with optional inline replacements) for the latest grade.

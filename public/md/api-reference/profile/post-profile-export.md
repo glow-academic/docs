@@ -1,5 +1,7 @@
 # `POST` `/profile/export`
 
+# `POST` `/profile/export`
+
 Export Profiles
 
 Export all profiles as a clean, denormalized CSV.

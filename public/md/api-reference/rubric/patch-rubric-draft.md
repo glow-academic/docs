@@ -1,5 +1,7 @@
 # `PATCH` `/rubric/draft`
 
+# `PATCH` `/rubric/draft`
+
 Patch Rubric Draft
 
 Patch rubric draft — composable infra architecture.

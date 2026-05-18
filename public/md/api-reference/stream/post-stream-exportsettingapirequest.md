@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportSettingApiRequest`
 
+# `POST` `/stream/ExportSettingApiRequest`
+
 Schema: ExportSettingApiRequest
 
 ## Request Body (`ExportSettingApiRequest`)

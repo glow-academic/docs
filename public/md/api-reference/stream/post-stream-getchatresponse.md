@@ -1,5 +1,7 @@
 # `POST` `/stream/GetChatResponse`
 
+# `POST` `/stream/GetChatResponse`
+
 Schema: GetChatResponse
 
 ## Request Body (`GetChatResponse`)

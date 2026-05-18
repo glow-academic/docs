@@ -1,5 +1,7 @@
 # `POST` `/docs-mcp`
 
+# `POST` `/docs-mcp`
+
 Docs Mcp Proxy
 
 Forward an MCP request to the Glow docs sibling.

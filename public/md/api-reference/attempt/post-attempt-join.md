@@ -1,5 +1,7 @@
 # `POST` `/attempt/join`
 
+# `POST` `/attempt/join`
+
 Attempt Join
 
 Subscribe to events for a group.

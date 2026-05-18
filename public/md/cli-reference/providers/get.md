@@ -1,0 +1,11 @@
+# `glow providers get`
+
+# `glow providers get`
+
+Get AI provider integrations.
+
+## Usage
+
+```bash
+glow providers get --id <id>
+```

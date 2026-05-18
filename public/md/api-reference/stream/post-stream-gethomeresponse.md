@@ -1,5 +1,7 @@
 # `POST` `/stream/GetHomeResponse`
 
+# `POST` `/stream/GetHomeResponse`
+
 Schema: GetHomeResponse
 
 ## Request Body (`GetHomeResponse-Input`)

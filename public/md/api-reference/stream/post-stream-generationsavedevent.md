@@ -1,5 +1,7 @@
 # `POST` `/stream/GenerationSavedEvent`
 
+# `POST` `/stream/GenerationSavedEvent`
+
 Schema: GenerationSavedEvent
 
 ## Request Body (`GenerationSavedEvent`)

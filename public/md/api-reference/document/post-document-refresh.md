@@ -1,5 +1,7 @@
 # `POST` `/document/refresh`
 
+# `POST` `/document/refresh`
+
 Document Refresh
 
 Refresh document materialized views and invalidate caches.

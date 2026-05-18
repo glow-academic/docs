@@ -1,5 +1,7 @@
 # `POST` `/attempt/practice/search`
 
+# `POST` `/attempt/practice/search`
+
 Search Practice
 
 Get paginated attempt history for practice.

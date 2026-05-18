@@ -1,5 +1,7 @@
 # `POST` `/attempt/practice/refresh`
 
+# `POST` `/attempt/practice/refresh`
+
 Practice Refresh
 
 Refresh practice materialized views and invalidate caches.

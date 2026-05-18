@@ -1,5 +1,7 @@
 # `POST` `/stream/GetModelApiResponse`
 
+# `POST` `/stream/GetModelApiResponse`
+
 Schema: GetModelApiResponse
 
 ## Request Body (`GetModelApiResponse`)

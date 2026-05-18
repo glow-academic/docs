@@ -1,5 +1,7 @@
 # `POST` `/profile/delete`
 
+# `POST` `/profile/delete`
+
 Delete Profile
 
 Bulk delete profiles — composable infra architecture.

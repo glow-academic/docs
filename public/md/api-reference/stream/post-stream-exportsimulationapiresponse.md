@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportSimulationApiResponse`
 
+# `POST` `/stream/ExportSimulationApiResponse`
+
 Schema: ExportSimulationApiResponse
 
 ## Request Body (`ExportSimulationApiResponse`)

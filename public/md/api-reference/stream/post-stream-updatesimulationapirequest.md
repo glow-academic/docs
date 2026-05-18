@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateSimulationApiRequest`
 
+# `POST` `/stream/UpdateSimulationApiRequest`
+
 Schema: UpdateSimulationApiRequest
 
 ## Request Body (`UpdateSimulationApiRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateToolApiResponse`
 
+# `POST` `/stream/UpdateToolApiResponse`
+
 Schema: UpdateToolApiResponse
 
 ## Request Body (`UpdateToolApiResponse-Input`)

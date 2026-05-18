@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/hints`
 
+# `POST` `/attempt/chat/hints`
+
 Chat Hints
 
 Create hint items for messages in a chat.

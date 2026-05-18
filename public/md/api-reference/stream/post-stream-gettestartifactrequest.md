@@ -1,5 +1,7 @@
 # `POST` `/stream/GetTestArtifactRequest`
 
+# `POST` `/stream/GetTestArtifactRequest`
+
 Schema: GetTestArtifactRequest
 
 ## Request Body (`GetTestArtifactRequest`)

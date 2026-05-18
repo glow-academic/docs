@@ -1,5 +1,7 @@
 # `POST` `/provider/group`
 
+# `POST` `/provider/group`
+
 Group Provider
 
 Resolve or create a provider group with optional naming.

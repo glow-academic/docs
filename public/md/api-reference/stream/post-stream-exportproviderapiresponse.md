@@ -1,5 +1,7 @@
 # `POST` `/stream/ExportProviderApiResponse`
 
+# `POST` `/stream/ExportProviderApiResponse`
+
 Schema: ExportProviderApiResponse
 
 ## Request Body (`ExportProviderApiResponse`)

@@ -1,0 +1,11 @@
+# `glow departments delete`
+
+# `glow departments delete`
+
+Delete Organizational departments.
+
+## Usage
+
+```bash
+glow departments delete --id <id>
+```

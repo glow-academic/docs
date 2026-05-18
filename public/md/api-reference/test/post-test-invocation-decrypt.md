@@ -1,5 +1,7 @@
 # `POST` `/test/invocation/decrypt`
 
+# `POST` `/test/invocation/decrypt`
+
 Decrypt Invocation Key
 
 Decrypt a key scoped to an invocation entry.

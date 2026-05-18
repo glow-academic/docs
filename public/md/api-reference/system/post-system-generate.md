@@ -1,5 +1,7 @@
 # `POST` `/system/generate`
 
+# `POST` `/system/generate`
+
 Generate System
 
 Trigger system generation. Returns immediately; progress via events.

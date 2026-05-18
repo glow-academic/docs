@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/audio`
 
+# `POST` `/attempt/chat/audio`
+
 Chat Audio
 
 Attach an audios_id to an attempt chat message.

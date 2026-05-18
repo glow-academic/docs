@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateScenarioApiRequest`
 
+# `POST` `/stream/DuplicateScenarioApiRequest`
+
 Schema: DuplicateScenarioApiRequest
 
 ## Request Body (`DuplicateScenarioApiRequest`)

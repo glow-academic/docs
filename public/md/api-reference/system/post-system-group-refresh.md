@@ -1,5 +1,7 @@
 # `POST` `/system/group/refresh`
 
+# `POST` `/system/group/refresh`
+
 Group Refresh
 
 Refresh group materialized views and invalidate caches.

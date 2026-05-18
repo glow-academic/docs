@@ -1,5 +1,7 @@
 # `POST` `/model/problem`
 
+# `POST` `/model/problem`
+
 Problem Model
 
 Report a model problem — composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/attempt/leave`
 
+# `POST` `/attempt/leave`
+
 Attempt Leave
 
 Unsubscribe from events for a group.

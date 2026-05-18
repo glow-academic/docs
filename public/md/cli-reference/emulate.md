@@ -1,5 +1,7 @@
 # `glow emulate`
 
+# `glow emulate`
+
 Emulate another user profile
 
 ## Usage

@@ -1,5 +1,7 @@
 # `POST` `/test/benchmark/refresh`
 
+# `POST` `/test/benchmark/refresh`
+
 Benchmark Refresh
 
 Refresh benchmark materialized views and invalidate caches.

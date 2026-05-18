@@ -1,5 +1,7 @@
 # `POST` `/stream/GetParameterApiResponse`
 
+# `POST` `/stream/GetParameterApiResponse`
+
 Schema: GetParameterApiResponse
 
 ## Request Body (`GetParameterApiResponse`)

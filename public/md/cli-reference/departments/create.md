@@ -1,0 +1,11 @@
+# `glow departments create`
+
+# `glow departments create`
+
+Create Organizational departments.
+
+## Usage
+
+```bash
+glow departments create --body '\{...\}'
+```

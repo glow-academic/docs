@@ -1,5 +1,7 @@
 # `POST` `/stream/GetSuiteResponse`
 
+# `POST` `/stream/GetSuiteResponse`
+
 Schema: GetSuiteResponse
 
 ## Request Body (`GetSuiteResponse`)

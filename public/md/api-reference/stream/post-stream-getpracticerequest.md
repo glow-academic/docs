@@ -1,5 +1,7 @@
 # `POST` `/stream/GetPracticeRequest`
 
+# `POST` `/stream/GetPracticeRequest`
+
 Schema: GetPracticeRequest
 
 ## Request Body (`GetPracticeRequest`)

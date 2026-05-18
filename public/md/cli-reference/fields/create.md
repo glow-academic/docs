@@ -1,0 +1,11 @@
+# `glow fields create`
+
+# `glow fields create`
+
+Create Custom fields.
+
+## Usage
+
+```bash
+glow fields create --body '\{...\}'
+```

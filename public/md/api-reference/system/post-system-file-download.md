@@ -1,5 +1,7 @@
 # `POST` `/system/file/download`
 
+# `POST` `/system/file/download`
+
 Download File
 
 Download a file by file resource ID.

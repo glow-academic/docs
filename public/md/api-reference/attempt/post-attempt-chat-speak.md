@@ -1,5 +1,7 @@
 # `POST` `/attempt/chat/speak`
 
+# `POST` `/attempt/chat/speak`
+
 Chat Speak
 
 Push audio bytes into a conversation's inbound buffer.

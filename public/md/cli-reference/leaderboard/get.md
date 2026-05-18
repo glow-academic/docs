@@ -1,0 +1,11 @@
+# `glow leaderboard get`
+
+# `glow leaderboard get`
+
+Get Leaderboard data.
+
+## Usage
+
+```bash
+glow leaderboard get --id <id>
+```

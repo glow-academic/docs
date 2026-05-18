@@ -1,5 +1,7 @@
 # `POST` `/system/group/name`
 
+# `POST` `/system/group/name`
+
 Name Group
 
 Set or update a group's name.

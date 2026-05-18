@@ -1,5 +1,7 @@
 # `POST` `/stream/GetAgentApiRequest`
 
+# `POST` `/stream/GetAgentApiRequest`
+
 Schema: GetAgentApiRequest
 
 ## Request Body (`GetAgentApiRequest`)

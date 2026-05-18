@@ -1,5 +1,7 @@
 # `POST` `/agent/problem`
 
+# `POST` `/agent/problem`
+
 Problem Agent
 
 Report an agent problem — composable infra architecture.

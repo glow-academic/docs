@@ -1,5 +1,7 @@
 # `POST` `/stream/LeaderboardRequest`
 
+# `POST` `/stream/LeaderboardRequest`
+
 Schema: LeaderboardRequest
 
 ## Request Body (`LeaderboardRequest`)

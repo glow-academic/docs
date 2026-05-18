@@ -1,5 +1,7 @@
 # `POST` `/model/create`
 
+# `POST` `/model/create`
+
 Create Model
 
 Create models using composable infra architecture.

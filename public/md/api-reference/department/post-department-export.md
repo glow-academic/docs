@@ -1,5 +1,7 @@
 # `POST` `/department/export`
 
+# `POST` `/department/export`
+
 Export Departments
 
 Export all departments as a clean, denormalized CSV.

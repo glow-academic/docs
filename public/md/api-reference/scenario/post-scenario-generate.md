@@ -1,5 +1,7 @@
 # `POST` `/scenario/generate`
 
+# `POST` `/scenario/generate`
+
 Generate Scenario
 
 Trigger scenario generation. Returns immediately; progress via events.

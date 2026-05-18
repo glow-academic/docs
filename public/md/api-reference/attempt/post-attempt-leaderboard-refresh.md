@@ -1,5 +1,7 @@
 # `POST` `/attempt/leaderboard/refresh`
 
+# `POST` `/attempt/leaderboard/refresh`
+
 Leaderboard Refresh
 
 Refresh leaderboard caches.

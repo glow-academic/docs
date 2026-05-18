@@ -1,5 +1,7 @@
 # `POST` `/system/session/refresh`
 
+# `POST` `/system/session/refresh`
+
 Session Refresh
 
 Refresh session materialized views and invalidate caches.

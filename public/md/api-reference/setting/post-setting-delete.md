@@ -1,5 +1,7 @@
 # `POST` `/setting/delete`
 
+# `POST` `/setting/delete`
+
 Delete Setting
 
 Bulk delete settings — composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/stream/ConnectionConfirmedPayload`
 
+# `POST` `/stream/ConnectionConfirmedPayload`
+
 Schema: ConnectionConfirmedPayload
 
 ## Request Body (`ConnectionConfirmedPayload`)

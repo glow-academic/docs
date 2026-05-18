@@ -1,0 +1,11 @@
+# `glow settings delete`
+
+# `glow settings delete`
+
+Delete Instance settings.
+
+## Usage
+
+```bash
+glow settings delete --id <id>
+```

@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateAgentApiRequest`
 
+# `POST` `/stream/UpdateAgentApiRequest`
+
 Schema: UpdateAgentApiRequest
 
 ## Request Body (`UpdateAgentApiRequest`)

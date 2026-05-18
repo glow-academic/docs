@@ -1,5 +1,7 @@
 # `POST` `/document/delete`
 
+# `POST` `/document/delete`
+
 Delete Document
 
 Bulk delete documents — composable infra architecture.

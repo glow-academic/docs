@@ -1,5 +1,7 @@
 # Stream Types
 
+# Stream Types
+
 ## `ActivityResources`
 
 Activity resource metadata.

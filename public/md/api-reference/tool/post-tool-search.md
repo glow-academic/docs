@@ -1,5 +1,7 @@
 # `POST` `/tool/search`
 
+# `POST` `/tool/search`
+
 Search Tool
 
 Search tools — composable infra architecture.

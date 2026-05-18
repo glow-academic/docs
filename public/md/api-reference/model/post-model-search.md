@@ -1,5 +1,7 @@
 # `POST` `/model/search`
 
+# `POST` `/model/search`
+
 Search Model
 
 Search models — composable infra architecture.

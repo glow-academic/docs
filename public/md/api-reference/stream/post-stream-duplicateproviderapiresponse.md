@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateProviderApiResponse`
 
+# `POST` `/stream/DuplicateProviderApiResponse`
+
 Schema: DuplicateProviderApiResponse
 
 ## Request Body (`DuplicateProviderApiResponse`)

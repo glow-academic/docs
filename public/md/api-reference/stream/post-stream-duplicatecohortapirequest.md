@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateCohortApiRequest`
 
+# `POST` `/stream/DuplicateCohortApiRequest`
+
 Schema: DuplicateCohortApiRequest
 
 ## Request Body (`DuplicateCohortApiRequest`)

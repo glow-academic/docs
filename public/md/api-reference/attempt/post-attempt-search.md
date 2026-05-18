@@ -1,5 +1,7 @@
 # `POST` `/attempt/search`
 
+# `POST` `/attempt/search`
+
 Search Attempt
 
 Search attempts — composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/provider/problem`
 
+# `POST` `/provider/problem`
+
 Problem Provider
 
 Report a provider problem — composable infra architecture.

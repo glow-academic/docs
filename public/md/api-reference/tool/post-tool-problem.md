@@ -1,5 +1,7 @@
 # `POST` `/tool/problem`
 
+# `POST` `/tool/problem`
+
 Problem Tool
 
 Report a tool problem — composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptAssistantCompleteEvent`
 
+# `POST` `/stream/AttemptAssistantCompleteEvent`
+
 Schema: AttemptAssistantCompleteEvent
 
 ## Request Body (`AttemptAssistantCompleteEvent`)

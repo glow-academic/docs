@@ -1,5 +1,7 @@
 # `POST` `/department/search`
 
+# `POST` `/department/search`
+
 Search Department
 
 Search departments — composable infra architecture.

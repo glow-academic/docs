@@ -1,5 +1,7 @@
 # `POST` `/stream/UpdateProviderApiRequest`
 
+# `POST` `/stream/UpdateProviderApiRequest`
+
 Schema: UpdateProviderApiRequest
 
 ## Request Body (`UpdateProviderApiRequest`)

@@ -1,5 +1,7 @@
 # `POST` `/stream/AttemptResponseResultEvent`
 
+# `POST` `/stream/AttemptResponseResultEvent`
+
 Schema: AttemptResponseResultEvent
 
 ## Request Body (`AttemptResponseResultEvent`)

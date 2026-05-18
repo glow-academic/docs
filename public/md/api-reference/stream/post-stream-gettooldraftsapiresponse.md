@@ -1,5 +1,7 @@
 # `POST` `/stream/GetToolDraftsApiResponse`
 
+# `POST` `/stream/GetToolDraftsApiResponse`
+
 Schema: GetToolDraftsApiResponse
 
 ## Request Body (`GetToolDraftsApiResponse`)

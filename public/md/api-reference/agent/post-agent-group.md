@@ -1,5 +1,7 @@
 # `POST` `/agent/group`
 
+# `POST` `/agent/group`
+
 Group Agent
 
 Resolve or create an agent group with optional naming.

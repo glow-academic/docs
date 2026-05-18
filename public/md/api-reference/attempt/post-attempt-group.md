@@ -1,5 +1,7 @@
 # `POST` `/attempt/group`
 
+# `POST` `/attempt/group`
+
 Group Attempt
 
 Resolve or create an attempt group with optional naming.

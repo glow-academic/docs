@@ -1,5 +1,7 @@
 # `POST` `/attempt/record/refresh`
 
+# `POST` `/attempt/record/refresh`
+
 Record Refresh
 
 Refresh record caches.

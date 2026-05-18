@@ -1,5 +1,7 @@
 # `POST` `/persona/get`
 
+# `POST` `/persona/get`
+
 Get Persona
 
 Get persona information using the canonical shared persona operation.

@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateSimulationApiRequest`
 
+# `POST` `/stream/DuplicateSimulationApiRequest`
+
 Schema: DuplicateSimulationApiRequest
 
 ## Request Body (`DuplicateSimulationApiRequest`)

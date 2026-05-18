@@ -1,0 +1,11 @@
+# `glow session update`
+
+# `glow session update`
+
+Update Session management.
+
+## Usage
+
+```bash
+glow session update --id <id>
+```

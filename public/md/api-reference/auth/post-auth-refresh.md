@@ -1,5 +1,7 @@
 # `POST` `/auth/refresh`
 
+# `POST` `/auth/refresh`
+
 Auth Refresh
 
 Refresh auth materialized views and invalidate caches.

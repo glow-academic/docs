@@ -1,5 +1,7 @@
 # `POST` `/stream/DuplicateToolApiResponse`
 
+# `POST` `/stream/DuplicateToolApiResponse`
+
 Schema: DuplicateToolApiResponse
 
 ## Request Body (`DuplicateToolApiResponse`)

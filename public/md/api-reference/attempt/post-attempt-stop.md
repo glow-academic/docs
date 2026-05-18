@@ -1,5 +1,7 @@
 # `POST` `/attempt/stop`
 
+# `POST` `/attempt/stop`
+
 Attempt Stop
 
 Cancel an active generation by group_id.

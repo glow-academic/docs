@@ -1,5 +1,7 @@
 # `POST` `/department/update`
 
+# `POST` `/department/update`
+
 Update Department
 
 Update departments using composable infra architecture.

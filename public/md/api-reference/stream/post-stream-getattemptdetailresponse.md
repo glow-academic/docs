@@ -1,5 +1,7 @@
 # `POST` `/stream/GetAttemptDetailResponse`
 
+# `POST` `/stream/GetAttemptDetailResponse`
+
 Schema: GetAttemptDetailResponse
 
 ## Request Body (`GetAttemptDetailResponse-Input`)

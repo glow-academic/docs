@@ -1,5 +1,7 @@
 # `POST` `/system/activity/export`
 
+# `POST` `/system/activity/export`
+
 Export Activity
 
 Export all activity data as a clean, denormalized ZIP.

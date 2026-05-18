@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteEvalApiResponse`
 
+# `POST` `/stream/DeleteEvalApiResponse`
+
 Schema: DeleteEvalApiResponse
 
 ## Request Body (`DeleteEvalApiResponse`)

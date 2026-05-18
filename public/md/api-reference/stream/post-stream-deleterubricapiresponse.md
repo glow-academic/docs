@@ -1,5 +1,7 @@
 # `POST` `/stream/DeleteRubricApiResponse`
 
+# `POST` `/stream/DeleteRubricApiResponse`
+
 Schema: DeleteRubricApiResponse
 
 ## Request Body (`DeleteRubricApiResponse`)

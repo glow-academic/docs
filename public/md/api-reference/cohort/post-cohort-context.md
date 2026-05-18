@@ -1,5 +1,7 @@
 # `POST` `/cohort/context`
 
+# `POST` `/cohort/context`
+
 Get Cohort Context
 
 Get page context for the cohort artifact.

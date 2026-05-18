@@ -1,5 +1,7 @@
 # `POST` `/stream/ActivityRequest`
 
+# `POST` `/stream/ActivityRequest`
+
 Schema: ActivityRequest
 
 ## Request Body (`ActivityRequest`)

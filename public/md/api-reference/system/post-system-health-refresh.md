@@ -1,5 +1,7 @@
 # `POST` `/system/health/refresh`
 
+# `POST` `/system/health/refresh`
+
 Health Refresh
 
 Refresh health materialized views and invalidate caches.

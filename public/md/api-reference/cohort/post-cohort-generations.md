@@ -1,5 +1,7 @@
 # `POST` `/cohort/generations`
 
+# `POST` `/cohort/generations`
+
 Generations Cohort
 
 List cohort generation groups — composable infra architecture.

@@ -1,5 +1,7 @@
 # `POST` `/attempt/record/search`
 
+# `POST` `/attempt/record/search`
+
 Search Record
 
 Get record attempt history for a single profile (paginated).

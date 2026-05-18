@@ -1,0 +1,11 @@
+# `glow pricing create`
+
+# `glow pricing create`
+
+Create Pricing information.
+
+## Usage
+
+```bash
+glow pricing create --body '\{...\}'
+```

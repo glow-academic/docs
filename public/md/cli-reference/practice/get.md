@@ -1,0 +1,11 @@
+# `glow practice get`
+
+# `glow practice get`
+
+Get Practice sessions.
+
+## Usage
+
+```bash
+glow practice get --id <id>
+```
