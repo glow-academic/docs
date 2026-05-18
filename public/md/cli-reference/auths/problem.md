@@ -1,0 +1,13 @@
+# `glow auths problem`
+
+# `glow auths problem`
+
+Problem Authentication records.
+
+## Usage
+
+```bash
+glow auths problem --id <id>
+```
+
+> Wire call: `POST /auth/problem`. Run `glow auths problem --help` for the full flag list.

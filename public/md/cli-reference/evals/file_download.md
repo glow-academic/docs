@@ -1,0 +1,13 @@
+# `glow evals file_download`
+
+# `glow evals file_download`
+
+File Download Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals file_download --id <id>
+```
+
+> Wire call: `POST /eval/file_download`. Run `glow evals file_download --help` for the full flag list.

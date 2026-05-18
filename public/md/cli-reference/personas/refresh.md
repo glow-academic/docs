@@ -1,0 +1,13 @@
+# `glow personas refresh`
+
+# `glow personas refresh`
+
+Refresh AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas refresh --id <id>
+```
+
+> Wire call: `POST /persona/refresh`. Run `glow personas refresh --help` for the full flag list.

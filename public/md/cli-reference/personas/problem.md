@@ -1,0 +1,13 @@
+# `glow personas problem`
+
+# `glow personas problem`
+
+Problem AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas problem --id <id>
+```
+
+> Wire call: `POST /persona/problem`. Run `glow personas problem --help` for the full flag list.

@@ -9,3 +9,5 @@ Delete Tool integrations.
 ```bash
 glow tools delete --id <id>
 ```
+
+> Wire call: `POST /tool/delete`. Run `glow tools delete --help` for the full flag list.

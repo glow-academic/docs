@@ -9,3 +9,5 @@ Search Simulation attempts.
 ```bash
 glow attempts search
 ```
+
+> Wire call: `POST /attempt/search`. Run `glow attempts search --help` for the full flag list.

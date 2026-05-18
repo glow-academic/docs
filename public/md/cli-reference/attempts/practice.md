@@ -1,0 +1,13 @@
+# `glow attempts practice`
+
+# `glow attempts practice`
+
+Practice Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts practice --id <id>
+```
+
+> Wire call: `POST /attempt/practice`. Run `glow attempts practice --help` for the full flag list.

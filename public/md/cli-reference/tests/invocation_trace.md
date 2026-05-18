@@ -1,0 +1,13 @@
+# `glow tests invocation_trace`
+
+# `glow tests invocation_trace`
+
+Invocation Trace Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_trace --id <id>
+```
+
+> Wire call: `POST /test/invocation_trace`. Run `glow tests invocation_trace --help` for the full flag list.

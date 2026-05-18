@@ -9,3 +9,5 @@ Delete AI personas for simulation.
 ```bash
 glow personas delete --id <id>
 ```
+
+> Wire call: `POST /persona/delete`. Run `glow personas delete --help` for the full flag list.

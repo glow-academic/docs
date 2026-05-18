@@ -9,3 +9,5 @@ Delete Instance settings.
 ```bash
 glow settings delete --id <id>
 ```
+
+> Wire call: `POST /setting/delete`. Run `glow settings delete --help` for the full flag list.

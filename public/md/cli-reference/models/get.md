@@ -9,3 +9,5 @@ Get AI model configurations.
 ```bash
 glow models get --id <id>
 ```
+
+> Wire call: `POST /model/get`. Run `glow models get --help` for the full flag list.

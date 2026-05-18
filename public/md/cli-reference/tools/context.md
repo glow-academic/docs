@@ -1,0 +1,13 @@
+# `glow tools context`
+
+# `glow tools context`
+
+Context Tool integrations.
+
+## Usage
+
+```bash
+glow tools context --id <id>
+```
+
+> Wire call: `POST /tool/context`. Run `glow tools context --help` for the full flag list.

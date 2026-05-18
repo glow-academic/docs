@@ -9,3 +9,5 @@ Get Simulation attempts.
 ```bash
 glow attempts get --id <id>
 ```
+
+> Wire call: `POST /attempt/get`. Run `glow attempts get --help` for the full flag list.

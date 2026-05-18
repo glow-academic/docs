@@ -1,0 +1,13 @@
+# `glow system sessions`
+
+# `glow system sessions`
+
+Sessions System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system sessions --id <id>
+```
+
+> Wire call: `POST /system/sessions`. Run `glow system sessions --help` for the full flag list.

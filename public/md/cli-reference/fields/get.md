@@ -9,3 +9,5 @@ Get Custom fields.
 ```bash
 glow fields get --id <id>
 ```
+
+> Wire call: `POST /field/get`. Run `glow fields get --help` for the full flag list.

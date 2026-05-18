@@ -1,0 +1,13 @@
+# `glow attempts chat_voice`
+
+# `glow attempts chat_voice`
+
+Chat Voice Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_voice --id <id>
+```
+
+> Wire call: `POST /attempt/chat_voice`. Run `glow attempts chat_voice --help` for the full flag list.

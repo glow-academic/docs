@@ -1,0 +1,13 @@
+# `glow tests invocation_create`
+
+# `glow tests invocation_create`
+
+Invocation Create Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_create --id <id>
+```
+
+> Wire call: `POST /test/invocation_create`. Run `glow tests invocation_create --help` for the full flag list.

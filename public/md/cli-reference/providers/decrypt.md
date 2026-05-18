@@ -1,0 +1,13 @@
+# `glow providers decrypt`
+
+# `glow providers decrypt`
+
+Decrypt AI provider integrations.
+
+## Usage
+
+```bash
+glow providers decrypt --id <id>
+```
+
+> Wire call: `POST /provider/decrypt`. Run `glow providers decrypt --help` for the full flag list.

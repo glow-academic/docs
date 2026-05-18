@@ -1,0 +1,13 @@
+# `glow scenarios problem`
+
+# `glow scenarios problem`
+
+Problem Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios problem --id <id>
+```
+
+> Wire call: `POST /scenario/problem`. Run `glow scenarios problem --help` for the full flag list.

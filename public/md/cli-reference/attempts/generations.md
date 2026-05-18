@@ -1,0 +1,13 @@
+# `glow attempts generations`
+
+# `glow attempts generations`
+
+Generations Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts generations --id <id>
+```
+
+> Wire call: `POST /attempt/generations`. Run `glow attempts generations --help` for the full flag list.

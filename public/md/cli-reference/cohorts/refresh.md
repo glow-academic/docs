@@ -1,0 +1,13 @@
+# `glow cohorts refresh`
+
+# `glow cohorts refresh`
+
+Refresh User cohorts.
+
+## Usage
+
+```bash
+glow cohorts refresh --id <id>
+```
+
+> Wire call: `POST /cohort/refresh`. Run `glow cohorts refresh --help` for the full flag list.

@@ -9,3 +9,5 @@ Update Simulation scenarios.
 ```bash
 glow scenarios update --id <id>
 ```
+
+> Wire call: `POST /scenario/update`. Run `glow scenarios update --help` for the full flag list.

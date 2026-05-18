@@ -1,0 +1,13 @@
+# `glow simulations file_download`
+
+# `glow simulations file_download`
+
+File Download Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations file_download --id <id>
+```
+
+> Wire call: `POST /simulation/file_download`. Run `glow simulations file_download --help` for the full flag list.

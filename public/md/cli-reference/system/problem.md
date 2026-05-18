@@ -1,0 +1,13 @@
+# `glow system problem`
+
+# `glow system problem`
+
+Problem System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system problem --id <id>
+```
+
+> Wire call: `POST /system/problem`. Run `glow system problem --help` for the full flag list.

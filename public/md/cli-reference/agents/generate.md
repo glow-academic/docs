@@ -1,0 +1,13 @@
+# `glow agents generate`
+
+# `glow agents generate`
+
+Generate AI agents.
+
+## Usage
+
+```bash
+glow agents generate --body '\{...\}'
+```
+
+> Wire call: `POST /agent/generate`. Run `glow agents generate --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow simulations generate`
+
+# `glow simulations generate`
+
+Generate Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations generate --body '\{...\}'
+```
+
+> Wire call: `POST /simulation/generate`. Run `glow simulations generate --help` for the full flag list.

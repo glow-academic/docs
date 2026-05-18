@@ -1,0 +1,13 @@
+# `glow fields draft`
+
+# `glow fields draft`
+
+Draft Custom fields.
+
+## Usage
+
+```bash
+glow fields draft --id <id>
+```
+
+> Wire call: `POST /field/draft`. Run `glow fields draft --help` for the full flag list.

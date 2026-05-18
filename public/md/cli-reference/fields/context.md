@@ -1,0 +1,13 @@
+# `glow fields context`
+
+# `glow fields context`
+
+Context Custom fields.
+
+## Usage
+
+```bash
+glow fields context --id <id>
+```
+
+> Wire call: `POST /field/context`. Run `glow fields context --help` for the full flag list.

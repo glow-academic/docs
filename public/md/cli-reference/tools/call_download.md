@@ -1,0 +1,13 @@
+# `glow tools call_download`
+
+# `glow tools call_download`
+
+Call Download Tool integrations.
+
+## Usage
+
+```bash
+glow tools call_download --id <id>
+```
+
+> Wire call: `POST /tool/call_download`. Run `glow tools call_download --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow providers refresh`
+
+# `glow providers refresh`
+
+Refresh AI provider integrations.
+
+## Usage
+
+```bash
+glow providers refresh --id <id>
+```
+
+> Wire call: `POST /provider/refresh`. Run `glow providers refresh --help` for the full flag list.

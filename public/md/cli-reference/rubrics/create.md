@@ -9,3 +9,5 @@ Create Grading rubrics.
 ```bash
 glow rubrics create --body '\{...\}'
 ```
+
+> Wire call: `POST /rubric/create`. Run `glow rubrics create --help` for the full flag list.

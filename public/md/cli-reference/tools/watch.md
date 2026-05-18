@@ -1,0 +1,13 @@
+# `glow tools watch`
+
+# `glow tools watch`
+
+Watch Tool integrations.
+
+## Usage
+
+```bash
+glow tools watch --id <id>
+```
+
+> Wire call: `POST /tool/watch`. Run `glow tools watch --help` for the full flag list.

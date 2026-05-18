@@ -1,0 +1,13 @@
+# `glow evals title`
+
+# `glow evals title`
+
+Title Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals title --id <id>
+```
+
+> Wire call: `POST /eval/title`. Run `glow evals title --help` for the full flag list.

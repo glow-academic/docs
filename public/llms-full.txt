@@ -36891,6 +36891,42 @@ curl -X POST https://<your-instance>/attempt/chat_drafts \
 
 ---
 
+# `glow agents call_download`
+
+Route: /cli-reference/agents/call_download
+
+# `glow agents call_download`
+
+Call Download AI agents.
+
+## Usage
+
+```bash
+glow agents call_download --id <id>
+```
+
+> Wire call: `POST /agent/call_download`. Run `glow agents call_download --help` for the full flag list.
+
+---
+
+# `glow agents context`
+
+Route: /cli-reference/agents/context
+
+# `glow agents context`
+
+Context AI agents.
+
+## Usage
+
+```bash
+glow agents context --id <id>
+```
+
+> Wire call: `POST /agent/context`. Run `glow agents context --help` for the full flag list.
+
+---
+
 # `glow agents create`
 
 Route: /cli-reference/agents/create
@@ -36904,6 +36940,26 @@ Create AI agents.
 ```bash
 glow agents create --body '\{...\}'
 ```
+
+> Wire call: `POST /agent/create`. Run `glow agents create --help` for the full flag list.
+
+---
+
+# `glow agents csv`
+
+Route: /cli-reference/agents/csv
+
+# `glow agents csv`
+
+Csv AI agents.
+
+## Usage
+
+```bash
+glow agents csv --id <id>
+```
+
+> Wire call: `POST /agent/csv`. Run `glow agents csv --help` for the full flag list.
 
 ---
 
@@ -36921,6 +36977,134 @@ Delete AI agents.
 glow agents delete --id <id>
 ```
 
+> Wire call: `POST /agent/delete`. Run `glow agents delete --help` for the full flag list.
+
+---
+
+# `glow agents draft`
+
+Route: /cli-reference/agents/draft
+
+# `glow agents draft`
+
+Draft AI agents.
+
+## Usage
+
+```bash
+glow agents draft --id <id>
+```
+
+> Wire call: `POST /agent/draft`. Run `glow agents draft --help` for the full flag list.
+
+---
+
+# `glow agents drafts`
+
+Route: /cli-reference/agents/drafts
+
+# `glow agents drafts`
+
+Drafts AI agents.
+
+## Usage
+
+```bash
+glow agents drafts --id <id>
+```
+
+> Wire call: `POST /agent/drafts`. Run `glow agents drafts --help` for the full flag list.
+
+---
+
+# `glow agents duplicate`
+
+Route: /cli-reference/agents/duplicate
+
+# `glow agents duplicate`
+
+Duplicate AI agents.
+
+## Usage
+
+```bash
+glow agents duplicate --id <id>
+```
+
+> Wire call: `POST /agent/duplicate`. Run `glow agents duplicate --help` for the full flag list.
+
+---
+
+# `glow agents export`
+
+Route: /cli-reference/agents/export
+
+# `glow agents export`
+
+Export AI agents.
+
+## Usage
+
+```bash
+glow agents export --id <id>
+```
+
+> Wire call: `POST /agent/export`. Run `glow agents export --help` for the full flag list.
+
+---
+
+# `glow agents file_download`
+
+Route: /cli-reference/agents/file_download
+
+# `glow agents file_download`
+
+File Download AI agents.
+
+## Usage
+
+```bash
+glow agents file_download --id <id>
+```
+
+> Wire call: `POST /agent/file_download`. Run `glow agents file_download --help` for the full flag list.
+
+---
+
+# `glow agents generate`
+
+Route: /cli-reference/agents/generate
+
+# `glow agents generate`
+
+Generate AI agents.
+
+## Usage
+
+```bash
+glow agents generate --body '\{...\}'
+```
+
+> Wire call: `POST /agent/generate`. Run `glow agents generate --help` for the full flag list.
+
+---
+
+# `glow agents generations`
+
+Route: /cli-reference/agents/generations
+
+# `glow agents generations`
+
+Generations AI agents.
+
+## Usage
+
+```bash
+glow agents generations --id <id>
+```
+
+> Wire call: `POST /agent/generations`. Run `glow agents generations --help` for the full flag list.
+
 ---
 
 # `glow agents get`
@@ -36936,6 +37120,62 @@ Get AI agents.
 ```bash
 glow agents get --id <id>
 ```
+
+> Wire call: `POST /agent/get`. Run `glow agents get --help` for the full flag list.
+
+---
+
+# `glow agents group`
+
+Route: /cli-reference/agents/group
+
+# `glow agents group`
+
+Group AI agents.
+
+## Usage
+
+```bash
+glow agents group --id <id>
+```
+
+> Wire call: `POST /agent/group`. Run `glow agents group --help` for the full flag list.
+
+---
+
+# `glow agents problem`
+
+Route: /cli-reference/agents/problem
+
+# `glow agents problem`
+
+Problem AI agents.
+
+## Usage
+
+```bash
+glow agents problem --id <id>
+```
+
+> Wire call: `POST /agent/problem`. Run `glow agents problem --help` for the full flag list.
+
+---
+
+# `glow agents refresh`
+
+Route: /cli-reference/agents/refresh
+
+# `glow agents refresh`
+
+Refresh AI agents.
+
+## Usage
+
+```bash
+glow agents refresh --id <id>
+```
+
+> Wire call: `POST /agent/refresh`. Run `glow agents refresh --help` for the full flag list.
 
 ---
 
@@ -36953,6 +37193,44 @@ Search AI agents.
 glow agents search
 ```
 
+> Wire call: `POST /agent/search`. Run `glow agents search --help` for the full flag list.
+
+---
+
+# `glow agents text_download`
+
+Route: /cli-reference/agents/text_download
+
+# `glow agents text_download`
+
+Text Download AI agents.
+
+## Usage
+
+```bash
+glow agents text_download --id <id>
+```
+
+> Wire call: `POST /agent/text_download`. Run `glow agents text_download --help` for the full flag list.
+
+---
+
+# `glow agents title`
+
+Route: /cli-reference/agents/title
+
+# `glow agents title`
+
+Title AI agents.
+
+## Usage
+
+```bash
+glow agents title --id <id>
+```
+
+> Wire call: `POST /agent/title`. Run `glow agents title --help` for the full flag list.
+
 ---
 
 # `glow agents update`
@@ -36969,37 +37247,547 @@ Update AI agents.
 glow agents update --id <id>
 ```
 
+> Wire call: `POST /agent/update`. Run `glow agents update --help` for the full flag list.
+
 ---
 
-# `glow attempts create`
+# `glow agents watch`
 
-Route: /cli-reference/attempts/create
+Route: /cli-reference/agents/watch
 
-# `glow attempts create`
+# `glow agents watch`
 
-Create Simulation attempts.
+Watch AI agents.
 
 ## Usage
 
 ```bash
-glow attempts create --body '\{...\}'
+glow agents watch --id <id>
 ```
+
+> Wire call: `POST /agent/watch`. Run `glow agents watch --help` for the full flag list.
 
 ---
 
-# `glow attempts delete`
+# `glow attempts archive`
 
-Route: /cli-reference/attempts/delete
+Route: /cli-reference/attempts/archive
 
-# `glow attempts delete`
+# `glow attempts archive`
 
-Delete Simulation attempts.
+Archive Simulation attempts.
 
 ## Usage
 
 ```bash
-glow attempts delete --id <id>
+glow attempts archive --id <id>
 ```
+
+> Wire call: `POST /attempt/archive`. Run `glow attempts archive --help` for the full flag list.
+
+---
+
+# `glow attempts audio_download`
+
+Route: /cli-reference/attempts/audio_download
+
+# `glow attempts audio_download`
+
+Audio Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts audio_download --id <id>
+```
+
+> Wire call: `POST /attempt/audio_download`. Run `glow attempts audio_download --help` for the full flag list.
+
+---
+
+# `glow attempts audio_upload`
+
+Route: /cli-reference/attempts/audio_upload
+
+# `glow attempts audio_upload`
+
+Audio Upload Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts audio_upload --id <id>
+```
+
+> Wire call: `POST /attempt/audio_upload`. Run `glow attempts audio_upload --help` for the full flag list.
+
+---
+
+# `glow attempts call_download`
+
+Route: /cli-reference/attempts/call_download
+
+# `glow attempts call_download`
+
+Call Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts call_download --id <id>
+```
+
+> Wire call: `POST /attempt/call_download`. Run `glow attempts call_download --help` for the full flag list.
+
+---
+
+# `glow attempts chat_analyses`
+
+Route: /cli-reference/attempts/chat_analyses
+
+# `glow attempts chat_analyses`
+
+Chat Analyses Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_analyses --id <id>
+```
+
+> Wire call: `POST /attempt/chat_analyses`. Run `glow attempts chat_analyses --help` for the full flag list.
+
+---
+
+# `glow attempts chat_audio`
+
+Route: /cli-reference/attempts/chat_audio
+
+# `glow attempts chat_audio`
+
+Chat Audio Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_audio --id <id>
+```
+
+> Wire call: `POST /attempt/chat_audio`. Run `glow attempts chat_audio --help` for the full flag list.
+
+---
+
+# `glow attempts chat_complete`
+
+Route: /cli-reference/attempts/chat_complete
+
+# `glow attempts chat_complete`
+
+Chat Complete Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_complete --id <id>
+```
+
+> Wire call: `POST /attempt/chat_complete`. Run `glow attempts chat_complete --help` for the full flag list.
+
+---
+
+# `glow attempts chat_create`
+
+Route: /cli-reference/attempts/chat_create
+
+# `glow attempts chat_create`
+
+Chat Create Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_create --id <id>
+```
+
+> Wire call: `POST /attempt/chat_create`. Run `glow attempts chat_create --help` for the full flag list.
+
+---
+
+# `glow attempts chat_feedback`
+
+Route: /cli-reference/attempts/chat_feedback
+
+# `glow attempts chat_feedback`
+
+Chat Feedback Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_feedback --id <id>
+```
+
+> Wire call: `POST /attempt/chat_feedback`. Run `glow attempts chat_feedback --help` for the full flag list.
+
+---
+
+# `glow attempts chat_get`
+
+Route: /cli-reference/attempts/chat_get
+
+# `glow attempts chat_get`
+
+Chat Get Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_get --id <id>
+```
+
+> Wire call: `POST /attempt/chat_get`. Run `glow attempts chat_get --help` for the full flag list.
+
+---
+
+# `glow attempts chat_grade`
+
+Route: /cli-reference/attempts/chat_grade
+
+# `glow attempts chat_grade`
+
+Chat Grade Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_grade --id <id>
+```
+
+> Wire call: `POST /attempt/chat_grade`. Run `glow attempts chat_grade --help` for the full flag list.
+
+---
+
+# `glow attempts chat_hints`
+
+Route: /cli-reference/attempts/chat_hints
+
+# `glow attempts chat_hints`
+
+Chat Hints Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_hints --id <id>
+```
+
+> Wire call: `POST /attempt/chat_hints`. Run `glow attempts chat_hints --help` for the full flag list.
+
+---
+
+# `glow attempts chat_improvements`
+
+Route: /cli-reference/attempts/chat_improvements
+
+# `glow attempts chat_improvements`
+
+Chat Improvements Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_improvements --id <id>
+```
+
+> Wire call: `POST /attempt/chat_improvements`. Run `glow attempts chat_improvements --help` for the full flag list.
+
+---
+
+# `glow attempts chat_message`
+
+Route: /cli-reference/attempts/chat_message
+
+# `glow attempts chat_message`
+
+Chat Message Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_message --id <id>
+```
+
+> Wire call: `POST /attempt/chat_message`. Run `glow attempts chat_message --help` for the full flag list.
+
+---
+
+# `glow attempts chat_response`
+
+Route: /cli-reference/attempts/chat_response
+
+# `glow attempts chat_response`
+
+Chat Response Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_response --id <id>
+```
+
+> Wire call: `POST /attempt/chat_response`. Run `glow attempts chat_response --help` for the full flag list.
+
+---
+
+# `glow attempts chat_silence`
+
+Route: /cli-reference/attempts/chat_silence
+
+# `glow attempts chat_silence`
+
+Chat Silence Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_silence --id <id>
+```
+
+> Wire call: `POST /attempt/chat_silence`. Run `glow attempts chat_silence --help` for the full flag list.
+
+---
+
+# `glow attempts chat_speak`
+
+Route: /cli-reference/attempts/chat_speak
+
+# `glow attempts chat_speak`
+
+Chat Speak Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_speak --id <id>
+```
+
+> Wire call: `POST /attempt/chat_speak`. Run `glow attempts chat_speak --help` for the full flag list.
+
+---
+
+# `glow attempts chat_strengths`
+
+Route: /cli-reference/attempts/chat_strengths
+
+# `glow attempts chat_strengths`
+
+Chat Strengths Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_strengths --id <id>
+```
+
+> Wire call: `POST /attempt/chat_strengths`. Run `glow attempts chat_strengths --help` for the full flag list.
+
+---
+
+# `glow attempts chat_voice`
+
+Route: /cli-reference/attempts/chat_voice
+
+# `glow attempts chat_voice`
+
+Chat Voice Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_voice --id <id>
+```
+
+> Wire call: `POST /attempt/chat_voice`. Run `glow attempts chat_voice --help` for the full flag list.
+
+---
+
+# `glow attempts complete`
+
+Route: /cli-reference/attempts/complete
+
+# `glow attempts complete`
+
+Complete Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts complete --id <id>
+```
+
+> Wire call: `POST /attempt/complete`. Run `glow attempts complete --help` for the full flag list.
+
+---
+
+# `glow attempts context`
+
+Route: /cli-reference/attempts/context
+
+# `glow attempts context`
+
+Context Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts context --id <id>
+```
+
+> Wire call: `POST /attempt/context`. Run `glow attempts context --help` for the full flag list.
+
+---
+
+# `glow attempts dashboard`
+
+Route: /cli-reference/attempts/dashboard
+
+# `glow attempts dashboard`
+
+Dashboard Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts dashboard --id <id>
+```
+
+> Wire call: `POST /attempt/dashboard`. Run `glow attempts dashboard --help` for the full flag list.
+
+---
+
+# `glow attempts draft`
+
+Route: /cli-reference/attempts/draft
+
+# `glow attempts draft`
+
+Draft Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts draft --id <id>
+```
+
+> Wire call: `POST /attempt/draft`. Run `glow attempts draft --help` for the full flag list.
+
+---
+
+# `glow attempts drafts`
+
+Route: /cli-reference/attempts/drafts
+
+# `glow attempts drafts`
+
+Drafts Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts drafts --id <id>
+```
+
+> Wire call: `POST /attempt/drafts`. Run `glow attempts drafts --help` for the full flag list.
+
+---
+
+# `glow attempts export`
+
+Route: /cli-reference/attempts/export
+
+# `glow attempts export`
+
+Export Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts export --id <id>
+```
+
+> Wire call: `POST /attempt/export`. Run `glow attempts export --help` for the full flag list.
+
+---
+
+# `glow attempts file_download`
+
+Route: /cli-reference/attempts/file_download
+
+# `glow attempts file_download`
+
+File Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts file_download --id <id>
+```
+
+> Wire call: `POST /attempt/file_download`. Run `glow attempts file_download --help` for the full flag list.
+
+---
+
+# `glow attempts file_preview`
+
+Route: /cli-reference/attempts/file_preview
+
+# `glow attempts file_preview`
+
+File Preview Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts file_preview --id <id>
+```
+
+> Wire call: `POST /attempt/file_preview`. Run `glow attempts file_preview --help` for the full flag list.
+
+---
+
+# `glow attempts generate`
+
+Route: /cli-reference/attempts/generate
+
+# `glow attempts generate`
+
+Generate Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts generate --body '\{...\}'
+```
+
+> Wire call: `POST /attempt/generate`. Run `glow attempts generate --help` for the full flag list.
+
+---
+
+# `glow attempts generations`
+
+Route: /cli-reference/attempts/generations
+
+# `glow attempts generations`
+
+Generations Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts generations --id <id>
+```
+
+> Wire call: `POST /attempt/generations`. Run `glow attempts generations --help` for the full flag list.
 
 ---
 
@@ -37017,6 +37805,152 @@ Get Simulation attempts.
 glow attempts get --id <id>
 ```
 
+> Wire call: `POST /attempt/get`. Run `glow attempts get --help` for the full flag list.
+
+---
+
+# `glow attempts group`
+
+Route: /cli-reference/attempts/group
+
+# `glow attempts group`
+
+Group Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts group --id <id>
+```
+
+> Wire call: `POST /attempt/group`. Run `glow attempts group --help` for the full flag list.
+
+---
+
+# `glow attempts home`
+
+Route: /cli-reference/attempts/home
+
+# `glow attempts home`
+
+Home Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts home --id <id>
+```
+
+> Wire call: `POST /attempt/home`. Run `glow attempts home --help` for the full flag list.
+
+---
+
+# `glow attempts image_download`
+
+Route: /cli-reference/attempts/image_download
+
+# `glow attempts image_download`
+
+Image Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts image_download --id <id>
+```
+
+> Wire call: `POST /attempt/image_download`. Run `glow attempts image_download --help` for the full flag list.
+
+---
+
+# `glow attempts leaderboard`
+
+Route: /cli-reference/attempts/leaderboard
+
+# `glow attempts leaderboard`
+
+Leaderboard Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts leaderboard --id <id>
+```
+
+> Wire call: `POST /attempt/leaderboard`. Run `glow attempts leaderboard --help` for the full flag list.
+
+---
+
+# `glow attempts practice`
+
+Route: /cli-reference/attempts/practice
+
+# `glow attempts practice`
+
+Practice Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts practice --id <id>
+```
+
+> Wire call: `POST /attempt/practice`. Run `glow attempts practice --help` for the full flag list.
+
+---
+
+# `glow attempts problem`
+
+Route: /cli-reference/attempts/problem
+
+# `glow attempts problem`
+
+Problem Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts problem --id <id>
+```
+
+> Wire call: `POST /attempt/problem`. Run `glow attempts problem --help` for the full flag list.
+
+---
+
+# `glow attempts refresh`
+
+Route: /cli-reference/attempts/refresh
+
+# `glow attempts refresh`
+
+Refresh Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts refresh --id <id>
+```
+
+> Wire call: `POST /attempt/refresh`. Run `glow attempts refresh --help` for the full flag list.
+
+---
+
+# `glow attempts report`
+
+Route: /cli-reference/attempts/report
+
+# `glow attempts report`
+
+Report Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts report --id <id>
+```
+
+> Wire call: `POST /attempt/report`. Run `glow attempts report --help` for the full flag list.
+
 ---
 
 # `glow attempts search`
@@ -37033,21 +37967,169 @@ Search Simulation attempts.
 glow attempts search
 ```
 
+> Wire call: `POST /attempt/search`. Run `glow attempts search --help` for the full flag list.
+
 ---
 
-# `glow attempts update`
+# `glow attempts start`
 
-Route: /cli-reference/attempts/update
+Route: /cli-reference/attempts/start
 
-# `glow attempts update`
+# `glow attempts start`
 
-Update Simulation attempts.
+Start Simulation attempts.
 
 ## Usage
 
 ```bash
-glow attempts update --id <id>
+glow attempts start --id <id>
 ```
+
+> Wire call: `POST /attempt/start`. Run `glow attempts start --help` for the full flag list.
+
+---
+
+# `glow attempts stop`
+
+Route: /cli-reference/attempts/stop
+
+# `glow attempts stop`
+
+Stop Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts stop --id <id>
+```
+
+> Wire call: `POST /attempt/stop`. Run `glow attempts stop --help` for the full flag list.
+
+---
+
+# `glow attempts text_download`
+
+Route: /cli-reference/attempts/text_download
+
+# `glow attempts text_download`
+
+Text Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts text_download --id <id>
+```
+
+> Wire call: `POST /attempt/text_download`. Run `glow attempts text_download --help` for the full flag list.
+
+---
+
+# `glow attempts title`
+
+Route: /cli-reference/attempts/title
+
+# `glow attempts title`
+
+Title Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts title --id <id>
+```
+
+> Wire call: `POST /attempt/title`. Run `glow attempts title --help` for the full flag list.
+
+---
+
+# `glow attempts video_download`
+
+Route: /cli-reference/attempts/video_download
+
+# `glow attempts video_download`
+
+Video Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts video_download --id <id>
+```
+
+> Wire call: `POST /attempt/video_download`. Run `glow attempts video_download --help` for the full flag list.
+
+---
+
+# `glow attempts watch`
+
+Route: /cli-reference/attempts/watch
+
+# `glow attempts watch`
+
+Watch Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts watch --id <id>
+```
+
+> Wire call: `POST /attempt/watch`. Run `glow attempts watch --help` for the full flag list.
+
+---
+
+# `glow auths call_download`
+
+Route: /cli-reference/auths/call_download
+
+# `glow auths call_download`
+
+Call Download Authentication records.
+
+## Usage
+
+```bash
+glow auths call_download --id <id>
+```
+
+> Wire call: `POST /auth/call_download`. Run `glow auths call_download --help` for the full flag list.
+
+---
+
+# `glow auths client-config`
+
+Route: /cli-reference/auths/client-config
+
+# `glow auths client-config`
+
+Client Config Authentication records.
+
+## Usage
+
+```bash
+glow auths client-config --id <id>
+```
+
+> Wire call: `POST /auth/client-config`. Run `glow auths client-config --help` for the full flag list.
+
+---
+
+# `glow auths context`
+
+Route: /cli-reference/auths/context
+
+# `glow auths context`
+
+Context Authentication records.
+
+## Usage
+
+```bash
+glow auths context --id <id>
+```
+
+> Wire call: `POST /auth/context`. Run `glow auths context --help` for the full flag list.
 
 ---
 
@@ -37065,6 +38147,26 @@ Create Authentication records.
 glow auths create --body '\{...\}'
 ```
 
+> Wire call: `POST /auth/create`. Run `glow auths create --help` for the full flag list.
+
+---
+
+# `glow auths csv`
+
+Route: /cli-reference/auths/csv
+
+# `glow auths csv`
+
+Csv Authentication records.
+
+## Usage
+
+```bash
+glow auths csv --id <id>
+```
+
+> Wire call: `POST /auth/csv`. Run `glow auths csv --help` for the full flag list.
+
 ---
 
 # `glow auths delete`
@@ -37080,6 +38182,134 @@ Delete Authentication records.
 ```bash
 glow auths delete --id <id>
 ```
+
+> Wire call: `POST /auth/delete`. Run `glow auths delete --help` for the full flag list.
+
+---
+
+# `glow auths draft`
+
+Route: /cli-reference/auths/draft
+
+# `glow auths draft`
+
+Draft Authentication records.
+
+## Usage
+
+```bash
+glow auths draft --id <id>
+```
+
+> Wire call: `POST /auth/draft`. Run `glow auths draft --help` for the full flag list.
+
+---
+
+# `glow auths drafts`
+
+Route: /cli-reference/auths/drafts
+
+# `glow auths drafts`
+
+Drafts Authentication records.
+
+## Usage
+
+```bash
+glow auths drafts --id <id>
+```
+
+> Wire call: `POST /auth/drafts`. Run `glow auths drafts --help` for the full flag list.
+
+---
+
+# `glow auths duplicate`
+
+Route: /cli-reference/auths/duplicate
+
+# `glow auths duplicate`
+
+Duplicate Authentication records.
+
+## Usage
+
+```bash
+glow auths duplicate --id <id>
+```
+
+> Wire call: `POST /auth/duplicate`. Run `glow auths duplicate --help` for the full flag list.
+
+---
+
+# `glow auths export`
+
+Route: /cli-reference/auths/export
+
+# `glow auths export`
+
+Export Authentication records.
+
+## Usage
+
+```bash
+glow auths export --id <id>
+```
+
+> Wire call: `POST /auth/export`. Run `glow auths export --help` for the full flag list.
+
+---
+
+# `glow auths file_download`
+
+Route: /cli-reference/auths/file_download
+
+# `glow auths file_download`
+
+File Download Authentication records.
+
+## Usage
+
+```bash
+glow auths file_download --id <id>
+```
+
+> Wire call: `POST /auth/file_download`. Run `glow auths file_download --help` for the full flag list.
+
+---
+
+# `glow auths generate`
+
+Route: /cli-reference/auths/generate
+
+# `glow auths generate`
+
+Generate Authentication records.
+
+## Usage
+
+```bash
+glow auths generate --body '\{...\}'
+```
+
+> Wire call: `POST /auth/generate`. Run `glow auths generate --help` for the full flag list.
+
+---
+
+# `glow auths generations`
+
+Route: /cli-reference/auths/generations
+
+# `glow auths generations`
+
+Generations Authentication records.
+
+## Usage
+
+```bash
+glow auths generations --id <id>
+```
+
+> Wire call: `POST /auth/generations`. Run `glow auths generations --help` for the full flag list.
 
 ---
 
@@ -37097,6 +38327,62 @@ Get Authentication records.
 glow auths get --id <id>
 ```
 
+> Wire call: `POST /auth/get`. Run `glow auths get --help` for the full flag list.
+
+---
+
+# `glow auths group`
+
+Route: /cli-reference/auths/group
+
+# `glow auths group`
+
+Group Authentication records.
+
+## Usage
+
+```bash
+glow auths group --id <id>
+```
+
+> Wire call: `POST /auth/group`. Run `glow auths group --help` for the full flag list.
+
+---
+
+# `glow auths problem`
+
+Route: /cli-reference/auths/problem
+
+# `glow auths problem`
+
+Problem Authentication records.
+
+## Usage
+
+```bash
+glow auths problem --id <id>
+```
+
+> Wire call: `POST /auth/problem`. Run `glow auths problem --help` for the full flag list.
+
+---
+
+# `glow auths refresh`
+
+Route: /cli-reference/auths/refresh
+
+# `glow auths refresh`
+
+Refresh Authentication records.
+
+## Usage
+
+```bash
+glow auths refresh --id <id>
+```
+
+> Wire call: `POST /auth/refresh`. Run `glow auths refresh --help` for the full flag list.
+
 ---
 
 # `glow auths search`
@@ -37113,6 +38399,44 @@ Search Authentication records.
 glow auths search
 ```
 
+> Wire call: `POST /auth/search`. Run `glow auths search --help` for the full flag list.
+
+---
+
+# `glow auths text_download`
+
+Route: /cli-reference/auths/text_download
+
+# `glow auths text_download`
+
+Text Download Authentication records.
+
+## Usage
+
+```bash
+glow auths text_download --id <id>
+```
+
+> Wire call: `POST /auth/text_download`. Run `glow auths text_download --help` for the full flag list.
+
+---
+
+# `glow auths title`
+
+Route: /cli-reference/auths/title
+
+# `glow auths title`
+
+Title Authentication records.
+
+## Usage
+
+```bash
+glow auths title --id <id>
+```
+
+> Wire call: `POST /auth/title`. Run `glow auths title --help` for the full flag list.
+
 ---
 
 # `glow auths update`
@@ -37128,6 +38452,26 @@ Update Authentication records.
 ```bash
 glow auths update --id <id>
 ```
+
+> Wire call: `POST /auth/update`. Run `glow auths update --help` for the full flag list.
+
+---
+
+# `glow auths watch`
+
+Route: /cli-reference/auths/watch
+
+# `glow auths watch`
+
+Watch Authentication records.
+
+## Usage
+
+```bash
+glow auths watch --id <id>
+```
+
+> Wire call: `POST /auth/watch`. Run `glow auths watch --help` for the full flag list.
 
 ---
 
@@ -37222,6 +38566,42 @@ glow backup restore [--name] file <file>
 
 ---
 
+# `glow cohorts call_download`
+
+Route: /cli-reference/cohorts/call_download
+
+# `glow cohorts call_download`
+
+Call Download User cohorts.
+
+## Usage
+
+```bash
+glow cohorts call_download --id <id>
+```
+
+> Wire call: `POST /cohort/call_download`. Run `glow cohorts call_download --help` for the full flag list.
+
+---
+
+# `glow cohorts context`
+
+Route: /cli-reference/cohorts/context
+
+# `glow cohorts context`
+
+Context User cohorts.
+
+## Usage
+
+```bash
+glow cohorts context --id <id>
+```
+
+> Wire call: `POST /cohort/context`. Run `glow cohorts context --help` for the full flag list.
+
+---
+
 # `glow cohorts create`
 
 Route: /cli-reference/cohorts/create
@@ -37235,6 +38615,26 @@ Create User cohorts.
 ```bash
 glow cohorts create --body '\{...\}'
 ```
+
+> Wire call: `POST /cohort/create`. Run `glow cohorts create --help` for the full flag list.
+
+---
+
+# `glow cohorts csv`
+
+Route: /cli-reference/cohorts/csv
+
+# `glow cohorts csv`
+
+Csv User cohorts.
+
+## Usage
+
+```bash
+glow cohorts csv --id <id>
+```
+
+> Wire call: `POST /cohort/csv`. Run `glow cohorts csv --help` for the full flag list.
 
 ---
 
@@ -37252,6 +38652,134 @@ Delete User cohorts.
 glow cohorts delete --id <id>
 ```
 
+> Wire call: `POST /cohort/delete`. Run `glow cohorts delete --help` for the full flag list.
+
+---
+
+# `glow cohorts draft`
+
+Route: /cli-reference/cohorts/draft
+
+# `glow cohorts draft`
+
+Draft User cohorts.
+
+## Usage
+
+```bash
+glow cohorts draft --id <id>
+```
+
+> Wire call: `POST /cohort/draft`. Run `glow cohorts draft --help` for the full flag list.
+
+---
+
+# `glow cohorts drafts`
+
+Route: /cli-reference/cohorts/drafts
+
+# `glow cohorts drafts`
+
+Drafts User cohorts.
+
+## Usage
+
+```bash
+glow cohorts drafts --id <id>
+```
+
+> Wire call: `POST /cohort/drafts`. Run `glow cohorts drafts --help` for the full flag list.
+
+---
+
+# `glow cohorts duplicate`
+
+Route: /cli-reference/cohorts/duplicate
+
+# `glow cohorts duplicate`
+
+Duplicate User cohorts.
+
+## Usage
+
+```bash
+glow cohorts duplicate --id <id>
+```
+
+> Wire call: `POST /cohort/duplicate`. Run `glow cohorts duplicate --help` for the full flag list.
+
+---
+
+# `glow cohorts export`
+
+Route: /cli-reference/cohorts/export
+
+# `glow cohorts export`
+
+Export User cohorts.
+
+## Usage
+
+```bash
+glow cohorts export --id <id>
+```
+
+> Wire call: `POST /cohort/export`. Run `glow cohorts export --help` for the full flag list.
+
+---
+
+# `glow cohorts file_download`
+
+Route: /cli-reference/cohorts/file_download
+
+# `glow cohorts file_download`
+
+File Download User cohorts.
+
+## Usage
+
+```bash
+glow cohorts file_download --id <id>
+```
+
+> Wire call: `POST /cohort/file_download`. Run `glow cohorts file_download --help` for the full flag list.
+
+---
+
+# `glow cohorts generate`
+
+Route: /cli-reference/cohorts/generate
+
+# `glow cohorts generate`
+
+Generate User cohorts.
+
+## Usage
+
+```bash
+glow cohorts generate --body '\{...\}'
+```
+
+> Wire call: `POST /cohort/generate`. Run `glow cohorts generate --help` for the full flag list.
+
+---
+
+# `glow cohorts generations`
+
+Route: /cli-reference/cohorts/generations
+
+# `glow cohorts generations`
+
+Generations User cohorts.
+
+## Usage
+
+```bash
+glow cohorts generations --id <id>
+```
+
+> Wire call: `POST /cohort/generations`. Run `glow cohorts generations --help` for the full flag list.
+
 ---
 
 # `glow cohorts get`
@@ -37267,6 +38795,62 @@ Get User cohorts.
 ```bash
 glow cohorts get --id <id>
 ```
+
+> Wire call: `POST /cohort/get`. Run `glow cohorts get --help` for the full flag list.
+
+---
+
+# `glow cohorts group`
+
+Route: /cli-reference/cohorts/group
+
+# `glow cohorts group`
+
+Group User cohorts.
+
+## Usage
+
+```bash
+glow cohorts group --id <id>
+```
+
+> Wire call: `POST /cohort/group`. Run `glow cohorts group --help` for the full flag list.
+
+---
+
+# `glow cohorts problem`
+
+Route: /cli-reference/cohorts/problem
+
+# `glow cohorts problem`
+
+Problem User cohorts.
+
+## Usage
+
+```bash
+glow cohorts problem --id <id>
+```
+
+> Wire call: `POST /cohort/problem`. Run `glow cohorts problem --help` for the full flag list.
+
+---
+
+# `glow cohorts refresh`
+
+Route: /cli-reference/cohorts/refresh
+
+# `glow cohorts refresh`
+
+Refresh User cohorts.
+
+## Usage
+
+```bash
+glow cohorts refresh --id <id>
+```
+
+> Wire call: `POST /cohort/refresh`. Run `glow cohorts refresh --help` for the full flag list.
 
 ---
 
@@ -37284,6 +38868,44 @@ Search User cohorts.
 glow cohorts search
 ```
 
+> Wire call: `POST /cohort/search`. Run `glow cohorts search --help` for the full flag list.
+
+---
+
+# `glow cohorts text_download`
+
+Route: /cli-reference/cohorts/text_download
+
+# `glow cohorts text_download`
+
+Text Download User cohorts.
+
+## Usage
+
+```bash
+glow cohorts text_download --id <id>
+```
+
+> Wire call: `POST /cohort/text_download`. Run `glow cohorts text_download --help` for the full flag list.
+
+---
+
+# `glow cohorts title`
+
+Route: /cli-reference/cohorts/title
+
+# `glow cohorts title`
+
+Title User cohorts.
+
+## Usage
+
+```bash
+glow cohorts title --id <id>
+```
+
+> Wire call: `POST /cohort/title`. Run `glow cohorts title --help` for the full flag list.
+
 ---
 
 # `glow cohorts update`
@@ -37299,6 +38921,62 @@ Update User cohorts.
 ```bash
 glow cohorts update --id <id>
 ```
+
+> Wire call: `POST /cohort/update`. Run `glow cohorts update --help` for the full flag list.
+
+---
+
+# `glow cohorts watch`
+
+Route: /cli-reference/cohorts/watch
+
+# `glow cohorts watch`
+
+Watch User cohorts.
+
+## Usage
+
+```bash
+glow cohorts watch --id <id>
+```
+
+> Wire call: `POST /cohort/watch`. Run `glow cohorts watch --help` for the full flag list.
+
+---
+
+# `glow departments call_download`
+
+Route: /cli-reference/departments/call_download
+
+# `glow departments call_download`
+
+Call Download Organizational departments.
+
+## Usage
+
+```bash
+glow departments call_download --id <id>
+```
+
+> Wire call: `POST /department/call_download`. Run `glow departments call_download --help` for the full flag list.
+
+---
+
+# `glow departments context`
+
+Route: /cli-reference/departments/context
+
+# `glow departments context`
+
+Context Organizational departments.
+
+## Usage
+
+```bash
+glow departments context --id <id>
+```
+
+> Wire call: `POST /department/context`. Run `glow departments context --help` for the full flag list.
 
 ---
 
@@ -37316,6 +38994,26 @@ Create Organizational departments.
 glow departments create --body '\{...\}'
 ```
 
+> Wire call: `POST /department/create`. Run `glow departments create --help` for the full flag list.
+
+---
+
+# `glow departments csv`
+
+Route: /cli-reference/departments/csv
+
+# `glow departments csv`
+
+Csv Organizational departments.
+
+## Usage
+
+```bash
+glow departments csv --id <id>
+```
+
+> Wire call: `POST /department/csv`. Run `glow departments csv --help` for the full flag list.
+
 ---
 
 # `glow departments delete`
@@ -37331,6 +39029,134 @@ Delete Organizational departments.
 ```bash
 glow departments delete --id <id>
 ```
+
+> Wire call: `POST /department/delete`. Run `glow departments delete --help` for the full flag list.
+
+---
+
+# `glow departments draft`
+
+Route: /cli-reference/departments/draft
+
+# `glow departments draft`
+
+Draft Organizational departments.
+
+## Usage
+
+```bash
+glow departments draft --id <id>
+```
+
+> Wire call: `POST /department/draft`. Run `glow departments draft --help` for the full flag list.
+
+---
+
+# `glow departments drafts`
+
+Route: /cli-reference/departments/drafts
+
+# `glow departments drafts`
+
+Drafts Organizational departments.
+
+## Usage
+
+```bash
+glow departments drafts --id <id>
+```
+
+> Wire call: `POST /department/drafts`. Run `glow departments drafts --help` for the full flag list.
+
+---
+
+# `glow departments duplicate`
+
+Route: /cli-reference/departments/duplicate
+
+# `glow departments duplicate`
+
+Duplicate Organizational departments.
+
+## Usage
+
+```bash
+glow departments duplicate --id <id>
+```
+
+> Wire call: `POST /department/duplicate`. Run `glow departments duplicate --help` for the full flag list.
+
+---
+
+# `glow departments export`
+
+Route: /cli-reference/departments/export
+
+# `glow departments export`
+
+Export Organizational departments.
+
+## Usage
+
+```bash
+glow departments export --id <id>
+```
+
+> Wire call: `POST /department/export`. Run `glow departments export --help` for the full flag list.
+
+---
+
+# `glow departments file_download`
+
+Route: /cli-reference/departments/file_download
+
+# `glow departments file_download`
+
+File Download Organizational departments.
+
+## Usage
+
+```bash
+glow departments file_download --id <id>
+```
+
+> Wire call: `POST /department/file_download`. Run `glow departments file_download --help` for the full flag list.
+
+---
+
+# `glow departments generate`
+
+Route: /cli-reference/departments/generate
+
+# `glow departments generate`
+
+Generate Organizational departments.
+
+## Usage
+
+```bash
+glow departments generate --body '\{...\}'
+```
+
+> Wire call: `POST /department/generate`. Run `glow departments generate --help` for the full flag list.
+
+---
+
+# `glow departments generations`
+
+Route: /cli-reference/departments/generations
+
+# `glow departments generations`
+
+Generations Organizational departments.
+
+## Usage
+
+```bash
+glow departments generations --id <id>
+```
+
+> Wire call: `POST /department/generations`. Run `glow departments generations --help` for the full flag list.
 
 ---
 
@@ -37348,6 +39174,62 @@ Get Organizational departments.
 glow departments get --id <id>
 ```
 
+> Wire call: `POST /department/get`. Run `glow departments get --help` for the full flag list.
+
+---
+
+# `glow departments group`
+
+Route: /cli-reference/departments/group
+
+# `glow departments group`
+
+Group Organizational departments.
+
+## Usage
+
+```bash
+glow departments group --id <id>
+```
+
+> Wire call: `POST /department/group`. Run `glow departments group --help` for the full flag list.
+
+---
+
+# `glow departments problem`
+
+Route: /cli-reference/departments/problem
+
+# `glow departments problem`
+
+Problem Organizational departments.
+
+## Usage
+
+```bash
+glow departments problem --id <id>
+```
+
+> Wire call: `POST /department/problem`. Run `glow departments problem --help` for the full flag list.
+
+---
+
+# `glow departments refresh`
+
+Route: /cli-reference/departments/refresh
+
+# `glow departments refresh`
+
+Refresh Organizational departments.
+
+## Usage
+
+```bash
+glow departments refresh --id <id>
+```
+
+> Wire call: `POST /department/refresh`. Run `glow departments refresh --help` for the full flag list.
+
 ---
 
 # `glow departments search`
@@ -37364,6 +39246,44 @@ Search Organizational departments.
 glow departments search
 ```
 
+> Wire call: `POST /department/search`. Run `glow departments search --help` for the full flag list.
+
+---
+
+# `glow departments text_download`
+
+Route: /cli-reference/departments/text_download
+
+# `glow departments text_download`
+
+Text Download Organizational departments.
+
+## Usage
+
+```bash
+glow departments text_download --id <id>
+```
+
+> Wire call: `POST /department/text_download`. Run `glow departments text_download --help` for the full flag list.
+
+---
+
+# `glow departments title`
+
+Route: /cli-reference/departments/title
+
+# `glow departments title`
+
+Title Organizational departments.
+
+## Usage
+
+```bash
+glow departments title --id <id>
+```
+
+> Wire call: `POST /department/title`. Run `glow departments title --help` for the full flag list.
+
 ---
 
 # `glow departments update`
@@ -37379,6 +39299,26 @@ Update Organizational departments.
 ```bash
 glow departments update --id <id>
 ```
+
+> Wire call: `POST /department/update`. Run `glow departments update --help` for the full flag list.
+
+---
+
+# `glow departments watch`
+
+Route: /cli-reference/departments/watch
+
+# `glow departments watch`
+
+Watch Organizational departments.
+
+## Usage
+
+```bash
+glow departments watch --id <id>
+```
+
+> Wire call: `POST /department/watch`. Run `glow departments watch --help` for the full flag list.
 
 ---
 
@@ -37430,6 +39370,42 @@ glow destroy [--name]
 
 ---
 
+# `glow documents call_download`
+
+Route: /cli-reference/documents/call_download
+
+# `glow documents call_download`
+
+Call Download Document management.
+
+## Usage
+
+```bash
+glow documents call_download --id <id>
+```
+
+> Wire call: `POST /document/call_download`. Run `glow documents call_download --help` for the full flag list.
+
+---
+
+# `glow documents context`
+
+Route: /cli-reference/documents/context
+
+# `glow documents context`
+
+Context Document management.
+
+## Usage
+
+```bash
+glow documents context --id <id>
+```
+
+> Wire call: `POST /document/context`. Run `glow documents context --help` for the full flag list.
+
+---
+
 # `glow documents create`
 
 Route: /cli-reference/documents/create
@@ -37443,6 +39419,26 @@ Create Document management.
 ```bash
 glow documents create --body '\{...\}'
 ```
+
+> Wire call: `POST /document/create`. Run `glow documents create --help` for the full flag list.
+
+---
+
+# `glow documents csv`
+
+Route: /cli-reference/documents/csv
+
+# `glow documents csv`
+
+Csv Document management.
+
+## Usage
+
+```bash
+glow documents csv --id <id>
+```
+
+> Wire call: `POST /document/csv`. Run `glow documents csv --help` for the full flag list.
 
 ---
 
@@ -37460,6 +39456,170 @@ Delete Document management.
 glow documents delete --id <id>
 ```
 
+> Wire call: `POST /document/delete`. Run `glow documents delete --help` for the full flag list.
+
+---
+
+# `glow documents draft`
+
+Route: /cli-reference/documents/draft
+
+# `glow documents draft`
+
+Draft Document management.
+
+## Usage
+
+```bash
+glow documents draft --id <id>
+```
+
+> Wire call: `POST /document/draft`. Run `glow documents draft --help` for the full flag list.
+
+---
+
+# `glow documents drafts`
+
+Route: /cli-reference/documents/drafts
+
+# `glow documents drafts`
+
+Drafts Document management.
+
+## Usage
+
+```bash
+glow documents drafts --id <id>
+```
+
+> Wire call: `POST /document/drafts`. Run `glow documents drafts --help` for the full flag list.
+
+---
+
+# `glow documents duplicate`
+
+Route: /cli-reference/documents/duplicate
+
+# `glow documents duplicate`
+
+Duplicate Document management.
+
+## Usage
+
+```bash
+glow documents duplicate --id <id>
+```
+
+> Wire call: `POST /document/duplicate`. Run `glow documents duplicate --help` for the full flag list.
+
+---
+
+# `glow documents export`
+
+Route: /cli-reference/documents/export
+
+# `glow documents export`
+
+Export Document management.
+
+## Usage
+
+```bash
+glow documents export --id <id>
+```
+
+> Wire call: `POST /document/export`. Run `glow documents export --help` for the full flag list.
+
+---
+
+# `glow documents file_download`
+
+Route: /cli-reference/documents/file_download
+
+# `glow documents file_download`
+
+File Download Document management.
+
+## Usage
+
+```bash
+glow documents file_download --id <id>
+```
+
+> Wire call: `POST /document/file_download`. Run `glow documents file_download --help` for the full flag list.
+
+---
+
+# `glow documents file_preview`
+
+Route: /cli-reference/documents/file_preview
+
+# `glow documents file_preview`
+
+File Preview Document management.
+
+## Usage
+
+```bash
+glow documents file_preview --id <id>
+```
+
+> Wire call: `POST /document/file_preview`. Run `glow documents file_preview --help` for the full flag list.
+
+---
+
+# `glow documents file_upload`
+
+Route: /cli-reference/documents/file_upload
+
+# `glow documents file_upload`
+
+File Upload Document management.
+
+## Usage
+
+```bash
+glow documents file_upload --id <id>
+```
+
+> Wire call: `POST /document/file_upload`. Run `glow documents file_upload --help` for the full flag list.
+
+---
+
+# `glow documents generate`
+
+Route: /cli-reference/documents/generate
+
+# `glow documents generate`
+
+Generate Document management.
+
+## Usage
+
+```bash
+glow documents generate --body '\{...\}'
+```
+
+> Wire call: `POST /document/generate`. Run `glow documents generate --help` for the full flag list.
+
+---
+
+# `glow documents generations`
+
+Route: /cli-reference/documents/generations
+
+# `glow documents generations`
+
+Generations Document management.
+
+## Usage
+
+```bash
+glow documents generations --id <id>
+```
+
+> Wire call: `POST /document/generations`. Run `glow documents generations --help` for the full flag list.
+
 ---
 
 # `glow documents get`
@@ -37475,6 +39635,62 @@ Get Document management.
 ```bash
 glow documents get --id <id>
 ```
+
+> Wire call: `POST /document/get`. Run `glow documents get --help` for the full flag list.
+
+---
+
+# `glow documents group`
+
+Route: /cli-reference/documents/group
+
+# `glow documents group`
+
+Group Document management.
+
+## Usage
+
+```bash
+glow documents group --id <id>
+```
+
+> Wire call: `POST /document/group`. Run `glow documents group --help` for the full flag list.
+
+---
+
+# `glow documents problem`
+
+Route: /cli-reference/documents/problem
+
+# `glow documents problem`
+
+Problem Document management.
+
+## Usage
+
+```bash
+glow documents problem --id <id>
+```
+
+> Wire call: `POST /document/problem`. Run `glow documents problem --help` for the full flag list.
+
+---
+
+# `glow documents refresh`
+
+Route: /cli-reference/documents/refresh
+
+# `glow documents refresh`
+
+Refresh Document management.
+
+## Usage
+
+```bash
+glow documents refresh --id <id>
+```
+
+> Wire call: `POST /document/refresh`. Run `glow documents refresh --help` for the full flag list.
 
 ---
 
@@ -37492,6 +39708,62 @@ Search Document management.
 glow documents search
 ```
 
+> Wire call: `POST /document/search`. Run `glow documents search --help` for the full flag list.
+
+---
+
+# `glow documents text_download`
+
+Route: /cli-reference/documents/text_download
+
+# `glow documents text_download`
+
+Text Download Document management.
+
+## Usage
+
+```bash
+glow documents text_download --id <id>
+```
+
+> Wire call: `POST /document/text_download`. Run `glow documents text_download --help` for the full flag list.
+
+---
+
+# `glow documents text_upload`
+
+Route: /cli-reference/documents/text_upload
+
+# `glow documents text_upload`
+
+Text Upload Document management.
+
+## Usage
+
+```bash
+glow documents text_upload --id <id>
+```
+
+> Wire call: `POST /document/text_upload`. Run `glow documents text_upload --help` for the full flag list.
+
+---
+
+# `glow documents title`
+
+Route: /cli-reference/documents/title
+
+# `glow documents title`
+
+Title Document management.
+
+## Usage
+
+```bash
+glow documents title --id <id>
+```
+
+> Wire call: `POST /document/title`. Run `glow documents title --help` for the full flag list.
+
 ---
 
 # `glow documents update`
@@ -37507,6 +39779,62 @@ Update Document management.
 ```bash
 glow documents update --id <id>
 ```
+
+> Wire call: `POST /document/update`. Run `glow documents update --help` for the full flag list.
+
+---
+
+# `glow documents watch`
+
+Route: /cli-reference/documents/watch
+
+# `glow documents watch`
+
+Watch Document management.
+
+## Usage
+
+```bash
+glow documents watch --id <id>
+```
+
+> Wire call: `POST /document/watch`. Run `glow documents watch --help` for the full flag list.
+
+---
+
+# `glow evals call_download`
+
+Route: /cli-reference/evals/call_download
+
+# `glow evals call_download`
+
+Call Download Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals call_download --id <id>
+```
+
+> Wire call: `POST /eval/call_download`. Run `glow evals call_download --help` for the full flag list.
+
+---
+
+# `glow evals context`
+
+Route: /cli-reference/evals/context
+
+# `glow evals context`
+
+Context Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals context --id <id>
+```
+
+> Wire call: `POST /eval/context`. Run `glow evals context --help` for the full flag list.
 
 ---
 
@@ -37524,6 +39852,26 @@ Create Evaluation configurations.
 glow evals create --body '\{...\}'
 ```
 
+> Wire call: `POST /eval/create`. Run `glow evals create --help` for the full flag list.
+
+---
+
+# `glow evals csv`
+
+Route: /cli-reference/evals/csv
+
+# `glow evals csv`
+
+Csv Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals csv --id <id>
+```
+
+> Wire call: `POST /eval/csv`. Run `glow evals csv --help` for the full flag list.
+
 ---
 
 # `glow evals delete`
@@ -37539,6 +39887,134 @@ Delete Evaluation configurations.
 ```bash
 glow evals delete --id <id>
 ```
+
+> Wire call: `POST /eval/delete`. Run `glow evals delete --help` for the full flag list.
+
+---
+
+# `glow evals draft`
+
+Route: /cli-reference/evals/draft
+
+# `glow evals draft`
+
+Draft Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals draft --id <id>
+```
+
+> Wire call: `POST /eval/draft`. Run `glow evals draft --help` for the full flag list.
+
+---
+
+# `glow evals drafts`
+
+Route: /cli-reference/evals/drafts
+
+# `glow evals drafts`
+
+Drafts Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals drafts --id <id>
+```
+
+> Wire call: `POST /eval/drafts`. Run `glow evals drafts --help` for the full flag list.
+
+---
+
+# `glow evals duplicate`
+
+Route: /cli-reference/evals/duplicate
+
+# `glow evals duplicate`
+
+Duplicate Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals duplicate --id <id>
+```
+
+> Wire call: `POST /eval/duplicate`. Run `glow evals duplicate --help` for the full flag list.
+
+---
+
+# `glow evals export`
+
+Route: /cli-reference/evals/export
+
+# `glow evals export`
+
+Export Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals export --id <id>
+```
+
+> Wire call: `POST /eval/export`. Run `glow evals export --help` for the full flag list.
+
+---
+
+# `glow evals file_download`
+
+Route: /cli-reference/evals/file_download
+
+# `glow evals file_download`
+
+File Download Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals file_download --id <id>
+```
+
+> Wire call: `POST /eval/file_download`. Run `glow evals file_download --help` for the full flag list.
+
+---
+
+# `glow evals generate`
+
+Route: /cli-reference/evals/generate
+
+# `glow evals generate`
+
+Generate Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals generate --body '\{...\}'
+```
+
+> Wire call: `POST /eval/generate`. Run `glow evals generate --help` for the full flag list.
+
+---
+
+# `glow evals generations`
+
+Route: /cli-reference/evals/generations
+
+# `glow evals generations`
+
+Generations Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals generations --id <id>
+```
+
+> Wire call: `POST /eval/generations`. Run `glow evals generations --help` for the full flag list.
 
 ---
 
@@ -37556,6 +40032,62 @@ Get Evaluation configurations.
 glow evals get --id <id>
 ```
 
+> Wire call: `POST /eval/get`. Run `glow evals get --help` for the full flag list.
+
+---
+
+# `glow evals group`
+
+Route: /cli-reference/evals/group
+
+# `glow evals group`
+
+Group Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals group --id <id>
+```
+
+> Wire call: `POST /eval/group`. Run `glow evals group --help` for the full flag list.
+
+---
+
+# `glow evals problem`
+
+Route: /cli-reference/evals/problem
+
+# `glow evals problem`
+
+Problem Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals problem --id <id>
+```
+
+> Wire call: `POST /eval/problem`. Run `glow evals problem --help` for the full flag list.
+
+---
+
+# `glow evals refresh`
+
+Route: /cli-reference/evals/refresh
+
+# `glow evals refresh`
+
+Refresh Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals refresh --id <id>
+```
+
+> Wire call: `POST /eval/refresh`. Run `glow evals refresh --help` for the full flag list.
+
 ---
 
 # `glow evals search`
@@ -37571,6 +40103,44 @@ Search Evaluation configurations.
 ```bash
 glow evals search
 ```
+
+> Wire call: `POST /eval/search`. Run `glow evals search --help` for the full flag list.
+
+---
+
+# `glow evals text_download`
+
+Route: /cli-reference/evals/text_download
+
+# `glow evals text_download`
+
+Text Download Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals text_download --id <id>
+```
+
+> Wire call: `POST /eval/text_download`. Run `glow evals text_download --help` for the full flag list.
+
+---
+
+# `glow evals title`
+
+Route: /cli-reference/evals/title
+
+# `glow evals title`
+
+Title Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals title --id <id>
+```
+
+> Wire call: `POST /eval/title`. Run `glow evals title --help` for the full flag list.
 
 ---
 
@@ -37588,6 +40158,62 @@ Update Evaluation configurations.
 glow evals update --id <id>
 ```
 
+> Wire call: `POST /eval/update`. Run `glow evals update --help` for the full flag list.
+
+---
+
+# `glow evals watch`
+
+Route: /cli-reference/evals/watch
+
+# `glow evals watch`
+
+Watch Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals watch --id <id>
+```
+
+> Wire call: `POST /eval/watch`. Run `glow evals watch --help` for the full flag list.
+
+---
+
+# `glow fields call_download`
+
+Route: /cli-reference/fields/call_download
+
+# `glow fields call_download`
+
+Call Download Custom fields.
+
+## Usage
+
+```bash
+glow fields call_download --id <id>
+```
+
+> Wire call: `POST /field/call_download`. Run `glow fields call_download --help` for the full flag list.
+
+---
+
+# `glow fields context`
+
+Route: /cli-reference/fields/context
+
+# `glow fields context`
+
+Context Custom fields.
+
+## Usage
+
+```bash
+glow fields context --id <id>
+```
+
+> Wire call: `POST /field/context`. Run `glow fields context --help` for the full flag list.
+
 ---
 
 # `glow fields create`
@@ -37603,6 +40229,26 @@ Create Custom fields.
 ```bash
 glow fields create --body '\{...\}'
 ```
+
+> Wire call: `POST /field/create`. Run `glow fields create --help` for the full flag list.
+
+---
+
+# `glow fields csv`
+
+Route: /cli-reference/fields/csv
+
+# `glow fields csv`
+
+Csv Custom fields.
+
+## Usage
+
+```bash
+glow fields csv --id <id>
+```
+
+> Wire call: `POST /field/csv`. Run `glow fields csv --help` for the full flag list.
 
 ---
 
@@ -37620,6 +40266,134 @@ Delete Custom fields.
 glow fields delete --id <id>
 ```
 
+> Wire call: `POST /field/delete`. Run `glow fields delete --help` for the full flag list.
+
+---
+
+# `glow fields draft`
+
+Route: /cli-reference/fields/draft
+
+# `glow fields draft`
+
+Draft Custom fields.
+
+## Usage
+
+```bash
+glow fields draft --id <id>
+```
+
+> Wire call: `POST /field/draft`. Run `glow fields draft --help` for the full flag list.
+
+---
+
+# `glow fields drafts`
+
+Route: /cli-reference/fields/drafts
+
+# `glow fields drafts`
+
+Drafts Custom fields.
+
+## Usage
+
+```bash
+glow fields drafts --id <id>
+```
+
+> Wire call: `POST /field/drafts`. Run `glow fields drafts --help` for the full flag list.
+
+---
+
+# `glow fields duplicate`
+
+Route: /cli-reference/fields/duplicate
+
+# `glow fields duplicate`
+
+Duplicate Custom fields.
+
+## Usage
+
+```bash
+glow fields duplicate --id <id>
+```
+
+> Wire call: `POST /field/duplicate`. Run `glow fields duplicate --help` for the full flag list.
+
+---
+
+# `glow fields export`
+
+Route: /cli-reference/fields/export
+
+# `glow fields export`
+
+Export Custom fields.
+
+## Usage
+
+```bash
+glow fields export --id <id>
+```
+
+> Wire call: `POST /field/export`. Run `glow fields export --help` for the full flag list.
+
+---
+
+# `glow fields file_download`
+
+Route: /cli-reference/fields/file_download
+
+# `glow fields file_download`
+
+File Download Custom fields.
+
+## Usage
+
+```bash
+glow fields file_download --id <id>
+```
+
+> Wire call: `POST /field/file_download`. Run `glow fields file_download --help` for the full flag list.
+
+---
+
+# `glow fields generate`
+
+Route: /cli-reference/fields/generate
+
+# `glow fields generate`
+
+Generate Custom fields.
+
+## Usage
+
+```bash
+glow fields generate --body '\{...\}'
+```
+
+> Wire call: `POST /field/generate`. Run `glow fields generate --help` for the full flag list.
+
+---
+
+# `glow fields generations`
+
+Route: /cli-reference/fields/generations
+
+# `glow fields generations`
+
+Generations Custom fields.
+
+## Usage
+
+```bash
+glow fields generations --id <id>
+```
+
+> Wire call: `POST /field/generations`. Run `glow fields generations --help` for the full flag list.
+
 ---
 
 # `glow fields get`
@@ -37635,6 +40409,62 @@ Get Custom fields.
 ```bash
 glow fields get --id <id>
 ```
+
+> Wire call: `POST /field/get`. Run `glow fields get --help` for the full flag list.
+
+---
+
+# `glow fields group`
+
+Route: /cli-reference/fields/group
+
+# `glow fields group`
+
+Group Custom fields.
+
+## Usage
+
+```bash
+glow fields group --id <id>
+```
+
+> Wire call: `POST /field/group`. Run `glow fields group --help` for the full flag list.
+
+---
+
+# `glow fields problem`
+
+Route: /cli-reference/fields/problem
+
+# `glow fields problem`
+
+Problem Custom fields.
+
+## Usage
+
+```bash
+glow fields problem --id <id>
+```
+
+> Wire call: `POST /field/problem`. Run `glow fields problem --help` for the full flag list.
+
+---
+
+# `glow fields refresh`
+
+Route: /cli-reference/fields/refresh
+
+# `glow fields refresh`
+
+Refresh Custom fields.
+
+## Usage
+
+```bash
+glow fields refresh --id <id>
+```
+
+> Wire call: `POST /field/refresh`. Run `glow fields refresh --help` for the full flag list.
 
 ---
 
@@ -37652,6 +40482,44 @@ Search Custom fields.
 glow fields search
 ```
 
+> Wire call: `POST /field/search`. Run `glow fields search --help` for the full flag list.
+
+---
+
+# `glow fields text_download`
+
+Route: /cli-reference/fields/text_download
+
+# `glow fields text_download`
+
+Text Download Custom fields.
+
+## Usage
+
+```bash
+glow fields text_download --id <id>
+```
+
+> Wire call: `POST /field/text_download`. Run `glow fields text_download --help` for the full flag list.
+
+---
+
+# `glow fields title`
+
+Route: /cli-reference/fields/title
+
+# `glow fields title`
+
+Title Custom fields.
+
+## Usage
+
+```bash
+glow fields title --id <id>
+```
+
+> Wire call: `POST /field/title`. Run `glow fields title --help` for the full flag list.
+
 ---
 
 # `glow fields update`
@@ -37667,6 +40535,26 @@ Update Custom fields.
 ```bash
 glow fields update --id <id>
 ```
+
+> Wire call: `POST /field/update`. Run `glow fields update --help` for the full flag list.
+
+---
+
+# `glow fields watch`
+
+Route: /cli-reference/fields/watch
+
+# `glow fields watch`
+
+Watch Custom fields.
+
+## Usage
+
+```bash
+glow fields watch --id <id>
+```
+
+> Wire call: `POST /field/watch`. Run `glow fields watch --help` for the full flag list.
 
 ---
 
@@ -37794,6 +40682,42 @@ glow mcp list-tools
 
 ---
 
+# `glow models call_download`
+
+Route: /cli-reference/models/call_download
+
+# `glow models call_download`
+
+Call Download AI model configurations.
+
+## Usage
+
+```bash
+glow models call_download --id <id>
+```
+
+> Wire call: `POST /model/call_download`. Run `glow models call_download --help` for the full flag list.
+
+---
+
+# `glow models context`
+
+Route: /cli-reference/models/context
+
+# `glow models context`
+
+Context AI model configurations.
+
+## Usage
+
+```bash
+glow models context --id <id>
+```
+
+> Wire call: `POST /model/context`. Run `glow models context --help` for the full flag list.
+
+---
+
 # `glow models create`
 
 Route: /cli-reference/models/create
@@ -37807,6 +40731,26 @@ Create AI model configurations.
 ```bash
 glow models create --body '\{...\}'
 ```
+
+> Wire call: `POST /model/create`. Run `glow models create --help` for the full flag list.
+
+---
+
+# `glow models csv`
+
+Route: /cli-reference/models/csv
+
+# `glow models csv`
+
+Csv AI model configurations.
+
+## Usage
+
+```bash
+glow models csv --id <id>
+```
+
+> Wire call: `POST /model/csv`. Run `glow models csv --help` for the full flag list.
 
 ---
 
@@ -37824,6 +40768,134 @@ Delete AI model configurations.
 glow models delete --id <id>
 ```
 
+> Wire call: `POST /model/delete`. Run `glow models delete --help` for the full flag list.
+
+---
+
+# `glow models draft`
+
+Route: /cli-reference/models/draft
+
+# `glow models draft`
+
+Draft AI model configurations.
+
+## Usage
+
+```bash
+glow models draft --id <id>
+```
+
+> Wire call: `POST /model/draft`. Run `glow models draft --help` for the full flag list.
+
+---
+
+# `glow models drafts`
+
+Route: /cli-reference/models/drafts
+
+# `glow models drafts`
+
+Drafts AI model configurations.
+
+## Usage
+
+```bash
+glow models drafts --id <id>
+```
+
+> Wire call: `POST /model/drafts`. Run `glow models drafts --help` for the full flag list.
+
+---
+
+# `glow models duplicate`
+
+Route: /cli-reference/models/duplicate
+
+# `glow models duplicate`
+
+Duplicate AI model configurations.
+
+## Usage
+
+```bash
+glow models duplicate --id <id>
+```
+
+> Wire call: `POST /model/duplicate`. Run `glow models duplicate --help` for the full flag list.
+
+---
+
+# `glow models export`
+
+Route: /cli-reference/models/export
+
+# `glow models export`
+
+Export AI model configurations.
+
+## Usage
+
+```bash
+glow models export --id <id>
+```
+
+> Wire call: `POST /model/export`. Run `glow models export --help` for the full flag list.
+
+---
+
+# `glow models file_download`
+
+Route: /cli-reference/models/file_download
+
+# `glow models file_download`
+
+File Download AI model configurations.
+
+## Usage
+
+```bash
+glow models file_download --id <id>
+```
+
+> Wire call: `POST /model/file_download`. Run `glow models file_download --help` for the full flag list.
+
+---
+
+# `glow models generate`
+
+Route: /cli-reference/models/generate
+
+# `glow models generate`
+
+Generate AI model configurations.
+
+## Usage
+
+```bash
+glow models generate --body '\{...\}'
+```
+
+> Wire call: `POST /model/generate`. Run `glow models generate --help` for the full flag list.
+
+---
+
+# `glow models generations`
+
+Route: /cli-reference/models/generations
+
+# `glow models generations`
+
+Generations AI model configurations.
+
+## Usage
+
+```bash
+glow models generations --id <id>
+```
+
+> Wire call: `POST /model/generations`. Run `glow models generations --help` for the full flag list.
+
 ---
 
 # `glow models get`
@@ -37839,6 +40911,62 @@ Get AI model configurations.
 ```bash
 glow models get --id <id>
 ```
+
+> Wire call: `POST /model/get`. Run `glow models get --help` for the full flag list.
+
+---
+
+# `glow models group`
+
+Route: /cli-reference/models/group
+
+# `glow models group`
+
+Group AI model configurations.
+
+## Usage
+
+```bash
+glow models group --id <id>
+```
+
+> Wire call: `POST /model/group`. Run `glow models group --help` for the full flag list.
+
+---
+
+# `glow models problem`
+
+Route: /cli-reference/models/problem
+
+# `glow models problem`
+
+Problem AI model configurations.
+
+## Usage
+
+```bash
+glow models problem --id <id>
+```
+
+> Wire call: `POST /model/problem`. Run `glow models problem --help` for the full flag list.
+
+---
+
+# `glow models refresh`
+
+Route: /cli-reference/models/refresh
+
+# `glow models refresh`
+
+Refresh AI model configurations.
+
+## Usage
+
+```bash
+glow models refresh --id <id>
+```
+
+> Wire call: `POST /model/refresh`. Run `glow models refresh --help` for the full flag list.
 
 ---
 
@@ -37856,6 +40984,44 @@ Search AI model configurations.
 glow models search
 ```
 
+> Wire call: `POST /model/search`. Run `glow models search --help` for the full flag list.
+
+---
+
+# `glow models text_download`
+
+Route: /cli-reference/models/text_download
+
+# `glow models text_download`
+
+Text Download AI model configurations.
+
+## Usage
+
+```bash
+glow models text_download --id <id>
+```
+
+> Wire call: `POST /model/text_download`. Run `glow models text_download --help` for the full flag list.
+
+---
+
+# `glow models title`
+
+Route: /cli-reference/models/title
+
+# `glow models title`
+
+Title AI model configurations.
+
+## Usage
+
+```bash
+glow models title --id <id>
+```
+
+> Wire call: `POST /model/title`. Run `glow models title --help` for the full flag list.
+
 ---
 
 # `glow models update`
@@ -37871,6 +41037,62 @@ Update AI model configurations.
 ```bash
 glow models update --id <id>
 ```
+
+> Wire call: `POST /model/update`. Run `glow models update --help` for the full flag list.
+
+---
+
+# `glow models watch`
+
+Route: /cli-reference/models/watch
+
+# `glow models watch`
+
+Watch AI model configurations.
+
+## Usage
+
+```bash
+glow models watch --id <id>
+```
+
+> Wire call: `POST /model/watch`. Run `glow models watch --help` for the full flag list.
+
+---
+
+# `glow parameters call_download`
+
+Route: /cli-reference/parameters/call_download
+
+# `glow parameters call_download`
+
+Call Download Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters call_download --id <id>
+```
+
+> Wire call: `POST /parameter/call_download`. Run `glow parameters call_download --help` for the full flag list.
+
+---
+
+# `glow parameters context`
+
+Route: /cli-reference/parameters/context
+
+# `glow parameters context`
+
+Context Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters context --id <id>
+```
+
+> Wire call: `POST /parameter/context`. Run `glow parameters context --help` for the full flag list.
 
 ---
 
@@ -37888,6 +41110,26 @@ Create Configuration parameters.
 glow parameters create --body '\{...\}'
 ```
 
+> Wire call: `POST /parameter/create`. Run `glow parameters create --help` for the full flag list.
+
+---
+
+# `glow parameters csv`
+
+Route: /cli-reference/parameters/csv
+
+# `glow parameters csv`
+
+Csv Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters csv --id <id>
+```
+
+> Wire call: `POST /parameter/csv`. Run `glow parameters csv --help` for the full flag list.
+
 ---
 
 # `glow parameters delete`
@@ -37903,6 +41145,134 @@ Delete Configuration parameters.
 ```bash
 glow parameters delete --id <id>
 ```
+
+> Wire call: `POST /parameter/delete`. Run `glow parameters delete --help` for the full flag list.
+
+---
+
+# `glow parameters draft`
+
+Route: /cli-reference/parameters/draft
+
+# `glow parameters draft`
+
+Draft Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters draft --id <id>
+```
+
+> Wire call: `POST /parameter/draft`. Run `glow parameters draft --help` for the full flag list.
+
+---
+
+# `glow parameters drafts`
+
+Route: /cli-reference/parameters/drafts
+
+# `glow parameters drafts`
+
+Drafts Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters drafts --id <id>
+```
+
+> Wire call: `POST /parameter/drafts`. Run `glow parameters drafts --help` for the full flag list.
+
+---
+
+# `glow parameters duplicate`
+
+Route: /cli-reference/parameters/duplicate
+
+# `glow parameters duplicate`
+
+Duplicate Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters duplicate --id <id>
+```
+
+> Wire call: `POST /parameter/duplicate`. Run `glow parameters duplicate --help` for the full flag list.
+
+---
+
+# `glow parameters export`
+
+Route: /cli-reference/parameters/export
+
+# `glow parameters export`
+
+Export Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters export --id <id>
+```
+
+> Wire call: `POST /parameter/export`. Run `glow parameters export --help` for the full flag list.
+
+---
+
+# `glow parameters file_download`
+
+Route: /cli-reference/parameters/file_download
+
+# `glow parameters file_download`
+
+File Download Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters file_download --id <id>
+```
+
+> Wire call: `POST /parameter/file_download`. Run `glow parameters file_download --help` for the full flag list.
+
+---
+
+# `glow parameters generate`
+
+Route: /cli-reference/parameters/generate
+
+# `glow parameters generate`
+
+Generate Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters generate --body '\{...\}'
+```
+
+> Wire call: `POST /parameter/generate`. Run `glow parameters generate --help` for the full flag list.
+
+---
+
+# `glow parameters generations`
+
+Route: /cli-reference/parameters/generations
+
+# `glow parameters generations`
+
+Generations Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters generations --id <id>
+```
+
+> Wire call: `POST /parameter/generations`. Run `glow parameters generations --help` for the full flag list.
 
 ---
 
@@ -37920,6 +41290,62 @@ Get Configuration parameters.
 glow parameters get --id <id>
 ```
 
+> Wire call: `POST /parameter/get`. Run `glow parameters get --help` for the full flag list.
+
+---
+
+# `glow parameters group`
+
+Route: /cli-reference/parameters/group
+
+# `glow parameters group`
+
+Group Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters group --id <id>
+```
+
+> Wire call: `POST /parameter/group`. Run `glow parameters group --help` for the full flag list.
+
+---
+
+# `glow parameters problem`
+
+Route: /cli-reference/parameters/problem
+
+# `glow parameters problem`
+
+Problem Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters problem --id <id>
+```
+
+> Wire call: `POST /parameter/problem`. Run `glow parameters problem --help` for the full flag list.
+
+---
+
+# `glow parameters refresh`
+
+Route: /cli-reference/parameters/refresh
+
+# `glow parameters refresh`
+
+Refresh Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters refresh --id <id>
+```
+
+> Wire call: `POST /parameter/refresh`. Run `glow parameters refresh --help` for the full flag list.
+
 ---
 
 # `glow parameters search`
@@ -37935,6 +41361,44 @@ Search Configuration parameters.
 ```bash
 glow parameters search
 ```
+
+> Wire call: `POST /parameter/search`. Run `glow parameters search --help` for the full flag list.
+
+---
+
+# `glow parameters text_download`
+
+Route: /cli-reference/parameters/text_download
+
+# `glow parameters text_download`
+
+Text Download Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters text_download --id <id>
+```
+
+> Wire call: `POST /parameter/text_download`. Run `glow parameters text_download --help` for the full flag list.
+
+---
+
+# `glow parameters title`
+
+Route: /cli-reference/parameters/title
+
+# `glow parameters title`
+
+Title Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters title --id <id>
+```
+
+> Wire call: `POST /parameter/title`. Run `glow parameters title --help` for the full flag list.
 
 ---
 
@@ -37952,6 +41416,62 @@ Update Configuration parameters.
 glow parameters update --id <id>
 ```
 
+> Wire call: `POST /parameter/update`. Run `glow parameters update --help` for the full flag list.
+
+---
+
+# `glow parameters watch`
+
+Route: /cli-reference/parameters/watch
+
+# `glow parameters watch`
+
+Watch Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters watch --id <id>
+```
+
+> Wire call: `POST /parameter/watch`. Run `glow parameters watch --help` for the full flag list.
+
+---
+
+# `glow personas call_download`
+
+Route: /cli-reference/personas/call_download
+
+# `glow personas call_download`
+
+Call Download AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas call_download --id <id>
+```
+
+> Wire call: `POST /persona/call_download`. Run `glow personas call_download --help` for the full flag list.
+
+---
+
+# `glow personas context`
+
+Route: /cli-reference/personas/context
+
+# `glow personas context`
+
+Context AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas context --id <id>
+```
+
+> Wire call: `POST /persona/context`. Run `glow personas context --help` for the full flag list.
+
 ---
 
 # `glow personas create`
@@ -37967,6 +41487,26 @@ Create AI personas for simulation.
 ```bash
 glow personas create --body '\{...\}'
 ```
+
+> Wire call: `POST /persona/create`. Run `glow personas create --help` for the full flag list.
+
+---
+
+# `glow personas csv`
+
+Route: /cli-reference/personas/csv
+
+# `glow personas csv`
+
+Csv AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas csv --id <id>
+```
+
+> Wire call: `POST /persona/csv`. Run `glow personas csv --help` for the full flag list.
 
 ---
 
@@ -37984,6 +41524,134 @@ Delete AI personas for simulation.
 glow personas delete --id <id>
 ```
 
+> Wire call: `POST /persona/delete`. Run `glow personas delete --help` for the full flag list.
+
+---
+
+# `glow personas draft`
+
+Route: /cli-reference/personas/draft
+
+# `glow personas draft`
+
+Draft AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas draft --id <id>
+```
+
+> Wire call: `POST /persona/draft`. Run `glow personas draft --help` for the full flag list.
+
+---
+
+# `glow personas drafts`
+
+Route: /cli-reference/personas/drafts
+
+# `glow personas drafts`
+
+Drafts AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas drafts --id <id>
+```
+
+> Wire call: `POST /persona/drafts`. Run `glow personas drafts --help` for the full flag list.
+
+---
+
+# `glow personas duplicate`
+
+Route: /cli-reference/personas/duplicate
+
+# `glow personas duplicate`
+
+Duplicate AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas duplicate --id <id>
+```
+
+> Wire call: `POST /persona/duplicate`. Run `glow personas duplicate --help` for the full flag list.
+
+---
+
+# `glow personas export`
+
+Route: /cli-reference/personas/export
+
+# `glow personas export`
+
+Export AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas export --id <id>
+```
+
+> Wire call: `POST /persona/export`. Run `glow personas export --help` for the full flag list.
+
+---
+
+# `glow personas file_download`
+
+Route: /cli-reference/personas/file_download
+
+# `glow personas file_download`
+
+File Download AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas file_download --id <id>
+```
+
+> Wire call: `POST /persona/file_download`. Run `glow personas file_download --help` for the full flag list.
+
+---
+
+# `glow personas generate`
+
+Route: /cli-reference/personas/generate
+
+# `glow personas generate`
+
+Generate AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas generate --body '\{...\}'
+```
+
+> Wire call: `POST /persona/generate`. Run `glow personas generate --help` for the full flag list.
+
+---
+
+# `glow personas generations`
+
+Route: /cli-reference/personas/generations
+
+# `glow personas generations`
+
+Generations AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas generations --id <id>
+```
+
+> Wire call: `POST /persona/generations`. Run `glow personas generations --help` for the full flag list.
+
 ---
 
 # `glow personas get`
@@ -37999,6 +41667,62 @@ Get AI personas for simulation.
 ```bash
 glow personas get --id <id>
 ```
+
+> Wire call: `POST /persona/get`. Run `glow personas get --help` for the full flag list.
+
+---
+
+# `glow personas group`
+
+Route: /cli-reference/personas/group
+
+# `glow personas group`
+
+Group AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas group --id <id>
+```
+
+> Wire call: `POST /persona/group`. Run `glow personas group --help` for the full flag list.
+
+---
+
+# `glow personas problem`
+
+Route: /cli-reference/personas/problem
+
+# `glow personas problem`
+
+Problem AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas problem --id <id>
+```
+
+> Wire call: `POST /persona/problem`. Run `glow personas problem --help` for the full flag list.
+
+---
+
+# `glow personas refresh`
+
+Route: /cli-reference/personas/refresh
+
+# `glow personas refresh`
+
+Refresh AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas refresh --id <id>
+```
+
+> Wire call: `POST /persona/refresh`. Run `glow personas refresh --help` for the full flag list.
 
 ---
 
@@ -38016,6 +41740,44 @@ Search AI personas for simulation.
 glow personas search
 ```
 
+> Wire call: `POST /persona/search`. Run `glow personas search --help` for the full flag list.
+
+---
+
+# `glow personas text_download`
+
+Route: /cli-reference/personas/text_download
+
+# `glow personas text_download`
+
+Text Download AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas text_download --id <id>
+```
+
+> Wire call: `POST /persona/text_download`. Run `glow personas text_download --help` for the full flag list.
+
+---
+
+# `glow personas title`
+
+Route: /cli-reference/personas/title
+
+# `glow personas title`
+
+Title AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas title --id <id>
+```
+
+> Wire call: `POST /persona/title`. Run `glow personas title --help` for the full flag list.
+
 ---
 
 # `glow personas update`
@@ -38031,6 +41793,62 @@ Update AI personas for simulation.
 ```bash
 glow personas update --id <id>
 ```
+
+> Wire call: `POST /persona/update`. Run `glow personas update --help` for the full flag list.
+
+---
+
+# `glow personas watch`
+
+Route: /cli-reference/personas/watch
+
+# `glow personas watch`
+
+Watch AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas watch --id <id>
+```
+
+> Wire call: `POST /persona/watch`. Run `glow personas watch --help` for the full flag list.
+
+---
+
+# `glow profiles call_download`
+
+Route: /cli-reference/profiles/call_download
+
+# `glow profiles call_download`
+
+Call Download User profiles.
+
+## Usage
+
+```bash
+glow profiles call_download --id <id>
+```
+
+> Wire call: `POST /profile/call_download`. Run `glow profiles call_download --help` for the full flag list.
+
+---
+
+# `glow profiles context`
+
+Route: /cli-reference/profiles/context
+
+# `glow profiles context`
+
+Context User profiles.
+
+## Usage
+
+```bash
+glow profiles context --id <id>
+```
+
+> Wire call: `POST /profile/context`. Run `glow profiles context --help` for the full flag list.
 
 ---
 
@@ -38048,6 +41866,26 @@ Create User profiles.
 glow profiles create --body '\{...\}'
 ```
 
+> Wire call: `POST /profile/create`. Run `glow profiles create --help` for the full flag list.
+
+---
+
+# `glow profiles csv`
+
+Route: /cli-reference/profiles/csv
+
+# `glow profiles csv`
+
+Csv User profiles.
+
+## Usage
+
+```bash
+glow profiles csv --id <id>
+```
+
+> Wire call: `POST /profile/csv`. Run `glow profiles csv --help` for the full flag list.
+
 ---
 
 # `glow profiles delete`
@@ -38063,6 +41901,152 @@ Delete User profiles.
 ```bash
 glow profiles delete --id <id>
 ```
+
+> Wire call: `POST /profile/delete`. Run `glow profiles delete --help` for the full flag list.
+
+---
+
+# `glow profiles draft`
+
+Route: /cli-reference/profiles/draft
+
+# `glow profiles draft`
+
+Draft User profiles.
+
+## Usage
+
+```bash
+glow profiles draft --id <id>
+```
+
+> Wire call: `POST /profile/draft`. Run `glow profiles draft --help` for the full flag list.
+
+---
+
+# `glow profiles drafts`
+
+Route: /cli-reference/profiles/drafts
+
+# `glow profiles drafts`
+
+Drafts User profiles.
+
+## Usage
+
+```bash
+glow profiles drafts --id <id>
+```
+
+> Wire call: `POST /profile/drafts`. Run `glow profiles drafts --help` for the full flag list.
+
+---
+
+# `glow profiles duplicate`
+
+Route: /cli-reference/profiles/duplicate
+
+# `glow profiles duplicate`
+
+Duplicate User profiles.
+
+## Usage
+
+```bash
+glow profiles duplicate --id <id>
+```
+
+> Wire call: `POST /profile/duplicate`. Run `glow profiles duplicate --help` for the full flag list.
+
+---
+
+# `glow profiles emulate`
+
+Route: /cli-reference/profiles/emulate
+
+# `glow profiles emulate`
+
+Emulate User profiles.
+
+## Usage
+
+```bash
+glow profiles emulate --id <id>
+```
+
+> Wire call: `POST /profile/emulate`. Run `glow profiles emulate --help` for the full flag list.
+
+---
+
+# `glow profiles export`
+
+Route: /cli-reference/profiles/export
+
+# `glow profiles export`
+
+Export User profiles.
+
+## Usage
+
+```bash
+glow profiles export --id <id>
+```
+
+> Wire call: `POST /profile/export`. Run `glow profiles export --help` for the full flag list.
+
+---
+
+# `glow profiles file_download`
+
+Route: /cli-reference/profiles/file_download
+
+# `glow profiles file_download`
+
+File Download User profiles.
+
+## Usage
+
+```bash
+glow profiles file_download --id <id>
+```
+
+> Wire call: `POST /profile/file_download`. Run `glow profiles file_download --help` for the full flag list.
+
+---
+
+# `glow profiles generate`
+
+Route: /cli-reference/profiles/generate
+
+# `glow profiles generate`
+
+Generate User profiles.
+
+## Usage
+
+```bash
+glow profiles generate --body '\{...\}'
+```
+
+> Wire call: `POST /profile/generate`. Run `glow profiles generate --help` for the full flag list.
+
+---
+
+# `glow profiles generations`
+
+Route: /cli-reference/profiles/generations
+
+# `glow profiles generations`
+
+Generations User profiles.
+
+## Usage
+
+```bash
+glow profiles generations --id <id>
+```
+
+> Wire call: `POST /profile/generations`. Run `glow profiles generations --help` for the full flag list.
 
 ---
 
@@ -38080,6 +42064,62 @@ Get User profiles.
 glow profiles get --id <id>
 ```
 
+> Wire call: `POST /profile/get`. Run `glow profiles get --help` for the full flag list.
+
+---
+
+# `glow profiles group`
+
+Route: /cli-reference/profiles/group
+
+# `glow profiles group`
+
+Group User profiles.
+
+## Usage
+
+```bash
+glow profiles group --id <id>
+```
+
+> Wire call: `POST /profile/group`. Run `glow profiles group --help` for the full flag list.
+
+---
+
+# `glow profiles problem`
+
+Route: /cli-reference/profiles/problem
+
+# `glow profiles problem`
+
+Problem User profiles.
+
+## Usage
+
+```bash
+glow profiles problem --id <id>
+```
+
+> Wire call: `POST /profile/problem`. Run `glow profiles problem --help` for the full flag list.
+
+---
+
+# `glow profiles refresh`
+
+Route: /cli-reference/profiles/refresh
+
+# `glow profiles refresh`
+
+Refresh User profiles.
+
+## Usage
+
+```bash
+glow profiles refresh --id <id>
+```
+
+> Wire call: `POST /profile/refresh`. Run `glow profiles refresh --help` for the full flag list.
+
 ---
 
 # `glow profiles search`
@@ -38095,6 +42135,62 @@ Search User profiles.
 ```bash
 glow profiles search
 ```
+
+> Wire call: `POST /profile/search`. Run `glow profiles search --help` for the full flag list.
+
+---
+
+# `glow profiles text_download`
+
+Route: /cli-reference/profiles/text_download
+
+# `glow profiles text_download`
+
+Text Download User profiles.
+
+## Usage
+
+```bash
+glow profiles text_download --id <id>
+```
+
+> Wire call: `POST /profile/text_download`. Run `glow profiles text_download --help` for the full flag list.
+
+---
+
+# `glow profiles title`
+
+Route: /cli-reference/profiles/title
+
+# `glow profiles title`
+
+Title User profiles.
+
+## Usage
+
+```bash
+glow profiles title --id <id>
+```
+
+> Wire call: `POST /profile/title`. Run `glow profiles title --help` for the full flag list.
+
+---
+
+# `glow profiles unemulate`
+
+Route: /cli-reference/profiles/unemulate
+
+# `glow profiles unemulate`
+
+Unemulate User profiles.
+
+## Usage
+
+```bash
+glow profiles unemulate --id <id>
+```
+
+> Wire call: `POST /profile/unemulate`. Run `glow profiles unemulate --help` for the full flag list.
 
 ---
 
@@ -38112,6 +42208,62 @@ Update User profiles.
 glow profiles update --id <id>
 ```
 
+> Wire call: `POST /profile/update`. Run `glow profiles update --help` for the full flag list.
+
+---
+
+# `glow profiles watch`
+
+Route: /cli-reference/profiles/watch
+
+# `glow profiles watch`
+
+Watch User profiles.
+
+## Usage
+
+```bash
+glow profiles watch --id <id>
+```
+
+> Wire call: `POST /profile/watch`. Run `glow profiles watch --help` for the full flag list.
+
+---
+
+# `glow providers call_download`
+
+Route: /cli-reference/providers/call_download
+
+# `glow providers call_download`
+
+Call Download AI provider integrations.
+
+## Usage
+
+```bash
+glow providers call_download --id <id>
+```
+
+> Wire call: `POST /provider/call_download`. Run `glow providers call_download --help` for the full flag list.
+
+---
+
+# `glow providers context`
+
+Route: /cli-reference/providers/context
+
+# `glow providers context`
+
+Context AI provider integrations.
+
+## Usage
+
+```bash
+glow providers context --id <id>
+```
+
+> Wire call: `POST /provider/context`. Run `glow providers context --help` for the full flag list.
+
 ---
 
 # `glow providers create`
@@ -38127,6 +42279,44 @@ Create AI provider integrations.
 ```bash
 glow providers create --body '\{...\}'
 ```
+
+> Wire call: `POST /provider/create`. Run `glow providers create --help` for the full flag list.
+
+---
+
+# `glow providers csv`
+
+Route: /cli-reference/providers/csv
+
+# `glow providers csv`
+
+Csv AI provider integrations.
+
+## Usage
+
+```bash
+glow providers csv --id <id>
+```
+
+> Wire call: `POST /provider/csv`. Run `glow providers csv --help` for the full flag list.
+
+---
+
+# `glow providers decrypt`
+
+Route: /cli-reference/providers/decrypt
+
+# `glow providers decrypt`
+
+Decrypt AI provider integrations.
+
+## Usage
+
+```bash
+glow providers decrypt --id <id>
+```
+
+> Wire call: `POST /provider/decrypt`. Run `glow providers decrypt --help` for the full flag list.
 
 ---
 
@@ -38144,6 +42334,134 @@ Delete AI provider integrations.
 glow providers delete --id <id>
 ```
 
+> Wire call: `POST /provider/delete`. Run `glow providers delete --help` for the full flag list.
+
+---
+
+# `glow providers draft`
+
+Route: /cli-reference/providers/draft
+
+# `glow providers draft`
+
+Draft AI provider integrations.
+
+## Usage
+
+```bash
+glow providers draft --id <id>
+```
+
+> Wire call: `POST /provider/draft`. Run `glow providers draft --help` for the full flag list.
+
+---
+
+# `glow providers drafts`
+
+Route: /cli-reference/providers/drafts
+
+# `glow providers drafts`
+
+Drafts AI provider integrations.
+
+## Usage
+
+```bash
+glow providers drafts --id <id>
+```
+
+> Wire call: `POST /provider/drafts`. Run `glow providers drafts --help` for the full flag list.
+
+---
+
+# `glow providers duplicate`
+
+Route: /cli-reference/providers/duplicate
+
+# `glow providers duplicate`
+
+Duplicate AI provider integrations.
+
+## Usage
+
+```bash
+glow providers duplicate --id <id>
+```
+
+> Wire call: `POST /provider/duplicate`. Run `glow providers duplicate --help` for the full flag list.
+
+---
+
+# `glow providers export`
+
+Route: /cli-reference/providers/export
+
+# `glow providers export`
+
+Export AI provider integrations.
+
+## Usage
+
+```bash
+glow providers export --id <id>
+```
+
+> Wire call: `POST /provider/export`. Run `glow providers export --help` for the full flag list.
+
+---
+
+# `glow providers file_download`
+
+Route: /cli-reference/providers/file_download
+
+# `glow providers file_download`
+
+File Download AI provider integrations.
+
+## Usage
+
+```bash
+glow providers file_download --id <id>
+```
+
+> Wire call: `POST /provider/file_download`. Run `glow providers file_download --help` for the full flag list.
+
+---
+
+# `glow providers generate`
+
+Route: /cli-reference/providers/generate
+
+# `glow providers generate`
+
+Generate AI provider integrations.
+
+## Usage
+
+```bash
+glow providers generate --body '\{...\}'
+```
+
+> Wire call: `POST /provider/generate`. Run `glow providers generate --help` for the full flag list.
+
+---
+
+# `glow providers generations`
+
+Route: /cli-reference/providers/generations
+
+# `glow providers generations`
+
+Generations AI provider integrations.
+
+## Usage
+
+```bash
+glow providers generations --id <id>
+```
+
+> Wire call: `POST /provider/generations`. Run `glow providers generations --help` for the full flag list.
+
 ---
 
 # `glow providers get`
@@ -38159,6 +42477,62 @@ Get AI provider integrations.
 ```bash
 glow providers get --id <id>
 ```
+
+> Wire call: `POST /provider/get`. Run `glow providers get --help` for the full flag list.
+
+---
+
+# `glow providers group`
+
+Route: /cli-reference/providers/group
+
+# `glow providers group`
+
+Group AI provider integrations.
+
+## Usage
+
+```bash
+glow providers group --id <id>
+```
+
+> Wire call: `POST /provider/group`. Run `glow providers group --help` for the full flag list.
+
+---
+
+# `glow providers problem`
+
+Route: /cli-reference/providers/problem
+
+# `glow providers problem`
+
+Problem AI provider integrations.
+
+## Usage
+
+```bash
+glow providers problem --id <id>
+```
+
+> Wire call: `POST /provider/problem`. Run `glow providers problem --help` for the full flag list.
+
+---
+
+# `glow providers refresh`
+
+Route: /cli-reference/providers/refresh
+
+# `glow providers refresh`
+
+Refresh AI provider integrations.
+
+## Usage
+
+```bash
+glow providers refresh --id <id>
+```
+
+> Wire call: `POST /provider/refresh`. Run `glow providers refresh --help` for the full flag list.
 
 ---
 
@@ -38176,6 +42550,44 @@ Search AI provider integrations.
 glow providers search
 ```
 
+> Wire call: `POST /provider/search`. Run `glow providers search --help` for the full flag list.
+
+---
+
+# `glow providers text_download`
+
+Route: /cli-reference/providers/text_download
+
+# `glow providers text_download`
+
+Text Download AI provider integrations.
+
+## Usage
+
+```bash
+glow providers text_download --id <id>
+```
+
+> Wire call: `POST /provider/text_download`. Run `glow providers text_download --help` for the full flag list.
+
+---
+
+# `glow providers title`
+
+Route: /cli-reference/providers/title
+
+# `glow providers title`
+
+Title AI provider integrations.
+
+## Usage
+
+```bash
+glow providers title --id <id>
+```
+
+> Wire call: `POST /provider/title`. Run `glow providers title --help` for the full flag list.
+
 ---
 
 # `glow providers update`
@@ -38191,6 +42603,26 @@ Update AI provider integrations.
 ```bash
 glow providers update --id <id>
 ```
+
+> Wire call: `POST /provider/update`. Run `glow providers update --help` for the full flag list.
+
+---
+
+# `glow providers watch`
+
+Route: /cli-reference/providers/watch
+
+# `glow providers watch`
+
+Watch AI provider integrations.
+
+## Usage
+
+```bash
+glow providers watch --id <id>
+```
+
+> Wire call: `POST /provider/watch`. Run `glow providers watch --help` for the full flag list.
 
 ---
 
@@ -38221,6 +42653,42 @@ glow redeploy [--name] [--api-version] [--client-version] [--from-backup] [--res
 
 ---
 
+# `glow rubrics call_download`
+
+Route: /cli-reference/rubrics/call_download
+
+# `glow rubrics call_download`
+
+Call Download Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics call_download --id <id>
+```
+
+> Wire call: `POST /rubric/call_download`. Run `glow rubrics call_download --help` for the full flag list.
+
+---
+
+# `glow rubrics context`
+
+Route: /cli-reference/rubrics/context
+
+# `glow rubrics context`
+
+Context Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics context --id <id>
+```
+
+> Wire call: `POST /rubric/context`. Run `glow rubrics context --help` for the full flag list.
+
+---
+
 # `glow rubrics create`
 
 Route: /cli-reference/rubrics/create
@@ -38234,6 +42702,26 @@ Create Grading rubrics.
 ```bash
 glow rubrics create --body '\{...\}'
 ```
+
+> Wire call: `POST /rubric/create`. Run `glow rubrics create --help` for the full flag list.
+
+---
+
+# `glow rubrics csv`
+
+Route: /cli-reference/rubrics/csv
+
+# `glow rubrics csv`
+
+Csv Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics csv --id <id>
+```
+
+> Wire call: `POST /rubric/csv`. Run `glow rubrics csv --help` for the full flag list.
 
 ---
 
@@ -38251,6 +42739,134 @@ Delete Grading rubrics.
 glow rubrics delete --id <id>
 ```
 
+> Wire call: `POST /rubric/delete`. Run `glow rubrics delete --help` for the full flag list.
+
+---
+
+# `glow rubrics draft`
+
+Route: /cli-reference/rubrics/draft
+
+# `glow rubrics draft`
+
+Draft Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics draft --id <id>
+```
+
+> Wire call: `POST /rubric/draft`. Run `glow rubrics draft --help` for the full flag list.
+
+---
+
+# `glow rubrics drafts`
+
+Route: /cli-reference/rubrics/drafts
+
+# `glow rubrics drafts`
+
+Drafts Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics drafts --id <id>
+```
+
+> Wire call: `POST /rubric/drafts`. Run `glow rubrics drafts --help` for the full flag list.
+
+---
+
+# `glow rubrics duplicate`
+
+Route: /cli-reference/rubrics/duplicate
+
+# `glow rubrics duplicate`
+
+Duplicate Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics duplicate --id <id>
+```
+
+> Wire call: `POST /rubric/duplicate`. Run `glow rubrics duplicate --help` for the full flag list.
+
+---
+
+# `glow rubrics export`
+
+Route: /cli-reference/rubrics/export
+
+# `glow rubrics export`
+
+Export Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics export --id <id>
+```
+
+> Wire call: `POST /rubric/export`. Run `glow rubrics export --help` for the full flag list.
+
+---
+
+# `glow rubrics file_download`
+
+Route: /cli-reference/rubrics/file_download
+
+# `glow rubrics file_download`
+
+File Download Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics file_download --id <id>
+```
+
+> Wire call: `POST /rubric/file_download`. Run `glow rubrics file_download --help` for the full flag list.
+
+---
+
+# `glow rubrics generate`
+
+Route: /cli-reference/rubrics/generate
+
+# `glow rubrics generate`
+
+Generate Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics generate --body '\{...\}'
+```
+
+> Wire call: `POST /rubric/generate`. Run `glow rubrics generate --help` for the full flag list.
+
+---
+
+# `glow rubrics generations`
+
+Route: /cli-reference/rubrics/generations
+
+# `glow rubrics generations`
+
+Generations Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics generations --id <id>
+```
+
+> Wire call: `POST /rubric/generations`. Run `glow rubrics generations --help` for the full flag list.
+
 ---
 
 # `glow rubrics get`
@@ -38266,6 +42882,62 @@ Get Grading rubrics.
 ```bash
 glow rubrics get --id <id>
 ```
+
+> Wire call: `POST /rubric/get`. Run `glow rubrics get --help` for the full flag list.
+
+---
+
+# `glow rubrics group`
+
+Route: /cli-reference/rubrics/group
+
+# `glow rubrics group`
+
+Group Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics group --id <id>
+```
+
+> Wire call: `POST /rubric/group`. Run `glow rubrics group --help` for the full flag list.
+
+---
+
+# `glow rubrics problem`
+
+Route: /cli-reference/rubrics/problem
+
+# `glow rubrics problem`
+
+Problem Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics problem --id <id>
+```
+
+> Wire call: `POST /rubric/problem`. Run `glow rubrics problem --help` for the full flag list.
+
+---
+
+# `glow rubrics refresh`
+
+Route: /cli-reference/rubrics/refresh
+
+# `glow rubrics refresh`
+
+Refresh Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics refresh --id <id>
+```
+
+> Wire call: `POST /rubric/refresh`. Run `glow rubrics refresh --help` for the full flag list.
 
 ---
 
@@ -38283,6 +42955,44 @@ Search Grading rubrics.
 glow rubrics search
 ```
 
+> Wire call: `POST /rubric/search`. Run `glow rubrics search --help` for the full flag list.
+
+---
+
+# `glow rubrics text_download`
+
+Route: /cli-reference/rubrics/text_download
+
+# `glow rubrics text_download`
+
+Text Download Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics text_download --id <id>
+```
+
+> Wire call: `POST /rubric/text_download`. Run `glow rubrics text_download --help` for the full flag list.
+
+---
+
+# `glow rubrics title`
+
+Route: /cli-reference/rubrics/title
+
+# `glow rubrics title`
+
+Title Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics title --id <id>
+```
+
+> Wire call: `POST /rubric/title`. Run `glow rubrics title --help` for the full flag list.
+
 ---
 
 # `glow rubrics update`
@@ -38298,6 +43008,62 @@ Update Grading rubrics.
 ```bash
 glow rubrics update --id <id>
 ```
+
+> Wire call: `POST /rubric/update`. Run `glow rubrics update --help` for the full flag list.
+
+---
+
+# `glow rubrics watch`
+
+Route: /cli-reference/rubrics/watch
+
+# `glow rubrics watch`
+
+Watch Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics watch --id <id>
+```
+
+> Wire call: `POST /rubric/watch`. Run `glow rubrics watch --help` for the full flag list.
+
+---
+
+# `glow scenarios call_download`
+
+Route: /cli-reference/scenarios/call_download
+
+# `glow scenarios call_download`
+
+Call Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios call_download --id <id>
+```
+
+> Wire call: `POST /scenario/call_download`. Run `glow scenarios call_download --help` for the full flag list.
+
+---
+
+# `glow scenarios context`
+
+Route: /cli-reference/scenarios/context
+
+# `glow scenarios context`
+
+Context Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios context --id <id>
+```
+
+> Wire call: `POST /scenario/context`. Run `glow scenarios context --help` for the full flag list.
 
 ---
 
@@ -38315,6 +43081,26 @@ Create Simulation scenarios.
 glow scenarios create --body '\{...\}'
 ```
 
+> Wire call: `POST /scenario/create`. Run `glow scenarios create --help` for the full flag list.
+
+---
+
+# `glow scenarios csv`
+
+Route: /cli-reference/scenarios/csv
+
+# `glow scenarios csv`
+
+Csv Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios csv --id <id>
+```
+
+> Wire call: `POST /scenario/csv`. Run `glow scenarios csv --help` for the full flag list.
+
 ---
 
 # `glow scenarios delete`
@@ -38330,6 +43116,152 @@ Delete Simulation scenarios.
 ```bash
 glow scenarios delete --id <id>
 ```
+
+> Wire call: `POST /scenario/delete`. Run `glow scenarios delete --help` for the full flag list.
+
+---
+
+# `glow scenarios draft`
+
+Route: /cli-reference/scenarios/draft
+
+# `glow scenarios draft`
+
+Draft Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios draft --id <id>
+```
+
+> Wire call: `POST /scenario/draft`. Run `glow scenarios draft --help` for the full flag list.
+
+---
+
+# `glow scenarios drafts`
+
+Route: /cli-reference/scenarios/drafts
+
+# `glow scenarios drafts`
+
+Drafts Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios drafts --id <id>
+```
+
+> Wire call: `POST /scenario/drafts`. Run `glow scenarios drafts --help` for the full flag list.
+
+---
+
+# `glow scenarios duplicate`
+
+Route: /cli-reference/scenarios/duplicate
+
+# `glow scenarios duplicate`
+
+Duplicate Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios duplicate --id <id>
+```
+
+> Wire call: `POST /scenario/duplicate`. Run `glow scenarios duplicate --help` for the full flag list.
+
+---
+
+# `glow scenarios export`
+
+Route: /cli-reference/scenarios/export
+
+# `glow scenarios export`
+
+Export Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios export --id <id>
+```
+
+> Wire call: `POST /scenario/export`. Run `glow scenarios export --help` for the full flag list.
+
+---
+
+# `glow scenarios file_download`
+
+Route: /cli-reference/scenarios/file_download
+
+# `glow scenarios file_download`
+
+File Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios file_download --id <id>
+```
+
+> Wire call: `POST /scenario/file_download`. Run `glow scenarios file_download --help` for the full flag list.
+
+---
+
+# `glow scenarios file_preview`
+
+Route: /cli-reference/scenarios/file_preview
+
+# `glow scenarios file_preview`
+
+File Preview Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios file_preview --id <id>
+```
+
+> Wire call: `POST /scenario/file_preview`. Run `glow scenarios file_preview --help` for the full flag list.
+
+---
+
+# `glow scenarios generate`
+
+Route: /cli-reference/scenarios/generate
+
+# `glow scenarios generate`
+
+Generate Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios generate --body '\{...\}'
+```
+
+> Wire call: `POST /scenario/generate`. Run `glow scenarios generate --help` for the full flag list.
+
+---
+
+# `glow scenarios generations`
+
+Route: /cli-reference/scenarios/generations
+
+# `glow scenarios generations`
+
+Generations Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios generations --id <id>
+```
+
+> Wire call: `POST /scenario/generations`. Run `glow scenarios generations --help` for the full flag list.
 
 ---
 
@@ -38347,6 +43279,98 @@ Get Simulation scenarios.
 glow scenarios get --id <id>
 ```
 
+> Wire call: `POST /scenario/get`. Run `glow scenarios get --help` for the full flag list.
+
+---
+
+# `glow scenarios group`
+
+Route: /cli-reference/scenarios/group
+
+# `glow scenarios group`
+
+Group Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios group --id <id>
+```
+
+> Wire call: `POST /scenario/group`. Run `glow scenarios group --help` for the full flag list.
+
+---
+
+# `glow scenarios image_download`
+
+Route: /cli-reference/scenarios/image_download
+
+# `glow scenarios image_download`
+
+Image Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios image_download --id <id>
+```
+
+> Wire call: `POST /scenario/image_download`. Run `glow scenarios image_download --help` for the full flag list.
+
+---
+
+# `glow scenarios image_upload`
+
+Route: /cli-reference/scenarios/image_upload
+
+# `glow scenarios image_upload`
+
+Image Upload Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios image_upload --id <id>
+```
+
+> Wire call: `POST /scenario/image_upload`. Run `glow scenarios image_upload --help` for the full flag list.
+
+---
+
+# `glow scenarios problem`
+
+Route: /cli-reference/scenarios/problem
+
+# `glow scenarios problem`
+
+Problem Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios problem --id <id>
+```
+
+> Wire call: `POST /scenario/problem`. Run `glow scenarios problem --help` for the full flag list.
+
+---
+
+# `glow scenarios refresh`
+
+Route: /cli-reference/scenarios/refresh
+
+# `glow scenarios refresh`
+
+Refresh Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios refresh --id <id>
+```
+
+> Wire call: `POST /scenario/refresh`. Run `glow scenarios refresh --help` for the full flag list.
+
 ---
 
 # `glow scenarios search`
@@ -38362,6 +43386,44 @@ Search Simulation scenarios.
 ```bash
 glow scenarios search
 ```
+
+> Wire call: `POST /scenario/search`. Run `glow scenarios search --help` for the full flag list.
+
+---
+
+# `glow scenarios text_download`
+
+Route: /cli-reference/scenarios/text_download
+
+# `glow scenarios text_download`
+
+Text Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios text_download --id <id>
+```
+
+> Wire call: `POST /scenario/text_download`. Run `glow scenarios text_download --help` for the full flag list.
+
+---
+
+# `glow scenarios title`
+
+Route: /cli-reference/scenarios/title
+
+# `glow scenarios title`
+
+Title Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios title --id <id>
+```
+
+> Wire call: `POST /scenario/title`. Run `glow scenarios title --help` for the full flag list.
 
 ---
 
@@ -38379,6 +43441,98 @@ Update Simulation scenarios.
 glow scenarios update --id <id>
 ```
 
+> Wire call: `POST /scenario/update`. Run `glow scenarios update --help` for the full flag list.
+
+---
+
+# `glow scenarios video_download`
+
+Route: /cli-reference/scenarios/video_download
+
+# `glow scenarios video_download`
+
+Video Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios video_download --id <id>
+```
+
+> Wire call: `POST /scenario/video_download`. Run `glow scenarios video_download --help` for the full flag list.
+
+---
+
+# `glow scenarios video_upload`
+
+Route: /cli-reference/scenarios/video_upload
+
+# `glow scenarios video_upload`
+
+Video Upload Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios video_upload --id <id>
+```
+
+> Wire call: `POST /scenario/video_upload`. Run `glow scenarios video_upload --help` for the full flag list.
+
+---
+
+# `glow scenarios watch`
+
+Route: /cli-reference/scenarios/watch
+
+# `glow scenarios watch`
+
+Watch Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios watch --id <id>
+```
+
+> Wire call: `POST /scenario/watch`. Run `glow scenarios watch --help` for the full flag list.
+
+---
+
+# `glow settings call_download`
+
+Route: /cli-reference/settings/call_download
+
+# `glow settings call_download`
+
+Call Download Instance settings.
+
+## Usage
+
+```bash
+glow settings call_download --id <id>
+```
+
+> Wire call: `POST /setting/call_download`. Run `glow settings call_download --help` for the full flag list.
+
+---
+
+# `glow settings context`
+
+Route: /cli-reference/settings/context
+
+# `glow settings context`
+
+Context Instance settings.
+
+## Usage
+
+```bash
+glow settings context --id <id>
+```
+
+> Wire call: `POST /setting/context`. Run `glow settings context --help` for the full flag list.
+
 ---
 
 # `glow settings create`
@@ -38394,6 +43548,44 @@ Create Instance settings.
 ```bash
 glow settings create --body '\{...\}'
 ```
+
+> Wire call: `POST /setting/create`. Run `glow settings create --help` for the full flag list.
+
+---
+
+# `glow settings csv`
+
+Route: /cli-reference/settings/csv
+
+# `glow settings csv`
+
+Csv Instance settings.
+
+## Usage
+
+```bash
+glow settings csv --id <id>
+```
+
+> Wire call: `POST /setting/csv`. Run `glow settings csv --help` for the full flag list.
+
+---
+
+# `glow settings decrypt`
+
+Route: /cli-reference/settings/decrypt
+
+# `glow settings decrypt`
+
+Decrypt Instance settings.
+
+## Usage
+
+```bash
+glow settings decrypt --id <id>
+```
+
+> Wire call: `POST /setting/decrypt`. Run `glow settings decrypt --help` for the full flag list.
 
 ---
 
@@ -38411,6 +43603,134 @@ Delete Instance settings.
 glow settings delete --id <id>
 ```
 
+> Wire call: `POST /setting/delete`. Run `glow settings delete --help` for the full flag list.
+
+---
+
+# `glow settings draft`
+
+Route: /cli-reference/settings/draft
+
+# `glow settings draft`
+
+Draft Instance settings.
+
+## Usage
+
+```bash
+glow settings draft --id <id>
+```
+
+> Wire call: `POST /setting/draft`. Run `glow settings draft --help` for the full flag list.
+
+---
+
+# `glow settings drafts`
+
+Route: /cli-reference/settings/drafts
+
+# `glow settings drafts`
+
+Drafts Instance settings.
+
+## Usage
+
+```bash
+glow settings drafts --id <id>
+```
+
+> Wire call: `POST /setting/drafts`. Run `glow settings drafts --help` for the full flag list.
+
+---
+
+# `glow settings duplicate`
+
+Route: /cli-reference/settings/duplicate
+
+# `glow settings duplicate`
+
+Duplicate Instance settings.
+
+## Usage
+
+```bash
+glow settings duplicate --id <id>
+```
+
+> Wire call: `POST /setting/duplicate`. Run `glow settings duplicate --help` for the full flag list.
+
+---
+
+# `glow settings export`
+
+Route: /cli-reference/settings/export
+
+# `glow settings export`
+
+Export Instance settings.
+
+## Usage
+
+```bash
+glow settings export --id <id>
+```
+
+> Wire call: `POST /setting/export`. Run `glow settings export --help` for the full flag list.
+
+---
+
+# `glow settings file_download`
+
+Route: /cli-reference/settings/file_download
+
+# `glow settings file_download`
+
+File Download Instance settings.
+
+## Usage
+
+```bash
+glow settings file_download --id <id>
+```
+
+> Wire call: `POST /setting/file_download`. Run `glow settings file_download --help` for the full flag list.
+
+---
+
+# `glow settings generate`
+
+Route: /cli-reference/settings/generate
+
+# `glow settings generate`
+
+Generate Instance settings.
+
+## Usage
+
+```bash
+glow settings generate --body '\{...\}'
+```
+
+> Wire call: `POST /setting/generate`. Run `glow settings generate --help` for the full flag list.
+
+---
+
+# `glow settings generations`
+
+Route: /cli-reference/settings/generations
+
+# `glow settings generations`
+
+Generations Instance settings.
+
+## Usage
+
+```bash
+glow settings generations --id <id>
+```
+
+> Wire call: `POST /setting/generations`. Run `glow settings generations --help` for the full flag list.
+
 ---
 
 # `glow settings get`
@@ -38426,6 +43746,62 @@ Get Instance settings.
 ```bash
 glow settings get --id <id>
 ```
+
+> Wire call: `POST /setting/get`. Run `glow settings get --help` for the full flag list.
+
+---
+
+# `glow settings group`
+
+Route: /cli-reference/settings/group
+
+# `glow settings group`
+
+Group Instance settings.
+
+## Usage
+
+```bash
+glow settings group --id <id>
+```
+
+> Wire call: `POST /setting/group`. Run `glow settings group --help` for the full flag list.
+
+---
+
+# `glow settings problem`
+
+Route: /cli-reference/settings/problem
+
+# `glow settings problem`
+
+Problem Instance settings.
+
+## Usage
+
+```bash
+glow settings problem --id <id>
+```
+
+> Wire call: `POST /setting/problem`. Run `glow settings problem --help` for the full flag list.
+
+---
+
+# `glow settings refresh`
+
+Route: /cli-reference/settings/refresh
+
+# `glow settings refresh`
+
+Refresh Instance settings.
+
+## Usage
+
+```bash
+glow settings refresh --id <id>
+```
+
+> Wire call: `POST /setting/refresh`. Run `glow settings refresh --help` for the full flag list.
 
 ---
 
@@ -38443,6 +43819,44 @@ Search Instance settings.
 glow settings search
 ```
 
+> Wire call: `POST /setting/search`. Run `glow settings search --help` for the full flag list.
+
+---
+
+# `glow settings text_download`
+
+Route: /cli-reference/settings/text_download
+
+# `glow settings text_download`
+
+Text Download Instance settings.
+
+## Usage
+
+```bash
+glow settings text_download --id <id>
+```
+
+> Wire call: `POST /setting/text_download`. Run `glow settings text_download --help` for the full flag list.
+
+---
+
+# `glow settings title`
+
+Route: /cli-reference/settings/title
+
+# `glow settings title`
+
+Title Instance settings.
+
+## Usage
+
+```bash
+glow settings title --id <id>
+```
+
+> Wire call: `POST /setting/title`. Run `glow settings title --help` for the full flag list.
+
 ---
 
 # `glow settings update`
@@ -38458,6 +43872,62 @@ Update Instance settings.
 ```bash
 glow settings update --id <id>
 ```
+
+> Wire call: `POST /setting/update`. Run `glow settings update --help` for the full flag list.
+
+---
+
+# `glow settings watch`
+
+Route: /cli-reference/settings/watch
+
+# `glow settings watch`
+
+Watch Instance settings.
+
+## Usage
+
+```bash
+glow settings watch --id <id>
+```
+
+> Wire call: `POST /setting/watch`. Run `glow settings watch --help` for the full flag list.
+
+---
+
+# `glow simulations call_download`
+
+Route: /cli-reference/simulations/call_download
+
+# `glow simulations call_download`
+
+Call Download Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations call_download --id <id>
+```
+
+> Wire call: `POST /simulation/call_download`. Run `glow simulations call_download --help` for the full flag list.
+
+---
+
+# `glow simulations context`
+
+Route: /cli-reference/simulations/context
+
+# `glow simulations context`
+
+Context Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations context --id <id>
+```
+
+> Wire call: `POST /simulation/context`. Run `glow simulations context --help` for the full flag list.
 
 ---
 
@@ -38475,6 +43945,26 @@ Create Simulation configurations.
 glow simulations create --body '\{...\}'
 ```
 
+> Wire call: `POST /simulation/create`. Run `glow simulations create --help` for the full flag list.
+
+---
+
+# `glow simulations csv`
+
+Route: /cli-reference/simulations/csv
+
+# `glow simulations csv`
+
+Csv Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations csv --id <id>
+```
+
+> Wire call: `POST /simulation/csv`. Run `glow simulations csv --help` for the full flag list.
+
 ---
 
 # `glow simulations delete`
@@ -38490,6 +43980,134 @@ Delete Simulation configurations.
 ```bash
 glow simulations delete --id <id>
 ```
+
+> Wire call: `POST /simulation/delete`. Run `glow simulations delete --help` for the full flag list.
+
+---
+
+# `glow simulations draft`
+
+Route: /cli-reference/simulations/draft
+
+# `glow simulations draft`
+
+Draft Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations draft --id <id>
+```
+
+> Wire call: `POST /simulation/draft`. Run `glow simulations draft --help` for the full flag list.
+
+---
+
+# `glow simulations drafts`
+
+Route: /cli-reference/simulations/drafts
+
+# `glow simulations drafts`
+
+Drafts Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations drafts --id <id>
+```
+
+> Wire call: `POST /simulation/drafts`. Run `glow simulations drafts --help` for the full flag list.
+
+---
+
+# `glow simulations duplicate`
+
+Route: /cli-reference/simulations/duplicate
+
+# `glow simulations duplicate`
+
+Duplicate Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations duplicate --id <id>
+```
+
+> Wire call: `POST /simulation/duplicate`. Run `glow simulations duplicate --help` for the full flag list.
+
+---
+
+# `glow simulations export`
+
+Route: /cli-reference/simulations/export
+
+# `glow simulations export`
+
+Export Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations export --id <id>
+```
+
+> Wire call: `POST /simulation/export`. Run `glow simulations export --help` for the full flag list.
+
+---
+
+# `glow simulations file_download`
+
+Route: /cli-reference/simulations/file_download
+
+# `glow simulations file_download`
+
+File Download Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations file_download --id <id>
+```
+
+> Wire call: `POST /simulation/file_download`. Run `glow simulations file_download --help` for the full flag list.
+
+---
+
+# `glow simulations generate`
+
+Route: /cli-reference/simulations/generate
+
+# `glow simulations generate`
+
+Generate Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations generate --body '\{...\}'
+```
+
+> Wire call: `POST /simulation/generate`. Run `glow simulations generate --help` for the full flag list.
+
+---
+
+# `glow simulations generations`
+
+Route: /cli-reference/simulations/generations
+
+# `glow simulations generations`
+
+Generations Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations generations --id <id>
+```
+
+> Wire call: `POST /simulation/generations`. Run `glow simulations generations --help` for the full flag list.
 
 ---
 
@@ -38507,6 +44125,62 @@ Get Simulation configurations.
 glow simulations get --id <id>
 ```
 
+> Wire call: `POST /simulation/get`. Run `glow simulations get --help` for the full flag list.
+
+---
+
+# `glow simulations group`
+
+Route: /cli-reference/simulations/group
+
+# `glow simulations group`
+
+Group Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations group --id <id>
+```
+
+> Wire call: `POST /simulation/group`. Run `glow simulations group --help` for the full flag list.
+
+---
+
+# `glow simulations problem`
+
+Route: /cli-reference/simulations/problem
+
+# `glow simulations problem`
+
+Problem Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations problem --id <id>
+```
+
+> Wire call: `POST /simulation/problem`. Run `glow simulations problem --help` for the full flag list.
+
+---
+
+# `glow simulations refresh`
+
+Route: /cli-reference/simulations/refresh
+
+# `glow simulations refresh`
+
+Refresh Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations refresh --id <id>
+```
+
+> Wire call: `POST /simulation/refresh`. Run `glow simulations refresh --help` for the full flag list.
+
 ---
 
 # `glow simulations search`
@@ -38523,6 +44197,44 @@ Search Simulation configurations.
 glow simulations search
 ```
 
+> Wire call: `POST /simulation/search`. Run `glow simulations search --help` for the full flag list.
+
+---
+
+# `glow simulations text_download`
+
+Route: /cli-reference/simulations/text_download
+
+# `glow simulations text_download`
+
+Text Download Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations text_download --id <id>
+```
+
+> Wire call: `POST /simulation/text_download`. Run `glow simulations text_download --help` for the full flag list.
+
+---
+
+# `glow simulations title`
+
+Route: /cli-reference/simulations/title
+
+# `glow simulations title`
+
+Title Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations title --id <id>
+```
+
+> Wire call: `POST /simulation/title`. Run `glow simulations title --help` for the full flag list.
+
 ---
 
 # `glow simulations update`
@@ -38538,6 +44250,26 @@ Update Simulation configurations.
 ```bash
 glow simulations update --id <id>
 ```
+
+> Wire call: `POST /simulation/update`. Run `glow simulations update --help` for the full flag list.
+
+---
+
+# `glow simulations watch`
+
+Route: /cli-reference/simulations/watch
+
+# `glow simulations watch`
+
+Watch Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations watch --id <id>
+```
+
+> Wire call: `POST /simulation/watch`. Run `glow simulations watch --help` for the full flag list.
 
 ---
 
@@ -38607,115 +44339,651 @@ glow stop [--name]
 
 ---
 
-# `glow system create`
+# `glow system activity`
 
-Route: /cli-reference/system/create
+Route: /cli-reference/system/activity
 
-# `glow system create`
+# `glow system activity`
 
-Create System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Activity System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow system create --body '\{...\}'
+glow system activity --id <id>
 ```
+
+> Wire call: `POST /system/activity`. Run `glow system activity --help` for the full flag list.
 
 ---
 
-# `glow system delete`
+# `glow system audio_download`
 
-Route: /cli-reference/system/delete
+Route: /cli-reference/system/audio_download
 
-# `glow system delete`
+# `glow system audio_download`
 
-Delete System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Audio Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow system delete --id <id>
+glow system audio_download --id <id>
 ```
+
+> Wire call: `POST /system/audio_download`. Run `glow system audio_download --help` for the full flag list.
 
 ---
 
-# `glow system get`
+# `glow system call_download`
 
-Route: /cli-reference/system/get
+Route: /cli-reference/system/call_download
 
-# `glow system get`
+# `glow system call_download`
 
-Get System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Call Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow system get --id <id>
+glow system call_download --id <id>
 ```
+
+> Wire call: `POST /system/call_download`. Run `glow system call_download --help` for the full flag list.
 
 ---
 
-# `glow system search`
+# `glow system context`
 
-Route: /cli-reference/system/search
+Route: /cli-reference/system/context
 
-# `glow system search`
+# `glow system context`
 
-Search System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Context System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow system search
+glow system context --id <id>
 ```
+
+> Wire call: `POST /system/context`. Run `glow system context --help` for the full flag list.
 
 ---
 
-# `glow system update`
+# `glow system export`
 
-Route: /cli-reference/system/update
+Route: /cli-reference/system/export
 
-# `glow system update`
+# `glow system export`
 
-Update System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Export System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow system update --id <id>
+glow system export --id <id>
 ```
+
+> Wire call: `POST /system/export`. Run `glow system export --help` for the full flag list.
 
 ---
 
-# `glow tests create`
+# `glow system file_download`
 
-Route: /cli-reference/tests/create
+Route: /cli-reference/system/file_download
 
-# `glow tests create`
+# `glow system file_download`
 
-Create Test sessions.
+File Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow tests create --body '\{...\}'
+glow system file_download --id <id>
 ```
+
+> Wire call: `POST /system/file_download`. Run `glow system file_download --help` for the full flag list.
 
 ---
 
-# `glow tests delete`
+# `glow system file_preview`
 
-Route: /cli-reference/tests/delete
+Route: /cli-reference/system/file_preview
 
-# `glow tests delete`
+# `glow system file_preview`
 
-Delete Test sessions.
+File Preview System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
 
 ## Usage
 
 ```bash
-glow tests delete --id <id>
+glow system file_preview --id <id>
 ```
+
+> Wire call: `POST /system/file_preview`. Run `glow system file_preview --help` for the full flag list.
+
+---
+
+# `glow system generate`
+
+Route: /cli-reference/system/generate
+
+# `glow system generate`
+
+Generate System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system generate --body '\{...\}'
+```
+
+> Wire call: `POST /system/generate`. Run `glow system generate --help` for the full flag list.
+
+---
+
+# `glow system generations`
+
+Route: /cli-reference/system/generations
+
+# `glow system generations`
+
+Generations System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system generations --id <id>
+```
+
+> Wire call: `POST /system/generations`. Run `glow system generations --help` for the full flag list.
+
+---
+
+# `glow system group`
+
+Route: /cli-reference/system/group
+
+# `glow system group`
+
+Group System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system group --id <id>
+```
+
+> Wire call: `POST /system/group`. Run `glow system group --help` for the full flag list.
+
+---
+
+# `glow system groups`
+
+Route: /cli-reference/system/groups
+
+# `glow system groups`
+
+Groups System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system groups --id <id>
+```
+
+> Wire call: `POST /system/groups`. Run `glow system groups --help` for the full flag list.
+
+---
+
+# `glow system health`
+
+Route: /cli-reference/system/health
+
+# `glow system health`
+
+Health System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system health --id <id>
+```
+
+> Wire call: `POST /system/health`. Run `glow system health --help` for the full flag list.
+
+---
+
+# `glow system image_download`
+
+Route: /cli-reference/system/image_download
+
+# `glow system image_download`
+
+Image Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system image_download --id <id>
+```
+
+> Wire call: `POST /system/image_download`. Run `glow system image_download --help` for the full flag list.
+
+---
+
+# `glow system pricing`
+
+Route: /cli-reference/system/pricing
+
+# `glow system pricing`
+
+Pricing System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system pricing --id <id>
+```
+
+> Wire call: `POST /system/pricing`. Run `glow system pricing --help` for the full flag list.
+
+---
+
+# `glow system problem`
+
+Route: /cli-reference/system/problem
+
+# `glow system problem`
+
+Problem System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system problem --id <id>
+```
+
+> Wire call: `POST /system/problem`. Run `glow system problem --help` for the full flag list.
+
+---
+
+# `glow system refresh`
+
+Route: /cli-reference/system/refresh
+
+# `glow system refresh`
+
+Refresh System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system refresh --id <id>
+```
+
+> Wire call: `POST /system/refresh`. Run `glow system refresh --help` for the full flag list.
+
+---
+
+# `glow system resolve`
+
+Route: /cli-reference/system/resolve
+
+# `glow system resolve`
+
+Resolve System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system resolve --id <id>
+```
+
+> Wire call: `POST /system/resolve`. Run `glow system resolve --help` for the full flag list.
+
+---
+
+# `glow system session`
+
+Route: /cli-reference/system/session
+
+# `glow system session`
+
+Session System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system session --id <id>
+```
+
+> Wire call: `POST /system/session`. Run `glow system session --help` for the full flag list.
+
+---
+
+# `glow system sessions`
+
+Route: /cli-reference/system/sessions
+
+# `glow system sessions`
+
+Sessions System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system sessions --id <id>
+```
+
+> Wire call: `POST /system/sessions`. Run `glow system sessions --help` for the full flag list.
+
+---
+
+# `glow system text_download`
+
+Route: /cli-reference/system/text_download
+
+# `glow system text_download`
+
+Text Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system text_download --id <id>
+```
+
+> Wire call: `POST /system/text_download`. Run `glow system text_download --help` for the full flag list.
+
+---
+
+# `glow system title`
+
+Route: /cli-reference/system/title
+
+# `glow system title`
+
+Title System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system title --id <id>
+```
+
+> Wire call: `POST /system/title`. Run `glow system title --help` for the full flag list.
+
+---
+
+# `glow system video_download`
+
+Route: /cli-reference/system/video_download
+
+# `glow system video_download`
+
+Video Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system video_download --id <id>
+```
+
+> Wire call: `POST /system/video_download`. Run `glow system video_download --help` for the full flag list.
+
+---
+
+# `glow system watch`
+
+Route: /cli-reference/system/watch
+
+# `glow system watch`
+
+Watch System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system watch --id <id>
+```
+
+> Wire call: `POST /system/watch`. Run `glow system watch --help` for the full flag list.
+
+---
+
+# `glow tests archive`
+
+Route: /cli-reference/tests/archive
+
+# `glow tests archive`
+
+Archive Test sessions.
+
+## Usage
+
+```bash
+glow tests archive --id <id>
+```
+
+> Wire call: `POST /test/archive`. Run `glow tests archive --help` for the full flag list.
+
+---
+
+# `glow tests benchmark`
+
+Route: /cli-reference/tests/benchmark
+
+# `glow tests benchmark`
+
+Benchmark Test sessions.
+
+## Usage
+
+```bash
+glow tests benchmark --id <id>
+```
+
+> Wire call: `POST /test/benchmark`. Run `glow tests benchmark --help` for the full flag list.
+
+---
+
+# `glow tests call_download`
+
+Route: /cli-reference/tests/call_download
+
+# `glow tests call_download`
+
+Call Download Test sessions.
+
+## Usage
+
+```bash
+glow tests call_download --id <id>
+```
+
+> Wire call: `POST /test/call_download`. Run `glow tests call_download --help` for the full flag list.
+
+---
+
+# `glow tests complete`
+
+Route: /cli-reference/tests/complete
+
+# `glow tests complete`
+
+Complete Test sessions.
+
+## Usage
+
+```bash
+glow tests complete --id <id>
+```
+
+> Wire call: `POST /test/complete`. Run `glow tests complete --help` for the full flag list.
+
+---
+
+# `glow tests context`
+
+Route: /cli-reference/tests/context
+
+# `glow tests context`
+
+Context Test sessions.
+
+## Usage
+
+```bash
+glow tests context --id <id>
+```
+
+> Wire call: `POST /test/context`. Run `glow tests context --help` for the full flag list.
+
+---
+
+# `glow tests decrypt`
+
+Route: /cli-reference/tests/decrypt
+
+# `glow tests decrypt`
+
+Decrypt Test sessions.
+
+## Usage
+
+```bash
+glow tests decrypt --id <id>
+```
+
+> Wire call: `POST /test/decrypt`. Run `glow tests decrypt --help` for the full flag list.
+
+---
+
+# `glow tests draft`
+
+Route: /cli-reference/tests/draft
+
+# `glow tests draft`
+
+Draft Test sessions.
+
+## Usage
+
+```bash
+glow tests draft --id <id>
+```
+
+> Wire call: `POST /test/draft`. Run `glow tests draft --help` for the full flag list.
+
+---
+
+# `glow tests drafts`
+
+Route: /cli-reference/tests/drafts
+
+# `glow tests drafts`
+
+Drafts Test sessions.
+
+## Usage
+
+```bash
+glow tests drafts --id <id>
+```
+
+> Wire call: `POST /test/drafts`. Run `glow tests drafts --help` for the full flag list.
+
+---
+
+# `glow tests export`
+
+Route: /cli-reference/tests/export
+
+# `glow tests export`
+
+Export Test sessions.
+
+## Usage
+
+```bash
+glow tests export --id <id>
+```
+
+> Wire call: `POST /test/export`. Run `glow tests export --help` for the full flag list.
+
+---
+
+# `glow tests feedback`
+
+Route: /cli-reference/tests/feedback
+
+# `glow tests feedback`
+
+Feedback Test sessions.
+
+## Usage
+
+```bash
+glow tests feedback --id <id>
+```
+
+> Wire call: `POST /test/feedback`. Run `glow tests feedback --help` for the full flag list.
+
+---
+
+# `glow tests file_download`
+
+Route: /cli-reference/tests/file_download
+
+# `glow tests file_download`
+
+File Download Test sessions.
+
+## Usage
+
+```bash
+glow tests file_download --id <id>
+```
+
+> Wire call: `POST /test/file_download`. Run `glow tests file_download --help` for the full flag list.
+
+---
+
+# `glow tests generate`
+
+Route: /cli-reference/tests/generate
+
+# `glow tests generate`
+
+Generate Test sessions.
+
+## Usage
+
+```bash
+glow tests generate --body '\{...\}'
+```
+
+> Wire call: `POST /test/generate`. Run `glow tests generate --help` for the full flag list.
+
+---
+
+# `glow tests generations`
+
+Route: /cli-reference/tests/generations
+
+# `glow tests generations`
+
+Generations Test sessions.
+
+## Usage
+
+```bash
+glow tests generations --id <id>
+```
+
+> Wire call: `POST /test/generations`. Run `glow tests generations --help` for the full flag list.
 
 ---
 
@@ -38733,6 +45001,206 @@ Get Test sessions.
 glow tests get --id <id>
 ```
 
+> Wire call: `POST /test/get`. Run `glow tests get --help` for the full flag list.
+
+---
+
+# `glow tests grade`
+
+Route: /cli-reference/tests/grade
+
+# `glow tests grade`
+
+Grade Test sessions.
+
+## Usage
+
+```bash
+glow tests grade --id <id>
+```
+
+> Wire call: `POST /test/grade`. Run `glow tests grade --help` for the full flag list.
+
+---
+
+# `glow tests group`
+
+Route: /cli-reference/tests/group
+
+# `glow tests group`
+
+Group Test sessions.
+
+## Usage
+
+```bash
+glow tests group --id <id>
+```
+
+> Wire call: `POST /test/group`. Run `glow tests group --help` for the full flag list.
+
+---
+
+# `glow tests invocation_complete`
+
+Route: /cli-reference/tests/invocation_complete
+
+# `glow tests invocation_complete`
+
+Invocation Complete Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_complete --id <id>
+```
+
+> Wire call: `POST /test/invocation_complete`. Run `glow tests invocation_complete --help` for the full flag list.
+
+---
+
+# `glow tests invocation_create`
+
+Route: /cli-reference/tests/invocation_create
+
+# `glow tests invocation_create`
+
+Invocation Create Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_create --id <id>
+```
+
+> Wire call: `POST /test/invocation_create`. Run `glow tests invocation_create --help` for the full flag list.
+
+---
+
+# `glow tests invocation_get`
+
+Route: /cli-reference/tests/invocation_get
+
+# `glow tests invocation_get`
+
+Invocation Get Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_get --id <id>
+```
+
+> Wire call: `POST /test/invocation_get`. Run `glow tests invocation_get --help` for the full flag list.
+
+---
+
+# `glow tests invocation_run`
+
+Route: /cli-reference/tests/invocation_run
+
+# `glow tests invocation_run`
+
+Invocation Run Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_run --id <id>
+```
+
+> Wire call: `POST /test/invocation_run`. Run `glow tests invocation_run --help` for the full flag list.
+
+---
+
+# `glow tests invocation_terminate`
+
+Route: /cli-reference/tests/invocation_terminate
+
+# `glow tests invocation_terminate`
+
+Invocation Terminate Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_terminate --id <id>
+```
+
+> Wire call: `POST /test/invocation_terminate`. Run `glow tests invocation_terminate --help` for the full flag list.
+
+---
+
+# `glow tests invocation_trace`
+
+Route: /cli-reference/tests/invocation_trace
+
+# `glow tests invocation_trace`
+
+Invocation Trace Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_trace --id <id>
+```
+
+> Wire call: `POST /test/invocation_trace`. Run `glow tests invocation_trace --help` for the full flag list.
+
+---
+
+# `glow tests invocations`
+
+Route: /cli-reference/tests/invocations
+
+# `glow tests invocations`
+
+Invocations Test sessions.
+
+## Usage
+
+```bash
+glow tests invocations --id <id>
+```
+
+> Wire call: `POST /test/invocations`. Run `glow tests invocations --help` for the full flag list.
+
+---
+
+# `glow tests problem`
+
+Route: /cli-reference/tests/problem
+
+# `glow tests problem`
+
+Problem Test sessions.
+
+## Usage
+
+```bash
+glow tests problem --id <id>
+```
+
+> Wire call: `POST /test/problem`. Run `glow tests problem --help` for the full flag list.
+
+---
+
+# `glow tests refresh`
+
+Route: /cli-reference/tests/refresh
+
+# `glow tests refresh`
+
+Refresh Test sessions.
+
+## Usage
+
+```bash
+glow tests refresh --id <id>
+```
+
+> Wire call: `POST /test/refresh`. Run `glow tests refresh --help` for the full flag list.
+
 ---
 
 # `glow tests search`
@@ -38749,21 +45217,133 @@ Search Test sessions.
 glow tests search
 ```
 
+> Wire call: `POST /test/search`. Run `glow tests search --help` for the full flag list.
+
 ---
 
-# `glow tests update`
+# `glow tests start`
 
-Route: /cli-reference/tests/update
+Route: /cli-reference/tests/start
 
-# `glow tests update`
+# `glow tests start`
 
-Update Test sessions.
+Start Test sessions.
 
 ## Usage
 
 ```bash
-glow tests update --id <id>
+glow tests start --id <id>
 ```
+
+> Wire call: `POST /test/start`. Run `glow tests start --help` for the full flag list.
+
+---
+
+# `glow tests stop`
+
+Route: /cli-reference/tests/stop
+
+# `glow tests stop`
+
+Stop Test sessions.
+
+## Usage
+
+```bash
+glow tests stop --id <id>
+```
+
+> Wire call: `POST /test/stop`. Run `glow tests stop --help` for the full flag list.
+
+---
+
+# `glow tests text_download`
+
+Route: /cli-reference/tests/text_download
+
+# `glow tests text_download`
+
+Text Download Test sessions.
+
+## Usage
+
+```bash
+glow tests text_download --id <id>
+```
+
+> Wire call: `POST /test/text_download`. Run `glow tests text_download --help` for the full flag list.
+
+---
+
+# `glow tests title`
+
+Route: /cli-reference/tests/title
+
+# `glow tests title`
+
+Title Test sessions.
+
+## Usage
+
+```bash
+glow tests title --id <id>
+```
+
+> Wire call: `POST /test/title`. Run `glow tests title --help` for the full flag list.
+
+---
+
+# `glow tests watch`
+
+Route: /cli-reference/tests/watch
+
+# `glow tests watch`
+
+Watch Test sessions.
+
+## Usage
+
+```bash
+glow tests watch --id <id>
+```
+
+> Wire call: `POST /test/watch`. Run `glow tests watch --help` for the full flag list.
+
+---
+
+# `glow tools call_download`
+
+Route: /cli-reference/tools/call_download
+
+# `glow tools call_download`
+
+Call Download Tool integrations.
+
+## Usage
+
+```bash
+glow tools call_download --id <id>
+```
+
+> Wire call: `POST /tool/call_download`. Run `glow tools call_download --help` for the full flag list.
+
+---
+
+# `glow tools context`
+
+Route: /cli-reference/tools/context
+
+# `glow tools context`
+
+Context Tool integrations.
+
+## Usage
+
+```bash
+glow tools context --id <id>
+```
+
+> Wire call: `POST /tool/context`. Run `glow tools context --help` for the full flag list.
 
 ---
 
@@ -38781,6 +45361,26 @@ Create Tool integrations.
 glow tools create --body '\{...\}'
 ```
 
+> Wire call: `POST /tool/create`. Run `glow tools create --help` for the full flag list.
+
+---
+
+# `glow tools csv`
+
+Route: /cli-reference/tools/csv
+
+# `glow tools csv`
+
+Csv Tool integrations.
+
+## Usage
+
+```bash
+glow tools csv --id <id>
+```
+
+> Wire call: `POST /tool/csv`. Run `glow tools csv --help` for the full flag list.
+
 ---
 
 # `glow tools delete`
@@ -38796,6 +45396,134 @@ Delete Tool integrations.
 ```bash
 glow tools delete --id <id>
 ```
+
+> Wire call: `POST /tool/delete`. Run `glow tools delete --help` for the full flag list.
+
+---
+
+# `glow tools draft`
+
+Route: /cli-reference/tools/draft
+
+# `glow tools draft`
+
+Draft Tool integrations.
+
+## Usage
+
+```bash
+glow tools draft --id <id>
+```
+
+> Wire call: `POST /tool/draft`. Run `glow tools draft --help` for the full flag list.
+
+---
+
+# `glow tools drafts`
+
+Route: /cli-reference/tools/drafts
+
+# `glow tools drafts`
+
+Drafts Tool integrations.
+
+## Usage
+
+```bash
+glow tools drafts --id <id>
+```
+
+> Wire call: `POST /tool/drafts`. Run `glow tools drafts --help` for the full flag list.
+
+---
+
+# `glow tools duplicate`
+
+Route: /cli-reference/tools/duplicate
+
+# `glow tools duplicate`
+
+Duplicate Tool integrations.
+
+## Usage
+
+```bash
+glow tools duplicate --id <id>
+```
+
+> Wire call: `POST /tool/duplicate`. Run `glow tools duplicate --help` for the full flag list.
+
+---
+
+# `glow tools export`
+
+Route: /cli-reference/tools/export
+
+# `glow tools export`
+
+Export Tool integrations.
+
+## Usage
+
+```bash
+glow tools export --id <id>
+```
+
+> Wire call: `POST /tool/export`. Run `glow tools export --help` for the full flag list.
+
+---
+
+# `glow tools file_download`
+
+Route: /cli-reference/tools/file_download
+
+# `glow tools file_download`
+
+File Download Tool integrations.
+
+## Usage
+
+```bash
+glow tools file_download --id <id>
+```
+
+> Wire call: `POST /tool/file_download`. Run `glow tools file_download --help` for the full flag list.
+
+---
+
+# `glow tools generate`
+
+Route: /cli-reference/tools/generate
+
+# `glow tools generate`
+
+Generate Tool integrations.
+
+## Usage
+
+```bash
+glow tools generate --body '\{...\}'
+```
+
+> Wire call: `POST /tool/generate`. Run `glow tools generate --help` for the full flag list.
+
+---
+
+# `glow tools generations`
+
+Route: /cli-reference/tools/generations
+
+# `glow tools generations`
+
+Generations Tool integrations.
+
+## Usage
+
+```bash
+glow tools generations --id <id>
+```
+
+> Wire call: `POST /tool/generations`. Run `glow tools generations --help` for the full flag list.
 
 ---
 
@@ -38813,6 +45541,80 @@ Get Tool integrations.
 glow tools get --id <id>
 ```
 
+> Wire call: `POST /tool/get`. Run `glow tools get --help` for the full flag list.
+
+---
+
+# `glow tools group`
+
+Route: /cli-reference/tools/group
+
+# `glow tools group`
+
+Group Tool integrations.
+
+## Usage
+
+```bash
+glow tools group --id <id>
+```
+
+> Wire call: `POST /tool/group`. Run `glow tools group --help` for the full flag list.
+
+---
+
+# `glow tools preview`
+
+Route: /cli-reference/tools/preview
+
+# `glow tools preview`
+
+Preview Tool integrations.
+
+## Usage
+
+```bash
+glow tools preview --id <id>
+```
+
+> Wire call: `POST /tool/preview`. Run `glow tools preview --help` for the full flag list.
+
+---
+
+# `glow tools problem`
+
+Route: /cli-reference/tools/problem
+
+# `glow tools problem`
+
+Problem Tool integrations.
+
+## Usage
+
+```bash
+glow tools problem --id <id>
+```
+
+> Wire call: `POST /tool/problem`. Run `glow tools problem --help` for the full flag list.
+
+---
+
+# `glow tools refresh`
+
+Route: /cli-reference/tools/refresh
+
+# `glow tools refresh`
+
+Refresh Tool integrations.
+
+## Usage
+
+```bash
+glow tools refresh --id <id>
+```
+
+> Wire call: `POST /tool/refresh`. Run `glow tools refresh --help` for the full flag list.
+
 ---
 
 # `glow tools search`
@@ -38829,6 +45631,44 @@ Search Tool integrations.
 glow tools search
 ```
 
+> Wire call: `POST /tool/search`. Run `glow tools search --help` for the full flag list.
+
+---
+
+# `glow tools text_download`
+
+Route: /cli-reference/tools/text_download
+
+# `glow tools text_download`
+
+Text Download Tool integrations.
+
+## Usage
+
+```bash
+glow tools text_download --id <id>
+```
+
+> Wire call: `POST /tool/text_download`. Run `glow tools text_download --help` for the full flag list.
+
+---
+
+# `glow tools title`
+
+Route: /cli-reference/tools/title
+
+# `glow tools title`
+
+Title Tool integrations.
+
+## Usage
+
+```bash
+glow tools title --id <id>
+```
+
+> Wire call: `POST /tool/title`. Run `glow tools title --help` for the full flag list.
+
 ---
 
 # `glow tools update`
@@ -38844,6 +45684,26 @@ Update Tool integrations.
 ```bash
 glow tools update --id <id>
 ```
+
+> Wire call: `POST /tool/update`. Run `glow tools update --help` for the full flag list.
+
+---
+
+# `glow tools watch`
+
+Route: /cli-reference/tools/watch
+
+# `glow tools watch`
+
+Watch Tool integrations.
+
+## Usage
+
+```bash
+glow tools watch --id <id>
+```
+
+> Wire call: `POST /tool/watch`. Run `glow tools watch --help` for the full flag list.
 
 ---
 

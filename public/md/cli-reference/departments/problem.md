@@ -1,0 +1,13 @@
+# `glow departments problem`
+
+# `glow departments problem`
+
+Problem Organizational departments.
+
+## Usage
+
+```bash
+glow departments problem --id <id>
+```
+
+> Wire call: `POST /department/problem`. Run `glow departments problem --help` for the full flag list.

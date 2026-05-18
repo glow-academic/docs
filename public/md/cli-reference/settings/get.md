@@ -9,3 +9,5 @@ Get Instance settings.
 ```bash
 glow settings get --id <id>
 ```
+
+> Wire call: `POST /setting/get`. Run `glow settings get --help` for the full flag list.

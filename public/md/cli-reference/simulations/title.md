@@ -1,0 +1,13 @@
+# `glow simulations title`
+
+# `glow simulations title`
+
+Title Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations title --id <id>
+```
+
+> Wire call: `POST /simulation/title`. Run `glow simulations title --help` for the full flag list.

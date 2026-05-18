@@ -9,3 +9,5 @@ Search Simulation scenarios.
 ```bash
 glow scenarios search
 ```
+
+> Wire call: `POST /scenario/search`. Run `glow scenarios search --help` for the full flag list.

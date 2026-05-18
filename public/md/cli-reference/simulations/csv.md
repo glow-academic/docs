@@ -1,0 +1,13 @@
+# `glow simulations csv`
+
+# `glow simulations csv`
+
+Csv Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations csv --id <id>
+```
+
+> Wire call: `POST /simulation/csv`. Run `glow simulations csv --help` for the full flag list.

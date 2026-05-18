@@ -1,0 +1,13 @@
+# `glow providers draft`
+
+# `glow providers draft`
+
+Draft AI provider integrations.
+
+## Usage
+
+```bash
+glow providers draft --id <id>
+```
+
+> Wire call: `POST /provider/draft`. Run `glow providers draft --help` for the full flag list.

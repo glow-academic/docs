@@ -1,0 +1,13 @@
+# `glow models group`
+
+# `glow models group`
+
+Group AI model configurations.
+
+## Usage
+
+```bash
+glow models group --id <id>
+```
+
+> Wire call: `POST /model/group`. Run `glow models group --help` for the full flag list.

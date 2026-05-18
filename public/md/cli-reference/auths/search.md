@@ -9,3 +9,5 @@ Search Authentication records.
 ```bash
 glow auths search
 ```
+
+> Wire call: `POST /auth/search`. Run `glow auths search --help` for the full flag list.

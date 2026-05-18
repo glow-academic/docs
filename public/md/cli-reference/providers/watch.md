@@ -1,0 +1,13 @@
+# `glow providers watch`
+
+# `glow providers watch`
+
+Watch AI provider integrations.
+
+## Usage
+
+```bash
+glow providers watch --id <id>
+```
+
+> Wire call: `POST /provider/watch`. Run `glow providers watch --help` for the full flag list.

@@ -589,26 +589,63 @@ function main() {
     }
 
     // Dynamic resources from CLI spec (glow personas list, glow agents get, etc.)
+    // The CLI itself is generic (forwards any `glow <res> <action>` to
+    // POST /<res>/<action>) so the docs need to enumerate the actual
+    // action set from the API. We derive it from apiSpec.paths grouped
+    // by tag instead of hardcoding — that way artifacts with extras like
+    // `generate`, `group`, `audio-upload` get their full action list.
     if (cliSpec.resources) {
+      // Build singular→action-set map from the api spec.
+      // e.g. paths like /persona/save, /persona/list, /persona/generate
+      // → {persona: ['save', 'list', 'generate', ...]}
+      const actionsByArtifact = new Map<string, string[]>()
+      if (apiSpec?.paths) {
+        for (const path of Object.keys(apiSpec.paths)) {
+          // Path shape: /artifact/action  or  /artifact/action/subaction
+          const parts = path.split('/').filter(Boolean)
+          if (parts.length < 2) continue
+          const artifact = parts[0]
+          const action = parts.slice(1).join('-')   // collapse multi-segment to a single CLI action token
+          if (!actionsByArtifact.has(artifact)) actionsByArtifact.set(artifact, [])
+          if (!actionsByArtifact.get(artifact)!.includes(action)) {
+            actionsByArtifact.get(artifact)!.push(action)
+          }
+        }
+      }
+
       for (const res of cliSpec.resources) {
+        // Map plural cli_name → singular api_path. cliSpec.resources
+        // already stores both pluralization forms; we use the api_path
+        // form (singular) to look up in the api spec.
+        const artifact = (res as any).api_path || res.slug.replace(/s$/, '')
+        const actions = (actionsByArtifact.get(artifact) || ['get', 'list', 'save', 'delete'])
+          .sort()
+
         const resDir = join(cliRefDir, res.slug)
         mkdirSync(resDir, { recursive: true })
-
-        // Generate standard CRUD actions
-        const actions = ['search', 'get', 'create', 'update', 'delete']
         const resMeta: Record<string, string> = {}
 
         for (const action of actions) {
           const aDir = join(resDir, action)
           mkdirSync(aDir, { recursive: true })
+          // Best-effort invocation hint. The CLI accepts --body for any
+          // action and may also accept positional/named args via the
+          // helper layer — see `glow <res> <action> --help` for truth.
+          const usageHint =
+            action === 'list' || action === 'search'
+              ? `${rootName} ${res.slug} ${action}`
+              : action === 'save' || action === 'create' || action === 'generate'
+                ? `${rootName} ${res.slug} ${action} --body '\\{...\\}'`
+                : `${rootName} ${res.slug} ${action} --id <id>`
           const lines = [
             `# \`${rootName} ${res.slug} ${action}\``,
             '', `${titleCase(action)} ${res.about || res.slug}.`, '',
             '## Usage', '', '```bash',
-            action === 'search' ? `${rootName} ${res.slug} ${action}` :
-            action === 'create' ? `${rootName} ${res.slug} ${action} --body '\\{...\\}'` :
-            `${rootName} ${res.slug} ${action} --id <id>`,
+            usageHint,
             '```', '',
+            `> Wire call: \`POST /${artifact}/${action}\`. ` +
+            `Run \`${rootName} ${res.slug} ${action} --help\` for the full flag list.`,
+            '',
           ]
           writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
           resMeta[action] = `${rootName} ${res.slug} ${action}`

@@ -1,0 +1,13 @@
+# `glow departments text_download`
+
+# `glow departments text_download`
+
+Text Download Organizational departments.
+
+## Usage
+
+```bash
+glow departments text_download --id <id>
+```
+
+> Wire call: `POST /department/text_download`. Run `glow departments text_download --help` for the full flag list.

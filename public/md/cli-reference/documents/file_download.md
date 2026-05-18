@@ -1,0 +1,13 @@
+# `glow documents file_download`
+
+# `glow documents file_download`
+
+File Download Document management.
+
+## Usage
+
+```bash
+glow documents file_download --id <id>
+```
+
+> Wire call: `POST /document/file_download`. Run `glow documents file_download --help` for the full flag list.

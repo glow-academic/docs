@@ -9,3 +9,5 @@ Get Evaluation configurations.
 ```bash
 glow evals get --id <id>
 ```
+
+> Wire call: `POST /eval/get`. Run `glow evals get --help` for the full flag list.

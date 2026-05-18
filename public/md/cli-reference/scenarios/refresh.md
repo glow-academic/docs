@@ -1,0 +1,13 @@
+# `glow scenarios refresh`
+
+# `glow scenarios refresh`
+
+Refresh Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios refresh --id <id>
+```
+
+> Wire call: `POST /scenario/refresh`. Run `glow scenarios refresh --help` for the full flag list.

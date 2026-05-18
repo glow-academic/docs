@@ -9,3 +9,5 @@ Create Authentication records.
 ```bash
 glow auths create --body '\{...\}'
 ```
+
+> Wire call: `POST /auth/create`. Run `glow auths create --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow parameters refresh`
+
+# `glow parameters refresh`
+
+Refresh Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters refresh --id <id>
+```
+
+> Wire call: `POST /parameter/refresh`. Run `glow parameters refresh --help` for the full flag list.

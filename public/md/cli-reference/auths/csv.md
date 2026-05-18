@@ -1,0 +1,13 @@
+# `glow auths csv`
+
+# `glow auths csv`
+
+Csv Authentication records.
+
+## Usage
+
+```bash
+glow auths csv --id <id>
+```
+
+> Wire call: `POST /auth/csv`. Run `glow auths csv --help` for the full flag list.

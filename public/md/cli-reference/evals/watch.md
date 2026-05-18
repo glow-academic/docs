@@ -1,0 +1,13 @@
+# `glow evals watch`
+
+# `glow evals watch`
+
+Watch Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals watch --id <id>
+```
+
+> Wire call: `POST /eval/watch`. Run `glow evals watch --help` for the full flag list.

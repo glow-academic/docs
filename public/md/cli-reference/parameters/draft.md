@@ -1,0 +1,13 @@
+# `glow parameters draft`
+
+# `glow parameters draft`
+
+Draft Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters draft --id <id>
+```
+
+> Wire call: `POST /parameter/draft`. Run `glow parameters draft --help` for the full flag list.

@@ -9,3 +9,5 @@ Create User profiles.
 ```bash
 glow profiles create --body '\{...\}'
 ```
+
+> Wire call: `POST /profile/create`. Run `glow profiles create --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow profiles drafts`
+
+# `glow profiles drafts`
+
+Drafts User profiles.
+
+## Usage
+
+```bash
+glow profiles drafts --id <id>
+```
+
+> Wire call: `POST /profile/drafts`. Run `glow profiles drafts --help` for the full flag list.

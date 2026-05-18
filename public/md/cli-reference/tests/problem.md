@@ -1,0 +1,13 @@
+# `glow tests problem`
+
+# `glow tests problem`
+
+Problem Test sessions.
+
+## Usage
+
+```bash
+glow tests problem --id <id>
+```
+
+> Wire call: `POST /test/problem`. Run `glow tests problem --help` for the full flag list.

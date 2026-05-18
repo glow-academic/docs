@@ -9,3 +9,5 @@ Search Evaluation configurations.
 ```bash
 glow evals search
 ```
+
+> Wire call: `POST /eval/search`. Run `glow evals search --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow tests invocation_complete`
+
+# `glow tests invocation_complete`
+
+Invocation Complete Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_complete --id <id>
+```
+
+> Wire call: `POST /test/invocation_complete`. Run `glow tests invocation_complete --help` for the full flag list.

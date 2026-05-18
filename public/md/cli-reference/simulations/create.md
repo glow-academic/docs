@@ -9,3 +9,5 @@ Create Simulation configurations.
 ```bash
 glow simulations create --body '\{...\}'
 ```
+
+> Wire call: `POST /simulation/create`. Run `glow simulations create --help` for the full flag list.

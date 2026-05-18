@@ -1,0 +1,13 @@
+# `glow personas generate`
+
+# `glow personas generate`
+
+Generate AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas generate --body '\{...\}'
+```
+
+> Wire call: `POST /persona/generate`. Run `glow personas generate --help` for the full flag list.

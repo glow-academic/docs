@@ -9,3 +9,5 @@ Get User profiles.
 ```bash
 glow profiles get --id <id>
 ```
+
+> Wire call: `POST /profile/get`. Run `glow profiles get --help` for the full flag list.

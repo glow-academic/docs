@@ -9,3 +9,5 @@ Get Grading rubrics.
 ```bash
 glow rubrics get --id <id>
 ```
+
+> Wire call: `POST /rubric/get`. Run `glow rubrics get --help` for the full flag list.

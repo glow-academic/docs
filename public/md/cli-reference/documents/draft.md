@@ -1,0 +1,13 @@
+# `glow documents draft`
+
+# `glow documents draft`
+
+Draft Document management.
+
+## Usage
+
+```bash
+glow documents draft --id <id>
+```
+
+> Wire call: `POST /document/draft`. Run `glow documents draft --help` for the full flag list.

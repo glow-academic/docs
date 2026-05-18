@@ -1,0 +1,13 @@
+# `glow fields refresh`
+
+# `glow fields refresh`
+
+Refresh Custom fields.
+
+## Usage
+
+```bash
+glow fields refresh --id <id>
+```
+
+> Wire call: `POST /field/refresh`. Run `glow fields refresh --help` for the full flag list.

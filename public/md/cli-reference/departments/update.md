@@ -9,3 +9,5 @@ Update Organizational departments.
 ```bash
 glow departments update --id <id>
 ```
+
+> Wire call: `POST /department/update`. Run `glow departments update --help` for the full flag list.

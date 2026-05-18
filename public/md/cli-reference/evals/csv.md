@@ -1,0 +1,13 @@
+# `glow evals csv`
+
+# `glow evals csv`
+
+Csv Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals csv --id <id>
+```
+
+> Wire call: `POST /eval/csv`. Run `glow evals csv --help` for the full flag list.

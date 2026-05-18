@@ -9,3 +9,5 @@ Get Simulation configurations.
 ```bash
 glow simulations get --id <id>
 ```
+
+> Wire call: `POST /simulation/get`. Run `glow simulations get --help` for the full flag list.

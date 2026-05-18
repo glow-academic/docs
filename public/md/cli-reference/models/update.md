@@ -9,3 +9,5 @@ Update AI model configurations.
 ```bash
 glow models update --id <id>
 ```
+
+> Wire call: `POST /model/update`. Run `glow models update --help` for the full flag list.

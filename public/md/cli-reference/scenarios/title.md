@@ -1,0 +1,13 @@
+# `glow scenarios title`
+
+# `glow scenarios title`
+
+Title Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios title --id <id>
+```
+
+> Wire call: `POST /scenario/title`. Run `glow scenarios title --help` for the full flag list.

@@ -9,3 +9,5 @@ Search User profiles.
 ```bash
 glow profiles search
 ```
+
+> Wire call: `POST /profile/search`. Run `glow profiles search --help` for the full flag list.

@@ -9,3 +9,5 @@ Update Document management.
 ```bash
 glow documents update --id <id>
 ```
+
+> Wire call: `POST /document/update`. Run `glow documents update --help` for the full flag list.

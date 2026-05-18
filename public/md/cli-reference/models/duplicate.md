@@ -1,0 +1,13 @@
+# `glow models duplicate`
+
+# `glow models duplicate`
+
+Duplicate AI model configurations.
+
+## Usage
+
+```bash
+glow models duplicate --id <id>
+```
+
+> Wire call: `POST /model/duplicate`. Run `glow models duplicate --help` for the full flag list.

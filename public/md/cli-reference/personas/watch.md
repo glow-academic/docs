@@ -1,0 +1,13 @@
+# `glow personas watch`
+
+# `glow personas watch`
+
+Watch AI personas for simulation.
+
+## Usage
+
+```bash
+glow personas watch --id <id>
+```
+
+> Wire call: `POST /persona/watch`. Run `glow personas watch --help` for the full flag list.

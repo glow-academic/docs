@@ -9,3 +9,5 @@ Create Document management.
 ```bash
 glow documents create --body '\{...\}'
 ```
+
+> Wire call: `POST /document/create`. Run `glow documents create --help` for the full flag list.

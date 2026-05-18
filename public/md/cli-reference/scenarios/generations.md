@@ -1,0 +1,13 @@
+# `glow scenarios generations`
+
+# `glow scenarios generations`
+
+Generations Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios generations --id <id>
+```
+
+> Wire call: `POST /scenario/generations`. Run `glow scenarios generations --help` for the full flag list.

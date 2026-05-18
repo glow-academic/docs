@@ -1,0 +1,13 @@
+# `glow auths group`
+
+# `glow auths group`
+
+Group Authentication records.
+
+## Usage
+
+```bash
+glow auths group --id <id>
+```
+
+> Wire call: `POST /auth/group`. Run `glow auths group --help` for the full flag list.

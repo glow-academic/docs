@@ -1,0 +1,13 @@
+# `glow tools generations`
+
+# `glow tools generations`
+
+Generations Tool integrations.
+
+## Usage
+
+```bash
+glow tools generations --id <id>
+```
+
+> Wire call: `POST /tool/generations`. Run `glow tools generations --help` for the full flag list.

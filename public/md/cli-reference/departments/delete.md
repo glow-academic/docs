@@ -9,3 +9,5 @@ Delete Organizational departments.
 ```bash
 glow departments delete --id <id>
 ```
+
+> Wire call: `POST /department/delete`. Run `glow departments delete --help` for the full flag list.

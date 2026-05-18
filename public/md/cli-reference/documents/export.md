@@ -1,0 +1,13 @@
+# `glow documents export`
+
+# `glow documents export`
+
+Export Document management.
+
+## Usage
+
+```bash
+glow documents export --id <id>
+```
+
+> Wire call: `POST /document/export`. Run `glow documents export --help` for the full flag list.

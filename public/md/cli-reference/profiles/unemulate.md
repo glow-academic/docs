@@ -1,0 +1,13 @@
+# `glow profiles unemulate`
+
+# `glow profiles unemulate`
+
+Unemulate User profiles.
+
+## Usage
+
+```bash
+glow profiles unemulate --id <id>
+```
+
+> Wire call: `POST /profile/unemulate`. Run `glow profiles unemulate --help` for the full flag list.

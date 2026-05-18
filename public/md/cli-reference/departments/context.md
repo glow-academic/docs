@@ -1,0 +1,13 @@
+# `glow departments context`
+
+# `glow departments context`
+
+Context Organizational departments.
+
+## Usage
+
+```bash
+glow departments context --id <id>
+```
+
+> Wire call: `POST /department/context`. Run `glow departments context --help` for the full flag list.

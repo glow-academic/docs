@@ -9,3 +9,5 @@ Search AI personas for simulation.
 ```bash
 glow personas search
 ```
+
+> Wire call: `POST /persona/search`. Run `glow personas search --help` for the full flag list.

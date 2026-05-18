@@ -1,0 +1,13 @@
+# `glow profiles refresh`
+
+# `glow profiles refresh`
+
+Refresh User profiles.
+
+## Usage
+
+```bash
+glow profiles refresh --id <id>
+```
+
+> Wire call: `POST /profile/refresh`. Run `glow profiles refresh --help` for the full flag list.

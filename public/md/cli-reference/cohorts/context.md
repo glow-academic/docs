@@ -1,0 +1,13 @@
+# `glow cohorts context`
+
+# `glow cohorts context`
+
+Context User cohorts.
+
+## Usage
+
+```bash
+glow cohorts context --id <id>
+```
+
+> Wire call: `POST /cohort/context`. Run `glow cohorts context --help` for the full flag list.

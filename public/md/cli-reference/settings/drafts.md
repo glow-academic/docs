@@ -1,0 +1,13 @@
+# `glow settings drafts`
+
+# `glow settings drafts`
+
+Drafts Instance settings.
+
+## Usage
+
+```bash
+glow settings drafts --id <id>
+```
+
+> Wire call: `POST /setting/drafts`. Run `glow settings drafts --help` for the full flag list.

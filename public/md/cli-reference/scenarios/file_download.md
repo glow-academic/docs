@@ -1,0 +1,13 @@
+# `glow scenarios file_download`
+
+# `glow scenarios file_download`
+
+File Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios file_download --id <id>
+```
+
+> Wire call: `POST /scenario/file_download`. Run `glow scenarios file_download --help` for the full flag list.

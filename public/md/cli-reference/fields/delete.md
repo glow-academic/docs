@@ -9,3 +9,5 @@ Delete Custom fields.
 ```bash
 glow fields delete --id <id>
 ```
+
+> Wire call: `POST /field/delete`. Run `glow fields delete --help` for the full flag list.

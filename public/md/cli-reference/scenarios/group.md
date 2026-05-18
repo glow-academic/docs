@@ -1,0 +1,13 @@
+# `glow scenarios group`
+
+# `glow scenarios group`
+
+Group Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios group --id <id>
+```
+
+> Wire call: `POST /scenario/group`. Run `glow scenarios group --help` for the full flag list.

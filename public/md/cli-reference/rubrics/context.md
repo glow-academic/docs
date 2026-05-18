@@ -1,0 +1,13 @@
+# `glow rubrics context`
+
+# `glow rubrics context`
+
+Context Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics context --id <id>
+```
+
+> Wire call: `POST /rubric/context`. Run `glow rubrics context --help` for the full flag list.

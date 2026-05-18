@@ -9,3 +9,5 @@ Delete User cohorts.
 ```bash
 glow cohorts delete --id <id>
 ```
+
+> Wire call: `POST /cohort/delete`. Run `glow cohorts delete --help` for the full flag list.

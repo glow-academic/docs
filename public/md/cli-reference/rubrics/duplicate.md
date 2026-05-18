@@ -1,0 +1,13 @@
+# `glow rubrics duplicate`
+
+# `glow rubrics duplicate`
+
+Duplicate Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics duplicate --id <id>
+```
+
+> Wire call: `POST /rubric/duplicate`. Run `glow rubrics duplicate --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow settings duplicate`
+
+# `glow settings duplicate`
+
+Duplicate Instance settings.
+
+## Usage
+
+```bash
+glow settings duplicate --id <id>
+```
+
+> Wire call: `POST /setting/duplicate`. Run `glow settings duplicate --help` for the full flag list.

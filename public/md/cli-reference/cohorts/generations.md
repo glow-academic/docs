@@ -1,0 +1,13 @@
+# `glow cohorts generations`
+
+# `glow cohorts generations`
+
+Generations User cohorts.
+
+## Usage
+
+```bash
+glow cohorts generations --id <id>
+```
+
+> Wire call: `POST /cohort/generations`. Run `glow cohorts generations --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow system group`
+
+# `glow system group`
+
+Group System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system group --id <id>
+```
+
+> Wire call: `POST /system/group`. Run `glow system group --help` for the full flag list.

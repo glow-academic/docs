@@ -9,3 +9,5 @@ Update Simulation configurations.
 ```bash
 glow simulations update --id <id>
 ```
+
+> Wire call: `POST /simulation/update`. Run `glow simulations update --help` for the full flag list.

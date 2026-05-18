@@ -1,0 +1,13 @@
+# `glow tools refresh`
+
+# `glow tools refresh`
+
+Refresh Tool integrations.
+
+## Usage
+
+```bash
+glow tools refresh --id <id>
+```
+
+> Wire call: `POST /tool/refresh`. Run `glow tools refresh --help` for the full flag list.

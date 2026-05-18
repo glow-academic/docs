@@ -1,0 +1,13 @@
+# `glow models call_download`
+
+# `glow models call_download`
+
+Call Download AI model configurations.
+
+## Usage
+
+```bash
+glow models call_download --id <id>
+```
+
+> Wire call: `POST /model/call_download`. Run `glow models call_download --help` for the full flag list.

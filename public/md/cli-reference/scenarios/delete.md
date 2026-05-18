@@ -9,3 +9,5 @@ Delete Simulation scenarios.
 ```bash
 glow scenarios delete --id <id>
 ```
+
+> Wire call: `POST /scenario/delete`. Run `glow scenarios delete --help` for the full flag list.

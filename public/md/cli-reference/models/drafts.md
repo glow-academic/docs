@@ -1,0 +1,13 @@
+# `glow models drafts`
+
+# `glow models drafts`
+
+Drafts AI model configurations.
+
+## Usage
+
+```bash
+glow models drafts --id <id>
+```
+
+> Wire call: `POST /model/drafts`. Run `glow models drafts --help` for the full flag list.

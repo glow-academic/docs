@@ -1,0 +1,13 @@
+# `glow settings watch`
+
+# `glow settings watch`
+
+Watch Instance settings.
+
+## Usage
+
+```bash
+glow settings watch --id <id>
+```
+
+> Wire call: `POST /setting/watch`. Run `glow settings watch --help` for the full flag list.

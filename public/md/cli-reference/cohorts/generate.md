@@ -1,0 +1,13 @@
+# `glow cohorts generate`
+
+# `glow cohorts generate`
+
+Generate User cohorts.
+
+## Usage
+
+```bash
+glow cohorts generate --body '\{...\}'
+```
+
+> Wire call: `POST /cohort/generate`. Run `glow cohorts generate --help` for the full flag list.

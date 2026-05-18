@@ -1,0 +1,13 @@
+# `glow cohorts watch`
+
+# `glow cohorts watch`
+
+Watch User cohorts.
+
+## Usage
+
+```bash
+glow cohorts watch --id <id>
+```
+
+> Wire call: `POST /cohort/watch`. Run `glow cohorts watch --help` for the full flag list.

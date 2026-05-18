@@ -1,0 +1,13 @@
+# `glow documents context`
+
+# `glow documents context`
+
+Context Document management.
+
+## Usage
+
+```bash
+glow documents context --id <id>
+```
+
+> Wire call: `POST /document/context`. Run `glow documents context --help` for the full flag list.

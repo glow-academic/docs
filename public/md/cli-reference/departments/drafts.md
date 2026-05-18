@@ -1,0 +1,13 @@
+# `glow departments drafts`
+
+# `glow departments drafts`
+
+Drafts Organizational departments.
+
+## Usage
+
+```bash
+glow departments drafts --id <id>
+```
+
+> Wire call: `POST /department/drafts`. Run `glow departments drafts --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow tests feedback`
+
+# `glow tests feedback`
+
+Feedback Test sessions.
+
+## Usage
+
+```bash
+glow tests feedback --id <id>
+```
+
+> Wire call: `POST /test/feedback`. Run `glow tests feedback --help` for the full flag list.

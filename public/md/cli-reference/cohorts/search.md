@@ -9,3 +9,5 @@ Search User cohorts.
 ```bash
 glow cohorts search
 ```
+
+> Wire call: `POST /cohort/search`. Run `glow cohorts search --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow attempts chat_hints`
+
+# `glow attempts chat_hints`
+
+Chat Hints Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts chat_hints --id <id>
+```
+
+> Wire call: `POST /attempt/chat_hints`. Run `glow attempts chat_hints --help` for the full flag list.

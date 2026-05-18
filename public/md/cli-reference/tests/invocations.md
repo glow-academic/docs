@@ -1,0 +1,13 @@
+# `glow tests invocations`
+
+# `glow tests invocations`
+
+Invocations Test sessions.
+
+## Usage
+
+```bash
+glow tests invocations --id <id>
+```
+
+> Wire call: `POST /test/invocations`. Run `glow tests invocations --help` for the full flag list.

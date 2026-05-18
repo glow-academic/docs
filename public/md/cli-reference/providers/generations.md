@@ -1,0 +1,13 @@
+# `glow providers generations`
+
+# `glow providers generations`
+
+Generations AI provider integrations.
+
+## Usage
+
+```bash
+glow providers generations --id <id>
+```
+
+> Wire call: `POST /provider/generations`. Run `glow providers generations --help` for the full flag list.

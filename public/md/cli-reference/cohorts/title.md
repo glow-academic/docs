@@ -1,0 +1,13 @@
+# `glow cohorts title`
+
+# `glow cohorts title`
+
+Title User cohorts.
+
+## Usage
+
+```bash
+glow cohorts title --id <id>
+```
+
+> Wire call: `POST /cohort/title`. Run `glow cohorts title --help` for the full flag list.

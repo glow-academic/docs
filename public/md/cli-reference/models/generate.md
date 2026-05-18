@@ -1,0 +1,13 @@
+# `glow models generate`
+
+# `glow models generate`
+
+Generate AI model configurations.
+
+## Usage
+
+```bash
+glow models generate --body '\{...\}'
+```
+
+> Wire call: `POST /model/generate`. Run `glow models generate --help` for the full flag list.

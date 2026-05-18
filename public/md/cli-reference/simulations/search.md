@@ -9,3 +9,5 @@ Search Simulation configurations.
 ```bash
 glow simulations search
 ```
+
+> Wire call: `POST /simulation/search`. Run `glow simulations search --help` for the full flag list.

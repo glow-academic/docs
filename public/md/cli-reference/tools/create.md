@@ -9,3 +9,5 @@ Create Tool integrations.
 ```bash
 glow tools create --body '\{...\}'
 ```
+
+> Wire call: `POST /tool/create`. Run `glow tools create --help` for the full flag list.

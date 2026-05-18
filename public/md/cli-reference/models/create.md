@@ -9,3 +9,5 @@ Create AI model configurations.
 ```bash
 glow models create --body '\{...\}'
 ```
+
+> Wire call: `POST /model/create`. Run `glow models create --help` for the full flag list.

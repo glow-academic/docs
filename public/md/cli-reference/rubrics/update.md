@@ -9,3 +9,5 @@ Update Grading rubrics.
 ```bash
 glow rubrics update --id <id>
 ```
+
+> Wire call: `POST /rubric/update`. Run `glow rubrics update --help` for the full flag list.

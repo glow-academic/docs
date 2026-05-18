@@ -1,0 +1,13 @@
+# `glow auths draft`
+
+# `glow auths draft`
+
+Draft Authentication records.
+
+## Usage
+
+```bash
+glow auths draft --id <id>
+```
+
+> Wire call: `POST /auth/draft`. Run `glow auths draft --help` for the full flag list.

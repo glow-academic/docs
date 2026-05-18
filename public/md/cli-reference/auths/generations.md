@@ -1,0 +1,13 @@
+# `glow auths generations`
+
+# `glow auths generations`
+
+Generations Authentication records.
+
+## Usage
+
+```bash
+glow auths generations --id <id>
+```
+
+> Wire call: `POST /auth/generations`. Run `glow auths generations --help` for the full flag list.

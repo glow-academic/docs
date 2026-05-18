@@ -1,0 +1,13 @@
+# `glow profiles generations`
+
+# `glow profiles generations`
+
+Generations User profiles.
+
+## Usage
+
+```bash
+glow profiles generations --id <id>
+```
+
+> Wire call: `POST /profile/generations`. Run `glow profiles generations --help` for the full flag list.

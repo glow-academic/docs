@@ -1,0 +1,13 @@
+# `glow fields generations`
+
+# `glow fields generations`
+
+Generations Custom fields.
+
+## Usage
+
+```bash
+glow fields generations --id <id>
+```
+
+> Wire call: `POST /field/generations`. Run `glow fields generations --help` for the full flag list.

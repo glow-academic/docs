@@ -9,3 +9,5 @@ Delete Evaluation configurations.
 ```bash
 glow evals delete --id <id>
 ```
+
+> Wire call: `POST /eval/delete`. Run `glow evals delete --help` for the full flag list.

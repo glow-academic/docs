@@ -1,0 +1,13 @@
+# `glow rubrics generations`
+
+# `glow rubrics generations`
+
+Generations Grading rubrics.
+
+## Usage
+
+```bash
+glow rubrics generations --id <id>
+```
+
+> Wire call: `POST /rubric/generations`. Run `glow rubrics generations --help` for the full flag list.

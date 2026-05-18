@@ -9,3 +9,5 @@ Get AI provider integrations.
 ```bash
 glow providers get --id <id>
 ```
+
+> Wire call: `POST /provider/get`. Run `glow providers get --help` for the full flag list.

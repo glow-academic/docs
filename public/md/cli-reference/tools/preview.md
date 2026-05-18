@@ -1,0 +1,13 @@
+# `glow tools preview`
+
+# `glow tools preview`
+
+Preview Tool integrations.
+
+## Usage
+
+```bash
+glow tools preview --id <id>
+```
+
+> Wire call: `POST /tool/preview`. Run `glow tools preview --help` for the full flag list.

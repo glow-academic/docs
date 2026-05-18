@@ -1,0 +1,13 @@
+# `glow evals context`
+
+# `glow evals context`
+
+Context Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals context --id <id>
+```
+
+> Wire call: `POST /eval/context`. Run `glow evals context --help` for the full flag list.

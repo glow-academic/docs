@@ -9,3 +9,5 @@ Get Simulation scenarios.
 ```bash
 glow scenarios get --id <id>
 ```
+
+> Wire call: `POST /scenario/get`. Run `glow scenarios get --help` for the full flag list.

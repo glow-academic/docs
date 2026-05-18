@@ -1,0 +1,13 @@
+# `glow tests generate`
+
+# `glow tests generate`
+
+Generate Test sessions.
+
+## Usage
+
+```bash
+glow tests generate --body '\{...\}'
+```
+
+> Wire call: `POST /test/generate`. Run `glow tests generate --help` for the full flag list.

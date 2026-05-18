@@ -9,3 +9,5 @@ Update Instance settings.
 ```bash
 glow settings update --id <id>
 ```
+
+> Wire call: `POST /setting/update`. Run `glow settings update --help` for the full flag list.

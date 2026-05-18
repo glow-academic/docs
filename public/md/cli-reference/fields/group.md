@@ -1,0 +1,13 @@
+# `glow fields group`
+
+# `glow fields group`
+
+Group Custom fields.
+
+## Usage
+
+```bash
+glow fields group --id <id>
+```
+
+> Wire call: `POST /field/group`. Run `glow fields group --help` for the full flag list.

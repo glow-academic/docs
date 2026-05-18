@@ -1,0 +1,13 @@
+# `glow tests watch`
+
+# `glow tests watch`
+
+Watch Test sessions.
+
+## Usage
+
+```bash
+glow tests watch --id <id>
+```
+
+> Wire call: `POST /test/watch`. Run `glow tests watch --help` for the full flag list.

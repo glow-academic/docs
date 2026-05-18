@@ -1,0 +1,13 @@
+# `glow profiles csv`
+
+# `glow profiles csv`
+
+Csv User profiles.
+
+## Usage
+
+```bash
+glow profiles csv --id <id>
+```
+
+> Wire call: `POST /profile/csv`. Run `glow profiles csv --help` for the full flag list.

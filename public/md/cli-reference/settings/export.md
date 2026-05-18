@@ -1,0 +1,13 @@
+# `glow settings export`
+
+# `glow settings export`
+
+Export Instance settings.
+
+## Usage
+
+```bash
+glow settings export --id <id>
+```
+
+> Wire call: `POST /setting/export`. Run `glow settings export --help` for the full flag list.

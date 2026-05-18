@@ -9,3 +9,5 @@ Delete Document management.
 ```bash
 glow documents delete --id <id>
 ```
+
+> Wire call: `POST /document/delete`. Run `glow documents delete --help` for the full flag list.

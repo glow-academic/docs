@@ -1,0 +1,13 @@
+# `glow providers group`
+
+# `glow providers group`
+
+Group AI provider integrations.
+
+## Usage
+
+```bash
+glow providers group --id <id>
+```
+
+> Wire call: `POST /provider/group`. Run `glow providers group --help` for the full flag list.

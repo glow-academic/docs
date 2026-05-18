@@ -9,3 +9,5 @@ Search Configuration parameters.
 ```bash
 glow parameters search
 ```
+
+> Wire call: `POST /parameter/search`. Run `glow parameters search --help` for the full flag list.

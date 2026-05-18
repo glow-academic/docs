@@ -1,0 +1,13 @@
+# `glow models title`
+
+# `glow models title`
+
+Title AI model configurations.
+
+## Usage
+
+```bash
+glow models title --id <id>
+```
+
+> Wire call: `POST /model/title`. Run `glow models title --help` for the full flag list.

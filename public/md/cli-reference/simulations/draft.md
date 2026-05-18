@@ -1,0 +1,13 @@
+# `glow simulations draft`
+
+# `glow simulations draft`
+
+Draft Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations draft --id <id>
+```
+
+> Wire call: `POST /simulation/draft`. Run `glow simulations draft --help` for the full flag list.

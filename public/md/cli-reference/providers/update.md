@@ -9,3 +9,5 @@ Update AI provider integrations.
 ```bash
 glow providers update --id <id>
 ```
+
+> Wire call: `POST /provider/update`. Run `glow providers update --help` for the full flag list.

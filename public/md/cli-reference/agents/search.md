@@ -9,3 +9,5 @@ Search AI agents.
 ```bash
 glow agents search
 ```
+
+> Wire call: `POST /agent/search`. Run `glow agents search --help` for the full flag list.

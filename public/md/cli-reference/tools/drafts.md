@@ -1,0 +1,13 @@
+# `glow tools drafts`
+
+# `glow tools drafts`
+
+Drafts Tool integrations.
+
+## Usage
+
+```bash
+glow tools drafts --id <id>
+```
+
+> Wire call: `POST /tool/drafts`. Run `glow tools drafts --help` for the full flag list.

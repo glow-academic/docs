@@ -9,3 +9,5 @@ Update Authentication records.
 ```bash
 glow auths update --id <id>
 ```
+
+> Wire call: `POST /auth/update`. Run `glow auths update --help` for the full flag list.

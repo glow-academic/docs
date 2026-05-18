@@ -1,0 +1,13 @@
+# `glow parameters watch`
+
+# `glow parameters watch`
+
+Watch Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters watch --id <id>
+```
+
+> Wire call: `POST /parameter/watch`. Run `glow parameters watch --help` for the full flag list.

@@ -9,3 +9,5 @@ Search AI provider integrations.
 ```bash
 glow providers search
 ```
+
+> Wire call: `POST /provider/search`. Run `glow providers search --help` for the full flag list.

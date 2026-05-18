@@ -9,3 +9,5 @@ Create Configuration parameters.
 ```bash
 glow parameters create --body '\{...\}'
 ```
+
+> Wire call: `POST /parameter/create`. Run `glow parameters create --help` for the full flag list.

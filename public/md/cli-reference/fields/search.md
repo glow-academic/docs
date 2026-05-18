@@ -9,3 +9,5 @@ Search Custom fields.
 ```bash
 glow fields search
 ```
+
+> Wire call: `POST /field/search`. Run `glow fields search --help` for the full flag list.

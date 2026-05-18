@@ -9,3 +9,5 @@ Get Configuration parameters.
 ```bash
 glow parameters get --id <id>
 ```
+
+> Wire call: `POST /parameter/get`. Run `glow parameters get --help` for the full flag list.

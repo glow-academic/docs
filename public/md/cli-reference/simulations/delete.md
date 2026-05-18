@@ -9,3 +9,5 @@ Delete Simulation configurations.
 ```bash
 glow simulations delete --id <id>
 ```
+
+> Wire call: `POST /simulation/delete`. Run `glow simulations delete --help` for the full flag list.

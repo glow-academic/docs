@@ -1,0 +1,13 @@
+# `glow cohorts group`
+
+# `glow cohorts group`
+
+Group User cohorts.
+
+## Usage
+
+```bash
+glow cohorts group --id <id>
+```
+
+> Wire call: `POST /cohort/group`. Run `glow cohorts group --help` for the full flag list.

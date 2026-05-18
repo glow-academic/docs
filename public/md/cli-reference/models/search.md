@@ -9,3 +9,5 @@ Search AI model configurations.
 ```bash
 glow models search
 ```
+
+> Wire call: `POST /model/search`. Run `glow models search --help` for the full flag list.

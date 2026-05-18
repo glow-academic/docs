@@ -1,0 +1,13 @@
+# `glow evals generate`
+
+# `glow evals generate`
+
+Generate Evaluation configurations.
+
+## Usage
+
+```bash
+glow evals generate --body '\{...\}'
+```
+
+> Wire call: `POST /eval/generate`. Run `glow evals generate --help` for the full flag list.

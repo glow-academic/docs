@@ -1,0 +1,13 @@
+# `glow simulations duplicate`
+
+# `glow simulations duplicate`
+
+Duplicate Simulation configurations.
+
+## Usage
+
+```bash
+glow simulations duplicate --id <id>
+```
+
+> Wire call: `POST /simulation/duplicate`. Run `glow simulations duplicate --help` for the full flag list.

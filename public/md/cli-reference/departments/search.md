@@ -9,3 +9,5 @@ Search Organizational departments.
 ```bash
 glow departments search
 ```
+
+> Wire call: `POST /department/search`. Run `glow departments search --help` for the full flag list.

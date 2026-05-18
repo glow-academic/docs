@@ -9,3 +9,5 @@ Update User profiles.
 ```bash
 glow profiles update --id <id>
 ```
+
+> Wire call: `POST /profile/update`. Run `glow profiles update --help` for the full flag list.

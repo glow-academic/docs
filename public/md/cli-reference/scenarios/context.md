@@ -1,0 +1,13 @@
+# `glow scenarios context`
+
+# `glow scenarios context`
+
+Context Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios context --id <id>
+```
+
+> Wire call: `POST /scenario/context`. Run `glow scenarios context --help` for the full flag list.

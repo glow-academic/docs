@@ -9,3 +9,5 @@ Create AI agents.
 ```bash
 glow agents create --body '\{...\}'
 ```
+
+> Wire call: `POST /agent/create`. Run `glow agents create --help` for the full flag list.

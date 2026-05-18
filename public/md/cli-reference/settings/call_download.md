@@ -1,0 +1,13 @@
+# `glow settings call_download`
+
+# `glow settings call_download`
+
+Call Download Instance settings.
+
+## Usage
+
+```bash
+glow settings call_download --id <id>
+```
+
+> Wire call: `POST /setting/call_download`. Run `glow settings call_download --help` for the full flag list.

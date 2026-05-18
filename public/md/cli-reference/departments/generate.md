@@ -1,0 +1,13 @@
+# `glow departments generate`
+
+# `glow departments generate`
+
+Generate Organizational departments.
+
+## Usage
+
+```bash
+glow departments generate --body '\{...\}'
+```
+
+> Wire call: `POST /department/generate`. Run `glow departments generate --help` for the full flag list.

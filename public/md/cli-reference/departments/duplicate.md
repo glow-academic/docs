@@ -1,0 +1,13 @@
+# `glow departments duplicate`
+
+# `glow departments duplicate`
+
+Duplicate Organizational departments.
+
+## Usage
+
+```bash
+glow departments duplicate --id <id>
+```
+
+> Wire call: `POST /department/duplicate`. Run `glow departments duplicate --help` for the full flag list.

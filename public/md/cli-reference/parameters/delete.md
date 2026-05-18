@@ -9,3 +9,5 @@ Delete Configuration parameters.
 ```bash
 glow parameters delete --id <id>
 ```
+
+> Wire call: `POST /parameter/delete`. Run `glow parameters delete --help` for the full flag list.

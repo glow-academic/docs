@@ -1,0 +1,13 @@
+# `glow departments title`
+
+# `glow departments title`
+
+Title Organizational departments.
+
+## Usage
+
+```bash
+glow departments title --id <id>
+```
+
+> Wire call: `POST /department/title`. Run `glow departments title --help` for the full flag list.

@@ -9,3 +9,5 @@ Delete AI model configurations.
 ```bash
 glow models delete --id <id>
 ```
+
+> Wire call: `POST /model/delete`. Run `glow models delete --help` for the full flag list.

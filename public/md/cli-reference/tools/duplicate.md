@@ -1,0 +1,13 @@
+# `glow tools duplicate`
+
+# `glow tools duplicate`
+
+Duplicate Tool integrations.
+
+## Usage
+
+```bash
+glow tools duplicate --id <id>
+```
+
+> Wire call: `POST /tool/duplicate`. Run `glow tools duplicate --help` for the full flag list.

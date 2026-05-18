@@ -1,0 +1,13 @@
+# `glow parameters duplicate`
+
+# `glow parameters duplicate`
+
+Duplicate Configuration parameters.
+
+## Usage
+
+```bash
+glow parameters duplicate --id <id>
+```
+
+> Wire call: `POST /parameter/duplicate`. Run `glow parameters duplicate --help` for the full flag list.

@@ -9,3 +9,5 @@ Get AI agents.
 ```bash
 glow agents get --id <id>
 ```
+
+> Wire call: `POST /agent/get`. Run `glow agents get --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow tests invocation_terminate`
+
+# `glow tests invocation_terminate`
+
+Invocation Terminate Test sessions.
+
+## Usage
+
+```bash
+glow tests invocation_terminate --id <id>
+```
+
+> Wire call: `POST /test/invocation_terminate`. Run `glow tests invocation_terminate --help` for the full flag list.

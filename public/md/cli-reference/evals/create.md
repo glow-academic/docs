@@ -9,3 +9,5 @@ Create Evaluation configurations.
 ```bash
 glow evals create --body '\{...\}'
 ```
+
+> Wire call: `POST /eval/create`. Run `glow evals create --help` for the full flag list.

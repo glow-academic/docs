@@ -1,0 +1,13 @@
+# `glow agents drafts`
+
+# `glow agents drafts`
+
+Drafts AI agents.
+
+## Usage
+
+```bash
+glow agents drafts --id <id>
+```
+
+> Wire call: `POST /agent/drafts`. Run `glow agents drafts --help` for the full flag list.

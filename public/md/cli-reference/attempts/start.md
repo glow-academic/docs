@@ -1,0 +1,13 @@
+# `glow attempts start`
+
+# `glow attempts start`
+
+Start Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts start --id <id>
+```
+
+> Wire call: `POST /attempt/start`. Run `glow attempts start --help` for the full flag list.

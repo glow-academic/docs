@@ -9,3 +9,5 @@ Delete Authentication records.
 ```bash
 glow auths delete --id <id>
 ```
+
+> Wire call: `POST /auth/delete`. Run `glow auths delete --help` for the full flag list.

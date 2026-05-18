@@ -9,3 +9,5 @@ Create AI provider integrations.
 ```bash
 glow providers create --body '\{...\}'
 ```
+
+> Wire call: `POST /provider/create`. Run `glow providers create --help` for the full flag list.

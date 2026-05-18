@@ -1,0 +1,13 @@
+# `glow attempts audio_download`
+
+# `glow attempts audio_download`
+
+Audio Download Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts audio_download --id <id>
+```
+
+> Wire call: `POST /attempt/audio_download`. Run `glow attempts audio_download --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow cohorts drafts`
+
+# `glow cohorts drafts`
+
+Drafts User cohorts.
+
+## Usage
+
+```bash
+glow cohorts drafts --id <id>
+```
+
+> Wire call: `POST /cohort/drafts`. Run `glow cohorts drafts --help` for the full flag list.

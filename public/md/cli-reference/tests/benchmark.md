@@ -1,0 +1,13 @@
+# `glow tests benchmark`
+
+# `glow tests benchmark`
+
+Benchmark Test sessions.
+
+## Usage
+
+```bash
+glow tests benchmark --id <id>
+```
+
+> Wire call: `POST /test/benchmark`. Run `glow tests benchmark --help` for the full flag list.

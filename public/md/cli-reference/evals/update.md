@@ -9,3 +9,5 @@ Update Evaluation configurations.
 ```bash
 glow evals update --id <id>
 ```
+
+> Wire call: `POST /eval/update`. Run `glow evals update --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow attempts title`
+
+# `glow attempts title`
+
+Title Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts title --id <id>
+```
+
+> Wire call: `POST /attempt/title`. Run `glow attempts title --help` for the full flag list.

@@ -9,3 +9,5 @@ Get Document management.
 ```bash
 glow documents get --id <id>
 ```
+
+> Wire call: `POST /document/get`. Run `glow documents get --help` for the full flag list.

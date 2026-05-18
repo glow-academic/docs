@@ -1,0 +1,13 @@
+# `glow settings title`
+
+# `glow settings title`
+
+Title Instance settings.
+
+## Usage
+
+```bash
+glow settings title --id <id>
+```
+
+> Wire call: `POST /setting/title`. Run `glow settings title --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow departments watch`
+
+# `glow departments watch`
+
+Watch Organizational departments.
+
+## Usage
+
+```bash
+glow departments watch --id <id>
+```
+
+> Wire call: `POST /department/watch`. Run `glow departments watch --help` for the full flag list.

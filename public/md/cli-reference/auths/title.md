@@ -1,0 +1,13 @@
+# `glow auths title`
+
+# `glow auths title`
+
+Title Authentication records.
+
+## Usage
+
+```bash
+glow auths title --id <id>
+```
+
+> Wire call: `POST /auth/title`. Run `glow auths title --help` for the full flag list.

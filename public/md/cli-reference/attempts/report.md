@@ -1,0 +1,13 @@
+# `glow attempts report`
+
+# `glow attempts report`
+
+Report Simulation attempts.
+
+## Usage
+
+```bash
+glow attempts report --id <id>
+```
+
+> Wire call: `POST /attempt/report`. Run `glow attempts report --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow scenarios video_download`
+
+# `glow scenarios video_download`
+
+Video Download Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios video_download --id <id>
+```
+
+> Wire call: `POST /scenario/video_download`. Run `glow scenarios video_download --help` for the full flag list.

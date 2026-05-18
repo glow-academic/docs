@@ -1,0 +1,13 @@
+# `glow agents call_download`
+
+# `glow agents call_download`
+
+Call Download AI agents.
+
+## Usage
+
+```bash
+glow agents call_download --id <id>
+```
+
+> Wire call: `POST /agent/call_download`. Run `glow agents call_download --help` for the full flag list.

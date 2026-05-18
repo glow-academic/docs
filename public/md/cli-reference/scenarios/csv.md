@@ -1,0 +1,13 @@
+# `glow scenarios csv`
+
+# `glow scenarios csv`
+
+Csv Simulation scenarios.
+
+## Usage
+
+```bash
+glow scenarios csv --id <id>
+```
+
+> Wire call: `POST /scenario/csv`. Run `glow scenarios csv --help` for the full flag list.

@@ -1,0 +1,13 @@
+# `glow agents duplicate`
+
+# `glow agents duplicate`
+
+Duplicate AI agents.
+
+## Usage
+
+```bash
+glow agents duplicate --id <id>
+```
+
+> Wire call: `POST /agent/duplicate`. Run `glow agents duplicate --help` for the full flag list.

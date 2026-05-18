@@ -1,0 +1,13 @@
+# `glow system file_preview`
+
+# `glow system file_preview`
+
+File Preview System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system file_preview --id <id>
+```
+
+> Wire call: `POST /system/file_preview`. Run `glow system file_preview --help` for the full flag list.
