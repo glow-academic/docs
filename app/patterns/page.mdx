@@ -1,13 +1,19 @@
-{/* DEMO_VIDEO: patterns — replace public/demos/patterns.mp4 */}
+{/* DEMO_VIDEO: patterns-overview — replace public/demos/patterns-overview.mp4 */}
 
 # Patterns & Best Practices
 
-<DemoVideo topic="patterns" />
-
+<DemoVideo topic="patterns-overview" caption="Quick tour through the pattern catalog — persona realism, rubric specificity, parameters, progressive difficulty." />
 
 Short, actionable recipes for common simulation design challenges. Each pattern stands on its own — read the ones relevant to what you're working on.
 
+{/* DEMO_VIDEO: patterns-persona-realism — replace public/demos/patterns-persona-realism.mp4 */}
+
 ## Making Personas Feel Real
+
+<DemoVideo
+  topic="patterns-persona-realism"
+  caption="Anti-pattern vs. pattern: a persona that breaks character and offers help, then the same persona rewritten with the golden rule and example exchanges."
+/>
 
 Getting an AI model to convincingly role-play a student (or any character that needs help) is the hardest problem in simulation design. Models are trained to be helpful assistants — asking them to be confused, angry, or passive goes against their nature. Here's what works:
 
@@ -86,7 +92,14 @@ Student (Mostly calmed down): "Ok fine, I'm just annoyed that I got zero
 points, and I spent hours trying to figure out that last question."
 ```
 
+{/* DEMO_VIDEO: patterns-rubric-criteria — replace public/demos/patterns-rubric-criteria.mp4 */}
+
 ## Writing Rubric Criteria That Work
+
+<DemoVideo
+  topic="patterns-rubric-criteria"
+  caption="Vague 'communicates well' criterion producing identical 3/5 scores, then the same rubric with behavioral-anchor levels producing differentiated feedback."
+/>
 
 The rubric is the backbone of your simulation's grading. Vague criteria produce meaningless scores; specific criteria produce actionable feedback.
 
@@ -174,7 +187,14 @@ One persona + one document + different parameter combinations = many unique scen
 
 Attach actual course material (homework assignments, problem sets, syllabi) as documents. The document becomes the single source of truth for the course number and topic. This ensures the AI character asks about real problems, not generic ones — which is what makes practice feel authentic.
 
+{/* DEMO_VIDEO: patterns-progressive-difficulty — replace public/demos/patterns-progressive-difficulty.mp4 */}
+
 ## Progressive Difficulty
+
+<DemoVideo
+  topic="patterns-progressive-difficulty"
+  caption="Reordering scenarios inside a simulation from cooperative → confused → aggressive → passive, and seeing scenario_positions enforced at runtime."
+/>
 
 Order scenarios from easiest to hardest so learners build confidence before facing harder challenges.
 
