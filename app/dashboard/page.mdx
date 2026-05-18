@@ -1,6 +1,20 @@
+{/* DEMO_VIDEO: dashboard — replace public/demos/dashboard.mp4 */}
+
 # Dashboard
 
-The Dashboard is the admin analytics hub for TA training programs. It provides a comprehensive view of training metrics across your institution -- header summaries, primary and secondary metric panels, rubric breakdowns, simulation overviews, and full attempt history -- so program coordinators can evaluate how TAs are performing in office-hours simulations.
+<DemoVideo topic="dashboard" />
+
+The Dashboard is the admin analytics hub for TA training programs.
+It returns a single bundled response — header summaries, primary and
+secondary metric panels, rubric breakdowns, simulation overviews, and
+inline attempt history — so program coordinators can evaluate how
+TAs are performing in office-hours simulations.
+
+Dashboard is a **view on the attempt artifact** — one endpoint
+(`POST /attempt/dashboard`) that takes a filter body and returns a
+`DashboardBundleResponse`. It is not its own artifact, so there is no
+`/dashboard/...` URL space; sibling operations (attempt search,
+export, refresh) live at the attempt root.
 
 ![Dashboard overview showing aggregate scores by rubric standard across all cohorts](/screenshots/dashboard/overview.png)
 
@@ -23,23 +37,22 @@ Dashboard returns `header_metrics` (total attempts, average score, completion pe
 
 ```bash
 # Fetch the full dashboard bundle (all metrics, rubrics, simulations)
-glow dashboard get
+glow attempts dashboard
 
-# Fetch dashboard scoped to a specific cohort and date range
-glow dashboard get --body '{"cohort_ids": ["cohort-abc"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+# Scope to a specific cohort and date range (body merges into the request)
+glow attempts dashboard --body '{"cohort_ids": ["cohort-abc"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
 
-# Search attempt history (paginated)
-glow dashboard search --body '{"page": 1, "page_size": 25, "sort_by": "score", "sort_order": "desc"}'
-
-# Export dashboard data as a ZIP
-glow dashboard export
+# Sibling operations on the attempt artifact (NOT under /dashboard)
+glow attempts search --body '{"page_size": 25, "sort_by": "score", "sort_order": "desc"}'
+glow attempts export
+glow attempts refresh
 ```
 
 ### API
 
 ```bash
-# Get dashboard bundle
-curl -X POST https://<your-instance>/v5/dashboard/get \
+# Get dashboard bundle — single endpoint, filters in the body
+curl -X POST https://<your-instance>/attempt/dashboard \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -49,13 +62,12 @@ curl -X POST https://<your-instance>/v5/dashboard/get \
     "end_date": "2025-06-30"
   }'
 
-# Search attempt history
-curl -X POST https://<your-instance>/v5/dashboard/search \
+# Search attempt history (separate endpoint on the attempt artifact)
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
-    "page": 1,
     "page_size": 20,
     "sort_order": "desc"
   }'
@@ -63,7 +75,7 @@ curl -X POST https://<your-instance>/v5/dashboard/search \
 
 ## Filtering and Scoping
 
-Dashboard supports composable filters so you can drill down to exactly the data you need:
+Dashboard supports composable filters in the body so you can drill down to exactly the data you need:
 
 | Filter | Field | Example |
 |---|---|---|
@@ -93,12 +105,13 @@ The `DashboardBundleResponse` is organized into sections:
 - **`history`** -- Inline paginated attempt history with `HistoryItem` rows.
 - **`analytics`** -- Filter facets (department options, cohort options, role options, date range boundaries) for rendering dropdowns.
 
-## History Search
+## Sibling: Attempt History Search
 
-The `/dashboard/search` endpoint returns paginated attempt history. This is useful for building tables of TA attempts:
+For larger paginated history tables, use the attempt search endpoint
+directly — it returns the same `HistoryItem` shape with full pagination:
 
 ```bash
-curl -X POST https://<your-instance>/v5/dashboard/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -107,21 +120,17 @@ curl -X POST https://<your-instance>/v5/dashboard/search \
     "scenario_ids": ["scenario-confused-student"],
     "sort_by": "date",
     "sort_order": "desc",
-    "page": 1,
     "page_size": 10
   }'
 ```
 
 Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_status` (pass/fail), `persona_names_junction`, `num_scenarios_completed`, and action flags like `show_view` and `show_continue`.
 
-## Refreshing and Exporting
+## Exporting
 
 ```bash
-# Refresh dashboard caches (admin only)
-glow dashboard refresh
-
-# Export all dashboard data as a denormalized ZIP
-glow dashboard export
+# Export attempts as a denormalized ZIP (sibling endpoint, not under dashboard)
+glow attempts export
 ```
 
 The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `mime_type`, and `row_count`.
@@ -130,15 +139,15 @@ The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `m
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Full dashboard metrics | `glow dashboard get` | `POST /dashboard/get` |
-| Search attempt history | `glow dashboard search` | `POST /dashboard/search` |
-| Export data | `glow dashboard export` | `POST /dashboard/export` |
-| Refresh caches | `glow dashboard refresh` | `POST /dashboard/refresh` |
-| View API docs | -- | `POST /dashboard/docs` |
+| Dashboard metric bundle | `glow attempts dashboard` | `POST /attempt/dashboard` |
+| Attempt history search | `glow attempts search` | `POST /attempt/search` |
+| Export attempts | `glow attempts export` | `POST /attempt/export` |
+| Refresh MV caches | `glow attempts refresh` | `POST /attempt/refresh` |
 
 ## Related
 
-- [Dashboard API Reference](/glow/dashboard/api)
-- [Dashboard CLI Reference](/glow/dashboard/cli)
-- [Reports Guide](/glow/reports/guide) -- aggregate training reports
-- [Record Guide](/glow/record/guide) -- single-TA dashboard view
+- [Attempt API Reference](/api-reference/attempt) — every endpoint on the attempt artifact
+- [Attempts CLI Reference](/cli-reference/attempts) — every `glow attempts ...` command
+- [Reports](/reports) — aggregate training reports (sibling view, `POST /attempt/report`)
+- [Leaderboard](/leaderboard) — score rankings (sibling view, `POST /attempt/leaderboard`)
+- [Practice](/practice) — practice-mode view (sibling view, `POST /attempt/practice`)
