@@ -1,4 +1,4 @@
-{/* DEMO_VIDEO: realtime-overview — replace public/demos/realtime-overview.mp4 */}
+{/* DEMO_VIDEO: realtime-overview | manual */}
 
 # Realtime
 
@@ -10,6 +10,7 @@ and server-pushed updates that don't fit a request/response shape.
 
 <DemoVideo
   topic="realtime-overview"
+  kind="manual"
   caption="Glow's WS surface mirrors HTTP: same artifact taxonomy, same operation names, with bidirectional streaming for live flows."
 />
 
@@ -36,12 +37,13 @@ surface when you're driving an interactive UI.
 
 ---
 
-{/* DEMO_VIDEO: realtime-events — replace public/demos/realtime-events.mp4 */}
+{/* DEMO_VIDEO: realtime-events | manual */}
 
 ## Event naming taxonomy
 
 <DemoVideo
   topic="realtime-events"
+  kind="manual"
   caption="Every WS event name is <artifact>.<operation> — the same shape as POST /<artifact>/<operation>. Sub-namespaces flatten to <artifact>.<sub_op>."
 />
 
@@ -73,12 +75,13 @@ in the API; every file there registers exactly one `@sio.on(...)` event.
 
 ---
 
-{/* DEMO_VIDEO: realtime-connect — replace public/demos/realtime-connect.mp4 */}
+{/* DEMO_VIDEO: realtime-connect | vhs */}
 
 ## Connecting
 
 <DemoVideo
   topic="realtime-connect"
+  kind="vhs"
   caption="socket.io v4 handshake — bearer JWT goes into the auth payload, not the Authorization header. Server resolves identity once at connect time."
 />
 
@@ -123,12 +126,13 @@ debug-panel-as-client all coexist without anyone kicking anyone off.
 
 ---
 
-{/* DEMO_VIDEO: realtime-chat-live — replace public/demos/realtime-chat-live.mp4 */}
+{/* DEMO_VIDEO: realtime-chat-live | vhs */}
 
 ## Live chat REPL
 
 <DemoVideo
   topic="realtime-chat-live"
+  kind="vhs"
   caption="glow attempts chat live <chat_id> — interactive terminal REPL over socket.io. Each stdin line emits attempt.chat_message; inbound events stream back between prompts."
 />
 

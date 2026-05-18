@@ -1,4 +1,4 @@
-{/* DEMO_VIDEO: media-overview — replace public/demos/media-overview.mp4 */}
+{/* DEMO_VIDEO: media-overview | manual */}
 
 # Media
 
@@ -9,6 +9,7 @@ per-modality routes that hang off the artifact each upload belongs to.
 
 <DemoVideo
   topic="media-overview"
+  kind="manual"
   caption="An attempt with a recorded audio reply, a scenario with an attached cover image, and a document with a PDF — all three trace back to the same upload_id shape on the wire."
 />
 
@@ -34,12 +35,13 @@ id**; it's the canonical mirror of every download family.
 
 ---
 
-{/* DEMO_VIDEO: media-upload — replace public/demos/media-upload.mp4 */}
+{/* DEMO_VIDEO: media-upload | playwright */}
 
 ## Uploading
 
 <DemoVideo
   topic="media-upload"
+  kind="playwright"
   caption="Dragging a PDF onto the documents picker — the multipart POST round-trips an upload_id that the client immediately stores against the row."
 />
 
@@ -97,12 +99,13 @@ Response is always `{audio_id, audios_id, upload_id}`.
 
 ---
 
-{/* DEMO_VIDEO: media-download — replace public/demos/media-download.mp4 */}
+{/* DEMO_VIDEO: media-download | playwright */}
 
 ## Downloading
 
 <DemoVideo
   topic="media-download"
+  kind="playwright"
   caption="An audio scrubber seeking mid-track — the second request is a Range GET for the bytes ahead of the playhead, served as 206 Partial Content."
 />
 
@@ -149,12 +152,13 @@ Body is always `{"<kind>_id": "<upload_id>"}` — `audio_id`, `file_id`,
 
 ---
 
-{/* DEMO_VIDEO: media-preview — replace public/demos/media-preview.mp4 */}
+{/* DEMO_VIDEO: media-preview | playwright */}
 
 ## File preview
 
 <DemoVideo
   topic="media-preview"
+  kind="playwright"
   caption="A PDF document tile showing a PNG thumbnail of its first page — generated server-side, cached for an hour."
 />
 
@@ -175,12 +179,13 @@ must-revalidate`. Hosted on `system`, `attempt`, `scenario`, and
 
 ---
 
-{/* DEMO_VIDEO: media-chunked — replace public/demos/media-chunked.mp4 */}
+{/* DEMO_VIDEO: media-chunked | manual */}
 
 ## Resumable uploads (TUS)
 
 <DemoVideo
   topic="media-chunked"
+  kind="manual"
   caption="Uploading a 400 MB lecture recording in 32 MB chunks — the network drops, the client reconnects, status reports the offset, and the upload resumes."
 />
 

@@ -1,4 +1,4 @@
-{/* DEMO_VIDEO: generation-overview — replace public/demos/generation-overview.mp4 */}
+{/* DEMO_VIDEO: generation-overview | playwright */}
 
 # Generation
 
@@ -9,6 +9,7 @@ families and is the subject of this page.
 
 <DemoVideo
   topic="generation-overview"
+  kind="playwright"
   caption="Triggering POST /persona/generate from the personas list, then watching the SSE stream paint progress, save, and complete events into the row before the page refreshes."
 />
 
@@ -42,12 +43,13 @@ before the run exists).
 
 ---
 
-{/* DEMO_VIDEO: generation-trigger — replace public/demos/generation-trigger.mp4 */}
+{/* DEMO_VIDEO: generation-trigger | vhs */}
 
 ## Triggering generation
 
 <DemoVideo
   topic="generation-trigger"
+  kind="vhs"
   caption="POST /persona/generate firing a single-line instructions string; the response panel showing run_id + group_id within ~200ms while the model spins up in the background."
 />
 
@@ -94,12 +96,13 @@ into `/watch` (or use `--wait`, below) to block on completion.
 
 ---
 
-{/* DEMO_VIDEO: generation-wait — replace public/demos/generation-wait.mp4 */}
+{/* DEMO_VIDEO: generation-wait | vhs */}
 
 ## The `--wait` shortcut
 
 <DemoVideo
   topic="generation-wait"
+  kind="vhs"
   caption="Running glow personas generate --wait in a terminal: the trigger response prints first with run_id, then live SSE frames stream in until a green `Run completed.` line."
 />
 
@@ -128,12 +131,13 @@ already.
 
 ---
 
-{/* DEMO_VIDEO: generation-events — replace public/demos/generation-events.mp4 */}
+{/* DEMO_VIDEO: generation-events | playwright */}
 
 ## Event types you'll see
 
 <DemoVideo
   topic="generation-events"
+  kind="playwright"
   caption="A single persona generate in the network inspector: Progress frames rising from 20% → 80%, a Saved frame, then a final Complete frame carrying the artifact_id."
 />
 
