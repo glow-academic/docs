@@ -15,8 +15,9 @@ import { useRef, useState } from 'react'
  * Greppability:
  *   * To find every video slot across the docs, run:
  *       grep -rn 'DEMO_VIDEO' app/ public/md/
- *     Pages always pair the component with a ``{/* DEMO_VIDEO: topic */}``
- *     MDX comment marker so the grep finds both MDX and copied markdown.
+ *     Pages always pair the component with a DEMO_VIDEO comment
+ *     marker inside an MDX brace-comment, so the grep finds both the
+ *     MDX page and the .md copy.
  *
  * To insert a real video for topic ``foo``: drop the file at
  * ``public/demos/foo.mp4`` and the next build picks it up automatically.
