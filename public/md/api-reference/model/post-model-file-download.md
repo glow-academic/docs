@@ -1,7 +1,5 @@
 # `POST` `/model/file_download`
 
-# `POST` `/model/file_download`
-
 Download File
 
 Download a file by file resource ID.

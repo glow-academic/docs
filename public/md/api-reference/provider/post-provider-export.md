@@ -1,7 +1,5 @@
 # `POST` `/provider/export`
 
-# `POST` `/provider/export`
-
 Export Providers
 
 Export all providers as a clean, denormalized CSV.

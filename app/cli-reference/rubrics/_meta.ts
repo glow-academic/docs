@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow rubrics call_download',
   'context': 'glow rubrics context',
   'create': 'glow rubrics create',
   'csv': 'glow rubrics csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow rubrics drafts',
   'duplicate': 'glow rubrics duplicate',
   'export': 'glow rubrics export',
-  'file_download': 'glow rubrics file_download',
   'generate': 'glow rubrics generate',
   'generations': 'glow rubrics generations',
   'get': 'glow rubrics get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow rubrics problem',
   'refresh': 'glow rubrics refresh',
   'search': 'glow rubrics search',
-  'text_download': 'glow rubrics text_download',
   'title': 'glow rubrics title',
   'update': 'glow rubrics update',
   'watch': 'glow rubrics watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

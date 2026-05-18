@@ -1,7 +1,5 @@
 # `POST` `/setting/draft`
 
-# `POST` `/setting/draft`
-
 Patch Setting Draft
 
 Patch setting draft — composable infra architecture.

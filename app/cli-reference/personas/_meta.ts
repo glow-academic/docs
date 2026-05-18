@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow personas call_download',
   'context': 'glow personas context',
   'create': 'glow personas create',
   'csv': 'glow personas csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow personas drafts',
   'duplicate': 'glow personas duplicate',
   'export': 'glow personas export',
-  'file_download': 'glow personas file_download',
   'generate': 'glow personas generate',
   'generations': 'glow personas generations',
   'get': 'glow personas get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow personas problem',
   'refresh': 'glow personas refresh',
   'search': 'glow personas search',
-  'text_download': 'glow personas text_download',
   'title': 'glow personas title',
   'update': 'glow personas update',
   'watch': 'glow personas watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

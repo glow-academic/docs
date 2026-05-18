@@ -1,7 +1,5 @@
 # `POST` `/setting/refresh`
 
-# `POST` `/setting/refresh`
-
 Setting Refresh
 
 Refresh setting materialized views and invalidate caches.

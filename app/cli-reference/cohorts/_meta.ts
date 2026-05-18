@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow cohorts call_download',
   'context': 'glow cohorts context',
   'create': 'glow cohorts create',
   'csv': 'glow cohorts csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow cohorts drafts',
   'duplicate': 'glow cohorts duplicate',
   'export': 'glow cohorts export',
-  'file_download': 'glow cohorts file_download',
   'generate': 'glow cohorts generate',
   'generations': 'glow cohorts generations',
   'get': 'glow cohorts get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow cohorts problem',
   'refresh': 'glow cohorts refresh',
   'search': 'glow cohorts search',
-  'text_download': 'glow cohorts text_download',
   'title': 'glow cohorts title',
   'update': 'glow cohorts update',
   'watch': 'glow cohorts watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

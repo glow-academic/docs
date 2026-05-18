@@ -1,7 +1,5 @@
 # `POST` `/field/title`
 
-# `POST` `/field/title`
-
 Title Field
 
 Rename a field's group (writes group_names_entry).

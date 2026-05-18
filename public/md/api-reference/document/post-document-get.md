@@ -1,7 +1,5 @@
 # `POST` `/document/get`
 
-# `POST` `/document/get`
-
 Get Document
 
 Get document information using the canonical shared document operation.

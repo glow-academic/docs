@@ -1,7 +1,5 @@
 # `POST` `/setting/drafts`
 
-# `POST` `/setting/drafts`
-
 Get Setting Drafts
 
 List setting drafts owned by the current profile.

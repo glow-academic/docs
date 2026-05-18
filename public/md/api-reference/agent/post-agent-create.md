@@ -1,7 +1,5 @@
 # `POST` `/agent/create`
 
-# `POST` `/agent/create`
-
 Create Agent
 
 Create agents using composable infra architecture.

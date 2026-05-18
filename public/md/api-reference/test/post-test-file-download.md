@@ -1,7 +1,5 @@
 # `POST` `/test/file_download`
 
-# `POST` `/test/file_download`
-
 Download File
 
 Download a file by file resource ID.

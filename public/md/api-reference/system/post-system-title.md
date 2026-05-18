@@ -1,7 +1,5 @@
 # `POST` `/system/title`
 
-# `POST` `/system/title`
-
 Title System
 
 Rename a system's group (writes group_names_entry).

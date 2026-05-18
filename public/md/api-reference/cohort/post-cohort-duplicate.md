@@ -1,7 +1,5 @@
 # `POST` `/cohort/duplicate`
 
-# `POST` `/cohort/duplicate`
-
 Duplicate Cohort
 
 Duplicate a cohort — composable infra architecture.

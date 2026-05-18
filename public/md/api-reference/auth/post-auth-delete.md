@@ -1,7 +1,5 @@
 # `POST` `/auth/delete`
 
-# `POST` `/auth/delete`
-
 Delete Auth
 
 Bulk delete auths — composable infra architecture.

@@ -1,7 +1,5 @@
 # `GET` `/profile/watch`
 
-# `GET` `/profile/watch`
-
 Profile Watch
 
 ## Parameters

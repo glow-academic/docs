@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_complete`
 
-# `POST` `/attempt/chat_complete`
-
 Chat Complete
 
 Mark an attempt chat as completed — final step after grading.

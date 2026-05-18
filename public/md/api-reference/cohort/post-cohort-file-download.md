@@ -1,7 +1,5 @@
 # `POST` `/cohort/file_download`
 
-# `POST` `/cohort/file_download`
-
 Download File
 
 Download a file by file resource ID.

@@ -1,7 +1,5 @@
 # `POST` `/eval/export`
 
-# `POST` `/eval/export`
-
 Export Evals
 
 Export all evals as a clean, denormalized CSV.

@@ -1,7 +1,5 @@
 # `POST` `/parameter/create`
 
-# `POST` `/parameter/create`
-
 Create Parameter
 
 Create parameters using composable infra architecture.

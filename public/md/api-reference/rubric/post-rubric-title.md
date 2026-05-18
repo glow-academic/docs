@@ -1,7 +1,5 @@
 # `POST` `/rubric/title`
 
-# `POST` `/rubric/title`
-
 Title Rubric
 
 Rename a rubric's group (writes group_names_entry).

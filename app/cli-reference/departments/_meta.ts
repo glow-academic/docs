@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow departments call_download',
   'context': 'glow departments context',
   'create': 'glow departments create',
   'csv': 'glow departments csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow departments drafts',
   'duplicate': 'glow departments duplicate',
   'export': 'glow departments export',
-  'file_download': 'glow departments file_download',
   'generate': 'glow departments generate',
   'generations': 'glow departments generations',
   'get': 'glow departments get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow departments problem',
   'refresh': 'glow departments refresh',
   'search': 'glow departments search',
-  'text_download': 'glow departments text_download',
   'title': 'glow departments title',
   'update': 'glow departments update',
   'watch': 'glow departments watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

@@ -1,7 +1,5 @@
 # `POST` `/document/context`
 
-# `POST` `/document/context`
-
 Get Document Context
 
 Get page context for the document artifact.

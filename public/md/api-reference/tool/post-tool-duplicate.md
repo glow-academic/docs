@@ -1,7 +1,5 @@
 # `POST` `/tool/duplicate`
 
-# `POST` `/tool/duplicate`
-
 Duplicate Tool
 
 Duplicate a tool — composable infra architecture.

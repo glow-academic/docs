@@ -1,7 +1,5 @@
 # `POST` `/cohort/title`
 
-# `POST` `/cohort/title`
-
 Title Cohort
 
 Rename a cohort's group (writes group_names_entry).

@@ -1,7 +1,5 @@
 # `POST` `/test/invocation_trace`
 
-# `POST` `/test/invocation_trace`
-
 Test Trace
 
 ## Request Body (`TestTracePayload`)

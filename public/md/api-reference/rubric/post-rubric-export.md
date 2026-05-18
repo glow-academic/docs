@@ -1,7 +1,5 @@
 # `POST` `/rubric/export`
 
-# `POST` `/rubric/export`
-
 Export Rubrics
 
 Render a rubric PDF and register it as a downloadable file.

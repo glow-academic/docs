@@ -1,7 +1,5 @@
 # `POST` `/eval/duplicate`
 
-# `POST` `/eval/duplicate`
-
 Duplicate Eval
 
 Duplicate an eval — composable infra architecture.

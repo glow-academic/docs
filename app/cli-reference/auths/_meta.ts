@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow auths call_download',
   'client-config': 'glow auths client-config',
   'context': 'glow auths context',
   'create': 'glow auths create',
@@ -9,7 +8,6 @@ export default {
   'drafts': 'glow auths drafts',
   'duplicate': 'glow auths duplicate',
   'export': 'glow auths export',
-  'file_download': 'glow auths file_download',
   'generate': 'glow auths generate',
   'generations': 'glow auths generations',
   'get': 'glow auths get',
@@ -17,8 +15,10 @@ export default {
   'problem': 'glow auths problem',
   'refresh': 'glow auths refresh',
   'search': 'glow auths search',
-  'text_download': 'glow auths text_download',
   'title': 'glow auths title',
   'update': 'glow auths update',
   'watch': 'glow auths watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

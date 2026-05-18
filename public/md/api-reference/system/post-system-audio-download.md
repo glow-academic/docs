@@ -1,7 +1,5 @@
 # `POST` `/system/audio_download`
 
-# `POST` `/system/audio_download`
-
 Download Audio
 
 Download an audio file by audio resource ID with range support for seeking.

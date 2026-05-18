@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_voice`
 
-# `POST` `/attempt/chat_voice`
-
 Chat Voice
 
 Start a voice session for an attempt chat.

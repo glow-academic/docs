@@ -1,7 +1,5 @@
 # `POST` `/setting/decrypt`
 
-# `POST` `/setting/decrypt`
-
 Decrypt Setting Key
 
 Decrypt a key scoped to a setting artifact.

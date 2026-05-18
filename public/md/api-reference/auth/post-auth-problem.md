@@ -1,7 +1,5 @@
 # `POST` `/auth/problem`
 
-# `POST` `/auth/problem`
-
 Problem Auth
 
 Report an auth problem — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/test/invocation_create`
 
-# `POST` `/test/invocation_create`
-
 Create Invocation Endpoint
 
 Create an invocation within a test.

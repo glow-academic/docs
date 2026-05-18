@@ -1,7 +1,5 @@
 # `POST` `/profile/drafts`
 
-# `POST` `/profile/drafts`
-
 Get Profile Drafts
 
 List profile drafts owned by the current profile.

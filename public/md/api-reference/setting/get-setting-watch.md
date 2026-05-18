@@ -1,7 +1,5 @@
 # `GET` `/setting/watch`
 
-# `GET` `/setting/watch`
-
 Setting Watch
 
 ## Parameters

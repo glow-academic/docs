@@ -1,7 +1,5 @@
 # `POST` `/attempt/stop`
 
-# `POST` `/attempt/stop`
-
 Attempt Stop
 
 ## Request Body (`AttemptStopRequest`)

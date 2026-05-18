@@ -1,7 +1,5 @@
 # `GET` `/provider/watch`
 
-# `GET` `/provider/watch`
-
 Provider Watch
 
 ## Parameters

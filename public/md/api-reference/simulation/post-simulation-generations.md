@@ -1,7 +1,5 @@
 # `POST` `/simulation/generations`
 
-# `POST` `/simulation/generations`
-
 Generations Simulation
 
 List simulation generation groups — composable infra architecture.

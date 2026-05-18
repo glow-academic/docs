@@ -1,7 +1,5 @@
 # `POST` `/system/video_download`
 
-# `POST` `/system/video_download`
-
 Download Video
 
 Download a video file by video resource ID with range support for seeking.

@@ -1,7 +1,5 @@
 # `POST` `/model/duplicate`
 
-# `POST` `/model/duplicate`
-
 Duplicate Model
 
 Duplicate a model — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/test/grade`
 
-# `POST` `/test/grade`
-
 Create Grade
 
 Create a test grade.

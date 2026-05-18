@@ -1,7 +1,5 @@
 # `POST` `/test/feedback`
 
-# `POST` `/test/feedback`
-
 Create Feedback
 
 Create test feedback for a specific tool call.

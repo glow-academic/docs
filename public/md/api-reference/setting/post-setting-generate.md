@@ -1,7 +1,5 @@
 # `POST` `/setting/generate`
 
-# `POST` `/setting/generate`
-
 Generate Setting
 
 Trigger setting generation. Returns immediately; progress via events.

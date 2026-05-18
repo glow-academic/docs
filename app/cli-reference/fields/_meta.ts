@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow fields call_download',
   'context': 'glow fields context',
   'create': 'glow fields create',
   'csv': 'glow fields csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow fields drafts',
   'duplicate': 'glow fields duplicate',
   'export': 'glow fields export',
-  'file_download': 'glow fields file_download',
   'generate': 'glow fields generate',
   'generations': 'glow fields generations',
   'get': 'glow fields get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow fields problem',
   'refresh': 'glow fields refresh',
   'search': 'glow fields search',
-  'text_download': 'glow fields text_download',
   'title': 'glow fields title',
   'update': 'glow fields update',
   'watch': 'glow fields watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

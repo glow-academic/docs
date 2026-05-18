@@ -1,7 +1,5 @@
 # `POST` `/parameter/title`
 
-# `POST` `/parameter/title`
-
 Title Parameter
 
 Rename a parameter's group (writes group_names_entry).

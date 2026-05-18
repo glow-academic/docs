@@ -1,7 +1,5 @@
 # `POST` `/attempt/complete`
 
-# `POST` `/attempt/complete`
-
 Attempt Complete
 
 Mark an entire attempt as completed.

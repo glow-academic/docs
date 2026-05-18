@@ -1,7 +1,5 @@
 # `POST` `/tool/create`
 
-# `POST` `/tool/create`
-
 Create Tool
 
 Create tools using composable infra architecture.

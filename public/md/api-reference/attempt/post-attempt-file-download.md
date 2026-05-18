@@ -1,7 +1,5 @@
 # `POST` `/attempt/file_download`
 
-# `POST` `/attempt/file_download`
-
 Download File
 
 Download a file by file entry ID.

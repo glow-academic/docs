@@ -1,7 +1,5 @@
 # `POST` `/eval/generate`
 
-# `POST` `/eval/generate`
-
 Generate Eval
 
 Trigger eval generation. Returns immediately; progress via events.

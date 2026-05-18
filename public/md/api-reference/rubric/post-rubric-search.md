@@ -1,7 +1,5 @@
 # `POST` `/rubric/search`
 
-# `POST` `/rubric/search`
-
 Search Rubric
 
 Search rubrics — composable infra architecture.

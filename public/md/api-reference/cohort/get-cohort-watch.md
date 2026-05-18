@@ -1,7 +1,5 @@
 # `GET` `/cohort/watch`
 
-# `GET` `/cohort/watch`
-
 Cohort Watch
 
 ## Parameters

@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow settings call_download',
   'context': 'glow settings context',
   'create': 'glow settings create',
   'csv': 'glow settings csv',
@@ -9,7 +8,6 @@ export default {
   'drafts': 'glow settings drafts',
   'duplicate': 'glow settings duplicate',
   'export': 'glow settings export',
-  'file_download': 'glow settings file_download',
   'generate': 'glow settings generate',
   'generations': 'glow settings generations',
   'get': 'glow settings get',
@@ -17,8 +15,10 @@ export default {
   'problem': 'glow settings problem',
   'refresh': 'glow settings refresh',
   'search': 'glow settings search',
-  'text_download': 'glow settings text_download',
   'title': 'glow settings title',
   'update': 'glow settings update',
   'watch': 'glow settings watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

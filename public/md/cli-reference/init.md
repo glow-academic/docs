@@ -1,7 +1,5 @@
 # `glow init`
 
-# `glow init`
-
 Interactive wizard: scaffold a `glow-deploy.yaml` under `~/.glow/instances/<name>/`. Walks you through origin URL, AI provider + key, seed template, and optional OIDC. Idempotent — re-running overwrites the yaml
 
 ## Usage

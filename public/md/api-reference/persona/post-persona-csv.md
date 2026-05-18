@@ -1,7 +1,5 @@
 # `POST` `/persona/csv`
 
-# `POST` `/persona/csv`
-
 Parse Persona Csv
 
 Parse a CSV file and return mapped items for preview.

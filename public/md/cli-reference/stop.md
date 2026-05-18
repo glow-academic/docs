@@ -1,7 +1,5 @@
 # `glow stop`
 
-# `glow stop`
-
 Stop containers; volumes + network intact. `glow start` resumes
 
 ## Usage

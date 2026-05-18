@@ -1,7 +1,5 @@
 # `POST` `/setting/problem`
 
-# `POST` `/setting/problem`
-
 Problem Setting
 
 Report a setting problem — composable infra architecture.

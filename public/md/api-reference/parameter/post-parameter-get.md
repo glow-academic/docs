@@ -1,7 +1,5 @@
 # `POST` `/parameter/get`
 
-# `POST` `/parameter/get`
-
 Get Parameter
 
 Get parameter information using the canonical shared parameter operation.

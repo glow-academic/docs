@@ -1,7 +1,5 @@
 # `POST` `/provider/generations`
 
-# `POST` `/provider/generations`
-
 Generations Provider
 
 List provider generation groups — composable infra architecture.

@@ -1,7 +1,5 @@
 # `GET` `/system/watch`
 
-# `GET` `/system/watch`
-
 System Watch
 
 ## Parameters

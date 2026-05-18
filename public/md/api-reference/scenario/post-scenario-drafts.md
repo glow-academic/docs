@@ -1,7 +1,5 @@
 # `POST` `/scenario/drafts`
 
-# `POST` `/scenario/drafts`
-
 Get Scenario Drafts
 
 List scenario drafts owned by the current profile.

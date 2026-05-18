@@ -1,7 +1,5 @@
 # `glow logs`
 
-# `glow logs`
-
 Tail container logs (`docker compose logs [-f]`)
 
 ## Usage

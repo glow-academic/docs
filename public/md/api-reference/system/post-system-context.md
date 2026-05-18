@@ -1,7 +1,5 @@
 # `POST` `/system/context`
 
-# `POST` `/system/context`
-
 Get System Context
 
 Get page context for the system artifact.

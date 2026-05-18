@@ -1,7 +1,5 @@
 # `POST` `/auth/group`
 
-# `POST` `/auth/group`
-
 Group Auth
 
 Resolve or create an auth group with optional naming.

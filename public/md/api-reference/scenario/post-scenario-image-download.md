@@ -1,7 +1,5 @@
 # `POST` `/scenario/image_download`
 
-# `POST` `/scenario/image_download`
-
 Download Image
 
 Download an image file by image resource ID.

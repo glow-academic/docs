@@ -1,7 +1,5 @@
 # `POST` `/cohort/delete`
 
-# `POST` `/cohort/delete`
-
 Delete Cohort
 
 Bulk delete cohorts — composable infra architecture.

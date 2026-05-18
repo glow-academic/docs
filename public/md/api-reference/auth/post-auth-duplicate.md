@@ -1,7 +1,5 @@
 # `POST` `/auth/duplicate`
 
-# `POST` `/auth/duplicate`
-
 Duplicate Auth
 
 Duplicate an auth — composable infra architecture.

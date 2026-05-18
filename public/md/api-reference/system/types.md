@@ -1,7 +1,5 @@
 # System Types
 
-# System Types
-
 ## `ActivityHistoryResponse`
 
 Embedded activity session history for the activity bundle endpoint.

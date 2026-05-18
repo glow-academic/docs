@@ -1,7 +1,5 @@
 # `POST` `/provider/csv`
 
-# `POST` `/provider/csv`
-
 Parse Provider Csv
 
 Parse a CSV file and return mapped items for preview.

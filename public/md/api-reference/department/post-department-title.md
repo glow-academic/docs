@@ -1,7 +1,5 @@
 # `POST` `/department/title`
 
-# `POST` `/department/title`
-
 Title Department
 
 Rename a department's group (writes group_names_entry).

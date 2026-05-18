@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_grade`
 
-# `POST` `/attempt/chat_grade`
-
 Chat Grade
 
 Manually grade an attempt chat with a score.

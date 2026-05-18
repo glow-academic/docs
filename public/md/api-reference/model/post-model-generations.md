@@ -1,7 +1,5 @@
 # `POST` `/model/generations`
 
-# `POST` `/model/generations`
-
 Generations Model
 
 List model generation groups — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/test/start`
 
-# `POST` `/test/start`
-
 Start Test
 
 Create a new test.

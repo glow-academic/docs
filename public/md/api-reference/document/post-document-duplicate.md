@@ -1,7 +1,5 @@
 # `POST` `/document/duplicate`
 
-# `POST` `/document/duplicate`
-
 Duplicate Document
 
 Duplicate a document — composable infra architecture.

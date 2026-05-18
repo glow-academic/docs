@@ -1,7 +1,5 @@
 # `GET` `/tool/watch`
 
-# `GET` `/tool/watch`
-
 Tool Watch
 
 ## Parameters

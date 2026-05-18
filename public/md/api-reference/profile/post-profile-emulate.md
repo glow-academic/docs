@@ -1,7 +1,5 @@
 # `POST` `/profile/emulate`
 
-# `POST` `/profile/emulate`
-
 Emulate Profile
 
 Create emulation grant. Next request will resolve to target profile.

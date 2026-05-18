@@ -1,7 +1,5 @@
 # `POST` `/test/draft`
 
-# `POST` `/test/draft`
-
 Patch Invocation Draft
 
 Patch invocation draft — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/tool/export`
 
-# `POST` `/tool/export`
-
 Export Tools
 
 Export all tools as a clean, denormalized CSV.

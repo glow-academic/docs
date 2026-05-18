@@ -1,7 +1,5 @@
 # `POST` `/test/export`
 
-# `POST` `/test/export`
-
 Export Test
 
 Artifact-level test export.

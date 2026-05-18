@@ -1,7 +1,5 @@
 # `POST` `/scenario/call_download`
 
-# `POST` `/scenario/call_download`
-
 Download Call
 
 Download a call file by call resource ID.

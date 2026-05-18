@@ -1,7 +1,5 @@
 # `POST` `/tool/context`
 
-# `POST` `/tool/context`
-
 Get Tool Context
 
 Get page context for the tool artifact.

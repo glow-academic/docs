@@ -1,7 +1,5 @@
 # `glow backup list`
 
-# `glow backup list`
-
 List local backups for an instance
 
 ## Usage

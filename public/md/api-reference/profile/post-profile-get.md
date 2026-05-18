@@ -1,7 +1,5 @@
 # `POST` `/profile/get`
 
-# `POST` `/profile/get`
-
 Get Profile
 
 Get profile information using the canonical shared profile operation.

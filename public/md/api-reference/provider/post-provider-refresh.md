@@ -1,7 +1,5 @@
 # `POST` `/provider/refresh`
 
-# `POST` `/provider/refresh`
-
 Provider Refresh
 
 Refresh provider materialized views and invalidate caches.

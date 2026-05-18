@@ -1,7 +1,5 @@
 # `POST` `/test/text_download`
 
-# `POST` `/test/text_download`
-
 Test Text Download
 
 Download text content for a test.

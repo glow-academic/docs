@@ -1,7 +1,5 @@
 # `POST` `/field/duplicate`
 
-# `POST` `/field/duplicate`
-
 Duplicate Field
 
 Duplicate a field — composable infra architecture.

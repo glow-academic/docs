@@ -1,7 +1,5 @@
 # `POST` `/document/draft`
 
-# `POST` `/document/draft`
-
 Patch Document Draft
 
 Patch document draft — composable infra architecture.

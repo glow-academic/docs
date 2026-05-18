@@ -1,7 +1,5 @@
 # `POST` `/simulation/context`
 
-# `POST` `/simulation/context`
-
 Get Simulation Context
 
 Get page context for the simulation artifact.

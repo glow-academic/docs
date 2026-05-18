@@ -1,7 +1,5 @@
 # `POST` `/profile/draft`
 
-# `POST` `/profile/draft`
-
 Patch Profile Draft
 
 Patch profile draft — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/attempt/audio_download`
 
-# `POST` `/attempt/audio_download`
-
 Download Audio
 
 Download an audio file by audio entry ID.

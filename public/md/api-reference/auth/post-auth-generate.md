@@ -1,7 +1,5 @@
 # `POST` `/auth/generate`
 
-# `POST` `/auth/generate`
-
 Generate Auth
 
 Trigger auth generation. Returns immediately; progress via events.

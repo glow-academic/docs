@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_get`
 
-# `POST` `/attempt/chat_get`
-
 Chat Get
 
 Get hydrated resources for chat bundle customization.

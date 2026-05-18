@@ -1,5 +1,3 @@
-# How AI Simulation Training Works
-
 {/* DEMO_VIDEO: how-it-works-overview | manual */}
 
 # How AI Simulation Training Works

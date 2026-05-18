@@ -1,7 +1,5 @@
 # `GET` `/agent/watch`
 
-# `GET` `/agent/watch`
-
 Agent Watch
 
 ## Parameters

@@ -1,7 +1,5 @@
 # `POST` `/system/sessions`
 
-# `POST` `/system/sessions`
-
 Search Sessions
 
 Get paginated sessions list with activity data (canonical sessions list).

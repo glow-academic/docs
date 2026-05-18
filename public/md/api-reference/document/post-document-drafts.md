@@ -1,7 +1,5 @@
 # `POST` `/document/drafts`
 
-# `POST` `/document/drafts`
-
 Get Document Drafts
 
 List document drafts owned by the current profile.

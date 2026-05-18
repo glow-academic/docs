@@ -1,7 +1,5 @@
 # `GET` `/eval/watch`
 
-# `GET` `/eval/watch`
-
 Eval Watch
 
 ## Parameters

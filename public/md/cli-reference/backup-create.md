@@ -1,7 +1,5 @@
 # `glow backup create`
 
-# `glow backup create`
-
 Create a new pg_dump backup
 
 ## Usage

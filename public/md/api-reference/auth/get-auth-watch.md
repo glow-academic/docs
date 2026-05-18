@@ -1,7 +1,5 @@
 # `GET` `/auth/watch`
 
-# `GET` `/auth/watch`
-
 Auth Watch
 
 ## Parameters

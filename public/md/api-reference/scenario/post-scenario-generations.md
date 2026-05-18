@@ -1,7 +1,5 @@
 # `POST` `/scenario/generations`
 
-# `POST` `/scenario/generations`
-
 Generations Scenario
 
 List scenario generation groups — composable infra architecture.

@@ -1,7 +1,5 @@
 # Setting Types
 
-# Setting Types
-
 ## `CallerPermissions`
 
 Evaluated permissions for the current caller on this artifact type.

@@ -1,7 +1,5 @@
 # `POST` `/tool/draft`
 
-# `POST` `/tool/draft`
-
 Patch Tool Draft
 
 Patch tool draft — composable infra architecture.

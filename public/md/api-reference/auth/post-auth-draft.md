@@ -1,7 +1,5 @@
 # `POST` `/auth/draft`
 
-# `POST` `/auth/draft`
-
 Patch Auth Draft
 
 Patch auth draft — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/attempt/audio_upload`
 
-# `POST` `/attempt/audio_upload`
-
 Upload Audio
 
 Upload audio or promote an existing raw upload.

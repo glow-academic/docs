@@ -1,7 +1,5 @@
 # `POST` `/cohort/csv`
 
-# `POST` `/cohort/csv`
-
 Parse Cohort Csv
 
 Parse a CSV file and return mapped items for preview.

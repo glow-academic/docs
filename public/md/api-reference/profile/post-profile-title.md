@@ -1,7 +1,5 @@
 # `POST` `/profile/title`
 
-# `POST` `/profile/title`
-
 Title Profile
 
 Rename a profile's group (writes group_names_entry).

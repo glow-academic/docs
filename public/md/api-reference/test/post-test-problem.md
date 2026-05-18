@@ -1,7 +1,5 @@
 # `POST` `/test/problem`
 
-# `POST` `/test/problem`
-
 Problem Test
 
 Report a test problem — composable infra architecture.

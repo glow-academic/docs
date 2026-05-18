@@ -1,7 +1,5 @@
 # `POST` `/agent/duplicate`
 
-# `POST` `/agent/duplicate`
-
 Duplicate Agent
 
 Duplicate an agent — composable infra architecture.

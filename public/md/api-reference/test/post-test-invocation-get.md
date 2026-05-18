@@ -1,7 +1,5 @@
 # `POST` `/test/invocation_get`
 
-# `POST` `/test/invocation_get`
-
 Invocation Get
 
 Get hydrated resources for benchmark bundle customization.

@@ -1,7 +1,5 @@
 # `POST` `/field/search`
 
-# `POST` `/field/search`
-
 Search Field
 
 Search fields — composable infra architecture.

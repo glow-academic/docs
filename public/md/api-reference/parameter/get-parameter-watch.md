@@ -1,7 +1,5 @@
 # `GET` `/parameter/watch`
 
-# `GET` `/parameter/watch`
-
 Parameter Watch
 
 ## Parameters

@@ -1,7 +1,5 @@
 # Auth Types
 
-# Auth Types
-
 ## `AuthDepartmentResource`
 
 Department resource for auth.

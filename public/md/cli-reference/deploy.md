@@ -1,7 +1,5 @@
 # `glow deploy`
 
-# `glow deploy`
-
 Deploy a Glow instance to the local machine (first-time setup). Reads `~/.glow/instances/<name>/glow-deploy.yaml`. Run `glow init` first to scaffold one interactively
 
 ## Usage

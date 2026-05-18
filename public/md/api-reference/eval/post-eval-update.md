@@ -1,7 +1,5 @@
 # `POST` `/eval/update`
 
-# `POST` `/eval/update`
-
 Update Eval
 
 Update evals using composable infra architecture.

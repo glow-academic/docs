@@ -1,7 +1,5 @@
 # `POST` `/persona/create`
 
-# `POST` `/persona/create`
-
 Create Persona
 
 Create personas using composable infra architecture.

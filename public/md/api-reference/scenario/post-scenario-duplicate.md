@@ -1,7 +1,5 @@
 # `POST` `/scenario/duplicate`
 
-# `POST` `/scenario/duplicate`
-
 Duplicate Scenario
 
 Duplicate a scenario — composable infra architecture.

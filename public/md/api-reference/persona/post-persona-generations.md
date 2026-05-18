@@ -1,7 +1,5 @@
 # `POST` `/persona/generations`
 
-# `POST` `/persona/generations`
-
 Generations Persona
 
 List persona generation groups — composable infra architecture.

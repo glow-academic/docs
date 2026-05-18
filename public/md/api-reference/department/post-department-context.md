@@ -1,7 +1,5 @@
 # `POST` `/department/context`
 
-# `POST` `/department/context`
-
 Get Department Context
 
 Get page context for the department artifact.

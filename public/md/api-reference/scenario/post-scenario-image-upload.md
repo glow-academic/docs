@@ -1,7 +1,5 @@
 # `POST` `/scenario/image_upload`
 
-# `POST` `/scenario/image_upload`
-
 Upload Image
 
 Upload an image for later use in scenarios.

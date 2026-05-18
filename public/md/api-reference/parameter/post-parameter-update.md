@@ -1,7 +1,5 @@
 # `POST` `/parameter/update`
 
-# `POST` `/parameter/update`
-
 Update Parameter
 
 Update parameters using composable infra architecture.

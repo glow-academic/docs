@@ -1,7 +1,5 @@
 # `glow destroy`
 
-# `glow destroy`
-
 Tear down containers + volumes (DESTROYS DATA — confirm twice). Config + backups under `~/.glow/instances/<name>/` are preserved
 
 ## Usage

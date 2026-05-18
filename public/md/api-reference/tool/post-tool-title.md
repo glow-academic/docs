@@ -1,7 +1,5 @@
 # `POST` `/tool/title`
 
-# `POST` `/tool/title`
-
 Title Tool
 
 Rename a tool's group (writes group_names_entry).

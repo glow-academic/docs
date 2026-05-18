@@ -1,7 +1,5 @@
 # `POST` `/test/generate`
 
-# `POST` `/test/generate`
-
 Generate Test
 
 Trigger test generation. Returns immediately; progress via events.

@@ -1,7 +1,5 @@
 # `POST` `/simulation/update`
 
-# `POST` `/simulation/update`
-
 Update Simulation
 
 Update simulations using composable infra architecture.

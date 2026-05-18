@@ -1,7 +1,5 @@
 # `POST` `/attempt/export`
 
-# `POST` `/attempt/export`
-
 Export Attempt
 
 Artifact-level attempt export.

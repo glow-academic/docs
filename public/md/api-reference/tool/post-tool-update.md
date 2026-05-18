@@ -1,7 +1,5 @@
 # `POST` `/tool/update`
 
-# `POST` `/tool/update`
-
 Update Tool
 
 Update tools using composable infra architecture.

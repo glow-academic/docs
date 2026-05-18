@@ -1,7 +1,5 @@
 # `POST` `/field/refresh`
 
-# `POST` `/field/refresh`
-
 Field Refresh
 
 Refresh field materialized views and invalidate caches.

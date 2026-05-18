@@ -1,7 +1,5 @@
 # `POST` `/department/refresh`
 
-# `POST` `/department/refresh`
-
 Department Refresh
 
 Refresh department materialized views and invalidate caches.

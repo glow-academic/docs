@@ -1,7 +1,5 @@
 # `POST` `/rubric/generate`
 
-# `POST` `/rubric/generate`
-
 Generate Rubric
 
 Trigger rubric generation. Returns immediately; progress via events.

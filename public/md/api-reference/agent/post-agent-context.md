@@ -1,7 +1,5 @@
 # `POST` `/agent/context`
 
-# `POST` `/agent/context`
-
 Get Agent Context
 
 Get page context for the agent artifact.

@@ -1,7 +1,5 @@
 # `glow login`
 
-# `glow login`
-
 Authenticate with Glow instance
 
 ## Usage

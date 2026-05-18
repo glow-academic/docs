@@ -1,7 +1,5 @@
 # `POST` `/profile/csv`
 
-# `POST` `/profile/csv`
-
 Parse Profile Csv
 
 Parse a CSV file and return mapped items for preview.

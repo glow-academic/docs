@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_analyses`
 
-# `POST` `/attempt/chat_analyses`
-
 Chat Analyses
 
 Create analysis items for the latest grade on a chat.

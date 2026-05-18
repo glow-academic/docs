@@ -1,7 +1,5 @@
 # `POST` `/setting/create`
 
-# `POST` `/setting/create`
-
 Create Setting
 
 Create settings using composable infra architecture.

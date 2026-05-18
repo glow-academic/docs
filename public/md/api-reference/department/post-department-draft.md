@@ -1,7 +1,5 @@
 # `POST` `/department/draft`
 
-# `POST` `/department/draft`
-
 Patch Department Draft
 
 Patch department draft — composable infra architecture.

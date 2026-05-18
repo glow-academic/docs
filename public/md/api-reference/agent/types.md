@@ -1,7 +1,5 @@
 # Agent Types
 
-# Agent Types
-
 ## `AgentDepartmentResource`
 
 | Field | Type | Required | Description |

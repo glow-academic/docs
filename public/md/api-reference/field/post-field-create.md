@@ -1,7 +1,5 @@
 # `POST` `/field/create`
 
-# `POST` `/field/create`
-
 Create Field
 
 Create fields using composable infra architecture.

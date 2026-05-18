@@ -1,7 +1,5 @@
 # `POST` `/attempt/practice`
 
-# `POST` `/attempt/practice`
-
 Practice Get
 
 Get simulations available for practice (operational).

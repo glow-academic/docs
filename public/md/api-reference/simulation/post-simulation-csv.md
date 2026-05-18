@@ -1,7 +1,5 @@
 # `POST` `/simulation/csv`
 
-# `POST` `/simulation/csv`
-
 Parse Simulation Csv
 
 Parse a CSV file and return mapped items for preview.

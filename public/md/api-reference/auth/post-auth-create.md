@@ -1,7 +1,5 @@
 # `POST` `/auth/create`
 
-# `POST` `/auth/create`
-
 Create Auth
 
 Create auths using composable infra architecture.

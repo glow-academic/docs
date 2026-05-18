@@ -1,7 +1,5 @@
 # `POST` `/simulation/text_download`
 
-# `POST` `/simulation/text_download`
-
 Download Text
 
 Download a text file by text resource ID.

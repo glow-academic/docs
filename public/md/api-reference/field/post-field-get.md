@@ -1,7 +1,5 @@
 # `POST` `/field/get`
 
-# `POST` `/field/get`
-
 Get Field
 
 Get field information using the canonical shared field operation.

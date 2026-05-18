@@ -1,7 +1,5 @@
 # `POST` `/agent/draft`
 
-# `POST` `/agent/draft`
-
 Patch Agent Draft
 
 Patch agent draft — composable infra architecture.

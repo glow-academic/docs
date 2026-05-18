@@ -1,7 +1,5 @@
 # `glow backup delete`
 
-# `glow backup delete`
-
 Delete a backup file
 
 ## Usage

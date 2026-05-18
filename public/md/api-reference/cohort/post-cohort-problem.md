@@ -1,7 +1,5 @@
 # `POST` `/cohort/problem`
 
-# `POST` `/cohort/problem`
-
 Problem Cohort
 
 Report a cohort problem — composable infra architecture.

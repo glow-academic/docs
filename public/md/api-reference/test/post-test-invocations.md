@@ -1,7 +1,5 @@
 # `POST` `/test/invocations`
 
-# `POST` `/test/invocations`
-
 List Invocations
 
 List test invocations with pagination and filters.

@@ -1,7 +1,5 @@
 # `POST` `/model/title`
 
-# `POST` `/model/title`
-
 Title Model
 
 Rename a model's group (writes group_names_entry).

@@ -1,7 +1,5 @@
 # `POST` `/eval/refresh`
 
-# `POST` `/eval/refresh`
-
 Eval Refresh
 
 Refresh eval materialized views and invalidate caches.

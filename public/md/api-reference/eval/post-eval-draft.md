@@ -1,7 +1,5 @@
 # `POST` `/eval/draft`
 
-# `POST` `/eval/draft`
-
 Patch Eval Draft
 
 Patch eval draft — composable infra architecture.

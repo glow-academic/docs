@@ -1,7 +1,5 @@
 # `POST` `/eval/group`
 
-# `POST` `/eval/group`
-
 Group Eval
 
 Resolve or create an eval group with optional naming.

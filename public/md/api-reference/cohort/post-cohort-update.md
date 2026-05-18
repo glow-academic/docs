@@ -1,7 +1,5 @@
 # `POST` `/cohort/update`
 
-# `POST` `/cohort/update`
-
 Update Cohort
 
 Update cohorts using composable infra architecture.

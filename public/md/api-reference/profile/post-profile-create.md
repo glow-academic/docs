@@ -1,7 +1,5 @@
 # `POST` `/profile/create`
 
-# `POST` `/profile/create`
-
 Create Profile
 
 Create profiles using composable infra architecture.

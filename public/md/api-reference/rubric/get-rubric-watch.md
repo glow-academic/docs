@@ -1,7 +1,5 @@
 # `GET` `/rubric/watch`
 
-# `GET` `/rubric/watch`
-
 Rubric Watch
 
 ## Parameters

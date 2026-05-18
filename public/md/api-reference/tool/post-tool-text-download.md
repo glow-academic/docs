@@ -1,7 +1,5 @@
 # `POST` `/tool/text_download`
 
-# `POST` `/tool/text_download`
-
 Download Text
 
 Download a text file by text resource ID.

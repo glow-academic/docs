@@ -1,7 +1,5 @@
 # `POST` `/test/drafts`
 
-# `POST` `/test/drafts`
-
 Get Invocation Drafts
 
 List invocation drafts owned by the current profile.

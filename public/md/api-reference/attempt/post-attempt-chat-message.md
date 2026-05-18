@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_message`
 
-# `POST` `/attempt/chat_message`
-
 Chat Message
 
 Create a message in an attempt chat.

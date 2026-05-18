@@ -1,7 +1,5 @@
 # `POST` `/document/export`
 
-# `POST` `/document/export`
-
 Export Documents
 
 Export all documents as a clean, denormalized CSV.

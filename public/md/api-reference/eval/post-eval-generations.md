@@ -1,7 +1,5 @@
 # `POST` `/eval/generations`
 
-# `POST` `/eval/generations`
-
 Generations Eval
 
 List eval generation groups — composable infra architecture.

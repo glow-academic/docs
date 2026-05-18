@@ -1,7 +1,5 @@
 # `POST` `/parameter/generations`
 
-# `POST` `/parameter/generations`
-
 Generations Parameter
 
 List parameter generation groups — composable infra architecture.

@@ -18,6 +18,9 @@ export default {
   'stop': 'glow tests stop',
   'title': 'glow tests title',
   'watch': 'glow tests watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
   'benchmark': 'Benchmark',
   'invocation': 'Invocation',
 }

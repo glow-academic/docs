@@ -1,5 +1,3 @@
-# Design Your First Simulation
-
 {/* DEMO_VIDEO: tutorial-overview | manual */}
 
 # Design Your First Simulation

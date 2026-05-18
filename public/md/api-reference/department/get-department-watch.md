@@ -1,7 +1,5 @@
 # `GET` `/department/watch`
 
-# `GET` `/department/watch`
-
 Department Watch
 
 ## Parameters

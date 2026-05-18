@@ -1,7 +1,5 @@
 # `POST` `/rubric/file_download`
 
-# `POST` `/rubric/file_download`
-
 Download File
 
 Download a file by file resource ID.

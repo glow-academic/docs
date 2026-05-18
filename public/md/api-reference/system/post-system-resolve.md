@@ -1,7 +1,5 @@
 # `POST` `/system/resolve`
 
-# `POST` `/system/resolve`
-
 Resolve Problem
 
 Resolve or unresolve a problem entry.

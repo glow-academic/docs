@@ -1,7 +1,5 @@
 # `POST` `/attempt/search`
 
-# `POST` `/attempt/search`
-
 Search Attempt
 
 Search paginated attempt history. Canonical for all view contexts.

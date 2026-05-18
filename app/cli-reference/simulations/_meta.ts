@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow simulations call_download',
   'context': 'glow simulations context',
   'create': 'glow simulations create',
   'csv': 'glow simulations csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow simulations drafts',
   'duplicate': 'glow simulations duplicate',
   'export': 'glow simulations export',
-  'file_download': 'glow simulations file_download',
   'generate': 'glow simulations generate',
   'generations': 'glow simulations generations',
   'get': 'glow simulations get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow simulations problem',
   'refresh': 'glow simulations refresh',
   'search': 'glow simulations search',
-  'text_download': 'glow simulations text_download',
   'title': 'glow simulations title',
   'update': 'glow simulations update',
   'watch': 'glow simulations watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

@@ -1,7 +1,5 @@
 # `POST` `/model/draft`
 
-# `POST` `/model/draft`
-
 Patch Model Draft
 
 Patch model draft — composable infra architecture.

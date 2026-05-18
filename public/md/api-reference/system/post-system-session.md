@@ -1,7 +1,5 @@
 # `POST` `/system/session`
 
-# `POST` `/system/session`
-
 Get Session
 
 Get session detail with groups and timeline.

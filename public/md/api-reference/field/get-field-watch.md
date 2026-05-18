@@ -1,7 +1,5 @@
 # `GET` `/field/watch`
 
-# `GET` `/field/watch`
-
 Field Watch
 
 ## Parameters

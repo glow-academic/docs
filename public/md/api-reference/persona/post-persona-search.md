@@ -1,7 +1,5 @@
 # `POST` `/persona/search`
 
-# `POST` `/persona/search`
-
 Search Persona
 
 Search personas — composable infra architecture.

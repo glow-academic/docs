@@ -1,7 +1,5 @@
 # `POST` `/document/generate`
 
-# `POST` `/document/generate`
-
 Generate Document
 
 Trigger document generation. Returns immediately; progress via events.

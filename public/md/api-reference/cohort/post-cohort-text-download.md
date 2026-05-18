@@ -1,7 +1,5 @@
 # `POST` `/cohort/text_download`
 
-# `POST` `/cohort/text_download`
-
 Download Text
 
 Download a text file by text resource ID.

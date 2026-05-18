@@ -1,7 +1,5 @@
 # `POST` `/attempt/chat_feedback`
 
-# `POST` `/attempt/chat_feedback`
-
 Chat Feedback
 
 Create feedback items for the latest grade on a chat.

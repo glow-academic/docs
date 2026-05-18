@@ -1,7 +1,5 @@
 # `POST` `/setting/group`
 
-# `POST` `/setting/group`
-
 Group Setting
 
 Resolve or create a setting group with optional naming.

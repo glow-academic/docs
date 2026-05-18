@@ -1,7 +1,5 @@
 # `POST` `/provider/decrypt`
 
-# `POST` `/provider/decrypt`
-
 Decrypt Provider Key
 
 Decrypt a key scoped to a provider artifact.

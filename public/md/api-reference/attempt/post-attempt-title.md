@@ -1,7 +1,5 @@
 # `POST` `/attempt/title`
 
-# `POST` `/attempt/title`
-
 Title Attempt
 
 Rename a attempt's group (writes group_names_entry).

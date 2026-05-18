@@ -1,7 +1,5 @@
 # `POST` `/system/generations`
 
-# `POST` `/system/generations`
-
 Generations System
 
 List system generation groups — composable infra architecture.

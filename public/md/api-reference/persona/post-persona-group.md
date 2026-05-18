@@ -1,7 +1,5 @@
 # `POST` `/persona/group`
 
-# `POST` `/persona/group`
-
 Group Persona
 
 Resolve or create a persona group with optional naming.

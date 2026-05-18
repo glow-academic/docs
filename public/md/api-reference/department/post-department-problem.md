@@ -1,7 +1,5 @@
 # `POST` `/department/problem`
 
-# `POST` `/department/problem`
-
 Problem Department
 
 Report a department problem — composable infra architecture.

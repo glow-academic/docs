@@ -1,7 +1,5 @@
 # `POST` `/scenario/title`
 
-# `POST` `/scenario/title`
-
 Title Scenario
 
 Rename a scenario's group (writes group_names_entry).

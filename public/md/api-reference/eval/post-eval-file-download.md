@@ -1,7 +1,5 @@
 # `POST` `/eval/file_download`
 
-# `POST` `/eval/file_download`
-
 Download File
 
 Download a file by file resource ID.

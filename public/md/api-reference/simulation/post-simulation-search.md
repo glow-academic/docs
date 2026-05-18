@@ -1,7 +1,5 @@
 # `POST` `/simulation/search`
 
-# `POST` `/simulation/search`
-
 Search Simulation
 
 Search simulations — composable infra architecture.

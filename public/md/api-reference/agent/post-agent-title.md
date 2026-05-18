@@ -1,7 +1,5 @@
 # `POST` `/agent/title`
 
-# `POST` `/agent/title`
-
 Title Agent
 
 Rename a agent's group (writes group_names_entry).

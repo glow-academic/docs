@@ -1,7 +1,5 @@
 # `GET` `/simulation/watch`
 
-# `GET` `/simulation/watch`
-
 Simulation Watch
 
 ## Parameters

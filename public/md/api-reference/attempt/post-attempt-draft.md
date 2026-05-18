@@ -1,7 +1,5 @@
 # `POST` `/attempt/draft`
 
-# `POST` `/attempt/draft`
-
 Patch Chat Draft
 
 Patch chat draft — composable infra architecture.

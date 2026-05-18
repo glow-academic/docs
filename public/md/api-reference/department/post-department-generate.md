@@ -1,7 +1,5 @@
 # `POST` `/department/generate`
 
-# `POST` `/department/generate`
-
 Generate Department
 
 Trigger department generation. Returns immediately; progress via events.

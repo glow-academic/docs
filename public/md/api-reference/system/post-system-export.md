@@ -1,7 +1,5 @@
 # `POST` `/system/export`
 
-# `POST` `/system/export`
-
 Export System
 
 Artifact-level system export.

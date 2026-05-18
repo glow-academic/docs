@@ -1,7 +1,5 @@
 # `POST` `/eval/problem`
 
-# `POST` `/eval/problem`
-
 Problem Eval
 
 Report an eval problem — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/attempt/problem`
 
-# `POST` `/attempt/problem`
-
 Problem Attempt
 
 Report an attempt problem — composable infra architecture.

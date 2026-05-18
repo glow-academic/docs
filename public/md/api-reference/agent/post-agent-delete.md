@@ -1,7 +1,5 @@
 # `POST` `/agent/delete`
 
-# `POST` `/agent/delete`
-
 Delete Agent
 
 Bulk delete agents — composable infra architecture.

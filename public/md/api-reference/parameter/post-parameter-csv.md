@@ -1,7 +1,5 @@
 # `POST` `/parameter/csv`
 
-# `POST` `/parameter/csv`
-
 Parse Parameter Csv
 
 Parse a CSV file and return mapped items for preview.

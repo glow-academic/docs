@@ -1,7 +1,5 @@
 # `POST` `/attempt/start`
 
-# `POST` `/attempt/start`
-
 Start Attempt
 
 Create a new attempt from a home or practice entry.

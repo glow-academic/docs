@@ -1,7 +1,5 @@
 # `POST` `/test/invocation_run`
 
-# `POST` `/test/invocation_run`
-
 Run Invocation
 
 ## Request Body (`TestRunPayload`)

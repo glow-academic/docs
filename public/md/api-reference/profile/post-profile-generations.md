@@ -1,7 +1,5 @@
 # `POST` `/profile/generations`
 
-# `POST` `/profile/generations`
-
 Generations Profile
 
 List profile generation groups — composable infra architecture.

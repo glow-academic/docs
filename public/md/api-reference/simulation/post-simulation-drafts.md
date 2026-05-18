@@ -1,7 +1,5 @@
 # `POST` `/simulation/drafts`
 
-# `POST` `/simulation/drafts`
-
 Get Simulation Drafts
 
 List simulation drafts owned by the current profile.

@@ -1,7 +1,5 @@
 # `POST` `/rubric/csv`
 
-# `POST` `/rubric/csv`
-
 Parse Rubric Csv
 
 Parse a CSV file and return mapped items for preview.

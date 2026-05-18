@@ -1,7 +1,5 @@
 # `POST` `/parameter/problem`
 
-# `POST` `/parameter/problem`
-
 Problem Parameter
 
 Report a parameter problem — composable infra architecture.

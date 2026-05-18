@@ -1,7 +1,5 @@
 # `POST` `/parameter/group`
 
-# `POST` `/parameter/group`
-
 Group Parameter
 
 Resolve or create a parameter group with optional naming.

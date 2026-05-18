@@ -1,7 +1,5 @@
 # `POST` `/rubric/call_download`
 
-# `POST` `/rubric/call_download`
-
 Download Call
 
 Download a call file by call resource ID.

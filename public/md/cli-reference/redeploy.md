@@ -1,7 +1,5 @@
 # `glow redeploy`
 
-# `glow redeploy`
-
 Roll out a new version while keeping the database. Auto-pre-backs up before doing anything destructive, blue/green swaps with healthcheck monitoring + auto-rollback if the new color flaps
 
 ## Usage

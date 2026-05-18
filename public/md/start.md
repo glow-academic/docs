@@ -1,5 +1,3 @@
-# Start
-
 {/* DEMO_VIDEO: start-overview | vhs */}
 
 # Start

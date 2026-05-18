@@ -1,7 +1,5 @@
 # `POST` `/rubric/context`
 
-# `POST` `/rubric/context`
-
 Get Rubric Context
 
 Get page context for the rubric artifact.

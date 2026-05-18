@@ -1,7 +1,5 @@
 # `GET` `/scenario/watch`
 
-# `GET` `/scenario/watch`
-
 Scenario Watch
 
 ## Parameters

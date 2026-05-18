@@ -1,7 +1,5 @@
 # `POST` `/document/csv`
 
-# `POST` `/document/csv`
-
 Parse Document Csv
 
 Parse a CSV file and return mapped items for preview.

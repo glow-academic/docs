@@ -1,7 +1,5 @@
 # `POST` `/simulation/delete`
 
-# `POST` `/simulation/delete`
-
 Delete Simulation
 
 Bulk delete simulations — composable infra architecture.

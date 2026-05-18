@@ -1,7 +1,5 @@
 # `POST` `/setting/export`
 
-# `POST` `/setting/export`
-
 Export Settings
 
 Export all settings as a clean, denormalized CSV.

@@ -1,7 +1,5 @@
 # `POST` `/agent/refresh`
 
-# `POST` `/agent/refresh`
-
 Agent Refresh
 
 Refresh agent materialized views and invalidate caches.

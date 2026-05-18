@@ -1,7 +1,5 @@
 # `GET` `/test/watch`
 
-# `GET` `/test/watch`
-
 Test Watch
 
 ## Parameters

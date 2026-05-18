@@ -1,7 +1,5 @@
 # `POST` `/provider/generate`
 
-# `POST` `/provider/generate`
-
 Generate Provider
 
 Trigger provider generation. Returns immediately; progress via events.

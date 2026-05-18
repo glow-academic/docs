@@ -1,7 +1,5 @@
 # `POST` `/document/problem`
 
-# `POST` `/document/problem`
-
 Problem Document
 
 Report a document problem — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/cohort/drafts`
 
-# `POST` `/cohort/drafts`
-
 Get Cohort Drafts
 
 List cohort drafts owned by the current profile.

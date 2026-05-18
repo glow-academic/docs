@@ -1,7 +1,5 @@
 # `POST` `/provider/draft`
 
-# `POST` `/provider/draft`
-
 Patch Provider Draft
 
 Patch provider draft — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/department/get`
 
-# `POST` `/department/get`
-
 Get Department
 
 Get department information using the canonical shared department operation.

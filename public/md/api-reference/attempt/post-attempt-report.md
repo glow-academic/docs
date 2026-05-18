@@ -1,7 +1,5 @@
 # `POST` `/attempt/report`
 
-# `POST` `/attempt/report`
-
 Get Reports
 
 Get reports artifact data via composable context resolver.

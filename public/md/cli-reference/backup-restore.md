@@ -1,7 +1,5 @@
 # `glow backup restore`
 
-# `glow backup restore`
-
 Restore an existing backup (destructive — drops + recreates DB)
 
 ## Usage

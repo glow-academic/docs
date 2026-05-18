@@ -1,5 +1,3 @@
-# Patterns & Best Practices
-
 {/* DEMO_VIDEO: patterns-overview | manual */}
 
 # Patterns & Best Practices

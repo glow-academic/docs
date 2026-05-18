@@ -1,7 +1,5 @@
 # `POST` `/document/group`
 
-# `POST` `/document/group`
-
 Group Document
 
 Resolve or create a document group with optional naming.

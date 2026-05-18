@@ -1,7 +1,5 @@
 # `POST` `/simulation/group`
 
-# `POST` `/simulation/group`
-
 Group Simulation
 
 Resolve or create a simulation group with optional naming.

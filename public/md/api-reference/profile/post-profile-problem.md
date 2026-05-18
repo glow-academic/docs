@@ -1,7 +1,5 @@
 # `POST` `/profile/problem`
 
-# `POST` `/profile/problem`
-
 Problem Profile
 
 Report a profile problem — composable infra architecture.

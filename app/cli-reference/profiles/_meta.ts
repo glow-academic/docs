@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow profiles call_download',
   'context': 'glow profiles context',
   'create': 'glow profiles create',
   'csv': 'glow profiles csv',
@@ -9,7 +8,6 @@ export default {
   'duplicate': 'glow profiles duplicate',
   'emulate': 'glow profiles emulate',
   'export': 'glow profiles export',
-  'file_download': 'glow profiles file_download',
   'generate': 'glow profiles generate',
   'generations': 'glow profiles generations',
   'get': 'glow profiles get',
@@ -17,9 +15,11 @@ export default {
   'problem': 'glow profiles problem',
   'refresh': 'glow profiles refresh',
   'search': 'glow profiles search',
-  'text_download': 'glow profiles text_download',
   'title': 'glow profiles title',
   'unemulate': 'glow profiles unemulate',
   'update': 'glow profiles update',
   'watch': 'glow profiles watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

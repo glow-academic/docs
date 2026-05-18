@@ -1,7 +1,5 @@
 # `POST` `/document/update`
 
-# `POST` `/document/update`
-
 Update Document
 
 Update documents using composable infra architecture.

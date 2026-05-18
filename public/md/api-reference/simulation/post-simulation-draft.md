@@ -1,7 +1,5 @@
 # `POST` `/simulation/draft`
 
-# `POST` `/simulation/draft`
-
 Patch Simulation Draft
 
 Patch simulation draft — composable infra architecture.

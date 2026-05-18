@@ -1,7 +1,5 @@
 # `POST` `/department/group`
 
-# `POST` `/department/group`
-
 Group Department
 
 Resolve or create a department group with optional naming.

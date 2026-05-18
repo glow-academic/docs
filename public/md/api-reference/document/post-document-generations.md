@@ -1,7 +1,5 @@
 # `POST` `/document/generations`
 
-# `POST` `/document/generations`
-
 Generations Document
 
 List document generation groups — composable infra architecture.

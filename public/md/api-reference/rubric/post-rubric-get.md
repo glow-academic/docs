@@ -1,7 +1,5 @@
 # `POST` `/rubric/get`
 
-# `POST` `/rubric/get`
-
 Get Rubric
 
 Get rubric information using the canonical shared rubric operation.

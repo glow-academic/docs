@@ -1,7 +1,5 @@
 # `POST` `/test/search`
 
-# `POST` `/test/search`
-
 Search Test
 
 Search tests — composable infra architecture.

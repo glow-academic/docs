@@ -1,7 +1,5 @@
 # `POST` `/eval/context`
 
-# `POST` `/eval/context`
-
 Get Eval Context
 
 Get page context for the eval artifact.

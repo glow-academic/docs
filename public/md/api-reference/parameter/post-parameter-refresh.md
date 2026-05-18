@@ -1,7 +1,5 @@
 # `POST` `/parameter/refresh`
 
-# `POST` `/parameter/refresh`
-
 Parameter Refresh
 
 Refresh parameter materialized views and invalidate caches.

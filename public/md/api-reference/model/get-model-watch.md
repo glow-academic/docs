@@ -1,7 +1,5 @@
 # `GET` `/model/watch`
 
-# `GET` `/model/watch`
-
 Model Watch
 
 ## Parameters

@@ -1,7 +1,5 @@
 # `POST` `/scenario/text_download`
 
-# `POST` `/scenario/text_download`
-
 Download Text
 
 Download a text file by text resource ID.

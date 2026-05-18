@@ -1,7 +1,5 @@
 # `POST` `/parameter/draft`
 
-# `POST` `/parameter/draft`
-
 Patch Parameter Draft
 
 Patch parameter draft — composable infra architecture.

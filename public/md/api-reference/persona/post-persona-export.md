@@ -1,7 +1,5 @@
 # `POST` `/persona/export`
 
-# `POST` `/persona/export`
-
 Export Personas
 
 Export all personas as a clean, denormalized CSV.

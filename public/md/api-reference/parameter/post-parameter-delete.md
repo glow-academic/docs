@@ -1,7 +1,5 @@
 # `POST` `/parameter/delete`
 
-# `POST` `/parameter/delete`
-
 Delete Parameter
 
 Bulk delete parameters — composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/model/get`
 
-# `POST` `/model/get`
-
 Get Model
 
 Get model information using the canonical shared model operation.

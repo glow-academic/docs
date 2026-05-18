@@ -1,7 +1,5 @@
 # `glow status`
 
-# `glow status`
-
 Show instance state + per-container health
 
 ## Usage

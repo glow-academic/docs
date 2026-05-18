@@ -1,7 +1,5 @@
 # `POST` `/scenario/refresh`
 
-# `POST` `/scenario/refresh`
-
 Scenario Refresh
 
 Refresh scenario materialized views and invalidate caches.

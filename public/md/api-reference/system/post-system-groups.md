@@ -1,7 +1,5 @@
 # `POST` `/system/groups`
 
-# `POST` `/system/groups`
-
 Search Groups
 
 Get paginated groups list with cost data (canonical groups list).

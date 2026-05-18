@@ -1,7 +1,5 @@
 # `POST` `/simulation/get`
 
-# `POST` `/simulation/get`
-
 Get Simulation
 
 Get simulation information using the canonical shared simulation operation.

@@ -1,7 +1,5 @@
 # `POST` `/test/call_download`
 
-# `POST` `/test/call_download`
-
 Test Call Download
 
 Download call JSON for a test.

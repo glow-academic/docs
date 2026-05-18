@@ -1,7 +1,5 @@
 # `POST` `/tool/preview`
 
-# `POST` `/tool/preview`
-
 Preview Tool
 
 Render output templates against mock arg values.

@@ -1,7 +1,5 @@
 # `POST` `/provider/search`
 
-# `POST` `/provider/search`
-
 Search Provider
 
 Search providers — composable infra architecture.

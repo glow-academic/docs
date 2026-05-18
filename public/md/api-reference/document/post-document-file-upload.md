@@ -1,7 +1,5 @@
 # `POST` `/document/file_upload`
 
-# `POST` `/document/file_upload`
-
 Upload File
 
 Upload a file for later use in documents.

@@ -1,7 +1,5 @@
 # `POST` `/persona/context`
 
-# `POST` `/persona/context`
-
 Get Persona Context
 
 Get page context for the persona artifact.

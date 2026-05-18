@@ -1,7 +1,5 @@
 # `POST` `/test/complete`
 
-# `POST` `/test/complete`
-
 Complete Test
 
 ## Request Body (`TestCompletePayload`)

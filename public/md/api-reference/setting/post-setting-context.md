@@ -1,7 +1,5 @@
 # `POST` `/setting/context`
 
-# `POST` `/setting/context`
-
 Get Setting Context
 
 Get page context for the setting artifact.

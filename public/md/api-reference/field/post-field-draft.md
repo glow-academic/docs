@@ -1,7 +1,5 @@
 # `POST` `/field/draft`
 
-# `POST` `/field/draft`
-
 Patch Field Draft
 
 Patch field draft — composable infra architecture.

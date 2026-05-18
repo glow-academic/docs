@@ -1,7 +1,5 @@
 # `POST` `/scenario/draft`
 
-# `POST` `/scenario/draft`
-
 Patch Scenario Draft
 
 Patch scenario draft — composable infra architecture.

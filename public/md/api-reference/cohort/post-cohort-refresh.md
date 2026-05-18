@@ -1,7 +1,5 @@
 # `POST` `/cohort/refresh`
 
-# `POST` `/cohort/refresh`
-
 Cohort Refresh
 
 Refresh cohort materialized views and invalidate caches.

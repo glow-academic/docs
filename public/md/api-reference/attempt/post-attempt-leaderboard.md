@@ -1,7 +1,5 @@
 # `POST` `/attempt/leaderboard`
 
-# `POST` `/attempt/leaderboard`
-
 Get Leaderboard
 
 ## Request Body (`LeaderboardRequest`)

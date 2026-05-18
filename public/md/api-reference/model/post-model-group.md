@@ -1,7 +1,5 @@
 # `POST` `/model/group`
 
-# `POST` `/model/group`
-
 Group Model
 
 Resolve or create a model group with optional naming.

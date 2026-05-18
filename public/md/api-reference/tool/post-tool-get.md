@@ -1,7 +1,5 @@
 # `POST` `/tool/get`
 
-# `POST` `/tool/get`
-
 Get Tool
 
 Get tool information using the canonical shared tool operation.

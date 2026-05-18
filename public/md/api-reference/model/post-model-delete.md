@@ -1,7 +1,5 @@
 # `POST` `/model/delete`
 
-# `POST` `/model/delete`
-
 Delete Model
 
 Bulk delete models — composable infra architecture.

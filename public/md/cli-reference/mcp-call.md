@@ -1,7 +1,5 @@
 # `glow mcp call`
 
-# `glow mcp call`
-
 Call an MCP tool by name with a JSON arguments object. → POST /mcp/ with JSON-RPC ``tools/call``
 
 ## Usage

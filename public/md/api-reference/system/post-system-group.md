@@ -1,7 +1,5 @@
 # `POST` `/system/group`
 
-# `POST` `/system/group`
-
 Group System
 
 Resolve or create the session's system group, optionally naming it.

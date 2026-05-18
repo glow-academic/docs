@@ -1,7 +1,5 @@
 # `POST` `/provider/drafts`
 
-# `POST` `/provider/drafts`
-
 Get Provider Drafts
 
 List provider drafts owned by the current profile.

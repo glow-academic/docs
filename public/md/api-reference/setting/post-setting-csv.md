@@ -1,7 +1,5 @@
 # `POST` `/setting/csv`
 
-# `POST` `/setting/csv`
-
 Parse Setting Csv
 
 Parse a CSV file and return mapped items for preview.

@@ -1,7 +1,5 @@
 # `POST` `/tool/call_download`
 
-# `POST` `/tool/call_download`
-
 Download Call
 
 Download a call file by call resource ID.

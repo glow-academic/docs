@@ -1,7 +1,5 @@
 # `POST` `/persona/update`
 
-# `POST` `/persona/update`
-
 Update Persona
 
 Update personas using composable infra architecture.

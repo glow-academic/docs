@@ -1,7 +1,5 @@
 # `POST` `/cohort/search`
 
-# `POST` `/cohort/search`
-
 Search Cohort
 
 Search cohorts — composable infra architecture.

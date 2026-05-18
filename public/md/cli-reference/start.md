@@ -1,7 +1,5 @@
 # `glow start`
 
-# `glow start`
-
 Resume previously-stopped containers
 
 ## Usage

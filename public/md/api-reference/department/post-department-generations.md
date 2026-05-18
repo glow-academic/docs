@@ -1,7 +1,5 @@
 # `POST` `/department/generations`
 
-# `POST` `/department/generations`
-
 Generations Department
 
 List department generation groups — composable infra architecture.

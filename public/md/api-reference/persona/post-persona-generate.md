@@ -1,7 +1,5 @@
 # `POST` `/persona/generate`
 
-# `POST` `/persona/generate`
-
 Generate Persona
 
 Trigger persona generation. Returns immediately; progress via events.

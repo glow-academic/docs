@@ -1,7 +1,5 @@
 # `POST` `/test/invocation_complete`
 
-# `POST` `/test/invocation_complete`
-
 Complete Invocation
 
 ## Request Body (`TestInvocationCompletePayload`)

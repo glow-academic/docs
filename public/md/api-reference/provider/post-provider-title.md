@@ -1,7 +1,5 @@
 # `POST` `/provider/title`
 
-# `POST` `/provider/title`
-
 Title Provider
 
 Rename a provider's group (writes group_names_entry).

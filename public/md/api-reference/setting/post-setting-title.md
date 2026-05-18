@@ -1,7 +1,5 @@
 # `POST` `/setting/title`
 
-# `POST` `/setting/title`
-
 Title Setting
 
 Rename a setting's group (writes group_names_entry).

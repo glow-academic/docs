@@ -1,7 +1,5 @@
 # `POST` `/simulation/generate`
 
-# `POST` `/simulation/generate`
-
 Generate Simulation
 
 Trigger simulation generation. Returns immediately; progress via events.

@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow documents call_download',
   'context': 'glow documents context',
   'create': 'glow documents create',
   'csv': 'glow documents csv',
@@ -8,9 +7,6 @@ export default {
   'drafts': 'glow documents drafts',
   'duplicate': 'glow documents duplicate',
   'export': 'glow documents export',
-  'file_download': 'glow documents file_download',
-  'file_preview': 'glow documents file_preview',
-  'file_upload': 'glow documents file_upload',
   'generate': 'glow documents generate',
   'generations': 'glow documents generations',
   'get': 'glow documents get',
@@ -18,9 +14,10 @@ export default {
   'problem': 'glow documents problem',
   'refresh': 'glow documents refresh',
   'search': 'glow documents search',
-  'text_download': 'glow documents text_download',
-  'text_upload': 'glow documents text_upload',
   'title': 'glow documents title',
   'update': 'glow documents update',
   'watch': 'glow documents watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

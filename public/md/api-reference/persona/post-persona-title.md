@@ -1,7 +1,5 @@
 # `POST` `/persona/title`
 
-# `POST` `/persona/title`
-
 Title Persona
 
 Rename a persona's group (writes group_names_entry).

@@ -1,7 +1,5 @@
 # `POST` `/tool/generate`
 
-# `POST` `/tool/generate`
-
 Generate Tool
 
 Trigger tool generation. Returns immediately; progress via events.

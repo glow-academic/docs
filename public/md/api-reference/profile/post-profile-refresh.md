@@ -1,7 +1,5 @@
 # `POST` `/profile/refresh`
 
-# `POST` `/profile/refresh`
-
 Profile Refresh
 
 Refresh profile materialized views and invalidate caches.

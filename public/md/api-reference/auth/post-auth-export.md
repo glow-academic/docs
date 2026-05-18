@@ -1,7 +1,5 @@
 # `POST` `/auth/export`
 
-# `POST` `/auth/export`
-
 Export Auths
 
 Export all auths as a clean, denormalized CSV.

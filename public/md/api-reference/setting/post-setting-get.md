@@ -1,7 +1,5 @@
 # `POST` `/setting/get`
 
-# `POST` `/setting/get`
-
 Get Setting
 
 Get setting information using the canonical shared setting operation.

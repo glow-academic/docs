@@ -1,7 +1,5 @@
 # `POST` `/provider/get`
 
-# `POST` `/provider/get`
-
 Get Provider
 
 Get provider information using the canonical shared provider operation.

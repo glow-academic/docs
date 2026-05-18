@@ -1,7 +1,5 @@
 # `POST` `/scenario/create`
 
-# `POST` `/scenario/create`
-
 Create Scenario
 
 Create scenarios using composable infra architecture.

@@ -1,7 +1,5 @@
 # `POST` `/cohort/group`
 
-# `POST` `/cohort/group`
-
 Group Cohort
 
 Resolve or create a cohort group with optional naming.

@@ -1,7 +1,5 @@
 # `POST` `/eval/title`
 
-# `POST` `/eval/title`
-
 Title Eval
 
 Rename a eval's group (writes group_names_entry).

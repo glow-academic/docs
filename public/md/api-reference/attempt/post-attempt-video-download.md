@@ -1,7 +1,5 @@
 # `POST` `/attempt/video_download`
 
-# `POST` `/attempt/video_download`
-
 Download Video
 
 Download a video file by video entry ID with range support for seeking.

@@ -1,7 +1,5 @@
 # `POST` `/model/update`
 
-# `POST` `/model/update`
-
 Update Model
 
 Update models using composable infra architecture.

@@ -1,7 +1,5 @@
 # `GET` `/persona/watch`
 
-# `GET` `/persona/watch`
-
 Persona Watch
 
 ## Parameters

@@ -1,7 +1,5 @@
 # `POST` `/test/benchmark`
 
-# `POST` `/test/benchmark`
-
 Get Benchmark
 
 Get benchmark artifact data with the canonical shared benchmark operation.

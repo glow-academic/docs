@@ -1,7 +1,5 @@
 # `POST` `/test/invocation_terminate`
 
-# `POST` `/test/invocation_terminate`
-
 Terminate Invocation
 
 ## Request Body (`TestRunEndPayload`)

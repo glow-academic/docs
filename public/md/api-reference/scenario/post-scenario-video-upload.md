@@ -1,7 +1,5 @@
 # `POST` `/scenario/video_upload`
 
-# `POST` `/scenario/video_upload`
-
 Upload Video
 
 Upload a video for later use in scenarios.

@@ -1,7 +1,5 @@
 # `GET` `/document/watch`
 
-# `GET` `/document/watch`
-
 Document Watch
 
 ## Parameters

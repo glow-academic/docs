@@ -1,7 +1,5 @@
 # `POST` `/scenario/file_download`
 
-# `POST` `/scenario/file_download`
-
 Download File
 
 Download a file by file resource ID with range support.

@@ -628,54 +628,104 @@ function main() {
       // below instead of flat actions.
       const namespaceSlugs = new Set((cliSpec.namespaces || []).map(n => n.name))
 
+      // Bucket actions by a recognized prefix (media type or view name).
+      // For each action `prefix_suffix` where prefix ∈ prefixes,
+      // collect `suffix` under prefix. Returns { flat, byPrefix }.
+      function bucketByPrefix(actions: string[], prefixes: string[]) {
+        const flat: string[] = []
+        const byPrefix = new Map<string, string[]>()
+        for (const a of actions) {
+          const m = prefixes.find(p => a.startsWith(`${p}_`))
+          if (m) {
+            const sub = a.slice(m.length + 1)
+            if (!byPrefix.has(m)) byPrefix.set(m, [])
+            byPrefix.get(m)!.push(sub)
+          } else {
+            flat.push(a)
+          }
+        }
+        return { flat, byPrefix }
+      }
+
+      const mediaTypes = cliSpec.media_types || []
+
+      // Render a single CLI action page. Used by all the writer paths
+      // below — keeps the page shape consistent across CRUD, namespace
+      // own_actions, view-nested, and media-nested entries.
+      function writeCliPage(
+        dir: string,
+        invocationParts: string[],   // e.g. ['personas', 'file', 'download']
+        wirePath: string,            // e.g. '/persona/file_download'
+        about: string,
+      ) {
+        const aDir = join(dir, invocationParts[invocationParts.length - 1])
+        mkdirSync(aDir, { recursive: true })
+        const fullInvocation = `${rootName} ${invocationParts.join(' ')}`
+        const action = invocationParts[invocationParts.length - 1]
+        const usageHint =
+          action === 'list' || action === 'search'
+            ? fullInvocation
+            : action === 'save' || action === 'create' || action === 'generate' || action === 'upload'
+              ? `${fullInvocation} --body '\\{...\\}'`
+              : `${fullInvocation} --id <id>`
+        const lines = [
+          `# \`${fullInvocation}\``,
+          '', about, '',
+          '## Usage', '', '```bash', usageHint, '```', '',
+          `> Wire call: \`POST ${wirePath}\`. ` +
+          `Run \`${fullInvocation} --help\` for the full flag list.`,
+          '',
+        ]
+        writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
+        totalCliCommands++
+      }
+
+      function writeMetaTs(dir: string, meta: Record<string, string>) {
+        const lines = ['export default {']
+        for (const [k, v] of Object.entries(meta)) {
+          lines.push(`  '${k}': '${v}',`)
+        }
+        lines.push('}', '')
+        writeFileSync(join(dir, '_meta.ts'), lines.join('\n'))
+      }
+
       for (const res of cliSpec.resources) {
         if (namespaceSlugs.has(res.slug)) continue
 
-        // Map plural cli_name → singular api_path. cliSpec.resources
-        // already stores both pluralization forms; we use the api_path
-        // form (singular) to look up in the api spec.
         const artifact = (res as any).api_path || res.slug.replace(/s$/, '')
-        const actions = (actionsByArtifact.get(artifact) || ['get', 'list', 'save', 'delete'])
-          .sort()
+        const allActions = (actionsByArtifact.get(artifact) || ['get', 'list', 'save', 'delete'])
+
+        // Bucket by media-type prefix. flat actions stay top-level
+        // under the resource; media actions nest at <res>/<media>/<op>/.
+        const { flat, byPrefix: byMedia } = bucketByPrefix(allActions, mediaTypes)
 
         const resDir = join(cliRefDir, res.slug)
         mkdirSync(resDir, { recursive: true })
         const resMeta: Record<string, string> = {}
 
-        for (const action of actions) {
-          const aDir = join(resDir, action)
-          mkdirSync(aDir, { recursive: true })
-          // Best-effort invocation hint. The CLI accepts --body for any
-          // action and may also accept positional/named args via the
-          // helper layer — see `glow <res> <action> --help` for truth.
-          const usageHint =
-            action === 'list' || action === 'search'
-              ? `${rootName} ${res.slug} ${action}`
-              : action === 'save' || action === 'create' || action === 'generate'
-                ? `${rootName} ${res.slug} ${action} --body '\\{...\\}'`
-                : `${rootName} ${res.slug} ${action} --id <id>`
-          const lines = [
-            `# \`${rootName} ${res.slug} ${action}\``,
-            '', `${titleCase(action)} ${res.about || res.slug}.`, '',
-            '## Usage', '', '```bash',
-            usageHint,
-            '```', '',
-            `> Wire call: \`POST /${artifact}/${action}\`. ` +
-            `Run \`${rootName} ${res.slug} ${action} --help\` for the full flag list.`,
-            '',
-          ]
-          writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
+        for (const action of flat.sort()) {
+          writeCliPage(resDir, [res.slug, action],
+            `/${artifact}/${action}`,
+            `${titleCase(action)} ${res.about || res.slug}.`)
           resMeta[action] = `${rootName} ${res.slug} ${action}`
-          totalCliCommands++
         }
 
-        const resMetaLines = ['export default {']
-        for (const [key, label] of Object.entries(resMeta)) {
-          resMetaLines.push(`  '${key}': '${label}',`)
+        for (const media of [...byMedia.keys()].sort()) {
+          const ops = byMedia.get(media)!.sort()
+          const mediaDir = join(resDir, media)
+          mkdirSync(mediaDir, { recursive: true })
+          const mediaMeta: Record<string, string> = {}
+          for (const op of ops) {
+            writeCliPage(mediaDir, [res.slug, media, op],
+              `/${artifact}/${media}_${op}`,
+              `${titleCase(op)} ${media} on ${res.about || res.slug}.`)
+            mediaMeta[op] = `${rootName} ${res.slug} ${media} ${op}`
+          }
+          writeMetaTs(mediaDir, mediaMeta)
+          resMeta[media] = titleCase(media)
         }
-        resMetaLines.push('}', '')
-        writeFileSync(join(resDir, '_meta.ts'), resMetaLines.join('\n'))
 
+        writeMetaTs(resDir, resMeta)
         cliRefMeta[res.slug] = titleCase(res.slug)
       }
 
@@ -691,7 +741,6 @@ function main() {
       //   `glow <parent> <action>` (own)
       //   `glow <parent> <view> <action>` (nested)
       for (const ns of (cliSpec.namespaces || [])) {
-        // Singular parent for wire-path lookup. attempts → attempt, etc.
         const parentSingular = ns.name.replace(/s$/, '')
         const parentApiActions = actionsByArtifact.get(parentSingular) || []
 
@@ -699,41 +748,52 @@ function main() {
         mkdirSync(parentDir, { recursive: true })
         const parentMeta: Record<string, string> = {}
 
-        // Own actions — direct CLI verb under the parent.
-        for (const action of [...ns.own_actions].sort()) {
-          if (!parentApiActions.includes(action)) continue  // skip if api doesn't expose
-          const aDir = join(parentDir, action)
-          mkdirSync(aDir, { recursive: true })
-          const usageHint =
-            action === 'list' || action === 'search'
-              ? `${rootName} ${ns.name} ${action}`
-              : action === 'save' || action === 'generate'
-                ? `${rootName} ${ns.name} ${action} --body '\\{...\\}'`
-                : `${rootName} ${ns.name} ${action} --id <id>`
-          const lines = [
-            `# \`${rootName} ${ns.name} ${action}\``,
-            '', `${titleCase(action)} on ${ns.name}.`, '',
-            '## Usage', '', '```bash', usageHint, '```', '',
-            `> Wire call: \`POST /${parentSingular}/${action}\`. ` +
-            `Run \`${rootName} ${ns.name} ${action} --help\` for the full flag list.`,
-            '',
-          ]
-          writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
+        // Own actions = declared verbs in NAMESPACES (intersect with what
+        // the api actually exposes) + ALL media-prefixed actions the api
+        // exposes. Media ops are implicit — they don't need to be in the
+        // hardcoded own_actions list since `<media>_<op>` is a uniform
+        // convention across artifacts.
+        const declared = ns.own_actions.filter(a => parentApiActions.includes(a))
+        const mediaApi = parentApiActions.filter(a =>
+          mediaTypes.some(m => a.startsWith(`${m}_`))
+        )
+        const ownActions = [...new Set([...declared, ...mediaApi])]
+
+        // Bucket by media prefix so file_download, audio_upload etc.
+        // nest at <parent>/<media>/<op>/ rather than flat.
+        const { flat: ownFlat, byPrefix: ownByMedia } = bucketByPrefix(ownActions, mediaTypes)
+
+        for (const action of [...ownFlat].sort()) {
+          writeCliPage(parentDir, [ns.name, action],
+            `/${parentSingular}/${action}`,
+            `${titleCase(action)} on ${ns.name}.`)
           parentMeta[action] = `${rootName} ${ns.name} ${action}`
-          totalCliCommands++
         }
 
-        // Nested view artifacts. Wire actions are prefixed in the
-        // parent's path space (e.g. /attempt/chat_get). We derive
-        // the per-view action set by stripping the `<view>_` prefix
-        // from parent's api actions.
+        for (const media of [...ownByMedia.keys()].sort()) {
+          const ops = ownByMedia.get(media)!.sort()
+          const mediaDir = join(parentDir, media)
+          mkdirSync(mediaDir, { recursive: true })
+          const mediaMeta: Record<string, string> = {}
+          for (const op of ops) {
+            writeCliPage(mediaDir, [ns.name, media, op],
+              `/${parentSingular}/${media}_${op}`,
+              `${titleCase(op)} ${media} on ${ns.name}.`)
+            mediaMeta[op] = `${rootName} ${ns.name} ${media} ${op}`
+          }
+          writeMetaTs(mediaDir, mediaMeta)
+          parentMeta[media] = titleCase(media)
+        }
+
+        // Nested view artifacts. Strip the <view>_ prefix from
+        // parent's api actions to get each view's action set, then
+        // media-bucket those too so /<parent>/<view>_audio_download
+        // → <parent>/<view>/audio/download.
         for (const view of [...ns.views].sort()) {
           const viewActions = parentApiActions
             .filter(a => a.startsWith(`${view}_`))
-            .map(a => a.slice(view.length + 1))   // drop `<view>_` prefix
+            .map(a => a.slice(view.length + 1))
             .sort()
-          // Some views have a bare path (no action) like /attempt/dashboard
-          // — surface that as a 'get' default for the view.
           if (parentApiActions.includes(view)) viewActions.unshift('get')
           if (viewActions.length === 0) continue
 
@@ -741,48 +801,37 @@ function main() {
           mkdirSync(viewDir, { recursive: true })
           const viewMeta: Record<string, string> = {}
 
-          for (const action of viewActions) {
-            const aDir = join(viewDir, action)
-            mkdirSync(aDir, { recursive: true })
-            // Bare-path (no _action suffix) → POST /<parent>/<view>;
-            // otherwise → POST /<parent>/<view>_<action>.
+          const { flat: viewFlat, byPrefix: viewByMedia } = bucketByPrefix(viewActions, mediaTypes)
+
+          for (const action of [...viewFlat].sort()) {
             const wirePath = action === 'get' && !parentApiActions.includes(`${view}_get`)
               ? `/${parentSingular}/${view}`
               : `/${parentSingular}/${view}_${action}`
-            const usageHint =
-              action === 'list' || action === 'search'
-                ? `${rootName} ${ns.name} ${view} ${action}`
-                : action === 'save' || action === 'create' || action === 'generate'
-                  ? `${rootName} ${ns.name} ${view} ${action} --body '\\{...\\}'`
-                  : `${rootName} ${ns.name} ${view} ${action} --id <id>`
-            const lines = [
-              `# \`${rootName} ${ns.name} ${view} ${action}\``,
-              '', `${titleCase(action)} on ${view} (under ${ns.name}).`, '',
-              '## Usage', '', '```bash', usageHint, '```', '',
-              `> Wire call: \`POST ${wirePath}\`. ` +
-              `Run \`${rootName} ${ns.name} ${view} ${action} --help\` for the full flag list.`,
-              '',
-            ]
-            writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
+            writeCliPage(viewDir, [ns.name, view, action], wirePath,
+              `${titleCase(action)} on ${view} (under ${ns.name}).`)
             viewMeta[action] = `${rootName} ${ns.name} ${view} ${action}`
-            totalCliCommands++
           }
 
-          const viewMetaLines = ['export default {']
-          for (const [key, label] of Object.entries(viewMeta)) {
-            viewMetaLines.push(`  '${key}': '${label}',`)
+          for (const media of [...viewByMedia.keys()].sort()) {
+            const ops = viewByMedia.get(media)!.sort()
+            const mediaDir = join(viewDir, media)
+            mkdirSync(mediaDir, { recursive: true })
+            const mediaMeta: Record<string, string> = {}
+            for (const op of ops) {
+              writeCliPage(mediaDir, [ns.name, view, media, op],
+                `/${parentSingular}/${view}_${media}_${op}`,
+                `${titleCase(op)} ${media} on ${view} (under ${ns.name}).`)
+              mediaMeta[op] = `${rootName} ${ns.name} ${view} ${media} ${op}`
+            }
+            writeMetaTs(mediaDir, mediaMeta)
+            viewMeta[media] = titleCase(media)
           }
-          viewMetaLines.push('}', '')
-          writeFileSync(join(viewDir, '_meta.ts'), viewMetaLines.join('\n'))
+
+          writeMetaTs(viewDir, viewMeta)
           parentMeta[view] = titleCase(view)
         }
 
-        const parentMetaLines = ['export default {']
-        for (const [key, label] of Object.entries(parentMeta)) {
-          parentMetaLines.push(`  '${key}': '${label}',`)
-        }
-        parentMetaLines.push('}', '')
-        writeFileSync(join(parentDir, '_meta.ts'), parentMetaLines.join('\n'))
+        writeMetaTs(parentDir, parentMeta)
         cliRefMeta[ns.name] = titleCase(ns.name)
       }
     }

@@ -1,7 +1,5 @@
 # `POST` `/auth/csv`
 
-# `POST` `/auth/csv`
-
 Parse Auth Csv
 
 Parse a CSV file and return mapped items for preview.

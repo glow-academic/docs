@@ -1,7 +1,5 @@
 # `POST` `/scenario/delete`
 
-# `POST` `/scenario/delete`
-
 Delete Scenario
 
 Bulk delete scenarios — composable infra architecture.

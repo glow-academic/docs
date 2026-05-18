@@ -1,7 +1,5 @@
 # `POST` `/persona/delete`
 
-# `POST` `/persona/delete`
-
 Delete Persona
 
 Bulk delete personas — composable infra architecture.

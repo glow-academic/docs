@@ -1,7 +1,5 @@
 # `POST` `/eval/search`
 
-# `POST` `/eval/search`
-
 Search Eval
 
 Search evals — composable infra architecture.

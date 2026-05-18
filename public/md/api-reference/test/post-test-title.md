@@ -1,7 +1,5 @@
 # `POST` `/test/title`
 
-# `POST` `/test/title`
-
 Title Test
 
 Rename a test's group (writes group_names_entry).

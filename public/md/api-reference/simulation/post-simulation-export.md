@@ -1,7 +1,5 @@
 # `POST` `/simulation/export`
 
-# `POST` `/simulation/export`
-
 Export Simulations
 
 Export all simulations as a clean, denormalized CSV.

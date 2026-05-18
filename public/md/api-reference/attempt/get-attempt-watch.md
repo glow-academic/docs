@@ -1,7 +1,5 @@
 # `GET` `/attempt/watch`
 
-# `GET` `/attempt/watch`
-
 Attempt Watch
 
 ## Parameters

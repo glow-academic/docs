@@ -1,7 +1,5 @@
 # `POST` `/cohort/draft`
 
-# `POST` `/cohort/draft`
-
 Patch Cohort Draft
 
 Patch cohort draft — composable infra architecture.

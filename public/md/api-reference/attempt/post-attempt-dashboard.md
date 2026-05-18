@@ -1,7 +1,5 @@
 # `POST` `/attempt/dashboard`
 
-# `POST` `/attempt/dashboard`
-
 Get Dashboard
 
 ## Request Body (`DashboardRequest`)

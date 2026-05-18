@@ -1,7 +1,5 @@
 # `POST` `/rubric/problem`
 
-# `POST` `/rubric/problem`
-
 Problem Rubric
 
 Report a rubric problem — composable infra architecture.

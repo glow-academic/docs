@@ -1,7 +1,5 @@
 # `POST` `/simulation/title`
 
-# `POST` `/simulation/title`
-
 Title Simulation
 
 Rename a simulation's group (writes group_names_entry).

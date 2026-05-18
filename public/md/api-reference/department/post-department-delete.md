@@ -1,7 +1,5 @@
 # `POST` `/department/delete`
 
-# `POST` `/department/delete`
-
 Delete Department
 
 Bulk delete departments — composable infra architecture.

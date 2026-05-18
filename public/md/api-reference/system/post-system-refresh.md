@@ -1,7 +1,5 @@
 # `POST` `/system/refresh`
 
-# `POST` `/system/refresh`
-
 System Refresh
 
 Refresh system-scope caches (Phase A: invalidate tags only).

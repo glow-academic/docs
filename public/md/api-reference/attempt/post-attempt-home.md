@@ -1,7 +1,5 @@
 # `POST` `/attempt/home`
 
-# `POST` `/attempt/home`
-
 Home Get
 
 Get simulations available for home (operational).

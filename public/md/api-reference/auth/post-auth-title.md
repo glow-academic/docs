@@ -1,7 +1,5 @@
 # `POST` `/auth/title`
 
-# `POST` `/auth/title`
-
 Title Auth
 
 Rename a auth's group (writes group_names_entry).

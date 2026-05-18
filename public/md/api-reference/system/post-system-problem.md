@@ -1,7 +1,5 @@
 # `POST` `/system/problem`
 
-# `POST` `/system/problem`
-
 Problem System
 
 Report a system problem — composable infra architecture.

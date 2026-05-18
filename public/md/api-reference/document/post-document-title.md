@@ -1,7 +1,5 @@
 # `POST` `/document/title`
 
-# `POST` `/document/title`
-
 Title Document
 
 Rename a document's group (writes group_names_entry).

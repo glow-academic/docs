@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow evals call_download',
   'context': 'glow evals context',
   'create': 'glow evals create',
   'csv': 'glow evals csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow evals drafts',
   'duplicate': 'glow evals duplicate',
   'export': 'glow evals export',
-  'file_download': 'glow evals file_download',
   'generate': 'glow evals generate',
   'generations': 'glow evals generations',
   'get': 'glow evals get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow evals problem',
   'refresh': 'glow evals refresh',
   'search': 'glow evals search',
-  'text_download': 'glow evals text_download',
   'title': 'glow evals title',
   'update': 'glow evals update',
   'watch': 'glow evals watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

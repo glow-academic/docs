@@ -1,5 +1,4 @@
 export default {
-  'call_download': 'glow agents call_download',
   'context': 'glow agents context',
   'create': 'glow agents create',
   'csv': 'glow agents csv',
@@ -8,7 +7,6 @@ export default {
   'drafts': 'glow agents drafts',
   'duplicate': 'glow agents duplicate',
   'export': 'glow agents export',
-  'file_download': 'glow agents file_download',
   'generate': 'glow agents generate',
   'generations': 'glow agents generations',
   'get': 'glow agents get',
@@ -16,8 +14,10 @@ export default {
   'problem': 'glow agents problem',
   'refresh': 'glow agents refresh',
   'search': 'glow agents search',
-  'text_download': 'glow agents text_download',
   'title': 'glow agents title',
   'update': 'glow agents update',
   'watch': 'glow agents watch',
+  'call': 'Call',
+  'file': 'File',
+  'text': 'Text',
 }

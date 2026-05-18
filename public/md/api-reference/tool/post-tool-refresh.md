@@ -1,7 +1,5 @@
 # `POST` `/tool/refresh`
 
-# `POST` `/tool/refresh`
-
 Tool Refresh
 
 Refresh tool materialized views and invalidate caches.
