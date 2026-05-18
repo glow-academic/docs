@@ -1,12 +1,13 @@
-{/* DEMO_VIDEO: tools — replace public/demos/tools.mp4 */}
+{/* DEMO_VIDEO: tools-overview — replace public/demos/tools-overview.mp4 */}
 
 # Tools
 
-<DemoVideo topic="tools" />
-
 Tools give agents the ability to take actions and look up information during office hour simulations. A tool might check a student's enrollment status, look up assignment deadlines, or retrieve course policies -- enabling the AI agent to respond with accurate, real-time data rather than relying solely on its training.
 
-![Tools list showing available tools with name, description, and assigned agent count](/screenshots/tools/list.png)
+<DemoVideo
+  topic="tools-overview"
+  caption="The tools list -- rows by name with arg count and agent usage, plus a filter to find every tool wired into a specific agent."
+/>
 
 ---
 
@@ -25,64 +26,6 @@ Tools are attached to agents through the `agent_tools_junction`. When a student 
 
 ---
 
-## Quick Start
-
-### CLI
-
-List all available tools:
-
-```bash
-glow tools search
-```
-
-Get details for a specific tool:
-
-```bash
-glow tools get --body '{"tool_id": "TOOL_UUID"}'
-```
-
-Create a new tool:
-
-```bash
-glow tools create --body '{
-  "tools": [{
-    "name": "check_enrollment",
-    "description": "Verify whether a student is enrolled in a given course section"
-  }]
-}'
-```
-
-### API
-
-All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` headers.
-
-**Search tools:**
-
-```bash
-curl -X POST https://<your-instance>/tool/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{}'
-```
-
-**Create a tool:**
-
-```bash
-curl -X POST https://<your-instance>/tool/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "tools": [{
-      "name": "lookup_course_policy",
-      "description": "Look up course-specific policies such as late submission rules, attendance requirements, and grading criteria"
-    }]
-  }'
-```
-
----
-
 ## How it Connects
 
 ```
@@ -98,11 +41,53 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ---
 
-![Tool detail showing function signature, parameters, and linked agents](/screenshots/tools/detail.png)
+{/* DEMO_VIDEO: tools-create — replace public/demos/tools-create.mp4 */}
 
-## Tool Arguments and Outputs
+## Create a tool
 
-### Defining Arguments
+<DemoVideo
+  topic="tools-create"
+  caption="Defining a check_enrollment tool: name, description, and the initial arg shape -- the new tool_id is immediately available to wire into agents."
+/>
+
+### Via the CLI
+
+```bash
+glow tools create --body '{
+  "tools": [{
+    "name": "check_enrollment",
+    "description": "Verify whether a student is enrolled in a given course section"
+  }]
+}'
+```
+
+### Via the API
+
+```bash
+curl -X POST https://<your-instance>/tool/create \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tools": [{
+      "name": "lookup_course_policy",
+      "description": "Look up course-specific policies such as late submission rules, attendance requirements, and grading criteria"
+    }]
+  }'
+```
+
+Each entry returns the new `tool_id`, a generated `draft_id`, and the initial `version`.
+
+---
+
+{/* DEMO_VIDEO: tools-args — replace public/demos/tools-args.mp4 */}
+
+## Defining arguments and outputs
+
+<DemoVideo
+  topic="tools-args"
+  caption="Adding two arguments to lookup_course_policy with arg_positions to lock ordering, then defining the args_outputs shape the LLM will receive."
+/>
 
 Tool arguments specify what data the tool needs to operate. For example, a `check_deadline` tool might accept a `course_id` and an `assignment_type` argument. Arguments are managed through `arg_ids` on the tool's configuration.
 
@@ -125,7 +110,16 @@ The tool would return the matching policy text, which the agent uses to answer t
 
 ---
 
-## Feature Flags
+{/* DEMO_VIDEO: tools-invocation — replace public/demos/tools-invocation.mp4 */}
+
+## Invocation surface
+
+The tool's `operations` and `artifacts` describe what actually runs when an agent calls it. Operations bind the tool to a callable in the platform; flags control whether the tool is currently usable.
+
+<DemoVideo
+  topic="tools-invocation"
+  caption="Watching the tool fire during a live attempt -- the agent picks check_deadline, args render in the trace, and the structured response feeds back into the next turn."
+/>
 
 Tools support feature flags through `flag_ids` that control behavior such as:
 
@@ -137,9 +131,16 @@ The search endpoint includes a `creatable_filter` section for filtering tools by
 
 ---
 
-## Drafts
+{/* DEMO_VIDEO: tools-draft — replace public/demos/tools-draft.mp4 */}
+
+## The draft cycle
 
 Tools support a draft workflow for staging changes before they affect running simulations. This is useful when adding new arguments to a tool or modifying its operation logic.
+
+<DemoVideo
+  topic="tools-draft"
+  caption="Editing a tool in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 ```bash
 # Create or update a tool draft
@@ -158,6 +159,66 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 ---
 
+{/* DEMO_VIDEO: tools-search — replace public/demos/tools-search.mp4 */}
+
+## Search & filter
+
+<DemoVideo
+  topic="tools-search"
+  caption="Filtering tools by agent (which tools does this agent see?) and creatability flag, then drilling in."
+/>
+
+```bash
+glow tools search --body '{"search": "policy"}'
+
+glow tools search --body '{
+  "filter_agent_ids": ["agent-uuid"],
+  "filter_creatable": true,
+  "page_size": 25
+}'
+```
+
+---
+
+{/* DEMO_VIDEO: tools-bulk — replace public/demos/tools-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs, or `all: true` with flat filter fields plus optional `excluded_ids` and a `patch` body. The persona surface is the prove-out; tools follow the same shape.
+
+<DemoVideo
+  topic="tools-bulk"
+  caption="Bulk-disabling every legacy lookup tool in one round-trip; excluded_ids keeps a tool that an active agent still depends on."
+/>
+
+**Delete by explicit IDs:**
+
+```bash
+glow tools delete --body '{
+  "tool_ids": ["tool-1", "tool-2"]
+}'
+```
+
+**Delete all matching a filter (with exclusions):**
+
+```bash
+glow tools delete --body '{
+  "all": true,
+  "filter_agent_ids": ["agent-deprecated-uuid"],
+  "excluded_ids": ["tool-still-needed"]
+}'
+```
+
+**Bulk update via `patch`:**
+
+```bash
+glow tools update --body '{
+  "all": true,
+  "filter_creatable": false,
+  "patch": { "archived": true }
+}'
+```
+
 ## Common Operations
 
 | Task | CLI | API Endpoint |
@@ -168,6 +229,7 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 | Update tool | `glow tools update --body '{"tool_id": "...", ...}'` | `POST /tool/update` |
 | Duplicate tool | -- | `POST /tool/duplicate` |
 | Delete tool(s) | `glow tools delete --body '{"tool_id": "..."}'` | `POST /tool/delete` |
+| Bulk delete (filter) | `glow tools delete --body '{"all": true, "filter_…": "…"}'` | `POST /tool/delete` |
 | Export to CSV | `glow tools export` | `POST /tool/export` |
 | Stage a draft | `glow tools draft --body '{...}'` | `PATCH /tool/draft` |
 | List drafts | `glow tools list` | `POST /tool/drafts` |
