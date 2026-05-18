@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: home — replace public/demos/home.mp4 */}
+
 # Home
+
+<DemoVideo topic="home" />
 
 Home is the TA landing page in Glow. It displays the training simulations assigned to the current TA, along with their progress status and attempt history. This is where TAs go to start, continue, or review their office-hours practice sessions.
 
@@ -8,8 +12,8 @@ Home is the TA landing page in Glow. It displays the training simulations assign
 
 Home provides two views for TAs:
 
-1. **Simulation cards** (`/home/get`) -- A list of assigned simulations showing the TA's name, each simulation's persona (Confused, Aggressive, Passive, or Happy student), progress status (not-started, in-progress, passed), highest score, and pass threshold.
-2. **Attempt history** (`/home/search`) -- A paginated table of the TA's past attempts, with scores, scenario details, and actions (view, continue).
+1. **Simulation cards** (`POST /attempt/home`) -- A list of assigned simulations showing the TA's name, each simulation's persona (Confused, Aggressive, Passive, or Happy student), progress status (not-started, in-progress, passed), highest score, and pass threshold.
+2. **Attempt history** (`POST /attempt/search`) -- A paginated table of the TA's past attempts, with scores, scenario details, and actions (view, continue).
 
 Home also returns rubric and standard mappings so the UI can display which Communication Skills, Policy Knowledge, and De-escalation standards are being assessed for each simulation.
 
@@ -19,27 +23,27 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 
 ```bash
 # Get assigned simulations for the current TA
-glow home get
+glow attempts home
 
 # Search the TA's attempt history
-glow home search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
+glow attempts search --body '{"page": 1, "page_size": 20, "sort_order": "desc"}'
 
 # Export home data with certificate
-glow home export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get simulation cards
-curl -X POST https://<your-instance>/v5/home/get \
+curl -X POST https://<your-instance>/attempt/home \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search attempt history
-curl -X POST https://<your-instance>/v5/home/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -53,7 +57,7 @@ curl -X POST https://<your-instance>/v5/home/search \
 
 ## Understanding the Simulation Cards
 
-The `/home/get` response includes:
+The `POST /attempt/home` response includes:
 
 - **`actor_name`** -- Display name of the currently logged-in TA.
 - **`items`** -- Array of `ChatSimulationOperational` objects, one per assigned simulation:
@@ -78,7 +82,7 @@ The `/home/get` response includes:
 
 ![Home attempt history showing individual scores per scenario with pass/fail indicators](/screenshots/home/attempt-history.png)
 
-The `/home/search` response returns paginated `HistoryItem` rows:
+The `POST /attempt/search` response returns paginated `HistoryItem` rows:
 
 - `attempt_id`, `date` -- Attempt identity and formatted date
 - `simulation_id`, `simulation_name` -- Which simulation was attempted
@@ -107,7 +111,7 @@ The `/home/search` response returns paginated `HistoryItem` rows:
 The export endpoint generates a denormalized ZIP that includes a certificate of completion:
 
 ```bash
-glow home export
+glow attempts export
 ```
 
 The response includes `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
@@ -116,14 +120,14 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Get assigned simulations | `glow home get` | `POST /home/get` |
-| Search attempt history | `glow home search` | `POST /home/search` |
-| Export with certificate | `glow home export` | `POST /home/export` |
-| Refresh caches | -- | `POST /home/refresh` |
+| Get assigned simulations | `glow attempts home` | `POST /attempt/home` |
+| Search attempt history | `glow attempts search` | `POST /attempt/search` |
+| Export with certificate | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 
 ## Related
 
-- [Home API Reference](/glow/home/api)
-- [Home CLI Reference](/glow/home/cli)
-- [Practice Guide](/glow/practice/guide) -- open practice with student personas
-- [Record Guide](/glow/record/guide) -- individual TA training history (admin view)
+- [Home API Reference](/api-reference/attempt)
+- [Home CLI Reference](/cli-reference/attempts)
+- [Practice Guide](/practice) -- open practice with student personas
+- [Record Guide](/record) -- individual TA training history (admin view)
