@@ -1,10 +1,13 @@
-{/* DEMO_VIDEO: profiles — replace public/demos/profiles.mp4 */}
+{/* DEMO_VIDEO: profiles-overview — replace public/demos/profiles-overview.mp4 */}
 
 # Profiles
 
-<DemoVideo topic="profiles" />
-
 Profiles represent the people who use Glow -- instructors, teaching assistants, and administrators. Every user in your institution gets a profile that determines what they can access and how they interact with simulations through cohorts.
+
+<DemoVideo
+  topic="profiles-overview"
+  caption="The profiles list — cards show name, role, department, and last login; drill in to manage role assignments and department membership."
+/>
 
 ![Profiles list showing user cards with name, role, department, and last login](/screenshots/profiles/list.png)
 
@@ -14,20 +17,32 @@ A profile is a user identity in Glow. Each profile has a name, email, role, depa
 
 **University example:** Your CS department might have profiles for Professor Smith (Instructional Staff), TA Johnson (Instructional Staff), and a University Admin (Super Administrator). Each profile's role controls what they can create, edit, and view across the platform.
 
-## Quick Start
+## How It Connects: The 5-Step Workflow
 
-### CLI
+Profiles participate in step 4 of the Glow workflow:
+
+1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
+2. **Assign to Scenarios** -- Attach personas and documents to scenarios.
+3. **Add to Simulations** -- Group scenarios into simulations.
+4. **Add to Cohorts** -- Assign *profiles* and simulations to a cohort. Profile personas tell the AI who each learner is, so the AI character can adapt.
+5. **Run Attempts** -- Learners launch simulations from their cohort.
+
+Profiles are the link between real users and the simulation experience. Without a profile assigned to a cohort, a user cannot access any simulations.
+
+---
+
+{/* DEMO_VIDEO: profiles-create — replace public/demos/profiles-create.mp4 */}
+
+## Create a profile
+
+<DemoVideo
+  topic="profiles-create"
+  caption="Filling out the create form: name, email, picking the role (Instructional Staff / Administrator / Super Administrator), and assigning to a department."
+/>
+
+### Via the CLI
 
 ```bash
-# List all profiles
-glow profiles list
-
-# Search for a specific profile
-glow profiles search
-
-![Profile creation form showing name, role selection, and department assignment](/screenshots/profiles/create.png)
-
-# Create a new profile
 glow profiles create --body '{
   "profiles": [
     {
@@ -37,42 +52,13 @@ glow profiles create --body '{
     }
   ]
 }'
-
-# Get a profile by ID
-glow profiles get --body '{"profile_id": "abc-123"}'
-
-# Update an existing profile
-glow profiles update --body '{
-  "profiles": [
-    {
-      "profile_id": "abc-123",
-      "name": "TA Johnson",
-      "role": "Administrator"
-    }
-  ]
-}'
-
-# Delete a profile
-glow profiles delete --body '{"profile_id": "abc-123"}'
 ```
 
-### API
+### Via the API
 
 All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
 
 ```bash
-# Search profiles
-curl -X POST https://<your-instance>/profile/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "search": "Johnson",
-    "role_filter": "Instructional Staff",
-    "page_size": 10
-  }'
-
-# Create a profile
 curl -X POST https://<your-instance>/profile/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -88,19 +74,20 @@ curl -X POST https://<your-instance>/profile/create \
   }'
 ```
 
-## How It Connects: The 5-Step Workflow
+![Profile creation form showing name, role selection, and department assignment](/screenshots/profiles/create.png)
 
-Profiles participate in step 4 of the Glow workflow:
+---
 
-1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
-2. **Assign to Scenarios** -- Attach personas and documents to scenarios.
-3. **Add to Simulations** -- Group scenarios into simulations.
-4. **Add to Cohorts** -- Assign *profiles* and simulations to a cohort. Profile personas tell the AI who each learner is, so the AI character can adapt.
-5. **Run Attempts** -- Learners launch simulations from their cohort.
+{/* DEMO_VIDEO: profiles-edit — replace public/demos/profiles-edit.mp4 */}
 
-Profiles are the link between real users and the simulation experience. Without a profile assigned to a cohort, a user cannot access any simulations.
+## Roles, departments, and request limits
 
-## Roles
+<DemoVideo
+  topic="profiles-edit"
+  caption="Editing a profile: promoting from Instructional Staff to Administrator, adding a second department, and setting a request-limit cap."
+/>
+
+### Roles
 
 Glow supports three profile roles, each with different permissions:
 
@@ -112,7 +99,7 @@ Glow supports three profile roles, each with different permissions:
 
 **Example:** TA Johnson has the Instructional Staff role and can run practice simulations in their assigned cohorts. The University Admin has the Super Administrator role and can manage profiles across all departments.
 
-## Department Membership
+### Department membership
 
 Every profile belongs to one or more departments. Department membership controls:
 
@@ -122,13 +109,59 @@ Every profile belongs to one or more departments. Department membership controls
 
 **Example:** Professor Smith belongs to the "University" department and can see all resources scoped to that department.
 
-## Request Limits
+### Request limits
 
 Profiles can have request limits that cap how many simulation attempts a learner can make. This is useful for controlling API usage in large courses.
 
+---
+
+{/* DEMO_VIDEO: profiles-emulate — replace public/demos/profiles-emulate.mp4 */}
+
+## Emulating another profile
+
+Super Administrators can emulate any profile to debug what that user actually sees -- cohort access, role-gated UI, request-limit warnings, the works. Emulation is a sub-operation on the profile artifact (`POST /profile/emulate`), and you exit it with `POST /profile/unemulate`.
+
+<DemoVideo
+  topic="profiles-emulate"
+  caption="A Super Admin emulating TA Johnson — the UI reflows to show only TA Johnson's cohorts and learner-facing features, then unemulate returns to admin view."
+/>
+
+**Start emulation:**
+
+```bash
+curl -X POST https://<your-instance>/profile/emulate \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "profile_id": "ta-johnson-uuid"
+  }'
+```
+
+**Stop emulating and return to your own profile:**
+
+```bash
+curl -X POST https://<your-instance>/profile/unemulate \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+Emulation is audit-logged; only Super Administrators can invoke `/profile/emulate`.
+
+---
+
+{/* DEMO_VIDEO: profiles-draft — replace public/demos/profiles-draft.mp4 */}
+
 ## Drafts
 
-Profiles support the draft workflow. When you create or update a profile through the UI, changes are saved as a draft before being published. This lets you preview changes before they take effect.
+Profiles support the draft workflow. When you create or update a profile through the UI, changes are saved as a draft before being published. The draft endpoint enforces optimistic concurrency via `expected_version`.
+
+<DemoVideo
+  topic="profiles-draft"
+  caption="Editing the same profile in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 ```bash
 # Save a profile draft
@@ -141,6 +174,62 @@ glow profiles draft --body '{
 
 Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expected_version`, `name`, `email`, `flag_id`, `department_ids`, and `role_ids`.
 
+---
+
+{/* DEMO_VIDEO: profiles-search — replace public/demos/profiles-search.mp4 */}
+
+## Search and filter
+
+Profile search supports full-text plus facet filters across role, department, and cohort membership.
+
+<DemoVideo
+  topic="profiles-search"
+  caption="Filtering profiles by role (Instructional Staff) and department, then drilling in on a single profile."
+/>
+
+```bash
+curl -X POST https://<your-instance>/profile/search \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "Johnson",
+    "role_filter": "Instructional Staff",
+    "page_size": 10
+  }'
+```
+
+---
+
+{/* DEMO_VIDEO: profiles-bulk — replace public/demos/profiles-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- pass either explicit IDs, or `all: true` with flat filter fields + optional `excluded_ids` + a `patch` for updates.
+
+<DemoVideo
+  topic="profiles-bulk"
+  caption="Bulk-archiving every profile in a sunset department in one round-trip, keeping admin users via excluded_ids."
+/>
+
+```bash
+# Delete every profile in a sunset department, except admins
+glow profiles delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-sunset"],
+  "excluded_ids": ["super-admin-uuid"]
+}'
+
+# Bulk update via patch (e.g. raise request limits for an entire cohort)
+glow profiles update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-cs"],
+  "patch": { "request_limit": 100 }
+}'
+```
+
+See the [Personas guide](/personas#bulk-operations) for the canonical write-up of this pattern.
+
 ## Common Operations
 
 | Task | CLI | API Endpoint |
@@ -151,6 +240,9 @@ Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expe
 | Update profiles | `glow profiles update --body '{...}'` | `POST /profile/update` |
 | Duplicate a profile | -- | `POST /profile/duplicate` |
 | Delete profiles | `glow profiles delete --body '{...}'` | `POST /profile/delete` |
+| Bulk delete (filter) | `glow profiles delete --body '{"all": true, "filter_…": "…"}'` | `POST /profile/delete` |
+| Emulate a profile | -- | `POST /profile/emulate` |
+| Stop emulating | -- | `POST /profile/unemulate` |
 | Export to CSV | `glow profiles export` | `POST /profile/export` |
 | Save a draft | `glow profiles draft --body '{...}'` | `PATCH /profile/draft` |
 | List drafts | -- | `POST /profile/drafts` |
