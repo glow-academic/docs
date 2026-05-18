@@ -18,6 +18,7 @@ export default {
   patterns: 'Patterns & Best Practices',
   'annotated-example': 'Annotated Example',
   authentication: 'Authentication',
+  realtime: 'Realtime',
   settings: 'Settings',
 
   // ── Attempt artifact — chat namespace + view ops ────────────
