@@ -26,19 +26,39 @@ import { DEMO_TOPICS } from './demo-manifest'
  *   2. Run ``node scripts/gen-demo-manifest.mjs`` (or ``make sync-types``).
  *   3. The next build picks it up automatically.
  */
+/**
+ * How the clip is produced. Drives the small badge under the caption
+ * and lets a future regenerator script enumerate work by tool:
+ *   - 'playwright' — client web-UI flow recorded by Playwright
+ *   - 'vhs'        — terminal demo recorded by Charm's VHS
+ *   - 'manual'     — hand-recorded screen capture (no automation today)
+ *
+ * Mirrored in the marker comment so it's greppable:
+ *   {/* DEMO_VIDEO: <slug> | playwright *‍/}
+ */
+export type DemoVideoKind = 'playwright' | 'vhs' | 'manual'
+
 interface DemoVideoProps {
   topic: string
   /** Optional caption rendered under the video. */
   caption?: string
   /** Optional poster image (defaults to first frame of the video). */
   poster?: string
+  /** How this clip is produced — surfaces a small badge + lets tooling enumerate. */
+  kind?: DemoVideoKind
 }
 
 // Mirrors next.config.mjs ``basePath`` — must be inlined client-side
 // since Next only auto-prefixes raw asset URLs for next/image / next/link.
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
-export default function DemoVideo({ topic, caption, poster }: DemoVideoProps) {
+const KIND_LABEL: Record<DemoVideoKind, string> = {
+  playwright: 'Playwright clip',
+  vhs: 'VHS clip',
+  manual: 'Manual recording',
+}
+
+export default function DemoVideo({ topic, caption, poster, kind }: DemoVideoProps) {
   const hasPerTopic = DEMO_TOPICS.has(topic)
   const path = hasPerTopic ? `/demos/${topic}.mp4` : '/demos/_placeholder.mp4'
   const src = `${BASE_PATH}${path}`
@@ -48,6 +68,7 @@ export default function DemoVideo({ topic, caption, poster }: DemoVideoProps) {
       className="my-6"
       data-demo-video={topic}
       data-demo-fallback={hasPerTopic ? undefined : 'placeholder'}
+      data-demo-kind={kind}
       aria-label={`Demo video for ${topic}`}
     >
       <video
@@ -60,8 +81,13 @@ export default function DemoVideo({ topic, caption, poster }: DemoVideoProps) {
       >
         Your browser does not support the video tag.
       </video>
-      {(caption || !hasPerTopic) && (
+      {(caption || !hasPerTopic || kind) && (
         <figcaption className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+          {kind && (
+            <span className="mr-2 inline-block rounded border border-neutral-300 dark:border-neutral-700 px-1.5 py-0.5 text-xs font-mono text-neutral-600 dark:text-neutral-400">
+              {KIND_LABEL[kind]}
+            </span>
+          )}
           {caption ?? `Placeholder — drop a real clip at public/demos/${topic}.mp4 to replace.`}
         </figcaption>
       )}
