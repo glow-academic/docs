@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: practice — replace public/demos/practice.mp4 */}
+{/* DEMO_VIDEO: practice-overview */}
 
 # Practice
 
-<DemoVideo topic="practice" />
+<DemoVideo
+  topic="practice-overview"
+  caption="The practice landing — self-directed simulation cards with persona colors, best score, and a Start button that never counts against assigned-training metrics."
+/>
 
 Practice provides open-ended training sessions where TAs can practice with student personas outside of graded assignments. Unlike Home (which shows assigned simulations), Practice surfaces all available practice simulations for self-directed skill development.
 
@@ -75,9 +78,25 @@ The `POST /attempt/practice` response mirrors the Home response structure:
 - **`standard_groups`** -- Groups like "Communication Skills", "Policy Knowledge", "De-escalation" with `points` and `pass_points`.
 - **`standards`** -- Individual assessment standards within each group.
 
+{/* DEMO_VIDEO: practice-retry */}
+
+## Retrying a practice session
+
+<DemoVideo
+  topic="practice-retry"
+  caption="Re-running a finished practice attempt — same persona + scenario, fresh chat thread, num_sessions ticks up but the highest_score badge stays."
+/>
+
 ![Active practice session showing the chat interface with hint button and backtrack option](/screenshots/practice/active-session.png)
 
 ## Searching Practice History
+
+{/* DEMO_VIDEO: practice-scores */}
+
+<DemoVideo
+  topic="practice-scores"
+  caption="A practice attempt result page — rubric standard breakdown, per-criterion feedback and the suggested-improvement panel side by side."
+/>
 
 ![Practice results showing rubric scores, per-criterion feedback, and improvement suggestions](/screenshots/practice/results.png)
 
@@ -106,6 +125,15 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 | Grading | Counts toward reports/leaderboard | May be excluded from official metrics |
 | Certificate | Export includes certificate | Standard export |
 | `view_mode` | `"member"` or `"instructional"` | `"practice"` |
+
+{/* DEMO_VIDEO: practice-export */}
+
+## Exporting practice data
+
+<DemoVideo
+  topic="practice-export"
+  caption="glow attempts export from a practice context — same denormalized ZIP shape as Home, minus the official-training certificate gating."
+/>
 
 ## Common Operations
 
