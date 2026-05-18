@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: documents — replace public/demos/documents.mp4 */}
+
 # Documents
+
+<DemoVideo topic="documents" />
 
 Documents provide reference material that grounds AI-driven simulations in real institutional content. They attach to scenarios so the AI character can draw on policies, syllabi, and other materials during a conversation.
 
@@ -56,7 +60,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search documents
-curl -X POST https://<your-instance>/v5/documents/search \
+curl -X POST https://<your-instance>/document/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -66,7 +70,7 @@ curl -X POST https://<your-instance>/v5/documents/search \
   }'
 
 # Create a document
-curl -X POST https://<your-instance>/v5/documents/create \
+curl -X POST https://<your-instance>/document/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -124,7 +128,7 @@ Documents support file uploads for rich content. Use the upload endpoint to atta
 
 ```bash
 # Upload a file
-curl -X POST https://<your-instance>/v5/documents/upload \
+curl -X POST https://<your-instance>/document/upload \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/pdf" \
@@ -146,27 +150,27 @@ glow documents draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /documents/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `file_ids`, `text_ids`, `department_ids`, `parameter_ids`, and `parameter_field_ids`.
+Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `file_ids`, `text_ids`, `department_ids`, `parameter_ids`, and `parameter_field_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all documents | `glow documents list` | `POST /documents/search` |
-| Get a document | `glow documents get --body '{...}'` | `POST /documents/get` |
-| Create documents | `glow documents create --body '{...}'` | `POST /documents/create` |
-| Update documents | `glow documents update --body '{...}'` | `POST /documents/update` |
-| Duplicate a document | -- | `POST /documents/duplicate` |
-| Delete documents | `glow documents delete --body '{...}'` | `POST /documents/delete` |
-| Upload a file | -- | `POST /documents/upload` |
-| Export to CSV | `glow documents export` | `POST /documents/export` |
-| Save a draft | `glow documents draft --body '{...}'` | `PATCH /documents/draft` |
-| List drafts | -- | `POST /documents/drafts` |
+| List all documents | `glow documents list` | `POST /document/search` |
+| Get a document | `glow documents get --body '{...}'` | `POST /document/get` |
+| Create documents | `glow documents create --body '{...}'` | `POST /document/create` |
+| Update documents | `glow documents update --body '{...}'` | `POST /document/update` |
+| Duplicate a document | -- | `POST /document/duplicate` |
+| Delete documents | `glow documents delete --body '{...}'` | `POST /document/delete` |
+| Upload a file | -- | `POST /document/upload` |
+| Export to CSV | `glow documents export` | `POST /document/export` |
+| Save a draft | `glow documents draft --body '{...}'` | `PATCH /document/draft` |
+| List drafts | -- | `POST /document/drafts` |
 
 ## Related
 
-- [Documents API](/glow/documents/api)
-- [Documents CLI](/glow/documents/cli)
-- [Parameters Guide](/glow/parameters/guide) -- parameters and fields that organize documents
-- [Fields Guide](/glow/fields/guide) -- field values attached to documents
-- [Departments Guide](/glow/departments/guide) -- scope documents to departments
+- [Documents API](/api-reference/document)
+- [Documents CLI](/cli-reference/document)
+- [Parameters Guide](/parameter) -- parameters and fields that organize documents
+- [Fields Guide](/field) -- field values attached to documents
+- [Departments Guide](/department) -- scope documents to departments
