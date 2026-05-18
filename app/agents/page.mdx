@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: agents — replace public/demos/agents.mp4 */}
+
 # Agents
+
+<DemoVideo topic="agents" />
 
 Agents configure the AI engine that powers Glow simulations -- they control which language model is used, what tools are available, how grading rubrics are applied, and voice and reasoning settings.
 
@@ -6,7 +10,7 @@ Agents configure the AI engine that powers Glow simulations -- they control whic
 
 ## What is an Agent?
 
-An agent is the configuration layer between your training content and the underlying AI model. It does **not** contain personas -- personas are attached to [Scenarios](/glow/scenarios/guide), not agents. Instead, an agent defines the technical and behavioral parameters of the AI engine itself.
+An agent is the configuration layer between your training content and the underlying AI model. It does **not** contain personas -- personas are attached to [Scenarios](/scenario), not agents. Instead, an agent defines the technical and behavioral parameters of the AI engine itself.
 
 An agent contains:
 
@@ -63,7 +67,7 @@ glow agents get --body '{"agent_id": "your-agent-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/agents/create \
+curl -X POST https://<your-instance>/agent/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -78,7 +82,7 @@ curl -X POST https://<your-instance>/v5/agents/create \
 Search agents:
 
 ```bash
-curl -X POST https://<your-instance>/v5/agents/search \
+curl -X POST https://<your-instance>/agent/search \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -91,11 +95,11 @@ Agents operate alongside the content pipeline, providing the AI engine configura
 
 | Step | Resource | Description |
 |------|----------|-------------|
-| 1. Create Personas | [Personas](/glow/personas/guide) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas, documents, and objectives |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas, documents, and objectives |
+| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts; the **Agent** powers the AI conversation and grading |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts; the **Agent** powers the AI conversation and grading |
 
 The agent is the engine that processes every message, generates persona responses, produces hints, and evaluates performance against rubrics.
 
@@ -113,7 +117,7 @@ glow agents draft --body '{
 ```
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/agents/draft \
+curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -126,7 +130,7 @@ curl -X PATCH https://<your-instance>/v5/agents/draft \
 You can search agents by model using the `filter_model_ids` parameter:
 
 ```bash
-curl -X POST https://<your-instance>/v5/agents/search \
+curl -X POST https://<your-instance>/agent/search \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -164,7 +168,7 @@ glow agents draft --body '{
 ```
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/agents/draft \
+curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -233,7 +237,7 @@ glow agents draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/agents/draft \
+curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -252,7 +256,7 @@ curl -X PATCH https://<your-instance>/v5/agents/draft \
 glow agents list
 
 # API
-curl -X POST https://<your-instance>/v5/agents/drafts \
+curl -X POST https://<your-instance>/agent/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -262,21 +266,21 @@ curl -X POST https://<your-instance>/v5/agents/drafts \
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all agents | `glow agents search` | `POST /agents/search` |
-| Get one agent | `glow agents get --body '{"agent_id": "..."}'` | `POST /agents/get` |
-| Create agents | `glow agents create --body '{"agents": [...]}'` | `POST /agents/create` |
-| Update agents | `glow agents update --body '{"agents": [...]}'` | `POST /agents/update` |
-| Duplicate an agent | -- | `POST /agents/duplicate` |
-| Delete agents | `glow agents delete --body '{"agent_ids": [...]}'` | `POST /agents/delete` |
-| Save a draft | `glow agents draft --body '{...}'` | `PATCH /agents/draft` |
-| List drafts | `glow agents list` | `POST /agents/drafts` |
-| Export to CSV | `glow agents export` | `POST /agents/export` |
+| List all agents | `glow agents search` | `POST /agent/search` |
+| Get one agent | `glow agents get --body '{"agent_id": "..."}'` | `POST /agent/get` |
+| Create agents | `glow agents create --body '{"agents": [...]}'` | `POST /agent/create` |
+| Update agents | `glow agents update --body '{"agents": [...]}'` | `POST /agent/update` |
+| Duplicate an agent | -- | `POST /agent/duplicate` |
+| Delete agents | `glow agents delete --body '{"agent_ids": [...]}'` | `POST /agent/delete` |
+| Save a draft | `glow agents draft --body '{...}'` | `PATCH /agent/draft` |
+| List drafts | `glow agents list` | `POST /agent/drafts` |
+| Export to CSV | `glow agents export` | `POST /agent/export` |
 
 ## Related
 
-- [Agents API Reference](/glow/agents/api) -- full endpoint schemas and field definitions
-- [Agents CLI Reference](/glow/agents/cli) -- all CLI commands and flags
-- [Simulations Guide](/glow/simulations/guide) -- the training sessions that agents power
-- [Attempts Guide](/glow/attempt/guide) -- the runtime sessions where agents process messages and grade
-- [Personas Guide](/glow/personas/guide) -- the AI characters (attached to scenarios, not agents) that agents bring to life
-- [Scenarios Guide](/glow/scenarios/guide) -- the training situations that define persona and document context
+- [Agents API Reference](/api-reference/agent) -- full endpoint schemas and field definitions
+- [Agents CLI Reference](/cli-reference/agent) -- all CLI commands and flags
+- [Simulations Guide](/simulation) -- the training sessions that agents power
+- [Attempts Guide](/attempt) -- the runtime sessions where agents process messages and grade
+- [Personas Guide](/persona) -- the AI characters (attached to scenarios, not agents) that agents bring to life
+- [Scenarios Guide](/scenario) -- the training situations that define persona and document context
