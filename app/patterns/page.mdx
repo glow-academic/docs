@@ -1,17 +1,18 @@
-{/* DEMO_VIDEO: patterns-overview — replace public/demos/patterns-overview.mp4 */}
+{/* DEMO_VIDEO: patterns-overview | manual */}
 
 # Patterns & Best Practices
 
-<DemoVideo topic="patterns-overview" caption="Quick tour through the pattern catalog — persona realism, rubric specificity, parameters, progressive difficulty." />
+<DemoVideo topic="patterns-overview" kind="manual" caption="Quick tour through the pattern catalog — persona realism, rubric specificity, parameters, progressive difficulty." />
 
 Short, actionable recipes for common simulation design challenges. Each pattern stands on its own — read the ones relevant to what you're working on.
 
-{/* DEMO_VIDEO: patterns-persona-realism — replace public/demos/patterns-persona-realism.mp4 */}
+{/* DEMO_VIDEO: patterns-persona-realism | manual */}
 
 ## Making Personas Feel Real
 
 <DemoVideo
   topic="patterns-persona-realism"
+  kind="manual"
   caption="Anti-pattern vs. pattern: a persona that breaks character and offers help, then the same persona rewritten with the golden rule and example exchanges."
 />
 
@@ -92,12 +93,13 @@ Student (Mostly calmed down): "Ok fine, I'm just annoyed that I got zero
 points, and I spent hours trying to figure out that last question."
 ```
 
-{/* DEMO_VIDEO: patterns-rubric-criteria — replace public/demos/patterns-rubric-criteria.mp4 */}
+{/* DEMO_VIDEO: patterns-rubric-criteria | manual */}
 
 ## Writing Rubric Criteria That Work
 
 <DemoVideo
   topic="patterns-rubric-criteria"
+  kind="manual"
   caption="Vague 'communicates well' criterion producing identical 3/5 scores, then the same rubric with behavioral-anchor levels producing differentiated feedback."
 />
 
@@ -187,12 +189,13 @@ One persona + one document + different parameter combinations = many unique scen
 
 Attach actual course material (homework assignments, problem sets, syllabi) as documents. The document becomes the single source of truth for the course number and topic. This ensures the AI character asks about real problems, not generic ones — which is what makes practice feel authentic.
 
-{/* DEMO_VIDEO: patterns-progressive-difficulty — replace public/demos/patterns-progressive-difficulty.mp4 */}
+{/* DEMO_VIDEO: patterns-progressive-difficulty | playwright */}
 
 ## Progressive Difficulty
 
 <DemoVideo
   topic="patterns-progressive-difficulty"
+  kind="playwright"
   caption="Reordering scenarios inside a simulation from cooperative → confused → aggressive → passive, and seeing scenario_positions enforced at runtime."
 />
 
@@ -299,12 +302,13 @@ The same conversation gets very different scores on different runs.
 Reusable API patterns that apply across many artifacts. Per-artifact pages
 link here instead of re-explaining the same shape.
 
-{/* DEMO_VIDEO: patterns-drafts — replace public/demos/patterns-drafts.mp4 */}
+{/* DEMO_VIDEO: patterns-drafts | playwright */}
 
 ## Recipe 1: Drafts + `expected_version` (optimistic concurrency)
 
 <DemoVideo
   topic="patterns-drafts"
+  kind="playwright"
   caption="Saving a draft from two tabs — the second save sees an expected_version mismatch and surfaces the conflict instead of clobbering the first edit."
 />
 
@@ -355,12 +359,13 @@ present a merge prompt rather than blindly retrying. See the
 [Personas draft cycle](/personas#the-draft-cycle) for the fully worked
 example and the artifact-specific field list in each API reference page.
 
-{/* DEMO_VIDEO: patterns-bulk-write — replace public/demos/patterns-bulk-write.mp4 */}
+{/* DEMO_VIDEO: patterns-bulk-write | playwright */}
 
 ## Recipe 2: Bulk-write (`all` + flat filters + `excluded_ids` + `patch`)
 
 <DemoVideo
   topic="patterns-bulk-write"
+  kind="playwright"
   caption="Bulk-archiving every persona in a department except a manually-excluded handful — single round-trip, server-side filter resolution, no row-by-row writes."
 />
 
@@ -420,12 +425,13 @@ own `Update<X>Item` minus `id` (the server stamps the id per matched row).
 See the [Personas bulk operations](/personas#bulk-operations) section for
 the fully worked example.
 
-{/* DEMO_VIDEO: patterns-search-facets — replace public/demos/patterns-search-facets.mp4 */}
+{/* DEMO_VIDEO: patterns-search-facets | playwright */}
 
 ## Recipe 3: Search facets (`*_search` request + `*_filter` response)
 
 <DemoVideo
   topic="patterns-search-facets"
+  kind="playwright"
   caption="A persona search response carrying scenario_filter / department_filter / voice_filter sections that the UI renders as dropdowns with counts — no second round-trip."
 />
 
