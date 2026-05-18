@@ -4,7 +4,7 @@
 #   make sync-types    → fetch specs from running servers, generate api + cli reference
 #   make dev           → start dev server on :3300
 
-.PHONY: dev build sync-types fetch-specs gen-docs gen-ts-types gen-llms generate help
+.PHONY: dev build sync-types fetch-specs gen-docs gen-ts-types gen-llms gen-demo-manifest generate help
 
 # ── Configuration ────────────────────────────────────────────────
 GLOW_API_URL ?= http://localhost:8000
@@ -46,7 +46,10 @@ sync-types:
 	@echo "Regenerating llms.txt..."
 	@node scripts/generate-llms-txt.mjs
 	@echo ""
-	@echo "✅ Sync complete. Commit api-versions.json + app/api-reference/ + app/cli-reference/ + public/."
+	@echo "Regenerating demo-video manifest..."
+	@node scripts/gen-demo-manifest.mjs
+	@echo ""
+	@echo "✅ Sync complete. Commit api-versions.json + app/api-reference/ + app/cli-reference/ + public/ + components/demo-manifest.ts."
 
 # ── Spec sync (CI: from GH release assets) ───────────────────────
 
@@ -65,6 +68,9 @@ gen-ts-types:
 
 gen-llms:
 	@node scripts/generate-llms-txt.mjs
+
+gen-demo-manifest:
+	@node scripts/gen-demo-manifest.mjs
 
 # ── Help ─────────────────────────────────────────────────────────
 
@@ -86,3 +92,4 @@ help:
 	@echo "  make gen-docs         MDX pages from existing public/specs/"
 	@echo "  make gen-ts-types     TS types from existing public/specs/"
 	@echo "  make gen-llms         llms.txt + llms-full.txt + public/md/"
+	@echo "  make gen-demo-manifest  components/demo-manifest.ts from public/demos/*.mp4"
