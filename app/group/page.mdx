@@ -37,6 +37,8 @@ Groups are essential for debugging AI behavior, auditing training interactions f
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Lean resolve — group identity only (cheap path used by audit linking)
 glow system group --body '{"group_id": "group-uuid"}'

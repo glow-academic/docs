@@ -54,6 +54,8 @@ Chats also support a draft system for customizing chat configurations before or 
 
 ### Get Chat Details via CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
 ```

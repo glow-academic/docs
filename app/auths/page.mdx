@@ -34,6 +34,8 @@ Auths uses a composable architecture with full CRUD, duplication, and a draft sy
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow auths create --body '{"auths": [{"name": "University SSO", "description": "SAML SSO for university login"}]}'
 ```
