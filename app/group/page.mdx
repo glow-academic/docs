@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: group — replace public/demos/group.mp4 */}
+{/* DEMO_VIDEO: group-overview — replace public/demos/group-overview.mp4 */}
 
 # Group
 
-<DemoVideo topic="group" />
+<DemoVideo
+  topic="group-overview"
+  caption="Opening a Group: header with group_name + actor_name, runs list expanding to show messages, media thumbnails inline with their upload_ids."
+/>
 
 Group provides detailed information about an AI generation group —
 the collection of model calls (runs) and messages produced during a
@@ -71,6 +74,15 @@ curl -X POST https://<your-instance>/system/groups \
   -d '{"page_size": 20}'
 ```
 
+{/* DEMO_VIDEO: group-lean-vs-detail — replace public/demos/group-lean-vs-detail.mp4 */}
+
+## Lean vs. detail
+
+<DemoVideo
+  topic="group-lean-vs-detail"
+  caption="Side-by-side: lean resolve returns just identity (cheap path for audit linking), then flipping `include_detail: true` to pull the full runs + messages tree."
+/>
+
 ## Request fields
 
 | Field | Type | Required | Description |
@@ -89,7 +101,15 @@ The full-detail response (`include_detail=true`) includes:
 - **`group_name`** -- Display name of the group.
 - **`total_message_count`** -- Total messages in the group (for pagination).
 
+{/* DEMO_VIDEO: group-runs-and-messages — replace public/demos/group-runs-and-messages.mp4 */}
+
 ### Runs
+
+<DemoVideo
+  topic="group-runs-and-messages"
+  caption="Expanding a single run: token counts and cost per call, then messages stepping through system → user → assistant with tool-call rows interleaved."
+/>
+
 
 The **`runs`** array contains `GroupDetailRunWithMessages` objects:
 
@@ -116,7 +136,15 @@ Each run has:
 - **`agents`** -- Agents used, each with `agent_id` and `name`.
 - **`profiles`** -- Profiles involved, each with `profile_id` and `name`.
 
+{/* DEMO_VIDEO: group-media-downloads — replace public/demos/group-media-downloads.mp4 */}
+
 ## Downloading media
+
+<DemoVideo
+  topic="group-media-downloads"
+  caption="Pulling an audio_upload_id through `POST /system/audio_download` with a range request, then opening the resulting clip in the inline media viewer."
+/>
+
 
 Messages reference uploaded media via their `*_upload_ids` fields. The
 canonical download path is the system artifact's media endpoints:
@@ -131,6 +159,15 @@ canonical download path is the system artifact's media endpoints:
 
 Each takes the relevant `<kind>_upload_id` in the body and supports
 range requests for large files.
+
+{/* DEMO_VIDEO: group-listing — replace public/demos/group-listing.mp4 */}
+
+## Listing groups
+
+<DemoVideo
+  topic="group-listing"
+  caption="Paginating `POST /system/groups` — the same row collection that powers the Pricing group-history table, sortable by cost or recency."
+/>
 
 ## AI generation flow
 
