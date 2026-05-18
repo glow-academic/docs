@@ -1,9 +1,10 @@
-{/* DEMO_VIDEO: reports-overview */}
+{/* DEMO_VIDEO: reports-overview | playwright */}
 
 # Reports
 
 <DemoVideo
   topic="reports-overview"
+  kind="playwright"
   caption="POST /attempt/report returning all five sections at once — header KPIs, per-simulation overview, leaderboard, trends and inline history bundled in one bundle."
 />
 
@@ -84,38 +85,42 @@ The `ReportsResponse` contains:
 
 The computed report sections:
 
-{/* DEMO_VIDEO: reports-overview-section */}
+{/* DEMO_VIDEO: reports-overview-section | playwright */}
 
 <DemoVideo
   topic="reports-overview-section"
+  kind="playwright"
   caption="The overview table — one row per simulation with attempts, completed, passed, average score and pass_rate computed from the same query that powers the header KPIs."
 />
 
 - **`header_metrics`** -- `total_attempts`, `average_score`, `completion_percentage`, `first_attempt_pass_rate`. Each metric includes `current_value`, `has_data`, `data_points`, and `hover` details (mean, median, mode, count, percent).
 - **`overview`** -- Array of `ReportsOverviewRow` grouped by simulation: `simulation_id`, `attempts`, `completed_attempts`, `passed_attempts`, `average_score`, `pass_rate`.
 
-{/* DEMO_VIDEO: reports-leaderboard-section */}
+{/* DEMO_VIDEO: reports-leaderboard-section | playwright */}
 
 <DemoVideo
   topic="reports-leaderboard-section"
+  kind="playwright"
   caption="The embedded leaderboard rows — rank, profile, highest_score, plus per-profile metrics like messages_per_session and stagnation_rate without a second round-trip."
 />
 
 - **`leaderboard`** -- Array of `ReportsLeaderboardRow` with `rank`, `profile_id`, `total_attempts`, `average_score`, `highest_score`, plus detailed `profile_metrics` (messages per session, session efficiency, stagnation rate, time spent).
 
-{/* DEMO_VIDEO: reports-trends */}
+{/* DEMO_VIDEO: reports-trends | playwright */}
 
 <DemoVideo
   topic="reports-trends"
+  kind="playwright"
   caption="The trends time-series — daily attempts, average_score and pass_rate plotted across the selected date range, hover for the underlying data_points."
 />
 
 - **`trends`** -- Array of `ReportsTrendPoint` with `date`, `attempts`, `average_score`, `pass_rate` for charting.
 
-{/* DEMO_VIDEO: reports-history */}
+{/* DEMO_VIDEO: reports-history | playwright */}
 
 <DemoVideo
   topic="reports-history"
+  kind="playwright"
   caption="Paginated ReportsHistoryRow drill-down — attempt_id, score_percent, num_chats and total_time_seconds for forensic review of individual sessions."
 />
 

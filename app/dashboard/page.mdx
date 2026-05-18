@@ -1,9 +1,10 @@
-{/* DEMO_VIDEO: dashboard-overview */}
+{/* DEMO_VIDEO: dashboard-overview | playwright */}
 
 # Dashboard
 
 <DemoVideo
   topic="dashboard-overview"
+  kind="playwright"
   caption="A single POST /attempt/dashboard call hydrating the whole admin surface — header KPIs, primary/secondary panels, rubric breakdowns and inline history in one bundle."
 />
 
@@ -34,12 +35,13 @@ Dashboard aggregates training data across all TAs, cohorts, and simulations into
 
 Dashboard returns `header_metrics` (total attempts, average score, completion percentage, first-attempt pass rate), `primary_metrics` and `secondary_metrics` panels, rubric/parameter/scenario breakdowns, score `thresholds`, AI-generated `insights`, and inline `history` with pagination.
 
-{/* DEMO_VIDEO: dashboard-header */}
+{/* DEMO_VIDEO: dashboard-header | playwright */}
 
 ## Header metrics at a glance
 
 <DemoVideo
   topic="dashboard-header"
+  kind="playwright"
   caption="The header_metrics strip — total attempts, average score, completion %, first-attempt pass rate, each with trend sparkline and hover detail."
 />
 
@@ -87,12 +89,13 @@ curl -X POST https://<your-instance>/attempt/search \
   }'
 ```
 
-{/* DEMO_VIDEO: dashboard-filters */}
+{/* DEMO_VIDEO: dashboard-filters | playwright */}
 
 ## Filtering and Scoping
 
 <DemoVideo
   topic="dashboard-filters"
+  kind="playwright"
   caption="Picking a date range, cohort, and rubric_search — the bundle recomputes server-side and every panel rehydrates without a page reload."
 />
 
@@ -112,12 +115,13 @@ Dashboard supports composable filters in the body so you can drill down to exact
 
 When `target_profile_id` is provided, the response includes `profile_name`, `profile_emails`, `profile_primary_email`, and `profile_role` for the scoped TA.
 
-{/* DEMO_VIDEO: dashboard-rubric */}
+{/* DEMO_VIDEO: dashboard-rubric | playwright */}
 
 ## Rubric breakdown
 
 <DemoVideo
   topic="dashboard-rubric"
+  kind="playwright"
   caption="Drilling into the rubrics panel — Communication Skills, Policy Knowledge, De-escalation broken out by standard with average score and threshold marker."
 />
 
@@ -135,12 +139,13 @@ The `DashboardBundleResponse` is organized into sections:
 - **`history`** -- Inline paginated attempt history with `HistoryItem` rows.
 - **`analytics`** -- Filter facets (department options, cohort options, role options, date range boundaries) for rendering dropdowns.
 
-{/* DEMO_VIDEO: dashboard-history */}
+{/* DEMO_VIDEO: dashboard-history | playwright */}
 
 ## Sibling: Attempt History Search
 
 <DemoVideo
   topic="dashboard-history"
+  kind="playwright"
   caption="Falling out of the bundle into POST /attempt/search — paginated HistoryItem rows with target_profile_id + scenario_ids scoping to one TA."
 />
 
