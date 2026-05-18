@@ -28,7 +28,14 @@ bun run build       # emits ./out/ — what GH Pages serves
 
 The `.github/workflows/pages.yml` workflow runs this on every push to `main` and publishes to GitHub Pages.
 
-## Regenerating `llms.txt`
+## `llms.txt`
+
+Deployed at:
+
+- <https://glow-academic.github.io/docs/llms.txt> (summary index)
+- <https://glow-academic.github.io/docs/llms-full.txt> (full reference)
+
+Note: GitHub Pages serves this site under the `/docs/` path (org project-page convention), so the files live at `/docs/llms.txt` rather than the root convention. If you ever move to a custom domain (e.g. `docs.glow-academic.org`), drop `basePath` from `next.config.mjs` and they'll resolve at `/llms.txt` automatically.
 
 `public/llms.txt` and `public/llms-full.txt` are checked-in so static export ships them as-is. When the MDX content changes, regenerate with:
 
