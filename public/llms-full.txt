@@ -148,20 +148,6 @@ glow activity export
 
 ---
 
-# Agent
-
-Route: /agent
-
-# Agent
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with agent in Glow.
-
----
-
 # Agents
 
 Route: /agents
@@ -35952,34 +35938,6 @@ Server-authoritative form state returned after draft save.
 
 ---
 
-# Attempt
-
-Route: /attempt
-
-# Attempt
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with attempt in Glow.
-
----
-
-# Auth
-
-Route: /auth
-
-# Auth
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with auth in Glow.
-
----
-
 # Authentication
 
 Route: /authentication
@@ -38539,20 +38497,6 @@ glow tools update --id <id>
 
 ---
 
-# Cohort
-
-Route: /cohort
-
-# Cohort
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with cohort in Glow.
-
----
-
 # Cohorts
 
 Route: /cohorts
@@ -38897,20 +38841,6 @@ The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `m
 
 ---
 
-# Department
-
-Route: /department
-
-# Department
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with department in Glow.
-
----
-
 # Departments
 
 Route: /departments
@@ -39066,34 +38996,6 @@ Via the API, use `PATCH /departments/draft` with fields like `input_draft_id`, `
 - [Documents Guide](/glow/documents/guide) -- documents are scoped to departments
 - [Parameters Guide](/glow/parameters/guide) -- parameters are scoped to departments
 - [Cohorts Guide](/glow/cohorts/guide) -- cohorts are scoped to departments
-
----
-
-# Docs Proxy
-
-Route: /docs-proxy
-
-# Docs Proxy
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with docs proxy in Glow.
-
----
-
-# Document
-
-Route: /document
-
-# Document
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with document in Glow.
 
 ---
 
@@ -39273,20 +39175,6 @@ Via the API, use `PATCH /documents/draft` with fields like `input_draft_id`, `ex
 - [Parameters Guide](/glow/parameters/guide) -- parameters and fields that organize documents
 - [Fields Guide](/glow/fields/guide) -- field values attached to documents
 - [Departments Guide](/glow/departments/guide) -- scope documents to departments
-
----
-
-# Eval
-
-Route: /eval
-
-# Eval
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with eval in Glow.
 
 ---
 
@@ -39498,20 +39386,6 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 - [Rubrics Guide](/glow/rubrics/guide) -- define scoring criteria used by evals
 - [Models Guide](/glow/models/guide) -- configure the evaluator models that power evals
 - [Providers Guide](/glow/providers/guide) -- set up LLM backends for evaluator models
-
----
-
-# Field
-
-Route: /field
-
-# Field
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with field in Glow.
 
 ---
 
@@ -40570,20 +40444,6 @@ The `/leaderboard/search` response returns `LeaderboardDataRow` items:
 
 ---
 
-# Model
-
-Route: /model
-
-# Model
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with model in Glow.
-
----
-
 # Models
 
 Route: /models
@@ -40784,20 +40644,6 @@ Documentation for the Glow conversational AI training platform.
 - **[How It Works](/how-it-works)** — Learn about AI simulation training
 - **[Tutorial](/tutorial)** — Design your first simulation
 - **[Patterns](/patterns)** — Patterns and best practices
-
----
-
-# Parameter
-
-Route: /parameter
-
-# Parameter
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with parameter in Glow.
 
 ---
 
@@ -41255,20 +41101,6 @@ The same conversation gets very different scores on different runs.
 - [Rubrics Guide](/glow/rubrics/guide) — full reference for rubric design
 - [Parameters Guide](/glow/parameters/guide) — full reference for dynamic parameter fields
 - [Benchmark Guide](/glow/benchmark/guide) — evaluate AI providers for your use case
-
----
-
-# Persona
-
-Route: /persona
-
-# Persona
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with persona in Glow.
 
 ---
 
@@ -41791,20 +41623,6 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 ---
 
-# Profile
-
-Route: /profile
-
-# Profile
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with profile in Glow.
-
----
-
 # Profiles
 
 Route: /profiles
@@ -41968,20 +41786,6 @@ Via the API, use `PATCH /profiles/draft` with fields like `input_draft_id`, `exp
 - [Profiles CLI](/glow/profiles/cli)
 - [Cohorts Guide](/glow/cohorts/guide) -- assign profiles to cohorts
 - [Departments Guide](/glow/departments/guide) -- manage department membership
-
----
-
-# Provider
-
-Route: /provider
-
-# Provider
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with provider in Glow.
 
 ---
 
@@ -42322,20 +42126,6 @@ The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `ro
 
 ---
 
-# Rubric
-
-Route: /rubric
-
-# Rubric
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with rubric in Glow.
-
----
-
 # Rubrics
 
 Route: /rubrics
@@ -42554,20 +42344,6 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 - [Rubrics CLI Reference](/glow/rubrics/cli) -- all CLI commands
 - [Evals Guide](/glow/evals/guide) -- use rubrics within automated evaluation runs
 - [Tools Guide](/glow/tools/guide) -- tools that agents use alongside rubric-scored behavior
-
----
-
-# Scenario
-
-Route: /scenario
-
-# Scenario
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with scenario in Glow.
 
 ---
 
@@ -42960,20 +42736,6 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 ---
 
-# Setting
-
-Route: /setting
-
-# Setting
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with setting in Glow.
-
----
-
 # Settings
 
 Route: /settings
@@ -43211,20 +42973,6 @@ Returns `upload_id`, `items` (parsed setting items), `mapped_fields`, and `row_c
 - [Settings API Reference](/glow/settings/api)
 - [Settings CLI Reference](/glow/settings/cli)
 - [Auths Guide](/glow/auths/guide) -- auth provider management
-
----
-
-# Simulation
-
-Route: /simulation
-
-# Simulation
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with simulation in Glow.
 
 ---
 
@@ -43563,48 +43311,6 @@ glow use
 | `--client-id` | — | `GLOW_CLIENT_ID` | OAuth client ID |
 | `--json` | — | — | Output in JSON format |
 | `--yes` | `-y` | — | Skip confirmation prompts for destructive actions |
-
----
-
-# System
-
-Route: /system
-
-# System
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with system in Glow.
-
----
-
-# Test
-
-Route: /test
-
-# Test
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with test in Glow.
-
----
-
-# Tool
-
-Route: /tool
-
-# Tool
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with tool in Glow.
 
 ---
 

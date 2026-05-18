@@ -1,9 +1,0 @@
-# Test
-
-# Test
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with test in Glow.

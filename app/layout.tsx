@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           footer={
             <Footer>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <span>MIT {new Date().getFullYear()} &copy; Glow contributors</span>
+                <span>{new Date().getFullYear()} &copy; Glow contributors — <a href="https://github.com/glow-academic/docs/blob/main/LICENSE" style={{ textDecoration: 'underline' }}>PolyForm Noncommercial 1.0.0</a></span>
                 <span style={{ fontSize: '0.75rem', opacity: 0.6 }}>
                   LLM-friendly: <a href="/llms.txt" style={{ textDecoration: 'underline' }}>llms.txt</a> | <a href="/llms-full.txt" style={{ textDecoration: 'underline' }}>Full reference (llms-full.txt)</a>
                 </span>

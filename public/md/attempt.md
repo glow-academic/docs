@@ -1,9 +1,0 @@
-# Attempt
-
-# Attempt
-
-> This guide is a work in progress.
-
-## Overview
-
-Learn how to work with attempt in Glow.

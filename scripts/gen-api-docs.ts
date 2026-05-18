@@ -673,19 +673,16 @@ function main() {
     console.log(`  mcp: ${totalMcpTools} tool pages`)
   }
 
-  // ── Guide placeholders ────────────────────────────────────────
+  // ── Mirror existing hand-written artifact guides to public/md/ ──
+  // We do NOT auto-create stub pages for missing guides — singular
+  // artifact slugs at app root would conflict with the plural-named
+  // hand-written guides (e.g., agents/, cohorts/). Only mirror what
+  // already exists at the singular slug for back-compat.
 
   for (const [tag] of tagged) {
     const slug = slugify(tag)
     const display = DISPLAY_NAMES[slug] || titleCase(tag)
     const guidePath = join(appDir, slug, 'page.mdx')
-    if (!existsSync(guidePath)) {
-      mkdirSync(join(appDir, slug), { recursive: true })
-      writeFileSync(guidePath, [
-        `# ${display}`, '', '> This guide is a work in progress.', '',
-        '## Overview', '', `Learn how to work with ${display.toLowerCase()} in Glow.`, '',
-      ].join('\n'))
-    }
     if (existsSync(guidePath)) {
       writeMdCopy(`/${slug}`, display, readFileSync(guidePath, 'utf-8'))
     }

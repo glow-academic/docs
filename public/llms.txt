@@ -8,10 +8,6 @@
 
 - [Activity](/activity.md)
 
-## Agent
-
-- [Agent](/agent.md)
-
 ## Agents
 
 - [Agents](/agents.md)
@@ -512,14 +508,6 @@
 - [`POST` `/tool/update`](/api-reference/tool/post-tool-update.md)
 - [Tool Types](/api-reference/tool/types.md)
 
-## Attempt
-
-- [Attempt](/attempt.md)
-
-## Auth
-
-- [Auth](/auth.md)
-
 ## Authentication
 
 - [Authentication](/authentication.md)
@@ -655,10 +643,6 @@
 - [`glow tools search`](/cli-reference/tools/search.md)
 - [`glow tools update`](/cli-reference/tools/update.md)
 
-## Cohort
-
-- [Cohort](/cohort.md)
-
 ## Cohorts
 
 - [Cohorts](/cohorts.md)
@@ -667,37 +651,17 @@
 
 - [Dashboard](/dashboard.md)
 
-## Department
-
-- [Department](/department.md)
-
 ## Departments
 
 - [Departments](/departments.md)
-
-## Docs Proxy
-
-- [Docs Proxy](/docs-proxy.md)
-
-## Document
-
-- [Document](/document.md)
 
 ## Documents
 
 - [Documents](/documents.md)
 
-## Eval
-
-- [Eval](/eval.md)
-
 ## Evals
 
 - [Evals](/evals.md)
-
-## Field
-
-- [Field](/field.md)
 
 ## Fields
 
@@ -727,10 +691,6 @@
 
 - [Leaderboard](/leaderboard.md)
 
-## Model
-
-- [Model](/model.md)
-
 ## Models
 
 - [Models](/models.md)
@@ -739,10 +699,6 @@
 
 - [Glow Documentation](/.md)
 
-## Parameter
-
-- [Parameter](/parameter.md)
-
 ## Parameters
 
 - [Parameters](/parameters.md)
@@ -750,10 +706,6 @@
 ## Patterns
 
 - [Patterns & Best Practices](/patterns.md)
-
-## Persona
-
-- [Persona](/persona.md)
 
 ## Personas
 
@@ -767,17 +719,9 @@
 
 - [Pricing](/pricing.md)
 
-## Profile
-
-- [Profile](/profile.md)
-
 ## Profiles
 
 - [Profiles](/profiles.md)
-
-## Provider
-
-- [Provider](/provider.md)
 
 ## Providers
 
@@ -787,17 +731,9 @@
 
 - [Reports](/reports.md)
 
-## Rubric
-
-- [Rubric](/rubric.md)
-
 ## Rubrics
 
 - [Rubrics](/rubrics.md)
-
-## Scenario
-
-- [Scenario](/scenario.md)
 
 ## Scenarios
 
@@ -807,17 +743,9 @@
 
 - [Session](/session.md)
 
-## Setting
-
-- [Setting](/setting.md)
-
 ## Settings
 
 - [Settings](/settings.md)
-
-## Simulation
-
-- [Simulation](/simulation.md)
 
 ## Simulations
 
@@ -826,18 +754,6 @@
 ## Start
 
 - [Glow](/start.md)
-
-## System
-
-- [System](/system.md)
-
-## Test
-
-- [Test](/test.md)
-
-## Tool
-
-- [Tool](/tool.md)
 
 ## Tools
 
