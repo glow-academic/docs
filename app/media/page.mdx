@@ -1,0 +1,289 @@
+{/* DEMO_VIDEO: media-overview — replace public/demos/media-overview.mp4 */}
+
+# Media
+
+Every file that flows through Glow — audio attempts, scenario
+illustrations, document PDFs, scenario videos, raw text uploads —
+funnels through a single `upload_id` primitive and a small grid of
+per-modality routes that hang off the artifact each upload belongs to.
+
+<DemoVideo
+  topic="media-overview"
+  caption="An attempt with a recorded audio reply, a scenario with an attached cover image, and a document with a PDF — all three trace back to the same upload_id shape on the wire."
+/>
+
+## The upload_id pattern
+
+Every byte that lands in Glow is registered as a single `uploads_entry`
+row and surfaced to clients as an opaque `upload_id` UUID. Three
+things use it:
+
+1. **Upload endpoints** return it after multipart ingest (or after
+   promoting a pre-reserved upload — see *attempt audio* below).
+2. **Download / preview endpoints** take it back in a JSON request
+   body and stream the bytes (or a rendered preview) out.
+3. **Message items** reference it inside `<kind>_upload_ids` arrays
+   on `GroupDetailMessageItem`, so an assistant turn that produced an
+   audio clip + an image carries both `audio_upload_ids` and
+   `image_upload_ids` for the client to fetch.
+
+The same `upload_id` is valid across every download surface that
+serves its kind — see the matrix below for which artifacts host
+which kinds. **When in doubt, hit `/system/<kind>_download` with the
+id**; it's the canonical mirror of every download family.
+
+---
+
+{/* DEMO_VIDEO: media-upload — replace public/demos/media-upload.mp4 */}
+
+## Uploading
+
+<DemoVideo
+  topic="media-upload"
+  caption="Dragging a PDF onto the documents picker — the multipart POST round-trips an upload_id that the client immediately stores against the row."
+/>
+
+Uploads are `multipart/form-data` `POST`s against the artifact that
+owns the eventual binding. The route name is always `<kind>_upload`:
+
+```bash
+curl -X POST https://<your-instance>/document/file_upload \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key" \
+  -F "file=@./paper.pdf"
+```
+
+The response carries the `upload_id` plus an artifact-side wrapper id
+(`files_id`, `images_id`, `audios_id`, ...) for the resource ladder.
+
+CLI ergonomics fan out to the same endpoints:
+
+```bash
+glow documents upload file  ./paper.pdf
+glow scenarios upload image ./classroom.png
+glow scenarios upload video ./role-play.mp4
+glow documents upload text  ./transcript.txt
+glow attempts  upload audio ./reply.webm
+```
+
+**Per-modality content-type allowlists** are enforced before any
+bytes are written:
+
+| Upload | Accepted MIME types |
+|--------|---------------------|
+| `audio_upload` | `audio/{mpeg,mp3,wav,ogg,webm,flac,aac,x-m4a,mp4,x-wav}` |
+| `image_upload` | `image/{png,jpeg,gif,svg+xml,webp,bmp,tiff}` |
+| `video_upload` | `video/*` |
+| `file_upload`  | any (catch-all binary) |
+| `text_upload`  | `text/{plain,html,csv,markdown,xml}`, `application/{json,xml}` |
+
+Codec parameters (`audio/webm;codecs=opus` from `MediaRecorder`) are
+stripped before the check; the bare type is persisted.
+
+### Attempt audio — promoting a pre-reserved upload
+
+The attempt audio route is the one upload that accepts a *second*
+shape: pass `?upload_id=<uuid>` to **promote** an existing raw upload
+(typically captured by the realtime adapter) into the full audio
+chain. Three shapes total:
+
+- `file` only — write bytes + build the chain on top
+- `upload_id` only — reuse an existing upload, stack resource +
+  junctions
+- `upload_id + file` — client pre-reserved a slot via
+  `/attempt/audio/new` and is filling it
+
+Response is always `{audio_id, audios_id, upload_id}`.
+
+---
+
+{/* DEMO_VIDEO: media-download — replace public/demos/media-download.mp4 */}
+
+## Downloading
+
+<DemoVideo
+  topic="media-download"
+  caption="An audio scrubber seeking mid-track — the second request is a Range GET for the bytes ahead of the playhead, served as 206 Partial Content."
+/>
+
+Downloads are `POST`s (id in the JSON body, not the URL) and return
+bytes via `StreamingResponse` with full HTTP Range support — so audio
+scrubbing, video seeking, and partial PDF loads work without a custom
+protocol:
+
+```bash
+curl -X POST https://<your-instance>/system/audio_download \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Range: bytes=0-65535" \
+  -d '{"audio_id": "<upload_id>"}' \
+  --output chunk.webm
+```
+
+Range semantics:
+
+- **No `Range` header** → `200 OK`, full body, `Accept-Ranges: bytes`.
+- **`Range: bytes=START-END`** → `206 Partial Content`,
+  `Content-Range: bytes START-END/TOTAL`, `Content-Length: N`.
+- Out-of-bounds ends clamp to `file_size - 1`; out-of-bounds starts
+  reset to `0` (no `416` today).
+
+`Content-Disposition` is always `inline` with a percent-encoded
+filename.
+
+### System fallback
+
+Every download family — `audio`, `image`, `video`, `file`, `text`,
+`call` — exists on `/system` as the **canonical mirror**. Per-artifact
+routes are convenience aliases so audit logs attribute the read to
+the artifact context (attempt / scenario / document). The wire shape
+is identical:
+
+```bash
+POST /attempt/file_download   { "file_id": "<id>" }   # audited as attempt
+POST /system/file_download    { "file_id": "<id>" }   # canonical
+```
+
+Body is always `{"<kind>_id": "<upload_id>"}` — `audio_id`, `file_id`,
+`image_id`, `video_id`, `text_id`, `call_id`.
+
+---
+
+{/* DEMO_VIDEO: media-preview — replace public/demos/media-preview.mp4 */}
+
+## File preview
+
+<DemoVideo
+  topic="media-preview"
+  caption="A PDF document tile showing a PNG thumbnail of its first page — generated server-side, cached for an hour."
+/>
+
+`POST /<art>/file_preview` returns a PNG rendering of the first page
+of a previewable upload — today, PDFs. Useful for document tiles and
+inline message previews.
+
+```bash
+curl -X POST https://<your-instance>/system/file_preview \
+  -H "Authorization: Bearer your-token" \
+  -d '{"file_id": "<upload_id>"}' \
+  --output preview.png
+```
+
+Response is `image/png` with `Cache-Control: private, max-age=3600,
+must-revalidate`. Hosted on `system`, `attempt`, `scenario`, and
+`document` — the four artifacts that actually carry file uploads.
+
+---
+
+{/* DEMO_VIDEO: media-chunked — replace public/demos/media-chunked.mp4 */}
+
+## Resumable uploads (TUS)
+
+<DemoVideo
+  topic="media-chunked"
+  caption="Uploading a 400 MB lecture recording in 32 MB chunks — the network drops, the client reconnects, status reports the offset, and the upload resumes."
+/>
+
+Large files use a TUS-flavored chunked protocol exposed via the CLI:
+
+```bash
+glow scenarios video discover                                       # list types
+glow scenarios video create   --filename role-play.mp4 --size 419430400
+glow scenarios video chunk    --id <upload_id> --file chunk-0.bin --offset 0
+glow scenarios video chunk    --id <upload_id> --file chunk-1.bin --offset 33554432
+glow scenarios video status   --id <upload_id>                      # poll offset
+glow scenarios video finalize --id <upload_id>                      # promote
+```
+
+URL shape (slash-form, parallel to the underscore download routes
+above):
+
+```
+POST   /<resource>/<media>/create          — initiate
+GET    /<resource>/<media>/<id>/status     — poll offset
+PATCH  /<resource>/<media>/<id>/chunk      — push a chunk
+POST   /<resource>/<media>/<id>/finalize   — close + promote
+GET    /<resource>/<media>/discover        — list resumable types
+```
+
+`chunk` is `application/offset+octet-stream` with an `Upload-Offset`
+header; the response carries the new offset.
+
+**Deferred capability.** End-to-end client orchestration (split file,
+retry chunks, resume after disconnect, fall back to single-shot for
+small files) is not wired into a single CLI command today — the
+primitives above are the building blocks. Track the deferred capability
+list in `cli-reference` for the eventual `glow <art> upload <type>
+<file> --resumable` flag.
+
+---
+
+## How media attaches to messages
+
+Inside a `GroupDetailMessageItem` (see [Group](/group) for the full
+shape), uploads are referenced by one array per kind:
+
+```json
+{
+  "id": "<message_id>",
+  "role": "user",
+  "text_upload_ids":  ["<upload_id>"],
+  "audio_upload_ids": ["<upload_id>"],
+  "image_upload_ids": [],
+  "video_upload_ids": [],
+  "file_upload_ids":  ["<upload_id>"]
+}
+```
+
+When a client sends a chat turn that includes media, it uploads first,
+collects the `upload_id`s, and passes them on the `chat_message`
+request. Clients render media by walking each array and issuing a
+`<kind>_download` (or `file_preview`) per id.
+
+---
+
+## Per-artifact matrix
+
+Which media operations exist on which artifact. **D** = download,
+**U** = upload, **P** = file_preview, blank = not hosted.
+
+| Artifact | audio | image | video | file | text | call | preview |
+|----------|:-----:|:-----:|:-----:|:----:|:----:|:----:|:-------:|
+| **system** (canonical) | D | D | D | D | D | D | P |
+| **attempt** | D + **U** | D | D | D | D | D | P |
+| **scenario** |  | D + **U** | D + **U** | D | D | D | P |
+| **document** |  |  |  | D + **U** | D + **U** | D | P |
+| every other artifact* |  |  |  | D | D | D |  |
+
+\* `agent`, `auth`, `cohort`, `department`, `eval`, `field`, `model`,
+`parameter`, `persona`, `profile`, `provider`, `rubric`, `setting`,
+`simulation`, `test`, `tool` — all expose the cross-cutting trio
+(`call_download`, `file_download`, `text_download`) so server-rendered
+exports, generation call replays, and inline text reads work
+consistently. Uploads for those kinds go through `attempt` /
+`scenario` / `document`.
+
+Reading the canonical rows:
+
+- **system** is the canonical full-download set + preview — hit it
+  when you have an `upload_id` and don't care about audit attribution.
+- **attempt** is the only artifact that hosts `audio_upload` — that's
+  where learner replies land.
+- **scenario** owns the visual upload surface (`image_upload`,
+  `video_upload`).
+- **document** is the text/file shop — both upload kinds plus full
+  text/file downloads.
+
+---
+
+## Related
+
+- [Streaming](/streaming) — SSE / WebSocket surfaces for generation
+  events; realtime adapter audio chunks ride alongside the upload_id
+  flow above.
+- [Chat](/chat) — where audio uploads attach to a live attempt turn.
+- [Group](/group) — `GroupDetailMessageItem` shape and where
+  `<kind>_upload_ids` arrays show up on the wire.
+- [API Reference — `POST /system/audio_download`](/api-reference/system/post-system-audio-download) — schema for the canonical download.
+- [Documents](/documents) — owns file + text upload UX.
+- [Scenarios](/scenarios) — owns image + video upload UX.

@@ -42,6 +42,7 @@ export default {
   pricing: 'Pricing',
   session: 'Session',
   group: 'Group',
+  media: 'Media',
 
   // ── Training artifacts ──────────────────────────────────────
   '---training': { type: 'separator', title: 'Training' },
