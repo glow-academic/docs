@@ -125,8 +125,171 @@ Sessions are listed in the CLI via the `instance` config under
 `~/.config/glow/`. There's no first-class `glow sessions list` command
 today — read the file directly if needed.
 
+{/* DEMO_VIDEO: authentication-service-accounts — replace public/demos/authentication-service-accounts.mp4 */}
+
+## Service accounts
+
+<DemoVideo
+  topic="authentication-service-accounts"
+  caption="Operator mints a JWT in Keycloak admin, drops it into a CI secret, and the runner authenticates non-interactively with `glow login --token` — no browser, ready to script."
+/>
+
+Service accounts are the non-interactive flavour of bearer auth: a
+long-lived JWT that a CI pipeline, cron job, or programmatic client
+attaches without ever opening a browser. Same `Authorization: Bearer
+<jwt>` shape as a human session — only the issuance path differs.
+
+The recap (covered in [Service-account flow](#service-account-flow---token)
+above):
+
+```bash
+glow login --instance-url https://my-school.example.com \
+  --token "$SERVICE_ACCOUNT_JWT"
+```
+
+The CLI's `--token` branch (`save_token` in
+[`src/auth.rs`](https://github.com/learnloopllc/glow-academic-cli/blob/main/src/auth.rs))
+writes the JWT straight into `~/.config/glow/tokens.json` with no
+`refresh_token` and no `expires_in` — the server enforces lifetime via
+the JWT's own `exp` claim.
+
+### Minting a service-account JWT
+
+Today this is an operator-side step, done directly against Keycloak:
+
+1. In the realm's Keycloak admin console, create (or pick) a user that
+   represents the service identity (e.g. `ci-runner@yourdomain`).
+2. Add a `profile.is_service_account = true` claim via a user attribute
+   + a protocol mapper, so it lands in the issued token. Server-side
+   resolution in
+   [`resolve_identity.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/resolve_identity.py)
+   accepts the JWT the same way as a human bearer; the claim is what
+   downstream policy uses to distinguish "machine" from "person" when
+   it matters (e.g. skipping interactive consent prompts).
+3. Mint a token for that user — admin REST API
+   (`POST /auth/realms/<realm>/protocol/openid-connect/token`) with the
+   service account's credentials, or via the admin console's "Get
+   access token" helper.
+
+**Honest gap:** there is no first-class CLI helper for minting
+service-account JWTs today (no `glow service-accounts create`). The
+operator does it via Keycloak admin or a custom script. The CLI's job
+ends at *consuming* an already-minted token via `--token`.
+
+### Scope, rotation, storage
+
+- **TTL.** Driven by the Keycloak client / user token lifespan
+  setting. Default Keycloak access-token lifespan is 5 minutes;
+  service-account tokens are typically configured for hours-to-days so
+  the CI run completes without a refresh dance.
+- **Rotation.** Re-mint in Keycloak, update the CI secret, re-run
+  `glow login --token "$NEW_JWT"`. No refresh token is stored, so
+  expiry is hard-stop — plan rotation cadence to match TTL.
+- **Storage in CI.** Treat the JWT as a bearer credential. Standard
+  pattern:
+
+  ```yaml
+  # GitHub Actions
+  env:
+    SERVICE_ACCOUNT_JWT: ${{ secrets.GLOW_SERVICE_ACCOUNT_JWT }}
+  run: |
+    glow login --instance-url "$GLOW_INSTANCE_URL" \
+      --token "$SERVICE_ACCOUNT_JWT"
+    glow personas search
+  ```
+
+  Never check the token into the repo; never echo it in logs.
+
+{/* DEMO_VIDEO: authentication-license-keys — replace public/demos/authentication-license-keys.mp4 */}
+
+## License keys (`X-Api-Key`)
+
+<DemoVideo
+  topic="authentication-license-keys"
+  caption="Operator seeds a license key in glow-deploy.yaml, runs `glow deploy`, the key lands encrypted-at-rest, and a request carrying X-Api-Key resolves to the right license context."
+/>
+
+License keys are the second authentication channel — distinct from
+the bearer JWT. The bearer carries **identity** ("who is calling");
+the license key carries **entitlement** ("what this caller is
+allowed to spend"). They're sent together on most mutation endpoints
+and resolved independently server-side.
+
+### Where they live
+
+- **Operator machine.** The license key is declared once in
+  `~/.glow/instances/<name>/glow-deploy.yaml` (the same file the
+  deploy wizard writes). Treat the file as a secret — it's the
+  source of truth for the instance.
+- **Server-side.** The deploy pipeline pushes the key into the
+  `keys_resource` table, encrypted-at-rest via the symmetric helper
+  in
+  [`app/utils/auth/decrypt_api_key.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/utils/auth/decrypt_api_key.py)
+  (decrypt counterpart used in
+  [`app/infra/identity/decrypt.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/decrypt.py)).
+  Plaintext is never logged or returned via the API.
+
+### How a request is resolved
+
+1. The client attaches the header: `X-Api-Key: <license-key>`.
+2. Middleware pulls it via `extract_api_key` (defined alongside
+   `extract_bearer_token` in
+   [`resolve_identity.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/resolve_identity.py)
+   — `extract_api_key` is the trivial `.strip()` helper; the heavier
+   lookup is the database round-trip).
+3. The trimmed value is matched against a row in `keys_resource`,
+   decrypted on read via `decrypt_api_key`, and the resulting
+   license context (rate limit bucket, feature flags, billing
+   account) is attached to the request.
+4. The bearer JWT is resolved independently in the same middleware
+   pass — neither channel knows about the other until they meet in
+   the request handler.
+
+### Seeding at deploy time
+
+The key flows in from the deploy yaml: `glow deploy` reads
+`glow-deploy.yaml`, the server's bootstrap seeds the `keys_resource`
+row (encrypted via the same helper), and the row is keyed by the
+license value so the X-Api-Key lookup is O(1) once warmed.
+
+### Rotation
+
+There is no atomic `glow license rotate` command today. **Honest
+gap:** rotation is a three-step manual flow:
+
+1. Generate a new key value (any sufficiently-random string the
+   operator trusts — the value is opaque to the server).
+2. Update `~/.glow/instances/<name>/glow-deploy.yaml` with the new
+   value.
+3. Re-run `glow deploy` to re-seed; old key row remains until
+   manually purged. Update any CI / client secret stores that hold
+   the previous value before the cutover.
+
+Plan rotations during a low-traffic window — there is no overlap
+period where both keys are valid unless you keep both rows in the
+table.
+
+### Bearer + license key together
+
+Most mutation endpoints want both headers:
+
+```bash
+curl -X POST https://my-school.example.com/persona/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -H "X-Api-Key: $GLOW_LICENSE_KEY" \
+  -d '{}'
+```
+
+The bearer answers "who is this caller?"; the license key answers
+"what tier of service do they get?". A request with only a bearer
+gets identity but no entitlement (and may be rate-limited or
+rejected on metered routes); a request with only a license key has
+entitlement but no profile (read-only / unauthenticated surface
+only).
+
 ## Related
 
 - [Start](/start) — install + first-boot
 - [CLI Reference: login](/cli-reference/login/) · [logout](/cli-reference/logout/)
 - API Reference: [`POST /profile/context`](/api-reference/profile/post-profile-context/) returns the authenticated profile
+- [Permissions](/permissions/) — roles, role_artifacts, and how license context interacts with per-route policy
