@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: settings — replace public/demos/settings.mp4 */}
+
 # Settings
+
+<DemoVideo topic="settings" />
 
 Settings manages your Glow instance configuration -- names, descriptions, colors, feature flags, departments, profiles, auth providers, provider keys, and system options. It supports full CRUD operations, a draft system with optimistic locking, and encrypted key management.
 
@@ -41,21 +45,21 @@ glow settings export
 
 ```bash
 # Search all settings
-curl -X POST https://<your-instance>/v5/settings/search \
+curl -X POST https://<your-instance>/setting/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Get a specific setting
-curl -X POST https://<your-instance>/v5/settings/get \
+curl -X POST https://<your-instance>/setting/get \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"settings_id": "setting-uuid"}'
 
 # Create settings
-curl -X POST https://<your-instance>/v5/settings/create \
+curl -X POST https://<your-instance>/setting/create \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -71,7 +75,7 @@ curl -X POST https://<your-instance>/v5/settings/create \
 
 ### Search
 
-`POST /settings/search` returns a list of all settings with:
+`POST /setting/search` returns a list of all settings with:
 - `actor_name` -- Current user's display name
 - `user_role` -- Current user's role
 - `settings` -- Array of `ListSettingApiSetting` items
@@ -79,7 +83,7 @@ curl -X POST https://<your-instance>/v5/settings/create \
 
 ### Get
 
-`POST /settings/get` returns a single setting composed of sections:
+`POST /setting/get` returns a single setting composed of sections:
 
 | Section | Field | Description |
 |---|---|---|
@@ -98,18 +102,18 @@ The response also includes `can_edit`, `disabled_reason`, `draft_version`, and `
 
 ### Create
 
-`POST /settings/create` accepts an array of `CreateSettingItem` objects and returns per-item results.
+`POST /setting/create` accepts an array of `CreateSettingItem` objects and returns per-item results.
 
 ### Update
 
-`POST /settings/update` accepts an array of `UpdateSettingItem` objects and returns per-item results.
+`POST /setting/update` accepts an array of `UpdateSettingItem` objects and returns per-item results.
 
 ### Duplicate
 
-`POST /settings/duplicate` clones a setting:
+`POST /setting/duplicate` clones a setting:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/duplicate \
+curl -X POST https://<your-instance>/setting/duplicate \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -120,10 +124,10 @@ Returns `success`, `setting_id` (new UUID), and `message`.
 
 ### Delete
 
-`POST /settings/delete` bulk-deletes settings by ID array:
+`POST /setting/delete` bulk-deletes settings by ID array:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/delete \
+curl -X POST https://<your-instance>/setting/delete \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -136,10 +140,10 @@ Settings supports a draft system with optimistic locking for safe concurrent edi
 
 ### Saving a Draft
 
-`PATCH /settings/draft` creates or updates a draft:
+`PATCH /setting/draft` creates or updates a draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/v5/settings/draft \
+curl -X PATCH https://<your-instance>/setting/draft \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -163,10 +167,10 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state` (ser
 
 ### Listing Drafts
 
-`POST /settings/drafts` returns all drafts owned by the current profile:
+`POST /setting/drafts` returns all drafts owned by the current profile:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/drafts \
+curl -X POST https://<your-instance>/setting/drafts \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
@@ -184,7 +188,7 @@ glow settings get --body '{"settings_id": "setting-uuid", "draft_id": "draft-uui
 Settings can store encrypted provider keys. To decrypt:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/decrypt \
+curl -X POST https://<your-instance>/setting/decrypt \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -201,7 +205,7 @@ Returns `key` (decrypted value), `name`, and `actor_name`.
 Settings supports bulk import via CSV:
 
 ```bash
-curl -X POST https://<your-instance>/v5/settings/csv \
+curl -X POST https://<your-instance>/setting/csv \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -F "file=@settings.csv"
@@ -213,21 +217,21 @@ Returns `upload_id`, `items` (parsed setting items), `mapped_fields`, and `row_c
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List settings | `glow settings search` | `POST /settings/search` |
-| Get setting | `glow settings get` | `POST /settings/get` |
-| Create setting | `glow settings create` | `POST /settings/create` |
-| Update setting | `glow settings update` | `POST /settings/update` |
-| Duplicate setting | -- | `POST /settings/duplicate` |
-| Delete settings | `glow settings delete` | `POST /settings/delete` |
-| Save draft | `glow settings draft` | `PATCH /settings/draft` |
-| List drafts | -- | `POST /settings/drafts` |
-| Decrypt key | -- | `POST /settings/decrypt` |
-| CSV import | -- | `POST /settings/csv` |
-| Export | `glow settings export` | `POST /settings/export` |
-| Refresh | -- | `POST /settings/refresh` |
+| List settings | `glow settings search` | `POST /setting/search` |
+| Get setting | `glow settings get` | `POST /setting/get` |
+| Create setting | `glow settings create` | `POST /setting/create` |
+| Update setting | `glow settings update` | `POST /setting/update` |
+| Duplicate setting | -- | `POST /setting/duplicate` |
+| Delete settings | `glow settings delete` | `POST /setting/delete` |
+| Save draft | `glow settings draft` | `PATCH /setting/draft` |
+| List drafts | -- | `POST /setting/drafts` |
+| Decrypt key | -- | `POST /setting/decrypt` |
+| CSV import | -- | `POST /setting/csv` |
+| Export | `glow settings export` | `POST /setting/export` |
+| Refresh | -- | `POST /setting/refresh` |
 
 ## Related
 
-- [Settings API Reference](/glow/settings/api)
-- [Settings CLI Reference](/glow/settings/cli)
-- [Auths Guide](/glow/auths/guide) -- auth provider management
+- [Settings API Reference](/api-reference/setting)
+- [Settings CLI Reference](/cli-reference/settings)
+- [Auths Guide](/auths) -- auth provider management
