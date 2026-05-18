@@ -1,11 +1,12 @@
 export default {
+  'post-cohort-title': 'POST /title',
   'post-cohort-search': 'POST /search',
   'post-cohort-get': 'POST /get',
   'post-cohort-create': 'POST /create',
   'post-cohort-update': 'POST /update',
   'post-cohort-duplicate': 'POST /duplicate',
   'post-cohort-delete': 'POST /delete',
-  'patch-cohort-draft': 'PATCH /draft',
+  'post-cohort-draft': 'POST /draft',
   'post-cohort-drafts': 'POST /drafts',
   'post-cohort-export': 'POST /export',
   'post-cohort-csv': 'POST /csv',
@@ -15,5 +16,9 @@ export default {
   'post-cohort-group': 'POST /group',
   'post-cohort-problem': 'POST /problem',
   'post-cohort-refresh': 'POST /refresh',
+  'get-cohort-watch': 'GET /watch',
+  'post-cohort-text-download': 'POST /text_download',
+  'post-cohort-file-download': 'POST /file_download',
+  'post-cohort-call-download': 'POST /call_download',
   'types': 'Types',
 }

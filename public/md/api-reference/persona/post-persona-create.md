@@ -10,13 +10,14 @@ Create personas using composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `personas` | [`CreatePersonaItem`](/api-reference/persona/types#createpersonaitem)[] | Yes | List of persona items to create |
+| `personas` | [`CreatePersonaItem`](/api-reference/persona/types#createpersonaitem)[] | No | List of persona items to create (required on first call) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`CreatePersonaApiResponse-Output`)
+## Response (`CreatePersonaApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`PersonaResultItem`](/api-reference/persona/types#personaresultitem)[] | Yes | Per-persona creation results |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `personas` | [`ListPersonaApiPersona`](/api-reference/persona/types#listpersonaapipersona)[] | No | Hydrated rows for the successfully-created personas (mirrors /persona/search shape) |

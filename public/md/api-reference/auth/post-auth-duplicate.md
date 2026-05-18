@@ -22,3 +22,4 @@ Duplicate an auth — composable infra architecture.
 | `auth_id` | `string` | Yes | UUID of the newly created auth provider |
 | `message` | `string` | Yes | Result message |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `auths` | [`ListAuthApiAuth`](/api-reference/auth/types#listauthapiauth)[] | No | Hydrated row for the newly-created duplicate auth (mirrors /auth/search shape) |

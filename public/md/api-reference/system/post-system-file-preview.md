@@ -1,6 +1,6 @@
-# `POST` `/system/file/preview`
+# `POST` `/system/file_preview`
 
-# `POST` `/system/file/preview`
+# `POST` `/system/file_preview`
 
 Preview File
 

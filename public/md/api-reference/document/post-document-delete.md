@@ -10,7 +10,17 @@ Bulk delete documents — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `document_ids` | `string`[] | Yes | Document UUIDs to delete |
+| `document_ids` | `string`[] | No | Document UUIDs to delete (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, delete every document matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `search` | `string` | No | Full-text search query |
+| `scenario_ids` | `string`[] | No | Filter by scenario UUIDs |
+| `field_ids` | `string`[] | No | Filter by field UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `scenario_search` | `string` | No | Search text for scenario facet (no-op for row filtering) |
+| `field_search` | `string` | No | Search text for field facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
 | `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
 

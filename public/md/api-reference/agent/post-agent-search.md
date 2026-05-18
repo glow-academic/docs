@@ -29,4 +29,6 @@ Search agents — composable infra architecture.
 | `department_filter` | [`ListFilterSection`](/api-reference/agent/types#listfiltersection) | No | Filter options for departments |
 | `model_filter` | [`ListFilterSection`](/api-reference/agent/types#listfiltersection) | No | Filter options for models |
 | `tool_filter` | [`ListFilterSection`](/api-reference/agent/types#listfiltersection) | No | Filter options for tools |
+| `flag_filter` | [`ListFilterSection`](/api-reference/agent/types#listfiltersection) | No | Filter options for flags in list UI |
 | `total_count` | `integer` | No | Total number of matching records |
+| `import_fields` | [`ImportField`](/api-reference/agent/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

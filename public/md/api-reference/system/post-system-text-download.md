@@ -1,6 +1,6 @@
-# `POST` `/system/text/download`
+# `POST` `/system/text_download`
 
-# `POST` `/system/text/download`
+# `POST` `/system/text_download`
 
 Download Text
 

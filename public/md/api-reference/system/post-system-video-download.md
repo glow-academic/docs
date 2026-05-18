@@ -1,6 +1,6 @@
-# `POST` `/system/video/download`
+# `POST` `/system/video_download`
 
-# `POST` `/system/video/download`
+# `POST` `/system/video_download`
 
 Download Video
 

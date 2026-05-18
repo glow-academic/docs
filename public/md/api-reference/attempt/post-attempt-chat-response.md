@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/response`
+# `POST` `/attempt/chat_response`
 
-# `POST` `/attempt/chat/response`
+# `POST` `/attempt/chat_response`
 
 Chat Response
 

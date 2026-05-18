@@ -1,0 +1,11 @@
+# `glow system create`
+
+# `glow system create`
+
+Create System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+
+## Usage
+
+```bash
+glow system create --body '\{...\}'
+```

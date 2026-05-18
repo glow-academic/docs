@@ -1,6 +1,6 @@
-# `POST` `/document/text/download`
+# `POST` `/document/text_download`
 
-# `POST` `/document/text/download`
+# `POST` `/document/text_download`
 
 Download Text
 

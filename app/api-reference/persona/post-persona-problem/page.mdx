@@ -8,8 +8,8 @@ Report a persona problem — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `type` | `string` | Yes | Problem type: feature, bug, question, other |
-| `message` | `string` | Yes | Problem description (max 1000 chars) |
+| `type` | `string` | No | Problem type: feature, bug, question, other (required on first call) |
+| `message` | `string` | No | Problem description, max 1000 chars (required on first call) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant problem |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 

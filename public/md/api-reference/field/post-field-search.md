@@ -29,4 +29,6 @@ Search fields — composable infra architecture.
 | `parameter_filter` | [`ListFilterSection`](/api-reference/field/types#listfiltersection) | No | Filter options for parameters |
 | `persona_filter` | [`ListFilterSection`](/api-reference/field/types#listfiltersection) | No | Filter options for personas |
 | `department_filter` | [`ListFilterSection`](/api-reference/field/types#listfiltersection) | No | Filter options for departments |
+| `flag_filter` | [`ListFilterSection`](/api-reference/field/types#listfiltersection) | No | Filter options for flags in list UI |
 | `total_count` | `integer` | No | Total number of fields |
+| `import_fields` | [`ImportField`](/api-reference/field/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

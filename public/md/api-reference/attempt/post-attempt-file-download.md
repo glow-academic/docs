@@ -1,6 +1,6 @@
-# `POST` `/attempt/file/download`
+# `POST` `/attempt/file_download`
 
-# `POST` `/attempt/file/download`
+# `POST` `/attempt/file_download`
 
 Download File
 

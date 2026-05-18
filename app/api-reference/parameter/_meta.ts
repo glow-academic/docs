@@ -1,4 +1,5 @@
 export default {
+  'post-parameter-title': 'POST /title',
   'post-parameter-get': 'POST /get',
   'post-parameter-search': 'POST /search',
   'post-parameter-create': 'POST /create',
@@ -6,7 +7,7 @@ export default {
   'post-parameter-duplicate': 'POST /duplicate',
   'post-parameter-context': 'POST /context',
   'post-parameter-delete': 'POST /delete',
-  'patch-parameter-draft': 'PATCH /draft',
+  'post-parameter-draft': 'POST /draft',
   'post-parameter-drafts': 'POST /drafts',
   'post-parameter-export': 'POST /export',
   'post-parameter-csv': 'POST /csv',
@@ -15,5 +16,9 @@ export default {
   'post-parameter-group': 'POST /group',
   'post-parameter-problem': 'POST /problem',
   'post-parameter-refresh': 'POST /refresh',
+  'get-parameter-watch': 'GET /watch',
+  'post-parameter-text-download': 'POST /text_download',
+  'post-parameter-file-download': 'POST /file_download',
+  'post-parameter-call-download': 'POST /call_download',
   'types': 'Types',
 }

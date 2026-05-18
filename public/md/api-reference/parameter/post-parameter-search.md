@@ -29,4 +29,6 @@ Search parameters — composable infra architecture.
 | `scenario_filter` | [`ListFilterSection`](/api-reference/parameter/types#listfiltersection) | No | Scenario filter options |
 | `field_filter` | [`ListFilterSection`](/api-reference/parameter/types#listfiltersection) | No | Field filter options |
 | `department_filter` | [`ListFilterSection`](/api-reference/parameter/types#listfiltersection) | No | Department filter options |
+| `flag_filter` | [`ListFilterSection`](/api-reference/parameter/types#listfiltersection) | No | Filter options for flags in list UI |
 | `total_count` | `integer` | No | Total number of parameters |
+| `import_fields` | [`ImportField`](/api-reference/parameter/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

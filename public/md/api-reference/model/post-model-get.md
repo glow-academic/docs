@@ -36,6 +36,7 @@ Get model information using the canonical shared model operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Group identifier for the model |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `model_id` | `string` | No | Model identifier |
 | `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
@@ -46,7 +47,7 @@ Get model information using the canonical shared model operation.
 | `descriptions` | [`ModelDescriptionResource`](/api-reference/model/types#modeldescriptionresource)[] | No | Description resources |
 | `values` | [`ModelValueResource`](/api-reference/model/types#modelvalueresource)[] | No | Value resources |
 | `providers` | [`ModelProviderResource`](/api-reference/model/types#modelproviderresource)[] | No | Provider resources |
-| `flags` | [`ModelFlagConfig`](/api-reference/model/types#modelflagconfig)[] | No | Flag configs |
+| `flags` | [`ModelFlagResource`](/api-reference/model/types#modelflagresource)[] | No | Flag configs |
 | `departments` | [`ModelDepartmentResource`](/api-reference/model/types#modeldepartmentresource)[] | No | Department resources |
 | `modalities` | [`ModelModalityResource`](/api-reference/model/types#modelmodalityresource)[] | No | Modality resources |
 | `temperature_levels` | [`ModelTemperatureLevelResource`](/api-reference/model/types#modeltemperaturelevelresource)[] | No | Temperature level resources |

@@ -1,0 +1,45 @@
+# `POST` `/provider/draft`
+
+# `POST` `/provider/draft`
+
+Patch Provider Draft
+
+Patch provider draft — composable infra architecture.
+
+## Request Body (`PatchProviderDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `draft_id` | `string` | No | Existing draft ID to update |
+| `input_draft_id` | `string` | No | Legacy alias for existing draft ID to update |
+| `name` | `string` | No | Display name value |
+| `name_id` | `string` | No | Name resource identifier |
+| `description` | `string` | No | Description text value |
+| `description_id` | `string` | No | Description resource identifier |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical |
+| `active` | `boolean` | No | Denormalized provider_active flag state; resolved to a flag_ids entry server-side |
+| `departments` | `string`[] | No | Department names to match |
+| `department_ids` | `string`[] | No | Department identifiers |
+| `endpoint` | `string` | No | Provider endpoint URL |
+| `endpoint_id` | `string` | No | Endpoint resource identifier |
+| `endpoint_ids` | `string`[] | No | Endpoint resource identifiers |
+| `key` | `string` | No | Provider key value |
+| `key_name` | `string` | No | Provider key display name |
+| `key_description` | `string` | No | Provider key description |
+| `key_id` | `string` | No | Key resource identifier |
+| `key_ids` | `string`[] | No | API key resource identifiers |
+| `value` | `string` | No | Provider identifier value |
+| `value_id` | `string` | No | Value resource identifier |
+| `pending_ids` | `string`[] | No | Pending resource identifiers to preserve |
+| `idempotency_key` | `string` | No | Operation key for ack semantics |
+| `accept` | `boolean` | No | Accept or reject acknowledgement when idempotency_key is supplied |
+
+## Response (`PatchProviderDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | Draft unique identifier |
+| `idempotency_key` | `string` | No | Operation key echoed back for client correlation |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`app__infra__provider__types__DraftFormState`](/api-reference/provider/types#app-infra-provider-types-draftformstate) | No | Server-authoritative form state |

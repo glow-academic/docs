@@ -1,6 +1,6 @@
-# `POST` `/scenario/file/preview`
+# `POST` `/scenario/file_preview`
 
-# `POST` `/scenario/file/preview`
+# `POST` `/scenario/file_preview`
 
 Preview File
 

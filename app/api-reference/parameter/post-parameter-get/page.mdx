@@ -28,12 +28,13 @@ Get parameter information using the canonical shared parameter operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Group identifier for the parameter |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Show AI generate if any resource supports it |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
 | `fields_step_show_ai_generate` | `boolean` | No | Show AI generate for fields step |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`ParameterNameResource`](/api-reference/parameter/types#parameternameresource)[] | No | Name resources |
 | `descriptions` | [`ParameterDescriptionResource`](/api-reference/parameter/types#parameterdescriptionresource)[] | No | Description resources |
-| `flags` | [`ParameterFlagConfig`](/api-reference/parameter/types#parameterflagconfig)[] | No | Flag configs |
+| `flags` | [`ParameterFlagResource`](/api-reference/parameter/types#parameterflagresource)[] | No | Flag configs |
 | `departments` | [`ParameterDepartmentResource`](/api-reference/parameter/types#parameterdepartmentresource)[] | No | Department resources |
 | `parameter_fields` | [`ParameterFieldResource`](/api-reference/parameter/types#parameterfieldresource)[] | No | Parameter field resources |

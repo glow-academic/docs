@@ -8,7 +8,17 @@ Bulk delete scenarios — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `scenario_ids` | `string`[] | Yes | UUIDs of scenarios to delete |
+| `scenario_ids` | `string`[] | No | UUIDs of scenarios to delete (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, delete every scenario matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `search` | `string` | No | Full-text search query |
+| `persona_ids` | `string`[] | No | Filter by persona UUIDs |
+| `simulation_ids` | `string`[] | No | Filter by simulation UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `persona_search` | `string` | No | Search text for persona facet (no-op for row filtering) |
+| `simulation_search` | `string` | No | Search text for simulation facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
 | `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
 

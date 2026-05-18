@@ -4,8 +4,6 @@
 
 Attempt Stop
 
-Cancel an active generation by group_id.
-
 ## Request Body (`AttemptStopRequest`)
 
 | Field | Type | Required | Description |

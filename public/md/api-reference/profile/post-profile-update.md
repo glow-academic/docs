@@ -10,13 +10,25 @@ Update profiles using composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `profiles` | [`UpdateProfileItem`](/api-reference/profile/types#updateprofileitem)[] | Yes | List of profiles to update |
+| `profiles` | [`UpdateProfileItem`](/api-reference/profile/types#updateprofileitem)[] | No | List of profiles to update (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, apply ``patch`` to every profile matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `patch` | [`UpdateProfilePatch`](/api-reference/profile/types#updateprofilepatch) | No | Shared change set applied to every matched row when ``all=true`` (sparse — only set fields are updated; ``patch.profile_id`` ignored) |
+| `search` | `string` | No | Full-text search query |
+| `cohort_ids` | `string`[] | No | Filter by cohort UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `role_filter` | `string` | No | Filter by role name |
+| `cohort_search` | `string` | No | Search text for cohort facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `role_search` | `string` | No | Search text for role facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`UpdateProfileApiResponse-Output`)
+## Response (`UpdateProfileApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ProfileResultItem`](/api-reference/profile/types#profileresultitem)[] | Yes | Per-item update results |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `profiles` | [`ListProfilesApiProfile`](/api-reference/profile/types#listprofilesapiprofile)[] | No | Hydrated rows for the successfully-updated profiles (mirrors /profile/search shape) |

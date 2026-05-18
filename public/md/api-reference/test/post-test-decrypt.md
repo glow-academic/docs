@@ -1,0 +1,22 @@
+# `POST` `/test/decrypt`
+
+# `POST` `/test/decrypt`
+
+Decrypt Invocation Key
+
+Decrypt a key scoped to an invocation entry.
+
+## Request Body (`DecryptInvocationKeyApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | Invocation identifier |
+| `key_id` | `string` | Yes | Key identifier to decrypt |
+
+## Response (`DecryptInvocationKeyApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | No | Decrypted key value |
+| `name` | `string` | No | Key display name |
+| `actor_name` | `string` | No | Name of the actor who decrypted |

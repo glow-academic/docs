@@ -32,11 +32,12 @@ Get field information using the canonical shared field operation.
 | `can_edit` | `boolean` | No | Whether the actor can edit this field |
 | `disabled_reason` | `string` | No | Reason editing is disabled, if any |
 | `group_id` | `string` | No | Group UUID for draft collaboration |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether to show AI generate button anywhere |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`FieldNameResource`](/api-reference/field/types#fieldnameresource)[] | No | Name resources |
 | `descriptions` | [`FieldDescriptionResource`](/api-reference/field/types#fielddescriptionresource)[] | No | Description resources |
-| `flags` | [`FieldFlagConfig`](/api-reference/field/types#fieldflagconfig)[] | No | Flag configs |
+| `flags` | [`FieldFlagResource`](/api-reference/field/types#fieldflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`FieldDepartmentResource`](/api-reference/field/types#fielddepartmentresource)[] | No | Department resources |
 | `conditional_parameters` | [`FieldConditionalParameterResource`](/api-reference/field/types#fieldconditionalparameterresource)[] | No | Conditional parameter resources |

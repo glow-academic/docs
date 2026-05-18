@@ -22,3 +22,4 @@ Duplicate a profile — composable infra architecture.
 | `profile_id` | `string` | Yes | UUID of the newly created profile |
 | `message` | `string` | Yes | Result message |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `profiles` | [`ListProfilesApiProfile`](/api-reference/profile/types#listprofilesapiprofile)[] | No | Hydrated row for the newly-created duplicate profile (mirrors /profile/search shape) |

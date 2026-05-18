@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/message`
+# `POST` `/attempt/chat_message`
 
-# `POST` `/attempt/chat/message`
+# `POST` `/attempt/chat_message`
 
 Chat Message
 
@@ -15,6 +15,7 @@ Create a message in an attempt chat.
 | `persona_id` | `string` | No | — |
 | `parent_message_id` | `string` | No | — |
 | `auto_link_parent` | `boolean` | No | — |
+| `audios_id` | `string` | No | — |
 
 ## Response (`ChatMessageResponse`)
 

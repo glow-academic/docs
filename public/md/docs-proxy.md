@@ -1,5 +1,7 @@
 # Docs Proxy
 
+# Docs Proxy
+
 > This guide is a work in progress.
 
 ## Overview

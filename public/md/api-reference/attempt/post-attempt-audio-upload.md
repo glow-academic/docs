@@ -1,6 +1,6 @@
-# `POST` `/attempt/audio/upload`
+# `POST` `/attempt/audio_upload`
 
-# `POST` `/attempt/audio/upload`
+# `POST` `/attempt/audio_upload`
 
 Upload Audio
 

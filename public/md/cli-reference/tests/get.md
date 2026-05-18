@@ -1,0 +1,11 @@
+# `glow tests get`
+
+# `glow tests get`
+
+Get Test sessions.
+
+## Usage
+
+```bash
+glow tests get --id <id>
+```

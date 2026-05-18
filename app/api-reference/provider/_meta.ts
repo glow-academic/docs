@@ -1,11 +1,12 @@
 export default {
+  'post-provider-title': 'POST /title',
   'post-provider-search': 'POST /search',
   'post-provider-get': 'POST /get',
   'post-provider-create': 'POST /create',
   'post-provider-update': 'POST /update',
   'post-provider-duplicate': 'POST /duplicate',
   'post-provider-delete': 'POST /delete',
-  'patch-provider-draft': 'PATCH /draft',
+  'post-provider-draft': 'POST /draft',
   'post-provider-drafts': 'POST /drafts',
   'post-provider-context': 'POST /context',
   'post-provider-export': 'POST /export',
@@ -16,5 +17,9 @@ export default {
   'post-provider-generations': 'POST /generations',
   'post-provider-group': 'POST /group',
   'post-provider-problem': 'POST /problem',
+  'get-provider-watch': 'GET /watch',
+  'post-provider-text-download': 'POST /text_download',
+  'post-provider-file-download': 'POST /file_download',
+  'post-provider-call-download': 'POST /call_download',
   'types': 'Types',
 }

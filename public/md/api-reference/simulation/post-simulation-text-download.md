@@ -1,0 +1,19 @@
+# `POST` `/simulation/text_download`
+
+# `POST` `/simulation/text_download`
+
+Download Text
+
+Download a text file by text resource ID.
+
+## Request Body (`TextDownloadSimulationApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `text_id` | `string` | Yes | UUID of the texts_resource to download |
+
+## Response
+
+```
+{}
+```

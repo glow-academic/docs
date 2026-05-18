@@ -21,4 +21,5 @@ Duplicate a parameter — composable infra architecture.
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
 | `parameter_id` | `string` | Yes | New duplicated parameter identifier |
 | `message` | `string` | Yes | Result message |
+| `parameters` | [`ListParameterApiParameter`](/api-reference/parameter/types#listparameterapiparameter)[] | No | Hydrated list row for the just-duplicated parameter — single-element list for shape consistency with create / update. Same shape as ``/parameter/search`` returns. Omitted on the soft-pending (ack-shaped) path. |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

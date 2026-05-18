@@ -10,11 +10,22 @@ Update agents using composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `agents` | [`UpdateAgentItem`](/api-reference/agent/types#updateagentitem)[] | Yes | List of agents to update |
+| `agents` | [`UpdateAgentItem`](/api-reference/agent/types#updateagentitem)[] | No | List of agents to update (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, apply ``patch`` to every agent matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `patch` | [`UpdateAgentPatch`](/api-reference/agent/types#updateagentpatch) | No | Shared change set applied to every matched row when ``all=true`` (sparse — only set fields are updated; ``patch.id`` ignored) |
+| `search` | `string` | No | Full-text search query |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `filter_model_ids` | `string`[] | No | Filter by model UUIDs |
+| `filter_tool_ids` | `string`[] | No | Filter by tool UUIDs |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `model_search` | `string` | No | Search text for model facet (no-op for row filtering) |
+| `tool_search` | `string` | No | Search text for tool facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`UpdateAgentApiResponse-Output`)
+## Response (`UpdateAgentApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|

@@ -30,15 +30,18 @@ Get eval information using the canonical shared eval operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Associated group UUID |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for the basic step |
 | `model_show_ai_generate` | `boolean` | No | Whether to show AI generate for the model step |
 | `show_ai_generate` | `boolean` | No | Whether any AI generate action should be shown |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`EvalNameResource`](/api-reference/eval/types#evalnameresource)[] | No | Name resources |
 | `descriptions` | [`EvalDescriptionResource`](/api-reference/eval/types#evaldescriptionresource)[] | No | Description resources |
-| `flags` | [`EvalFlagConfig`](/api-reference/eval/types#evalflagconfig)[] | No | Flag configs |
+| `flags` | [`EvalFlagResource`](/api-reference/eval/types#evalflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`EvalDepartmentResource`](/api-reference/eval/types#evaldepartmentresource)[] | No | Department resources |
 | `models` | [`EvalModelResource`](/api-reference/eval/types#evalmodelresource)[] | No | Model resources |
-| `model_flags` | [`EvalModelFlagResource`](/api-reference/eval/types#evalmodelflagresource)[] | No | Model flag resources |
+| `model_flags` | [`EvalModelFlagResource`](/api-reference/eval/types#evalmodelflagresource)[] | No | Model flag resources (linked junction rows) |
+| `model_flag_options` | [`EvalModelFlagOptionResource`](/api-reference/eval/types#evalmodelflagoptionresource)[] | No | Cross-product (model x flag-type x value) options for the ModelFlags picker. |
 | `model_rubrics` | [`EvalModelRubricResource`](/api-reference/eval/types#evalmodelrubricresource)[] | No | Model rubric resources |
 | `model_positions` | [`EvalModelPositionResource`](/api-reference/eval/types#evalmodelpositionresource)[] | No | Model position resources |
+| `rubrics` | [`EvalRubricResource`](/api-reference/eval/types#evalrubricresource)[] | No | Top-level rubric catalog for the ModelRubrics picker |

@@ -21,7 +21,6 @@ Export all personas as a clean, denormalized CSV.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `content` | `string` | Yes | CSV content as a string |
+| `file_id` | `string` | Yes | UUID of the files_resource holding the export CSV |
 | `file_name` | `string` | Yes | Suggested download file name |
-| `mime_type` | `string` | Yes | MIME type of the export (text/csv) |
 | `row_count` | `integer` | Yes | Number of data rows in the export |

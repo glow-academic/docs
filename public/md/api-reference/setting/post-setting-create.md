@@ -14,9 +14,10 @@ Create settings using composable infra architecture.
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`CreateSettingApiResponse-Output`)
+## Response (`CreateSettingApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`SettingResultItem`](/api-reference/setting/types#settingresultitem)[] | Yes | Per-item creation results |
+| `settings` | [`ListSettingApiSetting`](/api-reference/setting/types#listsettingapisetting)[] | No | Hydrated list rows for the newly-created settings. Mirrors the shape of ``/setting/search`` result rows so the client's ghost rail can materialize the new card directly from the audit ``.completed`` payload — no follow-up refresh needed. |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

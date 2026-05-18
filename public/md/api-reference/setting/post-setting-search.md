@@ -25,3 +25,8 @@ Search settings — composable infra architecture.
 | `user_role` | `string` | No | Role of the acting user |
 | `settings` | [`ListSettingApiSetting`](/api-reference/setting/types#listsettingapisetting)[] | No | List of setting items |
 | `keys` | [`ListSettingApiKey`](/api-reference/setting/types#listsettingapikey)[] | No | List of key items |
+| `flag_filter` | [`ListFilterSection`](/api-reference/setting/types#listfiltersection) | No | Filter options for flags in list UI |
+| `providers_filter` | [`ListFilterSection`](/api-reference/setting/types#listfiltersection) | No | Filter options for providers in list UI |
+| `auth_filter` | [`ListFilterSection`](/api-reference/setting/types#listfiltersection) | No | Filter options for auths in list UI |
+| `systems_filter` | [`ListFilterSection`](/api-reference/setting/types#listfiltersection) | No | Filter options for systems in list UI |
+| `import_fields` | [`ImportField`](/api-reference/setting/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

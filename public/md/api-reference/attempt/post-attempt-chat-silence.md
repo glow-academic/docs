@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/silence`
+# `POST` `/attempt/chat_silence`
 
-# `POST` `/attempt/chat/silence`
+# `POST` `/attempt/chat_silence`
 
 Chat Silence
 

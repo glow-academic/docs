@@ -1,4 +1,5 @@
 export default {
+  'post-agent-title': 'POST /title',
   'post-agent-context': 'POST /context',
   'post-agent-get': 'POST /get',
   'post-agent-search': 'POST /search',
@@ -7,7 +8,7 @@ export default {
   'post-agent-update': 'POST /update',
   'post-agent-duplicate': 'POST /duplicate',
   'post-agent-delete': 'POST /delete',
-  'patch-agent-draft': 'PATCH /draft',
+  'post-agent-draft': 'POST /draft',
   'post-agent-drafts': 'POST /drafts',
   'post-agent-export': 'POST /export',
   'post-agent-generate': 'POST /generate',
@@ -15,5 +16,9 @@ export default {
   'post-agent-group': 'POST /group',
   'post-agent-problem': 'POST /problem',
   'post-agent-refresh': 'POST /refresh',
+  'get-agent-watch': 'GET /watch',
+  'post-agent-text-download': 'POST /text_download',
+  'post-agent-file-download': 'POST /file_download',
+  'post-agent-call-download': 'POST /call_download',
   'types': 'Types',
 }

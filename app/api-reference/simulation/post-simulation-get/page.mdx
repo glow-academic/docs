@@ -34,14 +34,16 @@ Get simulation information using the canonical shared simulation operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason the simulation is disabled |
 | `group_id` | `string` | No | UUID of the owning group |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `basic_show_ai_generate` | `boolean` | No | Legacy basic-step AI generate flag |
 | `names` | [`SimulationNameResource`](/api-reference/simulation/types#simulationnameresource)[] | No | Name resources with selected/suggested flags |
 | `descriptions` | [`SimulationDescriptionResource`](/api-reference/simulation/types#simulationdescriptionresource)[] | No | Description resources with selected/suggested flags |
-| `flags` | [`SimulationFlagConfig`](/api-reference/simulation/types#simulationflagconfig)[] | No | Flag configs with selected/suggested flags |
+| `flags` | [`SimulationFlagResource`](/api-reference/simulation/types#simulationflagresource)[] | No | Flag configs with selected/suggested flags |
 | `departments` | [`SimulationDepartment`](/api-reference/simulation/types#simulationdepartment)[] | No | Department resources with selected/suggested flags |
 | `scenarios` | [`SimulationScenario`](/api-reference/simulation/types#simulationscenario)[] | No | Scenario resources with selected/suggested flags |
 | `scenario_flags` | [`SimulationScenarioFlag`](/api-reference/simulation/types#simulationscenarioflag)[] | No | Scenario flag resources with selected/suggested flags |
+| `scenario_flag_options` | [`SimulationScenarioFlagOption`](/api-reference/simulation/types#simulationscenarioflagoption)[] | No | Cross-product of (scenario × flag type × value) for the ScenarioFlags picker |
 | `scenario_positions` | [`SimulationScenarioPosition`](/api-reference/simulation/types#simulationscenarioposition)[] | No | Scenario position resources with selected/suggested flags |
 | `scenario_rubrics` | [`SimulationScenarioRubric`](/api-reference/simulation/types#simulationscenariorubric)[] | No | Scenario rubric resources with selected/suggested flags |
 | `scenario_time_limits` | [`SimulationScenarioTimeLimit`](/api-reference/simulation/types#simulationscenariotimelimit)[] | No | Scenario time limit resources with selected/suggested flags |

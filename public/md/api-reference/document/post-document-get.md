@@ -35,13 +35,14 @@ Get document information using the canonical shared document operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Associated group UUID |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for basic step |
 | `content_show_ai_generate` | `boolean` | No | Whether to show AI generate for content step |
 | `pending_ids` | `string`[] | No | Pending resource IDs from the draft, when available |
 | `names` | [`DocumentNameResource`](/api-reference/document/types#documentnameresource)[] | No | Name resources |
 | `descriptions` | [`DocumentDescriptionResource`](/api-reference/document/types#documentdescriptionresource)[] | No | Description resources |
-| `flags` | [`DocumentFlagConfig`](/api-reference/document/types#documentflagconfig)[] | No | Flag configs |
+| `flags` | [`DocumentFlagResource`](/api-reference/document/types#documentflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`DocumentDepartmentResource`](/api-reference/document/types#documentdepartmentresource)[] | No | Department resources |
 | `parameter_fields` | [`DocumentParameterFieldResource`](/api-reference/document/types#documentparameterfieldresource)[] | No | Parameter field resources |
 | `parameters` | [`DocumentParameterResource`](/api-reference/document/types#documentparameterresource)[] | No | Parameter catalog resources |

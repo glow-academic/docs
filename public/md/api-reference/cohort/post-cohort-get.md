@@ -39,10 +39,11 @@ Get cohort information using the canonical shared cohort operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Associated group UUID |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `names` | [`CohortNameResource`](/api-reference/cohort/types#cohortnameresource)[] | No | Name resources with selected/suggested flags |
 | `descriptions` | [`CohortDescriptionResource`](/api-reference/cohort/types#cohortdescriptionresource)[] | No | Description resources with selected/suggested flags |
-| `flags` | [`CohortFlagConfig`](/api-reference/cohort/types#cohortflagconfig)[] | No | Flag resources with selected/suggested flags |
+| `flags` | [`CohortFlagResource`](/api-reference/cohort/types#cohortflagresource)[] | No | Flag resources with selected/suggested flags |
 | `departments` | [`CohortDepartment`](/api-reference/cohort/types#cohortdepartment)[] | No | Department resources with selected/suggested flags |
 | `simulations` | [`CohortSimulation`](/api-reference/cohort/types#cohortsimulation)[] | No | Simulation resources with selected/suggested flags |
 | `simulation_positions` | [`CohortSimulationPosition`](/api-reference/cohort/types#cohortsimulationposition)[] | No | Simulation position resources with selected/suggested flags |

@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/complete`
+# `POST` `/attempt/chat_complete`
 
-# `POST` `/attempt/chat/complete`
+# `POST` `/attempt/chat_complete`
 
 Chat Complete
 

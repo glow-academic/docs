@@ -10,7 +10,17 @@ Bulk delete models — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `model_ids` | `string`[] | Yes | List of model IDs to delete |
+| `model_ids` | `string`[] | No | List of model IDs to delete (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, delete every model matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `search` | `string` | No | Full-text search query |
+| `filter_provider_ids` | `string`[] | No | Filter by provider UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `filter_agent_ids` | `string`[] | No | Filter by agent UUIDs |
+| `provider_search` | `string` | No | Search text for provider facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `agent_search` | `string` | No | Search text for agent facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
 | `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
 

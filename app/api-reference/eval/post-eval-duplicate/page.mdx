@@ -20,3 +20,4 @@ Duplicate an eval — composable infra architecture.
 | `eval_id` | `string` | Yes | Newly created eval UUID |
 | `message` | `string` | Yes | Human-readable result message |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `evals` | [`ListEvalApiEval`](/api-reference/eval/types#listevalapieval)[] | No | Hydrated list rows for the duplicated eval — single-element list, kept as a list for shape consistency with create/update. ``None`` for soft-pending duplicates. |

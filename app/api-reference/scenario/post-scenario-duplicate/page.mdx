@@ -20,3 +20,4 @@ Duplicate a scenario — composable infra architecture.
 | `scenario_id` | `string` | Yes | UUID of the duplicated scenario |
 | `message` | `string` | Yes | Human-readable result message |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `scenarios` | [`ListScenarioApiScenario`](/api-reference/scenario/types#listscenarioapiscenario)[] | No | Hydrated row for the newly-created duplicate scenario (single-element list) |

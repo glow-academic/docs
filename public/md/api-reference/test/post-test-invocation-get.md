@@ -1,6 +1,6 @@
-# `POST` `/test/invocation/get`
+# `POST` `/test/invocation_get`
 
-# `POST` `/test/invocation/get`
+# `POST` `/test/invocation_get`
 
 Invocation Get
 
@@ -57,3 +57,5 @@ Get hydrated resources for benchmark bundle customization.
 | `reasoning_levels` | [`InvocationReasoningLevelResource`](/api-reference/test/types#invocationreasoninglevelresource)[] | No | Reasoning level resources |
 | `qualities` | [`InvocationQualityResource`](/api-reference/test/types#invocationqualityresource)[] | No | Quality resources |
 | `voices` | [`InvocationVoiceResource`](/api-reference/test/types#invocationvoiceresource)[] | No | Voice resources |
+| `model_flags` | [`InvocationModelFlagResource`](/api-reference/test/types#invocationmodelflagresource)[] | No | Per-model flag junction rows |
+| `model_flag_options` | [`InvocationModelFlagOptionResource`](/api-reference/test/types#invocationmodelflagoptionresource)[] | No | Cross-product (model × flag-type × value) options for the ModelFlags picker. |

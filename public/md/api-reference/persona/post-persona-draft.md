@@ -21,8 +21,8 @@ Patch persona draft — composable infra architecture.
 | `icon_id` | `string` | No | UUID of an icon resource to select |
 | `instructions` | `string` | No | Instruction template text (creates new instruction resource) |
 | `instructions_id` | `string` | No | UUID of an existing instruction resource to select |
-| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
-| `active_flag` | `boolean` | No | Whether the persona is active (resolved to flag_id) |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
+| `active` | `boolean` | No | Denormalized persona_active flag state; resolved to a flag_ids entry server-side |
 | `examples` | `string`[] | No | Example texts (creates new example resources) |
 | `example_ids` | `string`[] | No | Existing example resource UUIDs to select |
 | `department_ids` | `string`[] | No | Department UUIDs to associate |

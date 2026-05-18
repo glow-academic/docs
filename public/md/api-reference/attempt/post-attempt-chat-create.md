@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/create`
+# `POST` `/attempt/chat_create`
 
-# `POST` `/attempt/chat/create`
+# `POST` `/attempt/chat_create`
 
 Create Attempt Chat Endpoint
 

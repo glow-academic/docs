@@ -1,4 +1,5 @@
 export default {
+  'post-rubric-title': 'POST /title',
   'post-rubric-get': 'POST /get',
   'post-rubric-search': 'POST /search',
   'post-rubric-context': 'POST /context',
@@ -6,7 +7,7 @@ export default {
   'post-rubric-update': 'POST /update',
   'post-rubric-duplicate': 'POST /duplicate',
   'post-rubric-delete': 'POST /delete',
-  'patch-rubric-draft': 'PATCH /draft',
+  'post-rubric-draft': 'POST /draft',
   'post-rubric-drafts': 'POST /drafts',
   'post-rubric-export': 'POST /export',
   'post-rubric-csv': 'POST /csv',
@@ -15,5 +16,9 @@ export default {
   'post-rubric-group': 'POST /group',
   'post-rubric-problem': 'POST /problem',
   'post-rubric-refresh': 'POST /refresh',
+  'get-rubric-watch': 'GET /watch',
+  'post-rubric-text-download': 'POST /text_download',
+  'post-rubric-file-download': 'POST /file_download',
+  'post-rubric-call-download': 'POST /call_download',
   'types': 'Types',
 }

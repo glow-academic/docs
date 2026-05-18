@@ -8,7 +8,11 @@ Bulk delete departments — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `department_ids` | `string`[] | Yes | UUIDs of departments to delete |
+| `department_ids` | `string`[] | No | UUIDs of departments to delete (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, delete every department matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `search` | `string` | No | Full-text search query |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
 | `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
 

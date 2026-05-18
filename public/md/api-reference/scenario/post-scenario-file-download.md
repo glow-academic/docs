@@ -1,6 +1,6 @@
-# `POST` `/scenario/file/download`
+# `POST` `/scenario/file_download`
 
-# `POST` `/scenario/file/download`
+# `POST` `/scenario/file_download`
 
 Download File
 

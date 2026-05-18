@@ -1,0 +1,21 @@
+# `glow deploy`
+
+# `glow deploy`
+
+Deploy a Glow instance to the local machine (first-time setup). Reads `~/.glow/instances/<name>/glow-deploy.yaml`. Run `glow init` first to scaffold one interactively
+
+## Usage
+
+```bash
+glow deploy [--name] [--api-version] [--client-version] [--seed-setup] [--grace-minutes]
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--name` | No | Instance name (defaults to "default") |
+| `--api-version` | No | API image version, e.g. `v1.0.0` |
+| `--client-version` | No | Client image version (required unless topology=api_only) |
+| `--seed-setup` | No | Seed template for first deploy: fresh | university | organization |
+| `--grace-minutes` | No | Grace period (minutes) to watch the new color after traffic swap |

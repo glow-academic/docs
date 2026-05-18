@@ -1,6 +1,6 @@
-# `POST` `/scenario/text/download`
+# `POST` `/scenario/text_download`
 
-# `POST` `/scenario/text/download`
+# `POST` `/scenario/text_download`
 
 Download Text
 

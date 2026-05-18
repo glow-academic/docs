@@ -15,8 +15,10 @@ Trigger simulation generation. Returns immediately; progress via events.
 | `modalities` | `string`[] | No | — |
 | `audios_id` | `string` | No | — |
 | `conversation_id` | `string` | No | — |
+| `trace_id` | `string` | No | — |
 | `idempotency_key` | `string` | No | — |
 | `accept` | `boolean` | No | — |
+| `wait_for_complete` | `boolean` | No | — |
 
 ## Response (`ArtifactGenerateResponse`)
 
@@ -25,3 +27,5 @@ Trigger simulation generation. Returns immediately; progress via events.
 | `group_id` | `string` | Yes | — |
 | `run_id` | `string` | No | — |
 | `idempotency_key` | `string` | No | — |
+| `eval` | [`EvalSetup`](/api-reference/simulation/types#evalsetup) | No | — |
+| `produced_media` | [`ProducedMedia`](/api-reference/simulation/types#producedmedia)[] | No | — |

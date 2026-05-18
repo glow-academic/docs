@@ -1,0 +1,19 @@
+# `POST` `/eval/call_download`
+
+# `POST` `/eval/call_download`
+
+Download Call
+
+Download a call file by call resource ID.
+
+## Request Body (`CallDownloadEvalApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `call_id` | `string` | Yes | UUID of the calls_resource to download |
+
+## Response
+
+```
+{}
+```

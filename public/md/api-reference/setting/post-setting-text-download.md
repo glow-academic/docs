@@ -1,0 +1,19 @@
+# `POST` `/setting/text_download`
+
+# `POST` `/setting/text_download`
+
+Download Text
+
+Download a text file by text resource ID.
+
+## Request Body (`TextDownloadSettingApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `text_id` | `string` | Yes | UUID of the texts_resource to download |
+
+## Response
+
+```
+{}
+```

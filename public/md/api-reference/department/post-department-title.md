@@ -1,0 +1,25 @@
+# `POST` `/department/title`
+
+# `POST` `/department/title`
+
+Title Department
+
+Rename a department's group (writes group_names_entry).
+
+## Request Body (`TitleDepartmentApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | Group to rename |
+| `title` | `string` | Yes | New title (display name) for the group |
+| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant rename |
+| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+
+## Response (`TitleDepartmentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | The group that was renamed |
+| `group_name_id` | `string` | Yes | UUID of the new group_names_entry row |
+| `title` | `string` | Yes | The title that was set |
+| `idempotency_key` | `string` | No | Operation key echoed back |

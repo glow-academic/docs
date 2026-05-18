@@ -29,13 +29,17 @@ Get profile information using the canonical shared profile operation.
 | `can_edit` | `boolean` | No | Whether the actor can edit this profile |
 | `disabled_reason` | `string` | No | Reason editing is disabled, if any |
 | `group_id` | `string` | No | Group UUID for draft collaboration |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `profile_id` | `string` | No | UUID of the profile |
 | `show_ai_generate` | `boolean` | No | Whether to show AI generate anywhere |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate on the basic step |
 | `contact_show_ai_generate` | `boolean` | No | Whether to show AI generate on the contact step |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
+| `role_options` | `string`[] | No | Role names the actor can assign |
 | `names` | [`ProfileNameResource`](/api-reference/profile/types#profilenameresource)[] | No | Name resources |
 | `emails` | [`ProfileEmailResource`](/api-reference/profile/types#profileemailresource)[] | No | Email resources |
-| `flags` | [`ProfileFlagConfig`](/api-reference/profile/types#profileflagconfig)[] | No | Flag configs |
+| `flags` | [`ProfileFlagResource`](/api-reference/profile/types#profileflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`ProfileDepartmentResource`](/api-reference/profile/types#profiledepartmentresource)[] | No | Department resources |
 | `roles` | [`ProfileRoleResource`](/api-reference/profile/types#profileroleresource)[] | No | Role resources |
+| `permissions` | [`ProfilePermissionResource`](/api-reference/profile/types#profilepermissionresource)[] | No | Permission catalog for the role editor |
+| `request_limits` | [`ProfileRequestLimitResource`](/api-reference/profile/types#profilerequestlimitresource)[] | No | Request-limit catalog for the role editor |

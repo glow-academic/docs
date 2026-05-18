@@ -1,6 +1,6 @@
-# `POST` `/system/image/download`
+# `POST` `/system/image_download`
 
-# `POST` `/system/image/download`
+# `POST` `/system/image_download`
 
 Download Image
 

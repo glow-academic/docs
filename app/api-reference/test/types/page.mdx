@@ -1,6 +1,16 @@
 # Test Types
 
-## `AnalyticsFacets-Output`
+## `AnalysisEntry`
+
+Analysis entry for chat-level analysis content.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | No | Analysis content text |
+
+---
+
+## `AnalyticsFacets`
 
 Resolved analytics facets — embeddable in any artifact response.
 
@@ -13,7 +23,7 @@ responses so each page has its filter facets ready for SSR.
 | `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
 | `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
 | `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
-| `role_options` | `string`[] | No | Available role options |
+| `role_options` | [`AnalyticsRoleOption`](#analyticsroleoption)[] | No | Available role resource options |
 | `attempt_options` | `string`[] | No | Available attempt options |
 | `date_range_earliest` | `string` | No | Earliest available date for filtering |
 | `date_range_latest` | `string` | No | Latest available date for filtering |
@@ -56,6 +66,23 @@ A single filter option for dropdown selectors.
 
 ---
 
+## `AnalyticsRoleOption`
+
+Hydrated role resource option for analytics role filters.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+| `id` | `string` | Yes | Role resource UUID |
+| `name` | `string` | Yes | Role resource name |
+| `description` | `string` | No | Role description |
+| `icon_id` | `string` | No | Icon resource UUID |
+| `color_id` | `string` | No | Color resource UUID |
+| `level` | `integer` | Yes | Role privilege level |
+
+---
+
 ## `BenchmarkDepartmentItem`
 
 Department resource for benchmark.
@@ -93,23 +120,30 @@ Eval card for the benchmark page — analogous to ChatSimulationOperational.
 
 ## `BenchmarkHistoryItem`
 
-History row for a test — analogous to TestHistoryItem.
+Single test row in benchmark history list — mirrors HistoryItem shape.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `test_id` | `string` | Yes | Test identifier |
+| `date` | `string` | No | Formatted date string of the test |
+| `profile_id` | `string` | No | UUID of the profile who owns the test |
+| `profile_name` | `string` | No | Display name of the profile |
 | `eval_id` | `string` | No | Parent eval ID |
 | `eval_name` | `string` | No | Parent eval name |
-| `eval_description` | `string` | No | Parent eval description |
-| `created_at` | `string` | No | Test creation timestamp |
-| `archived` | `boolean` | No | Whether test is archived |
-| `infinite_mode` | `boolean` | No | Whether test uses infinite mode |
-| `total_invocations` | `integer` | No | Total number of invocations |
-| `completed_invocations` | `integer` | No | Number of completed invocations |
-| `pending_invocations` | `integer` | No | Number of pending invocations |
-| `best_score` | `number` | No | Best score across invocations |
-| `has_passed` | `boolean` | No | Whether test has been passed |
-| `status` | `string` | No | Test status |
+| `rubric_id` | `string` | No | Rubric ID for this test |
+| `rubric_name` | `string` | No | Rubric display name |
+| `num_models` | `integer` | No | Total number of models in the test |
+| `num_models_completed` | `integer` | No | Number of models completed |
+| `model_ids` | `string`[] | No | UUIDs of associated models |
+| `model_names` | `string`[] | No | Display names of associated models |
+| `score` | `integer` | No | Overall test score percent (0-100) |
+| `score_status` | `string` | No | Score status label (e.g. high, medium, low) |
+| `pass_pct` | `integer` | No | Pass percentage threshold from rubric |
+| `show_view` | `boolean` | No | Whether the view action is available |
+| `show_continue` | `boolean` | No | Whether the continue action is available |
+| `is_archived` | `boolean` | No | Whether the test is archived |
+| `infinite_mode` | `boolean` | No | Whether the test uses infinite mode |
+| `department_ids` | `string`[] | No | Associated department IDs |
 
 ---
 
@@ -124,6 +158,9 @@ Paginated history response.
 | `page` | `integer` | No | Current page number |
 | `page_size` | `integer` | No | Items per page |
 | `eval_options` | [`FilterOption`](#filteroption)[] | No | Eval filter options |
+| `model_options` | [`FilterOption`](#filteroption)[] | No | Model filter options |
+| `profile_options` | [`FilterOption`](#filteroption)[] | No | Profile filter options |
+| `rubric_options` | [`FilterOption`](#filteroption)[] | No | Rubric filter options |
 
 ---
 
@@ -176,6 +213,37 @@ Evaluated permissions for the current caller on this artifact type.
 
 ---
 
+## `EvalSetup`
+
+Run-level eval scaffold — first-class on the generate response.
+
+Audit's ``**output`` spread carries this onto
+``<artifact>.generate.completed``. Null when no rubric-bearing
+agent participated.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | — |
+| `invocations` | [`InvocationSlot`](#invocationslot)[] | Yes | — |
+
+---
+
+## `FeedbackEntry`
+
+Feedback by standard for grading state.
+
+standard_group_id is derived from standards metadata lookup.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | UUID of the feedback entry |
+| `standard_id` | `string` | No | UUID of the associated standard |
+| `standard_group_id` | `string` | No | UUID of the standard group |
+| `total` | `number` | No | Total score for this standard |
+| `feedback` | `string` | No | Feedback text for this standard |
+
+---
+
 ## `FilterOption`
 
 A single filter option for dropdown selectors.
@@ -224,6 +292,7 @@ Single generation group in the test generations response.
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
 | `session_id` | `string` | Yes | Associated session UUID |
+| `name` | `string` | No | Immutable draft label set at create time |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
@@ -268,6 +337,7 @@ Single generation group in the test generations response.
 | `grade_id` | `string` | Yes | — |
 | `call_id` | `string` | Yes | — |
 | `tool_call_id` | `string` | Yes | — |
+| `standard_id` | `string` | No | — |
 | `total` | `integer` | Yes | — |
 | `feedback` | `string` | Yes | — |
 | `total_points` | `integer` | Yes | — |
@@ -294,29 +364,6 @@ Single generation group in the test generations response.
 
 ---
 
-## `GetTestInvocationGroupsResponse`
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | `string` | Yes | — |
-| `test_invocation_id` | `string` | Yes | — |
-| `created_at` | `string` | Yes | — |
-| `updated_at` | `string` | Yes | — |
-| `generated` | `boolean` | Yes | — |
-| `mcp` | `boolean` | Yes | — |
-| `active` | `boolean` | Yes | — |
-| `agent_ids` | `string`[] | No | — |
-| `reasoning_level_ids` | `string`[] | No | — |
-| `temperature_level_ids` | `string`[] | No | — |
-| `voice_ids` | `string`[] | No | — |
-| `prompt_ids` | `string`[] | No | — |
-| `instruction_ids` | `string`[] | No | — |
-| `tool_ids` | `string`[] | No | — |
-| `quality_ids` | `string`[] | No | — |
-| `modality_ids` | `string`[] | No | — |
-
----
-
 ## `GetTestInvocationResponse`
 
 | Field | Type | Required | Description |
@@ -337,8 +384,6 @@ Single generation group in the test generations response.
 | `agent_ids` | `string`[] | No | — |
 | `quality_id` | `string` | No | — |
 | `department_ids` | `string`[] | No | — |
-| `run_agent_ids` | `string`[] | No | — |
-| `group_agent_ids` | `string`[] | No | — |
 | `voice_id` | `string` | No | — |
 | `temperature_level_id` | `string` | No | — |
 | `reasoning_level_id` | `string` | No | — |
@@ -352,12 +397,28 @@ Single generation group in the test generations response.
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `test_invocation_id` | `string` | Yes | — |
+| `test_invocation_traces_id` | `string` | No | — |
+| `run_id` | `string` | No | — |
 | `created_at` | `string` | Yes | — |
 | `updated_at` | `string` | Yes | — |
 | `generated` | `boolean` | Yes | — |
 | `mcp` | `boolean` | Yes | — |
 | `active` | `boolean` | Yes | — |
-| `agent_ids` | `string`[] | No | — |
+
+---
+
+## `GetTestInvocationTracesResponse`
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `test_invocation_id` | `string` | Yes | — |
+| `run_id` | `string` | No | — |
+| `created_at` | `string` | Yes | — |
+| `updated_at` | `string` | Yes | — |
+| `generated` | `boolean` | Yes | — |
+| `mcp` | `boolean` | Yes | — |
+| `active` | `boolean` | Yes | — |
 | `reasoning_level_ids` | `string`[] | No | — |
 | `temperature_level_ids` | `string`[] | No | — |
 | `voice_ids` | `string`[] | No | — |
@@ -388,6 +449,36 @@ Single generation group in the test generations response.
 
 ---
 
+## `GradeData`
+
+Grade information for a chat (no id - not a resource).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `score` | `number` | No | Grade score achieved |
+| `passed` | `boolean` | No | Whether the grade is passing |
+| `description` | `string` | No | Grade description text |
+| `time_taken` | `integer` | No | Time taken in seconds |
+| `total_points` | `number` | No | Total available points |
+| `pass_points` | `number` | No | Points required to pass |
+
+---
+
+## `GradingStateData`
+
+Grading state for a chat in Record format.
+
+All fields are Records keyed by standard_id strings.
+This is the exact format the client needs - no transformation required.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `achieved_standards` | `object` | No | Map of standard_id to achieved status |
+| `passed_standards` | `object` | No | Map of standard_id to passed status |
+| `feedback_by_standard_id` | `object` | No | Map of standard_id to feedback text |
+
+---
+
 ## `GroupCall`
 
 Tool call referenced by a message.
@@ -397,6 +488,11 @@ Tool call referenced by a message.
 | `id` | `string` | Yes | — |
 | `tool_name` | `string` | No | — |
 | `template_name` | `string` | No | — |
+| `tool` | `object` | No | — |
+| `ledger_status` | `string` | No | — |
+| `ledger_operation` | `string` | No | — |
+| `ledger_artifact` | `string` | No | — |
+| `ledger_artifact_id` | `string` | No | — |
 
 ---
 
@@ -416,6 +512,23 @@ Message within a run.
 | `file_ids` | `string`[] | No | — |
 | `call_ids` | `string`[] | No | — |
 | `calls` | [`GroupCall`](#groupcall)[] | No | — |
+| `reasoning` | `boolean` | No | True when this row is a chain-of-thought trace persisted alongside the assistant answer (rendered as a collapsed accordion). |
+| `in_context` | `boolean` | No | Whether this message is included in the LLM context for the next generation. Mirrors the dedup pass that builds chat history (see in_context_reason). |
+| `in_context_reason` | `string` | No | Why this message is in/out of LLM context. 'kept' = included; 'deduped_read' = older read-only call to a tool that has a fresher result later in the group; future values may include 'trimmed_top_n'. |
+
+---
+
+## `GroupResource`
+
+Lightweight `\{id, name\}` for cross-referencing run-level ids
+(``model_id`` / ``agent_id`` / ``profile_id``) against human-readable
+names on the analytics panel. Names come from the canonical
+``get_models`` / ``get_agents`` / ``get_profiles`` black boxes.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `name` | `string` | No | — |
 
 ---
 
@@ -423,10 +536,25 @@ Message within a run.
 
 Run within a group, with its messages.
 
+Carries token / cost / model / agent / profile attribution so the
+analytics view can render per-run cost + actor info without a
+parallel detail shape. ``profile_id`` is the authoring profile
+(human user), ``agent_id`` is the LLM-side actor, ``model_id`` is
+the model used by that agent. All optional — runs predating these
+columns or with unresolved attributions surface ``None``.
+
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `created_at` | `string` | No | — |
+| `input_tokens` | `integer` | No | — |
+| `output_tokens` | `integer` | No | — |
+| `cached_input_tokens` | `integer` | No | — |
+| `cost` | `number` | No | — |
+| `model_id` | `string` | No | — |
+| `agent_id` | `string` | No | — |
+| `profile_id` | `string` | No | — |
+| `previous_context_start_index` | `integer` | No | Index in ``messages`` where the current run's own messages begin; earlier rows are previous-context replay. ``None`` when the run has no previous context attached. |
 | `messages` | [`GroupMessage`](#groupmessage)[] | No | — |
 
 ---
@@ -458,6 +586,32 @@ Run within a group, with its messages.
 
 ---
 
+## `InvocationDetail`
+
+Per-invocation graded-view payload.
+
+Mirrors ``ChatData`` from attempt — one of these per invocation,
+each carrying its rubric structure and the list of runs that
+executed against it. ``primary_run_id`` is the default local
+selection (usually the most recent / row-summary grade).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | UUID of the test_invocation_entry |
+| `rubric_id` | `string` | No | UUID of the rubric used to grade this invocation |
+| `rubric_structure` | [`RubricStructureData`](#rubricstructuredata) | No | Rubric structure for TableRubric (standards / groups / mappings) |
+| `primary_run_id` | `string` | No | Default selected run for this invocation |
+| `agent_id` | `string` | No | UUID of the agent under test |
+| `model_id` | `string` | No | UUID of the model the agent is set up with |
+| `voice_id` | `string` | No | UUID of the voice resource |
+| `temperature_level_id` | `string` | No | UUID of the temperature level |
+| `reasoning_level_id` | `string` | No | UUID of the reasoning level |
+| `quality_id` | `string` | No | UUID of the quality level |
+| `modality_ids` | `string`[] | No | Modality resource ids |
+| `runs` | [`InvocationRunDetail`](#invocationrundetail)[] | No | Per-execution detail |
+
+---
+
 ## `InvocationEndpointResource`
 
 | Field | Type | Required | Description |
@@ -473,17 +627,17 @@ Run within a group, with its messages.
 
 ## `InvocationFlagResource`
 
+Flag option row — one per (name, type, value) flags_resource entry.
+
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `id` | `string` | No | Unique identifier |
-| `key` | `string` | Yes | Flag key identifier |
-| `label` | `string` | Yes | Human-readable flag label |
+| `id` | `string` | No | Flag resource identifier |
+| `name` | `string` | No | Flag display name |
+| `type` | `string` | No | Flag type |
+| `value` | `boolean` | No | Underlying bool value of this option |
 | `description` | `string` | No | Flag description text |
 | `icon_id` | `string` | No | Icon identifier for the flag |
 | `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
-| `flag_option_id` | `string` | No | UUID of the selected flag option |
-| `show` | `boolean` | No | Whether the flag is visible to the client |
-| `required` | `boolean` | No | Whether the flag is required |
 | `generated` | `boolean` | No | Whether the flag was AI-generated |
 | `suggested` | `boolean` | No | Whether this is a suggested option |
 | `selected` | `boolean` | No | Whether this is currently selected |
@@ -523,6 +677,55 @@ Run within a group, with its messages.
 | `suggested` | `boolean` | No | Whether this is a suggested option |
 | `selected` | `boolean` | No | Whether this is currently selected |
 | `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationModelFlagOptionResource`
+
+Cross-product option row: one per (model_id, flag_type, value) tuple.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_id` | `string` | No | Model identifier |
+| `flag_id` | `string` | No | Flag resource identifier |
+| `type` | `string` | No | Flag type, e.g. 'model_active' |
+| `value` | `boolean` | No | Underlying flag value for this option |
+| `name` | `string` | No | Display name from the flags_resource row |
+| `description` | `string` | No | Description text from the flags_resource row |
+| `icon` | `string` | No | Icon SVG markup hydrated from icons_resource |
+
+---
+
+## `InvocationModelFlagResource`
+
+Per-model flag junction row for an invocation.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Model-flag resource identifier |
+| `model_id` | `string` | No | Associated model identifier |
+| `flag_id` | `string` | No | Associated flag identifier |
+| `type` | `string` | No | Flag type (e.g. 'model_active') of the linked flags_resource row |
+| `value` | `boolean` | No | Underlying bool value of the linked flags_resource row |
+| `name` | `string` | No | Display name |
+| `description` | `string` | No | Description text |
+| `icon` | `string` | No | Icon SVG markup |
+| `generated` | `boolean` | No | Whether this was AI-generated |
+| `suggested` | `boolean` | No | Whether this is a suggested option |
+| `selected` | `boolean` | No | Whether this is currently selected |
+| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationModelFlagValue`
+
+Denormalized per-(model, type) selection for draft requests.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model_id` | `string` | Yes | Target model identifier |
+| `type` | `string` | Yes | Flag type, e.g. 'model_active' |
+| `value` | `boolean` | Yes | Desired flag value |
 
 ---
 
@@ -583,6 +786,48 @@ Run within a group, with its messages.
 | `suggested` | `boolean` | No | Whether this is a suggested option |
 | `selected` | `boolean` | No | Whether this is currently selected |
 | `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `InvocationRunDetail`
+
+Per-run grade + replay detail within an invocation.
+
+One row per ``test_invocation_runs_entry`` binding. Carries the
+TableRubric-ready ``grading_state`` plus the message/call ids the
+client uses to slice ``entries.messages`` / ``entries.calls``.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run_id` | `string` | Yes | UUID of the runs_entry row this binding executed |
+| `binding_id` | `string` | Yes | UUID of the test_invocation_runs_entry binding row |
+| `grade_id` | `string` | No | UUID of the test_grade_entry, if graded |
+| `created_at` | `string` | No | When the binding was created |
+| `completed` | `boolean` | No | Whether the binding has a completion record |
+| `grade` | [`GradeData`](#gradedata) | No | Score / passed / time_taken summary |
+| `grading_state` | [`GradingStateData`](#gradingstatedata) | No | Achieved/passed/feedback maps keyed by standard_id |
+| `feedbacks` | [`FeedbackEntry`](#feedbackentry)[] | No | Per-standard feedback rows |
+| `analyses` | [`AnalysisEntry`](#analysisentry)[] | No | Chat-level analysis content (currently unused for tests) |
+| `message_ids` | `string`[] | No | Message ids belonging to this run |
+| `call_ids` | `string`[] | No | Tool-call ids belonging to this run |
+
+---
+
+## `InvocationSlot`
+
+One agent's slot in a multi-agent generation pool.
+
+Populated by ``setup_generation_test`` when an agent carries a
+rubric. The client uses these IDs to drive the eval workflow:
+review the candidate's output, optionally fire a grader against
+its ``invocation_id``, and promote/reject by call_id via the
+existing ``idempotency_key + accept`` pattern.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | — |
+| `agent_id` | `string` | Yes | — |
+| `rubric_id` | `string` | No | — |
 
 ---
 
@@ -709,6 +954,26 @@ and rotates through them.
 
 ---
 
+## `ProducedMedia`
+
+One asset produced by a generation run.
+
+``resource_id`` is the canonical id the per-artifact download tools
+accept (e.g. ``Scenario_Image_Download(image_id=resource_id)`` for
+``modality="image"``). It maps to ``images_resource.id`` /
+``videos_resource.id`` / ``audios_resource.id`` depending on the
+modality.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `modality` | `"image"` \| `"video"` \| `"audio"` | Yes | — |
+| `resource_id` | `string` | Yes | — |
+| `upload_id` | `string` | Yes | — |
+| `mime_type` | `string` | No | — |
+| `file_size` | `integer` | No | — |
+
+---
+
 ## `ProfileSummary`
 
 Caller identity derived from JWT — who you are on this page.
@@ -727,7 +992,7 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 | `role_permissions` | `any`[][] | Yes | Full (artifact, operation) permission tuples for granular page gating |
 | `is_active` | `boolean` | Yes | Whether the user's profile is active |
 | `id` | `string` | Yes | Profile UUID (SocketProvider, ProfileProvider) |
-| `theme` | [`ThemePrimitives`](#themeprimitives) | No | Theme primitives (ThemeHydrator) |
+| `theme` | [`ThemeBundle`](#themebundle) | No | Resolved theme: hex primitives + derived oklch tokens + score thresholds |
 | `session_id` | `string` | No | Current session UUID |
 | `is_emulation` | `boolean` | No | Whether user is in emulation mode (ProfileProvider) |
 | `role_resources` | [`QGetProfileContextV4RoleResource`](#qgetprofilecontextv4roleresource)[] | No | All role resources for emulation display (ProfileProvider) |
@@ -748,6 +1013,21 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 
 ---
 
+## `RubricStructureData`
+
+Rubric structure data in Record format.
+
+All fields are Records keyed by standard_group_id or standard_id strings.
+This is the exact format the client needs - no transformation required.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `standard_groups` | `object` | No | Map of group_id to standard_id lists |
+| `standard_groups_mapping` | `object` | No | Map of group_id to group metadata |
+| `standards_mapping` | `object` | No | Map of standard_id to standard metadata |
+
+---
+
 ## `SearchMessageResponse`
 
 | Field | Type | Required | Description |
@@ -762,6 +1042,7 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 | `video_ids` | `string`[] | Yes | UUIDs of video resources |
 | `file_ids` | `string`[] | Yes | UUIDs of file resources |
 | `call_ids` | `string`[] | Yes | UUIDs of call resources |
+| `reasoning` | `boolean` | No | Chain-of-thought trace row |
 
 ---
 
@@ -795,6 +1076,54 @@ Single test row in search results.
 
 ---
 
+## `TestConfigGroup`
+
+A group bucket for the picker — used as the section header.
+
+Renders one accordion section per row. `run_count` is the total
+rows in the group (across the whole inner pagination universe,
+not just the current expanded window). `last_run_at` drives the
+outer ordering (most-recent-group first).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | UUID of the group |
+| `name` | `string` | No | Human-readable group name (or null if unnamed) |
+| `run_count` | `integer` | No | Total run configs in this group |
+| `last_run_at` | `string` | No | ISO timestamp of the most recent run in this group |
+
+---
+
+## `TestConfigItem`
+
+A reusable run configuration the picker can queue.
+
+Sources from runs_entry rows. Each row is a distinct config
+(agent + model + bundle) that can be re-fired any number of times
+into fresh trace executions. The bundle ids carried here come from
+the historical run's agent_resource — the picker passes them as
+`RunPanelState` to /test/invocation/trace so the new trace records the same
+prompt + tool + instruction set the original run executed against.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run_id` | `string` | Yes | UUID of the runs_entry config |
+| `group_id` | `string` | No | UUID of the parent group (for grouping in the picker) |
+| `agent_name` | `string` | No | Display name of the agent |
+| `model_name` | `string` | No | Display name of the underlying model |
+| `label` | `string` | Yes | Human-readable picker label |
+| `created_at` | `string` | No | When this config was first created |
+| `prompt_ids` | `string`[] | No | Prompt resource ids from the historical agent |
+| `tool_ids` | `string`[] | No | Tool resource ids from the historical agent |
+| `instruction_ids` | `string`[] | No | Instruction resource ids from the historical agent |
+| `model_id` | `string` | No | Model id from the historical agent |
+| `temperature` | `number` | No | Temperature value from the historical agent |
+| `reasoning` | `string` | No | Reasoning level value from the historical agent |
+| `quality` | `string` | No | Quality value from the historical agent |
+| `permissions` | `any`[][] | No | Historical (artifact, operation) pairs this run executed |
+
+---
+
 ## `TestEntries`
 
 Entry payloads grouped by type.
@@ -804,7 +1133,7 @@ Entry payloads grouped by type.
 | `tests` | [`GetTestResponse`](#gettestresponse)[] | No | Test entry payloads |
 | `invocations` | [`GetTestInvocationResponse`](#gettestinvocationresponse)[] | No | Invocation entry payloads |
 | `runs` | [`GetTestInvocationRunsResponse`](#gettestinvocationrunsresponse)[] | No | Run entry payloads |
-| `groups` | [`GetTestInvocationGroupsResponse`](#gettestinvocationgroupsresponse)[] | No | Group entry payloads |
+| `groups` | [`GetTestInvocationTracesResponse`](#gettestinvocationtracesresponse)[] | No | Group entry payloads |
 | `grades` | [`GetTestGradeResponse`](#gettestgraderesponse)[] | No | Grade entry payloads |
 | `feedback` | [`GetTestFeedbackResponse`](#gettestfeedbackresponse)[] | No | Feedback entry payloads |
 | `messages` | [`SearchMessageResponse`](#searchmessageresponse)[] | No | Message entry payloads |
@@ -831,6 +1160,7 @@ Resource maps keyed by ID string.
 | `tools` | `object` | No | Tool resources keyed by ID |
 | `qualities` | `object` | No | Quality resources keyed by ID |
 | `standard_groups` | `object` | No | Standard group resources keyed by ID |
+| `standards` | `object` | No | Standard resources keyed by ID |
 
 ---
 
@@ -864,27 +1194,145 @@ A single run row for the UI table, derived from a benchmark invocation.
 
 ---
 
-## `ThemePrimitives`
+## `ThemeBundle`
 
-Raw theme color primitives (hex values) from settings.
+Full theme payload for a page bootstrap.
 
-General-purpose — not CSS-specific. Clients derive their own
-presentation tokens (oklch, CSS variables, etc.) from these.
+Riding along on every ``/\{artifact\}/context`` response via
+``ProfileSummary.theme``. Layers:
+  - ``primitives`` / ``dark_primitives`` — hex inputs the settings
+    editor reads/writes (light + dark palettes).
+  - ``tokens`` / ``dark_tokens`` — oklch tokens the client paints with.
+    ``ThemeStyle`` emits two ``<style>`` blocks: one scoped to
+    ``:root:not(.dark)`` (light) and one to ``:root.dark`` (dark).
+  - ``thresholds`` — numeric score thresholds for analytics components.
+Empty-in → empty-out per token: missing values fall through to the
+matching ``globals.css`` default.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `primary` | `string` | No | Primary color hex value |
-| `accent` | `string` | No | Accent color hex value |
-| `background` | `string` | No | Background color hex value |
-| `surface` | `string` | No | Surface color hex value |
-| `success` | `string` | No | Success state color hex value |
-| `warning` | `string` | No | Warning state color hex value |
-| `error` | `string` | No | Error state color hex value |
-| `chart1` | `string` | No | Chart color 1 hex value |
-| `chart2` | `string` | No | Chart color 2 hex value |
-| `chart3` | `string` | No | Chart color 3 hex value |
-| `chart4` | `string` | No | Chart color 4 hex value |
-| `chart5` | `string` | No | Chart color 5 hex value |
+| `primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (light palette, for the theme editor) |
+| `tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for light mode (SSR CSS-var injection) |
+| `dark_primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (dark palette, for the theme editor) |
+| `dark_tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for dark mode (SSR CSS-var injection) |
+| `thresholds` | [`Thresholds`](#thresholds) | No | Score thresholds resolved from the setting |
+
+---
+
+## `ThemePrimitives`
+
+40 optional fields. The 17 essentials drive the rest; the other 23
+are overrides for fine-tuning when derivation isn't what you want.
+
+Empty primitive → empty token → client falls back to globals.css.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `card` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `border` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `success` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `info` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `input` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `ThemeTokens`
+
+40 fully-resolved CSS variable values (snake_case 1:1 with vars).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `border` | `string` | No | — |
+| `input` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `success` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `Thresholds`
+
+Numeric score thresholds resolved from the active setting.
+
+Server pre-buckets dashboard metrics into ``success | warning | danger |
+neutral`` already, so most components don't need these values. Surface
+them for chart reference lines, tooltips, and any client-side bucketing.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `integer` | Yes | Score >= this counts as success |
+| `warning` | `integer` | Yes | Score >= this counts as warning |
+| `danger` | `integer` | Yes | Score < success threshold but >= this counts as danger; below is neutral/no-data |
 
 ---
 
@@ -909,7 +1357,8 @@ Server-authoritative form state returned after draft save.
 | `reasoning_level_id` | `string` | No | Saved reasoning level identifier |
 | `quality_ids` | `string`[] | No | Saved quality identifiers |
 | `voice_ids` | `string`[] | No | Saved voice identifiers |
-| `model_flag_ids` | `string`[] | No | Saved model flag identifiers |
+| `model_flag_ids` | `string`[] | No | Saved model flag junction-row identifiers |
+| `model_flag_values` | [`InvocationModelFlagValue`](#invocationmodelflagvalue)[] | No | Denormalized (model_id, type, value) echo derived from model_flag_ids |
 | `model_position_ids` | `string`[] | No | Saved model position identifiers |
 | `model_rubric_ids` | `string`[] | No | Saved model rubric identifiers |
 | `pending_ids` | `string`[] | No | Pending resource identifiers |

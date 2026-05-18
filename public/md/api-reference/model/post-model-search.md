@@ -29,4 +29,6 @@ Search models — composable infra architecture.
 | `provider_filter` | [`ListFilterSection`](/api-reference/model/types#listfiltersection) | No | Provider filter options |
 | `department_filter` | [`ListFilterSection`](/api-reference/model/types#listfiltersection) | No | Department filter options |
 | `agent_filter` | [`ListFilterSection`](/api-reference/model/types#listfiltersection) | No | Agent filter options |
+| `flag_filter` | [`ListFilterSection`](/api-reference/model/types#listfiltersection) | No | Filter options for flags in list UI |
 | `total_count` | `integer` | No | Total number of models |
+| `import_fields` | [`ImportField`](/api-reference/model/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

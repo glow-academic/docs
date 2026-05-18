@@ -1,0 +1,29 @@
+# `POST` `/system/export`
+
+# `POST` `/system/export`
+
+Export System
+
+Artifact-level system export.
+
+Dispatches on ``body.view`` to per-view exports (activity, pricing,
+group, session, health) and returns ``\{file_id, file_name, row_count\}``.
+Client downloads via ``/api/system/download/\{file_id\}`` (BFF) →
+``/system/file/download``.
+
+## Request Body (`ExportSystemApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `view` | `string` | Yes | View discriminator: 'activity' | 'pricing' | 'group' | 'session' | 'health' |
+| `session_id` | `string` | No | Target session UUID (required for view='session') |
+| `group_id` | `string` | No | Target group UUID (required for view='group') |
+| `mode` | `string` | No | Optional sub-mode within a view. Currently recognized: view=reports → mode='brightspace' (gradebook CSV only); view=home → mode='certificate' (PDF cert only) or 'attempts' (CSV only). Default (None) returns the full per-view bundle. |
+
+## Response (`ExportSystemApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file_id` | `string` | Yes | UUID of the files_resource holding the export bytes |
+| `file_name` | `string` | Yes | Suggested download file name |
+| `row_count` | `integer` | Yes | Number of data rows in the export |

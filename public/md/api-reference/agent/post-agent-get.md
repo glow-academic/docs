@@ -37,6 +37,7 @@ Get agent information using the canonical shared agent operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason the agent is disabled |
 | `group_id` | `string` | No | UUID of the owning group |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `agent_id` | `string` | No | UUID of the selected agent |
 | `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
@@ -47,7 +48,7 @@ Get agent information using the canonical shared agent operation.
 | `models` | [`AgentModelResource`](/api-reference/agent/types#agentmodelresource)[] | No | Model resources |
 | `prompts` | [`AgentPromptResource`](/api-reference/agent/types#agentpromptresource)[] | No | Prompt resources |
 | `instructions` | [`AgentInstructionResource`](/api-reference/agent/types#agentinstructionresource)[] | No | Instruction resources |
-| `flags` | [`AgentFlagConfig`](/api-reference/agent/types#agentflagconfig)[] | No | Flag resources |
+| `flags` | [`AgentFlagResource`](/api-reference/agent/types#agentflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`AgentDepartmentResource`](/api-reference/agent/types#agentdepartmentresource)[] | No | Department resources |
 | `tools` | [`AgentToolResource`](/api-reference/agent/types#agenttoolresource)[] | No | Tool resources |
 | `temperature_levels` | [`AgentTemperatureLevelResource`](/api-reference/agent/types#agenttemperaturelevelresource)[] | No | Temperature level resources |

@@ -1,6 +1,6 @@
-# `POST` `/attempt/audio/download`
+# `POST` `/attempt/audio_download`
 
-# `POST` `/attempt/audio/download`
+# `POST` `/attempt/audio_download`
 
 Download Audio
 

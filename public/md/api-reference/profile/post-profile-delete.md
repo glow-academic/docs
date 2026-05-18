@@ -10,7 +10,17 @@ Bulk delete profiles — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `profile_ids` | `string`[] | Yes | UUIDs of profiles to delete |
+| `profile_ids` | `string`[] | No | UUIDs of profiles to delete (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, delete every profile matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `search` | `string` | No | Full-text search query |
+| `cohort_ids` | `string`[] | No | Filter by cohort UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `role_filter` | `string` | No | Filter by role name |
+| `cohort_search` | `string` | No | Search text for cohort facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `role_search` | `string` | No | Search text for role facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
 | `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
 

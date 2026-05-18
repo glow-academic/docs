@@ -32,13 +32,14 @@ Get persona information using the canonical shared persona operation.
 | `can_edit` | `boolean` | No | Whether the current user has edit permission |
 | `disabled_reason` | `string` | No | Human-readable reason if editing is disabled |
 | `group_id` | `string` | No | Generation group UUID for AI operations |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. The FE uses this to show the draft name in the SaveToolbar trigger. |
 | `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `names` | [`PersonaNameResource`](/api-reference/persona/types#personanameresource)[] | No | Name resources with selected/suggested flags |
 | `descriptions` | [`PersonaDescriptionResource`](/api-reference/persona/types#personadescriptionresource)[] | No | Description resources with selected/suggested flags |
 | `colors` | [`PersonaColorResource`](/api-reference/persona/types#personacolorresource)[] | No | Color resources with selected/suggested flags |
 | `icons` | [`PersonaIconResource`](/api-reference/persona/types#personaiconresource)[] | No | Icon resources with selected/suggested flags |
 | `instructions` | [`PersonaInstructionResource`](/api-reference/persona/types#personainstructionresource)[] | No | Instruction resources with selected/suggested flags |
-| `flags` | [`PersonaFlagConfig`](/api-reference/persona/types#personaflagconfig)[] | No | Boolean flag configs with selected flag (e.g. active status) |
+| `flags` | [`PersonaFlagResource`](/api-reference/persona/types#personaflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`PersonaDepartmentResource`](/api-reference/persona/types#personadepartmentresource)[] | No | Department resources with selected/suggested flags |
 | `parameter_fields` | [`PersonaParameterFieldResource`](/api-reference/persona/types#personaparameterfieldresource)[] | No | Parameter field resources with selected/suggested flags |
 | `examples` | [`PersonaExampleResource`](/api-reference/persona/types#personaexampleresource)[] | No | Example resources with selected/suggested flags |

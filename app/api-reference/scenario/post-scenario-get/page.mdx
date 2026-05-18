@@ -34,12 +34,13 @@ Get scenario information using the canonical shared scenario operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason the scenario is disabled |
 | `group_id` | `string` | No | UUID of the owning group |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `resolved_parameter_ids` | `string`[] | No | Resolved parameter IDs from saved fields |
 | `names` | [`ScenarioNameResource`](/api-reference/scenario/types#scenarionameresource)[] | No | Name resources |
 | `descriptions` | [`ScenarioDescriptionResource`](/api-reference/scenario/types#scenariodescriptionresource)[] | No | Description resources |
 | `problem_statements` | [`ScenarioProblemStatement`](/api-reference/scenario/types#scenarioproblemstatement)[] | No | Problem statement resources |
-| `flags` | [`ScenarioFlagConfig`](/api-reference/scenario/types#scenarioflagconfig)[] | No | Flag configs |
+| `flags` | [`ScenarioFlagResource`](/api-reference/scenario/types#scenarioflagresource)[] | No | Flag configs |
 | `departments` | [`ScenarioDepartment`](/api-reference/scenario/types#scenariodepartment)[] | No | Department resources |
 | `personas` | [`ScenarioPersona`](/api-reference/scenario/types#scenariopersona)[] | No | Persona resources |
 | `documents` | [`ScenarioDocument`](/api-reference/scenario/types#scenariodocument)[] | No | Document resources |

@@ -21,4 +21,5 @@ Duplicate a rubric — composable infra architecture.
 | `success` | `boolean` | Yes | Whether the operation succeeded |
 | `rubric_id` | `string` | Yes | Newly created rubric UUID |
 | `message` | `string` | Yes | Human-readable result message |
+| `rubrics` | [`ListRubricApiRubric`](/api-reference/rubric/types#listrubricapirubric)[] | No | Hydrated rubric row for the duplicate (single-element list; omitted on soft writes) |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

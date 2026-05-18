@@ -1,0 +1,53 @@
+# `POST` `/setting/draft`
+
+# `POST` `/setting/draft`
+
+Patch Setting Draft
+
+Patch setting draft — composable infra architecture.
+
+## Request Body (`PatchSettingDraftApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `draft_id` | `string` | No | Existing draft UUID to update |
+| `input_draft_id` | `string` | No | Legacy draft UUID alias |
+| `idempotency_key` | `string` | No | Operation key for accept/reject acknowledgement |
+| `accept` | `boolean` | No | Accept or reject pending draft state when used with idempotency_key |
+| `name` | `string` | No | Name value to resolve or create |
+| `name_id` | `string` | No | UUID of the name resource |
+| `description` | `string` | No | Description value to resolve or create |
+| `description_id` | `string` | No | UUID of the description resource |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
+| `active` | `boolean` | No | Denormalized setting_active flag state; resolved to a flag_ids entry server-side |
+| `mcp` | `boolean` | No | Denormalized mcp flag state; resolved to a flag_ids entry server-side |
+| `departments` | `string`[] | No | Department names to resolve |
+| `department_ids` | `string`[] | No | Department UUIDs to assign |
+| `color_ids` | `string`[] | No | Color resource UUIDs |
+| `logins_ids` | `string`[] | No | Logins resource UUIDs to assign |
+| `system_ids` | `string`[] | No | System UUIDs to assign |
+| `mcp_id` | `string` | No | MCP resource UUID to assign (single) |
+| `threshold_ids` | `string`[] | No | Threshold UUIDs to assign |
+| `provider_key_ids` | `string`[] | No | Provider key UUIDs |
+| `auth_item_key_ids` | `string`[] | No | Auth item key UUIDs |
+| `auth_item_value_ids` | `string`[] | No | Auth item value UUIDs |
+| `auth_ids` | `string`[] | No | Auth resource UUIDs to assign |
+| `provider_ids` | `string`[] | No | Provider resource UUIDs to assign |
+| `provider_keys` | [`SettingProviderKeyDraftValue`](/api-reference/setting/types#settingproviderkeydraftvalue)[] | No | Inline-creatable (provider × key) value entries; id=null requests server to resolve or create |
+| `auth_item_keys` | [`SettingAuthItemKeyDraftValue`](/api-reference/setting/types#settingauthitemkeydraftvalue)[] | No | Inline-creatable (auth × key) value entries |
+| `auth_item_values` | [`SettingAuthItemValueDraftValue`](/api-reference/setting/types#settingauthitemvaluedraftvalue)[] | No | Inline-creatable (auth × item × value) entries |
+| `mcp_values` | [`SettingMcpDraftValue`](/api-reference/setting/types#settingmcpdraftvalue)[] | No | Inline-creatable mcp value entries |
+| `system_values` | [`SettingSystemDraftValue`](/api-reference/setting/types#settingsystemdraftvalue)[] | No | Inline-creatable systems_resource value entries |
+| `threshold_values` | [`SettingThresholdDraftValue`](/api-reference/setting/types#settingthresholddraftvalue)[] | No | Per-type threshold slider values; server finds or creates a row per (type, value) and swaps the matching type into threshold_ids |
+| `logins` | [`SettingLoginDraftValue`](/api-reference/setting/types#settinglogindraftvalue)[] | No | Inline-creatable logins_resource value entries (auth or profile buttons) |
+| `pending_ids` | `string`[] | No | Resource IDs to retain as pending inactive connections |
+
+## Response (`PatchSettingDraftApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `boolean` | Yes | Whether the draft save succeeded |
+| `draft_id` | `string` | Yes | UUID of the saved draft |
+| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `message` | `string` | Yes | Result message |
+| `form_state` | [`app__infra__setting__types__DraftFormState`](/api-reference/setting/types#app-infra-setting-types-draftformstate) | No | Server-authoritative form state |

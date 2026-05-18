@@ -8,13 +8,14 @@ Create auths using composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `auths` | [`CreateAuthItem`](/api-reference/auth/types#createauthitem)[] | Yes | List of auth providers to create |
+| `auths` | [`CreateAuthItem`](/api-reference/auth/types#createauthitem)[] | No | List of auth providers to create (required on first call) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`CreateAuthApiResponse-Output`)
+## Response (`CreateAuthApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`AuthResultItem`](/api-reference/auth/types#authresultitem)[] | Yes | Per-item creation results |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `auths` | [`ListAuthApiAuth`](/api-reference/auth/types#listauthapiauth)[] | No | Hydrated rows for the successfully-created auths (mirrors /auth/search shape) |

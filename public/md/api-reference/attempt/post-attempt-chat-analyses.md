@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/analyses`
+# `POST` `/attempt/chat_analyses`
 
-# `POST` `/attempt/chat/analyses`
+# `POST` `/attempt/chat_analyses`
 
 Chat Analyses
 

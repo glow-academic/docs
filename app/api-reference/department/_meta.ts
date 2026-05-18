@@ -1,11 +1,12 @@
 export default {
+  'post-department-title': 'POST /title',
   'post-department-get': 'POST /get',
   'post-department-search': 'POST /search',
   'post-department-create': 'POST /create',
   'post-department-update': 'POST /update',
   'post-department-duplicate': 'POST /duplicate',
   'post-department-delete': 'POST /delete',
-  'patch-department-draft': 'PATCH /draft',
+  'post-department-draft': 'POST /draft',
   'post-department-drafts': 'POST /drafts',
   'post-department-context': 'POST /context',
   'post-department-export': 'POST /export',
@@ -15,5 +16,9 @@ export default {
   'post-department-group': 'POST /group',
   'post-department-problem': 'POST /problem',
   'post-department-refresh': 'POST /refresh',
+  'get-department-watch': 'GET /watch',
+  'post-department-text-download': 'POST /text_download',
+  'post-department-file-download': 'POST /file_download',
+  'post-department-call-download': 'POST /call_download',
   'types': 'Types',
 }

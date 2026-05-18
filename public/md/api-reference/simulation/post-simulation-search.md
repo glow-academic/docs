@@ -33,3 +33,4 @@ Search simulations — composable infra architecture.
 | `department_filter` | [`ListFilterSection`](/api-reference/simulation/types#listfiltersection) | No | Filter options for departments |
 | `flag_filter` | [`ListFilterSection`](/api-reference/simulation/types#listfiltersection) | No | Filter options for flags |
 | `total_count` | `integer` | No | Total number of matching records |
+| `import_fields` | [`ImportField`](/api-reference/simulation/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

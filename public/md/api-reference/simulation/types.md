@@ -42,16 +42,13 @@ Required fields (name): provide ID or value.
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text value |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
 | `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
 | `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
 | `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
 | `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
 | `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
-| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
-| `active_flag` | `boolean` | No | Whether the simulation is active (resolved to flag_id) |
-| `practice_flag` | `boolean` | No | Whether this is a practice simulation |
-| `practice_flag_id` | `string` | No | Practice flag resource UUID |
 | `departments` | `string`[] | No | Department names for matching |
 | `scenarios` | `string`[] | No | Scenario names for matching |
 
@@ -89,6 +86,22 @@ Per-item result within a bulk delete response.
 | `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
 | `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
 | `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `DraftScenarioFlagDenormValue`
+
+Denormalized scenario_flag value — resolved server-side to (scenario_id, flag_id).
+
+Given (scenario_id, type, value), the server looks up the flags_resource
+row matching (type, value) and upserts a scenario_flags_resource row for
+(scenario_id, flag_id).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | Yes | UUID of the parent scenario |
+| `type` | `string` | Yes | Flag type in flags_resource |
+| `value` | `boolean` | Yes | Desired boolean value for this flag type |
 
 ---
 
@@ -137,6 +150,21 @@ Value for creating a scenario_time_limit resource via draft.
 
 ---
 
+## `EvalSetup`
+
+Run-level eval scaffold — first-class on the generate response.
+
+Audit's ``**output`` spread carries this onto
+``<artifact>.generate.completed``. Null when no rubric-bearing
+agent participated.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | — |
+| `invocations` | [`InvocationSlot`](#invocationslot)[] | Yes | — |
+
+---
+
 ## `GenerateConfig`
 
 Developer configuration — all optional with sensible defaults.
@@ -173,6 +201,7 @@ Single generation group in the simulation generations response.
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
 | `session_id` | `string` | Yes | Associated session UUID |
+| `name` | `string` | No | Immutable draft label set at create time |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
 | `flag_ids` | `string`[] | Yes | Associated flag UUIDs |
@@ -204,6 +233,11 @@ Tool call referenced by a message.
 | `id` | `string` | Yes | — |
 | `tool_name` | `string` | No | — |
 | `template_name` | `string` | No | — |
+| `tool` | `object` | No | — |
+| `ledger_status` | `string` | No | — |
+| `ledger_operation` | `string` | No | — |
+| `ledger_artifact` | `string` | No | — |
+| `ledger_artifact_id` | `string` | No | — |
 
 ---
 
@@ -223,6 +257,23 @@ Message within a run.
 | `file_ids` | `string`[] | No | — |
 | `call_ids` | `string`[] | No | — |
 | `calls` | [`GroupCall`](#groupcall)[] | No | — |
+| `reasoning` | `boolean` | No | True when this row is a chain-of-thought trace persisted alongside the assistant answer (rendered as a collapsed accordion). |
+| `in_context` | `boolean` | No | Whether this message is included in the LLM context for the next generation. Mirrors the dedup pass that builds chat history (see in_context_reason). |
+| `in_context_reason` | `string` | No | Why this message is in/out of LLM context. 'kept' = included; 'deduped_read' = older read-only call to a tool that has a fresher result later in the group; future values may include 'trimmed_top_n'. |
+
+---
+
+## `GroupResource`
+
+Lightweight `\{id, name\}` for cross-referencing run-level ids
+(``model_id`` / ``agent_id`` / ``profile_id``) against human-readable
+names on the analytics panel. Names come from the canonical
+``get_models`` / ``get_agents`` / ``get_profiles`` black boxes.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `name` | `string` | No | — |
 
 ---
 
@@ -230,11 +281,60 @@ Message within a run.
 
 Run within a group, with its messages.
 
+Carries token / cost / model / agent / profile attribution so the
+analytics view can render per-run cost + actor info without a
+parallel detail shape. ``profile_id`` is the authoring profile
+(human user), ``agent_id`` is the LLM-side actor, ``model_id`` is
+the model used by that agent. All optional — runs predating these
+columns or with unresolved attributions surface ``None``.
+
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `created_at` | `string` | No | — |
+| `input_tokens` | `integer` | No | — |
+| `output_tokens` | `integer` | No | — |
+| `cached_input_tokens` | `integer` | No | — |
+| `cost` | `number` | No | — |
+| `model_id` | `string` | No | — |
+| `agent_id` | `string` | No | — |
+| `profile_id` | `string` | No | — |
+| `previous_context_start_index` | `integer` | No | Index in ``messages`` where the current run's own messages begin; earlier rows are previous-context replay. ``None`` when the run has no previous context attached. |
 | `messages` | [`GroupMessage`](#groupmessage)[] | No | — |
+
+---
+
+## `ImportField`
+
+Field descriptor for CSV import column mapping.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | — |
+| `label` | `string` | Yes | — |
+| `required` | `boolean` | No | — |
+| `multi` | `boolean` | No | — |
+| `type` | `string` | No | — |
+| `example` | `string` | No | — |
+| `description` | `string` | No | — |
+
+---
+
+## `InvocationSlot`
+
+One agent's slot in a multi-agent generation pool.
+
+Populated by ``setup_generation_test`` when an agent carries a
+rubric. The client uses these IDs to drive the eval workflow:
+review the candidate's output, optionally fire a grader against
+its ``invocation_id``, and promote/reject by call_id via the
+existing ``idempotency_key + accept`` pattern.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | — |
+| `agent_id` | `string` | Yes | — |
+| `rubric_id` | `string` | No | — |
 
 ---
 
@@ -299,8 +399,10 @@ Simulation item in list response with Python-computed permissions.
 | `name` | `string` | No | Display name |
 | `description` | `string` | No | Simulation description text |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
-| `is_inactive` | `boolean` | No | Whether the simulation is inactive |
-| `practice_simulation` | `boolean` | No | Whether this is a practice simulation |
+| `flag_ids` | `string`[] | No | Currently selected flag option UUIDs |
+| `is_inactive` | `boolean` | No | Whether the simulation is inactive (derived from simulation_active flag) |
+| `is_practice` | `boolean` | No | Whether this is a practice simulation (derived from practice flag) |
+| `practice_simulation` | `boolean` | No | Legacy alias for is_practice — prefer is_practice |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `mcp` | `boolean` | No | Whether this is an MCP simulation |
 | `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
@@ -310,6 +412,9 @@ Simulation item in list response with Python-computed permissions.
 | `can_delete` | `boolean` | No | Whether the current user can delete |
 | `can_duplicate` | `boolean` | No | Whether the current user can duplicate |
 | `cohort_ids` | `string`[] | No | Associated cohort UUIDs |
+| `pending_status` | `string` | No | Latest soft_calls_mv status: 'pending' / 'accepted' / 'rejected' |
+| `pending_operation` | `string` | No | Operation type ('create'|'update'|'delete'|'duplicate') of the pending op |
+| `pending_call_id` | `string` | No | call_id (idempotency key for ack) of the pending op |
 | `updated_at` | `string` | No | Last updated timestamp |
 
 ---
@@ -370,6 +475,26 @@ and rotates through them.
 
 ---
 
+## `ProducedMedia`
+
+One asset produced by a generation run.
+
+``resource_id`` is the canonical id the per-artifact download tools
+accept (e.g. ``Scenario_Image_Download(image_id=resource_id)`` for
+``modality="image"``). It maps to ``images_resource.id`` /
+``videos_resource.id`` / ``audios_resource.id`` depending on the
+modality.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `modality` | `"image"` \| `"video"` \| `"audio"` | Yes | — |
+| `resource_id` | `string` | Yes | — |
+| `upload_id` | `string` | Yes | — |
+| `mime_type` | `string` | No | — |
+| `file_size` | `integer` | No | — |
+
+---
+
 ## `ProfileSummary`
 
 Caller identity derived from JWT — who you are on this page.
@@ -388,7 +513,7 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 | `role_permissions` | `any`[][] | Yes | Full (artifact, operation) permission tuples for granular page gating |
 | `is_active` | `boolean` | Yes | Whether the user's profile is active |
 | `id` | `string` | Yes | Profile UUID (SocketProvider, ProfileProvider) |
-| `theme` | [`ThemePrimitives`](#themeprimitives) | No | Theme primitives (ThemeHydrator) |
+| `theme` | [`ThemeBundle`](#themebundle) | No | Resolved theme: hex primitives + derived oklch tokens + score thresholds |
 | `session_id` | `string` | No | Current session UUID |
 | `is_emulation` | `boolean` | No | Whether user is in emulation mode (ProfileProvider) |
 | `role_resources` | [`QGetProfileContextV4RoleResource`](#qgetprofilecontextv4roleresource)[] | No | All role resources for emulation display (ProfileProvider) |
@@ -451,24 +576,23 @@ Per-field error from value resolution.
 
 ---
 
-## `SimulationFlagConfig`
+## `SimulationFlagResource`
 
-Enriched flag config for direct client consumption.
+Flag option row — one per (name, type, value) entry in flags_resource.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `key` | `string` | Yes | Flag config key identifier |
-| `label` | `string` | Yes | Display label for the flag |
+| `id` | `string` | No | Flag resource identifier |
+| `name` | `string` | No | Flag display name |
+| `type` | `string` | No | Flag type (e.g. 'simulation_active', 'practice') |
+| `value` | `boolean` | No | Underlying bool value of this option |
 | `description` | `string` | No | Flag description text |
-| `icon_id` | `string` | No | UUID of the selected icon resource |
-| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
-| `flag_option_id` | `string` | No | UUID of the flag option |
-| `show` | `boolean` | No | Whether to show this flag in the UI |
-| `required` | `boolean` | No | Whether this flag is required |
-| `generated` | `boolean` | No | Whether this was AI-generated |
-| `suggested` | `boolean` | No | Whether this is a suggested option |
-| `selected` | `boolean` | No | Whether this is currently selected |
-| `pending` | `boolean` | No | Whether this selection is pending acceptance |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup (hydrated from icons_resource) |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -539,7 +663,7 @@ Scenario for simulation.
 
 ## `SimulationScenarioFlag`
 
-Scenario flag (denormalized: includes flag name/description/icon).
+Scenario flag (denormalized: includes flag name/description/icon/type/value).
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -547,12 +671,35 @@ Scenario flag (denormalized: includes flag name/description/icon).
 | `scenario_id` | `string` | No | UUID of the parent scenario |
 | `flag_id` | `string` | No | UUID of the flag resource |
 | `name` | `string` | No | Flag name |
+| `type` | `string` | No | Underlying flag type (e.g. 'audio_enabled') |
+| `value` | `boolean` | No | Underlying flag boolean value |
 | `description` | `string` | No | Flag description text |
 | `icon` | `string` | No | Icon identifier for the flag |
 | `generated` | `boolean` | No | Whether this was AI-generated |
 | `suggested` | `boolean` | No | Whether this is a suggested option |
 | `selected` | `boolean` | No | Whether this is currently selected |
 | `pending` | `boolean` | No | Whether this selection is pending acceptance |
+
+---
+
+## `SimulationScenarioFlagOption`
+
+Option row for ScenarioFlags picker — one per (scenario × flag_type × value).
+
+The junction row of scenario_flags_resource links (scenario_id, flag_id);
+the client needs a pre-computed cross-product so each (scenario, type)
+pair can be rendered as a switch. `flag_id` here is the underlying
+flags_resource row ID for that (type, value) pair.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `scenario_id` | `string` | No | UUID of the parent scenario |
+| `flag_id` | `string` | No | UUID of the underlying flag resource (value-specific) |
+| `type` | `string` | No | Flag type |
+| `value` | `boolean` | No | Underlying flag boolean value |
+| `name` | `string` | No | Flag display name |
+| `description` | `string` | No | Flag description text |
+| `icon` | `string` | No | Resolved SVG markup |
 
 ---
 
@@ -614,27 +761,145 @@ Scenario time limit.
 
 ---
 
-## `ThemePrimitives`
+## `ThemeBundle`
 
-Raw theme color primitives (hex values) from settings.
+Full theme payload for a page bootstrap.
 
-General-purpose — not CSS-specific. Clients derive their own
-presentation tokens (oklch, CSS variables, etc.) from these.
+Riding along on every ``/\{artifact\}/context`` response via
+``ProfileSummary.theme``. Layers:
+  - ``primitives`` / ``dark_primitives`` — hex inputs the settings
+    editor reads/writes (light + dark palettes).
+  - ``tokens`` / ``dark_tokens`` — oklch tokens the client paints with.
+    ``ThemeStyle`` emits two ``<style>`` blocks: one scoped to
+    ``:root:not(.dark)`` (light) and one to ``:root.dark`` (dark).
+  - ``thresholds`` — numeric score thresholds for analytics components.
+Empty-in → empty-out per token: missing values fall through to the
+matching ``globals.css`` default.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `primary` | `string` | No | Primary color hex value |
-| `accent` | `string` | No | Accent color hex value |
-| `background` | `string` | No | Background color hex value |
-| `surface` | `string` | No | Surface color hex value |
-| `success` | `string` | No | Success state color hex value |
-| `warning` | `string` | No | Warning state color hex value |
-| `error` | `string` | No | Error state color hex value |
-| `chart1` | `string` | No | Chart color 1 hex value |
-| `chart2` | `string` | No | Chart color 2 hex value |
-| `chart3` | `string` | No | Chart color 3 hex value |
-| `chart4` | `string` | No | Chart color 4 hex value |
-| `chart5` | `string` | No | Chart color 5 hex value |
+| `primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (light palette, for the theme editor) |
+| `tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for light mode (SSR CSS-var injection) |
+| `dark_primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (dark palette, for the theme editor) |
+| `dark_tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for dark mode (SSR CSS-var injection) |
+| `thresholds` | [`Thresholds`](#thresholds) | No | Score thresholds resolved from the setting |
+
+---
+
+## `ThemePrimitives`
+
+40 optional fields. The 17 essentials drive the rest; the other 23
+are overrides for fine-tuning when derivation isn't what you want.
+
+Empty primitive → empty token → client falls back to globals.css.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `card` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `border` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `success` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `info` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `input` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `ThemeTokens`
+
+40 fully-resolved CSS variable values (snake_case 1:1 with vars).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `border` | `string` | No | — |
+| `input` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `success` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `Thresholds`
+
+Numeric score thresholds resolved from the active setting.
+
+Server pre-buckets dashboard metrics into ``success | warning | danger |
+neutral`` already, so most components don't need these values. Surface
+them for chart reference lines, tooltips, and any client-side bucketing.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `integer` | Yes | Score >= this counts as success |
+| `warning` | `integer` | Yes | Score >= this counts as warning |
+| `danger` | `integer` | Yes | Score < success threshold but >= this counts as danger; below is neutral/no-data |
 
 ---
 
@@ -646,21 +911,46 @@ Only provided fields are updated (partial update).
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `simulation_id` | `string` | Yes | UUID of the simulation to update |
+| `id` | `string` | Yes | UUID of the simulation to update |
 | `name_id` | `string` | No | UUID of the name resource |
 | `name` | `string` | No | Display name value |
 | `description_id` | `string` | No | UUID of the description resource |
 | `description` | `string` | No | Description text value |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
 | `department_ids` | `string`[] | No | Associated department UUIDs |
 | `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
 | `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
 | `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
 | `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
 | `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
-| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
-| `active_flag` | `boolean` | No | Whether the simulation is active (resolved to flag_id) |
-| `practice_flag` | `boolean` | No | Whether this is a practice simulation |
-| `practice_flag_id` | `string` | No | Practice flag resource UUID |
+| `departments` | `string`[] | No | Department names for matching |
+| `scenarios` | `string`[] | No | Scenario names for matching |
+
+---
+
+## `UpdateSimulationPatch`
+
+Shared patch for bulk-update-all-matching mode.
+
+Inherits every field from ``UpdateSimulationItem`` and just relaxes
+``id`` to optional — the bulk impl stamps the resolved id onto a
+clone of the patch per matched row, so any client-supplied id is
+ignored. Sparse semantics: only fields the client sets are written.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Ignored — bulk impl stamps the resolved simulation id per matched row |
+| `name_id` | `string` | No | UUID of the name resource |
+| `name` | `string` | No | Display name value |
+| `description_id` | `string` | No | UUID of the description resource |
+| `description` | `string` | No | Description text value |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
+| `department_ids` | `string`[] | No | Associated department UUIDs |
+| `scenario_ids` | `string`[] | No | Associated scenario UUIDs |
+| `scenario_flag_ids` | `string`[] | No | Associated scenario flag UUIDs |
+| `scenario_position_ids` | `string`[] | No | Associated scenario position UUIDs |
+| `scenario_rubric_ids` | `string`[] | No | Associated scenario rubric UUIDs |
+| `scenario_time_limit_ids` | `string`[] | No | Associated scenario time limit UUIDs |
 | `departments` | `string`[] | No | Department names for matching |
 | `scenarios` | `string`[] | No | Scenario names for matching |
 
@@ -679,9 +969,12 @@ Client replaces its local form state with this after every successful patch.
 | `description_id` | `string` | No | UUID of the selected description resource |
 | `description` | `string` | No | Saved description value |
 | `flag_ids` | `string`[] | No | Selected flag UUIDs |
+| `active` | `boolean` | No | Echoed simulation_active flag state |
+| `practice` | `boolean` | No | Echoed practice flag state |
 | `department_ids` | `string`[] | No | Selected department UUIDs |
 | `scenario_ids` | `string`[] | No | Selected scenario UUIDs |
 | `scenario_flag_ids` | `string`[] | No | Selected scenario flag UUIDs |
+| `scenario_flag_values` | [`DraftScenarioFlagDenormValue`](#draftscenarioflagdenormvalue)[] | No | Echoed denormalized (scenario_id, type, value) entries |
 | `scenario_position_ids` | `string`[] | No | Selected scenario position UUIDs |
 | `scenario_rubric_ids` | `string`[] | No | Selected scenario rubric UUIDs |
 | `scenario_time_limit_ids` | `string`[] | No | Selected scenario time limit UUIDs |

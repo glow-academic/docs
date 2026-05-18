@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/grade`
+# `POST` `/attempt/chat_grade`
 
-# `POST` `/attempt/chat/grade`
+# `POST` `/attempt/chat_grade`
 
 Chat Grade
 

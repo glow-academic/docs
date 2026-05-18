@@ -48,8 +48,8 @@ Required fields (name, color, icon, instructions): provide ID or value.
 | `instructions` | `string` | No | System instruction template (creates new resource if instructions_id not provided) |
 | `description_id` | `string` | No | UUID of an existing description resource |
 | `description` | `string` | No | Persona description text (creates new resource if description_id not provided) |
-| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
-| `active_flag` | `boolean` | No | Whether the persona is active (resolved to flag_id) |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
+| `active` | `boolean` | No | Denormalized persona_active flag state; resolved to a flag_ids entry server-side |
 | `department_ids` | `string`[] | No | Department UUIDs to associate with this persona |
 | `departments` | `string`[] | No | Department names (resolved to UUIDs server-side) |
 | `parameter_field_ids` | `string`[] | No | Parameter field UUIDs to associate |
@@ -93,6 +93,21 @@ Per-item result within a bulk delete response.
 | `materialized_view` | [`MvInfo`](#mvinfo) | No | Materialized view metadata |
 | `tables` | [`TableInfo`](#tableinfo)[] | Yes | Related database tables |
 | `operations` | [`OperationInfo`](#operationinfo)[] | Yes | Available operations |
+
+---
+
+## `EvalSetup`
+
+Run-level eval scaffold — first-class on the generate response.
+
+Audit's ``**output`` spread carries this onto
+``<artifact>.generate.completed``. Null when no rubric-bearing
+agent participated.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | — |
+| `invocations` | [`InvocationSlot`](#invocationslot)[] | Yes | — |
 
 ---
 
@@ -149,6 +164,7 @@ Single generation group in the persona generations response.
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
 | `session_id` | `string` | Yes | Associated session UUID |
+| `name` | `string` | No | Immutable draft label set at create time |
 | `color_ids` | `string`[] | Yes | Associated color UUIDs |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -182,6 +198,11 @@ Tool call referenced by a message.
 | `id` | `string` | Yes | — |
 | `tool_name` | `string` | No | — |
 | `template_name` | `string` | No | — |
+| `tool` | `object` | No | — |
+| `ledger_status` | `string` | No | — |
+| `ledger_operation` | `string` | No | — |
+| `ledger_artifact` | `string` | No | — |
+| `ledger_artifact_id` | `string` | No | — |
 
 ---
 
@@ -201,6 +222,23 @@ Message within a run.
 | `file_ids` | `string`[] | No | — |
 | `call_ids` | `string`[] | No | — |
 | `calls` | [`GroupCall`](#groupcall)[] | No | — |
+| `reasoning` | `boolean` | No | True when this row is a chain-of-thought trace persisted alongside the assistant answer (rendered as a collapsed accordion). |
+| `in_context` | `boolean` | No | Whether this message is included in the LLM context for the next generation. Mirrors the dedup pass that builds chat history (see in_context_reason). |
+| `in_context_reason` | `string` | No | Why this message is in/out of LLM context. 'kept' = included; 'deduped_read' = older read-only call to a tool that has a fresher result later in the group; future values may include 'trimmed_top_n'. |
+
+---
+
+## `GroupResource`
+
+Lightweight `\{id, name\}` for cross-referencing run-level ids
+(``model_id`` / ``agent_id`` / ``profile_id``) against human-readable
+names on the analytics panel. Names come from the canonical
+``get_models`` / ``get_agents`` / ``get_profiles`` black boxes.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `name` | `string` | No | — |
 
 ---
 
@@ -208,11 +246,60 @@ Message within a run.
 
 Run within a group, with its messages.
 
+Carries token / cost / model / agent / profile attribution so the
+analytics view can render per-run cost + actor info without a
+parallel detail shape. ``profile_id`` is the authoring profile
+(human user), ``agent_id`` is the LLM-side actor, ``model_id`` is
+the model used by that agent. All optional — runs predating these
+columns or with unresolved attributions surface ``None``.
+
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `created_at` | `string` | No | — |
+| `input_tokens` | `integer` | No | — |
+| `output_tokens` | `integer` | No | — |
+| `cached_input_tokens` | `integer` | No | — |
+| `cost` | `number` | No | — |
+| `model_id` | `string` | No | — |
+| `agent_id` | `string` | No | — |
+| `profile_id` | `string` | No | — |
+| `previous_context_start_index` | `integer` | No | Index in ``messages`` where the current run's own messages begin; earlier rows are previous-context replay. ``None`` when the run has no previous context attached. |
 | `messages` | [`GroupMessage`](#groupmessage)[] | No | — |
+
+---
+
+## `ImportField`
+
+Field descriptor for CSV import column mapping.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `key` | `string` | Yes | — |
+| `label` | `string` | Yes | — |
+| `required` | `boolean` | No | — |
+| `multi` | `boolean` | No | — |
+| `type` | `string` | No | — |
+| `example` | `string` | No | — |
+| `description` | `string` | No | — |
+
+---
+
+## `InvocationSlot`
+
+One agent's slot in a multi-agent generation pool.
+
+Populated by ``setup_generation_test`` when an agent carries a
+rubric. The client uses these IDs to drive the eval workflow:
+review the candidate's output, optionally fire a grader against
+its ``invocation_id``, and promote/reject by call_id via the
+existing ``idempotency_key + accept`` pattern.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | — |
+| `agent_id` | `string` | Yes | — |
+| `rubric_id` | `string` | No | — |
 
 ---
 
@@ -258,6 +345,9 @@ Persona type for list endpoint with computed permissions.
 | `scenario_ids` | `string`[] | No | Scenarios using this persona |
 | `field_ids` | `string`[] | No | Associated field UUIDs |
 | `is_inactive` | `boolean` | No | Whether the persona is marked inactive |
+| `pending_status` | `string` | No | Latest soft_calls_mv status: 'pending' / 'accepted' / 'rejected' |
+| `pending_operation` | `string` | No | Operation type ('create'|'update'|'delete'|'duplicate') of the pending op |
+| `pending_call_id` | `string` | No | call_id (idempotency key for ack) of the pending op |
 | `generated` | `boolean` | No | Whether the persona was AI-generated |
 | `mcp` | `boolean` | No | Whether this persona uses MCP tooling |
 | `num_scenarios` | `integer` | No | Count of scenarios using this persona |
@@ -399,23 +489,23 @@ Per-field error from value resolution.
 
 ---
 
-## `PersonaFlagConfig`
+## `PersonaFlagResource`
 
-Enriched flag config for direct client consumption.
+Flag option row — one per (name, type, value) entry in flags_resource.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `key` | `string` | Yes | — |
-| `label` | `string` | Yes | — |
-| `description` | `string` | No | — |
-| `icon_id` | `string` | No | — |
-| `icon` | `string` | No | Resolved SVG markup for the icon (hydrated from icons_resource) |
-| `flag_option_id` | `string` | No | — |
-| `show` | `boolean` | No | — |
-| `required` | `boolean` | No | — |
-| `generated` | `boolean` | No | — |
-| `selected` | `boolean` | No | — |
-| `pending` | `boolean` | No | — |
+| `id` | `string` | No | Flag resource identifier |
+| `name` | `string` | No | Flag display name |
+| `type` | `string` | No | Flag type (e.g. 'persona_active') |
+| `value` | `boolean` | No | Underlying bool value of this option |
+| `description` | `string` | No | Flag description text |
+| `icon_id` | `string` | No | Icon identifier for the flag |
+| `icon` | `string` | No | Resolved SVG markup (hydrated from icons_resource) |
+| `generated` | `boolean` | No | Whether the flag was AI-generated |
+| `suggested` | `boolean` | No | Whether this item is suggested |
+| `selected` | `boolean` | No | Whether this item is selected |
+| `pending` | `boolean` | No | Whether this item is pending acceptance |
 
 ---
 
@@ -513,6 +603,26 @@ Voice resource for persona.
 
 ---
 
+## `ProducedMedia`
+
+One asset produced by a generation run.
+
+``resource_id`` is the canonical id the per-artifact download tools
+accept (e.g. ``Scenario_Image_Download(image_id=resource_id)`` for
+``modality="image"``). It maps to ``images_resource.id`` /
+``videos_resource.id`` / ``audios_resource.id`` depending on the
+modality.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `modality` | `"image"` \| `"video"` \| `"audio"` | Yes | — |
+| `resource_id` | `string` | Yes | — |
+| `upload_id` | `string` | Yes | — |
+| `mime_type` | `string` | No | — |
+| `file_size` | `integer` | No | — |
+
+---
+
 ## `ProfileSummary`
 
 Caller identity derived from JWT — who you are on this page.
@@ -531,7 +641,7 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 | `role_permissions` | `any`[][] | Yes | Full (artifact, operation) permission tuples for granular page gating |
 | `is_active` | `boolean` | Yes | Whether the user's profile is active |
 | `id` | `string` | Yes | Profile UUID (SocketProvider, ProfileProvider) |
-| `theme` | [`ThemePrimitives`](#themeprimitives) | No | Theme primitives (ThemeHydrator) |
+| `theme` | [`ThemeBundle`](#themebundle) | No | Resolved theme: hex primitives + derived oklch tokens + score thresholds |
 | `session_id` | `string` | No | Current session UUID |
 | `is_emulation` | `boolean` | No | Whether user is in emulation mode (ProfileProvider) |
 | `role_resources` | [`QGetProfileContextV4RoleResource`](#qgetprofilecontextv4roleresource)[] | No | All role resources for emulation display (ProfileProvider) |
@@ -561,27 +671,145 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 
 ---
 
-## `ThemePrimitives`
+## `ThemeBundle`
 
-Raw theme color primitives (hex values) from settings.
+Full theme payload for a page bootstrap.
 
-General-purpose — not CSS-specific. Clients derive their own
-presentation tokens (oklch, CSS variables, etc.) from these.
+Riding along on every ``/\{artifact\}/context`` response via
+``ProfileSummary.theme``. Layers:
+  - ``primitives`` / ``dark_primitives`` — hex inputs the settings
+    editor reads/writes (light + dark palettes).
+  - ``tokens`` / ``dark_tokens`` — oklch tokens the client paints with.
+    ``ThemeStyle`` emits two ``<style>`` blocks: one scoped to
+    ``:root:not(.dark)`` (light) and one to ``:root.dark`` (dark).
+  - ``thresholds`` — numeric score thresholds for analytics components.
+Empty-in → empty-out per token: missing values fall through to the
+matching ``globals.css`` default.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `primary` | `string` | No | Primary color hex value |
-| `accent` | `string` | No | Accent color hex value |
-| `background` | `string` | No | Background color hex value |
-| `surface` | `string` | No | Surface color hex value |
-| `success` | `string` | No | Success state color hex value |
-| `warning` | `string` | No | Warning state color hex value |
-| `error` | `string` | No | Error state color hex value |
-| `chart1` | `string` | No | Chart color 1 hex value |
-| `chart2` | `string` | No | Chart color 2 hex value |
-| `chart3` | `string` | No | Chart color 3 hex value |
-| `chart4` | `string` | No | Chart color 4 hex value |
-| `chart5` | `string` | No | Chart color 5 hex value |
+| `primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (light palette, for the theme editor) |
+| `tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for light mode (SSR CSS-var injection) |
+| `dark_primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (dark palette, for the theme editor) |
+| `dark_tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for dark mode (SSR CSS-var injection) |
+| `thresholds` | [`Thresholds`](#thresholds) | No | Score thresholds resolved from the setting |
+
+---
+
+## `ThemePrimitives`
+
+40 optional fields. The 17 essentials drive the rest; the other 23
+are overrides for fine-tuning when derivation isn't what you want.
+
+Empty primitive → empty token → client falls back to globals.css.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `card` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `border` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `success` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `info` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `input` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `ThemeTokens`
+
+40 fully-resolved CSS variable values (snake_case 1:1 with vars).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `border` | `string` | No | — |
+| `input` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `success` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `Thresholds`
+
+Numeric score thresholds resolved from the active setting.
+
+Server pre-buckets dashboard metrics into ``success | warning | danger |
+neutral`` already, so most components don't need these values. Surface
+them for chart reference lines, tooltips, and any client-side bucketing.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `integer` | Yes | Score >= this counts as success |
+| `warning` | `integer` | Yes | Score >= this counts as warning |
+| `danger` | `integer` | Yes | Score < success threshold but >= this counts as danger; below is neutral/no-data |
 
 ---
 
@@ -604,8 +832,43 @@ Only provided fields are updated (partial update).
 | `instructions` | `string` | No | System instruction template (creates new resource if instructions_id not provided) |
 | `description_id` | `string` | No | UUID of an existing description resource to select |
 | `description` | `string` | No | Persona description text (creates new resource if description_id not provided) |
-| `active_flag_id` | `string` | No | UUID of the flag option to set active status |
-| `active_flag` | `boolean` | No | Whether the persona is active (resolved to flag_id) |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
+| `active` | `boolean` | No | Denormalized persona_active flag state; resolved to a flag_ids entry server-side |
+| `department_ids` | `string`[] | No | Department UUIDs to associate (replaces existing) |
+| `departments` | `string`[] | No | Department names (resolved to UUIDs server-side) |
+| `parameter_field_ids` | `string`[] | No | Parameter field UUIDs to associate (replaces existing) |
+| `parameter_fields` | `string`[] | No | Parameter field names (resolved to UUIDs server-side) |
+| `example_ids` | `string`[] | No | Example resource UUIDs to associate (replaces existing) |
+| `examples` | `string`[] | No | Example texts (creates new example resources) |
+| `voice_ids` | `string`[] | No | Voice resource UUIDs to associate (replaces existing) |
+| `voices` | `string`[] | No | Voice values (resolved to UUIDs server-side) |
+
+---
+
+## `UpdatePersonaPatch`
+
+Shared patch for bulk-update-all-matching mode.
+
+Inherits every field from ``UpdatePersonaItem`` and just relaxes
+``id`` to optional — the bulk impl stamps the resolved id onto a
+clone of the patch per matched row, so any client-supplied id is
+ignored. Sparse semantics: only fields the client sets are written.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | No | Ignored — bulk impl stamps the resolved persona id per matched row |
+| `name_id` | `string` | No | UUID of an existing name resource to select |
+| `name` | `string` | No | Display name text (creates new resource if name_id not provided) |
+| `color_id` | `string` | No | UUID of an existing color resource to select |
+| `color` | `string` | No | Hex color code (creates new resource if color_id not provided) |
+| `icon_id` | `string` | No | UUID of an existing icon resource to select |
+| `icon` | `string` | No | Icon identifier value (creates new resource if icon_id not provided) |
+| `instructions_id` | `string` | No | UUID of an existing instruction resource to select |
+| `instructions` | `string` | No | System instruction template (creates new resource if instructions_id not provided) |
+| `description_id` | `string` | No | UUID of an existing description resource to select |
+| `description` | `string` | No | Persona description text (creates new resource if description_id not provided) |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs — canonical; server derives semantics by flag type/value |
+| `active` | `boolean` | No | Denormalized persona_active flag state; resolved to a flag_ids entry server-side |
 | `department_ids` | `string`[] | No | Department UUIDs to associate (replaces existing) |
 | `departments` | `string`[] | No | Department names (resolved to UUIDs server-side) |
 | `parameter_field_ids` | `string`[] | No | Parameter field UUIDs to associate (replaces existing) |
@@ -636,7 +899,8 @@ Includes both resolved IDs and echoed values for AI model feedback.
 | `color` | `string` | No | Color value that was saved (hex code) |
 | `icon_id` | `string` | No | Currently selected icon resource UUID |
 | `icon` | `string` | No | Icon value that was saved |
-| `active_flag_id` | `string` | No | Currently selected flag option UUID |
+| `flag_ids` | `string`[] | No | Selected flag option UUIDs |
+| `active` | `boolean` | No | Echoed persona_active flag state |
 | `department_ids` | `string`[] | No | Currently associated department UUIDs |
 | `example_ids` | `string`[] | No | Currently associated example resource UUIDs |
 | `parameter_field_ids` | `string`[] | No | Currently associated parameter field UUIDs |

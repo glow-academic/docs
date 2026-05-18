@@ -1,4 +1,5 @@
 export default {
+  'post-eval-title': 'POST /title',
   'post-eval-search': 'POST /search',
   'post-eval-get': 'POST /get',
   'post-eval-create': 'POST /create',
@@ -6,7 +7,7 @@ export default {
   'post-eval-update': 'POST /update',
   'post-eval-duplicate': 'POST /duplicate',
   'post-eval-delete': 'POST /delete',
-  'patch-eval-draft': 'PATCH /draft',
+  'post-eval-draft': 'POST /draft',
   'post-eval-drafts': 'POST /drafts',
   'post-eval-export': 'POST /export',
   'post-eval-generate': 'POST /generate',
@@ -15,5 +16,9 @@ export default {
   'post-eval-group': 'POST /group',
   'post-eval-problem': 'POST /problem',
   'post-eval-refresh': 'POST /refresh',
+  'get-eval-watch': 'GET /watch',
+  'post-eval-text-download': 'POST /text_download',
+  'post-eval-file-download': 'POST /file_download',
+  'post-eval-call-download': 'POST /call_download',
   'types': 'Types',
 }

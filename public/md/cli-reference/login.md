@@ -2,10 +2,17 @@
 
 # `glow login`
 
-Authenticate with Glow instance (OAuth)
+Authenticate with Glow instance
 
 ## Usage
 
 ```bash
-glow login
+glow login [--token] [--client-id]
 ```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--token` | No | Pre-issued JWT to store as the access token. When set, the OAuth redirect flow is skipped and the token is persisted keyed on the instance URL. No refresh_token is recorded — the server enforces expiry via the token's own ``exp`` claim |
+| `--client-id` | No | OAuth client ID. Defaults to the value from ``--client-id`` / ``$GLOW_CLIENT_ID`` / config / "glow-cli". Ignored when ``--token`` is set |

@@ -19,6 +19,8 @@ Get tool information using the canonical shared tool operation.
 | `arg_positions` | [`app__infra__tool__types__SectionFilter`](/api-reference/tool/types#app-infra-tool-types-sectionfilter) | No | Filter options for arg positions |
 | `args_outputs` | [`app__infra__tool__types__SectionFilter`](/api-reference/tool/types#app-infra-tool-types-sectionfilter) | No | Filter options for arg outputs |
 | `permissions` | [`app__infra__tool__types__SectionFilter`](/api-reference/tool/types#app-infra-tool-types-sectionfilter) | No | Filter options for permissions |
+| `instructions` | [`app__infra__tool__types__SectionFilter`](/api-reference/tool/types#app-infra-tool-types-sectionfilter) | No | Filter options for instructions |
+| `departments` | [`app__infra__tool__types__SectionFilter`](/api-reference/tool/types#app-infra-tool-types-sectionfilter) | No | Filter options for departments |
 
 ## Response (`GetToolApiResponse`)
 
@@ -29,6 +31,7 @@ Get tool information using the canonical shared tool operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Group identifier for the tool |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `tool_id` | `string` | No | Tool identifier |
 | `show_ai_generate` | `boolean` | No | Whether AI generation is available |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
@@ -37,8 +40,10 @@ Get tool information using the canonical shared tool operation.
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`ToolNameResource`](/api-reference/tool/types#toolnameresource)[] | No | Name resources |
 | `descriptions` | [`ToolDescriptionResource`](/api-reference/tool/types#tooldescriptionresource)[] | No | Description resources |
-| `flags` | [`ToolFlagConfig`](/api-reference/tool/types#toolflagconfig)[] | No | Flag configs |
+| `flags` | [`ToolFlagResource`](/api-reference/tool/types#toolflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `args` | [`ToolArgResource`](/api-reference/tool/types#toolargresource)[] | No | Argument resources |
 | `arg_positions` | [`ToolArgPositionResource`](/api-reference/tool/types#toolargpositionresource)[] | No | Argument position resources |
 | `args_outputs` | [`ToolArgOutputResource`](/api-reference/tool/types#toolargoutputresource)[] | No | Argument output resources |
 | `permissions` | [`ToolPermissionResource`](/api-reference/tool/types#toolpermissionresource)[] | No | Permission resources |
+| `instructions` | [`ToolInstructionResource`](/api-reference/tool/types#toolinstructionresource)[] | No | Instruction resources (single-select) |
+| `departments` | [`ToolDepartmentResource`](/api-reference/tool/types#tooldepartmentresource)[] | No | Department resources |

@@ -10,7 +10,7 @@ Create a new test.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `benchmark_id` | `string` | Yes | UUID of the benchmark to test against |
+| `eval_id` | `string` | Yes | UUID of the eval to test |
 | `infinite_mode` | `boolean` | No | Whether to run in infinite mode |
 
 ## Response (`StartTestApiResponse`)
@@ -18,3 +18,5 @@ Create a new test.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `test_id` | `string` | Yes | — |
+| `invocation_id` | `string` | No | — |
+| `benchmark_id` | `string` | No | — |

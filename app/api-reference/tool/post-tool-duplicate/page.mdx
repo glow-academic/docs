@@ -20,3 +20,4 @@ Duplicate a tool — composable infra architecture.
 | `tool_id` | `string` | Yes | New duplicated tool identifier |
 | `message` | `string` | Yes | Result message |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `tools` | [`ListToolApiTool`](/api-reference/tool/types#listtoolapitool)[] | No | Hydrated row for the duplicated tool (same shape as `/tool/search` returns) |

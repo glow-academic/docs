@@ -1,4 +1,5 @@
 export default {
+  'post-persona-title': 'POST /title',
   'post-persona-get': 'POST /get',
   'post-persona-search': 'POST /search',
   'post-persona-create': 'POST /create',
@@ -15,5 +16,9 @@ export default {
   'post-persona-group': 'POST /group',
   'post-persona-problem': 'POST /problem',
   'post-persona-refresh': 'POST /refresh',
+  'get-persona-watch': 'GET /watch',
+  'post-persona-text-download': 'POST /text_download',
+  'post-persona-call-download': 'POST /call_download',
+  'post-persona-file-download': 'POST /file_download',
   'types': 'Types',
 }

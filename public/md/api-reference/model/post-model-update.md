@@ -10,13 +10,25 @@ Update models using composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `models` | [`UpdateModelItem`](/api-reference/model/types#updatemodelitem)[] | Yes | List of models to update |
+| `models` | [`UpdateModelItem`](/api-reference/model/types#updatemodelitem)[] | No | List of models to update (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, apply ``patch`` to every model matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `patch` | [`UpdateModelPatch`](/api-reference/model/types#updatemodelpatch) | No | Shared change set applied to every matched row when ``all=true`` (sparse — only set fields are updated; ``patch.id`` ignored) |
+| `search` | `string` | No | Full-text search query |
+| `filter_provider_ids` | `string`[] | No | Filter by provider UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `filter_agent_ids` | `string`[] | No | Filter by agent UUIDs |
+| `provider_search` | `string` | No | Search text for provider facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `agent_search` | `string` | No | Search text for agent facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`UpdateModelApiResponse-Output`)
+## Response (`UpdateModelApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ModelResultItem`](/api-reference/model/types#modelresultitem)[] | Yes | List of operation results |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `models` | [`ListModelApiModel`](/api-reference/model/types#listmodelapimodel)[] | No | Hydrated rows for the successfully-updated models (mirrors /model/search shape) |

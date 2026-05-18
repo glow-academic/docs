@@ -1,0 +1,19 @@
+# `POST` `/auth/text_download`
+
+# `POST` `/auth/text_download`
+
+Download Text
+
+Download a text file by text resource ID.
+
+## Request Body (`TextDownloadAuthApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `text_id` | `string` | Yes | UUID of the texts_resource to download |
+
+## Response
+
+```
+{}
+```

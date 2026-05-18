@@ -1,6 +1,6 @@
-# `POST` `/scenario/video/download`
+# `POST` `/scenario/video_download`
 
-# `POST` `/scenario/video/download`
+# `POST` `/scenario/video_download`
 
 Download Video
 

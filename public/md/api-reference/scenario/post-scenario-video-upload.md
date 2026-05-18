@@ -1,6 +1,6 @@
-# `POST` `/scenario/video/upload`
+# `POST` `/scenario/video_upload`
 
-# `POST` `/scenario/video/upload`
+# `POST` `/scenario/video_upload`
 
 Upload Video
 

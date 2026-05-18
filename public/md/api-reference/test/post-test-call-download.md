@@ -1,6 +1,6 @@
-# `POST` `/test/call/download`
+# `POST` `/test/call_download`
 
-# `POST` `/test/call/download`
+# `POST` `/test/call_download`
 
 Test Call Download
 

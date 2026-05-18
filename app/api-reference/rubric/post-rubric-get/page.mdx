@@ -29,13 +29,14 @@ Get rubric information using the canonical shared rubric operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Associated group UUID |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether any section supports AI generation |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate for the basic step |
 | `content_show_ai_generate` | `boolean` | No | Whether to show AI generate for the content step |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`RubricNameResource`](/api-reference/rubric/types#rubricnameresource)[] | No | Name resources |
 | `descriptions` | [`RubricDescriptionResource`](/api-reference/rubric/types#rubricdescriptionresource)[] | No | Description resources |
-| `flags` | [`RubricFlagConfig`](/api-reference/rubric/types#rubricflagconfig)[] | No | Flag configs |
+| `flags` | [`RubricFlagResource`](/api-reference/rubric/types#rubricflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`RubricDepartmentResource`](/api-reference/rubric/types#rubricdepartmentresource)[] | No | Department resources |
 | `points` | [`RubricPointResource`](/api-reference/rubric/types#rubricpointresource)[] | No | Point resources |
 | `standard_groups` | [`RubricStandardGroupResource`](/api-reference/rubric/types#rubricstandardgroupresource)[] | No | Standard group resources |

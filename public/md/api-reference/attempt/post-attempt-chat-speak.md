@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/speak`
+# `POST` `/attempt/chat_speak`
 
-# `POST` `/attempt/chat/speak`
+# `POST` `/attempt/chat_speak`
 
 Chat Speak
 

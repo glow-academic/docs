@@ -1,6 +1,6 @@
-# `POST` `/scenario/image/upload`
+# `POST` `/scenario/image_upload`
 
-# `POST` `/scenario/image/upload`
+# `POST` `/scenario/image_upload`
 
 Upload Image
 

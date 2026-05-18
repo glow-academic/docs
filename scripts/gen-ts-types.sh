@@ -12,15 +12,16 @@ cd "$(dirname "$0")/.."
 
 echo "Generating TypeScript types from OpenAPI specs..."
 
-for spec in specs/glow-api.json; do
+for spec in public/specs/glow-api.json; do
     name=$(basename "$spec" .json)
     output="generated/ts/${name}.ts"
 
     if [ ! -f "$spec" ]; then
-        echo "  skip: $spec (not found — run 'make sync-specs' first)"
+        echo "  skip: $spec (not found — run 'make sync-types' first)"
         continue
     fi
 
+    mkdir -p "$(dirname "$output")"
     echo "  ${spec} → ${output}"
     bun run openapi-typescript "$spec" -o "$output"
 done

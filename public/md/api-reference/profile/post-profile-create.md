@@ -14,9 +14,10 @@ Create profiles using composable infra architecture.
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`CreateProfileApiResponse-Output`)
+## Response (`CreateProfileApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ProfileResultItem`](/api-reference/profile/types#profileresultitem)[] | Yes | Per-item creation results |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `profiles` | [`ListProfilesApiProfile`](/api-reference/profile/types#listprofilesapiprofile)[] | No | Hydrated rows for the successfully-created profiles (mirrors /profile/search shape) |

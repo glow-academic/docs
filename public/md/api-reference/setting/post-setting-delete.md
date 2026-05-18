@@ -10,7 +10,20 @@ Bulk delete settings — composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `setting_ids` | `string`[] | Yes | UUIDs of settings to delete |
+| `setting_ids` | `string`[] | No | UUIDs of settings to delete (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, delete every setting matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `search` | `string` | No | Full-text search query |
+| `flag_ids` | `string`[] | No | Filter by flag UUIDs |
+| `provider_ids` | `string`[] | No | Filter by provider UUIDs |
+| `auth_ids` | `string`[] | No | Filter by auth UUIDs |
+| `system_ids` | `string`[] | No | Filter by system UUIDs |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
+| `provider_search` | `string` | No | Search text for provider facet (no-op for row filtering) |
+| `auth_search` | `string` | No | Search text for auth facet (no-op for row filtering) |
+| `system_search` | `string` | No | Search text for system facet (no-op for row filtering) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
 | `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
 

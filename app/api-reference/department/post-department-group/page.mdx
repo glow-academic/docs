@@ -9,16 +9,19 @@ Resolve or create a department group with optional naming.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `group_id` | `string` | No | Existing group UUID (omit to create or reuse via time window) |
-| `name` | `string` | No | Optional name for the group |
-| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant group |
-| `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
+| `snapshot_key` | `string` | No | Snapshot key for SETNX-race convergence on a single group across concurrent reads (e.g. parallel /context + /group + /search fan-out on page load). Echoed back in the response. |
 
 ## Response (`GroupDepartmentApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `group_id` | `string` | Yes | Resolved or newly created group UUID |
-| `group_name_id` | `string` | No | UUID of the created group_names entry (if name was provided) |
-| `name` | `string` | No | The name that was set (if provided) |
-| `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `name` | `string` | No | The group's current title (latest active group_names_entry, or 'New Chat' fallback for freshly minted groups) |
+| `snapshot_key` | `string` | No | Snapshot key echoed back — the UUID concurrent fan-out reads converged on via SETNX. Mirrors the resolved group_id. |
 | `runs` | [`GroupRun`](/api-reference/department/types#grouprun)[] | No | Conversation history — populated when resolving an existing group for fetch |
+| `group_exists` | `boolean` | No | (detail) Whether the group exists in storage — populated when ``include_resources=True`` |
+| `actor_name` | `string` | No | (detail) Display name of the current actor (caller profile) |
+| `total_message_count` | `integer` | No | (detail) Total number of messages in the group |
+| `models` | [`GroupResource`](/api-reference/department/types#groupresource)[] | No | (detail) Models used in the group |
+| `agents` | [`GroupResource`](/api-reference/department/types#groupresource)[] | No | (detail) Agents used in the group |
+| `profiles` | [`GroupResource`](/api-reference/department/types#groupresource)[] | No | (detail) Profiles that authored runs in this group |

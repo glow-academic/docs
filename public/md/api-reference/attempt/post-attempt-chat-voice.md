@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/voice`
+# `POST` `/attempt/chat_voice`
 
-# `POST` `/attempt/chat/voice`
+# `POST` `/attempt/chat_voice`
 
 Chat Voice
 

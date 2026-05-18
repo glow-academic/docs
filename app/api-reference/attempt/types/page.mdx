@@ -25,7 +25,7 @@ Analysis entry for chat-level analysis content.
 
 ---
 
-## `AnalyticsFacets-Output`
+## `AnalyticsFacets`
 
 Resolved analytics facets — embeddable in any artifact response.
 
@@ -38,7 +38,7 @@ responses so each page has its filter facets ready for SSR.
 | `fields` | [`AnalyticsFilterFields`](#analyticsfilterfields) | Yes | Filter field visibility configuration |
 | `department_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Department dropdown options |
 | `cohort_options` | [`AnalyticsFilterOption`](#analyticsfilteroption)[] | No | Cohort dropdown options |
-| `role_options` | `string`[] | No | Available role options |
+| `role_options` | [`AnalyticsRoleOption`](#analyticsroleoption)[] | No | Available role resource options |
 | `attempt_options` | `string`[] | No | Available attempt options |
 | `date_range_earliest` | `string` | No | Earliest available date for filtering |
 | `date_range_latest` | `string` | No | Latest available date for filtering |
@@ -81,6 +81,23 @@ A single filter option for dropdown selectors.
 
 ---
 
+## `AnalyticsRoleOption`
+
+Hydrated role resource option for analytics role filters.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `value` | `string` | Yes | Option value for the filter |
+| `label` | `string` | Yes | Human-readable option label |
+| `id` | `string` | Yes | Role resource UUID |
+| `name` | `string` | Yes | Role resource name |
+| `description` | `string` | No | Role description |
+| `icon_id` | `string` | No | Icon resource UUID |
+| `color_id` | `string` | No | Color resource UUID |
+| `level` | `integer` | Yes | Role privilege level |
+
+---
+
 ## `AttemptData`
 
 Attempt-level data.
@@ -102,16 +119,16 @@ is_archived is only populated when practice=True.
 
 ---
 
-## `AttemptEntries-Output`
+## `AttemptEntries`
 
 Entry payloads grouped by entry type.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `attempt` | [`GetAttemptResponse`](#getattemptresponse)[] | No | Attempt entry payloads |
-| `attempt_chat` | [`ChatData-Output`](#chatdata-output)[] | No | Chat entry payloads |
-| `attempt_message` | [`MessageData-Output`](#messagedata-output)[] | No | Message entry payloads |
-| `runs` | [`GetRunListViewResponse-Output`](#getrunlistviewresponse-output) | No | Runs list view response |
+| `attempt_chat` | [`ChatData`](#chatdata)[] | No | Chat entry payloads |
+| `attempt_message` | [`MessageData`](#messagedata)[] | No | Message entry payloads |
+| `runs` | [`GetRunListViewResponse`](#getrunlistviewresponse) | No | Runs list view response |
 
 ---
 
@@ -138,7 +155,7 @@ Inline question value with optional nested options.
 
 ---
 
-## `AttemptResources-Output`
+## `AttemptResources`
 
 Resource maps keyed by ID string.
 
@@ -159,7 +176,7 @@ Resource maps keyed by ID string.
 
 ---
 
-## `AvailableContinuationOptions-Output`
+## `AvailableContinuationOptions`
 
 Available continuation options for an attempt.
 
@@ -193,7 +210,7 @@ Evaluated permissions for the current caller on this artifact type.
 
 ---
 
-## `ChatData-Output`
+## `ChatData`
 
 Chat view data with IDs for related resources.
 
@@ -646,7 +663,7 @@ A bundle of consecutive scenarios that can be reused from previous attempts.
 
 ---
 
-## `DashboardFooterMetrics-Output`
+## `DashboardFooterMetrics`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -669,7 +686,7 @@ A bundle of consecutive scenarios that can be reused from previous attempts.
 
 ---
 
-## `DashboardHeaderMetrics-Output`
+## `DashboardHeaderMetrics`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -716,13 +733,13 @@ A bundle of consecutive scenarios that can be reused from previous attempts.
 
 ---
 
-## `DashboardPrimaryMetrics-Output`
+## `DashboardPrimaryMetrics`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `rubric_heatmap` | [`PrimaryRubricHeatmap-Output`](#primaryrubricheatmap-output) | No | Rubric correlation heatmap data |
+| `rubric_heatmap` | [`PrimaryRubricHeatmap`](#primaryrubricheatmap) | No | Rubric correlation heatmap data |
 | `rubric_trend` | [`PrimaryRubricTrend`](#primaryrubrictrend) | No | Rubric trend over time |
-| `skill_performance` | [`SecondarySkillPerformance-Output`](#secondaryskillperformance-output) | No | Skill performance radar data |
+| `skill_performance` | [`SecondarySkillPerformance`](#secondaryskillperformance) | No | Skill performance radar data |
 
 ---
 
@@ -746,11 +763,11 @@ A bundle of consecutive scenarios that can be reused from previous attempts.
 
 ---
 
-## `DashboardSecondaryMetrics-Output`
+## `DashboardSecondaryMetrics`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `persona_performance` | [`PrimaryPersonaPerformance-Output`](#primarypersonaperformance-output) | No | Persona performance data |
+| `persona_performance` | [`PrimaryPersonaPerformance`](#primarypersonaperformance) | No | Persona performance data |
 | `cohort_performance` | [`SecondaryCohortPerformance`](#secondarycohortperformance) | No | Cohort performance data |
 | `attempt_improvement` | [`SecondaryAttemptImprovement`](#secondaryattemptimprovement) | No | Attempt improvement data |
 
@@ -824,6 +841,21 @@ Dynamic rubric information for a chat.
 | `skill_scores` | [`SkillScore`](#skillscore)[] | No | Scores per skill |
 | `skill_feedbacks` | [`SkillFeedback`](#skillfeedback)[] | No | Feedback per skill |
 | `total_possible_points` | `number` | No | Maximum possible points |
+
+---
+
+## `EvalSetup`
+
+Run-level eval scaffold — first-class on the generate response.
+
+Audit's ``**output`` spread carries this onto
+``<artifact>.generate.completed``. Null when no rubric-bearing
+agent participated.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | — |
+| `invocations` | [`InvocationSlot`](#invocationslot)[] | Yes | — |
 
 ---
 
@@ -1022,6 +1054,7 @@ Single generation group in the attempt generations response.
 | `attempt_id` | `string` | Yes | — |
 | `simulation_id` | `string` | Yes | — |
 | `profile_id` | `string` | Yes | — |
+| `role_id` | `string` | No | — |
 | `user_persona_id` | `string` | Yes | — |
 | `personas_id` | `string` | Yes | — |
 | `cohort_id` | `string` | Yes | — |
@@ -1048,6 +1081,7 @@ Single generation group in the attempt generations response.
 | `mcp` | `boolean` | Yes | Whether MCP tooling was used |
 | `active` | `boolean` | Yes | Whether this draft is active |
 | `session_id` | `string` | Yes | Associated session UUID |
+| `name` | `string` | No | Immutable draft label set at create time |
 | `department_ids` | `string`[] | Yes | Associated department UUIDs |
 | `pending_department_ids` | `string`[] | No | Pending department UUIDs |
 | `description_ids` | `string`[] | Yes | Associated description UUIDs |
@@ -1084,7 +1118,7 @@ Single generation group in the attempt generations response.
 
 ---
 
-## `GetRunListViewResponse-Output`
+## `GetRunListViewResponse`
 
 Response containing run list data.
 
@@ -1134,6 +1168,11 @@ Tool call referenced by a message.
 | `id` | `string` | Yes | — |
 | `tool_name` | `string` | No | — |
 | `template_name` | `string` | No | — |
+| `tool` | `object` | No | — |
+| `ledger_status` | `string` | No | — |
+| `ledger_operation` | `string` | No | — |
+| `ledger_artifact` | `string` | No | — |
+| `ledger_artifact_id` | `string` | No | — |
 
 ---
 
@@ -1153,6 +1192,23 @@ Message within a run.
 | `file_ids` | `string`[] | No | — |
 | `call_ids` | `string`[] | No | — |
 | `calls` | [`GroupCall`](#groupcall)[] | No | — |
+| `reasoning` | `boolean` | No | True when this row is a chain-of-thought trace persisted alongside the assistant answer (rendered as a collapsed accordion). |
+| `in_context` | `boolean` | No | Whether this message is included in the LLM context for the next generation. Mirrors the dedup pass that builds chat history (see in_context_reason). |
+| `in_context_reason` | `string` | No | Why this message is in/out of LLM context. 'kept' = included; 'deduped_read' = older read-only call to a tool that has a fresher result later in the group; future values may include 'trimmed_top_n'. |
+
+---
+
+## `GroupResource`
+
+Lightweight `\{id, name\}` for cross-referencing run-level ids
+(``model_id`` / ``agent_id`` / ``profile_id``) against human-readable
+names on the analytics panel. Names come from the canonical
+``get_models`` / ``get_agents`` / ``get_profiles`` black boxes.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | Yes | — |
+| `name` | `string` | No | — |
 
 ---
 
@@ -1160,10 +1216,25 @@ Message within a run.
 
 Run within a group, with its messages.
 
+Carries token / cost / model / agent / profile attribution so the
+analytics view can render per-run cost + actor info without a
+parallel detail shape. ``profile_id`` is the authoring profile
+(human user), ``agent_id`` is the LLM-side actor, ``model_id`` is
+the model used by that agent. All optional — runs predating these
+columns or with unresolved attributions surface ``None``.
+
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `id` | `string` | Yes | — |
 | `created_at` | `string` | No | — |
+| `input_tokens` | `integer` | No | — |
+| `output_tokens` | `integer` | No | — |
+| `cached_input_tokens` | `integer` | No | — |
+| `cost` | `number` | No | — |
+| `model_id` | `string` | No | — |
+| `agent_id` | `string` | No | — |
+| `profile_id` | `string` | No | — |
+| `previous_context_start_index` | `integer` | No | Index in ``messages`` where the current run's own messages begin; earlier rows are previous-context replay. ``None`` when the run has no previous context attached. |
 | `messages` | [`GroupMessage`](#groupmessage)[] | No | — |
 
 ---
@@ -1236,6 +1307,24 @@ Paginated attempt history list.
 | `simulation_options` | [`FilterOption`](#filteroption)[] | No | Filter options for simulations |
 | `scenario_options` | [`FilterOption`](#filteroption)[] | No | Filter options for scenarios |
 | `profile_options` | [`FilterOption`](#filteroption)[] | No | Filter options for profiles |
+
+---
+
+## `InvocationSlot`
+
+One agent's slot in a multi-agent generation pool.
+
+Populated by ``setup_generation_test`` when an agent carries a
+rubric. The client uses these IDs to drive the eval workflow:
+review the candidate's output, optionally fire a grader against
+its ``invocation_id``, and promote/reject by call_id via the
+existing ``idempotency_key + accept`` pattern.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `invocation_id` | `string` | Yes | — |
+| `agent_id` | `string` | Yes | — |
+| `rubric_id` | `string` | No | — |
 
 ---
 
@@ -1354,7 +1443,7 @@ Section-level status metadata.
 
 ---
 
-## `LeaderboardSections-Output`
+## `LeaderboardSections`
 
 Business-computed section skeletons (built in permissions.py).
 
@@ -1369,34 +1458,7 @@ Business-computed section skeletons (built in permissions.py).
 
 ---
 
-## `ListFilterOption`
-
-Standardized option for list endpoint filter sections.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | `string` | No | Unique identifier for this filter option |
-| `name` | `string` | No | Display name |
-| `count` | `integer` | No | Number of matching records |
-| `hex_code` | `string` | No | Hex color code for display |
-| `value` | `string` | No | Internal value |
-| `type` | `string` | No | Option type discriminator |
-
----
-
-## `ListFilterSection`
-
-Filter section with options and echoed request state.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `options` | [`ListFilterOption`](#listfilteroption)[] | No | Available filter options |
-| `selected_ids` | `string`[] | No | Currently selected filter option IDs |
-| `search` | `string` | No | Active search text for filtering |
-
----
-
-## `MessageData-Output`
+## `MessageData`
 
 Message with contents, feedbacks, and hints.
 
@@ -1417,6 +1479,7 @@ Message with contents, feedbacks, and hints.
 | `parent_message_id` | `string` | No | UUID of the parent message in tree |
 | `sibling_index` | `integer` | No | Index among sibling messages |
 | `sibling_count` | `integer` | No | Total number of sibling messages |
+| `audios_id` | `string` | No | UUID of the attached audios_resource, if any |
 
 ---
 
@@ -1545,7 +1608,7 @@ A single chat_entry's best previous graded attempt_chat.
 
 ---
 
-## `PrimaryPersonaPerformance-Output`
+## `PrimaryPersonaPerformance`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -1556,11 +1619,11 @@ A single chat_entry's best previous graded attempt_chat.
 
 ---
 
-## `PrimaryRubricHeatmap-Output`
+## `PrimaryRubricHeatmap`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `matrices` | [`RubricHeatmapMatrix-Output`](#rubricheatmapmatrix-output)[] | No | Heatmap matrices per rubric |
+| `matrices` | [`RubricHeatmapMatrix`](#rubricheatmapmatrix)[] | No | Heatmap matrices per rubric |
 | `valid_rubric_ids` | `string`[] | No | Valid rubric IDs in scope |
 | `status` | `string` | No | Section status indicator |
 
@@ -1587,6 +1650,26 @@ A single chat_entry's best previous graded attempt_chat.
 
 ---
 
+## `ProducedMedia`
+
+One asset produced by a generation run.
+
+``resource_id`` is the canonical id the per-artifact download tools
+accept (e.g. ``Scenario_Image_Download(image_id=resource_id)`` for
+``modality="image"``). It maps to ``images_resource.id`` /
+``videos_resource.id`` / ``audios_resource.id`` depending on the
+modality.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `modality` | `"image"` \| `"video"` \| `"audio"` | Yes | — |
+| `resource_id` | `string` | Yes | — |
+| `upload_id` | `string` | Yes | — |
+| `mime_type` | `string` | No | — |
+| `file_size` | `integer` | No | — |
+
+---
+
 ## `ProfileSummary`
 
 Caller identity derived from JWT — who you are on this page.
@@ -1605,7 +1688,7 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 | `role_permissions` | `any`[][] | Yes | Full (artifact, operation) permission tuples for granular page gating |
 | `is_active` | `boolean` | Yes | Whether the user's profile is active |
 | `id` | `string` | Yes | Profile UUID (SocketProvider, ProfileProvider) |
-| `theme` | [`ThemePrimitives`](#themeprimitives) | No | Theme primitives (ThemeHydrator) |
+| `theme` | [`ThemeBundle`](#themebundle) | No | Resolved theme: hex primitives + derived oklch tokens + score thresholds |
 | `session_id` | `string` | No | Current session UUID |
 | `is_emulation` | `boolean` | No | Whether user is in emulation mode (ProfileProvider) |
 | `role_resources` | [`QGetProfileContextV4RoleResource`](#qgetprofilecontextv4roleresource)[] | No | All role resources for emulation display (ProfileProvider) |
@@ -1843,6 +1926,7 @@ Resource metadata keyed by ID for normalized hydration.
 |---|---|---|---|
 | `simulations` | `object` | No | Simulation resources keyed by ID |
 | `profiles` | `object` | No | Profile resources keyed by ID |
+| `roles` | `object` | No | Role resources keyed by ID |
 | `scenarios` | `object` | No | Scenario resources keyed by ID |
 | `cohorts` | `object` | No | Cohort resources keyed by ID |
 | `personas` | `object` | No | Persona resources keyed by ID |
@@ -1929,7 +2013,7 @@ Raw MV slices used to compute section outputs (deprecated — always empty).
 
 ---
 
-## `RubricHeatmapMatrix-Output`
+## `RubricHeatmapMatrix`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -2016,28 +2100,6 @@ Single run from the run list.
 | `model_ids` | `string`[] | No | Model UUIDs used in the run |
 | `provider_ids` | `string`[] | No | Provider UUIDs used in the run |
 | `pricing` | [`RunPricingItem`](#runpricingitem)[] | No | Pricing breakdown entries |
-
----
-
-## `SearchAttemptItem`
-
-Single attempt row in search results.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `attempt_id` | `string` | Yes | UUID of the attempt |
-| `date` | `string` | No | ISO timestamp of the attempt |
-| `profile_id` | `string` | No | UUID of the user profile |
-| `profile_name` | `string` | No | Display name of the user profile |
-| `simulation_id` | `string` | No | UUID of the simulation |
-| `simulation_name` | `string` | No | Name of the simulation |
-| `department_id` | `string` | No | UUID of the department |
-| `cohort_id` | `string` | No | UUID of the cohort |
-| `practice` | `boolean` | No | Whether this is a practice attempt |
-| `infinite_mode` | `boolean` | No | Whether infinite mode is enabled |
-| `num_chats` | `integer` | No | Number of chats in the attempt |
-| `is_archived` | `boolean` | No | Whether the attempt is archived |
-| `scenario_ids` | `string`[] | No | UUIDs of associated scenarios |
 
 ---
 
@@ -2173,7 +2235,7 @@ Single attempt row in search results.
 
 ---
 
-## `SecondarySkillPerformance-Output`
+## `SecondarySkillPerformance`
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -2261,27 +2323,145 @@ Standard metadata for sidebar/legend.
 
 ---
 
-## `ThemePrimitives`
+## `ThemeBundle`
 
-Raw theme color primitives (hex values) from settings.
+Full theme payload for a page bootstrap.
 
-General-purpose — not CSS-specific. Clients derive their own
-presentation tokens (oklch, CSS variables, etc.) from these.
+Riding along on every ``/\{artifact\}/context`` response via
+``ProfileSummary.theme``. Layers:
+  - ``primitives`` / ``dark_primitives`` — hex inputs the settings
+    editor reads/writes (light + dark palettes).
+  - ``tokens`` / ``dark_tokens`` — oklch tokens the client paints with.
+    ``ThemeStyle`` emits two ``<style>`` blocks: one scoped to
+    ``:root:not(.dark)`` (light) and one to ``:root.dark`` (dark).
+  - ``thresholds`` — numeric score thresholds for analytics components.
+Empty-in → empty-out per token: missing values fall through to the
+matching ``globals.css`` default.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `primary` | `string` | No | Primary color hex value |
-| `accent` | `string` | No | Accent color hex value |
-| `background` | `string` | No | Background color hex value |
-| `surface` | `string` | No | Surface color hex value |
-| `success` | `string` | No | Success state color hex value |
-| `warning` | `string` | No | Warning state color hex value |
-| `error` | `string` | No | Error state color hex value |
-| `chart1` | `string` | No | Chart color 1 hex value |
-| `chart2` | `string` | No | Chart color 2 hex value |
-| `chart3` | `string` | No | Chart color 3 hex value |
-| `chart4` | `string` | No | Chart color 4 hex value |
-| `chart5` | `string` | No | Chart color 5 hex value |
+| `primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (light palette, for the theme editor) |
+| `tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for light mode (SSR CSS-var injection) |
+| `dark_primitives` | [`ThemePrimitives`](#themeprimitives) | No | Hex inputs from the setting (dark palette, for the theme editor) |
+| `dark_tokens` | [`ThemeTokens`](#themetokens) | No | Derived oklch tokens for dark mode (SSR CSS-var injection) |
+| `thresholds` | [`Thresholds`](#thresholds) | No | Score thresholds resolved from the setting |
+
+---
+
+## `ThemePrimitives`
+
+40 optional fields. The 17 essentials drive the rest; the other 23
+are overrides for fine-tuning when derivation isn't what you want.
+
+Empty primitive → empty token → client falls back to globals.css.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `card` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `border` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `success` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `info` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `input` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `ThemeTokens`
+
+40 fully-resolved CSS variable values (snake_case 1:1 with vars).
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `background` | `string` | No | — |
+| `foreground` | `string` | No | — |
+| `card` | `string` | No | — |
+| `card_foreground` | `string` | No | — |
+| `popover` | `string` | No | — |
+| `popover_foreground` | `string` | No | — |
+| `primary` | `string` | No | — |
+| `primary_foreground` | `string` | No | — |
+| `secondary` | `string` | No | — |
+| `secondary_foreground` | `string` | No | — |
+| `muted` | `string` | No | — |
+| `muted_foreground` | `string` | No | — |
+| `accent` | `string` | No | — |
+| `accent_foreground` | `string` | No | — |
+| `destructive` | `string` | No | — |
+| `destructive_foreground` | `string` | No | — |
+| `danger` | `string` | No | — |
+| `danger_foreground` | `string` | No | — |
+| `border` | `string` | No | — |
+| `input` | `string` | No | — |
+| `ring` | `string` | No | — |
+| `success` | `string` | No | — |
+| `success_foreground` | `string` | No | — |
+| `warning` | `string` | No | — |
+| `warning_foreground` | `string` | No | — |
+| `info` | `string` | No | — |
+| `info_foreground` | `string` | No | — |
+| `chart1` | `string` | No | — |
+| `chart2` | `string` | No | — |
+| `chart3` | `string` | No | — |
+| `chart4` | `string` | No | — |
+| `chart5` | `string` | No | — |
+| `sidebar` | `string` | No | — |
+| `sidebar_foreground` | `string` | No | — |
+| `sidebar_primary` | `string` | No | — |
+| `sidebar_primary_foreground` | `string` | No | — |
+| `sidebar_accent` | `string` | No | — |
+| `sidebar_accent_foreground` | `string` | No | — |
+| `sidebar_border` | `string` | No | — |
+| `sidebar_ring` | `string` | No | — |
+
+---
+
+## `Thresholds`
+
+Numeric score thresholds resolved from the active setting.
+
+Server pre-buckets dashboard metrics into ``success | warning | danger |
+neutral`` already, so most components don't need these values. Surface
+them for chart reference lines, tooltips, and any client-side bucketing.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `success` | `integer` | Yes | Score >= this counts as success |
+| `warning` | `integer` | Yes | Score >= this counts as warning |
+| `danger` | `integer` | Yes | Score < success threshold but >= this counts as danger; below is neutral/no-data |
 
 ---
 
@@ -2299,7 +2479,7 @@ Timer information.
 
 ---
 
-## `app__infra__chat__types__DraftImageValue`
+## `app__infra__attempt__chat__types__DraftImageValue`
 
 Value for creating an image via the draft endpoint.
 
@@ -2311,7 +2491,7 @@ Value for creating an image via the draft endpoint.
 
 ---
 
-## `app__infra__chat__types__DraftOptionValue`
+## `app__infra__attempt__chat__types__DraftOptionValue`
 
 Value for creating an option via the draft endpoint.
 
@@ -2322,7 +2502,7 @@ Value for creating an option via the draft endpoint.
 
 ---
 
-## `app__infra__chat__types__DraftQuestionValue`
+## `app__infra__attempt__chat__types__DraftQuestionValue`
 
 Value for creating a question via the draft endpoint.
 
@@ -2334,7 +2514,7 @@ Value for creating a question via the draft endpoint.
 
 ---
 
-## `app__infra__chat__types__DraftVideoValue`
+## `app__infra__attempt__chat__types__DraftVideoValue`
 
 Value for creating a video via the draft endpoint.
 
@@ -2346,7 +2526,7 @@ Value for creating a video via the draft endpoint.
 
 ---
 
-## `app__infra__chat__types__SectionFilter`
+## `app__infra__attempt__chat__types__SectionFilter`
 
 Per-section filter options for chat GET requests.
 

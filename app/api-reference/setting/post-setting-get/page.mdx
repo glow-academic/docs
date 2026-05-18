@@ -35,13 +35,14 @@ Get setting information using the canonical shared setting operation.
 | `can_edit` | `boolean` | No | Whether the actor can edit this setting |
 | `disabled_reason` | `string` | No | Reason editing is disabled, if any |
 | `group_id` | `string` | No | Group UUID for draft collaboration |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether any section should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Whether the basic section should show AI generate |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`SettingNameResource`](/api-reference/setting/types#settingnameresource)[] | No | Name resources |
 | `descriptions` | [`SettingDescriptionResource`](/api-reference/setting/types#settingdescriptionresource)[] | No | Description resources |
 | `colors` | [`SettingColorResource`](/api-reference/setting/types#settingcolorresource)[] | No | Color resources |
-| `flags` | [`SettingFlagConfig`](/api-reference/setting/types#settingflagconfig)[] | No | Flag configs |
+| `flags` | [`SettingFlagResource`](/api-reference/setting/types#settingflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`SettingDepartmentResource`](/api-reference/setting/types#settingdepartmentresource)[] | No | Department resources |
 | `logins` | [`SettingLoginsResource`](/api-reference/setting/types#settingloginsresource)[] | No | Logins resources |
 | `systems` | [`SettingSystemResource`](/api-reference/setting/types#settingsystemresource)[] | No | System resources |
@@ -57,3 +58,8 @@ Get setting information using the canonical shared setting operation.
 | `auths` | [`SettingAuthCatalogResource`](/api-reference/setting/types#settingauthcatalogresource)[] | No | Auth catalog used by logins and auth item editing |
 | `icons` | [`SettingIconCatalogResource`](/api-reference/setting/types#settingiconcatalogresource)[] | No | Icon catalog used by logins editing |
 | `agents` | [`SettingAgentCatalogResource`](/api-reference/setting/types#settingagentcatalogresource)[] | No | Agent catalog used by mcp and systems editing |
+| `provider_key_options` | [`SettingProviderKeyOption`](/api-reference/setting/types#settingproviderkeyoption)[] | No | Curated (provider × key) options for the ProviderKeys picker |
+| `auth_item_key_options` | [`SettingAuthItemKeyOption`](/api-reference/setting/types#settingauthitemkeyoption)[] | No | Curated (auth × key) options for the AuthItemKeys picker |
+| `auth_item_value_options` | [`SettingAuthItemValueOption`](/api-reference/setting/types#settingauthitemvalueoption)[] | No | Curated (auth × item) options for the AuthItemValues picker |
+| `mcp_options` | [`SettingMcpOption`](/api-reference/setting/types#settingmcpoption)[] | No | Curated per-agent options for the MCP picker |
+| `login_options` | [`SettingLoginOption`](/api-reference/setting/types#settingloginoption)[] | No | Curated (auth × profile) options for the Logins picker |

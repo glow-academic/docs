@@ -9,13 +9,23 @@ export default {
   settings: 'Settings',
 
   '---attempt': { type: 'separator', title: 'Attempt' },
-  attempt: 'Attempt',
+  chat: 'Chat',
+  home: 'Home',
+  practice: 'Practice',
+  dashboard: 'Dashboard',
+  reports: 'Reports',
+  leaderboard: 'Leaderboard',
 
   '---test': { type: 'separator', title: 'Test' },
-  test: 'Test',
+  benchmark: 'Benchmark',
+  invocation: 'Invocation',
 
   '---system': { type: 'separator', title: 'System' },
-  system: 'System',
+  activity: 'Activity',
+  health: 'Health',
+  pricing: 'Pricing',
+  session: 'Session',
+  group: 'Group',
 
   '---training': { type: 'separator', title: 'Training' },
   cohorts: 'Cohorts',

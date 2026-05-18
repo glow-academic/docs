@@ -10,7 +10,8 @@ Create a test grade.
 |---|---|---|---|
 | `invocation_id` | `string` | Yes | Test invocation to grade |
 | `run_id` | `string` | No | Run ID for audit linkage |
-| `score` | `integer` | No | Overall score |
+| `score` | `integer` | No | Overall score (ignored when full=True) |
+| `full` | `boolean` | No | When true, server resolves the rubric and assigns score=total_points (max marks). Callers don't need to know the rubric ceiling ahead of time. Overrides any caller-supplied score. |
 
 ## Response
 

@@ -1,0 +1,29 @@
+# `POST` `/system/activity`
+
+Get Activity
+
+## Request Body (`ActivityRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `date_from` | `string` | No | Filter start date |
+| `date_to` | `string` | No | Filter end date |
+| `department_ids` | `string`[] | No | Department IDs to filter by |
+| `role_ids` | `string`[] | No | Role resource IDs to filter profiles by |
+| `page_limit` | `integer` | No | Max summary items per page |
+| `page_offset` | `integer` | No | Summary pagination offset |
+| `summary_profile_id` | `string` | No | Profile ID to focus the summary card |
+
+## Response (`ActivityResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `sessions_count` | `integer` | No | Total number of sessions |
+| `active_profiles_count` | `integer` | No | Number of active profiles |
+| `logins_count` | `integer` | No | Total number of logins |
+| `emulations_count` | `integer` | No | Total number of emulations |
+| `profile_summary` | [`ProfileSummaryItem`](/api-reference/system/types#profilesummaryitem)[] | No | Per-profile activity summaries |
+| `problems` | [`ActivityProblemItem`](/api-reference/system/types#activityproblemitem)[] | No | Recent problems for the activity panel |
+| `resources` | [`ActivityResources`](/api-reference/system/types#activityresources) | No | Activity resource metadata |
+| `analytics` | [`AnalyticsFacets`](/api-reference/system/types#analyticsfacets) | No | Inline analytics facets for SSR |
+| `history` | [`ActivityHistoryResponse`](/api-reference/system/types#activityhistoryresponse) | No | Always null on /activity/get — use /system/sessions instead |

@@ -1,11 +1,12 @@
 export default {
+  'post-setting-title': 'POST /title',
   'post-setting-search': 'POST /search',
   'post-setting-get': 'POST /get',
   'post-setting-create': 'POST /create',
   'post-setting-update': 'POST /update',
   'post-setting-duplicate': 'POST /duplicate',
   'post-setting-delete': 'POST /delete',
-  'patch-setting-draft': 'PATCH /draft',
+  'post-setting-draft': 'POST /draft',
   'post-setting-drafts': 'POST /drafts',
   'post-setting-export': 'POST /export',
   'post-setting-context': 'POST /context',
@@ -16,5 +17,9 @@ export default {
   'post-setting-problem': 'POST /problem',
   'post-setting-refresh': 'POST /refresh',
   'post-setting-decrypt': 'POST /decrypt',
+  'get-setting-watch': 'GET /watch',
+  'post-setting-text-download': 'POST /text_download',
+  'post-setting-file-download': 'POST /file_download',
+  'post-setting-call-download': 'POST /call_download',
   'types': 'Types',
 }

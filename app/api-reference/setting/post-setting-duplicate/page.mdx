@@ -19,4 +19,5 @@ Duplicate a setting — composable infra architecture.
 | `success` | `boolean` | Yes | Whether the duplication succeeded |
 | `setting_id` | `string` | Yes | UUID of the newly created setting |
 | `message` | `string` | Yes | Result message |
+| `settings` | [`ListSettingApiSetting`](/api-reference/setting/types#listsettingapisetting)[] | No | Hydrated list row(s) for the duplicated setting. Single-element list (kept as a list for shape consistency with create/update) so the client's ghost rail can materialize the new card directly. |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |

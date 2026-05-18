@@ -22,3 +22,4 @@ Duplicate a model — composable infra architecture.
 | `model_id` | `string` | Yes | New duplicated model identifier |
 | `message` | `string` | Yes | Result message |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `models` | [`ListModelApiModel`](/api-reference/model/types#listmodelapimodel)[] | No | Hydrated row for the newly-created duplicate model (mirrors /model/search shape) |

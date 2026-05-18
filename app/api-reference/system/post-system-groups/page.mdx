@@ -1,0 +1,34 @@
+# `POST` `/system/groups`
+
+Search Groups
+
+Get paginated groups list with cost data (canonical groups list).
+
+## Request Body (`ListPricingRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `start_date` | `string` | No | Filter start date |
+| `end_date` | `string` | No | Filter end date |
+| `date_from` | `string` | No | Alias for start date |
+| `date_to` | `string` | No | Alias for end date |
+| `department_ids` | `string`[] | No | Department IDs to filter by |
+| `model_id` | `string` | No | Model UUID to filter by (legacy singular) |
+| `model_ids` | `string`[] | No | Model UUIDs to filter by (multi, preferred) |
+| `profile_ids` | `string`[] | No | Profile UUIDs (human users) to filter by |
+| `agent_ids` | `string`[] | No | Agent UUIDs (LLM agents) to filter by |
+| `search` | `string` | No | Group name search (ILIKE) |
+| `page` | `integer` | No | Pagination page number |
+| `page_size` | `integer` | No | Items per page |
+| `sort_by` | `string` | No | Sort field (date | total_cost | total_tokens | run_count) |
+| `sort_order` | `string` | No | Sort direction (asc or desc) |
+
+## Response (`ListPricingResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `data` | [`PricingGroupItem`](/api-reference/system/types#pricinggroupitem)[] | No | Pricing group rows |
+| `total_count` | `integer` | No | Total number of matching records |
+| `page` | `integer` | No | Current page number |
+| `page_size` | `integer` | No | Items per page |
+| `total_pages` | `integer` | No | Total number of pages |

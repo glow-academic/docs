@@ -1,0 +1,17 @@
+# `glow stop`
+
+# `glow stop`
+
+Stop containers; volumes + network intact. `glow start` resumes
+
+## Usage
+
+```bash
+glow stop [--name]
+```
+
+## Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--name` | No | — |

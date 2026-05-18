@@ -28,4 +28,7 @@ Search rubrics — composable infra architecture.
 | `standards` | [`ListRubricApiStandard`](/api-reference/rubric/types#listrubricapistandard)[] | No | List of standards |
 | `department_filter` | [`ListFilterSection`](/api-reference/rubric/types#listfiltersection) | No | Filter options for departments in list UI |
 | `simulation_filter` | [`ListFilterSection`](/api-reference/rubric/types#listfiltersection) | No | Filter options for simulations in list UI |
+| `flag_filter` | [`ListFilterSection`](/api-reference/rubric/types#listfiltersection) | No | Filter options for flags in list UI |
+| `eval_filter` | [`ListFilterSection`](/api-reference/rubric/types#listfiltersection) | No | Filter options for evals in list UI |
 | `total_count` | `integer` | No | Total number of matching records |
+| `import_fields` | [`ImportField`](/api-reference/rubric/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

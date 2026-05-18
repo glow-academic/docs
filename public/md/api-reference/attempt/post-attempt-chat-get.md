@@ -1,6 +1,6 @@
-# `POST` `/attempt/chat/get`
+# `POST` `/attempt/chat_get`
 
-# `POST` `/attempt/chat/get`
+# `POST` `/attempt/chat_get`
 
 Chat Get
 
@@ -15,21 +15,21 @@ Get hydrated resources for chat bundle customization.
 | `attempt_id` | `string` | No | Attempt ID |
 | `draft_id` | `string` | No | Draft ID |
 | `snapshot_key` | `string` | No | Cache snapshot key for consistent reads |
-| `names` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `descriptions` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `flags` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `departments` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `personas` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `documents` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `parameter_fields` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `scenarios` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `fields` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `questions` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `options` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `videos` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `images` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `problem_statements` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
-| `objectives` | [`app__infra__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-chat-types-sectionfilter) | No | — |
+| `names` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `descriptions` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `flags` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `departments` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `personas` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `documents` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `parameter_fields` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `scenarios` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `fields` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `questions` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `options` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `videos` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `images` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `problem_statements` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
+| `objectives` | [`app__infra__attempt__chat__types__SectionFilter`](/api-reference/attempt/types#app-infra-attempt-chat-types-sectionfilter) | No | — |
 
 ## Response (`GetChatResponse`)
 

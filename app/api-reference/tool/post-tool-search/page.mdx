@@ -23,4 +23,8 @@ Search tools — composable infra architecture.
 | `tools` | [`ListToolApiTool`](/api-reference/tool/types#listtoolapitool)[] | No | List of tool entries |
 | `department_filter` | [`ListFilterSection`](/api-reference/tool/types#listfiltersection) | No | Department filter options |
 | `creatable_filter` | [`ListFilterSection`](/api-reference/tool/types#listfiltersection) | No | Creatable filter options |
+| `agent_filter` | [`ListFilterSection`](/api-reference/tool/types#listfiltersection) | No | Filter options for agents that reference these tools |
+| `flag_filter` | [`ListFilterSection`](/api-reference/tool/types#listfiltersection) | No | Filter options for flags in list UI |
+| `permissions_filter` | [`ListFilterSection`](/api-reference/tool/types#listfiltersection) | No | Filter options for permissions in list UI |
 | `total_count` | `integer` | No | Total number of tools |
+| `import_fields` | [`ImportField`](/api-reference/tool/types#importfield)[] | No | CSV import column schema for the bulk-import dialog |

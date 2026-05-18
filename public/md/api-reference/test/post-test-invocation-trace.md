@@ -1,0 +1,30 @@
+# `POST` `/test/invocation_trace`
+
+# `POST` `/test/invocation_trace`
+
+Test Trace
+
+## Request Body (`TestTracePayload`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_id` | `string` | Yes | UUID of the test |
+| `test_invocation_id` | `string` | Yes | UUID of the test invocation |
+| `run_id` | `string` | No | Historical run_id we're replaying against (optional) |
+| `tool_ids` | `string`[] | No | — |
+| `modality_ids` | `string`[] | No | — |
+| `voice_ids` | `string`[] | No | — |
+| `temperature_level_ids` | `string`[] | No | — |
+| `reasoning_level_ids` | `string`[] | No | — |
+| `quality_ids` | `string`[] | No | — |
+| `prompt_ids` | `string`[] | No | — |
+| `instruction_ids` | `string`[] | No | — |
+| `prompt_text` | `string` | No | User-typed system prompt; minted as a prompts_resource |
+| `instructions` | `string`[] | No | User-typed instruction templates; each minted separately |
+
+## Response (`TestTraceInternalResult`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `test_invocation_trace_id` | `string` | Yes | — |
+| `success` | `boolean` | No | — |

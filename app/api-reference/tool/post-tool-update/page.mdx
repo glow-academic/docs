@@ -8,13 +8,24 @@ Update tools using composable infra architecture.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `tools` | [`UpdateToolItem`](/api-reference/tool/types#updatetoolitem)[] | Yes | List of tools to update |
+| `tools` | [`UpdateToolItem`](/api-reference/tool/types#updatetoolitem)[] | No | List of tools to update (required on first call when ``all`` is false) |
+| `all` | `boolean` | No | When true, apply ``patch`` to every tool matching the filter fields below (minus ``excluded_ids``) |
+| `excluded_ids` | `string`[] | No | UUIDs to skip even when matched by ``all``-mode filters |
+| `patch` | [`UpdateToolPatch`](/api-reference/tool/types#updatetoolpatch) | No | Shared change set applied to every matched row when ``all=true`` (sparse — only set fields are updated; ``patch.id`` ignored) |
+| `search` | `string` | No | Full-text search query |
+| `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `filter_creatable` | `string`[] | No | Filter by creatable flag (no-op for row filtering today; accepted for forward compatibility) |
+| `filter_agent_ids` | `string`[] | No | Filter by agent UUIDs that reference these tools (no-op for row filtering today; accepted for forward compatibility) |
+| `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
+| `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
+| `agent_search` | `string` | No | Search text for agent facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`UpdateToolApiResponse-Output`)
+## Response (`UpdateToolApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `results` | [`ToolResultItem`](/api-reference/tool/types#toolresultitem)[] | Yes | List of operation results |
 | `idempotency_key` | `string` | No | Idempotency key echoed back for client correlation |
+| `tools` | [`ListToolApiTool`](/api-reference/tool/types#listtoolapitool)[] | No | Hydrated rows for the updated tools (same shape as `/tool/search` returns) |

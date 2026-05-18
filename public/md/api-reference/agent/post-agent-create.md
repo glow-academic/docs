@@ -14,7 +14,7 @@ Create agents using composable infra architecture.
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
-## Response (`CreateAgentApiResponse-Output`)
+## Response (`CreateAgentApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|

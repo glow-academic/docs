@@ -1,5 +1,7 @@
 # Auth
 
+# Auth
+
 > This guide is a work in progress.
 
 ## Overview

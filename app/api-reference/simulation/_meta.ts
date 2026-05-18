@@ -1,4 +1,5 @@
 export default {
+  'post-simulation-title': 'POST /title',
   'post-simulation-get': 'POST /get',
   'post-simulation-search': 'POST /search',
   'post-simulation-create': 'POST /create',
@@ -7,7 +8,7 @@ export default {
   'post-simulation-update': 'POST /update',
   'post-simulation-duplicate': 'POST /duplicate',
   'post-simulation-delete': 'POST /delete',
-  'patch-simulation-draft': 'PATCH /draft',
+  'post-simulation-draft': 'POST /draft',
   'post-simulation-drafts': 'POST /drafts',
   'post-simulation-export': 'POST /export',
   'post-simulation-generate': 'POST /generate',
@@ -15,5 +16,9 @@ export default {
   'post-simulation-problem': 'POST /problem',
   'post-simulation-refresh': 'POST /refresh',
   'post-simulation-group': 'POST /group',
+  'get-simulation-watch': 'GET /watch',
+  'post-simulation-text-download': 'POST /text_download',
+  'post-simulation-file-download': 'POST /file_download',
+  'post-simulation-call-download': 'POST /call_download',
   'types': 'Types',
 }

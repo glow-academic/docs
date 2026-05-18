@@ -1,6 +1,6 @@
-# `POST` `/document/file/upload`
+# `POST` `/document/file_upload`
 
-# `POST` `/document/file/upload`
+# `POST` `/document/file_upload`
 
 Upload File
 

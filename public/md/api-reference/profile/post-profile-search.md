@@ -28,4 +28,6 @@ Search profiles — composable infra architecture.
 | `profiles` | [`ListProfilesApiProfile`](/api-reference/profile/types#listprofilesapiprofile)[] | No | List of profile items |
 | `department_filter` | [`ListFilterSection`](/api-reference/profile/types#listfiltersection) | No | Filter options for departments |
 | `role_filter` | [`ListFilterSection`](/api-reference/profile/types#listfiltersection) | No | Filter options for roles |
+| `flag_filter` | [`ListFilterSection`](/api-reference/profile/types#listfiltersection) | No | Filter options for flags in list UI |
+| `permissions_filter` | [`ListFilterSection`](/api-reference/profile/types#listfiltersection) | No | Filter options for permissions in list UI |
 | `total_count` | `integer` | No | Total number of profiles |

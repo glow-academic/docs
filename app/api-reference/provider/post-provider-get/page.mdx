@@ -29,6 +29,7 @@ Get provider information using the canonical shared provider operation.
 | `can_edit` | `boolean` | No | Whether the current user can edit |
 | `disabled_reason` | `string` | No | Reason editing is disabled |
 | `group_id` | `string` | No | Group identifier for the provider |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `provider_id` | `string` | No | Provider identifier |
 | `show_ai_generate` | `boolean` | No | Whether any step should show AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Show AI generate for basic step |
@@ -36,7 +37,7 @@ Get provider information using the canonical shared provider operation.
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`ProviderNameResource`](/api-reference/provider/types#providernameresource)[] | No | Name resources |
 | `descriptions` | [`ProviderDescriptionResource`](/api-reference/provider/types#providerdescriptionresource)[] | No | Description resources |
-| `flags` | [`ProviderFlagConfig`](/api-reference/provider/types#providerflagconfig)[] | No | Flag configs |
+| `flags` | [`ProviderFlagResource`](/api-reference/provider/types#providerflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`ProviderDepartmentResource`](/api-reference/provider/types#providerdepartmentresource)[] | No | Department resources |
 | `values` | [`ProviderValueResource`](/api-reference/provider/types#providervalueresource)[] | No | Value resources |
 | `endpoints` | [`ProviderEndpointResource`](/api-reference/provider/types#providerendpointresource)[] | No | Endpoint resources |

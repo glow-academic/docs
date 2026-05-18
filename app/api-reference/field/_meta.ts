@@ -1,11 +1,12 @@
 export default {
+  'post-field-title': 'POST /title',
   'post-field-get': 'POST /get',
   'post-field-search': 'POST /search',
   'post-field-create': 'POST /create',
   'post-field-update': 'POST /update',
   'post-field-duplicate': 'POST /duplicate',
   'post-field-delete': 'POST /delete',
-  'patch-field-draft': 'PATCH /draft',
+  'post-field-draft': 'POST /draft',
   'post-field-drafts': 'POST /drafts',
   'post-field-context': 'POST /context',
   'post-field-export': 'POST /export',
@@ -15,5 +16,9 @@ export default {
   'post-field-group': 'POST /group',
   'post-field-problem': 'POST /problem',
   'post-field-refresh': 'POST /refresh',
+  'get-field-watch': 'GET /watch',
+  'post-field-text-download': 'POST /text_download',
+  'post-field-file-download': 'POST /file_download',
+  'post-field-call-download': 'POST /call_download',
   'types': 'Types',
 }

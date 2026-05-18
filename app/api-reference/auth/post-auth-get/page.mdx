@@ -29,12 +29,13 @@ Get auth information using the canonical shared auth operation.
 | `can_edit` | `boolean` | No | Whether the actor can edit this auth |
 | `disabled_reason` | `string` | No | Reason editing is disabled, if any |
 | `group_id` | `string` | No | Group UUID for draft collaboration |
+| `draft_name` | `string` | No | Immutable draft label from the active draft entry, when a ``draft_id`` was supplied. ``None`` for non-draft fetches. |
 | `show_ai_generate` | `boolean` | No | Whether any auth resource supports AI generate |
 | `basic_show_ai_generate` | `boolean` | No | Whether to show AI generate button |
 | `pending_ids` | `string`[] | No | Pending resource identifiers when available |
 | `names` | [`AuthNameResource`](/api-reference/auth/types#authnameresource)[] | No | Name resources |
 | `descriptions` | [`AuthDescriptionResource`](/api-reference/auth/types#authdescriptionresource)[] | No | Description resources |
-| `flags` | [`AuthFlagConfig`](/api-reference/auth/types#authflagconfig)[] | No | Flag configs |
+| `flags` | [`AuthFlagResource`](/api-reference/auth/types#authflagresource)[] | No | Flag resources (one per flags_resource row, value=true/false) |
 | `departments` | [`AuthDepartmentResource`](/api-reference/auth/types#authdepartmentresource)[] | No | Department resources |
 | `protocols` | [`AuthProtocolResource`](/api-reference/auth/types#authprotocolresource)[] | No | Protocol resources |
 | `slugs` | [`AuthSlugResource`](/api-reference/auth/types#authslugresource)[] | No | Slug resources |
