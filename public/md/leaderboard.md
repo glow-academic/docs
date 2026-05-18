@@ -1,10 +1,13 @@
 # Leaderboard
 
-{/* DEMO_VIDEO: leaderboard — replace public/demos/leaderboard.mp4 */}
+{/* DEMO_VIDEO: leaderboard-overview */}
 
 # Leaderboard
 
-<DemoVideo topic="leaderboard" />
+<DemoVideo
+  topic="leaderboard-overview"
+  caption="POST /attempt/leaderboard returning header KPIs + rankings + accolade winners — the full coordinator view of who's leading the cohort."
+/>
 
 The Leaderboard ranks TAs by training performance, highlighting top performers and awarding accolades. It helps program coordinators identify which TAs are excelling and which may need additional support with office-hours simulations.
 
@@ -84,6 +87,15 @@ curl -X POST https://<your-instance>/attempt/search \
 | Sorting | `sort_by`, `sort_order` | Sort by any metric column |
 | Pagination | `page_limit`, `page_offset` | Control page size |
 
+{/* DEMO_VIDEO: leaderboard-rankings */}
+
+## Rankings table
+
+<DemoVideo
+  topic="leaderboard-rankings"
+  caption="The ranked LeaderboardDataRow table — rank, name, highest_score_avg, messages_per_session, quickest_pass_minutes, sortable by any metric column."
+/>
+
 ## Understanding the Leaderboard Summary
 
 The `POST /attempt/leaderboard` response includes:
@@ -108,6 +120,15 @@ Each winner includes `profile_id`, `name`, `value`, and `details`.
 
 Resource metadata keyed by ID: `profiles`, `simulations`, `scenarios`.
 
+{/* DEMO_VIDEO: leaderboard-trends */}
+
+## Score trends and accolades
+
+<DemoVideo
+  topic="leaderboard-trends"
+  caption="Accolade winners panel — highest_scorer, rapid_riser, marathon_runner — with each card showing the underlying value + details that earned it."
+/>
+
 ## Understanding Search Results
 
 The `POST /attempt/search` response returns `LeaderboardDataRow` items:
@@ -124,6 +145,15 @@ The `POST /attempt/search` response returns `LeaderboardDataRow` items:
   - `improvement_rate_per_day` -- Daily improvement rate
   - `perfect_score_count` -- Number of perfect scores
   - `quickest_pass_minutes` -- Fastest pass time
+
+{/* DEMO_VIDEO: leaderboard-scoping */}
+
+## Scoping the leaderboard
+
+<DemoVideo
+  topic="leaderboard-scoping"
+  caption="Scoping with cohort_ids + simulation_ids + start_date/end_date — rankings, accolades and trends all reshape to the filtered window."
+/>
 
 ## Common Operations
 

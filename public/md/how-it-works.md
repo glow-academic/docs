@@ -1,12 +1,12 @@
 # How AI Simulation Training Works
 
-{/* DEMO_VIDEO: how-it-works — replace public/demos/how-it-works.mp4 */}
+{/* DEMO_VIDEO: how-it-works-overview — replace public/demos/how-it-works-overview.mp4 */}
 
 # How AI Simulation Training Works
 
 This page explains the ideas behind simulation-based training — why it works, what the building blocks are, and how to think about designing effective simulations. You don't need any technical background to follow along.
 
-<DemoVideo topic="how-it-works" caption="An attempt from start to grade — persona, scenario, rubric, feedback." />
+<DemoVideo topic="how-it-works-overview" caption="A single attempt walked end-to-end: persona greeting, learner reply, rubric scoring, structured feedback." />
 
 ## Why Simulation Training Works
 
@@ -28,6 +28,13 @@ There are four reasons it works:
 
 Before thinking about any specific tool or platform, every simulation training program needs the same core ingredients:
 
+{/* DEMO_VIDEO: how-it-works-cant-solve — replace public/demos/how-it-works-cant-solve.mp4 */}
+
+<DemoVideo
+  topic="how-it-works-cant-solve"
+  caption="Side-by-side: a vague 'What do you think?' stalls the persona, while a specific course-terminology question unlocks progress — the can't-solve-alone rule in action."
+/>
+
 ### A character with personality and rules (Persona)
 
 The person your learner talks to. Not a generic chatbot — a character with a name, a backstory, a mood, and specific behavioral rules that create realistic challenge.
@@ -42,6 +49,13 @@ A well-designed persona has:
 - **Knowledge boundaries** — what they know and don't know, and crucially, what misconceptions they hold
 - **"Show, don't tell" design** — the persona's traits are demonstrated through behavior, never labeled. Instead of "a passive student," the scenario reads: "A student stands quietly at the edge of the room, clutching their notes, hesitating before approaching"
 
+{/* DEMO_VIDEO: how-it-works-scenario-design — replace public/demos/how-it-works-scenario-design.mp4 */}
+
+<DemoVideo
+  topic="how-it-works-scenario-design"
+  caption="A scenario rendered to the learner: show-don't-tell problem statement, attached homework PDF as document, and the environmental parameters that set the atmosphere."
+/>
+
 ### A situation with context (Scenario)
 
 The context that puts the learner in a position where they need to use their skills. A good scenario has:
@@ -51,6 +65,13 @@ The context that puts the learner in a position where they need to use their ski
 - **Environmental parameters** — time, location, crowdedness, deadline pressure, and intensity that shape the atmosphere
 
 Scenarios work best when they're generated from real situations. In Glow's university deployment, every scenario is grounded in actual course documents (CS 180 homework on loops, EAPS 106 project on plate boundaries, MA 261 quiz on multivariable calculus). This specificity is what makes practice feel real and transfers to actual performance.
+
+{/* DEMO_VIDEO: how-it-works-rubric — replace public/demos/how-it-works-rubric.mp4 */}
+
+<DemoVideo
+  topic="how-it-works-rubric"
+  caption="Opening a graded attempt and walking the five rubric criteria — each named level (Poor → Excellent) with concrete behavioral feedback quoting the conversation."
+/>
 
 ### Criteria for what "good" looks like (Rubric)
 
@@ -75,6 +96,13 @@ Because simulation training can be challenging — especially the first time —
 ### A way to measure and report performance
 
 The system that turns rubric scores into actionable insights — both for the individual learner ("here's what to work on") and for the training designer ("here's where the cohort is struggling"). Glow provides dashboards, reports, leaderboards, and LMS-compatible exports.
+
+{/* DEMO_VIDEO: how-it-works-attempt-loop — replace public/demos/how-it-works-attempt-loop.mp4 */}
+
+<DemoVideo
+  topic="how-it-works-attempt-loop"
+  caption="The full attempt loop: start scenario, multi-turn chat with the persona, hints panel, backtrack a message, end attempt, see the rubric scorecard."
+/>
 
 ## The Design Loop
 

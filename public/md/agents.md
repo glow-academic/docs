@@ -1,14 +1,15 @@
 # Agents
 
-{/* DEMO_VIDEO: agents — replace public/demos/agents.mp4 */}
+{/* DEMO_VIDEO: agents-overview — replace public/demos/agents-overview.mp4 */}
 
 # Agents
 
-<DemoVideo topic="agents" />
-
 Agents configure the AI engine that powers Glow simulations -- they control which language model is used, what tools are available, how grading rubrics are applied, and voice and reasoning settings.
 
-![Agents list showing agent cards with name, assigned model, and tool count](/screenshots/agents/list.png)
+<DemoVideo
+  topic="agents-overview"
+  caption="The agents list page -- cards by model and tool count, filter by department, drill in to wire models, tools, rubrics, temperature, and voice."
+/>
 
 ## What is an Agent?
 
@@ -39,58 +40,6 @@ This is a common point of confusion, so it is worth stating clearly:
 
 A persona says "I am a confused student who starts sentences with 'Uh...'." An agent says "Use GPT-4o at temperature 0.7 with the de-escalation rubric."
 
-## Quick Start
-
-### Create via CLI
-
-Create a basic simulation agent:
-
-```bash
-glow agents create --body '{
-  "agents": [{
-    "name": "Default Simulation Agent",
-    "description": "Standard agent configuration for university training simulations"
-  }]
-}'
-```
-
-Search agents:
-
-```bash
-glow agents search
-```
-
-Get a specific agent:
-
-```bash
-glow agents get --body '{"agent_id": "your-agent-uuid"}'
-```
-
-### Create via API
-
-```bash
-curl -X POST https://<your-instance>/agent/create \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token" \
-  -d '{
-    "agents": [{
-      "name": "Default Simulation Agent",
-      "description": "Standard agent configuration for university training simulations"
-    }]
-  }'
-```
-
-Search agents:
-
-```bash
-curl -X POST https://<your-instance>/agent/search \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token" \
-  -d '{"search": "simulation"}'
-```
-
 ## How Agents Connect to the Workflow
 
 Agents operate alongside the content pipeline, providing the AI engine configuration that powers the entire system:
@@ -105,9 +54,57 @@ Agents operate alongside the content pipeline, providing the AI engine configura
 
 The agent is the engine that processes every message, generates persona responses, produces hints, and evaluates performance against rubrics.
 
-![Agent detail showing model selection, system prompt editor, temperature and reasoning level controls](/screenshots/agents/detail.png)
+---
 
-## Configuring Models
+{/* DEMO_VIDEO: agents-create — replace public/demos/agents-create.mp4 */}
+
+## Create an agent
+
+<DemoVideo
+  topic="agents-create"
+  caption="Filling out the create form: name, description, then committing -- the agent comes back with an agent_id and a draft_id for further wiring."
+/>
+
+### Via the CLI
+
+```bash
+glow agents create --body '{
+  "agents": [{
+    "name": "Default Simulation Agent",
+    "description": "Standard agent configuration for university training simulations"
+  }]
+}'
+```
+
+### Via the API
+
+```bash
+curl -X POST https://<your-instance>/agent/create \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "agents": [{
+      "name": "Default Simulation Agent",
+      "description": "Standard agent configuration for university training simulations"
+    }]
+  }'
+```
+
+Each entry returns the new `agent_id`, the generated `draft_id`, and the initial `version` for optimistic-concurrency follow-ups.
+
+---
+
+{/* DEMO_VIDEO: agents-wiring — replace public/demos/agents-wiring.mp4 */}
+
+## Wiring models, tools, and rubrics
+
+<DemoVideo
+  topic="agents-wiring"
+  caption="Attaching a model, two tools, and three rubrics to an agent draft in a single PATCH -- the form_state echoes the resolved IDs so you can re-render confidently."
+/>
+
+### Models
 
 The model selection determines which AI model processes conversations and grading. Configure models through the draft endpoint:
 
@@ -139,8 +136,6 @@ curl -X POST https://<your-instance>/agent/search \
   -d '{"filter_model_ids": ["model-uuid-1"]}'
 ```
 
-## Configuring Tools and Rubrics
-
 ### Tools
 
 Tools extend the agent's capabilities during a simulation. Attach tools through the draft:
@@ -169,18 +164,16 @@ glow agents draft --body '{
 }'
 ```
 
-```bash
-curl -X PATCH https://<your-instance>/agent/draft \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token" \
-  -d '{
-    "input_draft_id": "agent-draft-uuid",
-    "rubric_ids": ["communication-skills-uuid", "de-escalation-uuid"]
-  }'
-```
+---
 
-## Tuning Temperature and Reasoning
+{/* DEMO_VIDEO: agents-tuning — replace public/demos/agents-tuning.mp4 */}
+
+## Tuning temperature, reasoning, and voice
+
+<DemoVideo
+  topic="agents-tuning"
+  caption="Dialling temperature down and reasoning up on a grading-flavored agent, then swapping the TTS voice for audio mode."
+/>
 
 ### Temperature Levels
 
@@ -206,7 +199,7 @@ glow agents draft --body '{
 }'
 ```
 
-## Configuring Voices
+### Voices
 
 Voices determine the text-to-speech output when audio mode is enabled in a simulation. Different voices can match the persona's character (e.g., a younger voice for a student persona, a more authoritative voice for a professor).
 
@@ -217,9 +210,33 @@ glow agents draft --body '{
 }'
 ```
 
-## Working with Drafts
+---
 
-Agents use the same draft system as other Glow resources. All configuration changes go through the draft endpoint.
+{/* DEMO_VIDEO: agents-generate — replace public/demos/agents-generate.mp4 */}
+
+## Generate sub-op
+
+The agent surface exposes a `generate` sub-op (`POST /agent/generate`) that runs the configured engine end-to-end against an arbitrary input -- handy for sanity-checking a wired agent before pointing real learner traffic at it.
+
+<DemoVideo
+  topic="agents-generate"
+  caption="Triggering /agent/generate from the agent detail page -- the response streams back tokens that prove model/tool/rubric wiring is intact before going live."
+/>
+
+Use this in your own scripts to smoke-test an agent after edits or to wire it into batch grading flows. See the [Agents API Reference](/api-reference/agent) for the exact request shape.
+
+---
+
+{/* DEMO_VIDEO: agents-draft — replace public/demos/agents-draft.mp4 */}
+
+## The draft cycle
+
+Agents use the same draft system as other Glow resources. All configuration changes go through the draft endpoint, with `expected_version` providing optimistic concurrency so concurrent edits surface a conflict instead of silently clobbering each other.
+
+<DemoVideo
+  topic="agents-draft"
+  caption="Editing the same agent in two tabs: the second save sees an expected_version mismatch and surfaces the conflict instead of overwriting the first."
+/>
 
 ```bash
 # Create or update a draft with full configuration
@@ -254,14 +271,73 @@ curl -X PATCH https://<your-instance>/agent/draft \
 **List your drafts:**
 
 ```bash
-# CLI
 glow agents list
+```
 
-# API
-curl -X POST https://<your-instance>/agent/drafts \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token"
+---
+
+{/* DEMO_VIDEO: agents-search — replace public/demos/agents-search.mp4 */}
+
+## Search & filter
+
+<DemoVideo
+  topic="agents-search"
+  caption="Filtering agents by model and tool together, then drilling into a single agent's wiring."
+/>
+
+```bash
+# Simple text search
+glow agents search --body '{"search": "grading"}'
+
+# Facet filters
+glow agents search --body '{
+  "filter_model_ids": ["model-uuid-1"],
+  "filter_tool_ids": ["tool-uuid-1"],
+  "page_size": 25
+}'
+```
+
+The response includes hydrated agent rows plus facet sections (`model_filter`, `tool_filter`, `department_filter`, ...) so the UI can render dropdowns without a second round-trip.
+
+---
+
+{/* DEMO_VIDEO: agents-bulk — replace public/demos/agents-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs, or `all: true` with flat filter fields plus optional `excluded_ids` and a `patch` body. The persona surface is the prove-out; agents adopt the same shape.
+
+<DemoVideo
+  topic="agents-bulk"
+  caption="Bulk-archiving every agent in a deprecated department in a single round-trip -- excluded_ids keeps one production agent alive."
+/>
+
+**Delete by explicit IDs:**
+
+```bash
+glow agents delete --body '{
+  "agent_ids": ["agent-1", "agent-2", "agent-3"]
+}'
+```
+
+**Delete all matching a filter (with exclusions):**
+
+```bash
+glow agents delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-deprecated"],
+  "excluded_ids": ["agent-keep-this-one"]
+}'
+```
+
+**Bulk update via `patch`:**
+
+```bash
+glow agents update --body '{
+  "all": true,
+  "filter_model_ids": ["model-old-uuid"],
+  "patch": { "archived": true }
+}'
 ```
 
 ## Common Operations
@@ -274,8 +350,10 @@ curl -X POST https://<your-instance>/agent/drafts \
 | Update agents | `glow agents update --body '{"agents": [...]}'` | `POST /agent/update` |
 | Duplicate an agent | -- | `POST /agent/duplicate` |
 | Delete agents | `glow agents delete --body '{"agent_ids": [...]}'` | `POST /agent/delete` |
+| Bulk delete (filter) | `glow agents delete --body '{"all": true, "filter_…": "…"}'` | `POST /agent/delete` |
 | Save a draft | `glow agents draft --body '{...}'` | `PATCH /agent/draft` |
 | List drafts | `glow agents list` | `POST /agent/drafts` |
+| Generate (smoke test) | -- | `POST /agent/generate` |
 | Export to CSV | `glow agents export` | `POST /agent/export` |
 
 ## Related

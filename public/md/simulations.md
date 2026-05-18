@@ -1,12 +1,15 @@
 # Simulations
 
-{/* DEMO_VIDEO: simulations — replace public/demos/simulations.mp4 */}
+{/* DEMO_VIDEO: simulations-overview — replace public/demos/simulations-overview.mp4 */}
 
 # Simulations
 
-<DemoVideo topic="simulations" />
-
 Simulations are complete training sessions that bundle one or more scenarios together with rubrics, time limits, and ordering -- they are what learners actually launch to begin practicing.
+
+<DemoVideo
+  topic="simulations-overview"
+  caption="The simulations list — cards show name, scenario count, and active status; drill in to see scenario ordering, rubrics, and time limits."
+/>
 
 ## What is a Simulation?
 
@@ -28,13 +31,32 @@ Simulations are assigned to Cohorts, which control which learners have access. W
 
 ![Simulations list showing simulation cards with name, scenario count, and active status](/screenshots/simulations/list.png)
 
-## Quick Start
+## How Simulations Connect to the Workflow
 
-### Create via CLI
+Simulations are **step 3** in the Glow content pipeline:
 
-![Simulation creation form showing name, description, and scenario selection](/screenshots/simulations/create.png)
+| Step | Resource | Description |
+|------|----------|-------------|
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas, documents, and objectives |
+| **3. Add Scenarios to Simulations** | **Simulations** | **Bundle scenarios into a complete training session with rubrics and time limits** |
+| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
 
-Create an "Academic Integrity Training" simulation with one scenario:
+---
+
+{/* DEMO_VIDEO: simulations-create — replace public/demos/simulations-create.mp4 */}
+
+## Create a simulation
+
+<DemoVideo
+  topic="simulations-create"
+  caption="Filling out the create form: name, description, then opening the new simulation's detail page ready for scenario assignment."
+/>
+
+### Via the CLI
+
+Create an "Academic Integrity Training" simulation:
 
 ```bash
 glow simulations create --body '{
@@ -45,35 +67,7 @@ glow simulations create --body '{
 }'
 ```
 
-Then add scenarios to it via the draft system:
-
-```bash
-glow simulations draft --body '{
-  "input_draft_id": "simulation-draft-uuid",
-  "scenario_ids": ["academic-integrity-scenario-uuid"],
-  "scenario_rubrics": [
-    {"scenario_id": "academic-integrity-scenario-uuid", "rubric_id": "communication-skills-rubric-uuid"},
-    {"scenario_id": "academic-integrity-scenario-uuid", "rubric_id": "policy-knowledge-rubric-uuid"}
-  ],
-  "scenario_time_limits": [
-    {"scenario_id": "academic-integrity-scenario-uuid", "time_limit": 600}
-  ]
-}'
-```
-
-Search simulations:
-
-```bash
-glow simulations search
-```
-
-Get a specific simulation:
-
-```bash
-glow simulations get --body '{"simulation_id": "your-simulation-uuid"}'
-```
-
-### Create via API
+### Via the API
 
 ```bash
 curl -X POST https://<your-instance>/simulation/create \
@@ -88,39 +82,36 @@ curl -X POST https://<your-instance>/simulation/create \
   }'
 ```
 
-Configure scenarios via draft:
+![Simulation creation form showing name, description, and scenario selection](/screenshots/simulations/create.png)
 
-```bash
-curl -X PATCH https://<your-instance>/simulation/draft \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token" \
-  -d '{
-    "input_draft_id": "simulation-draft-uuid",
-    "scenario_ids": ["academic-integrity-scenario-uuid"],
-    "scenario_rubrics": [
-      {"scenario_id": "academic-integrity-scenario-uuid", "rubric_id": "communication-skills-rubric-uuid"}
-    ]
-  }'
-```
+---
 
-## How Simulations Connect to the Workflow
+{/* DEMO_VIDEO: simulations-edit — replace public/demos/simulations-edit.mp4 */}
 
-Simulations are **step 3** in the Glow content pipeline:
+## Assigning scenarios and per-scenario configuration
 
-| Step | Resource | Description |
-|------|----------|-------------|
-| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
-| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas, documents, and objectives |
-| **3. Add Scenarios to Simulations** | **Simulations** | **Bundle scenarios into a complete training session with rubrics and time limits** |
-| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
+Each scenario added to a simulation gets its own per-scenario configuration: rubrics, time limits, positions, and flags. This is managed through the simulation draft endpoint.
 
-## Configuring Scenarios Within a Simulation
+<DemoVideo
+  topic="simulations-edit"
+  caption="Adding two scenarios to a simulation, reordering them via drag-and-drop, attaching distinct rubrics to each, and setting a 10-minute time limit."
+/>
 
 ![Simulation detail showing scenario list with ordering, time limits, and rubric assignments](/screenshots/simulations/detail.png)
 
-Each scenario added to a simulation gets its own per-scenario configuration. This is managed through the simulation draft endpoint.
+```bash
+glow simulations draft --body '{
+  "input_draft_id": "simulation-draft-uuid",
+  "scenario_ids": ["academic-integrity-scenario-uuid"],
+  "scenario_rubrics": [
+    {"scenario_id": "academic-integrity-scenario-uuid", "rubric_id": "communication-skills-rubric-uuid"},
+    {"scenario_id": "academic-integrity-scenario-uuid", "rubric_id": "policy-knowledge-rubric-uuid"}
+  ],
+  "scenario_time_limits": [
+    {"scenario_id": "academic-integrity-scenario-uuid", "time_limit": 600}
+  ]
+}'
+```
 
 ### Rubrics
 
@@ -193,9 +184,18 @@ Single-scenario simulations designed for free-form practice with a specific pers
 - **Aggressive Practice** -- practice with a confrontational student
 - **General Practice** -- open-ended interaction practice
 
+---
+
+{/* DEMO_VIDEO: simulations-draft — replace public/demos/simulations-draft.mp4 */}
+
 ## Working with Drafts
 
 Simulations use the draft system for all edits. The draft endpoint supports optimistic concurrency via `expected_version`.
+
+<DemoVideo
+  topic="simulations-draft"
+  caption="Editing a simulation in two tabs — the second save sees a version mismatch and surfaces the conflict instead of clobbering the first edit."
+/>
 
 ```bash
 # Create or update a draft
@@ -234,6 +234,66 @@ curl -X POST https://<your-instance>/simulation/drafts \
   -H "Authorization: Bearer your-token"
 ```
 
+---
+
+{/* DEMO_VIDEO: simulations-search — replace public/demos/simulations-search.mp4 */}
+
+## Search and filter
+
+Simulation search supports full-text plus facet filters across scenario, department, and flag.
+
+<DemoVideo
+  topic="simulations-search"
+  caption="Filtering simulations by scenario (Academic Integrity Training) and department, then drilling in on a match."
+/>
+
+```bash
+glow simulations search --body '{
+  "search": "training",
+  "filter_department_ids": ["dept-cs"],
+  "page_size": 25
+}'
+```
+
+```bash
+curl -X POST https://<your-instance>/simulation/search \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -H "Content-Type: application/json" \
+  -d '{"search": "training", "page_size": 25}'
+```
+
+---
+
+{/* DEMO_VIDEO: simulations-bulk — replace public/demos/simulations-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- pass either explicit IDs, or `all: true` with flat filter fields + optional `excluded_ids` + a `patch` for updates.
+
+<DemoVideo
+  topic="simulations-bulk"
+  caption="Bulk-archiving every simulation in a sunset department in one round-trip, keeping a couple of canonical examples via excluded_ids."
+/>
+
+```bash
+# Delete every simulation in a sunset department, except a manual keeplist
+glow simulations delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-sunset"],
+  "excluded_ids": ["sim-keep-1", "sim-keep-2"]
+}'
+
+# Bulk update via patch
+glow simulations update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}'
+```
+
+See the [Personas guide](/personas#bulk-operations) for the canonical write-up of this pattern.
+
 ## Common Operations
 
 | Task | CLI | API |
@@ -244,6 +304,7 @@ curl -X POST https://<your-instance>/simulation/drafts \
 | Update simulations | `glow simulations update --body '{"simulations": [...]}'` | `POST /simulation/update` |
 | Duplicate a simulation | -- | `POST /simulation/duplicate` |
 | Delete simulations | `glow simulations delete --body '{"simulation_ids": [...]}'` | `POST /simulation/delete` |
+| Bulk delete (filter) | `glow simulations delete --body '{"all": true, "filter_…": "…"}'` | `POST /simulation/delete` |
 | Save a draft | `glow simulations draft --body '{...}'` | `PATCH /simulation/draft` |
 | List drafts | `glow simulations list` | `POST /simulation/drafts` |
 | Export to CSV | `glow simulations export` | `POST /simulation/export` |

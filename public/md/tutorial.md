@@ -1,10 +1,10 @@
 # Design Your First Simulation
 
-{/* DEMO_VIDEO: tutorial — replace public/demos/tutorial.mp4 */}
+{/* DEMO_VIDEO: tutorial-overview — replace public/demos/tutorial-overview.mp4 */}
 
 # Design Your First Simulation
 
-<DemoVideo topic="tutorial" caption="Building a simulation end-to-end: rubric → persona → scenario → cohort." />
+<DemoVideo topic="tutorial-overview" caption="The full tutorial path end-to-end: rubric, four personas, four scenarios, one simulation, cohort assignment." />
 
 This tutorial walks through building a complete simulation from scratch. By the end, you'll have a working training scenario with AI characters, a grading rubric, and a cohort of learners ready to practice.
 
@@ -24,7 +24,14 @@ For our example, university TAs often struggle during office hours when students
 
 These five skills will drive every design decision that follows.
 
+{/* DEMO_VIDEO: tutorial-rubric — replace public/demos/tutorial-rubric.mp4 */}
+
 ## Step 1: Define Your Rubric
+
+<DemoVideo
+  topic="tutorial-rubric"
+  caption="Creating the TA Office Hours rubric — five standard groups, five named levels each, pass threshold at 20/25."
+/>
 
 Start with the rubric, not the persona. This forces you to be specific about what "good" looks like before you build the training.
 
@@ -63,7 +70,14 @@ glow rubrics create --body '{
 
 Then add standard groups and standards for each level. See the [Rubrics Guide](/rubrics) for the full API.
 
+{/* DEMO_VIDEO: tutorial-persona — replace public/demos/tutorial-persona.mp4 */}
+
 ## Step 2: Create Your Personas
+
+<DemoVideo
+  topic="tutorial-persona"
+  caption="Building the Confused Student persona — pasting the can't-solve-independently instructions and saving the draft."
+/>
 
 Each persona is an AI character that tests specific rubric criteria. The key design principle: **the persona must not be able to solve problems on its own.** It can only make progress when the learner provides specific, relevant guidance.
 
@@ -125,7 +139,14 @@ glow personas create --body '{
 
 Don't skip this persona because they seem "easy." The happy student tests whether the TA can teach efficiently and accurately when there's no emotional challenge — a different but equally important skill.
 
+{/* DEMO_VIDEO: tutorial-scenario — replace public/demos/tutorial-scenario.mp4 */}
+
 ## Step 3: Build Your Scenarios
+
+<DemoVideo
+  topic="tutorial-scenario"
+  caption="Wiring the Help-with-Loops scenario: show-don't-tell problem statement, attaching the confused persona, listing the three objectives."
+/>
 
 Each scenario pairs a persona with context and a problem statement. The problem statement should **show** the persona's state through behavior, not **tell** it through labels.
 
@@ -204,7 +225,14 @@ glow documents create --body '{
 
 Then link the document to your scenarios. The scenario generation system uses the document as the **single source of truth** for course number and topic — if there's a conflict between the document and any parameters, the document wins.
 
+{/* DEMO_VIDEO: tutorial-simulation — replace public/demos/tutorial-simulation.mp4 */}
+
 ## Step 5: Create the Simulation
+
+<DemoVideo
+  topic="tutorial-simulation"
+  caption="Bundling the four scenarios into the TA Office Hours simulation — ordering happy → confused → aggressive → passive with 10-minute time limits."
+/>
 
 Bundle the scenarios into a single training package:
 
@@ -238,7 +266,14 @@ Notice the design choices:
 - **Same rubric across all scenarios**: the five criteria apply everywhere, but each scenario naturally emphasizes different ones.
 - **10-minute time limits**: based on real usage data, most productive conversations happen in the 5-10 minute range.
 
+{/* DEMO_VIDEO: tutorial-cohort — replace public/demos/tutorial-cohort.mp4 */}
+
 ## Step 6: Assign to a Cohort
+
+<DemoVideo
+  topic="tutorial-cohort"
+  caption="Creating the Fall 2025 CS TAs cohort, adding three profiles, and flipping on practice mode + hints + backtracking."
+/>
 
 Create a cohort and add your TAs:
 

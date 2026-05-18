@@ -1,6 +1,6 @@
 # Glow Documentation
 
-{/* DEMO_VIDEO: index — replace public/demos/index.mp4 */}
+{/* DEMO_VIDEO: index-overview — replace public/demos/index-overview.mp4 */}
 
 # Glow Documentation
 
@@ -8,7 +8,7 @@ Documentation for the **Glow** conversational AI training platform — an
 academic, self-hostable system for designing and running
 persona-driven simulations with full grading + analytics.
 
-<DemoVideo topic="index" caption="Glow in 60 seconds — the end-to-end attempt loop." />
+<DemoVideo topic="index-overview" caption="Glow in 60 seconds — landing on the docs home and orienting around what the platform does." />
 
 ## Getting started
 
@@ -24,18 +24,27 @@ persona-driven simulations with full grading + analytics.
 - **[API Reference](/api-reference)** — every HTTP endpoint, auto-generated from OpenAPI
 - **[CLI Reference](/cli-reference)** — every `glow` command, auto-generated from the CLI spec
 
+{/* DEMO_VIDEO: index-sidebar — replace public/demos/index-sidebar.mp4 */}
+
 ## Sidebar layout
 
-The left-hand nav mirrors the [client sidebar](/start) so what
-you see in the product UI maps 1-for-1 to a docs section:
+<DemoVideo
+  topic="index-sidebar"
+  caption="Scrolling the left-hand nav and showing how each sidebar group lines up 1-for-1 with the running client UI."
+/>
+
+The sidebar is organized by API/CLI taxonomy — each group
+corresponds to a parent artifact or a logical cluster of
+artifacts in the Glow API. The client product UI uses its own
+grouping (Learner / Analytics / etc.) optimized for product
+navigation; the two intentionally differ.
 
 | Sidebar group | What lives there |
 |---|---|
-| **Learner** | Home · Chat · Practice · Leaderboard |
-| **Analytics** | Dashboard · Reports · Activity · Pricing |
-| **Training** | Cohorts · Simulations · Scenarios · Personas |
-| **Management** | Profiles · Documents · Parameters · Fields |
+| **Attempt** | Chat · Home · Practice · Dashboard · Reports · Leaderboard |
+| **Test** | Benchmark · Invocation |
+| **System** | Activity · Health · Pricing · Session · Group |
+| **Training** | Cohorts · Personas · Scenarios · Simulations |
+| **Management** | Documents · Fields · Parameters · Profiles |
 | **Intelligence** | Agents · Models · Providers · Tools |
-| **System** | Auths · Departments · Evals · Rubrics |
-| **Ops** | Health · Benchmark · Invocation |
-| **Internals** | Session · Group (server-side, no client UI) |
+| **Platform** | Auths · Departments · Evals · Rubrics |

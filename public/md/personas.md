@@ -1,37 +1,60 @@
 # Personas
 
-{/* DEMO_VIDEO: personas — replace public/demos/personas.mp4 */}
+{/* DEMO_VIDEO: personas-overview — replace public/demos/personas-overview.mp4 */}
 
 # Personas
 
-<DemoVideo topic="personas" />
+Personas are the AI-driven characters that learners interact with
+during training simulations — they define *who* the learner is
+talking to and *how* that character behaves.
 
-Personas are the AI-driven characters that learners interact with during training simulations -- they define who the learner is talking to and how that character behaves.
+<DemoVideo
+  topic="personas-overview"
+  caption="The personas list page — cards by color and icon, filter by department or voice, drill in to edit instructions."
+/>
 
 ## What is a Persona?
 
-A persona is a reusable AI character definition that controls the personality, behavior, and communication style of the simulated individual a learner will face. Each persona is built from the following components:
+A persona is a reusable AI character definition that controls the
+personality, behavior, and communication style of the simulated
+individual a learner will face. Each persona is built from:
 
-- **Name** -- the character's display name (e.g., "Confused Student", "Aggressive Student")
-- **Description** -- a short summary of the character's role and disposition (e.g., "Seeks to understand by asking questions")
-- **Instructions** -- the behavioral prompt template that tells the AI how to act, including parameter placeholders
-- **Examples** -- sample dialogue exchanges that demonstrate the character's tone and style
-- **Color & Icon** -- visual identifiers shown in the simulation UI
-- **Voice** -- the text-to-speech voice used when audio mode is enabled
-- **Parameter Fields** -- dynamic placeholders (like `{{class}}`, `{{location}}`, `{{intensity}}`) that inject scenario-specific values into instructions at runtime
-- **Departments** -- organizational groupings for filtering and access control
+- **Name** — the character's display name (e.g., *Confused Student*, *Aggressive Student*)
+- **Description** — a short summary of the character's role and disposition
+- **Instructions** — the behavioral prompt template that tells the AI how to act, including parameter placeholders
+- **Examples** — sample dialogue exchanges that demonstrate the character's tone
+- **Color & Icon** — visual identifiers in the simulation UI
+- **Voice** — the TTS voice used when audio mode is enabled
+- **Parameter Fields** — dynamic placeholders (`{{class}}`, `{{location}}`, `{{intensity}}`) injected at runtime
+- **Departments** — organizational groupings for filtering and access control
 
-Personas are assigned to [Scenarios](/scenario), not directly to simulations or agents. A single persona can appear in many scenarios.
+Personas are assigned to [Scenarios](/scenarios), not directly to
+simulations or agents. A single persona can appear in many scenarios.
 
-![Personas list showing cards for each persona with name, color, icon, and description](/screenshots/personas/list.png)
+## Where personas sit in the workflow
 
-## Quick Start
+Personas are **step 1** in the Glow content pipeline:
 
-### Create via CLI
+| Step | Resource | Description |
+|------|----------|-------------|
+| **1. Create Personas** | **Personas** | Define AI characters with instructions, examples, and parameter fields |
+| 2. Assign to Scenarios | [Scenarios](/scenarios) | Build training situations and attach personas to them |
+| 3. Add Scenarios to Simulations | [Simulations](/simulations) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | [Cohorts](/cohorts) | Assign simulations to groups of learners |
+| 5. Run Attempts | [Chat](/chat) | Learners start attempts and interact with persona-driven AI |
 
-![Persona creation form showing name, description, color, icon, and instructions fields](/screenshots/personas/create.png)
+---
 
-Create a "Confused Student" persona for CS course training:
+{/* DEMO_VIDEO: personas-create — replace public/demos/personas-create.mp4 */}
+
+## Create a persona
+
+<DemoVideo
+  topic="personas-create"
+  caption="Filling out the create form: name, description, color, icon, and the instructions textarea."
+/>
+
+### Via the CLI
 
 ```bash
 glow personas create --body '{
@@ -43,19 +66,7 @@ glow personas create --body '{
 }'
 ```
 
-List all personas:
-
-```bash
-glow personas search
-```
-
-Get a specific persona:
-
-```bash
-glow personas get --body '{"persona_id": "your-persona-uuid"}'
-```
-
-### Create via API
+### Via the API
 
 ```bash
 curl -X POST https://<your-instance>/persona/create \
@@ -66,40 +77,29 @@ curl -X POST https://<your-instance>/persona/create \
     "personas": [{
       "name": "Confused Student",
       "description": "Seeks to understand by asking questions about course material",
-      "instructions": "You are a confused student in {{class}}. You do not understand the material covered in the last lecture. Ask clarifying questions and express frustration when answers are unclear. Your confusion is genuine, not combative."
+      "instructions": "You are a confused student in {{class}}..."
     }]
   }'
 ```
 
-Search personas:
+Each entry returns the new `persona_id`, the generated `draft_id`,
+and the initial `version` for optimistic-concurrency follow-ups.
 
-```bash
-curl -X POST https://<your-instance>/persona/search \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token" \
-  -d '{"search": "confused"}'
-```
+---
 
-## How Personas Connect to the Workflow
+{/* DEMO_VIDEO: personas-instructions — replace public/demos/personas-instructions.mp4 */}
 
-Personas are **step 1** in the Glow content pipeline:
+## Writing effective instructions
 
-| Step | Resource | Description |
-|------|----------|-------------|
-| **1. Create Personas** | **Personas** | **Define AI characters with instructions, examples, and parameter fields** |
-| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas to them |
-| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
-| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with persona-driven AI in [Chats](/chat) |
+The `instructions` field is the core of a persona. Well-written
+instructions produce consistent, realistic interactions.
 
-## Writing Effective Instructions
+<DemoVideo
+  topic="personas-instructions"
+  caption="Editing instructions inline with live preview, swapping {{placeholders}} for sample values to sanity-check the prompt."
+/>
 
-![Persona detail page showing the full instructions editor with formatting and example conversation preview](/screenshots/personas/detail.png)
-
-The `instructions` field is the core of a persona. It tells the AI how to behave during a conversation. Well-written instructions produce consistent, realistic interactions.
-
-### Role Definition
+### Role definition
 
 Start with a clear statement of who the character is:
 
@@ -108,7 +108,7 @@ You are a student in {{class}} who was caught cheating on the midterm exam.
 You are meeting with the instructor during office hours.
 ```
 
-### Behavioral Guidelines
+### Behavioral guidelines
 
 Describe how the character should respond emotionally and conversationally:
 
@@ -118,7 +118,7 @@ but if the instructor presents evidence calmly, you gradually admit fault.
 Do not become aggressive unless the instructor is accusatory.
 ```
 
-### Knowledge Boundaries
+### Knowledge boundaries
 
 Define what the character does and does not know:
 
@@ -127,7 +127,7 @@ You do not know the specific academic integrity policy. You assume the
 penalty is automatic expulsion. You have never been in trouble before.
 ```
 
-### Communication Style
+### Communication style
 
 Set the tone, vocabulary level, and mannerisms:
 
@@ -136,11 +136,22 @@ Speak informally. Use short sentences. Avoid eye contact metaphors.
 Start responses with hedging phrases like "I mean..." or "Look, I just..."
 ```
 
-## Using Parameter Fields
+---
 
-Parameter fields make personas dynamic. Instead of hard-coding values, use `{{placeholder}}` syntax in your instructions. Glow resolves these at runtime based on the scenario's parameter configuration.
+{/* DEMO_VIDEO: personas-parameters — replace public/demos/personas-parameters.mp4 */}
 
-**Example: Aggressive Student with parameters**
+## Parameter fields
+
+Parameter fields make personas dynamic. Instead of hard-coding values,
+use `{{placeholder}}` syntax in your instructions. Glow resolves these
+at runtime based on the scenario's parameter configuration.
+
+<DemoVideo
+  topic="personas-parameters"
+  caption="A persona referencing {{class}} and {{intensity}} — the same persona drives wildly different conversations depending on scenario parameter values."
+/>
+
+**Example: aggressive student with parameters**
 
 ```
 You are an aggressive student in {{class}} at {{location}}.
@@ -153,9 +164,9 @@ At intensity 4-6, you raise your voice and interrupt.
 At intensity 7-10, you USE ALL CAPS and make demands.
 ```
 
-Available parameter fields from the university seed data include:
+Available parameter fields from the university seed:
 
-| Parameter | Example Values |
+| Parameter | Example values |
 |-----------|---------------|
 | `{{class}}` | CS-180, CS-251, CS-307, CS-422 |
 | `{{location}}` | Lawson, Felix Haas Hall, Data Science Building |
@@ -165,15 +176,26 @@ Available parameter fields from the university seed data include:
 | `{{temperament}}` | Aggressive, Confused, Happy, Passive |
 | `{{crowdedness}}` | 1 through 10 |
 
-Parameter fields are defined on the persona and then resolved when the persona is used within a scenario that provides parameter values.
+Parameter fields are defined on the persona and resolved when the
+persona runs inside a scenario that provides matching parameter values.
 
-## Working with Examples
+---
 
-Examples teach the AI the persona's voice through concrete dialogue samples. They are especially useful for characters with distinctive speech patterns.
+{/* DEMO_VIDEO: personas-examples — replace public/demos/personas-examples.mp4 */}
 
-**Example: Passive Student persona**
+## Examples that teach voice
 
-When creating or updating the persona, supply examples as an array of dialogue strings:
+Examples teach the AI the persona's voice through concrete dialogue
+samples. They're especially useful for characters with distinctive
+speech patterns.
+
+<DemoVideo
+  topic="personas-examples"
+  caption="Adding two example exchanges to the passive-student persona to anchor the 'Uh...' verbal tic."
+/>
+
+When creating or updating the persona, supply examples as an array of
+dialogue strings:
 
 ```bash
 glow personas draft --body '{
@@ -188,16 +210,30 @@ glow personas draft --body '{
 }'
 ```
 
-Examples help the AI replicate specific verbal tics, sentence structures, and emotional registers that are difficult to capture through instructions alone.
+Examples help the AI replicate specific verbal tics, sentence
+structures, and emotional registers that are difficult to capture
+through instructions alone.
 
-## Working with Drafts
+---
 
-Glow uses a draft system for editing personas. When you modify a persona through the draft endpoint, changes are saved as a draft version that can be reviewed before publishing.
+{/* DEMO_VIDEO: personas-draft — replace public/demos/personas-draft.mp4 */}
+
+## The draft cycle
+
+Glow uses a draft system with optimistic concurrency for editing
+personas. When you save changes via `POST /persona/draft`, the
+response carries the new `version` — pass it back as
+`expected_version` on the next save so a concurrent edit doesn't
+silently overwrite yours.
+
+<DemoVideo
+  topic="personas-draft"
+  caption="Editing a persona in two tabs: the second save sees expected_version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 **Create or update a draft:**
 
 ```bash
-# Via CLI
 glow personas draft --body '{
   "input_draft_id": "existing-draft-uuid",
   "expected_version": 1,
@@ -209,34 +245,120 @@ glow personas draft --body '{
 }'
 ```
 
+Equivalent raw HTTP:
+
 ```bash
-# Via API
-curl -X PATCH https://<your-instance>/persona/draft \
+curl -X POST https://<your-instance>/persona/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
-    "name": "Updated Confused Student",
-    "description": "Seeks to understand by asking repeated questions"
+    "input_draft_id": "existing-draft-uuid",
+    "expected_version": 1,
+    "name": "Updated Confused Student"
   }'
 ```
 
-**List your drafts:**
+The response includes `draft_id`, `new_version`, and `form_state` so
+your client can track optimistic concurrency.
+
+**List your in-flight drafts:**
 
 ```bash
-# CLI
-glow personas list
-
-# API
-curl -X POST https://<your-instance>/persona/drafts \
-  -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
-  -H "Authorization: Bearer your-token"
+glow personas drafts
 ```
 
-The draft response includes `draft_id`, `new_version`, and `form_state` so your client can track optimistic concurrency.
+---
 
-## Common Operations
+{/* DEMO_VIDEO: personas-search — replace public/demos/personas-search.mp4 */}
+
+## Search & filter
+
+Persona search supports full-text, facet filters (department, voice,
+color, icon, scenario, field), and pagination.
+
+<DemoVideo
+  topic="personas-search"
+  caption="Filtering by department + voice picker, then drilling in on a single persona."
+/>
+
+```bash
+# Simple text search via the ergonomic helper
+glow personas search --name confused
+
+# Full facet search via raw body
+glow personas search --body '{
+  "search": "confused",
+  "filter_department_ids": ["dept-cs"],
+  "voice_search": "alloy",
+  "page_size": 25,
+  "page_offset": 0
+}'
+```
+
+Raw HTTP:
+
+```bash
+curl -X POST https://<your-instance>/persona/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-token" \
+  -d '{"search": "confused", "page_size": 25}'
+```
+
+The response returns hydrated `ListPersonaApiPersona` rows plus
+filter facets (`scenario_filter`, `department_filter`, `voice_filter`,
+…) so the UI can render dropdowns without a second round-trip.
+
+---
+
+{/* DEMO_VIDEO: personas-bulk — replace public/demos/personas-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape that
+persona is the prove-out for across the artifact catalog. Pass either
+explicit IDs, or `all: true` with flat filter fields + optional
+`excluded_ids`.
+
+<DemoVideo
+  topic="personas-bulk"
+  caption="Bulk-deleting every persona in a department except a manually-excluded list — single round-trip, no row-by-row delete."
+/>
+
+**Delete by explicit IDs:**
+
+```bash
+glow personas delete --body '{
+  "persona_ids": ["persona-1", "persona-2", "persona-3"]
+}'
+```
+
+**Delete all matching a filter (with exclusions):**
+
+```bash
+glow personas delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-cs"],
+  "voice_search": "deprecated-voice",
+  "excluded_ids": ["persona-keep-this-one"]
+}'
+```
+
+**Bulk update via `patch`:**
+
+```bash
+glow personas update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}'
+```
+
+The same shape applies across artifacts that have adopted the pattern
+— check the relevant API reference for each artifact's allowed filter
+fields and `patch` schema.
+
+## Common operations reference
 
 | Task | CLI | API |
 |------|-----|-----|
@@ -244,17 +366,18 @@ The draft response includes `draft_id`, `new_version`, and `form_state` so your 
 | Get one persona | `glow personas get --body '{"persona_id": "..."}' ` | `POST /persona/get` |
 | Create personas | `glow personas create --body '{"personas": [...]}'` | `POST /persona/create` |
 | Update personas | `glow personas update --body '{"personas": [...]}'` | `POST /persona/update` |
-| Duplicate a persona | -- | `POST /persona/duplicate` |
+| Duplicate a persona | `glow personas duplicate` | `POST /persona/duplicate` |
 | Delete personas | `glow personas delete --body '{"persona_ids": [...]}'` | `POST /persona/delete` |
-| Save a draft | `glow personas draft --body '{...}'` | `PATCH /persona/draft` |
-| List drafts | `glow personas list` | `POST /persona/drafts` |
+| Bulk delete (filter) | `glow personas delete --body '{"all": true, "filter_…": "…"}'` | `POST /persona/delete` |
+| Save a draft | `glow personas draft --body '{...}'` | `POST /persona/draft` |
+| List drafts | `glow personas drafts` | `POST /persona/drafts` |
 | Export to CSV | `glow personas export` | `POST /persona/export` |
-| Import from CSV | -- | `POST /persona/csv` |
+| Import from CSV | — | `POST /persona/csv` |
 
 ## Related
 
-- [Personas API Reference](/api-reference/persona) -- full endpoint schemas and field definitions
-- [Personas CLI Reference](/cli-reference/persona) -- all CLI commands and flags
-- [Scenarios Guide](/scenario) -- building training situations that use personas
-- [Simulations Guide](/simulation) -- bundling scenarios into complete training sessions
-- [Cohorts Guide](/cohort) -- assigning profile personas so the AI adapts to each learner
+- [Personas API Reference](/api-reference/persona) — full endpoint schemas and field definitions
+- [Personas CLI Reference](/cli-reference/personas) — all CLI commands and flags
+- [Scenarios](/scenarios) — the training situations that put personas to work
+- [Simulations](/simulations) — bundling scenarios into complete training sessions
+- [Chat](/chat) — the live conversation surface where personas drive interactions

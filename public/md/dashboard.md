@@ -1,10 +1,13 @@
 # Dashboard
 
-{/* DEMO_VIDEO: dashboard — replace public/demos/dashboard.mp4 */}
+{/* DEMO_VIDEO: dashboard-overview */}
 
 # Dashboard
 
-<DemoVideo topic="dashboard" />
+<DemoVideo
+  topic="dashboard-overview"
+  caption="A single POST /attempt/dashboard call hydrating the whole admin surface — header KPIs, primary/secondary panels, rubric breakdowns and inline history in one bundle."
+/>
 
 The Dashboard is the admin analytics hub for TA training programs.
 It returns a single bundled response — header summaries, primary and
@@ -32,6 +35,15 @@ Dashboard aggregates training data across all TAs, cohorts, and simulations into
 ![Dashboard chart showing score trends over time for each rubric standard group](/screenshots/dashboard/trends.png)
 
 Dashboard returns `header_metrics` (total attempts, average score, completion percentage, first-attempt pass rate), `primary_metrics` and `secondary_metrics` panels, rubric/parameter/scenario breakdowns, score `thresholds`, AI-generated `insights`, and inline `history` with pagination.
+
+{/* DEMO_VIDEO: dashboard-header */}
+
+## Header metrics at a glance
+
+<DemoVideo
+  topic="dashboard-header"
+  caption="The header_metrics strip — total attempts, average score, completion %, first-attempt pass rate, each with trend sparkline and hover detail."
+/>
 
 ## Quick Start
 
@@ -75,7 +87,14 @@ curl -X POST https://<your-instance>/attempt/search \
   }'
 ```
 
+{/* DEMO_VIDEO: dashboard-filters */}
+
 ## Filtering and Scoping
+
+<DemoVideo
+  topic="dashboard-filters"
+  caption="Picking a date range, cohort, and rubric_search — the bundle recomputes server-side and every panel rehydrates without a page reload."
+/>
 
 Dashboard supports composable filters in the body so you can drill down to exactly the data you need:
 
@@ -93,6 +112,15 @@ Dashboard supports composable filters in the body so you can drill down to exact
 
 When `target_profile_id` is provided, the response includes `profile_name`, `profile_emails`, `profile_primary_email`, and `profile_role` for the scoped TA.
 
+{/* DEMO_VIDEO: dashboard-rubric */}
+
+## Rubric breakdown
+
+<DemoVideo
+  topic="dashboard-rubric"
+  caption="Drilling into the rubrics panel — Communication Skills, Policy Knowledge, De-escalation broken out by standard with average score and threshold marker."
+/>
+
 ## Understanding the Response
 
 The `DashboardBundleResponse` is organized into sections:
@@ -107,7 +135,14 @@ The `DashboardBundleResponse` is organized into sections:
 - **`history`** -- Inline paginated attempt history with `HistoryItem` rows.
 - **`analytics`** -- Filter facets (department options, cohort options, role options, date range boundaries) for rendering dropdowns.
 
+{/* DEMO_VIDEO: dashboard-history */}
+
 ## Sibling: Attempt History Search
+
+<DemoVideo
+  topic="dashboard-history"
+  caption="Falling out of the bundle into POST /attempt/search — paginated HistoryItem rows with target_profile_id + scenario_ids scoping to one TA."
+/>
 
 For larger paginated history tables, use the attempt search endpoint
 directly — it returns the same `HistoryItem` shape with full pagination:

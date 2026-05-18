@@ -1,10 +1,13 @@
 # Health
 
-{/* DEMO_VIDEO: health — replace public/demos/health.mp4 */}
+{/* DEMO_VIDEO: health-overview — replace public/demos/health-overview.mp4 */}
 
 # Health
 
-<DemoVideo topic="health" />
+<DemoVideo
+  topic="health-overview"
+  caption="Opening the Health page — service tiles glowing green/red across the last 24 hours, with hourly buckets for uptime and latency."
+/>
 
 The Health resource provides service health monitoring and system metrics for your Glow instance. Use it to track uptime, latency, CPU, memory, and error rates over time. Health is an API-only resource with no CLI commands.
 
@@ -50,7 +53,15 @@ curl -X POST https://<your-instance>/system/health \
   }'
 ```
 
+{/* DEMO_VIDEO: health-status-indicators — replace public/demos/health-status-indicators.mp4 */}
+
 ## Understanding the Response
+
+<DemoVideo
+  topic="health-status-indicators"
+  caption="Hovering an hourly cell to surface check_count / ok_count / fail_count, uptime_percent, and the latest_error string for a degraded service."
+/>
+
 
 ### Service Hourly View
 
@@ -84,7 +95,15 @@ Each `metrics_hourly` entry contains:
 | `max_requests_total` | Peak total request count |
 | `max_errors_total` | Peak total error count |
 
+{/* DEMO_VIDEO: health-refresh — replace public/demos/health-refresh.mp4 */}
+
 ## Refreshing and Exporting
+
+<DemoVideo
+  topic="health-refresh"
+  caption="Hitting `POST /system/refresh` to rebuild the hourly materialized views, then re-fetching health to see the freshest buckets land."
+/>
+
 
 **Refresh materialized views** to ensure health data is current:
 

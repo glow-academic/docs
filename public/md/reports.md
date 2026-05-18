@@ -1,10 +1,13 @@
 # Reports
 
-{/* DEMO_VIDEO: reports — replace public/demos/reports.mp4 */}
+{/* DEMO_VIDEO: reports-overview */}
 
 # Reports
 
-<DemoVideo topic="reports" />
+<DemoVideo
+  topic="reports-overview"
+  caption="POST /attempt/report returning all five sections at once — header KPIs, per-simulation overview, leaderboard, trends and inline history bundled in one bundle."
+/>
 
 Reports provides structured training analytics on TA performance across your institution. It computes overview tables, leaderboard rankings, trend charts, and detailed attempt history -- all filterable by date range, cohort, department, simulation, and scenario.
 
@@ -81,10 +84,41 @@ The `ReportsResponse` contains:
 
 The computed report sections:
 
+{/* DEMO_VIDEO: reports-overview-section */}
+
+<DemoVideo
+  topic="reports-overview-section"
+  caption="The overview table — one row per simulation with attempts, completed, passed, average score and pass_rate computed from the same query that powers the header KPIs."
+/>
+
 - **`header_metrics`** -- `total_attempts`, `average_score`, `completion_percentage`, `first_attempt_pass_rate`. Each metric includes `current_value`, `has_data`, `data_points`, and `hover` details (mean, median, mode, count, percent).
 - **`overview`** -- Array of `ReportsOverviewRow` grouped by simulation: `simulation_id`, `attempts`, `completed_attempts`, `passed_attempts`, `average_score`, `pass_rate`.
+
+{/* DEMO_VIDEO: reports-leaderboard-section */}
+
+<DemoVideo
+  topic="reports-leaderboard-section"
+  caption="The embedded leaderboard rows — rank, profile, highest_score, plus per-profile metrics like messages_per_session and stagnation_rate without a second round-trip."
+/>
+
 - **`leaderboard`** -- Array of `ReportsLeaderboardRow` with `rank`, `profile_id`, `total_attempts`, `average_score`, `highest_score`, plus detailed `profile_metrics` (messages per session, session efficiency, stagnation rate, time spent).
+
+{/* DEMO_VIDEO: reports-trends */}
+
+<DemoVideo
+  topic="reports-trends"
+  caption="The trends time-series — daily attempts, average_score and pass_rate plotted across the selected date range, hover for the underlying data_points."
+/>
+
 - **`trends`** -- Array of `ReportsTrendPoint` with `date`, `attempts`, `average_score`, `pass_rate` for charting.
+
+{/* DEMO_VIDEO: reports-history */}
+
+<DemoVideo
+  topic="reports-history"
+  caption="Paginated ReportsHistoryRow drill-down — attempt_id, score_percent, num_chats and total_time_seconds for forensic review of individual sessions."
+/>
+
 - **`history`** -- Array of `ReportsHistoryRow` with `attempt_id`, `score_percent`, `has_passed`, `num_chats`, `total_time_seconds`.
 
 ### `resources`

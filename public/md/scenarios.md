@@ -1,12 +1,15 @@
 # Scenarios
 
-{/* DEMO_VIDEO: scenarios — replace public/demos/scenarios.mp4 */}
+{/* DEMO_VIDEO: scenarios-overview — replace public/demos/scenarios-overview.mp4 */}
 
 # Scenarios
 
-<DemoVideo topic="scenarios" />
-
 Scenarios are the training situations that learners encounter -- they combine personas, documents, objectives, and context into a single interactive exercise.
+
+<DemoVideo
+  topic="scenarios-overview"
+  caption="The scenarios list — cards show name, attached personas, and document count; drill in to edit the problem statement and objectives."
+/>
 
 ## What is a Scenario?
 
@@ -31,11 +34,30 @@ Scenarios are added to [Simulations](/simulation), which are then assigned to Co
 
 ![Scenarios list showing scenario cards with names, associated personas, and document counts](/screenshots/scenarios/list.png)
 
-## Quick Start
+## How Scenarios Connect to the Workflow
 
-### Create via CLI
+Scenarios are **step 2** in the Glow content pipeline:
 
-![Scenario creation form showing name, problem statement, persona selection, and objectives](/screenshots/scenarios/create.png)
+| Step | Resource | Description |
+|------|----------|-------------|
+| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
+| **2. Assign to Scenarios** | **Scenarios** | **Build training situations and attach personas, documents, and objectives** |
+| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
+
+---
+
+{/* DEMO_VIDEO: scenarios-create — replace public/demos/scenarios-create.mp4 */}
+
+## Create a scenario
+
+<DemoVideo
+  topic="scenarios-create"
+  caption="Filling out the create form: name, problem statement, objectives, and attaching the first persona and document."
+/>
+
+### Via the CLI
 
 Create an "Academic Integrity Training" scenario:
 
@@ -56,19 +78,7 @@ glow scenarios create --body '{
 }'
 ```
 
-Search scenarios:
-
-```bash
-glow scenarios search
-```
-
-Get a specific scenario:
-
-```bash
-glow scenarios get --body '{"scenario_id": "your-scenario-uuid"}'
-```
-
-### Create via API
+### Via the API
 
 ```bash
 curl -X POST https://<your-instance>/scenario/create \
@@ -90,19 +100,18 @@ curl -X POST https://<your-instance>/scenario/create \
   }'
 ```
 
-## How Scenarios Connect to the Workflow
+![Scenario creation form showing name, problem statement, persona selection, and objectives](/screenshots/scenarios/create.png)
 
-Scenarios are **step 2** in the Glow content pipeline:
+---
 
-| Step | Resource | Description |
-|------|----------|-------------|
-| 1. Create Personas | [Personas](/persona) | Define AI characters with instructions and parameter fields |
-| **2. Assign to Scenarios** | **Scenarios** | **Build training situations and attach personas, documents, and objectives** |
-| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
-| 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with AI in [Chats](/chat) |
+{/* DEMO_VIDEO: scenarios-edit — replace public/demos/scenarios-edit.mp4 */}
 
-## Attaching Personas to Scenarios
+## Attaching personas, documents, and objectives
+
+<DemoVideo
+  topic="scenarios-edit"
+  caption="Attaching two personas (Confused + Aggressive) and a FERPA policy document to a single scenario, then tightening the objective list."
+/>
 
 ![Scenario detail page showing problem statement, linked personas, documents, and objectives](/screenshots/scenarios/detail.png)
 
@@ -130,18 +139,6 @@ curl -X PATCH https://<your-instance>/scenario/draft \
   }'
 ```
 
-When filtering scenarios, you can search by which personas they contain:
-
-```bash
-glow scenarios search --body '{"persona_ids": ["confused-student-uuid"]}'
-```
-
-## Attaching Documents and Objectives
-
-![Scenario document attachment showing uploaded documents with preview](/screenshots/scenarios/documents.png)
-
-Documents give the AI context about policies and procedures. Objectives define what the learner should demonstrate.
-
 **Example: FERPA Training scenario**
 
 ```bash
@@ -161,6 +158,8 @@ glow scenarios create --body '{
 }'
 ```
 
+![Scenario document attachment showing uploaded documents with preview](/screenshots/scenarios/documents.png)
+
 ## Working with Parameters
 
 Scenarios supply the parameter values that fill persona `{{placeholders}}`. If a persona's instructions reference `{{class}}` and `{{location}}`, the scenario provides the actual values (e.g., CS-251, Lawson).
@@ -175,6 +174,32 @@ glow scenarios draft --body '{
 ```
 
 This makes the scenario supply concrete values for each parameter when the simulation runs, allowing the same persona to behave differently across scenarios.
+
+---
+
+{/* DEMO_VIDEO: scenarios-generate — replace public/demos/scenarios-generate.mp4 */}
+
+## Generate scenarios from a prompt
+
+The scenario artifact has a `generate` sub-operation that produces draft scenarios from a natural-language prompt -- useful for bulk authoring or templating off an existing situation.
+
+<DemoVideo
+  topic="scenarios-generate"
+  caption="Typing a brief ('three office-hours variants escalating in intensity') and watching three draft scenarios stream in, each pre-wired with personas and objectives."
+/>
+
+```bash
+curl -X POST https://<your-instance>/scenario/generate \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "prompt": "Three office-hours scenarios with the same Confused persona, escalating intensity 3 → 6 → 9",
+    "persona_ids": ["confused-student-uuid"]
+  }'
+```
+
+The response streams generated scenario drafts that you can then edit and publish the same way as hand-authored ones.
 
 ## Scenario Types in Practice
 
@@ -192,9 +217,18 @@ The university seed data illustrates two common patterns:
 - Aggressive Practice -- practice with a confrontational student
 - General Practice -- open-ended practice
 
+---
+
+{/* DEMO_VIDEO: scenarios-draft — replace public/demos/scenarios-draft.mp4 */}
+
 ## Working with Drafts
 
-Scenarios use the same draft system as other Glow resources. Edit through the draft endpoint and publish when ready.
+Scenarios use the same draft system as other Glow resources. Edit through the draft endpoint and publish when ready. The draft endpoint enforces optimistic concurrency via `expected_version`.
+
+<DemoVideo
+  topic="scenarios-draft"
+  caption="Editing a scenario in two tabs — the second save sees a version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 ```bash
 # Create or update a draft
@@ -233,6 +267,65 @@ curl -X POST https://<your-instance>/scenario/drafts \
   -H "Authorization: Bearer your-token"
 ```
 
+---
+
+{/* DEMO_VIDEO: scenarios-search — replace public/demos/scenarios-search.mp4 */}
+
+## Search and filter
+
+Scenario search supports full-text plus facet filters across persona, document, parameter, and department.
+
+<DemoVideo
+  topic="scenarios-search"
+  caption="Filtering scenarios by persona (Confused) and document (FERPA policy), then drilling in on a match."
+/>
+
+```bash
+glow scenarios search --body '{"persona_ids": ["confused-student-uuid"]}'
+```
+
+```bash
+curl -X POST https://<your-instance>/scenario/search \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "FERPA",
+    "page_size": 25
+  }'
+```
+
+---
+
+{/* DEMO_VIDEO: scenarios-bulk — replace public/demos/scenarios-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- pass either explicit IDs, or `all: true` with flat filter fields + optional `excluded_ids` + a `patch` for updates.
+
+<DemoVideo
+  topic="scenarios-bulk"
+  caption="Bulk-archiving every scenario tagged with a deprecated persona in one round-trip, keeping a couple of canonical examples via excluded_ids."
+/>
+
+```bash
+# Delete every scenario referencing a deprecated persona, except the canonical examples
+glow scenarios delete --body '{
+  "all": true,
+  "persona_ids": ["deprecated-persona-uuid"],
+  "excluded_ids": ["scenario-keep-1", "scenario-keep-2"]
+}'
+
+# Bulk update via patch
+glow scenarios update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}'
+```
+
+See the [Personas guide](/personas#bulk-operations) for the canonical write-up of this pattern.
+
 ## Common Operations
 
 | Task | CLI | API |
@@ -243,6 +336,8 @@ curl -X POST https://<your-instance>/scenario/drafts \
 | Update scenarios | `glow scenarios update --body '{"scenarios": [...]}'` | `POST /scenario/update` |
 | Duplicate a scenario | -- | `POST /scenario/duplicate` |
 | Delete scenarios | `glow scenarios delete --body '{"scenario_ids": [...]}'` | `POST /scenario/delete` |
+| Bulk delete (filter) | `glow scenarios delete --body '{"all": true, "filter_…": "…"}'` | `POST /scenario/delete` |
+| Generate scenarios | -- | `POST /scenario/generate` |
 | Save a draft | `glow scenarios draft --body '{...}'` | `PATCH /scenario/draft` |
 | List drafts | `glow scenarios list` | `POST /scenario/drafts` |
 | Export to CSV | `glow scenarios export` | `POST /scenario/export` |

@@ -1,12 +1,15 @@
 # Cohorts
 
-{/* DEMO_VIDEO: cohorts — replace public/demos/cohorts.mp4 */}
+{/* DEMO_VIDEO: cohorts-overview — replace public/demos/cohorts-overview.mp4 */}
 
 # Cohorts
 
-<DemoVideo topic="cohorts" />
-
 Cohorts bring everything together. A cohort is a group of profiles (learners) assigned to a set of simulations. It is the final assembly step before learners can run simulation attempts.
+
+<DemoVideo
+  topic="cohorts-overview"
+  caption="The cohorts list — cards show name, member count, and simulation count; drill in to see profile assignments and simulation availability."
+/>
 
 ## What is a Cohort?
 
@@ -16,20 +19,32 @@ A cohort is a named group that links profiles to simulations. When a learner log
 
 ![Cohorts list showing cohort cards with name, member count, and simulation count](/screenshots/cohorts/list.png)
 
-## Quick Start
+## How It Connects: The 5-Step Workflow
 
-### CLI
+Cohorts are step 4 -- the final assembly before learners can run attempts:
 
-![Cohort creation form showing name, description, profile selection, and simulation assignment](/screenshots/cohorts/create.png)
+1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
+2. **Assign to Scenarios** -- Attach personas and documents to scenarios.
+3. **Add to Simulations** -- Group scenarios into simulations.
+4. **Add to Cohorts** -- Assign *profiles* and *simulations* to a cohort. Configure profile personas to tell the AI who each learner is.
+5. **Run Attempts** -- Learners launch simulations from their cohort.
+
+A cohort requires at least one profile and one simulation. Once both are assigned, the profiles in that cohort can begin running simulation attempts.
+
+---
+
+{/* DEMO_VIDEO: cohorts-create — replace public/demos/cohorts-create.mp4 */}
+
+## Create a cohort
+
+<DemoVideo
+  topic="cohorts-create"
+  caption="Filling out the create form: name, description, then picking the department the cohort lives under."
+/>
+
+### Via the CLI
 
 ```bash
-# List all cohorts
-glow cohorts list
-
-# Search cohorts
-glow cohorts search
-
-# Create a new cohort
 glow cohorts create --body '{
   "cohorts": [
     {
@@ -38,41 +53,13 @@ glow cohorts create --body '{
     }
   ]
 }'
-
-# Get a cohort by ID
-glow cohorts get --body '{"cohort_id": "cohort-101"}'
-
-# Update an existing cohort
-glow cohorts update --body '{
-  "cohorts": [
-    {
-      "cohort_id": "cohort-101",
-      "name": "Practice Cohort",
-      "description": "Updated practice cohort description"
-    }
-  ]
-}'
-
-# Delete a cohort
-glow cohorts delete --body '{"cohort_id": "cohort-101"}'
 ```
 
-### API
+### Via the API
 
 All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
 
 ```bash
-# Search cohorts
-curl -X POST https://<your-instance>/cohort/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "search": "Practice",
-    "page_size": 10
-  }'
-
-# Create a cohort
 curl -X POST https://<your-instance>/cohort/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -87,23 +74,20 @@ curl -X POST https://<your-instance>/cohort/create \
   }'
 ```
 
-## How It Connects: The 5-Step Workflow
+---
 
-Cohorts are step 4 -- the final assembly before learners can run attempts:
+{/* DEMO_VIDEO: cohorts-edit — replace public/demos/cohorts-edit.mp4 */}
 
-1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
-2. **Assign to Scenarios** -- Attach personas and documents to scenarios.
-3. **Add to Simulations** -- Group scenarios into simulations.
-4. **Add to Cohorts** -- Assign *profiles* and *simulations* to a cohort. Configure profile personas to tell the AI who each learner is.
-5. **Run Attempts** -- Learners launch simulations from their cohort.
+## Cohort composition
 
-A cohort requires at least one profile and one simulation. Once both are assigned, the profiles in that cohort can begin running simulation attempts.
+A cohort contains several key sections that you configure together on the detail page.
 
-## Cohort Composition
+<DemoVideo
+  topic="cohorts-edit"
+  caption="Editing a cohort: adding profiles, attaching simulations, and reordering with simulation positions."
+/>
 
 ![Cohort detail showing member list, assigned simulations, and persona override configuration](/screenshots/cohorts/detail.png)
-
-A cohort contains several key sections:
 
 ### Profiles
 
@@ -117,11 +101,11 @@ The simulations assigned to a cohort determine what learners can practice. A sim
 
 **Example:** The Practice Cohort has practice simulations for office-hours scenarios, while the Training Cohort has training simulations for onboarding new instructors.
 
-### Simulation Positions and Availability
+### Simulation positions and availability
 
 Cohorts support simulation positions (ordering how simulations appear) and simulation availability (controlling when simulations are accessible). These are managed through `simulation_position_ids` / `simulation_positions` and `simulation_availability_ids` / `simulation_availability` on the draft endpoint.
 
-## Profile Personas
+## Profile personas
 
 Profile personas tell the AI *who the learner is*, so the AI student character can adapt its behavior accordingly. For example, a Confused student persona might use more technical language when speaking to a graduate-level TA and simpler language when speaking to an introductory TA -- because the profile persona gives the AI context about the learner's background.
 
@@ -135,9 +119,41 @@ The persona affects the AI's behavior, not the learner's identity. The same "Con
 
 Profile personas are managed through `profile_persona_ids` (existing personas) and `profile_personas` (new persona values) on the cohort draft endpoint.
 
-## Filtering and Search
+---
 
-Cohorts support rich search and filtering:
+{/* DEMO_VIDEO: cohorts-draft — replace public/demos/cohorts-draft.mp4 */}
+
+## Drafts
+
+Cohorts support the draft workflow. Changes are saved as a draft before being published, with optimistic concurrency via `expected_version` so two editors don't silently clobber each other.
+
+<DemoVideo
+  topic="cohorts-draft"
+  caption="Editing the same cohort in two tabs — the second save sees an expected_version mismatch and surfaces the conflict."
+/>
+
+```bash
+# Save a cohort draft
+glow cohorts draft --body '{
+  "name": "Practice Cohort",
+  "description": "Practice simulations for CS instructional staff"
+}'
+```
+
+Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, `simulation_ids`, `profile_ids`, `simulation_position_ids`, `simulation_positions`, `simulation_availability_ids`, `simulation_availability`, `profile_persona_ids`, and `profile_personas`.
+
+---
+
+{/* DEMO_VIDEO: cohorts-search — replace public/demos/cohorts-search.mp4 */}
+
+## Filtering and search
+
+Cohorts support rich search and filtering.
+
+<DemoVideo
+  topic="cohorts-search"
+  caption="Filtering cohorts by profile and simulation, then drilling into a single cohort to see its membership."
+/>
 
 - **Profile** -- Find cohorts containing specific profiles (`filter_profile_ids`, `profile_search`)
 - **Simulation** -- Find cohorts containing specific simulations (`filter_simulation_ids`, `simulation_search`)
@@ -156,19 +172,48 @@ curl -X POST https://<your-instance>/cohort/search \
   }'
 ```
 
-## Drafts
+---
 
-Cohorts support the draft workflow. Changes are saved as a draft before being published.
+{/* DEMO_VIDEO: cohorts-bulk — replace public/demos/cohorts-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape: pass either explicit IDs, or `all: true` with flat filter fields + optional `excluded_ids` + a `patch` for updates.
+
+<DemoVideo
+  topic="cohorts-bulk"
+  caption="Bulk-archiving every cohort in a sunset department in one round-trip, with a manual exclusion list for the cohorts to keep."
+/>
+
+**Delete by explicit IDs:**
 
 ```bash
-# Save a cohort draft
-glow cohorts draft --body '{
-  "name": "Practice Cohort",
-  "description": "Practice simulations for CS instructional staff"
+glow cohorts delete --body '{
+  "cohort_ids": ["cohort-1", "cohort-2", "cohort-3"]
 }'
 ```
 
-Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, `simulation_ids`, `profile_ids`, `simulation_position_ids`, `simulation_positions`, `simulation_availability_ids`, `simulation_availability`, `profile_persona_ids`, and `profile_personas`.
+**Delete all matching a filter (with exclusions):**
+
+```bash
+glow cohorts delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-sunset"],
+  "excluded_ids": ["cohort-keep-this-one"]
+}'
+```
+
+**Bulk update via `patch`:**
+
+```bash
+glow cohorts update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}'
+```
+
+See the [Personas guide](/personas) for the canonical write-up of this pattern -- it applies the same way across artifacts that have adopted it.
 
 ## Common Operations
 
@@ -180,6 +225,7 @@ Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expec
 | Update cohorts | `glow cohorts update --body '{...}'` | `POST /cohort/update` |
 | Duplicate a cohort | -- | `POST /cohort/duplicate` |
 | Delete cohorts | `glow cohorts delete --body '{...}'` | `POST /cohort/delete` |
+| Bulk delete (filter) | `glow cohorts delete --body '{"all": true, "filter_…": "…"}'` | `POST /cohort/delete` |
 | Export to CSV | `glow cohorts export` | `POST /cohort/export` |
 | Save a draft | `glow cohorts draft --body '{...}'` | `PATCH /cohort/draft` |
 | List drafts | -- | `POST /cohort/drafts` |

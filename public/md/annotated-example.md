@@ -1,17 +1,23 @@
 # Annotated Example: What Good (and Bad) Looks Like
 
-{/* DEMO_VIDEO: annotated-example — replace public/demos/annotated-example.mp4 */}
+{/* DEMO_VIDEO: annotated-example-overview — replace public/demos/annotated-example-overview.mp4 */}
 
 # Annotated Example: What Good (and Bad) Looks Like
 
-<DemoVideo topic="annotated-example" />
-
+<DemoVideo topic="annotated-example-overview" caption="Two real attempts side-by-side: the 24/25 passive-student conversation and the 7/25 aggressive-student failure, with rubric scorecards open." />
 
 The most effective way to learn simulation design is to see what actually happens in practice. This page shows two real conversations from Glow — one excellent, one poor — with commentary explaining why the grading system scored them the way it did.
 
 Both conversations are from the same platform, with the same rubric, using similar scenarios. The difference is entirely in how the TA approached the interaction.
 
+{/* DEMO_VIDEO: annotated-example-excellent — replace public/demos/annotated-example-excellent.mp4 */}
+
 ## The Excellent Conversation (24/25)
+
+<DemoVideo
+  topic="annotated-example-excellent"
+  caption="Replaying the passive-student attempt turn-by-turn — 'You're not interrupting', guided questioning, deferred input validation, 24/25 scorecard at the end."
+/>
 
 **Scenario:** A passive student needs help with a Java assignment (MyMathHelper.java — loops and menu logic). The student is hesitant, soft-spoken, and won't volunteer information.
 
