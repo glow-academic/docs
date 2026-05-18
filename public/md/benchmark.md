@@ -34,6 +34,8 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 
 **Fetch benchmark data** for the current semester:
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 curl -X POST https://<your-instance>/test/benchmark \
   -H "Authorization: Bearer <token>" \

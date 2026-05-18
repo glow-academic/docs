@@ -18,8 +18,17 @@ export default {
   patterns: 'Patterns & Best Practices',
   'annotated-example': 'Annotated Example',
   authentication: 'Authentication',
-  realtime: 'Realtime',
   settings: 'Settings',
+
+  // ── Foundations (cross-cutting capabilities that span every
+  //    artifact — read these before the per-artifact pages so
+  //    each artifact's section doesn't have to re-explain). ─────
+  '---foundations': { type: 'separator', title: 'Foundations' },
+  streaming: 'Streaming',
+  generation: 'Generation',
+  media: 'Media',
+  realtime: 'Realtime',
+  mcp: 'MCP',
 
   // ── Attempt artifact — chat namespace + view ops ────────────
   '---attempt': { type: 'separator', title: 'Attempt' },
@@ -42,7 +51,6 @@ export default {
   pricing: 'Pricing',
   session: 'Session',
   group: 'Group',
-  media: 'Media',
 
   // ── Training artifacts ──────────────────────────────────────
   '---training': { type: 'separator', title: 'Training' },

@@ -26,6 +26,8 @@ This helps institutions monitor budget consumption, compare model costs, and for
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get daily cost chart data
 glow system pricing

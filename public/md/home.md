@@ -26,6 +26,8 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get assigned simulations for the current TA
 glow attempts home

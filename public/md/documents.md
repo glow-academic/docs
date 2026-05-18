@@ -44,6 +44,8 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow documents create --body '{
   "documents": [

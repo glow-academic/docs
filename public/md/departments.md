@@ -42,6 +42,8 @@ Departments connect to nearly everything. They are the first resource you should
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow departments create --body '{
   "departments": [

@@ -1,0 +1,211 @@
+# MCP
+
+{/* DEMO_VIDEO: mcp-overview — replace public/demos/mcp-overview.mp4 */}
+
+# MCP
+
+Glow exposes its tool catalog over the **Model Context Protocol** at
+`/mcp/`. The mount is a [FastMCP](https://github.com/modelcontextprotocol/python-sdk)
+streamable-HTTP app, so any MCP-aware client (Claude Desktop, an
+agent runtime, the `glow mcp` CLI) can list and call the same tools
+the generate pipeline uses internally.
+
+<DemoVideo
+  topic="mcp-overview"
+  caption="Listing tools over MCP, then invoking one — same JSON-RPC envelope a real MCP client would send."
+/>
+
+## What's exposed
+
+`/mcp/` is mounted at the root of the API server:
+
+```python
+# core/app/server.py
+from app.routes.mcp import mcp_app
+fastapi_app.mount("/mcp", mcp_app, name="Artifacts-Resources-MCP")
+```
+
+The FastMCP instance is configured `stateless_http=True` — every POST
+to `/mcp/` is an independent request, no session is held server-side
+between calls. Tools are registered lazily on the first request from
+the system-wide `tools_resource` catalog: one MCP tool per unique
+`tool.name`, with the `inputSchema`, routing, and permissions enriched
+from the same pipeline that powers `/generate`.
+
+Multi-target tools (one tool, several artifact pairs) surface as a
+single MCP entry and route internally via `resolve_tool_spec`. There
+is also one MCP **prompt**, `agent_system_prompt`, which returns the
+caller's configured agent system prompt (department-driven).
+
+The exact tool list depends on what's seeded in your instance — call
+`tools/list` to see it.
+
+---
+
+{/* DEMO_VIDEO: mcp-list-tools — replace public/demos/mcp-list-tools.mp4 */}
+
+## Listing tools
+
+<DemoVideo
+  topic="mcp-list-tools"
+  caption="`glow mcp list-tools` — one POST to /mcp/, prints name + first description line per tool."
+/>
+
+JSON-RPC envelope:
+
+```json
+{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+```
+
+CLI helper:
+
+```bash
+glow mcp list-tools
+```
+
+The helper unwraps `result.tools` and prints `name` plus the first
+line of `description` per row. Pass `--json` for the raw array.
+
+---
+
+{/* DEMO_VIDEO: mcp-call — replace public/demos/mcp-call.mp4 */}
+
+## Invoking a tool
+
+<DemoVideo
+  topic="mcp-call"
+  caption="`glow mcp call` with --args '{...}' — JSON arguments validated against the tool's inputSchema before dispatch."
+/>
+
+JSON-RPC envelope:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "Persona_Search",
+    "arguments": {"search": "confused", "page_size": 10}
+  }
+}
+```
+
+CLI helper:
+
+```bash
+glow mcp call Persona_Search --args '{"search": "confused", "page_size": 10}'
+```
+
+`--args` must be valid JSON. The CLI prints each `content[].text`
+block in human mode, or the whole `result` object with `--json`.
+
+---
+
+## Authentication
+
+`/mcp/` reuses the API's bearer-token middleware. Every request must
+carry a JWT in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+The OAuth middleware sets `request.state.profile_id` on success, and
+`get_mcp_profile_id` reads it back via FastMCP's request-context
+helper to scope tool dispatch to the calling profile. Missing or
+unresolvable profile → 401.
+
+When the `glow` CLI is logged in (`glow login`), `mcp list-tools` and
+`mcp call` reuse the stored bearer automatically — there is no
+separate MCP login flow.
+
+**LearnLoop MCP proxy.** Hosted LearnLoop instances reach Glow MCP
+through a gateway that mints short-lived (5-minute) deployment-scoped
+JWTs signed with the LearnLoop key. Glow verifies the signature against
+LearnLoop's JWKS and trusts the user identity from the claims — same
+endpoint, different token issuer.
+
+---
+
+## Response shape
+
+`tools/list` returns:
+
+```json
+{"jsonrpc": "2.0", "id": 1, "result": {"tools": [{"name": "...", "description": "...", "inputSchema": {...}}, ...]}}
+```
+
+`tools/call` returns the MCP content-block shape:
+
+```json
+{"jsonrpc": "2.0", "id": 1, "result": {"content": [{"type": "text", "text": "..."}], "isError": false}}
+```
+
+Depending on the `Accept` header, FastMCP may frame the response as
+SSE (`event: ...\ndata: {json}\n\n`) rather than a plain JSON body.
+The CLI sends `Accept: application/json, text/event-stream` and parses
+either form; if you POST yourself, be ready to strip an SSE wrapper.
+
+---
+
+## Limitations of the CLI's thin client
+
+The `glow mcp` commands are intentionally **not** a full MCP client.
+They are a one-line JSON-RPC POST wrapper, useful for scripting tool
+calls but not for any session-oriented MCP feature. Specifically, the
+thin client does **not** support:
+
+- **`initialize` handshake** — no capability negotiation, no client info exchange.
+- **Server-push streaming** — every call is one POST → one response; no SSE subscription is held open.
+- **`notifications/*`** — no `tools/list_changed`, no `progress`, no `cancelled`.
+- **Sampling** — the server cannot call back into the client for LLM completions.
+- **Subscriptions** — `resources/subscribe` and friends are unreachable.
+- **Stateful sessions** — the server is mounted `stateless_http=True`, so even a richer client wouldn't get per-session state through this mount.
+
+If you need any of the above (long-running tool progress, dynamic tool
+discovery, sampling-driven agents), use a full MCP client — the
+official `mcp` Python SDK or one of the Rust/TypeScript clients. The
+thin client is the right tool when you want `tools/list` or
+`tools/call` from a shell script without a runtime.
+
+---
+
+## Raw curl
+
+To call MCP without the CLI:
+
+```bash
+# List tools
+curl -X POST https://<your-instance>/mcp/ \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}'
+
+# Call a tool
+curl -X POST https://<your-instance>/mcp/ \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "Persona_Search",
+      "arguments": {"search": "confused", "page_size": 10}
+    }
+  }'
+```
+
+Note the trailing slash on `/mcp/` — FastMCP's streamable-HTTP app
+mounts at that exact path.
+
+## Related
+
+- [Authentication](/authentication) — bearer-token flow shared with `/mcp/`
+- [`glow mcp list-tools`](/cli-reference/mcp-list-tools) — CLI reference
+- [`glow mcp call`](/cli-reference/mcp-call) — CLI reference
+- [Tools](/tools) — the underlying tool catalog MCP exposes
+- [Agents](/agents) — agent-scoped tool sets and the `agent_system_prompt` MCP prompt

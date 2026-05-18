@@ -46,6 +46,8 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow models create --body '{
   "models": [{

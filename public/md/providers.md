@@ -53,6 +53,8 @@ Provider  -->  Model (model has provider_id)
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow providers create --body '{
   "providers": [{

@@ -58,6 +58,8 @@ Simulations are **step 3** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" simulation:
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow simulations create --body '{
   "simulations": [{

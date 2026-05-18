@@ -53,6 +53,8 @@ Fields connect to **parameters** (each field belongs to a parameter) and to **do
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow fields create --body '{
   "fields": [

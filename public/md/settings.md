@@ -20,6 +20,8 @@ Settings uses a **composable infra architecture** -- you can search for all sett
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # List all settings
 glow settings search

@@ -29,6 +29,8 @@ This is the go-to resource when you need to answer questions like:
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get activity summary with engagement counts
 glow system activity

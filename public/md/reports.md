@@ -31,6 +31,8 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Fetch the full reports bundle
 glow attempts report

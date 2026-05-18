@@ -56,6 +56,8 @@ Parameters connect to **fields**. Each parameter contains one or more fields. Do
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow parameters create --body '{
   "parameters": [

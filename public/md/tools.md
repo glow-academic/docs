@@ -54,6 +54,8 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow tools create --body '{
   "tools": [{

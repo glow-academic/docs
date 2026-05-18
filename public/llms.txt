@@ -1037,6 +1037,10 @@
 
 - [Fields](/fields.md)
 
+## Generation
+
+- [Generation](/generation.md)
+
 ## Group
 
 - [Group](/group.md)
@@ -1060,6 +1064,14 @@
 ## Leaderboard
 
 - [Leaderboard](/leaderboard.md)
+
+## Mcp
+
+- [MCP](/mcp.md)
+
+## Media
+
+- [Media](/media.md)
 
 ## Models
 
@@ -1097,6 +1109,10 @@
 
 - [Providers](/providers.md)
 
+## Realtime
+
+- [Realtime](/realtime.md)
+
 ## Reports
 
 - [Reports](/reports.md)
@@ -1124,6 +1140,10 @@
 ## Start
 
 - [Start](/start.md)
+
+## Streaming
+
+- [Streaming](/streaming.md)
 
 ## Tools
 

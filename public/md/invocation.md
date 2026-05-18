@@ -56,6 +56,8 @@ singular concatenated form.
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Hydrate a single invocation
 glow tests invocation get --body '{"invocation_id": "invocation-uuid"}'

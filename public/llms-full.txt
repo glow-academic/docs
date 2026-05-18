@@ -31,6 +31,8 @@ This is the go-to resource when you need to answer questions like:
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get activity summary with engagement counts
 glow system activity
@@ -249,6 +251,8 @@ The agent is the engine that processes every message, generates persona response
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow agents create --body '{
@@ -36241,6 +36245,8 @@ Auths uses a composable architecture with full CRUD, duplication, and a draft sy
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow auths create --body '{"auths": [{"name": "University SSO", "description": "SAML SSO for university login"}]}'
 ```
@@ -36481,6 +36487,8 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 
 **Fetch benchmark data** for the current semester:
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 curl -X POST https://<your-instance>/test/benchmark \
   -H "Authorization: Bearer <token>" \
@@ -36653,6 +36661,8 @@ Chats also support a draft system for customizing chat configurations before or 
 ## Quick Start
 
 ### Get Chat Details via CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
@@ -45755,6 +45765,8 @@ A cohort requires at least one profile and one simulation. Once both are assigne
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow cohorts create --body '{
   "cohorts": [
@@ -46003,6 +46015,8 @@ Dashboard returns `header_metrics` (total attempts, average score, completion pe
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Fetch the full dashboard bundle (all metrics, rubrics, simulations)
 glow attempts dashboard
@@ -46190,6 +46204,8 @@ Departments connect to nearly everything. They are the first resource you should
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow departments create --body '{
@@ -46417,6 +46433,8 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow documents create --body '{
@@ -46672,6 +46690,8 @@ Eval
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow evals create --body '{
@@ -46940,6 +46960,8 @@ Fields connect to **parameters** (each field belongs to a parameter) and to **do
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow fields create --body '{
   "fields": [
@@ -47105,6 +47127,272 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 ---
 
+# Generation
+
+Route: /generation
+
+{/* DEMO_VIDEO: generation-overview — replace public/demos/generation-overview.mp4 */}
+
+# Generation
+
+Most artifacts in Glow can be authored two ways: hand-written through
+the standard CRUD surface (`create` / `draft` / `update`) or generated
+by an LLM. The generated path is uniform across the 20 artifact
+families and is the subject of this page.
+
+<DemoVideo
+  topic="generation-overview"
+  caption="Triggering POST /persona/generate from the personas list, then watching the SSE stream paint progress, save, and complete events into the row before the page refreshes."
+/>
+
+## The generate pattern in two beats
+
+Every artifact that supports generation exposes the same two-step
+contract:
+
+1. **Trigger.** `POST /<artifact>/generate` accepts an
+   `ArtifactGenerateRequest` and returns immediately with
+   `{ group_id, run_id, ... }`. The run is fire-and-return: the
+   server kicks off the model calls in the background and the HTTP
+   call hands you back the handles you need to follow it.
+2. **Follow.** `GET /<artifact>/watch?run_id=<run_id>` is a long-lived
+   Server-Sent Events stream that emits typed lifecycle events for
+   that run until the terminal `*.complete` or `*.error` event lands.
+
+The pair is the canonical fan-out: the trigger response is *the
+ticket* you exchange for a stream of progress on
+[/streaming](/streaming).
+
+| Handle | Lifetime | What it scopes |
+|--------|----------|----------------|
+| `group_id` | The conversation / session window | Every run the actor performs in this window — re-used across many triggers, surfaced on the [Group](/group) detail view, and how `glow <art> generations` paginates history |
+| `run_id` | One trigger | Exactly one generate call — the filter you pass to `/watch` so the stream is scoped to this run instead of every run in the group |
+
+`group_id` is resolved server-side from the actor's session if you
+don't pass one; `run_id` is minted by the trigger (or by the client up
+front via `client_run_id` on the request if you want to subscribe
+before the run exists).
+
+---
+
+{/* DEMO_VIDEO: generation-trigger — replace public/demos/generation-trigger.mp4 */}
+
+## Triggering generation
+
+<DemoVideo
+  topic="generation-trigger"
+  caption="POST /persona/generate firing a single-line instructions string; the response panel showing run_id + group_id within ~200ms while the model spins up in the background."
+/>
+
+The request body is `ArtifactGenerateRequest` — `instructions` (what
+you want), an optional `config` block (operations, params,
+`dangerous`), and optional modality / audio handles for media and
+voice flows. Artifact type is implicit from the URL path.
+
+**Raw HTTP:**
+
+```bash
+curl -X POST https://<your-instance>/persona/generate \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "instructions": ["A passive student who starts every reply with Uh..."],
+    "config": { "dangerous": false }
+  }'
+```
+
+Response:
+
+```json
+{
+  "group_id": "9c8d…",
+  "run_id":   "1f2e…",
+  "produced_media": []
+}
+```
+
+**glow CLI:**
+
+```bash
+# Fire-and-return — same as the curl call above
+glow personas generate --body '{
+  "instructions": ["A passive student who starts every reply with Uh..."]
+}'
+```
+
+The trigger returns within a few hundred milliseconds regardless of
+how long the underlying model work takes. Plug the returned `run_id`
+into `/watch` (or use `--wait`, below) to block on completion.
+
+---
+
+{/* DEMO_VIDEO: generation-wait — replace public/demos/generation-wait.mp4 */}
+
+## The `--wait` shortcut
+
+<DemoVideo
+  topic="generation-wait"
+  caption="Running glow personas generate --wait in a terminal: the trigger response prints first with run_id, then live SSE frames stream in until a green `Run completed.` line."
+/>
+
+`glow <artifact> generate --wait` rolls the trigger + watch loop into
+one blocking call. The CLI fires the `POST /<artifact>/generate`,
+captures the `run_id` and `group_id`, and immediately attaches to
+`GET /<artifact>/watch?run_id=<run_id>`, printing each SSE frame and
+exiting on the first terminal event (`*.complete` → exit 0,
+`*.error`/`*.failed` → exit 1).
+
+```bash
+glow personas generate --wait --body '{
+  "instructions": ["Aggressive student in CS-180, intensity 7"]
+}'
+```
+
+Useful in scripts and CI: the `--wait` shortcut means a generate is
+just one command and the process exit code tells you whether the
+artifact was actually saved. Stream-closed without a terminal event
+exits 0 (the API may end the stream when its dedup/age window
+expires).
+
+Without `--wait`, `glow <artifact> generate` is fire-and-return — the
+same shape the FE uses when it has its own SSE subscription open
+already.
+
+---
+
+{/* DEMO_VIDEO: generation-events — replace public/demos/generation-events.mp4 */}
+
+## Event types you'll see
+
+<DemoVideo
+  topic="generation-events"
+  caption="A single persona generate in the network inspector: Progress frames rising from 20% → 80%, a Saved frame, then a final Complete frame carrying the artifact_id."
+/>
+
+Six client-facing event types ride the watch stream. The text
+lifecycle and the media lifecycle are independent — a text-only
+generate emits only the first four; an image/video generate also
+emits the two `Media*` variants in parallel.
+
+| Event | Fires when | Carries |
+|-------|-----------|---------|
+| **`GenerationProgressEvent`** | Each resource in the run completes | `completed_resources`, `total_resources`, `percentage`, `last_completed_resource` |
+| **`GenerationSavedEvent`** | The artifact row is persisted to Postgres | `artifact_id` |
+| **`GenerationCompleteEvent`** | All work for the run is done (terminal) | `success`, `message`, `artifact_id` |
+| **`GenerationErrorEvent`** | Any resource or the run as a whole fails (terminal) | `resource_type`, `resource_id`, `message` |
+| **`GenerationMediaProgressEvent`** | Image/video generation crosses a status boundary | `modality`, `status` (`started` / `in_progress`), `message` |
+| **`GenerationMediaCompleteEvent`** | An image/video asset finishes uploading | `modality`, `upload_id`, `file_size`, `mime_type` |
+
+**Ordering you can rely on:**
+
+- `Progress*` frames are monotonic on `completed_resources` and
+  arrive before `Complete` / `Saved`.
+- `Saved` always arrives before `Complete` for runs that persist an
+  artifact (some media-only runs go `MediaComplete` → `Complete`
+  with no `Saved`).
+- `MediaProgress` with `status: "started"` precedes any
+  `MediaComplete` for the same `resource_id`.
+- `Error` is terminal but may arrive *with* prior `Progress` frames —
+  partial failures still report what made it through.
+
+Every event carries the `group_id` and `run_id` envelope so a single
+SSE connection scoped to a `group_id` (omit `run_id` on `/watch`) can
+multiplex many concurrent runs. The auto-generated schemas live under
+[`/api-reference`](/api-reference) — see
+[`/api-reference/persona/get-persona-watch`](/api-reference/persona/get-persona-watch)
+for the persona variant, and the equivalent `get-<artifact>-watch`
+page under every other artifact.
+
+---
+
+## Artifact-specific signatures
+
+Most artifacts (`persona`, `agent`, `rubric`, `eval`, `tool`,
+`field`, `parameter`, `document`, …) take the standard
+`ArtifactGenerateRequest` body — pass `instructions` and let the
+server pick operations.
+
+A handful have an ergonomic shape on top of that contract. The most
+common deviation is **scenarios**, which the CLI exposes positionally:
+
+```bash
+# glow scenarios generate <modality> <title> [--instructions <text>]
+glow scenarios generate image "University Office" \
+  --instructions "Wide-angle shot, late afternoon light, books on the desk"
+```
+
+The CLI translates that into the same `POST /scenario/generate` call
+with `{ modality, title, instructions }` in the body. For the full
+per-artifact request schema, jump to the relevant artifact page:
+
+- [Personas](/personas) — text generation only
+- [Scenarios](/scenarios) — image / video / text, `title` is the asset's display name
+- [Agents](/agents) — text generation, optional `params` for graph-mode
+- [Rubrics](/rubrics), [Evals](/evals), [Tools](/tools), [Fields](/fields), [Parameters](/parameters), [Documents](/documents) — standard text shape
+
+Or read the auto-generated request body on
+[`/api-reference/<artifact>/post-<artifact>-generate`](/api-reference).
+
+---
+
+## `glow <art> generations` — listing prior runs
+
+Every artifact that supports generation also exposes a `generations`
+endpoint that lists the `group_id`s an actor has produced for that
+artifact, paginated and date-windowed.
+
+```bash
+# List the 20 most recent persona-generation groups for this actor
+glow personas generations --body '{
+  "page_limit": 20,
+  "page_offset": 0
+}'
+```
+
+Each row is a `{ group_id, group_name, session_id, created_at }` — use
+`group_id` to open the full [Group](/group) detail view (every run +
+every message) or to pull the audit trail. The endpoint is scoped to
+the calling profile by default; admins see all generations in their
+org.
+
+Raw HTTP:
+
+```bash
+curl -X POST https://<your-instance>/persona/generations \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -d '{ "search": "confused", "page_limit": 50 }'
+```
+
+The response carries an `items` list of
+`{ group_id, session_id, group_name, created_at }` rows plus a
+`total_count` for the matching window. Combine with `date_from` /
+`date_to` to scope a sweep.
+
+---
+
+## Common operations reference
+
+| Task | CLI | API |
+|------|-----|-----|
+| Trigger a generate (fire-and-return) | `glow <art> generate --body '{...}'` | `POST /<art>/generate` |
+| Trigger + block on completion | `glow <art> generate --wait --body '{...}'` | `POST /<art>/generate` then `GET /<art>/watch?run_id=...` |
+| Stream events for one run | `glow <art> watch <run_id>` | `GET /<art>/watch?run_id=<run_id>` |
+| Stream every event in a group | `glow <art> watch --group <group_id>` | `GET /<art>/watch?group_id=<group_id>` |
+| List prior generations | `glow <art> generations --body '{...}'` | `POST /<art>/generations` |
+| Inspect one group's full tree | `glow system group --body '{"group_id":"...","include_detail":true}'` | `POST /system/group` |
+
+## Related
+
+- [Streaming](/streaming) — SSE plumbing details, reconnect semantics, and the `/watch` event envelope
+- [Media](/media) — image, video, and audio generation modalities and the produced-media handoff
+- [Group](/group) — the audit view of every run inside a single `group_id`
+- [Personas](/personas), [Scenarios](/scenarios), [Agents](/agents) — per-artifact pages with concrete generate request bodies
+- [API Reference](/api-reference) — auto-generated request / response schemas for every `<art>/generate`, `<art>/generations`, and `<art>/watch` endpoint
+
+---
+
 # Group
 
 Route: /group
@@ -47147,6 +47435,8 @@ Groups are essential for debugging AI behavior, auditing training interactions f
 ## Quick Start
 
 ### CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 # Lean resolve — group identity only (cheap path used by audit linking)
@@ -47345,6 +47635,8 @@ The health response includes two materialized views:
 
 **Fetch health data** for the last 7 days:
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 curl -X POST https://<your-instance>/system/health \
   -H "Authorization: Bearer <token>" \
@@ -47485,6 +47777,8 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 ## Quick Start
 
 ### CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 # Get assigned simulations for the current TA
@@ -47899,6 +48193,8 @@ singular concatenated form.
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Hydrate a single invocation
 glow tests invocation get --body '{"invocation_id": "invocation-uuid"}'
@@ -48062,6 +48358,8 @@ Leaderboard answers questions like:
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get the full leaderboard with header metrics and accolades
 glow attempts leaderboard
@@ -48204,6 +48502,518 @@ The `POST /attempt/search` response returns `LeaderboardDataRow` items:
 
 ---
 
+# MCP
+
+Route: /mcp
+
+{/* DEMO_VIDEO: mcp-overview — replace public/demos/mcp-overview.mp4 */}
+
+# MCP
+
+Glow exposes its tool catalog over the **Model Context Protocol** at
+`/mcp/`. The mount is a [FastMCP](https://github.com/modelcontextprotocol/python-sdk)
+streamable-HTTP app, so any MCP-aware client (Claude Desktop, an
+agent runtime, the `glow mcp` CLI) can list and call the same tools
+the generate pipeline uses internally.
+
+<DemoVideo
+  topic="mcp-overview"
+  caption="Listing tools over MCP, then invoking one — same JSON-RPC envelope a real MCP client would send."
+/>
+
+## What's exposed
+
+`/mcp/` is mounted at the root of the API server:
+
+```python
+# core/app/server.py
+from app.routes.mcp import mcp_app
+fastapi_app.mount("/mcp", mcp_app, name="Artifacts-Resources-MCP")
+```
+
+The FastMCP instance is configured `stateless_http=True` — every POST
+to `/mcp/` is an independent request, no session is held server-side
+between calls. Tools are registered lazily on the first request from
+the system-wide `tools_resource` catalog: one MCP tool per unique
+`tool.name`, with the `inputSchema`, routing, and permissions enriched
+from the same pipeline that powers `/generate`.
+
+Multi-target tools (one tool, several artifact pairs) surface as a
+single MCP entry and route internally via `resolve_tool_spec`. There
+is also one MCP **prompt**, `agent_system_prompt`, which returns the
+caller's configured agent system prompt (department-driven).
+
+The exact tool list depends on what's seeded in your instance — call
+`tools/list` to see it.
+
+---
+
+{/* DEMO_VIDEO: mcp-list-tools — replace public/demos/mcp-list-tools.mp4 */}
+
+## Listing tools
+
+<DemoVideo
+  topic="mcp-list-tools"
+  caption="`glow mcp list-tools` — one POST to /mcp/, prints name + first description line per tool."
+/>
+
+JSON-RPC envelope:
+
+```json
+{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+```
+
+CLI helper:
+
+```bash
+glow mcp list-tools
+```
+
+The helper unwraps `result.tools` and prints `name` plus the first
+line of `description` per row. Pass `--json` for the raw array.
+
+---
+
+{/* DEMO_VIDEO: mcp-call — replace public/demos/mcp-call.mp4 */}
+
+## Invoking a tool
+
+<DemoVideo
+  topic="mcp-call"
+  caption="`glow mcp call` with --args '{...}' — JSON arguments validated against the tool's inputSchema before dispatch."
+/>
+
+JSON-RPC envelope:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "Persona_Search",
+    "arguments": {"search": "confused", "page_size": 10}
+  }
+}
+```
+
+CLI helper:
+
+```bash
+glow mcp call Persona_Search --args '{"search": "confused", "page_size": 10}'
+```
+
+`--args` must be valid JSON. The CLI prints each `content[].text`
+block in human mode, or the whole `result` object with `--json`.
+
+---
+
+## Authentication
+
+`/mcp/` reuses the API's bearer-token middleware. Every request must
+carry a JWT in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+The OAuth middleware sets `request.state.profile_id` on success, and
+`get_mcp_profile_id` reads it back via FastMCP's request-context
+helper to scope tool dispatch to the calling profile. Missing or
+unresolvable profile → 401.
+
+When the `glow` CLI is logged in (`glow login`), `mcp list-tools` and
+`mcp call` reuse the stored bearer automatically — there is no
+separate MCP login flow.
+
+**LearnLoop MCP proxy.** Hosted LearnLoop instances reach Glow MCP
+through a gateway that mints short-lived (5-minute) deployment-scoped
+JWTs signed with the LearnLoop key. Glow verifies the signature against
+LearnLoop's JWKS and trusts the user identity from the claims — same
+endpoint, different token issuer.
+
+---
+
+## Response shape
+
+`tools/list` returns:
+
+```json
+{"jsonrpc": "2.0", "id": 1, "result": {"tools": [{"name": "...", "description": "...", "inputSchema": {...}}, ...]}}
+```
+
+`tools/call` returns the MCP content-block shape:
+
+```json
+{"jsonrpc": "2.0", "id": 1, "result": {"content": [{"type": "text", "text": "..."}], "isError": false}}
+```
+
+Depending on the `Accept` header, FastMCP may frame the response as
+SSE (`event: ...\ndata: {json}\n\n`) rather than a plain JSON body.
+The CLI sends `Accept: application/json, text/event-stream` and parses
+either form; if you POST yourself, be ready to strip an SSE wrapper.
+
+---
+
+## Limitations of the CLI's thin client
+
+The `glow mcp` commands are intentionally **not** a full MCP client.
+They are a one-line JSON-RPC POST wrapper, useful for scripting tool
+calls but not for any session-oriented MCP feature. Specifically, the
+thin client does **not** support:
+
+- **`initialize` handshake** — no capability negotiation, no client info exchange.
+- **Server-push streaming** — every call is one POST → one response; no SSE subscription is held open.
+- **`notifications/*`** — no `tools/list_changed`, no `progress`, no `cancelled`.
+- **Sampling** — the server cannot call back into the client for LLM completions.
+- **Subscriptions** — `resources/subscribe` and friends are unreachable.
+- **Stateful sessions** — the server is mounted `stateless_http=True`, so even a richer client wouldn't get per-session state through this mount.
+
+If you need any of the above (long-running tool progress, dynamic tool
+discovery, sampling-driven agents), use a full MCP client — the
+official `mcp` Python SDK or one of the Rust/TypeScript clients. The
+thin client is the right tool when you want `tools/list` or
+`tools/call` from a shell script without a runtime.
+
+---
+
+## Raw curl
+
+To call MCP without the CLI:
+
+```bash
+# List tools
+curl -X POST https://<your-instance>/mcp/ \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}'
+
+# Call a tool
+curl -X POST https://<your-instance>/mcp/ \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "Persona_Search",
+      "arguments": {"search": "confused", "page_size": 10}
+    }
+  }'
+```
+
+Note the trailing slash on `/mcp/` — FastMCP's streamable-HTTP app
+mounts at that exact path.
+
+## Related
+
+- [Authentication](/authentication) — bearer-token flow shared with `/mcp/`
+- [`glow mcp list-tools`](/cli-reference/mcp-list-tools) — CLI reference
+- [`glow mcp call`](/cli-reference/mcp-call) — CLI reference
+- [Tools](/tools) — the underlying tool catalog MCP exposes
+- [Agents](/agents) — agent-scoped tool sets and the `agent_system_prompt` MCP prompt
+
+---
+
+# Media
+
+Route: /media
+
+{/* DEMO_VIDEO: media-overview — replace public/demos/media-overview.mp4 */}
+
+# Media
+
+Every file that flows through Glow — audio attempts, scenario
+illustrations, document PDFs, scenario videos, raw text uploads —
+funnels through a single `upload_id` primitive and a small grid of
+per-modality routes that hang off the artifact each upload belongs to.
+
+<DemoVideo
+  topic="media-overview"
+  caption="An attempt with a recorded audio reply, a scenario with an attached cover image, and a document with a PDF — all three trace back to the same upload_id shape on the wire."
+/>
+
+## The upload_id pattern
+
+Every byte that lands in Glow is registered as a single `uploads_entry`
+row and surfaced to clients as an opaque `upload_id` UUID. Three
+things use it:
+
+1. **Upload endpoints** return it after multipart ingest (or after
+   promoting a pre-reserved upload — see *attempt audio* below).
+2. **Download / preview endpoints** take it back in a JSON request
+   body and stream the bytes (or a rendered preview) out.
+3. **Message items** reference it inside `<kind>_upload_ids` arrays
+   on `GroupDetailMessageItem`, so an assistant turn that produced an
+   audio clip + an image carries both `audio_upload_ids` and
+   `image_upload_ids` for the client to fetch.
+
+The same `upload_id` is valid across every download surface that
+serves its kind — see the matrix below for which artifacts host
+which kinds. **When in doubt, hit `/system/<kind>_download` with the
+id**; it's the canonical mirror of every download family.
+
+---
+
+{/* DEMO_VIDEO: media-upload — replace public/demos/media-upload.mp4 */}
+
+## Uploading
+
+<DemoVideo
+  topic="media-upload"
+  caption="Dragging a PDF onto the documents picker — the multipart POST round-trips an upload_id that the client immediately stores against the row."
+/>
+
+Uploads are `multipart/form-data` `POST`s against the artifact that
+owns the eventual binding. The route name is always `<kind>_upload`:
+
+```bash
+curl -X POST https://<your-instance>/document/file_upload \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key" \
+  -F "file=@./paper.pdf"
+```
+
+The response carries the `upload_id` plus an artifact-side wrapper id
+(`files_id`, `images_id`, `audios_id`, ...) for the resource ladder.
+
+CLI ergonomics fan out to the same endpoints:
+
+```bash
+glow documents upload file  ./paper.pdf
+glow scenarios upload image ./classroom.png
+glow scenarios upload video ./role-play.mp4
+glow documents upload text  ./transcript.txt
+glow attempts  upload audio ./reply.webm
+```
+
+**Per-modality content-type allowlists** are enforced before any
+bytes are written:
+
+| Upload | Accepted MIME types |
+|--------|---------------------|
+| `audio_upload` | `audio/{mpeg,mp3,wav,ogg,webm,flac,aac,x-m4a,mp4,x-wav}` |
+| `image_upload` | `image/{png,jpeg,gif,svg+xml,webp,bmp,tiff}` |
+| `video_upload` | `video/*` |
+| `file_upload`  | any (catch-all binary) |
+| `text_upload`  | `text/{plain,html,csv,markdown,xml}`, `application/{json,xml}` |
+
+Codec parameters (`audio/webm;codecs=opus` from `MediaRecorder`) are
+stripped before the check; the bare type is persisted.
+
+### Attempt audio — promoting a pre-reserved upload
+
+The attempt audio route is the one upload that accepts a *second*
+shape: pass `?upload_id=<uuid>` to **promote** an existing raw upload
+(typically captured by the realtime adapter) into the full audio
+chain. Three shapes total:
+
+- `file` only — write bytes + build the chain on top
+- `upload_id` only — reuse an existing upload, stack resource +
+  junctions
+- `upload_id + file` — client pre-reserved a slot via
+  `/attempt/audio/new` and is filling it
+
+Response is always `{audio_id, audios_id, upload_id}`.
+
+---
+
+{/* DEMO_VIDEO: media-download — replace public/demos/media-download.mp4 */}
+
+## Downloading
+
+<DemoVideo
+  topic="media-download"
+  caption="An audio scrubber seeking mid-track — the second request is a Range GET for the bytes ahead of the playhead, served as 206 Partial Content."
+/>
+
+Downloads are `POST`s (id in the JSON body, not the URL) and return
+bytes via `StreamingResponse` with full HTTP Range support — so audio
+scrubbing, video seeking, and partial PDF loads work without a custom
+protocol:
+
+```bash
+curl -X POST https://<your-instance>/system/audio_download \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Range: bytes=0-65535" \
+  -d '{"audio_id": "<upload_id>"}' \
+  --output chunk.webm
+```
+
+Range semantics:
+
+- **No `Range` header** → `200 OK`, full body, `Accept-Ranges: bytes`.
+- **`Range: bytes=START-END`** → `206 Partial Content`,
+  `Content-Range: bytes START-END/TOTAL`, `Content-Length: N`.
+- Out-of-bounds ends clamp to `file_size - 1`; out-of-bounds starts
+  reset to `0` (no `416` today).
+
+`Content-Disposition` is always `inline` with a percent-encoded
+filename.
+
+### System fallback
+
+Every download family — `audio`, `image`, `video`, `file`, `text`,
+`call` — exists on `/system` as the **canonical mirror**. Per-artifact
+routes are convenience aliases so audit logs attribute the read to
+the artifact context (attempt / scenario / document). The wire shape
+is identical:
+
+```bash
+POST /attempt/file_download   { "file_id": "<id>" }   # audited as attempt
+POST /system/file_download    { "file_id": "<id>" }   # canonical
+```
+
+Body is always `{"<kind>_id": "<upload_id>"}` — `audio_id`, `file_id`,
+`image_id`, `video_id`, `text_id`, `call_id`.
+
+---
+
+{/* DEMO_VIDEO: media-preview — replace public/demos/media-preview.mp4 */}
+
+## File preview
+
+<DemoVideo
+  topic="media-preview"
+  caption="A PDF document tile showing a PNG thumbnail of its first page — generated server-side, cached for an hour."
+/>
+
+`POST /<art>/file_preview` returns a PNG rendering of the first page
+of a previewable upload — today, PDFs. Useful for document tiles and
+inline message previews.
+
+```bash
+curl -X POST https://<your-instance>/system/file_preview \
+  -H "Authorization: Bearer your-token" \
+  -d '{"file_id": "<upload_id>"}' \
+  --output preview.png
+```
+
+Response is `image/png` with `Cache-Control: private, max-age=3600,
+must-revalidate`. Hosted on `system`, `attempt`, `scenario`, and
+`document` — the four artifacts that actually carry file uploads.
+
+---
+
+{/* DEMO_VIDEO: media-chunked — replace public/demos/media-chunked.mp4 */}
+
+## Resumable uploads (TUS)
+
+<DemoVideo
+  topic="media-chunked"
+  caption="Uploading a 400 MB lecture recording in 32 MB chunks — the network drops, the client reconnects, status reports the offset, and the upload resumes."
+/>
+
+Large files use a TUS-flavored chunked protocol exposed via the CLI:
+
+```bash
+glow scenarios video discover                                       # list types
+glow scenarios video create   --filename role-play.mp4 --size 419430400
+glow scenarios video chunk    --id <upload_id> --file chunk-0.bin --offset 0
+glow scenarios video chunk    --id <upload_id> --file chunk-1.bin --offset 33554432
+glow scenarios video status   --id <upload_id>                      # poll offset
+glow scenarios video finalize --id <upload_id>                      # promote
+```
+
+URL shape (slash-form, parallel to the underscore download routes
+above):
+
+```
+POST   /<resource>/<media>/create          — initiate
+GET    /<resource>/<media>/<id>/status     — poll offset
+PATCH  /<resource>/<media>/<id>/chunk      — push a chunk
+POST   /<resource>/<media>/<id>/finalize   — close + promote
+GET    /<resource>/<media>/discover        — list resumable types
+```
+
+`chunk` is `application/offset+octet-stream` with an `Upload-Offset`
+header; the response carries the new offset.
+
+**Deferred capability.** End-to-end client orchestration (split file,
+retry chunks, resume after disconnect, fall back to single-shot for
+small files) is not wired into a single CLI command today — the
+primitives above are the building blocks. Track the deferred capability
+list in `cli-reference` for the eventual `glow <art> upload <type>
+<file> --resumable` flag.
+
+---
+
+## How media attaches to messages
+
+Inside a `GroupDetailMessageItem` (see [Group](/group) for the full
+shape), uploads are referenced by one array per kind:
+
+```json
+{
+  "id": "<message_id>",
+  "role": "user",
+  "text_upload_ids":  ["<upload_id>"],
+  "audio_upload_ids": ["<upload_id>"],
+  "image_upload_ids": [],
+  "video_upload_ids": [],
+  "file_upload_ids":  ["<upload_id>"]
+}
+```
+
+When a client sends a chat turn that includes media, it uploads first,
+collects the `upload_id`s, and passes them on the `chat_message`
+request. Clients render media by walking each array and issuing a
+`<kind>_download` (or `file_preview`) per id.
+
+---
+
+## Per-artifact matrix
+
+Which media operations exist on which artifact. **D** = download,
+**U** = upload, **P** = file_preview, blank = not hosted.
+
+| Artifact | audio | image | video | file | text | call | preview |
+|----------|:-----:|:-----:|:-----:|:----:|:----:|:----:|:-------:|
+| **system** (canonical) | D | D | D | D | D | D | P |
+| **attempt** | D + **U** | D | D | D | D | D | P |
+| **scenario** |  | D + **U** | D + **U** | D | D | D | P |
+| **document** |  |  |  | D + **U** | D + **U** | D | P |
+| every other artifact* |  |  |  | D | D | D |  |
+
+\* `agent`, `auth`, `cohort`, `department`, `eval`, `field`, `model`,
+`parameter`, `persona`, `profile`, `provider`, `rubric`, `setting`,
+`simulation`, `test`, `tool` — all expose the cross-cutting trio
+(`call_download`, `file_download`, `text_download`) so server-rendered
+exports, generation call replays, and inline text reads work
+consistently. Uploads for those kinds go through `attempt` /
+`scenario` / `document`.
+
+Reading the canonical rows:
+
+- **system** is the canonical full-download set + preview — hit it
+  when you have an `upload_id` and don't care about audit attribution.
+- **attempt** is the only artifact that hosts `audio_upload` — that's
+  where learner replies land.
+- **scenario** owns the visual upload surface (`image_upload`,
+  `video_upload`).
+- **document** is the text/file shop — both upload kinds plus full
+  text/file downloads.
+
+---
+
+## Related
+
+- [Streaming](/streaming) — SSE / WebSocket surfaces for generation
+  events; realtime adapter audio chunks ride alongside the upload_id
+  flow above.
+- [Chat](/chat) — where audio uploads attach to a live attempt turn.
+- [Group](/group) — `GroupDetailMessageItem` shape and where
+  `<kind>_upload_ids` arrays show up on the wire.
+- [API Reference — `POST /system/audio_download`](/api-reference/system/post-system-audio-download) — schema for the canonical download.
+- [Documents](/documents) — owns file + text upload UX.
+- [Scenarios](/scenarios) — owns image + video upload UX.
+
+---
+
 # Models
 
 Route: /models
@@ -48253,6 +49063,8 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow models create --body '{
@@ -48562,6 +49374,8 @@ Parameters connect to **fields**. Each parameter contains one or more fields. Do
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow parameters create --body '{
@@ -49042,6 +49856,188 @@ The same conversation gets very different scores on different runs.
 
 ---
 
+## Cross-cutting recipes
+
+Reusable API patterns that apply across many artifacts. Per-artifact pages
+link here instead of re-explaining the same shape.
+
+{/* DEMO_VIDEO: patterns-drafts — replace public/demos/patterns-drafts.mp4 */}
+
+## Recipe 1: Drafts + `expected_version` (optimistic concurrency)
+
+<DemoVideo
+  topic="patterns-drafts"
+  caption="Saving a draft from two tabs — the second save sees an expected_version mismatch and surfaces the conflict instead of clobbering the first edit."
+/>
+
+**Use in:** agents, auths, cohorts, departments, documents, evals, fields,
+models, parameters, personas, profiles, providers, rubrics, scenarios,
+settings, simulations, tools (every artifact with a `/draft` endpoint).
+
+Editable artifacts in Glow use a draft system with optimistic concurrency.
+Instead of mutating the live row on every keystroke, the client POSTs
+buffered changes to `POST /<art>/draft` and gets back a `draft_id` +
+monotonic `version`. The next save passes that `version` as
+`expected_version` so a concurrent edit from another tab (or another user)
+can't silently overwrite yours.
+
+**The round-trip:**
+
+1. Client calls `POST /<art>/draft` with the in-progress form state. First
+   save omits `input_draft_id` and `expected_version`; subsequent saves
+   pass the `draft_id` and most-recent `version` returned by the prior call.
+2. Server returns `{ draft_id, new_version, form_state }`. The client
+   stores `new_version` and uses it as `expected_version` on the next save.
+3. If two clients race, the second save arrives with a stale
+   `expected_version` and the server returns a **409 conflict** carrying
+   the current server-side draft (so the client can show a "your edits
+   collided" UI and decide how to merge).
+4. `POST /<art>/drafts` lists every in-flight draft for the current user
+   so you can resume work across devices or surface "you have unsaved
+   changes" prompts.
+
+**Canonical example:**
+
+```bash
+curl -X POST https://<your-instance>/<art>/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "input_draft_id": "existing-draft-uuid",
+    "expected_version": 3,
+    "name": "Updated name",
+    "...": "rest of the form state"
+  }'
+```
+
+On success the response is `{ draft_id, new_version, form_state }`. On
+conflict the response carries the server's current draft so you can
+present a merge prompt rather than blindly retrying. See the
+[Personas draft cycle](/personas#the-draft-cycle) for the fully worked
+example and the artifact-specific field list in each API reference page.
+
+{/* DEMO_VIDEO: patterns-bulk-write — replace public/demos/patterns-bulk-write.mp4 */}
+
+## Recipe 2: Bulk-write (`all` + flat filters + `excluded_ids` + `patch`)
+
+<DemoVideo
+  topic="patterns-bulk-write"
+  caption="Bulk-archiving every persona in a department except a manually-excluded handful — single round-trip, server-side filter resolution, no row-by-row writes."
+/>
+
+**Use in:** agents, cohorts, documents, fields, personas, scenarios,
+simulations (confirmed adopters); the same shape is rolling out to the
+remaining list-backed artifacts (auths, departments, evals, models,
+parameters, profiles, providers, rubrics, settings, tools) as their UIs
+gain bulk toolbars.
+
+When you need to mutate many rows that match a filter — "archive every
+persona in this department", "delete every scenario tagged as
+deprecated" — don't fetch the ids client-side and loop. The
+`/<art>/delete` and `/<art>/update` endpoints accept an **all-matching**
+body that resolves rows server-side using the same predicates as
+`/<art>/search`.
+
+**Why this shape:**
+
+- **Single round-trip.** No fetch-then-write race. The server resolves
+  matching ids in the same transaction as the mutation.
+- **URL-stable.** The client passes `?selectAll=1&excludedIds=...` instead
+  of stuffing thousands of ids into a URL.
+- **Permission-honoring.** Per-row write checks run server-side; rows the
+  caller can't touch are reported in `skipped_results` rather than failing
+  the whole call.
+- **Exclude semantics.** `excluded_ids` lets the user say "everything
+  matching the filter except these specific rows" — the natural UX for
+  "select all, then unclick a few".
+
+**Request shape:**
+
+```jsonc
+// Explicit ids (small selections, fail-fast):
+{ "persona_ids": ["...", "..."] }
+
+// All matching a filter (large selections, soft-skip):
+{
+  "all": true,
+  "filter_department_ids": ["dept-cs"],
+  "voice_search": "deprecated-voice",
+  "excluded_ids": ["persona-keep-this-one"]
+}
+
+// Bulk update — same shape plus `patch`:
+{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}
+```
+
+Filter field names (`filter_<facet>_ids`, `<facet>_search`) match the
+artifact's `/search` request exactly, so the bulk call can re-use the
+list page's URL state verbatim. The `patch` schema mirrors the artifact's
+own `Update<X>Item` minus `id` (the server stamps the id per matched row).
+
+See the [Personas bulk operations](/personas#bulk-operations) section for
+the fully worked example.
+
+{/* DEMO_VIDEO: patterns-search-facets — replace public/demos/patterns-search-facets.mp4 */}
+
+## Recipe 3: Search facets (`*_search` request + `*_filter` response)
+
+<DemoVideo
+  topic="patterns-search-facets"
+  caption="A persona search response carrying scenario_filter / department_filter / voice_filter sections that the UI renders as dropdowns with counts — no second round-trip."
+/>
+
+**Use in:** every `/<art>/search` endpoint — agents, auths, cohorts,
+departments, documents, evals, fields, models, parameters, personas,
+profiles, providers, rubrics, scenarios, settings, simulations, tools.
+
+Every search endpoint hydrates its own filter sidebar. The client sends
+facet-narrowing fields in the request and gets back fully-formed
+`ListFilterSection` blocks in the response so dropdowns render without a
+second round-trip.
+
+**Request side** (all optional):
+
+- `filter_<facet>_ids: UUID[]` — narrow results to rows whose `<facet>`
+  matches one of the supplied ids.
+- `<facet>_search: string` — sub-search within a facet (e.g.
+  `voice_search: "alloy"` to look up a voice while filtering personas).
+- `search`, `page_size`, `page_offset` — top-level full-text +
+  pagination.
+
+**Response side** — alongside the hydrated rows, each search response
+returns one `<facet>_filter: ListFilterSection` per facet exposed by that
+artifact. Each section carries the facet's available options, counts, and
+the currently-selected ids — exactly what a dropdown needs.
+
+**Canonical example:**
+
+```bash
+curl -X POST https://<your-instance>/persona/search \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "search": "confused",
+    "filter_department_ids": ["dept-cs"],
+    "voice_search": "alloy",
+    "page_size": 25,
+    "page_offset": 0
+  }'
+```
+
+The response shape is `{ personas: [...], scenario_filter,
+department_filter, voice_filter, ... }`. The specific facet set varies
+per artifact — see each `/<art>/search` entry in the
+[API reference](/api-reference) for the exact `filter_<facet>_ids` /
+`<facet>_search` inputs and `<facet>_filter` outputs available.
+
+---
+
 # Personas
 
 Route: /personas
@@ -49460,6 +50456,8 @@ Practice offers two views:
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get available practice simulations
 glow attempts practice
@@ -49618,6 +50616,8 @@ This helps institutions monitor budget consumption, compare model costs, and for
 ## Quick Start
 
 ### CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 # Get daily cost chart data
@@ -49799,6 +50799,8 @@ Profiles are the link between real users and the simulation experience. Without 
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow profiles create --body '{
@@ -50071,6 +51073,8 @@ Provider  -->  Model (model has provider_id)
 
 ### Via the CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 glow providers create --body '{
   "providers": [{
@@ -50259,6 +51263,236 @@ The response returns a new `provider_id` for the duplicated provider.
 
 ---
 
+# Realtime
+
+Route: /realtime
+
+{/* DEMO_VIDEO: realtime-overview — replace public/demos/realtime-overview.mp4 */}
+
+# Realtime
+
+Glow's HTTP surface is the canonical entry point for every artifact
+operation. Alongside it, the API exposes a parallel **socket.io
+WebSocket** surface that mirrors most of those operations 1-for-1 —
+intended for live message flow (chat, voice), live progress streams,
+and server-pushed updates that don't fit a request/response shape.
+
+<DemoVideo
+  topic="realtime-overview"
+  caption="Glow's WS surface mirrors HTTP: same artifact taxonomy, same operation names, with bidirectional streaming for live flows."
+/>
+
+## When to use WS vs HTTP
+
+**Default to HTTP.** Every artifact operation is reachable as
+`POST /<artifact>/<operation>` with the same payload shape, the same
+auth, and the same response. The CLI, the OpenAPI spec, the generated
+TypeScript client, and the MCP tools all sit on HTTP.
+
+**Reach for WS** when you need:
+
+- **Live chat or voice** — `attempt.chat_message`, `attempt.chat_voice`,
+  `attempt.chat_speak` need bidirectional streaming and per-token push.
+- **Live progress on long-running generations** — the WS counterpart of
+  `<artifact>.generate` pushes progress frames as the job advances.
+- **Server-pushed presence / activity updates** — connecting a socket
+  also enrolls the profile in an activity room (see
+  [Activity](/activity)).
+
+Most integrations never need WS. The HTTP+SSE watch flow covers
+generation streaming for batch / scripted callers; WS is the right
+surface when you're driving an interactive UI.
+
+---
+
+{/* DEMO_VIDEO: realtime-events — replace public/demos/realtime-events.mp4 */}
+
+## Event naming taxonomy
+
+<DemoVideo
+  topic="realtime-events"
+  caption="Every WS event name is <artifact>.<operation> — the same shape as POST /<artifact>/<operation>. Sub-namespaces flatten to <artifact>.<sub_op>."
+/>
+
+Server-side handlers register against a flat namespace where each
+event name is `<artifact>.<operation>`:
+
+| HTTP endpoint | WS event |
+|---|---|
+| `POST /persona/search` | `persona.search` |
+| `POST /attempt/start` | `attempt.start` |
+| `POST /test/generate` | `test.generate` |
+| `POST /auth/create` | `auth.create` |
+
+Operations that live in a sub-directory on the HTTP side (for example
+`POST /test/invocation/run`) flatten to `<artifact>.<sub_op>` on WS:
+
+| HTTP endpoint | WS event |
+|---|---|
+| `POST /test/invocation/run` | `test.invocation_run` |
+| `POST /test/benchmark/search` | `test.benchmark_search` |
+| `POST /attempt/chat/message` | `attempt.chat_message` |
+| `POST /attempt/chat/voice` | `attempt.chat_voice` |
+| `POST /system/activity/search` | `system.activity_search` |
+
+The taxonomy is mechanical — if you can name the HTTP route, you can
+name the WS event. The source of truth is the handler tree at
+[`core/app/ws/`](https://github.com/learnloopllc/glow-academic-api/tree/main/core/app/ws)
+in the API; every file there registers exactly one `@sio.on(...)` event.
+
+---
+
+{/* DEMO_VIDEO: realtime-connect — replace public/demos/realtime-connect.mp4 */}
+
+## Connecting
+
+<DemoVideo
+  topic="realtime-connect"
+  caption="socket.io v4 handshake — bearer JWT goes into the auth payload, not the Authorization header. Server resolves identity once at connect time."
+/>
+
+Glow speaks **socket.io v4** over WebSocket. Auth is bearer-only and
+the token rides in the socket.io `auth` payload — *not* as an HTTP
+header. The server's `connect` handler reads `auth.token`, runs it
+through `resolve_identity`, and stores the resolved `Identity` in
+Redis for the lifetime of the socket. Every subsequent event handler
+calls `resolve_socket_identity(sid)` to recover that identity — same
+object the HTTP middleware materialises per request.
+
+**socket.io-client (JS):**
+
+```js
+import { io } from "socket.io-client";
+
+const socket = io("https://<your-instance>", {
+  auth: { token: "Bearer eyJhbGciOi..." },
+  transports: ["websocket"],
+});
+
+socket.on("connect", () => console.log("connected", socket.id));
+socket.emit("attempt.chat_message", {
+  chat_id: "...",
+  text: "Hello",
+});
+socket.onAny((event, payload) => console.log(event, payload));
+```
+
+**Rust (CLI `GlowSocket::connect`):**
+
+```rust
+let sock = GlowSocket::connect("https://<your-instance>", Some(bearer))?;
+sock.emit("attempt.chat_message", json!({
+  "chat_id": chat_id, "text": "Hello",
+}))?;
+```
+
+Connections without a valid bearer are rejected at handshake. Multiple
+sockets per profile are allowed — multi-tab, multi-device, and the
+debug-panel-as-client all coexist without anyone kicking anyone off.
+
+---
+
+{/* DEMO_VIDEO: realtime-chat-live — replace public/demos/realtime-chat-live.mp4 */}
+
+## Live chat REPL
+
+<DemoVideo
+  topic="realtime-chat-live"
+  caption="glow attempts chat live <chat_id> — interactive terminal REPL over socket.io. Each stdin line emits attempt.chat_message; inbound events stream back between prompts."
+/>
+
+The CLI ships a minimal terminal REPL for driving a chat over WS:
+
+```bash
+glow attempts chat live <chat_id> --persona <persona_id>
+```
+
+What it does:
+
+1. Opens a socket.io connection to your configured base URL with the
+   stored bearer token (see [Authentication](/authentication)).
+2. Drains any inbound events (non-blocking, 50ms window) and prints
+   each one as `<event_name>: <json_payload>`.
+3. Reads the next stdin line, emits it as
+   `attempt.chat_message` with `{ chat_id, text, persona_id? }`.
+4. Loops until EOF, `:quit`, or `:q`.
+
+The REPL is intentionally thin — no markdown rendering, no token-by-
+token animation. It's a debugging surface for the WS flow, not a
+chat client. Cross-link [Chat](/chat) for the full conversation
+semantics (drafts, voice, grades, attempts).
+
+---
+
+## Per-artifact surface
+
+Roughly **~330 events** are registered across the WS tree. The
+distribution mirrors how much each artifact uses live flows:
+
+| Artifact | WS events | Notable surfaces |
+|---|---|---|
+| `attempt` | 38 | Full chat + voice mirror — `chat_message`, `chat_voice`, `chat_speak`, `chat_silence`, `chat_grade`, `chat_get`, plus the standard CRUD + media download set. |
+| `scenario` | 21 | Full HTTP mirror. |
+| `system` | 20 | Cross-artifact ops — `activity_search`, `activity_resolve`, `health`, `pricing_search`, `session`, plus the group download family. |
+| `document` | 19 | CRUD + file/text upload + preview + download. |
+| `profile` | 17 | Full HTTP mirror. |
+| `test` | 16 | `invocation_run`, `generate`, `trace`, `start`, `stop`, plus benchmark + invocation CRUD. |
+| Each of `agent`, `auth`, `cohort`, `department`, `eval`, `field`, `model`, `parameter`, `persona`, `provider`, `rubric`, `setting`, `simulation`, `tool` | 14 | The standard artifact CRUD + draft + search + generate set, mirrored to WS verbatim. |
+
+The exhaustive list lives under
+[`core/app/ws/<artifact>/`](https://github.com/learnloopllc/glow-academic-api/tree/main/core/app/ws)
+— one file per `@sio.on(...)` event. Don't memorise the catalogue; the
+HTTP route is the spec, and the WS name follows mechanically.
+
+---
+
+## Voice flow (deferred)
+
+The server-side voice events exist today — `attempt.chat_voice`,
+`attempt.chat_speak`, `attempt.chat_silence`, `attempt.audio_upload`,
+`attempt.audio_download` — and they share the same auth +
+`<artifact>.<sub_op>` shape.
+
+The CLI does **not** ship a voice client yet. Adding mic capture +
+playback pulls in `cpal` + `rodio` (native audio deps), which is gated
+behind an explicit opt-in. If you need voice today, drive
+`attempt.chat_voice` directly from `socket.io-client` or the
+in-product voice surface.
+
+---
+
+## Status: untested end-to-end
+
+Be aware:
+
+- The **server** WS surface is in production — every `@sio.on(...)`
+  handler is exercised by the in-product clients.
+- The **CLI's `GlowSocket`** wrapper compiles cleanly and the chat
+  REPL loop is structurally sound, but no smoke test against a running
+  `glow-academic-api` instance has been run. Expect to iterate on
+  event names / payload shapes the first time you exercise it.
+- The Rust wrapper currently uses a single catch-all handler instead
+  of per-event registrations — events surface as `(unmatched)` until
+  the per-event registration path is wired through the builder. See
+  the comments in `src/glow/ws.rs`.
+
+Treat the CLI WS surface as a v1 scaffold. If you hit a mismatch
+between an emitted event name and what the server expects, the source
+of truth is the file path under `core/app/ws/` — the event name is
+always the filename's dotted parent + the registered `@sio.on(...)`
+string.
+
+---
+
+## Related
+
+- [Chat](/chat) — live conversation UX, persona semantics, draft cycle, voice mode.
+- [Authentication](/authentication) — bearer-token issuance; the same token rides into the WS `auth` payload.
+- [Activity](/activity) — presence rows recorded at connect time when a profile's first socket opens.
+- [API Reference](/api-reference) — canonical per-operation schemas; WS events accept the same payloads as their HTTP twins.
+
+---
+
 # Reports
 
 Route: /reports
@@ -50293,6 +51527,8 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 ## Quick Start
 
 ### CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 # Fetch the full reports bundle
@@ -50488,6 +51724,8 @@ Rubric
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow rubrics create --body '{
@@ -50770,6 +52008,8 @@ Scenarios are **step 2** in the Glow content pipeline:
 ### Via the CLI
 
 Create an "Academic Integrity Training" scenario:
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow scenarios create --body '{
@@ -51106,6 +52346,8 @@ Session is useful when you need to:
 
 ### CLI
 
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+
 ```bash
 # Get session detail with groups and timeline
 glow system session --body '{"session_id": "session-uuid"}'
@@ -51255,6 +52497,8 @@ Settings uses a **composable infra architecture** -- you can search for all sett
 ## Quick Start
 
 ### CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 # List all settings
@@ -51565,6 +52809,8 @@ Simulations are **step 3** in the Glow content pipeline:
 ### Via the CLI
 
 Create an "Academic Integrity Training" simulation:
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow simulations create --body '{
@@ -51968,6 +53214,257 @@ the instance URL replaces what `--api-url` used to do.)
 
 ---
 
+# Streaming
+
+Route: /streaming
+
+{/* DEMO_VIDEO: streaming-overview — replace public/demos/streaming-overview.mp4 */}
+
+# Streaming
+
+Every artifact in Glow exposes the same live-events surface:
+`GET /<artifact>/watch` is a Server-Sent Events stream filtered to a
+single run. Long-running operations — generation, simulation
+playback, eval scoring, bulk imports — fire envelopes onto this
+channel, and the client disconnects when a terminal lifecycle event
+arrives.
+
+<DemoVideo
+  topic="streaming-overview"
+  caption="A persona generate run watched live: events stream in, the terminal .completed frame fires, the CLI exits 0."
+/>
+
+## What does watch do?
+
+`watch` is the canonical "give me events for this run" surface. The
+top-level `/stream` and `/generate` routes do not exist — streaming is
+always per-artifact. The URL shape is:
+
+```
+GET /<artifact>/watch?run_id=<uuid>&group_id=<uuid>
+```
+
+`run_id` is the optional filter that scopes the stream to a single
+execution; omit it to receive every event in the group (the
+front-end default for live tables). `group_id` may be omitted and
+the resolver derives it from `run_id`. Auth is the same bearer-token
+pattern as every other endpoint — pass `Authorization: Bearer
+<token>` and the `X-Api-Key` license header.
+
+---
+
+{/* DEMO_VIDEO: streaming-connect — replace public/demos/streaming-connect.mp4 */}
+
+## Connecting to a watch stream
+
+<DemoVideo
+  topic="streaming-connect"
+  caption="curl --no-buffer against /persona/watch with a real run_id — frames stream into the terminal as the generator emits them."
+/>
+
+The response is `Content-Type: text/event-stream`, kept open
+indefinitely until the server fires a terminal event or the client
+disconnects. A keep-alive comment (`: keep-alive\n\n`) is emitted
+every 15 seconds when there are no events.
+
+**Raw HTTP:**
+
+```bash
+curl -N https://<your-instance>/persona/watch?run_id=<run-uuid> \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Accept: text/event-stream"
+```
+
+**Browser:**
+
+```js
+const es = new EventSource(
+  `/persona/watch?run_id=${runId}`,
+  { withCredentials: true },
+);
+es.onmessage = (ev) => {
+  const envelope = JSON.parse(ev.data);
+  // envelope.event_type, envelope.artifact, envelope.payload …
+};
+```
+
+The route is `GET` (not `POST`) specifically so the browser's
+native `EventSource` works without a polyfill.
+
+---
+
+{/* DEMO_VIDEO: streaming-events — replace public/demos/streaming-events.mp4 */}
+
+## SSE event format
+
+<DemoVideo
+  topic="streaming-events"
+  caption="Side-by-side: a single SSE frame on the wire next to the parsed EventEnvelope it represents."
+/>
+
+Every frame is a single `data:` line carrying the JSON-serialized
+`EventEnvelope` followed by a blank line. The wire format does **not**
+use the SSE `event:` name field — the event type lives inside the
+envelope as `event_type` so multiplexing clients can wildcard-match
+in JavaScript (which `EventSource` named-channels can't do).
+
+```
+data: {"id":"evt_01J…","event_type":"persona.generate.started","artifact":"persona","operation":"generate","created_at":"2026-05-17T18:04:11.293Z","group_id":"…","run_id":"…","entity_id":null,"call_id":"…","tool_id":null,"payload":{"prompt":"Confused student in CS-180"}}
+
+data: {"id":"evt_01J…","event_type":"persona.generate.progress","artifact":"persona","operation":"generate","created_at":"2026-05-17T18:04:12.871Z","group_id":"…","run_id":"…","entity_id":"persona_01J…","call_id":"…","tool_id":null,"payload":{"step":"draft","percent":42}}
+
+data: {"id":"evt_01J…","event_type":"persona.generate.completed","artifact":"persona","operation":"generate","created_at":"2026-05-17T18:04:14.502Z","group_id":"…","run_id":"…","entity_id":"persona_01J…","call_id":"…","tool_id":null,"payload":{"persona_id":"persona_01J…","version":1}}
+```
+
+The `EventEnvelope` schema (Pydantic, defined once and shared across
+all 20 watch streams):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Globally-unique event id |
+| `event_type` | string | Dotted name — `<artifact>.<op>.<phase>` |
+| `artifact` | string | Source artifact (`persona`, `attempt`, …) |
+| `operation` | string | Operation that fired the event (`generate`, `update`, …) |
+| `created_at` | datetime | UTC ISO-8601 timestamp |
+| `group_id` | uuid \| null | Group the run belongs to |
+| `run_id` | uuid \| null | The run this envelope was filtered against |
+| `entity_id` | uuid \| null | The artifact row being mutated (when known) |
+| `call_id` | uuid \| null | Soft `*_calls_entry` ledger id |
+| `tool_id` | uuid \| null | Originating tool call (for LLM-triggered ops) |
+| `payload` | object | Operation-specific body |
+
+---
+
+{/* DEMO_VIDEO: streaming-terminal — replace public/demos/streaming-terminal.mp4 */}
+
+## Terminal events
+
+<DemoVideo
+  topic="streaming-terminal"
+  caption="A run that fails: the .failed envelope arrives, the CLI prints the payload, and exits with code 1 — no need to poll a status endpoint."
+/>
+
+Event types follow the convention `<artifact>.<operation>.<phase>`.
+The phase suffix tells the client when to disconnect:
+
+- `.completed` (or `.complete`) — operation finished successfully
+- `.failed` (or `.error`) — operation reached a terminal failure
+
+The CLI's `cmd_watch_run` detects these by suffix-matching the
+`event_type` and returns `ControlFlow::Break` from the SSE reader,
+which closes the underlying connection. Exit code is 0 on
+`.completed`, 1 on `.failed`. If the stream closes naturally
+without a terminal frame (e.g. the server's dedup/age window
+expires), that is also treated as success — the run is just no
+longer being watched.
+
+You don't have to wait for a terminal event — non-blocking consumers
+(live tables, dashboards) typically omit `run_id` and stay
+subscribed to the whole group, hydrating their UI on every envelope.
+
+---
+
+{/* DEMO_VIDEO: streaming-cli — replace public/demos/streaming-cli.mp4 */}
+
+## The `glow <art> watch <run_id>` CLI helper
+
+<DemoVideo
+  topic="streaming-cli"
+  caption="glow personas watch <run_id> in human and --json modes — same frames, two renderings, terminal frame breaks the loop."
+/>
+
+Every artifact's CLI namespace reserves `watch` as a sub-command
+that wraps the SSE GET:
+
+```bash
+# Block on a single run until it completes or fails
+glow personas watch 01J3K…
+
+# Scope the subscriber room explicitly (otherwise resolved from run_id)
+glow personas watch 01J3K… --group-id 01J3G…
+
+# Machine-readable: one JSON object per frame on stdout
+glow personas watch 01J3K… --json
+```
+
+The most common pattern — generate then watch — is fused into a
+single command via `--wait`:
+
+```bash
+glow personas generate --wait --body '{"prompt": "Confused CS-180 student"}'
+```
+
+Under the hood that fires `POST /persona/generate`, reads `run_id`
+out of the response, then immediately connects to `/persona/watch`
+and blocks until the terminal frame.
+
+---
+
+## Which artifacts have watch
+
+All 20 artifacts that ship watch endpoints use the **same** URL
+shape, query params, envelope, and terminal-event convention. The
+list: `agent`, `attempt`, `auth`, `cohort`, `department`, `document`,
+`eval`, `field`, `model`, `parameter`, `persona`, `profile`,
+`provider`, `rubric`, `scenario`, `setting`, `simulation`, `system`,
+`test`, `tool`. There is no top-level `/stream` or `/watch` route —
+always go through an artifact path.
+
+---
+
+## Common patterns
+
+### Generate then watch (manual)
+
+```bash
+# 1. Trigger
+RESP=$(curl -sX POST https://<host>/persona/generate \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Confused CS-180 student"}')
+RUN_ID=$(echo "$RESP" | jq -r .run_id)
+
+# 2. Block on the run
+curl -N "https://<host>/persona/watch?run_id=$RUN_ID" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Accept: text/event-stream"
+```
+
+See [Generation](/generation) for the full per-artifact `generate`
+contract and the `--wait` ergonomic.
+
+### Filter by `run_id` vs `group_id`
+
+| Goal | Pass | Behavior |
+|------|------|----------|
+| Wait for one operation to finish | `run_id` (+ optional `group_id`) | Stream stops at the terminal frame for that run |
+| Hydrate a live table for the whole group | `group_id` only | Every artifact event in the group — never closes on terminal frames |
+| Mirror a single entity across edits | `group_id` + client-side filter on `entity_id` | Cheaper than per-run streams when the UI is row-scoped |
+
+### Reconnecting
+
+The transport is unbuffered HTTP — there's no replay if the client
+drops. For at-least-once delivery, query the underlying artifact
+(`POST /<art>/get` or its `generations` endpoint) after reconnect to
+catch up, then re-subscribe.
+
+## Related
+
+- [Generation](/generation) — the per-artifact `generate` operations
+  that produce most watch traffic, plus the `--wait` fuse-into-one
+  ergonomic
+- [Personas CLI Reference](/cli-reference/personas) — `watch` action
+  documented inline alongside CRUD verbs (every artifact CLI mirrors
+  this shape)
+- [Personas API Reference](/api-reference/persona) — the per-artifact
+  `GET /persona/watch` schema; every other artifact's reference page
+  carries the same endpoint
+- [Patterns](/patterns) — cross-cutting conventions that show up on
+  every artifact (soft calls, bulk shape, watch)
+
+---
+
 # Tools
 
 Route: /tools
@@ -52025,6 +53522,8 @@ Tool  -->  Agent (via agent_tools_junction)
 />
 
 ### Via the CLI
+
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
 
 ```bash
 glow tools create --body '{

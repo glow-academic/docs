@@ -1,0 +1,225 @@
+# Realtime
+
+{/* DEMO_VIDEO: realtime-overview — replace public/demos/realtime-overview.mp4 */}
+
+# Realtime
+
+Glow's HTTP surface is the canonical entry point for every artifact
+operation. Alongside it, the API exposes a parallel **socket.io
+WebSocket** surface that mirrors most of those operations 1-for-1 —
+intended for live message flow (chat, voice), live progress streams,
+and server-pushed updates that don't fit a request/response shape.
+
+<DemoVideo
+  topic="realtime-overview"
+  caption="Glow's WS surface mirrors HTTP: same artifact taxonomy, same operation names, with bidirectional streaming for live flows."
+/>
+
+## When to use WS vs HTTP
+
+**Default to HTTP.** Every artifact operation is reachable as
+`POST /<artifact>/<operation>` with the same payload shape, the same
+auth, and the same response. The CLI, the OpenAPI spec, the generated
+TypeScript client, and the MCP tools all sit on HTTP.
+
+**Reach for WS** when you need:
+
+- **Live chat or voice** — `attempt.chat_message`, `attempt.chat_voice`,
+  `attempt.chat_speak` need bidirectional streaming and per-token push.
+- **Live progress on long-running generations** — the WS counterpart of
+  `<artifact>.generate` pushes progress frames as the job advances.
+- **Server-pushed presence / activity updates** — connecting a socket
+  also enrolls the profile in an activity room (see
+  [Activity](/activity)).
+
+Most integrations never need WS. The HTTP+SSE watch flow covers
+generation streaming for batch / scripted callers; WS is the right
+surface when you're driving an interactive UI.
+
+---
+
+{/* DEMO_VIDEO: realtime-events — replace public/demos/realtime-events.mp4 */}
+
+## Event naming taxonomy
+
+<DemoVideo
+  topic="realtime-events"
+  caption="Every WS event name is <artifact>.<operation> — the same shape as POST /<artifact>/<operation>. Sub-namespaces flatten to <artifact>.<sub_op>."
+/>
+
+Server-side handlers register against a flat namespace where each
+event name is `<artifact>.<operation>`:
+
+| HTTP endpoint | WS event |
+|---|---|
+| `POST /persona/search` | `persona.search` |
+| `POST /attempt/start` | `attempt.start` |
+| `POST /test/generate` | `test.generate` |
+| `POST /auth/create` | `auth.create` |
+
+Operations that live in a sub-directory on the HTTP side (for example
+`POST /test/invocation/run`) flatten to `<artifact>.<sub_op>` on WS:
+
+| HTTP endpoint | WS event |
+|---|---|
+| `POST /test/invocation/run` | `test.invocation_run` |
+| `POST /test/benchmark/search` | `test.benchmark_search` |
+| `POST /attempt/chat/message` | `attempt.chat_message` |
+| `POST /attempt/chat/voice` | `attempt.chat_voice` |
+| `POST /system/activity/search` | `system.activity_search` |
+
+The taxonomy is mechanical — if you can name the HTTP route, you can
+name the WS event. The source of truth is the handler tree at
+[`core/app/ws/`](https://github.com/learnloopllc/glow-academic-api/tree/main/core/app/ws)
+in the API; every file there registers exactly one `@sio.on(...)` event.
+
+---
+
+{/* DEMO_VIDEO: realtime-connect — replace public/demos/realtime-connect.mp4 */}
+
+## Connecting
+
+<DemoVideo
+  topic="realtime-connect"
+  caption="socket.io v4 handshake — bearer JWT goes into the auth payload, not the Authorization header. Server resolves identity once at connect time."
+/>
+
+Glow speaks **socket.io v4** over WebSocket. Auth is bearer-only and
+the token rides in the socket.io `auth` payload — *not* as an HTTP
+header. The server's `connect` handler reads `auth.token`, runs it
+through `resolve_identity`, and stores the resolved `Identity` in
+Redis for the lifetime of the socket. Every subsequent event handler
+calls `resolve_socket_identity(sid)` to recover that identity — same
+object the HTTP middleware materialises per request.
+
+**socket.io-client (JS):**
+
+```js
+import { io } from "socket.io-client";
+
+const socket = io("https://<your-instance>", {
+  auth: { token: "Bearer eyJhbGciOi..." },
+  transports: ["websocket"],
+});
+
+socket.on("connect", () => console.log("connected", socket.id));
+socket.emit("attempt.chat_message", {
+  chat_id: "...",
+  text: "Hello",
+});
+socket.onAny((event, payload) => console.log(event, payload));
+```
+
+**Rust (CLI `GlowSocket::connect`):**
+
+```rust
+let sock = GlowSocket::connect("https://<your-instance>", Some(bearer))?;
+sock.emit("attempt.chat_message", json!({
+  "chat_id": chat_id, "text": "Hello",
+}))?;
+```
+
+Connections without a valid bearer are rejected at handshake. Multiple
+sockets per profile are allowed — multi-tab, multi-device, and the
+debug-panel-as-client all coexist without anyone kicking anyone off.
+
+---
+
+{/* DEMO_VIDEO: realtime-chat-live — replace public/demos/realtime-chat-live.mp4 */}
+
+## Live chat REPL
+
+<DemoVideo
+  topic="realtime-chat-live"
+  caption="glow attempts chat live <chat_id> — interactive terminal REPL over socket.io. Each stdin line emits attempt.chat_message; inbound events stream back between prompts."
+/>
+
+The CLI ships a minimal terminal REPL for driving a chat over WS:
+
+```bash
+glow attempts chat live <chat_id> --persona <persona_id>
+```
+
+What it does:
+
+1. Opens a socket.io connection to your configured base URL with the
+   stored bearer token (see [Authentication](/authentication)).
+2. Drains any inbound events (non-blocking, 50ms window) and prints
+   each one as `<event_name>: <json_payload>`.
+3. Reads the next stdin line, emits it as
+   `attempt.chat_message` with `{ chat_id, text, persona_id? }`.
+4. Loops until EOF, `:quit`, or `:q`.
+
+The REPL is intentionally thin — no markdown rendering, no token-by-
+token animation. It's a debugging surface for the WS flow, not a
+chat client. Cross-link [Chat](/chat) for the full conversation
+semantics (drafts, voice, grades, attempts).
+
+---
+
+## Per-artifact surface
+
+Roughly **~330 events** are registered across the WS tree. The
+distribution mirrors how much each artifact uses live flows:
+
+| Artifact | WS events | Notable surfaces |
+|---|---|---|
+| `attempt` | 38 | Full chat + voice mirror — `chat_message`, `chat_voice`, `chat_speak`, `chat_silence`, `chat_grade`, `chat_get`, plus the standard CRUD + media download set. |
+| `scenario` | 21 | Full HTTP mirror. |
+| `system` | 20 | Cross-artifact ops — `activity_search`, `activity_resolve`, `health`, `pricing_search`, `session`, plus the group download family. |
+| `document` | 19 | CRUD + file/text upload + preview + download. |
+| `profile` | 17 | Full HTTP mirror. |
+| `test` | 16 | `invocation_run`, `generate`, `trace`, `start`, `stop`, plus benchmark + invocation CRUD. |
+| Each of `agent`, `auth`, `cohort`, `department`, `eval`, `field`, `model`, `parameter`, `persona`, `provider`, `rubric`, `setting`, `simulation`, `tool` | 14 | The standard artifact CRUD + draft + search + generate set, mirrored to WS verbatim. |
+
+The exhaustive list lives under
+[`core/app/ws/<artifact>/`](https://github.com/learnloopllc/glow-academic-api/tree/main/core/app/ws)
+— one file per `@sio.on(...)` event. Don't memorise the catalogue; the
+HTTP route is the spec, and the WS name follows mechanically.
+
+---
+
+## Voice flow (deferred)
+
+The server-side voice events exist today — `attempt.chat_voice`,
+`attempt.chat_speak`, `attempt.chat_silence`, `attempt.audio_upload`,
+`attempt.audio_download` — and they share the same auth +
+`<artifact>.<sub_op>` shape.
+
+The CLI does **not** ship a voice client yet. Adding mic capture +
+playback pulls in `cpal` + `rodio` (native audio deps), which is gated
+behind an explicit opt-in. If you need voice today, drive
+`attempt.chat_voice` directly from `socket.io-client` or the
+in-product voice surface.
+
+---
+
+## Status: untested end-to-end
+
+Be aware:
+
+- The **server** WS surface is in production — every `@sio.on(...)`
+  handler is exercised by the in-product clients.
+- The **CLI's `GlowSocket`** wrapper compiles cleanly and the chat
+  REPL loop is structurally sound, but no smoke test against a running
+  `glow-academic-api` instance has been run. Expect to iterate on
+  event names / payload shapes the first time you exercise it.
+- The Rust wrapper currently uses a single catch-all handler instead
+  of per-event registrations — events surface as `(unmatched)` until
+  the per-event registration path is wired through the builder. See
+  the comments in `src/glow/ws.rs`.
+
+Treat the CLI WS surface as a v1 scaffold. If you hit a mismatch
+between an emitted event name and what the server expects, the source
+of truth is the file path under `core/app/ws/` — the event name is
+always the filename's dotted parent + the registered `@sio.on(...)`
+string.
+
+---
+
+## Related
+
+- [Chat](/chat) — live conversation UX, persona semantics, draft cycle, voice mode.
+- [Authentication](/authentication) — bearer-token issuance; the same token rides into the WS `auth` payload.
+- [Activity](/activity) — presence rows recorded at connect time when a profile's first socket opens.
+- [API Reference](/api-reference) — canonical per-operation schemas; WS events accept the same payloads as their HTTP twins.
