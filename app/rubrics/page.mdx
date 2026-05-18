@@ -1,4 +1,4 @@
-{/* DEMO_VIDEO: rubrics-overview — replace public/demos/rubrics-overview.mp4 */}
+{/* DEMO_VIDEO: rubrics-overview | playwright */}
 
 # Rubrics
 
@@ -6,6 +6,7 @@ Rubrics define the scoring criteria used to evaluate TA performance during offic
 
 <DemoVideo
   topic="rubrics-overview"
+  kind="playwright"
   caption="The rubrics list -- cards by name with total points, pass threshold, standard-group count, and live simulation usage; drill in to edit groups and standards."
 />
 
@@ -44,12 +45,13 @@ Rubric
 
 ---
 
-{/* DEMO_VIDEO: rubrics-create — replace public/demos/rubrics-create.mp4 */}
+{/* DEMO_VIDEO: rubrics-create | playwright */}
 
 ## Create a rubric
 
 <DemoVideo
   topic="rubrics-create"
+  kind="playwright"
   caption="Creating a Communication Skills rubric: name, description, then committing -- standard groups and standards come next."
 />
 
@@ -85,12 +87,13 @@ Each entry returns the new `rubric_id`, a generated `draft_id`, and the initial 
 
 ---
 
-{/* DEMO_VIDEO: rubrics-standards — replace public/demos/rubrics-standards.mp4 */}
+{/* DEMO_VIDEO: rubrics-standards | playwright */}
 
 ## Standard groups and standards
 
 <DemoVideo
   topic="rubrics-standards"
+  kind="playwright"
   caption="Adding three standard groups (Active Listening, Empathy, Clarity) and ladder-style standards under each -- the points tally rolls up to the rubric total live."
 />
 
@@ -135,7 +138,7 @@ Each standard includes:
 
 ---
 
-{/* DEMO_VIDEO: rubrics-points — replace public/demos/rubrics-points.mp4 */}
+{/* DEMO_VIDEO: rubrics-points | playwright */}
 
 ## Points and passing thresholds
 
@@ -143,6 +146,7 @@ Rubrics define scoring at multiple levels. The rubric list response includes `po
 
 <DemoVideo
   topic="rubrics-points"
+  kind="playwright"
   caption="Tuning the total points and pass threshold on a rubric; the pass_percentage recomputes live and the active_simulation_count badge warns about downstream impact."
 />
 
@@ -162,7 +166,7 @@ The response for each rubric entry includes:
 
 ---
 
-{/* DEMO_VIDEO: rubrics-draft — replace public/demos/rubrics-draft.mp4 */}
+{/* DEMO_VIDEO: rubrics-draft | playwright */}
 
 ## The draft cycle
 
@@ -170,6 +174,7 @@ Rubrics support a draft workflow for staging changes. This is especially importa
 
 <DemoVideo
   topic="rubrics-draft"
+  kind="playwright"
   caption="Editing a rubric in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering live scoring config."
 />
 
@@ -191,12 +196,13 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 ---
 
-{/* DEMO_VIDEO: rubrics-search — replace public/demos/rubrics-search.mp4 */}
+{/* DEMO_VIDEO: rubrics-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="rubrics-search"
+  kind="playwright"
   caption="Filtering rubrics by department + free-text to find the one wired into a specific eval, then drilling into its groups and standards."
 />
 
@@ -211,7 +217,7 @@ glow rubrics search --body '{
 
 ---
 
-{/* DEMO_VIDEO: rubrics-bulk — replace public/demos/rubrics-bulk.mp4 */}
+{/* DEMO_VIDEO: rubrics-bulk | playwright */}
 
 ## Bulk operations
 
@@ -219,6 +225,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="rubrics-bulk"
+  kind="playwright"
   caption="Bulk-archiving deprecated rubrics in one round-trip; excluded_ids keeps the one still attached to a live eval, and active_simulation_count warns about impact."
 />
 

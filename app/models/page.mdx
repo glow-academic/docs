@@ -1,4 +1,4 @@
-{/* DEMO_VIDEO: models-overview — replace public/demos/models-overview.mp4 */}
+{/* DEMO_VIDEO: models-overview | playwright */}
 
 # Models
 
@@ -6,6 +6,7 @@ Models define the LLM configurations that power AI student personas during offic
 
 <DemoVideo
   topic="models-overview"
+  kind="playwright"
   caption="The models list -- rows grouped by provider, each showing modality icons and agent usage count, with quick filter by provider and department."
 />
 
@@ -33,12 +34,13 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ---
 
-{/* DEMO_VIDEO: models-create — replace public/demos/models-create.mp4 */}
+{/* DEMO_VIDEO: models-create | playwright */}
 
 ## Create a model
 
 <DemoVideo
   topic="models-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, provider picker -- the new model_id is wired into the agent's model picker immediately."
 />
 
@@ -76,7 +78,7 @@ Each entry returns the new `model_id`, the generated `draft_id`, and the initial
 
 ---
 
-{/* DEMO_VIDEO: models-provider-link — replace public/demos/models-provider-link.mp4 */}
+{/* DEMO_VIDEO: models-provider-link | playwright */}
 
 ## Provider linking
 
@@ -84,6 +86,7 @@ Every model requires at least one provider. The `provider_ids` field connects th
 
 <DemoVideo
   topic="models-provider-link"
+  kind="playwright"
   caption="Swapping a model's provider from a deprecated key set to a freshly-rotated one -- no agent rewiring needed because the model_id stays stable."
 />
 
@@ -98,12 +101,13 @@ curl -X POST https://<your-instance>/model/search \
 
 ---
 
-{/* DEMO_VIDEO: models-capabilities — replace public/demos/models-capabilities.mp4 */}
+{/* DEMO_VIDEO: models-capabilities | playwright */}
 
 ## Capabilities and feature flags
 
 <DemoVideo
   topic="models-capabilities"
+  kind="playwright"
   caption="Toggling modality (adding image input), bumping reasoning to high, and shifting the quality tier on one model -- every dimension is its own resource set."
 />
 
@@ -122,7 +126,7 @@ Use `flag_ids` to toggle boolean capabilities like `image_model` or active/inact
 
 ---
 
-{/* DEMO_VIDEO: models-draft — replace public/demos/models-draft.mp4 */}
+{/* DEMO_VIDEO: models-draft | playwright */}
 
 ## The draft cycle
 
@@ -130,6 +134,7 @@ Models support a draft workflow for staging changes before publishing. Use the d
 
 <DemoVideo
   topic="models-draft"
+  kind="playwright"
   caption="Editing a model in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -150,12 +155,13 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 ---
 
-{/* DEMO_VIDEO: models-search — replace public/demos/models-search.mp4 */}
+{/* DEMO_VIDEO: models-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="models-search"
+  kind="playwright"
   caption="Filtering by provider + department + modality, then drilling into one model's wiring."
 />
 
@@ -175,7 +181,7 @@ The response includes a `department_filter`, `provider_filter`, and modality fac
 
 ---
 
-{/* DEMO_VIDEO: models-bulk — replace public/demos/models-bulk.mp4 */}
+{/* DEMO_VIDEO: models-bulk | playwright */}
 
 ## Bulk operations
 
@@ -183,6 +189,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="models-bulk"
+  kind="playwright"
   caption="Bulk-archiving every model tied to a deprecated provider in one round-trip; excluded_ids keeps the model still pinned by a live agent."
 />
 
