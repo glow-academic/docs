@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: personas — replace public/demos/personas.mp4 */}
+
 # Personas
+
+<DemoVideo topic="personas" />
 
 Personas are the AI-driven characters that learners interact with during training simulations -- they define who the learner is talking to and how that character behaves.
 
@@ -15,7 +19,7 @@ A persona is a reusable AI character definition that controls the personality, b
 - **Parameter Fields** -- dynamic placeholders (like `{{class}}`, `{{location}}`, `{{intensity}}`) that inject scenario-specific values into instructions at runtime
 - **Departments** -- organizational groupings for filtering and access control
 
-Personas are assigned to [Scenarios](/glow/scenarios/guide), not directly to simulations or agents. A single persona can appear in many scenarios.
+Personas are assigned to [Scenarios](/scenario), not directly to simulations or agents. A single persona can appear in many scenarios.
 
 ![Personas list showing cards for each persona with name, color, icon, and description](/screenshots/personas/list.png)
 
@@ -52,7 +56,7 @@ glow personas get --body '{"persona_id": "your-persona-uuid"}'
 ### Create via API
 
 ```bash
-curl -X POST https://<your-instance>/v5/personas/create \
+curl -X POST https://<your-instance>/persona/create \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -68,7 +72,7 @@ curl -X POST https://<your-instance>/v5/personas/create \
 Search personas:
 
 ```bash
-curl -X POST https://<your-instance>/v5/personas/search \
+curl -X POST https://<your-instance>/persona/search \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -82,10 +86,10 @@ Personas are **step 1** in the Glow content pipeline:
 | Step | Resource | Description |
 |------|----------|-------------|
 | **1. Create Personas** | **Personas** | **Define AI characters with instructions, examples, and parameter fields** |
-| 2. Assign to Scenarios | [Scenarios](/glow/scenarios/guide) | Build training situations and attach personas to them |
-| 3. Add Scenarios to Simulations | [Simulations](/glow/simulations/guide) | Bundle scenarios into a complete training session with rubrics and time limits |
+| 2. Assign to Scenarios | [Scenarios](/scenario) | Build training situations and attach personas to them |
+| 3. Add Scenarios to Simulations | [Simulations](/simulation) | Bundle scenarios into a complete training session with rubrics and time limits |
 | 4. Add Simulations to Cohorts | Cohorts | Assign simulations to groups of learners |
-| 5. Run Attempts | [Attempts](/glow/attempt/guide) | Learners start attempts and interact with persona-driven AI in [Chats](/glow/chat/guide) |
+| 5. Run Attempts | [Attempts](/attempt) | Learners start attempts and interact with persona-driven AI in [Chats](/chat) |
 
 ## Writing Effective Instructions
 
@@ -205,7 +209,7 @@ glow personas draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/v5/personas/draft \
+curl -X PATCH https://<your-instance>/persona/draft \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
@@ -222,7 +226,7 @@ curl -X PATCH https://<your-instance>/v5/personas/draft \
 glow personas list
 
 # API
-curl -X POST https://<your-instance>/v5/personas/drafts \
+curl -X POST https://<your-instance>/persona/drafts \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
@@ -234,21 +238,21 @@ The draft response includes `draft_id`, `new_version`, and `form_state` so your 
 
 | Task | CLI | API |
 |------|-----|-----|
-| List all personas | `glow personas search` | `POST /personas/search` |
-| Get one persona | `glow personas get --body '{"persona_id": "..."}' ` | `POST /personas/get` |
-| Create personas | `glow personas create --body '{"personas": [...]}'` | `POST /personas/create` |
-| Update personas | `glow personas update --body '{"personas": [...]}'` | `POST /personas/update` |
-| Duplicate a persona | -- | `POST /personas/duplicate` |
-| Delete personas | `glow personas delete --body '{"persona_ids": [...]}'` | `POST /personas/delete` |
-| Save a draft | `glow personas draft --body '{...}'` | `PATCH /personas/draft` |
-| List drafts | `glow personas list` | `POST /personas/drafts` |
-| Export to CSV | `glow personas export` | `POST /personas/export` |
-| Import from CSV | -- | `POST /personas/csv` |
+| List all personas | `glow personas search` | `POST /persona/search` |
+| Get one persona | `glow personas get --body '{"persona_id": "..."}' ` | `POST /persona/get` |
+| Create personas | `glow personas create --body '{"personas": [...]}'` | `POST /persona/create` |
+| Update personas | `glow personas update --body '{"personas": [...]}'` | `POST /persona/update` |
+| Duplicate a persona | -- | `POST /persona/duplicate` |
+| Delete personas | `glow personas delete --body '{"persona_ids": [...]}'` | `POST /persona/delete` |
+| Save a draft | `glow personas draft --body '{...}'` | `PATCH /persona/draft` |
+| List drafts | `glow personas list` | `POST /persona/drafts` |
+| Export to CSV | `glow personas export` | `POST /persona/export` |
+| Import from CSV | -- | `POST /persona/csv` |
 
 ## Related
 
-- [Personas API Reference](/glow/personas/api) -- full endpoint schemas and field definitions
-- [Personas CLI Reference](/glow/personas/cli) -- all CLI commands and flags
-- [Scenarios Guide](/glow/scenarios/guide) -- building training situations that use personas
-- [Simulations Guide](/glow/simulations/guide) -- bundling scenarios into complete training sessions
-- [Cohorts Guide](/glow/cohorts/guide) -- assigning profile personas so the AI adapts to each learner
+- [Personas API Reference](/api-reference/persona) -- full endpoint schemas and field definitions
+- [Personas CLI Reference](/cli-reference/persona) -- all CLI commands and flags
+- [Scenarios Guide](/scenario) -- building training situations that use personas
+- [Simulations Guide](/simulation) -- bundling scenarios into complete training sessions
+- [Cohorts Guide](/cohort) -- assigning profile personas so the AI adapts to each learner
