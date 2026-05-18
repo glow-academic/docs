@@ -1,12 +1,13 @@
-{/* DEMO_VIDEO: models — replace public/demos/models.mp4 */}
+{/* DEMO_VIDEO: models-overview — replace public/demos/models-overview.mp4 */}
 
 # Models
 
-<DemoVideo topic="models" />
-
 Models define the LLM configurations that power AI student personas during office hour simulations. Each model wraps a specific LLM (such as `gpt-4o` or `claude-3-opus`) with settings for temperature, reasoning level, modalities, and pricing, and links back to the provider that supplies the underlying API.
 
-![Models list showing available models with provider, name, and assigned agent count](/screenshots/models/list.png)
+<DemoVideo
+  topic="models-overview"
+  caption="The models list -- rows grouped by provider, each showing modality icons and agent usage count, with quick filter by provider and department."
+/>
 
 ---
 
@@ -15,66 +16,6 @@ Models define the LLM configurations that power AI student personas during offic
 A model in Glow represents a configured LLM identity. It connects an external language model to the platform by pairing it with a provider, quality tier, and feature flags. Models are then attached to agents through the `agent_models_junction`, giving each agent a specific conversational capability during simulations.
 
 For example, a university might configure a `gpt-4o-sim` model with medium temperature and text-only modality for TA training conversations, and a separate `claude-3-haiku-quick` model for rapid policy-lookup agents.
-
----
-
-## Quick Start
-
-### CLI
-
-List all available models:
-
-```bash
-glow models search
-```
-
-Get details for a specific model:
-
-```bash
-glow models get --body '{"model_id": "MODEL_UUID"}'
-```
-
-Create a new model linked to a provider:
-
-```bash
-glow models create --body '{
-  "models": [{
-    "name": "gpt-4o-sim",
-    "description": "GPT-4o configured for student persona simulations",
-    "provider_ids": ["PROVIDER_UUID"]
-  }]
-}'
-```
-
-### API
-
-All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` headers.
-
-**Search models:**
-
-```bash
-curl -X POST https://<your-instance>/model/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{}'
-```
-
-**Create a model:**
-
-```bash
-curl -X POST https://<your-instance>/model/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "models": [{
-      "name": "gpt-4o-sim",
-      "description": "GPT-4o for TA training simulations",
-      "provider_ids": ["PROVIDER_UUID"]
-    }]
-  }'
-```
 
 ---
 
@@ -92,13 +33,57 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ---
 
-![Model detail showing provider, endpoint, and configuration options](/screenshots/models/detail.png)
+{/* DEMO_VIDEO: models-create — replace public/demos/models-create.mp4 */}
 
-## Model Configuration
+## Create a model
 
-### Provider Linking
+<DemoVideo
+  topic="models-create"
+  caption="Filling out the create form: name, description, provider picker -- the new model_id is wired into the agent's model picker immediately."
+/>
+
+### Via the CLI
+
+```bash
+glow models create --body '{
+  "models": [{
+    "name": "gpt-4o-sim",
+    "description": "GPT-4o configured for student persona simulations",
+    "provider_ids": ["PROVIDER_UUID"]
+  }]
+}'
+```
+
+### Via the API
+
+```bash
+curl -X POST https://<your-instance>/model/create \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "models": [{
+      "name": "gpt-4o-sim",
+      "description": "GPT-4o for TA training simulations",
+      "provider_ids": ["PROVIDER_UUID"]
+    }]
+  }'
+```
+
+Each entry returns the new `model_id`, the generated `draft_id`, and the initial `version`.
+
+---
+
+{/* DEMO_VIDEO: models-provider-link — replace public/demos/models-provider-link.mp4 */}
+
+## Provider linking
 
 Every model requires at least one provider. The `provider_ids` field connects the model to the provider that holds the API endpoint and credentials. When you search models, the response includes `provider_id` and `provider_name` for each entry, along with `filter_provider_ids` for filtering.
+
+<DemoVideo
+  topic="models-provider-link"
+  caption="Swapping a model's provider from a deprecated key set to a freshly-rotated one -- no agent rewiring needed because the model_id stays stable."
+/>
 
 ```bash
 # Filter models by provider
@@ -109,7 +94,16 @@ curl -X POST https://<your-instance>/model/search \
   -d '{"filter_provider_ids": ["OPENAI_PROVIDER_UUID"]}'
 ```
 
-### Feature Flags and Capabilities
+---
+
+{/* DEMO_VIDEO: models-capabilities — replace public/demos/models-capabilities.mp4 */}
+
+## Capabilities and feature flags
+
+<DemoVideo
+  topic="models-capabilities"
+  caption="Toggling modality (adding image input), bumping reasoning to high, and shifting the quality tier on one model -- every dimension is its own resource set."
+/>
 
 Models support several capability dimensions configured through resource IDs:
 
@@ -126,21 +120,16 @@ Use `flag_ids` to toggle boolean capabilities like `image_model` or active/inact
 
 ---
 
-## Departments and Filtering
+{/* DEMO_VIDEO: models-draft — replace public/demos/models-draft.mp4 */}
 
-Models can be scoped to departments (e.g., "Computer Science", "Biology") using `department_ids`. The search endpoint supports department-scoped filtering:
-
-```bash
-glow models search --body '{"filter_department_ids": ["CS_DEPT_UUID"]}'
-```
-
-The response includes a `department_filter` section with available options, counts, and selected IDs for building filter UIs.
-
----
-
-## Drafts
+## The draft cycle
 
 Models support a draft workflow for staging changes before publishing. Use the draft system to preview configuration changes without affecting running simulations.
+
+<DemoVideo
+  topic="models-draft"
+  caption="Editing a model in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 ```bash
 # Create or update a draft
@@ -159,6 +148,70 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 ---
 
+{/* DEMO_VIDEO: models-search — replace public/demos/models-search.mp4 */}
+
+## Search & filter
+
+<DemoVideo
+  topic="models-search"
+  caption="Filtering by provider + department + modality, then drilling into one model's wiring."
+/>
+
+```bash
+# Free-text search
+glow models search --body '{"search": "gpt-4o"}'
+
+# Facet filter: only OpenAI text models in CS
+glow models search --body '{
+  "filter_provider_ids": ["OPENAI_PROVIDER_UUID"],
+  "filter_department_ids": ["CS_DEPT_UUID"],
+  "page_size": 25
+}'
+```
+
+The response includes a `department_filter`, `provider_filter`, and modality facets with available options, counts, and selected IDs for building filter UIs.
+
+---
+
+{/* DEMO_VIDEO: models-bulk — replace public/demos/models-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs, or `all: true` with flat filter fields plus optional `excluded_ids` and a `patch` body. The persona surface is the prove-out; models follow the same shape.
+
+<DemoVideo
+  topic="models-bulk"
+  caption="Bulk-archiving every model tied to a deprecated provider in one round-trip; excluded_ids keeps the model still pinned by a live agent."
+/>
+
+**Delete by explicit IDs:**
+
+```bash
+glow models delete --body '{
+  "model_ids": ["model-1", "model-2"]
+}'
+```
+
+**Delete all matching a filter (with exclusions):**
+
+```bash
+glow models delete --body '{
+  "all": true,
+  "filter_provider_ids": ["deprecated-provider-uuid"],
+  "excluded_ids": ["model-still-in-use"]
+}'
+```
+
+**Bulk update via `patch`:**
+
+```bash
+glow models update --body '{
+  "all": true,
+  "filter_provider_ids": ["old-provider-uuid"],
+  "patch": { "provider_ids": ["new-provider-uuid"] }
+}'
+```
+
 ## Common Operations
 
 | Task | CLI | API Endpoint |
@@ -169,6 +222,7 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 | Update model | `glow models update --body '{"model_id": "...", ...}'` | `POST /model/update` |
 | Duplicate model | `glow models create --body '{...}'` | `POST /model/duplicate` |
 | Delete model(s) | `glow models delete --body '{"model_id": "..."}'` | `POST /model/delete` |
+| Bulk delete (filter) | `glow models delete --body '{"all": true, "filter_…": "…"}'` | `POST /model/delete` |
 | Export to CSV | `glow models export` | `POST /model/export` |
 | Stage a draft | `glow models draft --body '{...}'` | `PATCH /model/draft` |
 | List drafts | `glow models list` | `POST /model/drafts` |
