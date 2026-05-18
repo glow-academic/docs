@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: chat — replace public/demos/chat.mp4 */}
+{/* DEMO_VIDEO: chat-overview */}
 
 # Chat
 
-<DemoVideo topic="chat" />
+<DemoVideo
+  topic="chat-overview"
+  caption="Opening a chat from the attempt list — message thread, persona header, attached documents and the input area in one frame."
+/>
 
 Chats are the individual conversations within an attempt — each chat
 corresponds to one scenario and holds the full message history between
@@ -37,6 +40,15 @@ A chat contains:
 Chats also support a draft system for customizing chat configurations before or during a session.
 
 ![Chat interface showing message thread with AI persona, with voice mode toggle and input area](/screenshots/chat/interface.png)
+
+{/* DEMO_VIDEO: chat-message */}
+
+## Sending a message
+
+<DemoVideo
+  topic="chat-message"
+  caption="Typing a learner turn, hitting send, and watching the persona reply stream back token-by-token via chat_message."
+/>
 
 ## Quick Start
 
@@ -119,7 +131,32 @@ CLI dispatch is symmetric — `glow attempts chat <op>` (e.g.
 `glow attempts chat message <chat_id> "..."`) maps 1:1 to
 `POST /attempt/chat_<op>`.
 
+{/* DEMO_VIDEO: chat-grade */}
+
+## Grading a chat
+
+<DemoVideo
+  topic="chat-grade"
+  caption="Triggering chat_grade after the conversation closes — rubric standards light up with per-standard scores and the overall pass/fail badge."
+/>
+
+{/* DEMO_VIDEO: chat-hints */}
+
+## Hints, feedback, and analyses
+
+<DemoVideo
+  topic="chat-hints"
+  caption="Calling chat_hints mid-conversation for a nudge, then chat_feedback + chat_strengths/improvements after grading to see per-standard rationale."
+/>
+
 ## Live REPL + voice (WS)
+
+{/* DEMO_VIDEO: chat-live */}
+
+<DemoVideo
+  topic="chat-live"
+  caption="glow attempts chat live <chat_id> — interactive socket.io REPL, lines sent as chat_message, replies stream back inline."
+/>
 
 The same chat surface is also exposed over socket.io for live message
 flow. The CLI has an interactive REPL at:
@@ -132,6 +169,13 @@ glow attempts chat live <chat_id>
 Voice (`glow attempts chat voice <chat_id>`) is gated on the `cpal` +
 `rodio` audio deps and is currently a deferred placeholder — see the
 deferred CLI capability tracking in the `glow-academic-cli` repo.
+
+{/* DEMO_VIDEO: chat-voice */}
+
+<DemoVideo
+  topic="chat-voice"
+  caption="The deferred voice REPL surface — placeholder warning today, will become chat_speak / chat_silence / chat_voice round-trip once cpal/rodio land."
+/>
 
 ## Searching and filtering chat resources
 
@@ -166,7 +210,14 @@ Available search filters:
 | `persona_show_selected` | Show only currently selected personas |
 | `document_show_selected` | Show only currently selected documents |
 
+{/* DEMO_VIDEO: chat-draft */}
+
 ## Working with drafts
+
+<DemoVideo
+  topic="chat-draft"
+  caption="Editing a chat's persona + document selection in draft form, saving with expected_version, and watching form_state hydrate the selected IDs."
+/>
 
 Chat drafts let you customize a chat's configuration — changing which personas, documents, parameters, and other resources are active.
 
@@ -207,6 +258,15 @@ curl -X POST https://<your-instance>/attempt/chat_drafts \
   -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
 ```
+
+{/* DEMO_VIDEO: chat-export */}
+
+## Exporting a transcript
+
+<DemoVideo
+  topic="chat-export"
+  caption="glow attempts chat export — downloads the message thread + grading metadata as a portable bundle ready to drop into a review packet."
+/>
 
 ## Common Operations
 
