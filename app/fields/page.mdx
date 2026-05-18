@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: fields — replace public/demos/fields.mp4 */}
+
 # Fields
+
+<DemoVideo topic="fields" />
 
 Fields are the specific values within a parameter. While parameters define categories like "Temperament" or "Class", fields define the individual options within those categories -- "Confused", "Happy", "CS-180", and so on.
 
@@ -64,7 +68,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search fields
-curl -X POST https://<your-instance>/v5/fields/search \
+curl -X POST https://<your-instance>/field/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -74,7 +78,7 @@ curl -X POST https://<your-instance>/v5/fields/search \
   }'
 
 # Create a field
-curl -X POST https://<your-instance>/v5/fields/create \
+curl -X POST https://<your-instance>/field/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -126,7 +130,7 @@ Fields support rich search and filtering:
 
 ```bash
 # Search fields by parameter
-curl -X POST https://<your-instance>/v5/fields/search \
+curl -X POST https://<your-instance>/field/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -148,26 +152,26 @@ glow fields draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /fields/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, and `conditional_parameter_ids`.
+Via the API, use `PATCH /field/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `flag_id`, `department_ids`, and `conditional_parameter_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all fields | `glow fields list` | `POST /fields/search` |
-| Get a field | `glow fields get --body '{...}'` | `POST /fields/get` |
-| Create fields | `glow fields create --body '{...}'` | `POST /fields/create` |
-| Update fields | `glow fields update --body '{...}'` | `POST /fields/update` |
-| Duplicate a field | -- | `POST /fields/duplicate` |
-| Delete fields | `glow fields delete --body '{...}'` | `POST /fields/delete` |
-| Export to CSV | `glow fields export` | `POST /fields/export` |
-| Save a draft | `glow fields draft --body '{...}'` | `PATCH /fields/draft` |
-| List drafts | -- | `POST /fields/drafts` |
+| List all fields | `glow fields list` | `POST /field/search` |
+| Get a field | `glow fields get --body '{...}'` | `POST /field/get` |
+| Create fields | `glow fields create --body '{...}'` | `POST /field/create` |
+| Update fields | `glow fields update --body '{...}'` | `POST /field/update` |
+| Duplicate a field | -- | `POST /field/duplicate` |
+| Delete fields | `glow fields delete --body '{...}'` | `POST /field/delete` |
+| Export to CSV | `glow fields export` | `POST /field/export` |
+| Save a draft | `glow fields draft --body '{...}'` | `PATCH /field/draft` |
+| List drafts | -- | `POST /field/drafts` |
 
 ## Related
 
-- [Fields API](/glow/fields/api)
-- [Fields CLI](/glow/fields/cli)
-- [Parameters Guide](/glow/parameters/guide) -- the categories that contain fields
-- [Documents Guide](/glow/documents/guide) -- documents reference fields
-- [Departments Guide](/glow/departments/guide) -- scope fields to departments
+- [Fields API](/api-reference/field)
+- [Fields CLI](/cli-reference/field)
+- [Parameters Guide](/parameter) -- the categories that contain fields
+- [Documents Guide](/document) -- documents reference fields
+- [Departments Guide](/department) -- scope fields to departments
