@@ -2,7 +2,7 @@
 
 # `glow system context`
 
-Context System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Context on system.
 
 ## Usage
 

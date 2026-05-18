@@ -1,0 +1,13 @@
+# `glow attempts chat get`
+
+# `glow attempts chat get`
+
+Get on chat (under attempts).
+
+## Usage
+
+```bash
+glow attempts chat get --id <id>
+```
+
+> Wire call: `POST /attempt/chat_get`. Run `glow attempts chat get --help` for the full flag list.

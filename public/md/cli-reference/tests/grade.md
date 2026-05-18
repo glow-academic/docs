@@ -2,7 +2,7 @@
 
 # `glow tests grade`
 
-Grade Test sessions.
+Grade on tests.
 
 ## Usage
 

@@ -76,6 +76,16 @@ interface CliSpec extends CliCommand {
   resources?: { slug: string; about: string }[]
   media_types?: string[]
   media_actions?: CliCommand[]
+  namespaces?: CliNamespace[]
+}
+
+/** Nested CLI parents (attempts/tests/system) with view artifacts.
+ *  Source: glow-academic-cli/src/resource.rs NAMESPACES table.
+ *  See the CLI module's docstring for the wire-path convention. */
+interface CliNamespace {
+  name: string                  // "attempts", "tests", "system"
+  own_actions: string[]         // actions on the parent itself
+  views: string[]               // nested view artifacts
 }
 
 // MCP tool spec types (from export-mcp-tools.py)
@@ -613,7 +623,14 @@ function main() {
         }
       }
 
+      // Skip namespace parents (attempts/tests/system) from the generic
+      // CRUD loop — they get nested treatment in the namespaces block
+      // below instead of flat actions.
+      const namespaceSlugs = new Set((cliSpec.namespaces || []).map(n => n.name))
+
       for (const res of cliSpec.resources) {
+        if (namespaceSlugs.has(res.slug)) continue
+
         // Map plural cli_name → singular api_path. cliSpec.resources
         // already stores both pluralization forms; we use the api_path
         // form (singular) to look up in the api spec.
@@ -660,6 +677,113 @@ function main() {
         writeFileSync(join(resDir, '_meta.ts'), resMetaLines.join('\n'))
 
         cliRefMeta[res.slug] = titleCase(res.slug)
+      }
+
+      // ── Nested namespaces (attempts / tests / system) ─────────
+      // The CLI declares these in NAMESPACES; each gets a parent dir
+      // with own_actions at the top level + nested view-artifact dirs
+      // for the views that share the parent's URL space.
+      //
+      // Wire path convention:
+      //   own action: POST /<parent_singular>/<action>
+      //   view action: POST /<parent_singular>/<view>_<action>
+      // CLI invocation:
+      //   `glow <parent> <action>` (own)
+      //   `glow <parent> <view> <action>` (nested)
+      for (const ns of (cliSpec.namespaces || [])) {
+        // Singular parent for wire-path lookup. attempts → attempt, etc.
+        const parentSingular = ns.name.replace(/s$/, '')
+        const parentApiActions = actionsByArtifact.get(parentSingular) || []
+
+        const parentDir = join(cliRefDir, ns.name)
+        mkdirSync(parentDir, { recursive: true })
+        const parentMeta: Record<string, string> = {}
+
+        // Own actions — direct CLI verb under the parent.
+        for (const action of [...ns.own_actions].sort()) {
+          if (!parentApiActions.includes(action)) continue  // skip if api doesn't expose
+          const aDir = join(parentDir, action)
+          mkdirSync(aDir, { recursive: true })
+          const usageHint =
+            action === 'list' || action === 'search'
+              ? `${rootName} ${ns.name} ${action}`
+              : action === 'save' || action === 'generate'
+                ? `${rootName} ${ns.name} ${action} --body '\\{...\\}'`
+                : `${rootName} ${ns.name} ${action} --id <id>`
+          const lines = [
+            `# \`${rootName} ${ns.name} ${action}\``,
+            '', `${titleCase(action)} on ${ns.name}.`, '',
+            '## Usage', '', '```bash', usageHint, '```', '',
+            `> Wire call: \`POST /${parentSingular}/${action}\`. ` +
+            `Run \`${rootName} ${ns.name} ${action} --help\` for the full flag list.`,
+            '',
+          ]
+          writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
+          parentMeta[action] = `${rootName} ${ns.name} ${action}`
+          totalCliCommands++
+        }
+
+        // Nested view artifacts. Wire actions are prefixed in the
+        // parent's path space (e.g. /attempt/chat_get). We derive
+        // the per-view action set by stripping the `<view>_` prefix
+        // from parent's api actions.
+        for (const view of [...ns.views].sort()) {
+          const viewActions = parentApiActions
+            .filter(a => a.startsWith(`${view}_`))
+            .map(a => a.slice(view.length + 1))   // drop `<view>_` prefix
+            .sort()
+          // Some views have a bare path (no action) like /attempt/dashboard
+          // — surface that as a 'get' default for the view.
+          if (parentApiActions.includes(view)) viewActions.unshift('get')
+          if (viewActions.length === 0) continue
+
+          const viewDir = join(parentDir, view)
+          mkdirSync(viewDir, { recursive: true })
+          const viewMeta: Record<string, string> = {}
+
+          for (const action of viewActions) {
+            const aDir = join(viewDir, action)
+            mkdirSync(aDir, { recursive: true })
+            // Bare-path (no _action suffix) → POST /<parent>/<view>;
+            // otherwise → POST /<parent>/<view>_<action>.
+            const wirePath = action === 'get' && !parentApiActions.includes(`${view}_get`)
+              ? `/${parentSingular}/${view}`
+              : `/${parentSingular}/${view}_${action}`
+            const usageHint =
+              action === 'list' || action === 'search'
+                ? `${rootName} ${ns.name} ${view} ${action}`
+                : action === 'save' || action === 'create' || action === 'generate'
+                  ? `${rootName} ${ns.name} ${view} ${action} --body '\\{...\\}'`
+                  : `${rootName} ${ns.name} ${view} ${action} --id <id>`
+            const lines = [
+              `# \`${rootName} ${ns.name} ${view} ${action}\``,
+              '', `${titleCase(action)} on ${view} (under ${ns.name}).`, '',
+              '## Usage', '', '```bash', usageHint, '```', '',
+              `> Wire call: \`POST ${wirePath}\`. ` +
+              `Run \`${rootName} ${ns.name} ${view} ${action} --help\` for the full flag list.`,
+              '',
+            ]
+            writeFileSync(join(aDir, 'page.mdx'), lines.join('\n'))
+            viewMeta[action] = `${rootName} ${ns.name} ${view} ${action}`
+            totalCliCommands++
+          }
+
+          const viewMetaLines = ['export default {']
+          for (const [key, label] of Object.entries(viewMeta)) {
+            viewMetaLines.push(`  '${key}': '${label}',`)
+          }
+          viewMetaLines.push('}', '')
+          writeFileSync(join(viewDir, '_meta.ts'), viewMetaLines.join('\n'))
+          parentMeta[view] = titleCase(view)
+        }
+
+        const parentMetaLines = ['export default {']
+        for (const [key, label] of Object.entries(parentMeta)) {
+          parentMetaLines.push(`  '${key}': '${label}',`)
+        }
+        parentMetaLines.push('}', '')
+        writeFileSync(join(parentDir, '_meta.ts'), parentMetaLines.join('\n'))
+        cliRefMeta[ns.name] = titleCase(ns.name)
       }
     }
 

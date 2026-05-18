@@ -2,7 +2,7 @@
 
 # `glow tests start`
 
-Start Test sessions.
+Start on tests.
 
 ## Usage
 

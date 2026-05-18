@@ -1,0 +1,13 @@
+# `glow attempts chat audio`
+
+# `glow attempts chat audio`
+
+Audio on chat (under attempts).
+
+## Usage
+
+```bash
+glow attempts chat audio --id <id>
+```
+
+> Wire call: `POST /attempt/chat_audio`. Run `glow attempts chat audio --help` for the full flag list.

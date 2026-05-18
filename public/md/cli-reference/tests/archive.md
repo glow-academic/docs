@@ -2,7 +2,7 @@
 
 # `glow tests archive`
 
-Archive Test sessions.
+Archive on tests.
 
 ## Usage
 

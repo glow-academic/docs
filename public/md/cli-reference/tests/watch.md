@@ -2,7 +2,7 @@
 
 # `glow tests watch`
 
-Watch Test sessions.
+Watch on tests.
 
 ## Usage
 

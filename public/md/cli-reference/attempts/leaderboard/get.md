@@ -1,0 +1,13 @@
+# `glow attempts leaderboard get`
+
+# `glow attempts leaderboard get`
+
+Get on leaderboard (under attempts).
+
+## Usage
+
+```bash
+glow attempts leaderboard get --id <id>
+```
+
+> Wire call: `POST /attempt/leaderboard`. Run `glow attempts leaderboard get --help` for the full flag list.

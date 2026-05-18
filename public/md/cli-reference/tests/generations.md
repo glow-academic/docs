@@ -2,7 +2,7 @@
 
 # `glow tests generations`
 
-Generations Test sessions.
+Generations on tests.
 
 ## Usage
 

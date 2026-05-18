@@ -2,7 +2,7 @@
 
 # `glow attempts refresh`
 
-Refresh Simulation attempts.
+Refresh on attempts.
 
 ## Usage
 

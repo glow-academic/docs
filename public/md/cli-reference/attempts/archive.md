@@ -2,7 +2,7 @@
 
 # `glow attempts archive`
 
-Archive Simulation attempts.
+Archive on attempts.
 
 ## Usage
 

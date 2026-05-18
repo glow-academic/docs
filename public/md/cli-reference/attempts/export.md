@@ -2,7 +2,7 @@
 
 # `glow attempts export`
 
-Export Simulation attempts.
+Export on attempts.
 
 ## Usage
 

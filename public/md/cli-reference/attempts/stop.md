@@ -2,7 +2,7 @@
 
 # `glow attempts stop`
 
-Stop Simulation attempts.
+Stop on attempts.
 
 ## Usage
 

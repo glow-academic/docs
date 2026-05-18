@@ -2,7 +2,7 @@
 
 # `glow attempts title`
 
-Title Simulation attempts.
+Title on attempts.
 
 ## Usage
 

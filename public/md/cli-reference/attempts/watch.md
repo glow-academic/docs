@@ -2,7 +2,7 @@
 
 # `glow attempts watch`
 
-Watch Simulation attempts.
+Watch on attempts.
 
 ## Usage
 

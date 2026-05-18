@@ -2,7 +2,7 @@
 
 # `glow attempts complete`
 
-Complete Simulation attempts.
+Complete on attempts.
 
 ## Usage
 

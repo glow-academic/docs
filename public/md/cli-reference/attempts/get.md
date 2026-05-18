@@ -2,7 +2,7 @@
 
 # `glow attempts get`
 
-Get Simulation attempts.
+Get on attempts.
 
 ## Usage
 

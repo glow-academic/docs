@@ -2,7 +2,7 @@
 
 # `glow attempts draft`
 
-Draft Simulation attempts.
+Draft on attempts.
 
 ## Usage
 

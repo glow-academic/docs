@@ -2,7 +2,7 @@
 
 # `glow system generate`
 
-Generate System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Generate on system.
 
 ## Usage
 

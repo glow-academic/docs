@@ -2,7 +2,7 @@
 
 # `glow attempts start`
 
-Start Simulation attempts.
+Start on attempts.
 
 ## Usage
 

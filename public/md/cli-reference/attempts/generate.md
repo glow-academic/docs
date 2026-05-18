@@ -2,7 +2,7 @@
 
 # `glow attempts generate`
 
-Generate Simulation attempts.
+Generate on attempts.
 
 ## Usage
 

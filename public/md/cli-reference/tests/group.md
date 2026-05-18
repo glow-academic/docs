@@ -2,7 +2,7 @@
 
 # `glow tests group`
 
-Group Test sessions.
+Group on tests.
 
 ## Usage
 

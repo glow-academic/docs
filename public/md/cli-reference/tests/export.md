@@ -2,7 +2,7 @@
 
 # `glow tests export`
 
-Export Test sessions.
+Export on tests.
 
 ## Usage
 

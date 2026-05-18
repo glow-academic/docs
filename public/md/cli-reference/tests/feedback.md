@@ -2,7 +2,7 @@
 
 # `glow tests feedback`
 
-Feedback Test sessions.
+Feedback on tests.
 
 ## Usage
 

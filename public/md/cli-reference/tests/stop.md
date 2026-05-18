@@ -2,7 +2,7 @@
 
 # `glow tests stop`
 
-Stop Test sessions.
+Stop on tests.
 
 ## Usage
 

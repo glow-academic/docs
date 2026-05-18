@@ -2,7 +2,7 @@
 
 # `glow attempts group`
 
-Group Simulation attempts.
+Group on attempts.
 
 ## Usage
 

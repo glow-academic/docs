@@ -2,7 +2,7 @@
 
 # `glow system watch`
 
-Watch System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Watch on system.
 
 ## Usage
 

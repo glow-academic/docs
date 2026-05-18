@@ -2,7 +2,7 @@
 
 # `glow attempts search`
 
-Search Simulation attempts.
+Search on attempts.
 
 ## Usage
 

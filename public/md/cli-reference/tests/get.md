@@ -2,7 +2,7 @@
 
 # `glow tests get`
 
-Get Test sessions.
+Get on tests.
 
 ## Usage
 

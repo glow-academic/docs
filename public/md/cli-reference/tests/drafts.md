@@ -2,7 +2,7 @@
 
 # `glow tests drafts`
 
-Drafts Test sessions.
+Drafts on tests.
 
 ## Usage
 

@@ -2,7 +2,7 @@
 
 # `glow tests refresh`
 
-Refresh Test sessions.
+Refresh on tests.
 
 ## Usage
 

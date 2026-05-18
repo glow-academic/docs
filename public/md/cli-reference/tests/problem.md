@@ -2,7 +2,7 @@
 
 # `glow tests problem`
 
-Problem Test sessions.
+Problem on tests.
 
 ## Usage
 

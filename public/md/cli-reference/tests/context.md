@@ -2,7 +2,7 @@
 
 # `glow tests context`
 
-Context Test sessions.
+Context on tests.
 
 ## Usage
 

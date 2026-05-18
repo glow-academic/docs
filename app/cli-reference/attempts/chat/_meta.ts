@@ -1,0 +1,17 @@
+export default {
+  'analyses': 'glow attempts chat analyses',
+  'audio': 'glow attempts chat audio',
+  'complete': 'glow attempts chat complete',
+  'create': 'glow attempts chat create',
+  'feedback': 'glow attempts chat feedback',
+  'get': 'glow attempts chat get',
+  'grade': 'glow attempts chat grade',
+  'hints': 'glow attempts chat hints',
+  'improvements': 'glow attempts chat improvements',
+  'message': 'glow attempts chat message',
+  'response': 'glow attempts chat response',
+  'silence': 'glow attempts chat silence',
+  'speak': 'glow attempts chat speak',
+  'strengths': 'glow attempts chat strengths',
+  'voice': 'glow attempts chat voice',
+}

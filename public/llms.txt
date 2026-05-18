@@ -508,6 +508,14 @@
 - [`POST` `/tool/update`](/api-reference/tool/post-tool-update.md)
 - [Tool Types](/api-reference/tool/types.md)
 
+## Attempts
+
+- [Attempts](/attempts.md)
+
+## Audit
+
+- [Audit & Lineage](/audit.md)
+
 ## Authentication
 
 - [Authentication](/authentication.md)
@@ -515,6 +523,10 @@
 ## Auths
 
 - [Auths](/auths.md)
+
+## Backup Restore
+
+- [Backup & restore](/backup-restore.md)
 
 ## Benchmark
 
@@ -548,49 +560,40 @@
 - [`glow agents update`](/cli-reference/agents/update.md)
 - [`glow agents watch`](/cli-reference/agents/watch.md)
 - [`glow attempts archive`](/cli-reference/attempts/archive.md)
-- [`glow attempts audio_download`](/cli-reference/attempts/audio_download.md)
-- [`glow attempts audio_upload`](/cli-reference/attempts/audio_upload.md)
-- [`glow attempts call_download`](/cli-reference/attempts/call_download.md)
-- [`glow attempts chat_analyses`](/cli-reference/attempts/chat_analyses.md)
-- [`glow attempts chat_audio`](/cli-reference/attempts/chat_audio.md)
-- [`glow attempts chat_complete`](/cli-reference/attempts/chat_complete.md)
-- [`glow attempts chat_create`](/cli-reference/attempts/chat_create.md)
-- [`glow attempts chat_feedback`](/cli-reference/attempts/chat_feedback.md)
-- [`glow attempts chat_get`](/cli-reference/attempts/chat_get.md)
-- [`glow attempts chat_grade`](/cli-reference/attempts/chat_grade.md)
-- [`glow attempts chat_hints`](/cli-reference/attempts/chat_hints.md)
-- [`glow attempts chat_improvements`](/cli-reference/attempts/chat_improvements.md)
-- [`glow attempts chat_message`](/cli-reference/attempts/chat_message.md)
-- [`glow attempts chat_response`](/cli-reference/attempts/chat_response.md)
-- [`glow attempts chat_silence`](/cli-reference/attempts/chat_silence.md)
-- [`glow attempts chat_speak`](/cli-reference/attempts/chat_speak.md)
-- [`glow attempts chat_strengths`](/cli-reference/attempts/chat_strengths.md)
-- [`glow attempts chat_voice`](/cli-reference/attempts/chat_voice.md)
+- [`glow attempts chat analyses`](/cli-reference/attempts/chat/analyses.md)
+- [`glow attempts chat audio`](/cli-reference/attempts/chat/audio.md)
+- [`glow attempts chat complete`](/cli-reference/attempts/chat/complete.md)
+- [`glow attempts chat create`](/cli-reference/attempts/chat/create.md)
+- [`glow attempts chat feedback`](/cli-reference/attempts/chat/feedback.md)
+- [`glow attempts chat get`](/cli-reference/attempts/chat/get.md)
+- [`glow attempts chat grade`](/cli-reference/attempts/chat/grade.md)
+- [`glow attempts chat hints`](/cli-reference/attempts/chat/hints.md)
+- [`glow attempts chat improvements`](/cli-reference/attempts/chat/improvements.md)
+- [`glow attempts chat message`](/cli-reference/attempts/chat/message.md)
+- [`glow attempts chat response`](/cli-reference/attempts/chat/response.md)
+- [`glow attempts chat silence`](/cli-reference/attempts/chat/silence.md)
+- [`glow attempts chat speak`](/cli-reference/attempts/chat/speak.md)
+- [`glow attempts chat strengths`](/cli-reference/attempts/chat/strengths.md)
+- [`glow attempts chat voice`](/cli-reference/attempts/chat/voice.md)
 - [`glow attempts complete`](/cli-reference/attempts/complete.md)
 - [`glow attempts context`](/cli-reference/attempts/context.md)
-- [`glow attempts dashboard`](/cli-reference/attempts/dashboard.md)
+- [`glow attempts dashboard get`](/cli-reference/attempts/dashboard/get.md)
 - [`glow attempts draft`](/cli-reference/attempts/draft.md)
 - [`glow attempts drafts`](/cli-reference/attempts/drafts.md)
 - [`glow attempts export`](/cli-reference/attempts/export.md)
-- [`glow attempts file_download`](/cli-reference/attempts/file_download.md)
-- [`glow attempts file_preview`](/cli-reference/attempts/file_preview.md)
 - [`glow attempts generate`](/cli-reference/attempts/generate.md)
 - [`glow attempts generations`](/cli-reference/attempts/generations.md)
 - [`glow attempts get`](/cli-reference/attempts/get.md)
 - [`glow attempts group`](/cli-reference/attempts/group.md)
-- [`glow attempts home`](/cli-reference/attempts/home.md)
-- [`glow attempts image_download`](/cli-reference/attempts/image_download.md)
-- [`glow attempts leaderboard`](/cli-reference/attempts/leaderboard.md)
-- [`glow attempts practice`](/cli-reference/attempts/practice.md)
+- [`glow attempts home get`](/cli-reference/attempts/home/get.md)
+- [`glow attempts leaderboard get`](/cli-reference/attempts/leaderboard/get.md)
+- [`glow attempts practice get`](/cli-reference/attempts/practice/get.md)
 - [`glow attempts problem`](/cli-reference/attempts/problem.md)
 - [`glow attempts refresh`](/cli-reference/attempts/refresh.md)
-- [`glow attempts report`](/cli-reference/attempts/report.md)
 - [`glow attempts search`](/cli-reference/attempts/search.md)
 - [`glow attempts start`](/cli-reference/attempts/start.md)
 - [`glow attempts stop`](/cli-reference/attempts/stop.md)
-- [`glow attempts text_download`](/cli-reference/attempts/text_download.md)
 - [`glow attempts title`](/cli-reference/attempts/title.md)
-- [`glow attempts video_download`](/cli-reference/attempts/video_download.md)
 - [`glow attempts watch`](/cli-reference/attempts/watch.md)
 - [`glow auths call_download`](/cli-reference/auths/call_download.md)
 - [`glow auths client-config`](/cli-reference/auths/client-config.md)
@@ -936,58 +939,45 @@
 - [`glow start`](/cli-reference/start.md)
 - [`glow status`](/cli-reference/status.md)
 - [`glow stop`](/cli-reference/stop.md)
-- [`glow system activity`](/cli-reference/system/activity.md)
-- [`glow system audio_download`](/cli-reference/system/audio_download.md)
-- [`glow system call_download`](/cli-reference/system/call_download.md)
+- [`glow system activity get`](/cli-reference/system/activity/get.md)
 - [`glow system context`](/cli-reference/system/context.md)
 - [`glow system export`](/cli-reference/system/export.md)
-- [`glow system file_download`](/cli-reference/system/file_download.md)
-- [`glow system file_preview`](/cli-reference/system/file_preview.md)
 - [`glow system generate`](/cli-reference/system/generate.md)
 - [`glow system generations`](/cli-reference/system/generations.md)
+- [`glow system group get`](/cli-reference/system/group/get.md)
 - [`glow system group`](/cli-reference/system/group.md)
-- [`glow system groups`](/cli-reference/system/groups.md)
-- [`glow system health`](/cli-reference/system/health.md)
-- [`glow system image_download`](/cli-reference/system/image_download.md)
-- [`glow system pricing`](/cli-reference/system/pricing.md)
+- [`glow system health get`](/cli-reference/system/health/get.md)
+- [`glow system pricing get`](/cli-reference/system/pricing/get.md)
 - [`glow system problem`](/cli-reference/system/problem.md)
 - [`glow system refresh`](/cli-reference/system/refresh.md)
 - [`glow system resolve`](/cli-reference/system/resolve.md)
-- [`glow system session`](/cli-reference/system/session.md)
-- [`glow system sessions`](/cli-reference/system/sessions.md)
-- [`glow system text_download`](/cli-reference/system/text_download.md)
+- [`glow system session get`](/cli-reference/system/session/get.md)
 - [`glow system title`](/cli-reference/system/title.md)
-- [`glow system video_download`](/cli-reference/system/video_download.md)
 - [`glow system watch`](/cli-reference/system/watch.md)
 - [`glow tests archive`](/cli-reference/tests/archive.md)
-- [`glow tests benchmark`](/cli-reference/tests/benchmark.md)
-- [`glow tests call_download`](/cli-reference/tests/call_download.md)
+- [`glow tests benchmark get`](/cli-reference/tests/benchmark/get.md)
 - [`glow tests complete`](/cli-reference/tests/complete.md)
 - [`glow tests context`](/cli-reference/tests/context.md)
-- [`glow tests decrypt`](/cli-reference/tests/decrypt.md)
 - [`glow tests draft`](/cli-reference/tests/draft.md)
 - [`glow tests drafts`](/cli-reference/tests/drafts.md)
 - [`glow tests export`](/cli-reference/tests/export.md)
 - [`glow tests feedback`](/cli-reference/tests/feedback.md)
-- [`glow tests file_download`](/cli-reference/tests/file_download.md)
 - [`glow tests generate`](/cli-reference/tests/generate.md)
 - [`glow tests generations`](/cli-reference/tests/generations.md)
 - [`glow tests get`](/cli-reference/tests/get.md)
 - [`glow tests grade`](/cli-reference/tests/grade.md)
 - [`glow tests group`](/cli-reference/tests/group.md)
-- [`glow tests invocation_complete`](/cli-reference/tests/invocation_complete.md)
-- [`glow tests invocation_create`](/cli-reference/tests/invocation_create.md)
-- [`glow tests invocation_get`](/cli-reference/tests/invocation_get.md)
-- [`glow tests invocation_run`](/cli-reference/tests/invocation_run.md)
-- [`glow tests invocation_terminate`](/cli-reference/tests/invocation_terminate.md)
-- [`glow tests invocation_trace`](/cli-reference/tests/invocation_trace.md)
-- [`glow tests invocations`](/cli-reference/tests/invocations.md)
+- [`glow tests invocation complete`](/cli-reference/tests/invocation/complete.md)
+- [`glow tests invocation create`](/cli-reference/tests/invocation/create.md)
+- [`glow tests invocation get`](/cli-reference/tests/invocation/get.md)
+- [`glow tests invocation run`](/cli-reference/tests/invocation/run.md)
+- [`glow tests invocation terminate`](/cli-reference/tests/invocation/terminate.md)
+- [`glow tests invocation trace`](/cli-reference/tests/invocation/trace.md)
 - [`glow tests problem`](/cli-reference/tests/problem.md)
 - [`glow tests refresh`](/cli-reference/tests/refresh.md)
 - [`glow tests search`](/cli-reference/tests/search.md)
 - [`glow tests start`](/cli-reference/tests/start.md)
 - [`glow tests stop`](/cli-reference/tests/stop.md)
-- [`glow tests text_download`](/cli-reference/tests/text_download.md)
 - [`glow tests title`](/cli-reference/tests/title.md)
 - [`glow tests watch`](/cli-reference/tests/watch.md)
 - [`glow tools call_download`](/cli-reference/tools/call_download.md)
@@ -1020,6 +1010,10 @@
 ## Dashboard
 
 - [Dashboard](/dashboard.md)
+
+## Data Layer
+
+- [Data layer](/data-layer.md)
 
 ## Departments
 
@@ -1089,6 +1083,10 @@
 
 - [Patterns & Best Practices](/patterns.md)
 
+## Permissions
+
+- [Permissions & Roles](/permissions.md)
+
 ## Personas
 
 - [Personas](/personas.md)
@@ -1145,10 +1143,22 @@
 
 - [Streaming](/streaming.md)
 
+## Tests
+
+- [Tests](/tests.md)
+
 ## Tools
 
 - [Tools](/tools.md)
 
+## Topology
+
+- [Topology](/topology.md)
+
 ## Tutorial
 
 - [Design Your First Simulation](/tutorial.md)
+
+## Voice
+
+- [Voice pipeline](/voice.md)

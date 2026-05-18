@@ -2,7 +2,7 @@
 
 # `glow system group`
 
-Group System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Group on system.
 
 ## Usage
 

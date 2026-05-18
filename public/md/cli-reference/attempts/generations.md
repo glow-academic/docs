@@ -2,7 +2,7 @@
 
 # `glow attempts generations`
 
-Generations Simulation attempts.
+Generations on attempts.
 
 ## Usage
 

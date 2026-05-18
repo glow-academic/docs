@@ -1,0 +1,13 @@
+# `glow system session get`
+
+# `glow system session get`
+
+Get on session (under system).
+
+## Usage
+
+```bash
+glow system session get --id <id>
+```
+
+> Wire call: `POST /system/session`. Run `glow system session get --help` for the full flag list.

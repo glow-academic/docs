@@ -30,8 +30,9 @@ export default {
   realtime: 'Realtime',
   mcp: 'MCP',
 
-  // ── Attempt artifact — chat namespace + view ops ────────────
+  // ── Attempt artifact — top-level lifecycle + chat namespace + views
   '---attempt': { type: 'separator', title: 'Attempt' },
+  attempts: 'Attempts (lifecycle)',
   chat: 'Chat',
   home: 'Home',
   practice: 'Practice',
@@ -39,8 +40,9 @@ export default {
   reports: 'Reports',
   leaderboard: 'Leaderboard',
 
-  // ── Test artifact — invocation namespace + view ops ─────────
+  // ── Test artifact — top-level lifecycle + invocation namespace + views
   '---test': { type: 'separator', title: 'Test' },
+  tests: 'Tests (lifecycle)',
   benchmark: 'Benchmark',
   invocation: 'Invocation',
 
@@ -79,6 +81,18 @@ export default {
   departments: 'Departments',
   evals: 'Evals',
   rubrics: 'Rubrics',
+
+  // ── Concepts (how the system works — for devs integrating) ──
+  '---concepts': { type: 'separator', title: 'Concepts' },
+  permissions: 'Permissions & Roles',
+  audit: 'Audit & Lineage',
+  'data-layer': 'Data Layer',
+  voice: 'Voice Pipeline',
+
+  // ── Operations (deploy / run / recover) ─────────────────────
+  '---operations': { type: 'separator', title: 'Operations' },
+  topology: 'Topology',
+  'backup-restore': 'Backup & Restore',
 
   // ── Reference (auto-generated) ──────────────────────────────
   '---ref': { type: 'separator', title: 'Reference' },

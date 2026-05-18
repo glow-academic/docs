@@ -2,7 +2,7 @@
 
 # `glow system resolve`
 
-Resolve System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Resolve on system.
 
 ## Usage
 

@@ -36066,6 +36066,529 @@ Server-authoritative form state returned after draft save.
 
 ---
 
+# Attempts
+
+Route: /attempts
+
+{/* DEMO_VIDEO: attempts-overview — replace public/demos/attempts-overview.mp4 */}
+
+# Attempts
+
+An **attempt** is the parent container for a single learner's run
+through a simulation. It owns the chats, the grading, the artifacts,
+and the lifecycle state. If a learner is *doing* something in Glow,
+they're inside an attempt.
+
+<DemoVideo
+  topic="attempts-overview"
+  caption="The attempts list — filter by cohort or simulation, drill in to see chats, grading, and export."
+/>
+
+## What is an attempt?
+
+An attempt is created when a learner starts a simulation. It holds:
+
+- **One chat per scenario** in the simulation — each scenario becomes
+  a sibling conversation under the same attempt
+- **Grading state** — when the attempt completes, rubric scoring
+  rolls up across the chats
+- **Lifecycle metadata** — start time, completion time, archive flag,
+  practice vs. graded mode
+- **Group membership** — attempts can be bound to an
+  [attempt group](#groups) for batch coordination
+
+The conversation surface itself — messages, audio, hints, grading —
+lives in the [chat](/chat) sub-namespace. The analytics view on top
+of an attempt lives in [dashboard](/dashboard). This page covers the
+**root attempt artifact**: the lifecycle and management ops that act
+on an attempt as a whole.
+
+---
+
+{/* DEMO_VIDEO: attempts-lifecycle — replace public/demos/attempts-lifecycle.mp4 */}
+
+## The lifecycle
+
+<DemoVideo
+  topic="attempts-lifecycle"
+  caption="An attempt from start to complete: scenarios spawn chats, the learner runs each one, then complete rolls up grading."
+/>
+
+Every attempt moves through a small state machine:
+
+| Step | Endpoint | What happens |
+|------|----------|--------------|
+| **1. Start** | `POST /attempt/start` | Create the attempt, fan out one chat per scenario |
+| **2. Run** | `POST /chat/*` | Learner converses with each persona — see [chat](/chat) |
+| **3. Stop (optional)** | `POST /attempt/stop` | Halt an in-flight AI generation mid-stream |
+| **4. Complete** | `POST /attempt/complete` | Finalize the attempt and trigger rubric grading |
+| **5. Archive (optional)** | `POST /attempt/archive` | Hide from default lists without deleting |
+
+Steps 1, 3, 4, and 5 are the focus of this page. Step 2 is the
+chat surface — covered in full on [/chat](/chat).
+
+---
+
+{/* DEMO_VIDEO: attempts-start — replace public/demos/attempts-start.mp4 */}
+
+## Starting an attempt
+
+<DemoVideo
+  topic="attempts-start"
+  caption="Clicking Start on a home-page entry: the attempt is minted, one chat per scenario opens, and the learner lands in the first conversation."
+/>
+
+`POST /attempt/start` takes either a `home_id` or a `practice_id`
+(the entry the learner clicked from the [home](/home) or
+[practice](/practice) page) and resolves it into the underlying
+simulation. One chat is created per scenario in that simulation, all
+parented under the new `attempt_id`.
+
+```bash
+# Start from a home entry
+glow attempts start --body '{"home_id": "00000000-0000-0000-0000-000000000001"}'
+
+# Start from a practice entry
+glow attempts start --body '{"practice_id": "00000000-0000-0000-0000-000000000002"}'
+```
+
+The response carries the new `attempt_id` plus the list of
+`chat_id`s that were spawned. From there the client typically calls
+`POST /chat/message` (or the audio variants) to drive the first
+conversation.
+
+---
+
+{/* DEMO_VIDEO: attempts-stop — replace public/demos/attempts-stop.mp4 */}
+
+## Stopping in-flight generation
+
+<DemoVideo
+  topic="attempts-stop"
+  caption="Hitting Stop mid-response: the streaming AI reply truncates cleanly and control returns to the learner."
+/>
+
+`POST /attempt/stop` halts a running AI response. It targets the
+attempt's `group_id` (the streaming hub key — see
+[Streaming Foundations](/streaming)) and cancels the in-flight
+generation without tearing down the attempt itself.
+
+```bash
+glow attempts stop --body '{"group_id": "00000000-0000-0000-0000-000000000003"}'
+```
+
+This is the safe way to interrupt a long-running response (e.g.
+the learner wants to retry, or the persona is going off the rails).
+The attempt and chat rows are unaffected — only the generation is
+cancelled.
+
+---
+
+{/* DEMO_VIDEO: attempts-complete — replace public/demos/attempts-complete.mp4 */}
+
+## Completing and archiving
+
+<DemoVideo
+  topic="attempts-complete"
+  caption="Completing an attempt: the rubric grader runs across every chat and the attempt lands on the dashboard with a final score."
+/>
+
+Two different operations, two different intents.
+
+### Complete
+
+`POST /attempt/complete` finalizes the attempt. It freezes the
+chats, runs the rubric grader across them, and produces the
+`completion_id` that downstream views (dashboard, reports) hang off
+of.
+
+```bash
+glow attempts complete --body '{
+  "attempt_id": "00000000-0000-0000-0000-000000000010",
+  "message": "Completed by learner"
+}'
+```
+
+Completion is irreversible in the sense that the grading rollup
+happens at this point — subsequent chat edits won't retroactively
+re-grade. To re-grade, regenerate via the chat-level grade endpoint
+(see [/chat](/chat)).
+
+### Archive
+
+`POST /attempt/archive` hides attempts from default list views
+without deleting them. Use it when a learner's run was a mistake,
+a test, or otherwise shouldn't show up in dashboards.
+
+Archive uses the canonical **bulk-write shape** — pass either
+explicit IDs, or `all: true` with flat filter fields plus
+`excluded_ids`. See [Patterns: bulk operations](/patterns) for the
+full pattern.
+
+```bash
+# Archive specific attempts
+glow attempts archive --body '{
+  "attempt_ids": ["00000000-0000-0000-0000-000000000010"],
+  "archived": true
+}'
+
+# Bulk-archive everything matching a filter, except a few keepers
+glow attempts archive --body '{
+  "all": true,
+  "filter_cohort_ids": ["00000000-0000-0000-0000-000000000020"],
+  "excluded_ids": ["00000000-0000-0000-0000-000000000011"],
+  "archived": true
+}'
+```
+
+To unarchive, pass `archived: false` with the same selector. Default
+search hides archived attempts; pass `show_archived: true` to
+include them.
+
+---
+
+## Listing and searching
+
+`POST /attempt/search` is the canonical paginated history endpoint.
+The previous per-view `/attempt/{home,practice,dashboard}/search`
+routes were collapsed into this one — view intent is now expressed
+through filter parameters (`practice`, `target_profile_id`,
+`profile_ids`, …).
+
+```bash
+glow attempts search --body '{
+  "cohort_ids": ["00000000-0000-0000-0000-000000000020"],
+  "simulation_search": "tutoring",
+  "practice": false,
+  "page": 0,
+  "page_size": 25
+}'
+```
+
+The response is a `HistoryResponse` with hydrated display aggregates
+(score %, persona, time, etc.) plus filter facets so the UI can
+render dropdowns without a second round-trip. For the full facet
+recipe and filter-field conventions, see
+[Patterns: search facets](/patterns#recipe-3-search-facets-search--filter)
+and the [Attempt API reference](/api-reference/attempt) for the
+complete filter schema.
+
+---
+
+## Exporting
+
+`POST /attempt/export` returns a `{file_id, file_name, row_count}`
+descriptor. The client then downloads the actual ZIP via the
+canonical media path (`/attempt/file/download`) — see
+[Media Foundations](/media) for the universal download flow.
+
+```bash
+glow attempts export --body '{
+  "view": "dashboard",
+  "attempt_id": "00000000-0000-0000-0000-000000000010"
+}'
+```
+
+The export bundles chat transcripts, audio, rubric scoring, and any
+generated artifacts. View-aware: `view: "record"` exports a single
+learner's history, `view: "dashboard"` exports the cohort-level
+slice, etc.
+
+---
+
+## Groups
+
+`POST /attempt/group` resolves (or mints) the `group_id` that ties
+an attempt to the streaming hub. Most clients don't call this
+directly — `attempt/start` mints the group for you — but it's
+exposed for advanced flows that need to coordinate cross-attempt
+batches or re-attach to an existing group.
+
+---
+
+## Universal ops
+
+The attempt artifact also exposes the universal cross-cutting
+operations every artifact in Glow gets for free. These are
+documented once in Foundations rather than re-explained here:
+
+- `POST /attempt/context`, `POST /attempt/problem`,
+  `POST /attempt/refresh`, `POST /attempt/title` — generic artifact
+  helpers (context loading, error surfacing, cache-bust, retitle).
+- `POST /attempt/generate` and `POST /attempt/generations` — the
+  generation request / history pair. See [Generation](/generation).
+- `POST /attempt/watch` — the SSE subscription for live updates.
+  See [Streaming Foundations](/streaming).
+- `POST /attempt/audio_upload`, `POST /attempt/audio_download`,
+  `POST /attempt/file_download`, `POST /attempt/file_preview`,
+  `POST /attempt/image_download`, `POST /attempt/text_download`,
+  `POST /attempt/video_download` — universal media operations.
+  See [Media](/media).
+- `POST /attempt/get`, `POST /attempt/draft`, `POST /attempt/drafts`
+  — single-row fetch and the draft cycle. The draft cycle follows
+  the same optimistic-concurrency pattern as [personas](/personas).
+
+---
+
+## Common operations reference
+
+| Task | CLI | API |
+|------|-----|-----|
+| Start an attempt | `glow attempts start --body '{...}'` | `POST /attempt/start` |
+| Stop in-flight generation | `glow attempts stop --body '{...}'` | `POST /attempt/stop` |
+| Complete an attempt | `glow attempts complete --body '{...}'` | `POST /attempt/complete` |
+| Archive attempts | `glow attempts archive --body '{...}'` | `POST /attempt/archive` |
+| Search attempts | `glow attempts search --body '{...}'` | `POST /attempt/search` |
+| Export an attempt | `glow attempts export --body '{...}'` | `POST /attempt/export` |
+| Resolve attempt group | `glow attempts group --body '{...}'` | `POST /attempt/group` |
+| Get one attempt | `glow attempts get --body '{...}'` | `POST /attempt/get` |
+| Save a draft | `glow attempts draft --body '{...}'` | `POST /attempt/draft` |
+| List drafts | `glow attempts drafts` | `POST /attempt/drafts` |
+
+## Related
+
+- [Chat](/chat) — the conversation surface that lives inside attempts
+- [Dashboard](/dashboard) — the analytics view over completed attempts
+- [Home](/home) — learner landing page, where attempts are started
+- [Practice](/practice) — the practice-mode entry surface
+- [Leaderboard](/leaderboard) — cross-attempt ranking view
+- [Reports](/reports) — long-form reporting over attempt history
+- [Attempt API Reference](/api-reference/attempt) — full endpoint schemas
+- [Attempt CLI Reference](/cli-reference/attempts) — all CLI commands and flags
+
+---
+
+# Audit & Lineage
+
+Route: /audit
+
+{/* DEMO_VIDEO: audit-overview — replace public/demos/audit-overview.mp4 */}
+
+# Audit & Lineage
+
+<DemoVideo
+  topic="audit-overview"
+  caption="The full lineage chain: a single learner action lands as a soft_calls_entry row, stitched back through group_id into the session timeline and the per-group runs view."
+/>
+
+Glow records every mutation that crosses the wire as an append-only
+ledger row, then stitches those rows back through `group_id` into
+the [Session](/session) timeline and the [Group](/group) detail tree.
+This is the write-side discipline that powers post-hoc
+"what actually happened" inspection, FERPA review, and replay of
+failed invocations.
+
+Audit is not a public endpoint — it is a framework wrapper that every
+mutation route runs through. Drilling the trail is done via the
+existing system endpoints documented on
+[Activity](/activity), [Session](/session), and [Group](/group).
+
+## What gets audited
+
+Every artifact mutation routed through
+`run_artifact_operation_with_audit` participates in audit. The wrapper
+does three things in order, regardless of whether the operation has a
+registered tool:
+
+1. Emits a `{artifact}.{operation}.started` event onto the internal
+   socket bus (forwarded to clients by `ws/output/`).
+2. Invokes the runner — the actual mutation closure.
+3. Emits `{artifact}.{operation}.completed` on success, or
+   `{artifact}.{operation}.failed` on error, with the same `call_id`
+   as the `.started` event.
+
+When the tool graph resolves a tool for the `(artifact, operation)`
+pair, the wrapper additionally writes a tool-call audit row and may
+append a `soft_calls_entry` ledger row from inside the runner.
+
+Reads are **not** audited. Cache hits, websocket replays, and the
+SSE relay path do not produce ledger rows.
+
+## The soft_calls_entry shape
+
+<DemoVideo
+  topic="audit-ledger"
+  caption="A single soft_calls_entry row expanded: call_id matches the wire-level event identity, artifact + operation mirror the permissions vocabulary, and status tracks pending → accepted | rejected."
+/>
+
+The ledger lives in `public.soft_calls_entry` and is **insert-only** —
+state transitions are recorded as new rows, never updates. A companion
+materialized view `soft_calls_mv` collapses to the latest row per
+`call_id` for fast lookups.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | Primary key, defaulted to `uuidv7()` so rows sort by insertion time. |
+| `call_id` | `uuid` | The wire-level identity carried on `.started` / `.completed` / `.failed`. |
+| `artifact` | `text` | Mirrors `permissions_resource.artifact` (e.g. `persona`, `agent`). |
+| `operation` | `text` | The operation key (e.g. `create`, `update`, `delete`). |
+| `status` | `text` | One of `pending`, `accepted`, `rejected` (enforced by check constraint). |
+| `artifact_id` | `uuid` | The row this call mutates / proposes to mutate. |
+| `patch` | `jsonb` | Proposed change payload (nullable). |
+| `active` | `boolean` | `false` hides the row from `soft_calls_mv` without deleting it. |
+| `mcp` | `boolean` | `true` when the call originated from an MCP tool surface. |
+| `generated` | `boolean` | `true` when written by the framework, `false` for hand-seeded rows. |
+| `created_at` | `timestamptz` | Defaulted to `now()`. |
+
+Vocabulary mirrors `permissions_resource`: the `(artifact, operation)`
+pair is the canonical identifier across the tool graph, the audit
+ledger, and the permissions table.
+
+### Append-only state transitions
+
+A soft tool call lifecycle looks like:
+
+```
+INSERT … status='pending'   ← LLM proposes a change
+INSERT … status='accepted'  ← user confirms (or the runner auto-accepts)
+```
+
+or:
+
+```
+INSERT … status='pending'
+INSERT … status='rejected'  ← user declines, no further writes
+```
+
+`soft_calls_mv` returns only the latest row per `call_id`, so
+consumers see one logical state. Historic transitions are recoverable
+by reading the base table directly.
+
+## group_id stitches audit, session, and group
+
+<DemoVideo
+  topic="audit-stitching"
+  caption="Tracing one group_id three ways: into the session timeline as a group_created event, into the group detail tree as runs + messages, and into the audit ledger as a call_id family."
+/>
+
+Every audit row, every run, and every timeline event carries a
+`group_id`. That single id is the join key across the three views:
+
+```
+                       session_id
+                           │
+                           ▼
+                ┌─────────────────────┐
+                │  Session (timeline) │
+                └──────────┬──────────┘
+                           │  groups[]
+                           ▼
+                   group_id ──────────────┐
+                       │                  │
+        ┌──────────────┴───────────┐      │
+        ▼                          ▼      ▼
+  ┌──────────┐              ┌──────────────────────┐
+  │  Group   │              │  soft_calls_entry    │
+  │  (runs + │              │  (one row per        │
+  │ messages)│              │   mutation call_id)  │
+  └──────────┘              └──────────────────────┘
+```
+
+The framework guarantees stitching by:
+
+- **Minting `group_id` early** — routes that create-the-group set
+  `mint_group_id_if_missing=True`, which consults the active-group
+  Redis cache (so `/context`, `/group`, `/search` firing in parallel
+  converge on the same id via `SET NX EX`) and materializes the
+  `groups_entry` row before the first event fires. Without this the
+  `.started` event would carry `group_id=None` and SSE would drop it.
+- **Reusing `call_id` across `.started` / `.completed` / `.failed`** —
+  one wire-level id per invocation, threaded through both the event
+  payloads and the audit row's primary key via `pre_minted_call_id`.
+- **Carrying `operation_key`** — a stable per-step identifier (see
+  [Idempotency + replay safety](#idempotency--replay-safety) below).
+
+## Reading the audit trail
+
+<DemoVideo
+  topic="audit-replay"
+  caption="Drilling top-down: Activity → pick a session → Session timeline → click a group_created row → Group detail with runs + messages → individual call_id back to the ledger."
+/>
+
+The audit trail is not exposed as its own endpoint — the existing
+system endpoints already surface the relevant slices. The canonical
+drill chain is:
+
+| Step | Surface | Endpoint | Carries |
+|---|---|---|---|
+| 1. Engagement | [Activity](/activity) | `POST /system/activity` | `sessions_count`, per-profile breakdown |
+| 2. Session pick | [Activity](/activity) | `POST /system/sessions` | `session_id` per row |
+| 3. Session detail | [Session](/session) | `POST /system/session` | `groups[]` + `timeline[]` |
+| 4. Group detail | [Group](/group) | `POST /system/group` (`include_detail: true`) | `runs[]` + `messages[]` with `calls[]` |
+| 5. Receipt | filesystem | call JSON receipt (`call_upload_id`) | full `started` / `completed` / `failed` event log |
+
+Each step narrows the time window and the entity set. The Group
+endpoint's lean mode (`include_detail: false`) is the cheap path used
+by the audit-linking middleware — it returns identity only, enough to
+hyperlink a `group_id` back to its session without paying for the full
+runs + messages tree.
+
+The Group page already documents the runs and messages shape; see
+[Group → Understanding the detail response](/group#understanding-the-detail-response).
+
+## Idempotency + replay safety
+
+Two ids work together to make audited calls safe to re-fire:
+
+- **`call_id`** — minted per invocation. Identifies one specific
+  attempt. Different attempts of the same logical operation get
+  different `call_id`s.
+- **`operation_key`** — stable across attempts of the same logical
+  step. Carried on the wire alongside `call_id`, and persisted on the
+  audit row.
+
+`calls_entry.operation_key` is the canonical replay key. When a
+runner fails partway (network drop, model timeout, a downstream 500),
+re-firing the *same* `operation_key` lets the framework detect the
+duplicate, short-circuit any already-written soft-call rows, and
+resume from the failure point without producing a second ledger
+entry. The test picker fan-out uses this mechanism to safely retry
+individual calls inside a larger replay without re-running the calls
+that already succeeded.
+
+`idempotency_key` is the wider deduplication contract — passed in by
+callers that need exactly-once semantics across long retry windows.
+The framework's earlier brittle assumption that `idempotency_key ==
+artifact_id` is gone; the soft_calls ledger is now the source of
+truth.
+
+## What audit does NOT cover
+
+The audit wrapper is the canonical entry point, but it is not the
+only path that emits events. Be precise about its limits:
+
+- **Direct `internal_sio.emit(...)` calls** — handlers that bypass
+  `run_artifact_operation_with_audit` and emit events themselves
+  produce wire traffic without a ledger row. The catch-all forwarder
+  in `ws/output.py` still relays them to clients, but no
+  `soft_calls_entry` is written.
+- **Read endpoints** — `POST /<artifact>/get`, `/<artifact>/search`,
+  and the various `*_download` routes never participate in audit.
+  There is no "who read this" trail.
+- **Cache hits** — when `bypass_cache=False` and the resolver returns
+  a cached result, no runner runs, so no events fire and no ledger
+  row is written. The original ledger row from the call that
+  populated the cache is the only audit trail.
+- **MV reads** — querying `soft_calls_mv` (e.g. through the search
+  endpoint) is itself a read, not an audited write.
+- **Failed pre-flight** — when `run_artifact_operation_with_audit`
+  raises in `resolve_common_context` (profile not found, permission
+  denied), the wrapper exits before any event fires. The failure is
+  observable in application logs but not in the ledger.
+
+If a write needs auditing, the answer is always to route it through
+`run_artifact_operation_with_audit` — adding ad-hoc ledger inserts
+elsewhere fragments the source of truth.
+
+## Related
+
+- [Activity](/activity) — aggregate engagement counts, the entry point for the drill chain.
+- [Session](/session) — per-session timeline and groups list.
+- [Group](/group) — per-group runs, messages, and `calls[]` references.
+- [API Reference](/api-reference) — full system endpoint schemas.
+
+---
+
 # Authentication
 
 Route: /authentication
@@ -36197,11 +36720,174 @@ Sessions are listed in the CLI via the `instance` config under
 `~/.config/glow/`. There's no first-class `glow sessions list` command
 today — read the file directly if needed.
 
+{/* DEMO_VIDEO: authentication-service-accounts — replace public/demos/authentication-service-accounts.mp4 */}
+
+## Service accounts
+
+<DemoVideo
+  topic="authentication-service-accounts"
+  caption="Operator mints a JWT in Keycloak admin, drops it into a CI secret, and the runner authenticates non-interactively with `glow login --token` — no browser, ready to script."
+/>
+
+Service accounts are the non-interactive flavour of bearer auth: a
+long-lived JWT that a CI pipeline, cron job, or programmatic client
+attaches without ever opening a browser. Same `Authorization: Bearer
+<jwt>` shape as a human session — only the issuance path differs.
+
+The recap (covered in [Service-account flow](#service-account-flow---token)
+above):
+
+```bash
+glow login --instance-url https://my-school.example.com \
+  --token "$SERVICE_ACCOUNT_JWT"
+```
+
+The CLI's `--token` branch (`save_token` in
+[`src/auth.rs`](https://github.com/learnloopllc/glow-academic-cli/blob/main/src/auth.rs))
+writes the JWT straight into `~/.config/glow/tokens.json` with no
+`refresh_token` and no `expires_in` — the server enforces lifetime via
+the JWT's own `exp` claim.
+
+### Minting a service-account JWT
+
+Today this is an operator-side step, done directly against Keycloak:
+
+1. In the realm's Keycloak admin console, create (or pick) a user that
+   represents the service identity (e.g. `ci-runner@yourdomain`).
+2. Add a `profile.is_service_account = true` claim via a user attribute
+   + a protocol mapper, so it lands in the issued token. Server-side
+   resolution in
+   [`resolve_identity.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/resolve_identity.py)
+   accepts the JWT the same way as a human bearer; the claim is what
+   downstream policy uses to distinguish "machine" from "person" when
+   it matters (e.g. skipping interactive consent prompts).
+3. Mint a token for that user — admin REST API
+   (`POST /auth/realms/<realm>/protocol/openid-connect/token`) with the
+   service account's credentials, or via the admin console's "Get
+   access token" helper.
+
+**Honest gap:** there is no first-class CLI helper for minting
+service-account JWTs today (no `glow service-accounts create`). The
+operator does it via Keycloak admin or a custom script. The CLI's job
+ends at *consuming* an already-minted token via `--token`.
+
+### Scope, rotation, storage
+
+- **TTL.** Driven by the Keycloak client / user token lifespan
+  setting. Default Keycloak access-token lifespan is 5 minutes;
+  service-account tokens are typically configured for hours-to-days so
+  the CI run completes without a refresh dance.
+- **Rotation.** Re-mint in Keycloak, update the CI secret, re-run
+  `glow login --token "$NEW_JWT"`. No refresh token is stored, so
+  expiry is hard-stop — plan rotation cadence to match TTL.
+- **Storage in CI.** Treat the JWT as a bearer credential. Standard
+  pattern:
+
+  ```yaml
+  # GitHub Actions
+  env:
+    SERVICE_ACCOUNT_JWT: ${{ secrets.GLOW_SERVICE_ACCOUNT_JWT }}
+  run: |
+    glow login --instance-url "$GLOW_INSTANCE_URL" \
+      --token "$SERVICE_ACCOUNT_JWT"
+    glow personas search
+  ```
+
+  Never check the token into the repo; never echo it in logs.
+
+{/* DEMO_VIDEO: authentication-license-keys — replace public/demos/authentication-license-keys.mp4 */}
+
+## License keys (`X-Api-Key`)
+
+<DemoVideo
+  topic="authentication-license-keys"
+  caption="Operator seeds a license key in glow-deploy.yaml, runs `glow deploy`, the key lands encrypted-at-rest, and a request carrying X-Api-Key resolves to the right license context."
+/>
+
+License keys are the second authentication channel — distinct from
+the bearer JWT. The bearer carries **identity** ("who is calling");
+the license key carries **entitlement** ("what this caller is
+allowed to spend"). They're sent together on most mutation endpoints
+and resolved independently server-side.
+
+### Where they live
+
+- **Operator machine.** The license key is declared once in
+  `~/.glow/instances/<name>/glow-deploy.yaml` (the same file the
+  deploy wizard writes). Treat the file as a secret — it's the
+  source of truth for the instance.
+- **Server-side.** The deploy pipeline pushes the key into the
+  `keys_resource` table, encrypted-at-rest via the symmetric helper
+  in
+  [`app/utils/auth/decrypt_api_key.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/utils/auth/decrypt_api_key.py)
+  (decrypt counterpart used in
+  [`app/infra/identity/decrypt.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/decrypt.py)).
+  Plaintext is never logged or returned via the API.
+
+### How a request is resolved
+
+1. The client attaches the header: `X-Api-Key: <license-key>`.
+2. Middleware pulls it via `extract_api_key` (defined alongside
+   `extract_bearer_token` in
+   [`resolve_identity.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/resolve_identity.py)
+   — `extract_api_key` is the trivial `.strip()` helper; the heavier
+   lookup is the database round-trip).
+3. The trimmed value is matched against a row in `keys_resource`,
+   decrypted on read via `decrypt_api_key`, and the resulting
+   license context (rate limit bucket, feature flags, billing
+   account) is attached to the request.
+4. The bearer JWT is resolved independently in the same middleware
+   pass — neither channel knows about the other until they meet in
+   the request handler.
+
+### Seeding at deploy time
+
+The key flows in from the deploy yaml: `glow deploy` reads
+`glow-deploy.yaml`, the server's bootstrap seeds the `keys_resource`
+row (encrypted via the same helper), and the row is keyed by the
+license value so the X-Api-Key lookup is O(1) once warmed.
+
+### Rotation
+
+There is no atomic `glow license rotate` command today. **Honest
+gap:** rotation is a three-step manual flow:
+
+1. Generate a new key value (any sufficiently-random string the
+   operator trusts — the value is opaque to the server).
+2. Update `~/.glow/instances/<name>/glow-deploy.yaml` with the new
+   value.
+3. Re-run `glow deploy` to re-seed; old key row remains until
+   manually purged. Update any CI / client secret stores that hold
+   the previous value before the cutover.
+
+Plan rotations during a low-traffic window — there is no overlap
+period where both keys are valid unless you keep both rows in the
+table.
+
+### Bearer + license key together
+
+Most mutation endpoints want both headers:
+
+```bash
+curl -X POST https://my-school.example.com/persona/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
+  -H "X-Api-Key: $GLOW_LICENSE_KEY" \
+  -d '{}'
+```
+
+The bearer answers "who is this caller?"; the license key answers
+"what tier of service do they get?". A request with only a bearer
+gets identity but no entitlement (and may be rate-limited or
+rejected on metered routes); a request with only a license key has
+entitlement but no profile (read-only / unauthenticated surface
+only).
+
 ## Related
 
 - [Start](/start) — install + first-boot
 - [CLI Reference: login](/cli-reference/login/) · [logout](/cli-reference/logout/)
 - API Reference: [`POST /profile/context`](/api-reference/profile/post-profile-context/) returns the authenticated profile
+- [Permissions](/permissions/) — roles, role_artifacts, and how license context interacts with per-route policy
 
 ---
 
@@ -36219,6 +36905,17 @@ Auths manages authentication providers for your Glow instance -- the SSO configu
   topic="auths-overview"
   caption="The auths list -- rows by login method, protocol badge, and enabled flag; encrypted items hidden behind a dedicated edit drawer."
 />
+
+> Auth artifacts configure the SSO/IdP providers. For the runtime auth flow (login, tokens, sessions), see [Authentication](/authentication).
+
+## What auth artifacts configure
+
+An auth row is an **identity-provider (IdP) configuration record** — not a runtime session. Each row tells the Glow instance how to wire one external SSO provider (university Shibboleth, Google Workspace, Azure AD, generic OIDC, ...) into the embedded Keycloak.
+
+- **Provider shape.** Each auth carries display fields (`name`, `description`), a `flag` (enabled/disabled), one or more `protocol_ids` (OIDC, SAML, ...), and a `slug` that becomes the login-button path. The `department_ids` set scopes which orgs see the button.
+- **Encrypted item keys.** Sensitive provider config (`client_secret`, signing keys, redirect-URI overrides) lives in `items`, and each item points at one or more `auth_item_key_ids` — encrypted-at-rest key resources. List and get responses **never return the plaintext**; values round-trip through `app.infra.identity.decrypt.resolve_decrypt`, which composes the canonical `get_keys` + `decrypt_api_key` path and requires the actor's `profile_id`.
+- **Keycloak sync.** Creating or saving an auth invalidates the `auths` cache tag and triggers `app.infra.identity.keycloak_sync` on the next sync pass. `sync_identity_provider_for_realm_level` and `sync_identity_provider_for_org` walk the auth rows for each realm/department, decrypt the item keys, and upsert matching Keycloak `IdentityProvider` records — so the auth artifact is the source of truth and Keycloak is the projection.
+- **Runtime handoff.** Once synced, the actual login dance (PKCE, token exchange, session minting) is handled by the flow documented in [Authentication](/authentication). Auths configure *which* providers exist; `/authentication` covers *how* a request authenticates against them.
 
 ## What is an Auth?
 
@@ -36290,6 +36987,53 @@ glow auths draft --body '{
   "item_ids": ["item-client-id", "item-client-secret", "item-redirect-uri"]
 }'
 ```
+
+---
+
+{/* DEMO_VIDEO: auths-idp — replace public/demos/auths-idp.mp4 */}
+
+## Adding a new IdP
+
+End-to-end recipe for wiring a fresh SSO provider into Keycloak. The four moves are: create the auth shell, seed the encrypted item keys, attach them in a draft, then let `keycloak_sync` project the row into the realm.
+
+<DemoVideo
+  topic="auths-idp"
+  caption="Greenfield IdP onboarding: POST /auth/create, encrypted client_secret pasted into an item key, draft saved with protocol+slug+items, sync log lighting up the new Keycloak IdentityProvider."
+/>
+
+**1. Create the auth shell** (returns `auth_id` + a fresh `draft_id`):
+
+```bash
+curl -X POST https://<your-instance>/auth/create \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "auths": [{
+      "name": "Acme University SSO",
+      "description": "OIDC login for Acme faculty + TAs",
+      "protocol": "oidc",
+      "slug": "acme-sso",
+      "department_ids": ["dept-acme"]
+    }]
+  }'
+```
+
+`protocol`/`slug` are resolve-or-create — pass a string and the server will reuse an existing resource or mint one. See [POST /auth/create](/api-reference/auth/post-auth-create) for the full request schema, including the `items` array and per-item `auth_item_key_ids` for seeding encrypted values up front.
+
+**2. Save the draft** with the wired items (client ID, secret, redirect URI). Plaintext values you submit go through the encrypted-key pipeline before they land in `items`; subsequent `get`/`search` calls return only the key IDs.
+
+```bash
+glow auths draft --body '{
+  "input_draft_id": "<draft-id-from-step-1>",
+  "expected_version": 1,
+  "item_ids": ["item-client-id", "item-client-secret", "item-redirect-uri"]
+}'
+```
+
+**3. Promote the draft** via `POST /auth/update` (or the UI's *Save* button). The route emits `X-Invalidate-Tags: auths` and the next `keycloak_sync` pass picks up the new row, decrypts the item keys, and upserts the matching Keycloak `IdentityProvider` for each realm the auth's departments map to.
+
+**4. Verify** the login button shows up under `/login/<slug>` and that the round-trip lands a session — that path is covered in [Authentication](/authentication).
 
 ---
 
@@ -36446,6 +37190,257 @@ Returns `success`, `auth_id` (new UUID), and `message`.
 - [Auths API Reference](/api-reference/auth)
 - [Auths CLI Reference](/cli-reference/auth)
 - [Settings Guide](/setting) -- instance configuration (links auth providers)
+
+---
+
+# Backup & restore
+
+Route: /backup-restore
+
+{/* DEMO_VIDEO: backup-overview — replace public/demos/backup-overview.mp4 */}
+
+# Backup & restore
+
+Glow's local backup story is deliberately small: every instance keeps
+a directory of gzipped `pg_dump` snapshots on disk, and the canonical
+restore path piggybacks on the blue/green redeploy flow so a recovery
+swap looks exactly like a normal rollout.
+
+<DemoVideo
+  topic="backup-overview"
+  caption="Listing the snapshots under ~/.glow/instances/<name>/backups/, then walking through a redeploy --from-backup to roll back."
+/>
+
+## What's backed up
+
+A backup is a `pg_dump` of the postgres container's primary database,
+piped through `gzip`, with the `keycloak` schema excluded:
+
+```
+pg_dump --exclude-schema=keycloak -U $POSTGRES_USER $POSTGRES_DB | gzip
+```
+
+That covers the application data — personas, scenarios, simulations,
+attempts, drafts, audit rows, etc. It does **not** cover:
+
+- The Keycloak schema (intentionally excluded; treat identity as
+  provisioned, not data).
+- Uploaded media that lives on disk outside Postgres.
+- `.env`, `glow-deploy.yaml`, or any other config under
+  `~/.glow/instances/<name>/` — those are operator-managed source.
+- Remote storage. Backups are local files; nothing is pushed offsite
+  by default.
+
+If you need an off-box copy, rsync the `backups/` directory yourself.
+
+---
+
+{/* DEMO_VIDEO: backup-storage — replace public/demos/backup-storage.mp4 */}
+
+## Where backups live
+
+<DemoVideo
+  topic="backup-storage"
+  caption="ls -lh ~/.glow/instances/default/backups/ — manual snapshots next to the auto pre-deploy snapshots."
+/>
+
+Every instance has its own `backups/` directory:
+
+```
+~/.glow/instances/<name>/
+  glow-deploy.yaml
+  .env
+  docker-compose.yml
+  .deploy-state.json
+  backups/
+    manual-<label>-<timestamp>.sql.gz       # from `glow backup create`
+    backup-deploy-<timestamp>.sql.gz        # auto pre-deploy snapshots
+```
+
+File naming follows two conventions:
+
+| Source | Filename pattern |
+|--------|------------------|
+| `glow backup create --label foo` | `manual-foo-<unix-seconds>.sql.gz` |
+| Auto pre-deploy snapshot | `backup-deploy-<YYYYMMDDTHHMMSSZ>.sql.gz` |
+
+The directory is preserved across `glow destroy` — only containers and
+volumes are wiped. Your snapshots stay put.
+
+---
+
+{/* DEMO_VIDEO: backup-create — replace public/demos/backup-create.mp4 */}
+
+## Creating a backup
+
+<DemoVideo
+  topic="backup-create"
+  caption="glow backup create --label pre-migration — the dump runs inside the database container, lands on the host."
+/>
+
+```bash
+glow backup create [--name <instance>] [--label <label>]
+```
+
+What it does:
+
+1. Asserts Docker is reachable.
+2. Execs `pg_dump | gzip` inside the running `database` container.
+3. Writes the gzipped stream to
+   `~/.glow/instances/<name>/backups/manual-<label>-<ts>.sql.gz`.
+
+The instance must be running (the database container has to be up to
+serve `pg_dump`). `--label` defaults to `manual`; slashes, spaces, and
+colons in the label are normalised to `-`.
+
+---
+
+## Listing backups
+
+```bash
+glow backup list [--name <instance>]
+# alias: glow backup ls
+```
+
+Output is sorted newest-first and prints filename, size, and full
+path. Only files ending in `.sql.gz` are returned — anything else in
+the directory is ignored.
+
+---
+
+{/* DEMO_VIDEO: backup-restore — replace public/demos/backup-restore.mp4 */}
+
+## Restoring
+
+<DemoVideo
+  topic="backup-restore"
+  caption="glow redeploy --from-backup <name> — pre-deploy snapshot fires first, then the restore runs as part of the blue/green swap."
+/>
+
+The **canonical** restore path is to roll the restore in through a
+redeploy:
+
+```bash
+glow redeploy --name <instance> --from-backup <filename>
+```
+
+This routes through the normal deploy pipeline, which means you still
+get:
+
+- A fresh pre-deploy snapshot of the current DB *before* the restore
+  touches anything (see [Auto pre-backup](#auto-pre-backup-on-redeploy)).
+- Blue/green orchestration — the new color comes up against the
+  restored DB.
+- Healthcheck monitoring during the grace window, with auto-rollback
+  if the new color flaps.
+
+There's also a standalone restore command for emergencies where you
+just want to drop the DB and stream a dump back in without rolling a
+new image:
+
+```bash
+glow backup restore --name <instance> <filename>
+```
+
+This is **destructive** — it drops + recreates `$POSTGRES_DB`,
+streams the gzipped dump in via `psql`, then restarts both
+`server-blue` and `server-green` so the asyncpg pools are fresh. The
+CLI requires you to type `restore` to confirm (unless `--yes`).
+
+Prefer `glow redeploy --from-backup` for anything resembling a planned
+rollback. Reserve `glow backup restore` for "the DB is gone, get it
+back" moments.
+
+---
+
+## Auto pre-backup on redeploy
+
+Every `glow redeploy` (as opposed to a first `glow deploy`) takes a
+snapshot **before** doing anything destructive. From the deploy
+pipeline:
+
+```
+1. Resolve config + versions
+2. Compatibility checks
+3. Ensure shared docker network
+4. → Pre-deploy backup (best-effort)
+5. Plan blue/green swap
+6. Render .env, pull images, bring up next color
+…
+12. Monitor grace period — rollback if it flaps.
+```
+
+The pre-deploy snapshot lands in the same `backups/` dir with the
+`backup-deploy-` prefix. If `pg_dump` fails (e.g. the DB is wedged),
+the deploy still continues — the failure is logged but non-fatal, on
+the principle that a missing snapshot shouldn't block you from
+deploying a fix.
+
+The blue/green monitor watches the new color's healthchecks during
+the configured grace window (`--grace-minutes`, default 2). If the
+new color flaps, the orchestrator rolls traffic back to the previous
+color automatically — at which point the pre-deploy snapshot is your
+safety net for any DB changes the new color might have made on the
+way down.
+
+---
+
+## Retention
+
+There are two retention regimes, and both are intentionally light:
+
+- **Manual backups (`manual-*.sql.gz`):** operator-managed. Nothing
+  prunes them; delete with `glow backup delete` when you're done.
+- **Auto pre-deploy snapshots (`backup-deploy-*.sql.gz`):** rolling
+  window of the **7 most recent** per instance. Older ones are
+  removed best-effort after each successful snapshot.
+
+```bash
+glow backup delete --name <instance> <filename>
+```
+
+No encryption, no offsite upload, no scheduling — the v1.0.0 model is
+that you own the files on disk and can rsync, encrypt, or rotate them
+to suit your environment.
+
+---
+
+## Disaster recovery flow
+
+A pragmatic checklist when something goes sideways:
+
+1. **Stop accepting new writes.** Take the client offline or
+   firewall the API so the blast radius stops growing.
+2. **Snapshot the current state**, even if it's broken — it's the
+   only evidence you have of *what* went wrong:
+
+   ```bash
+   glow backup create --name <instance> --label disaster-snapshot
+   ```
+
+3. **Investigate.** Pull logs (`glow logs`), inspect the DB, decide
+   whether the corruption is recoverable in place or needs a rollback.
+4. **Roll back to a known-good snapshot** via redeploy so you still
+   get blue/green safety:
+
+   ```bash
+   glow backup list --name <instance>
+   glow redeploy --name <instance> --from-backup <known-good-filename>
+   ```
+
+5. **Verify** with `glow status` and a smoke test, then re-enable
+   traffic.
+
+---
+
+## Related
+
+- [`glow backup create`](/cli-reference/backup-create) — manual snapshot command
+- [`glow backup list`](/cli-reference/backup-list) — list snapshots for an instance
+- [`glow backup restore`](/cli-reference/backup-restore) — standalone destructive restore
+- [`glow backup delete`](/cli-reference/backup-delete) — remove a snapshot file
+- [`glow redeploy`](/cli-reference/redeploy) — canonical restore path via `--from-backup`
+- [`glow deploy`](/cli-reference/deploy) — initial deployment (no pre-backup since the DB is fresh)
 
 ---
 
@@ -37285,7 +38280,7 @@ Route: /cli-reference/attempts/archive
 
 # `glow attempts archive`
 
-Archive Simulation attempts.
+Archive on attempts.
 
 ## Usage
 
@@ -37297,327 +38292,273 @@ glow attempts archive --id <id>
 
 ---
 
-# `glow attempts audio_download`
+# `glow attempts chat analyses`
 
-Route: /cli-reference/attempts/audio_download
+Route: /cli-reference/attempts/chat/analyses
 
-# `glow attempts audio_download`
+# `glow attempts chat analyses`
 
-Audio Download Simulation attempts.
+Analyses on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts audio_download --id <id>
+glow attempts chat analyses --id <id>
 ```
 
-> Wire call: `POST /attempt/audio_download`. Run `glow attempts audio_download --help` for the full flag list.
+> Wire call: `POST /attempt/chat_analyses`. Run `glow attempts chat analyses --help` for the full flag list.
 
 ---
 
-# `glow attempts audio_upload`
+# `glow attempts chat audio`
 
-Route: /cli-reference/attempts/audio_upload
+Route: /cli-reference/attempts/chat/audio
 
-# `glow attempts audio_upload`
+# `glow attempts chat audio`
 
-Audio Upload Simulation attempts.
+Audio on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts audio_upload --id <id>
+glow attempts chat audio --id <id>
 ```
 
-> Wire call: `POST /attempt/audio_upload`. Run `glow attempts audio_upload --help` for the full flag list.
+> Wire call: `POST /attempt/chat_audio`. Run `glow attempts chat audio --help` for the full flag list.
 
 ---
 
-# `glow attempts call_download`
+# `glow attempts chat complete`
 
-Route: /cli-reference/attempts/call_download
+Route: /cli-reference/attempts/chat/complete
 
-# `glow attempts call_download`
+# `glow attempts chat complete`
 
-Call Download Simulation attempts.
+Complete on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts call_download --id <id>
+glow attempts chat complete --id <id>
 ```
 
-> Wire call: `POST /attempt/call_download`. Run `glow attempts call_download --help` for the full flag list.
+> Wire call: `POST /attempt/chat_complete`. Run `glow attempts chat complete --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_analyses`
+# `glow attempts chat create`
 
-Route: /cli-reference/attempts/chat_analyses
+Route: /cli-reference/attempts/chat/create
 
-# `glow attempts chat_analyses`
+# `glow attempts chat create`
 
-Chat Analyses Simulation attempts.
+Create on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_analyses --id <id>
+glow attempts chat create --body '\{...\}'
 ```
 
-> Wire call: `POST /attempt/chat_analyses`. Run `glow attempts chat_analyses --help` for the full flag list.
+> Wire call: `POST /attempt/chat_create`. Run `glow attempts chat create --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_audio`
+# `glow attempts chat feedback`
 
-Route: /cli-reference/attempts/chat_audio
+Route: /cli-reference/attempts/chat/feedback
 
-# `glow attempts chat_audio`
+# `glow attempts chat feedback`
 
-Chat Audio Simulation attempts.
+Feedback on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_audio --id <id>
+glow attempts chat feedback --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_audio`. Run `glow attempts chat_audio --help` for the full flag list.
+> Wire call: `POST /attempt/chat_feedback`. Run `glow attempts chat feedback --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_complete`
+# `glow attempts chat get`
 
-Route: /cli-reference/attempts/chat_complete
+Route: /cli-reference/attempts/chat/get
 
-# `glow attempts chat_complete`
+# `glow attempts chat get`
 
-Chat Complete Simulation attempts.
+Get on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_complete --id <id>
+glow attempts chat get --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_complete`. Run `glow attempts chat_complete --help` for the full flag list.
+> Wire call: `POST /attempt/chat_get`. Run `glow attempts chat get --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_create`
+# `glow attempts chat grade`
 
-Route: /cli-reference/attempts/chat_create
+Route: /cli-reference/attempts/chat/grade
 
-# `glow attempts chat_create`
+# `glow attempts chat grade`
 
-Chat Create Simulation attempts.
+Grade on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_create --id <id>
+glow attempts chat grade --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_create`. Run `glow attempts chat_create --help` for the full flag list.
+> Wire call: `POST /attempt/chat_grade`. Run `glow attempts chat grade --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_feedback`
+# `glow attempts chat hints`
 
-Route: /cli-reference/attempts/chat_feedback
+Route: /cli-reference/attempts/chat/hints
 
-# `glow attempts chat_feedback`
+# `glow attempts chat hints`
 
-Chat Feedback Simulation attempts.
+Hints on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_feedback --id <id>
+glow attempts chat hints --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_feedback`. Run `glow attempts chat_feedback --help` for the full flag list.
+> Wire call: `POST /attempt/chat_hints`. Run `glow attempts chat hints --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_get`
+# `glow attempts chat improvements`
 
-Route: /cli-reference/attempts/chat_get
+Route: /cli-reference/attempts/chat/improvements
 
-# `glow attempts chat_get`
+# `glow attempts chat improvements`
 
-Chat Get Simulation attempts.
+Improvements on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_get --id <id>
+glow attempts chat improvements --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_get`. Run `glow attempts chat_get --help` for the full flag list.
+> Wire call: `POST /attempt/chat_improvements`. Run `glow attempts chat improvements --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_grade`
+# `glow attempts chat message`
 
-Route: /cli-reference/attempts/chat_grade
+Route: /cli-reference/attempts/chat/message
 
-# `glow attempts chat_grade`
+# `glow attempts chat message`
 
-Chat Grade Simulation attempts.
+Message on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_grade --id <id>
+glow attempts chat message --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_grade`. Run `glow attempts chat_grade --help` for the full flag list.
+> Wire call: `POST /attempt/chat_message`. Run `glow attempts chat message --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_hints`
+# `glow attempts chat response`
 
-Route: /cli-reference/attempts/chat_hints
+Route: /cli-reference/attempts/chat/response
 
-# `glow attempts chat_hints`
+# `glow attempts chat response`
 
-Chat Hints Simulation attempts.
+Response on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_hints --id <id>
+glow attempts chat response --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_hints`. Run `glow attempts chat_hints --help` for the full flag list.
+> Wire call: `POST /attempt/chat_response`. Run `glow attempts chat response --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_improvements`
+# `glow attempts chat silence`
 
-Route: /cli-reference/attempts/chat_improvements
+Route: /cli-reference/attempts/chat/silence
 
-# `glow attempts chat_improvements`
+# `glow attempts chat silence`
 
-Chat Improvements Simulation attempts.
+Silence on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_improvements --id <id>
+glow attempts chat silence --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_improvements`. Run `glow attempts chat_improvements --help` for the full flag list.
+> Wire call: `POST /attempt/chat_silence`. Run `glow attempts chat silence --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_message`
+# `glow attempts chat speak`
 
-Route: /cli-reference/attempts/chat_message
+Route: /cli-reference/attempts/chat/speak
 
-# `glow attempts chat_message`
+# `glow attempts chat speak`
 
-Chat Message Simulation attempts.
+Speak on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_message --id <id>
+glow attempts chat speak --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_message`. Run `glow attempts chat_message --help` for the full flag list.
+> Wire call: `POST /attempt/chat_speak`. Run `glow attempts chat speak --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_response`
+# `glow attempts chat strengths`
 
-Route: /cli-reference/attempts/chat_response
+Route: /cli-reference/attempts/chat/strengths
 
-# `glow attempts chat_response`
+# `glow attempts chat strengths`
 
-Chat Response Simulation attempts.
+Strengths on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_response --id <id>
+glow attempts chat strengths --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_response`. Run `glow attempts chat_response --help` for the full flag list.
+> Wire call: `POST /attempt/chat_strengths`. Run `glow attempts chat strengths --help` for the full flag list.
 
 ---
 
-# `glow attempts chat_silence`
+# `glow attempts chat voice`
 
-Route: /cli-reference/attempts/chat_silence
+Route: /cli-reference/attempts/chat/voice
 
-# `glow attempts chat_silence`
+# `glow attempts chat voice`
 
-Chat Silence Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts chat_silence --id <id>
-```
-
-> Wire call: `POST /attempt/chat_silence`. Run `glow attempts chat_silence --help` for the full flag list.
-
----
-
-# `glow attempts chat_speak`
-
-Route: /cli-reference/attempts/chat_speak
-
-# `glow attempts chat_speak`
-
-Chat Speak Simulation attempts.
+Voice on chat (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts chat_speak --id <id>
+glow attempts chat voice --id <id>
 ```
 
-> Wire call: `POST /attempt/chat_speak`. Run `glow attempts chat_speak --help` for the full flag list.
-
----
-
-# `glow attempts chat_strengths`
-
-Route: /cli-reference/attempts/chat_strengths
-
-# `glow attempts chat_strengths`
-
-Chat Strengths Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts chat_strengths --id <id>
-```
-
-> Wire call: `POST /attempt/chat_strengths`. Run `glow attempts chat_strengths --help` for the full flag list.
-
----
-
-# `glow attempts chat_voice`
-
-Route: /cli-reference/attempts/chat_voice
-
-# `glow attempts chat_voice`
-
-Chat Voice Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts chat_voice --id <id>
-```
-
-> Wire call: `POST /attempt/chat_voice`. Run `glow attempts chat_voice --help` for the full flag list.
+> Wire call: `POST /attempt/chat_voice`. Run `glow attempts chat voice --help` for the full flag list.
 
 ---
 
@@ -37627,7 +38568,7 @@ Route: /cli-reference/attempts/complete
 
 # `glow attempts complete`
 
-Complete Simulation attempts.
+Complete on attempts.
 
 ## Usage
 
@@ -37645,7 +38586,7 @@ Route: /cli-reference/attempts/context
 
 # `glow attempts context`
 
-Context Simulation attempts.
+Context on attempts.
 
 ## Usage
 
@@ -37657,21 +38598,21 @@ glow attempts context --id <id>
 
 ---
 
-# `glow attempts dashboard`
+# `glow attempts dashboard get`
 
-Route: /cli-reference/attempts/dashboard
+Route: /cli-reference/attempts/dashboard/get
 
-# `glow attempts dashboard`
+# `glow attempts dashboard get`
 
-Dashboard Simulation attempts.
+Get on dashboard (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts dashboard --id <id>
+glow attempts dashboard get --id <id>
 ```
 
-> Wire call: `POST /attempt/dashboard`. Run `glow attempts dashboard --help` for the full flag list.
+> Wire call: `POST /attempt/dashboard`. Run `glow attempts dashboard get --help` for the full flag list.
 
 ---
 
@@ -37681,7 +38622,7 @@ Route: /cli-reference/attempts/draft
 
 # `glow attempts draft`
 
-Draft Simulation attempts.
+Draft on attempts.
 
 ## Usage
 
@@ -37699,7 +38640,7 @@ Route: /cli-reference/attempts/drafts
 
 # `glow attempts drafts`
 
-Drafts Simulation attempts.
+Drafts on attempts.
 
 ## Usage
 
@@ -37717,7 +38658,7 @@ Route: /cli-reference/attempts/export
 
 # `glow attempts export`
 
-Export Simulation attempts.
+Export on attempts.
 
 ## Usage
 
@@ -37729,49 +38670,13 @@ glow attempts export --id <id>
 
 ---
 
-# `glow attempts file_download`
-
-Route: /cli-reference/attempts/file_download
-
-# `glow attempts file_download`
-
-File Download Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts file_download --id <id>
-```
-
-> Wire call: `POST /attempt/file_download`. Run `glow attempts file_download --help` for the full flag list.
-
----
-
-# `glow attempts file_preview`
-
-Route: /cli-reference/attempts/file_preview
-
-# `glow attempts file_preview`
-
-File Preview Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts file_preview --id <id>
-```
-
-> Wire call: `POST /attempt/file_preview`. Run `glow attempts file_preview --help` for the full flag list.
-
----
-
 # `glow attempts generate`
 
 Route: /cli-reference/attempts/generate
 
 # `glow attempts generate`
 
-Generate Simulation attempts.
+Generate on attempts.
 
 ## Usage
 
@@ -37789,7 +38694,7 @@ Route: /cli-reference/attempts/generations
 
 # `glow attempts generations`
 
-Generations Simulation attempts.
+Generations on attempts.
 
 ## Usage
 
@@ -37807,7 +38712,7 @@ Route: /cli-reference/attempts/get
 
 # `glow attempts get`
 
-Get Simulation attempts.
+Get on attempts.
 
 ## Usage
 
@@ -37825,7 +38730,7 @@ Route: /cli-reference/attempts/group
 
 # `glow attempts group`
 
-Group Simulation attempts.
+Group on attempts.
 
 ## Usage
 
@@ -37837,75 +38742,57 @@ glow attempts group --id <id>
 
 ---
 
-# `glow attempts home`
+# `glow attempts home get`
 
-Route: /cli-reference/attempts/home
+Route: /cli-reference/attempts/home/get
 
-# `glow attempts home`
+# `glow attempts home get`
 
-Home Simulation attempts.
+Get on home (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts home --id <id>
+glow attempts home get --id <id>
 ```
 
-> Wire call: `POST /attempt/home`. Run `glow attempts home --help` for the full flag list.
+> Wire call: `POST /attempt/home`. Run `glow attempts home get --help` for the full flag list.
 
 ---
 
-# `glow attempts image_download`
+# `glow attempts leaderboard get`
 
-Route: /cli-reference/attempts/image_download
+Route: /cli-reference/attempts/leaderboard/get
 
-# `glow attempts image_download`
+# `glow attempts leaderboard get`
 
-Image Download Simulation attempts.
+Get on leaderboard (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts image_download --id <id>
+glow attempts leaderboard get --id <id>
 ```
 
-> Wire call: `POST /attempt/image_download`. Run `glow attempts image_download --help` for the full flag list.
+> Wire call: `POST /attempt/leaderboard`. Run `glow attempts leaderboard get --help` for the full flag list.
 
 ---
 
-# `glow attempts leaderboard`
+# `glow attempts practice get`
 
-Route: /cli-reference/attempts/leaderboard
+Route: /cli-reference/attempts/practice/get
 
-# `glow attempts leaderboard`
+# `glow attempts practice get`
 
-Leaderboard Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts leaderboard --id <id>
-```
-
-> Wire call: `POST /attempt/leaderboard`. Run `glow attempts leaderboard --help` for the full flag list.
-
----
-
-# `glow attempts practice`
-
-Route: /cli-reference/attempts/practice
-
-# `glow attempts practice`
-
-Practice Simulation attempts.
+Get on practice (under attempts).
 
 ## Usage
 
 ```bash
-glow attempts practice --id <id>
+glow attempts practice get --id <id>
 ```
 
-> Wire call: `POST /attempt/practice`. Run `glow attempts practice --help` for the full flag list.
+> Wire call: `POST /attempt/practice`. Run `glow attempts practice get --help` for the full flag list.
 
 ---
 
@@ -37915,7 +38802,7 @@ Route: /cli-reference/attempts/problem
 
 # `glow attempts problem`
 
-Problem Simulation attempts.
+Problem on attempts.
 
 ## Usage
 
@@ -37933,7 +38820,7 @@ Route: /cli-reference/attempts/refresh
 
 # `glow attempts refresh`
 
-Refresh Simulation attempts.
+Refresh on attempts.
 
 ## Usage
 
@@ -37945,31 +38832,13 @@ glow attempts refresh --id <id>
 
 ---
 
-# `glow attempts report`
-
-Route: /cli-reference/attempts/report
-
-# `glow attempts report`
-
-Report Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts report --id <id>
-```
-
-> Wire call: `POST /attempt/report`. Run `glow attempts report --help` for the full flag list.
-
----
-
 # `glow attempts search`
 
 Route: /cli-reference/attempts/search
 
 # `glow attempts search`
 
-Search Simulation attempts.
+Search on attempts.
 
 ## Usage
 
@@ -37987,7 +38856,7 @@ Route: /cli-reference/attempts/start
 
 # `glow attempts start`
 
-Start Simulation attempts.
+Start on attempts.
 
 ## Usage
 
@@ -38005,7 +38874,7 @@ Route: /cli-reference/attempts/stop
 
 # `glow attempts stop`
 
-Stop Simulation attempts.
+Stop on attempts.
 
 ## Usage
 
@@ -38017,31 +38886,13 @@ glow attempts stop --id <id>
 
 ---
 
-# `glow attempts text_download`
-
-Route: /cli-reference/attempts/text_download
-
-# `glow attempts text_download`
-
-Text Download Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts text_download --id <id>
-```
-
-> Wire call: `POST /attempt/text_download`. Run `glow attempts text_download --help` for the full flag list.
-
----
-
 # `glow attempts title`
 
 Route: /cli-reference/attempts/title
 
 # `glow attempts title`
 
-Title Simulation attempts.
+Title on attempts.
 
 ## Usage
 
@@ -38053,31 +38904,13 @@ glow attempts title --id <id>
 
 ---
 
-# `glow attempts video_download`
-
-Route: /cli-reference/attempts/video_download
-
-# `glow attempts video_download`
-
-Video Download Simulation attempts.
-
-## Usage
-
-```bash
-glow attempts video_download --id <id>
-```
-
-> Wire call: `POST /attempt/video_download`. Run `glow attempts video_download --help` for the full flag list.
-
----
-
 # `glow attempts watch`
 
 Route: /cli-reference/attempts/watch
 
 # `glow attempts watch`
 
-Watch Simulation attempts.
+Watch on attempts.
 
 ## Usage
 
@@ -44349,57 +45182,21 @@ glow stop [--name]
 
 ---
 
-# `glow system activity`
+# `glow system activity get`
 
-Route: /cli-reference/system/activity
+Route: /cli-reference/system/activity/get
 
-# `glow system activity`
+# `glow system activity get`
 
-Activity System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system activity --id <id>
-```
-
-> Wire call: `POST /system/activity`. Run `glow system activity --help` for the full flag list.
-
----
-
-# `glow system audio_download`
-
-Route: /cli-reference/system/audio_download
-
-# `glow system audio_download`
-
-Audio Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Get on activity (under system).
 
 ## Usage
 
 ```bash
-glow system audio_download --id <id>
+glow system activity get --id <id>
 ```
 
-> Wire call: `POST /system/audio_download`. Run `glow system audio_download --help` for the full flag list.
-
----
-
-# `glow system call_download`
-
-Route: /cli-reference/system/call_download
-
-# `glow system call_download`
-
-Call Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system call_download --id <id>
-```
-
-> Wire call: `POST /system/call_download`. Run `glow system call_download --help` for the full flag list.
+> Wire call: `POST /system/activity`. Run `glow system activity get --help` for the full flag list.
 
 ---
 
@@ -44409,7 +45206,7 @@ Route: /cli-reference/system/context
 
 # `glow system context`
 
-Context System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Context on system.
 
 ## Usage
 
@@ -44427,7 +45224,7 @@ Route: /cli-reference/system/export
 
 # `glow system export`
 
-Export System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Export on system.
 
 ## Usage
 
@@ -44439,49 +45236,13 @@ glow system export --id <id>
 
 ---
 
-# `glow system file_download`
-
-Route: /cli-reference/system/file_download
-
-# `glow system file_download`
-
-File Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system file_download --id <id>
-```
-
-> Wire call: `POST /system/file_download`. Run `glow system file_download --help` for the full flag list.
-
----
-
-# `glow system file_preview`
-
-Route: /cli-reference/system/file_preview
-
-# `glow system file_preview`
-
-File Preview System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system file_preview --id <id>
-```
-
-> Wire call: `POST /system/file_preview`. Run `glow system file_preview --help` for the full flag list.
-
----
-
 # `glow system generate`
 
 Route: /cli-reference/system/generate
 
 # `glow system generate`
 
-Generate System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Generate on system.
 
 ## Usage
 
@@ -44499,7 +45260,7 @@ Route: /cli-reference/system/generations
 
 # `glow system generations`
 
-Generations System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Generations on system.
 
 ## Usage
 
@@ -44511,13 +45272,31 @@ glow system generations --id <id>
 
 ---
 
+# `glow system group get`
+
+Route: /cli-reference/system/group/get
+
+# `glow system group get`
+
+Get on group (under system).
+
+## Usage
+
+```bash
+glow system group get --id <id>
+```
+
+> Wire call: `POST /system/group`. Run `glow system group get --help` for the full flag list.
+
+---
+
 # `glow system group`
 
 Route: /cli-reference/system/group
 
 # `glow system group`
 
-Group System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Group on system.
 
 ## Usage
 
@@ -44529,75 +45308,39 @@ glow system group --id <id>
 
 ---
 
-# `glow system groups`
+# `glow system health get`
 
-Route: /cli-reference/system/groups
+Route: /cli-reference/system/health/get
 
-# `glow system groups`
+# `glow system health get`
 
-Groups System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Get on health (under system).
 
 ## Usage
 
 ```bash
-glow system groups --id <id>
+glow system health get --id <id>
 ```
 
-> Wire call: `POST /system/groups`. Run `glow system groups --help` for the full flag list.
+> Wire call: `POST /system/health`. Run `glow system health get --help` for the full flag list.
 
 ---
 
-# `glow system health`
+# `glow system pricing get`
 
-Route: /cli-reference/system/health
+Route: /cli-reference/system/pricing/get
 
-# `glow system health`
+# `glow system pricing get`
 
-Health System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system health --id <id>
-```
-
-> Wire call: `POST /system/health`. Run `glow system health --help` for the full flag list.
-
----
-
-# `glow system image_download`
-
-Route: /cli-reference/system/image_download
-
-# `glow system image_download`
-
-Image Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Get on pricing (under system).
 
 ## Usage
 
 ```bash
-glow system image_download --id <id>
+glow system pricing get --id <id>
 ```
 
-> Wire call: `POST /system/image_download`. Run `glow system image_download --help` for the full flag list.
-
----
-
-# `glow system pricing`
-
-Route: /cli-reference/system/pricing
-
-# `glow system pricing`
-
-Pricing System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system pricing --id <id>
-```
-
-> Wire call: `POST /system/pricing`. Run `glow system pricing --help` for the full flag list.
+> Wire call: `POST /system/pricing`. Run `glow system pricing get --help` for the full flag list.
 
 ---
 
@@ -44607,7 +45350,7 @@ Route: /cli-reference/system/problem
 
 # `glow system problem`
 
-Problem System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Problem on system.
 
 ## Usage
 
@@ -44625,7 +45368,7 @@ Route: /cli-reference/system/refresh
 
 # `glow system refresh`
 
-Refresh System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Refresh on system.
 
 ## Usage
 
@@ -44643,7 +45386,7 @@ Route: /cli-reference/system/resolve
 
 # `glow system resolve`
 
-Resolve System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Resolve on system.
 
 ## Usage
 
@@ -44655,57 +45398,21 @@ glow system resolve --id <id>
 
 ---
 
-# `glow system session`
+# `glow system session get`
 
-Route: /cli-reference/system/session
+Route: /cli-reference/system/session/get
 
-# `glow system session`
+# `glow system session get`
 
-Session System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system session --id <id>
-```
-
-> Wire call: `POST /system/session`. Run `glow system session --help` for the full flag list.
-
----
-
-# `glow system sessions`
-
-Route: /cli-reference/system/sessions
-
-# `glow system sessions`
-
-Sessions System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Get on session (under system).
 
 ## Usage
 
 ```bash
-glow system sessions --id <id>
+glow system session get --id <id>
 ```
 
-> Wire call: `POST /system/sessions`. Run `glow system sessions --help` for the full flag list.
-
----
-
-# `glow system text_download`
-
-Route: /cli-reference/system/text_download
-
-# `glow system text_download`
-
-Text Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system text_download --id <id>
-```
-
-> Wire call: `POST /system/text_download`. Run `glow system text_download --help` for the full flag list.
+> Wire call: `POST /system/session`. Run `glow system session get --help` for the full flag list.
 
 ---
 
@@ -44715,7 +45422,7 @@ Route: /cli-reference/system/title
 
 # `glow system title`
 
-Title System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Title on system.
 
 ## Usage
 
@@ -44727,31 +45434,13 @@ glow system title --id <id>
 
 ---
 
-# `glow system video_download`
-
-Route: /cli-reference/system/video_download
-
-# `glow system video_download`
-
-Video Download System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
-
-## Usage
-
-```bash
-glow system video_download --id <id>
-```
-
-> Wire call: `POST /system/video_download`. Run `glow system video_download --help` for the full flag list.
-
----
-
 # `glow system watch`
 
 Route: /cli-reference/system/watch
 
 # `glow system watch`
 
-Watch System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Watch on system.
 
 ## Usage
 
@@ -44769,7 +45458,7 @@ Route: /cli-reference/tests/archive
 
 # `glow tests archive`
 
-Archive Test sessions.
+Archive on tests.
 
 ## Usage
 
@@ -44781,39 +45470,21 @@ glow tests archive --id <id>
 
 ---
 
-# `glow tests benchmark`
+# `glow tests benchmark get`
 
-Route: /cli-reference/tests/benchmark
+Route: /cli-reference/tests/benchmark/get
 
-# `glow tests benchmark`
+# `glow tests benchmark get`
 
-Benchmark Test sessions.
-
-## Usage
-
-```bash
-glow tests benchmark --id <id>
-```
-
-> Wire call: `POST /test/benchmark`. Run `glow tests benchmark --help` for the full flag list.
-
----
-
-# `glow tests call_download`
-
-Route: /cli-reference/tests/call_download
-
-# `glow tests call_download`
-
-Call Download Test sessions.
+Get on benchmark (under tests).
 
 ## Usage
 
 ```bash
-glow tests call_download --id <id>
+glow tests benchmark get --id <id>
 ```
 
-> Wire call: `POST /test/call_download`. Run `glow tests call_download --help` for the full flag list.
+> Wire call: `POST /test/benchmark`. Run `glow tests benchmark get --help` for the full flag list.
 
 ---
 
@@ -44823,7 +45494,7 @@ Route: /cli-reference/tests/complete
 
 # `glow tests complete`
 
-Complete Test sessions.
+Complete on tests.
 
 ## Usage
 
@@ -44841,7 +45512,7 @@ Route: /cli-reference/tests/context
 
 # `glow tests context`
 
-Context Test sessions.
+Context on tests.
 
 ## Usage
 
@@ -44853,31 +45524,13 @@ glow tests context --id <id>
 
 ---
 
-# `glow tests decrypt`
-
-Route: /cli-reference/tests/decrypt
-
-# `glow tests decrypt`
-
-Decrypt Test sessions.
-
-## Usage
-
-```bash
-glow tests decrypt --id <id>
-```
-
-> Wire call: `POST /test/decrypt`. Run `glow tests decrypt --help` for the full flag list.
-
----
-
 # `glow tests draft`
 
 Route: /cli-reference/tests/draft
 
 # `glow tests draft`
 
-Draft Test sessions.
+Draft on tests.
 
 ## Usage
 
@@ -44895,7 +45548,7 @@ Route: /cli-reference/tests/drafts
 
 # `glow tests drafts`
 
-Drafts Test sessions.
+Drafts on tests.
 
 ## Usage
 
@@ -44913,7 +45566,7 @@ Route: /cli-reference/tests/export
 
 # `glow tests export`
 
-Export Test sessions.
+Export on tests.
 
 ## Usage
 
@@ -44931,7 +45584,7 @@ Route: /cli-reference/tests/feedback
 
 # `glow tests feedback`
 
-Feedback Test sessions.
+Feedback on tests.
 
 ## Usage
 
@@ -44943,31 +45596,13 @@ glow tests feedback --id <id>
 
 ---
 
-# `glow tests file_download`
-
-Route: /cli-reference/tests/file_download
-
-# `glow tests file_download`
-
-File Download Test sessions.
-
-## Usage
-
-```bash
-glow tests file_download --id <id>
-```
-
-> Wire call: `POST /test/file_download`. Run `glow tests file_download --help` for the full flag list.
-
----
-
 # `glow tests generate`
 
 Route: /cli-reference/tests/generate
 
 # `glow tests generate`
 
-Generate Test sessions.
+Generate on tests.
 
 ## Usage
 
@@ -44985,7 +45620,7 @@ Route: /cli-reference/tests/generations
 
 # `glow tests generations`
 
-Generations Test sessions.
+Generations on tests.
 
 ## Usage
 
@@ -45003,7 +45638,7 @@ Route: /cli-reference/tests/get
 
 # `glow tests get`
 
-Get Test sessions.
+Get on tests.
 
 ## Usage
 
@@ -45021,7 +45656,7 @@ Route: /cli-reference/tests/grade
 
 # `glow tests grade`
 
-Grade Test sessions.
+Grade on tests.
 
 ## Usage
 
@@ -45039,7 +45674,7 @@ Route: /cli-reference/tests/group
 
 # `glow tests group`
 
-Group Test sessions.
+Group on tests.
 
 ## Usage
 
@@ -45051,129 +45686,111 @@ glow tests group --id <id>
 
 ---
 
-# `glow tests invocation_complete`
+# `glow tests invocation complete`
 
-Route: /cli-reference/tests/invocation_complete
+Route: /cli-reference/tests/invocation/complete
 
-# `glow tests invocation_complete`
+# `glow tests invocation complete`
 
-Invocation Complete Test sessions.
+Complete on invocation (under tests).
 
 ## Usage
 
 ```bash
-glow tests invocation_complete --id <id>
+glow tests invocation complete --id <id>
 ```
 
-> Wire call: `POST /test/invocation_complete`. Run `glow tests invocation_complete --help` for the full flag list.
+> Wire call: `POST /test/invocation_complete`. Run `glow tests invocation complete --help` for the full flag list.
 
 ---
 
-# `glow tests invocation_create`
+# `glow tests invocation create`
 
-Route: /cli-reference/tests/invocation_create
+Route: /cli-reference/tests/invocation/create
 
-# `glow tests invocation_create`
+# `glow tests invocation create`
 
-Invocation Create Test sessions.
+Create on invocation (under tests).
 
 ## Usage
 
 ```bash
-glow tests invocation_create --id <id>
+glow tests invocation create --body '\{...\}'
 ```
 
-> Wire call: `POST /test/invocation_create`. Run `glow tests invocation_create --help` for the full flag list.
+> Wire call: `POST /test/invocation_create`. Run `glow tests invocation create --help` for the full flag list.
 
 ---
 
-# `glow tests invocation_get`
+# `glow tests invocation get`
 
-Route: /cli-reference/tests/invocation_get
+Route: /cli-reference/tests/invocation/get
 
-# `glow tests invocation_get`
+# `glow tests invocation get`
 
-Invocation Get Test sessions.
+Get on invocation (under tests).
 
 ## Usage
 
 ```bash
-glow tests invocation_get --id <id>
+glow tests invocation get --id <id>
 ```
 
-> Wire call: `POST /test/invocation_get`. Run `glow tests invocation_get --help` for the full flag list.
+> Wire call: `POST /test/invocation_get`. Run `glow tests invocation get --help` for the full flag list.
 
 ---
 
-# `glow tests invocation_run`
+# `glow tests invocation run`
 
-Route: /cli-reference/tests/invocation_run
+Route: /cli-reference/tests/invocation/run
 
-# `glow tests invocation_run`
+# `glow tests invocation run`
 
-Invocation Run Test sessions.
+Run on invocation (under tests).
 
 ## Usage
 
 ```bash
-glow tests invocation_run --id <id>
+glow tests invocation run --id <id>
 ```
 
-> Wire call: `POST /test/invocation_run`. Run `glow tests invocation_run --help` for the full flag list.
+> Wire call: `POST /test/invocation_run`. Run `glow tests invocation run --help` for the full flag list.
 
 ---
 
-# `glow tests invocation_terminate`
+# `glow tests invocation terminate`
 
-Route: /cli-reference/tests/invocation_terminate
+Route: /cli-reference/tests/invocation/terminate
 
-# `glow tests invocation_terminate`
+# `glow tests invocation terminate`
 
-Invocation Terminate Test sessions.
+Terminate on invocation (under tests).
 
 ## Usage
 
 ```bash
-glow tests invocation_terminate --id <id>
+glow tests invocation terminate --id <id>
 ```
 
-> Wire call: `POST /test/invocation_terminate`. Run `glow tests invocation_terminate --help` for the full flag list.
+> Wire call: `POST /test/invocation_terminate`. Run `glow tests invocation terminate --help` for the full flag list.
 
 ---
 
-# `glow tests invocation_trace`
+# `glow tests invocation trace`
 
-Route: /cli-reference/tests/invocation_trace
+Route: /cli-reference/tests/invocation/trace
 
-# `glow tests invocation_trace`
+# `glow tests invocation trace`
 
-Invocation Trace Test sessions.
-
-## Usage
-
-```bash
-glow tests invocation_trace --id <id>
-```
-
-> Wire call: `POST /test/invocation_trace`. Run `glow tests invocation_trace --help` for the full flag list.
-
----
-
-# `glow tests invocations`
-
-Route: /cli-reference/tests/invocations
-
-# `glow tests invocations`
-
-Invocations Test sessions.
+Trace on invocation (under tests).
 
 ## Usage
 
 ```bash
-glow tests invocations --id <id>
+glow tests invocation trace --id <id>
 ```
 
-> Wire call: `POST /test/invocations`. Run `glow tests invocations --help` for the full flag list.
+> Wire call: `POST /test/invocation_trace`. Run `glow tests invocation trace --help` for the full flag list.
 
 ---
 
@@ -45183,7 +45800,7 @@ Route: /cli-reference/tests/problem
 
 # `glow tests problem`
 
-Problem Test sessions.
+Problem on tests.
 
 ## Usage
 
@@ -45201,7 +45818,7 @@ Route: /cli-reference/tests/refresh
 
 # `glow tests refresh`
 
-Refresh Test sessions.
+Refresh on tests.
 
 ## Usage
 
@@ -45219,7 +45836,7 @@ Route: /cli-reference/tests/search
 
 # `glow tests search`
 
-Search Test sessions.
+Search on tests.
 
 ## Usage
 
@@ -45237,7 +45854,7 @@ Route: /cli-reference/tests/start
 
 # `glow tests start`
 
-Start Test sessions.
+Start on tests.
 
 ## Usage
 
@@ -45255,7 +45872,7 @@ Route: /cli-reference/tests/stop
 
 # `glow tests stop`
 
-Stop Test sessions.
+Stop on tests.
 
 ## Usage
 
@@ -45267,31 +45884,13 @@ glow tests stop --id <id>
 
 ---
 
-# `glow tests text_download`
-
-Route: /cli-reference/tests/text_download
-
-# `glow tests text_download`
-
-Text Download Test sessions.
-
-## Usage
-
-```bash
-glow tests text_download --id <id>
-```
-
-> Wire call: `POST /test/text_download`. Run `glow tests text_download --help` for the full flag list.
-
----
-
 # `glow tests title`
 
 Route: /cli-reference/tests/title
 
 # `glow tests title`
 
-Title Test sessions.
+Title on tests.
 
 ## Usage
 
@@ -45309,7 +45908,7 @@ Route: /cli-reference/tests/watch
 
 # `glow tests watch`
 
-Watch Test sessions.
+Watch on tests.
 
 ## Usage
 
@@ -46156,6 +46755,247 @@ The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `m
 - [Reports](/reports) — aggregate training reports (sibling view, `POST /attempt/report`)
 - [Leaderboard](/leaderboard) — score rankings (sibling view, `POST /attempt/leaderboard`)
 - [Practice](/practice) — practice-mode view (sibling view, `POST /attempt/practice`)
+
+---
+
+# Data layer
+
+Route: /data-layer
+
+{/* DEMO_VIDEO: data-layer-overview — replace public/demos/data-layer-overview.mp4 */}
+
+# Data layer
+
+Glow's read path has two cooperating layers. **Materialized views**
+(`<artifact>_mv` tables in Postgres) precompute the hydrated rows that
+search and list endpoints return, refreshed in the background on a
+cadence per artifact. A **route-level cache** sits in front of those
+reads in Redis, keyed by the request and busted by tag. Together they
+turn most list/get reads into sub-50ms responses without coupling
+mutation paths to read freshness.
+
+<DemoVideo
+  topic="data-layer-overview"
+  caption="A persona search before/after warmup: first request hits the MV, second hits the route cache; a mutation in another tab fires X-Invalidate-Tags and the third request misses cleanly."
+/>
+
+## Two layers
+
+The split is deliberate:
+
+| Layer | Storage | Keyed by | Busted by |
+|------|---------|----------|-----------|
+| Materialized views | Postgres (`<artifact>_mv`) | Underlying entry tables | Background refresh on a cadence + `POST /<artifact>/refresh` |
+| Route-level cache | Redis (`http:cache:*`) | Path + body hash | TTL + `X-Invalidate-Tags` from mutation responses |
+
+A list read first checks the route cache; on miss it queries the MV
+and writes the response back into Redis with a tag set. A mutation in
+the same artifact enqueues an MV refresh **and** returns
+`X-Invalidate-Tags`, which clients are expected to surface so that the
+next read bypasses the now-stale cache entry. Reads from MVs are not
+audited — the [Audit](/audit) ledger only captures mutations.
+
+---
+
+{/* DEMO_VIDEO: data-layer-mvs — replace public/demos/data-layer-mvs.mp4 */}
+
+## Materialized views
+
+<DemoVideo
+  topic="data-layer-mvs"
+  caption="The personas_mv definition pulled live from pg_matviews — a single SELECT that joins persona, persona_drafts, departments, voices, parameter_fields."
+/>
+
+Almost every artifact in Glow has a paired `<artifact>_mv` materialized
+view that joins the canonical entry table with its drafts, junctions,
+and lookup rows in a single SELECT. Search, list, and most
+hydration-heavy GET endpoints read **only** from the MV — never from
+the raw entry table — so per-request hydration stays O(1) regardless
+of how many junctions the artifact has accumulated.
+
+The full registry of MV targets lives in
+`core/app/infra/refresh/config.py:MV_REGISTRY`. A small sample:
+
+| MV | Backs | Refresh tier |
+|----|-------|--------------|
+| `personas_mv`, `persona_drafts_mv` | `POST /persona/search`, `/persona/get`, `/persona/drafts` | Cool |
+| `tests_mv`, `test_invocation_mv` | `POST /test/search`, `/test/invocations` | Cool |
+| `runs_mv`, `messages_mv`, `calls_mv` | Live attempt + agent surfaces | Hot |
+| `groups_mv`, `group_names_mv` | Session timeline + every artifact's `/title` resolver | Hot |
+| `grants_mv`, `health_mv`, `sessions_mv` | Permission gates + admin dashboards | Glacial |
+
+### Auto-refresh cadence
+
+Every MV target is assigned a hotness tier — `Hot` (~2s), `Warm` (~5s),
+`Cool` (~10s), `Glacial` (~30s) — defined alongside the registry. A
+per-MV background worker (`MVRefresher` in
+`core/app/infra/refresh/scheduler.py`) debounces enqueues into one
+`REFRESH MATERIALIZED VIEW CONCURRENTLY` per interval and serializes
+across replicas via a Redis lock. The exact interval per MV is
+configurable in `MV_REGISTRY` — don't read the constants here as a
+contract.
+
+Mutations don't run the refresh inline. Instead, every create / update
+/ delete primitive calls `enqueue_refreshes(...)` with the MV targets
+that depend on it, which just flips an O(1) Redis flag. The worker
+picks it up on its next tick. This means **read freshness lags writes
+by up to one refresh interval** for the artifact's tier.
+
+### Manual refresh: `POST /<artifact>/refresh`
+
+Every artifact exposes a refresh endpoint that re-enqueues all of its
+MV targets *and* invalidates the route-level cache tags for that
+artifact. Example for personas:
+
+```bash
+glow personas refresh
+```
+
+```bash
+curl -X POST https://<your-instance>/persona/refresh \
+  -H "Authorization: Bearer your-token" \
+  -H "X-Api-Key: your-license-key"
+```
+
+The response carries the list of invalidated tags and the per-target
+enqueue receipts, and the HTTP `X-Invalidate-Tags` header echoes the
+same tag set so client caches react too. The actual MV recompute still
+happens in the background worker — `refresh` is **not** a synchronous
+"give me a fresh row" call.
+
+---
+
+{/* DEMO_VIDEO: data-layer-cache — replace public/demos/data-layer-cache.mp4 */}
+
+## Route-level cache
+
+<DemoVideo
+  topic="data-layer-cache"
+  caption="Two identical /system/groups requests back-to-back — first emits X-Cache-Hit: 0 and writes Redis, second returns X-Cache-Hit: 1 in single-digit ms."
+/>
+
+The route cache is a thin Redis-backed wrapper any list / search /
+hydrated-GET endpoint can opt into. The primitives live in
+`core/app/utils/cache/`:
+
+- `cache_key(path, body, user_ctx)` — SHA-1 over a stable JSON encoding
+  of `{path, body, user_ctx}`. The prefix is `http:cache:`. The
+  `user_ctx` arg is optional; routes that scope per-profile pass the
+  profile_id, routes that don't (license-wide list reads) leave it
+  empty.
+- `get_cached(key, redis=...)` — returns the cached envelope or `None`.
+- `set_cached(key, data, ttl, tags, redis=...)` — writes the envelope
+  with a TTL and adds the key to each tag's Redis set so
+  `invalidate_tags` can sweep them later.
+- `invalidate_tags(tags, redis=...)` — drops every cached key
+  registered against any of the tags in one pipeline.
+
+### Wiring example
+
+`core/app/routes/system/groups.py` is the prototypical shape:
+
+```python
+tags = ["artifacts", "groups", "list"]
+bypass_cache = http_request.headers.get("X-Bypass-Cache") == "1"
+cache_key_val = cache_key(http_request.url.path, request.model_dump(mode="json"))
+
+if not bypass_cache:
+    cached = await get_cached(cache_key_val, redis=get_redis_client())
+    if cached:
+        response.headers["X-Cache-Tags"] = ",".join(tags)
+        response.headers["X-Cache-Hit"] = "1"
+        return ListPricingResponse.model_validate(cached["data"])
+
+api_response = await groups_system_impl(...)
+
+await set_cached(
+    cache_key_val,
+    {"data": api_response.model_dump(mode="json")},
+    ttl=300,
+    tags=tags,
+    redis=redis,
+)
+response.headers["X-Cache-Tags"] = ",".join(tags)
+response.headers["X-Cache-Hit"] = "0"
+return api_response
+```
+
+TTLs are per-route — the groups list uses 300s in the snippet above;
+the "big" page-context cache (`core/app/utils/cache/big.py`) defaults
+to 30s. Don't read either as a global contract; check the call site.
+
+Every cached response carries two headers so clients can self-report:
+
+- `X-Cache-Tags` — the tag set this response was stored under, so a
+  client can mirror the server's invalidation scheme.
+- `X-Cache-Hit` — `1` if the response came from Redis, `0` if it was
+  computed and just written.
+
+---
+
+{/* DEMO_VIDEO: data-layer-bypass — replace public/demos/data-layer-bypass.mp4 */}
+
+## `X-Bypass-Cache`
+
+<DemoVideo
+  topic="data-layer-bypass"
+  caption="Mutate persona, then immediately re-read with X-Bypass-Cache: 1 — the response shows the new row without waiting for the next refresh cycle."
+/>
+
+Send `X-Bypass-Cache: 1` on any cached read to skip the route cache
+entirely. The route still runs against the MV (which may itself be
+stale by up to one refresh interval — see above), but Redis is
+neither consulted on the way in nor written on the way out.
+
+Use it when:
+
+- You just performed a mutation in the same client and need a
+  consistent-read for the next render.
+- You're debugging a "why is this stale" report and want to rule out
+  Redis as the source.
+- You're running a test that asserts on freshly written rows.
+
+Do not use it as a default — it negates the whole point of the cache
+layer.
+
+## `X-Invalidate-Tags`
+
+Mutation responses (and the `/refresh` endpoint of every artifact)
+return an `X-Invalidate-Tags` header listing the tag families that
+the write touched. Examples observed in the routes:
+
+- `POST /persona/update` → `personas`
+- `POST /persona/refresh` → `personas,artifacts`
+- `POST /test/grade` → `test,tests,grades`
+- `POST /document/file_upload` → `uploads,resources,files`
+
+Clients that maintain their own caches (the Glow UI does, via
+`useArtifactGeneration` and the shared generation listener) read this
+header on every response and drop their local entries for the listed
+tags. The server-side equivalent is `invalidate_tags(...)` from
+`core/app/utils/cache/invalidate_tags.py`, which the same mutation
+paths call inline before returning.
+
+## When to call `/<artifact>/refresh` manually
+
+| Scenario | Manual `/refresh`? | Why |
+|----------|--------------------|-----|
+| Routine mutate-then-read through the SDK | No | Auto-enqueue + tag invalidate already cover this within one tick |
+| Just finished a bulk import / CSV load | Yes | One refresh collapses N enqueues; UI tables can re-fetch immediately |
+| Background MV drift suspected during incident triage | Yes | Forces an enqueue regardless of the next-run-at gate |
+| About to snapshot a list view in a test or report | Yes | Pairs naturally with `X-Bypass-Cache: 1` on the follow-up read |
+| Recovery after a worker crash | No | The Redis pending flag survives — the next worker tick drains it |
+
+The refresh endpoint is cheap (it just flips a Redis flag and writes
+an audit row); the actual `REFRESH MATERIALIZED VIEW` cost is paid
+once per debounce window regardless of how many times you call it.
+
+## Related
+
+- [POST /persona/refresh](/api-reference/persona/post-persona-refresh) — the canonical refresh endpoint, one per artifact
+- [Streaming](/streaming) — refresh emits a `.completed` event on the artifact watch channel when the MV recompute finishes
+- [Audit](/audit) — cache hits and MV refresh ticks are intentionally not audited; only the mutations that trigger invalidation land in the ledger
+- [Activity](/activity) — backs onto `activity_mv`, the same refresh + cache contract as every other list surface
 
 ---
 
@@ -50038,6 +50878,267 @@ per artifact — see each `/<art>/search` entry in the
 
 ---
 
+# Permissions & Roles
+
+Route: /permissions
+
+{/* DEMO_VIDEO: permissions-overview — replace public/demos/permissions-overview.mp4 */}
+
+# Permissions & Roles
+
+Every request hitting a Glow API endpoint resolves to a **profile**,
+each profile carries exactly one **role**, and the role's
+**permissions** -- a list of `(artifact, operation)` tuples -- decide
+which routes that request can touch. The same tuple list is mirrored
+to the client in every `context` response so the UI can hide the
+buttons, sidebar entries, and routes the caller can't reach without
+making a round-trip just to discover a 403.
+
+<DemoVideo
+  topic="permissions-overview"
+  caption="A learner-role profile sees the Home / Practice / Leaderboard rail; an admin-role profile sees the same rail plus Training, Management, Intelligence, and Platform. Same client build, different role_permissions payload."
+/>
+
+## The model
+
+- A **profile** is a person (or a guest auto-provisioned at first
+  login -- see [Authentication](/authentication)).
+- A profile has exactly one **role** (the `role_id` on the profile
+  resource).
+- A role has a set of **permissions**. Each permission row in
+  `permissions_resource` is an `(artifact, operation)` pair --
+  e.g. `("persona", "create")`, `("attempt", "dashboard")`,
+  `("test", "invocation_run")`.
+- A role's `permission_ids` define what tuples are granted. The
+  server enforces the tuple at the route boundary; the client mirrors
+  the same check to filter the UI.
+
+Two derived shapes flow off this list:
+
+| Shape | Type | Used for |
+|-------|------|----------|
+| `role_permissions` | `[artifact, operation][]` | Per-button / per-route gating (the exact tuple check). |
+| `role_artifacts` | `string[]` (unique artifacts) | Coarse sidebar visibility -- *"is any operation on `persona` granted?"*. |
+
+`role_artifacts` is just `dict.fromkeys(p.artifact for p in perms)` --
+the deduplicated artifact projection of `role_permissions`. The wire
+uses `role_artifacts` for the top-level sidebar gate and
+`role_permissions` for the granular check.
+
+---
+
+{/* DEMO_VIDEO: permissions-resolve — replace public/demos/permissions-resolve.mp4 */}
+
+## How a request gets authorized
+
+<DemoVideo
+  topic="permissions-resolve"
+  caption="A request to POST /persona/create with a viewer-role token: middleware resolves the identity, the route's has_permission check rejects (persona, create), and the response is a 403 before any work runs."
+/>
+
+The flow is the same for every authenticated route:
+
+```
+  Authorization: Bearer <jwt>
+            │
+            ▼
+  ┌─────────────────────────┐
+  │ resolve_identity(token) │   verifies JWT signature, extracts
+  └─────────────────────────┘   profile_id (direct claim, email
+            │                   lookup, or Keycloak sub fallback)
+            ▼
+  ┌──────────────────────────────────┐
+  │ resolve_profile_identity_context │   hydrates the profile's
+  └──────────────────────────────────┘   role + permissions
+            │
+            ▼
+       ProfileIdentityContext
+         .role_permissions  =  [("persona", "create"), …]
+         .role_artifacts    =  ["persona", "attempt", …]
+            │
+            ▼
+  ┌──────────────────────────────┐
+  │ has_permission(role_perms,   │   route handler asserts
+  │   artifact, operation)       │   the tuple before doing work
+  └──────────────────────────────┘
+            │
+       granted? ──── no ───▶  403 Forbidden
+            │
+           yes
+            ▼
+        run handler
+```
+
+The server-side check is a one-liner used by every protected route:
+
+```python
+from app.infra.permissions_helpers import has_permission
+
+if not has_permission(profile.role_permissions, "persona", "create"):
+    raise PermissionDenied(...)
+```
+
+Same predicate, same tuple, everywhere. There is no implicit
+"admins bypass" branch -- admin roles simply have every tuple in
+their `permission_ids`.
+
+---
+
+{/* DEMO_VIDEO: permissions-context — replace public/demos/permissions-context.mp4 */}
+
+## `role_artifacts` in responses
+
+<DemoVideo
+  topic="permissions-context"
+  caption="DevTools network panel showing a /profile/context response — the role_artifacts list is the same data the sidebar filter reads from."
+/>
+
+Every artifact's `POST /<artifact>/context` (and the canonical
+`POST /profile/context`) returns the caller's permission projection.
+The relevant slice of `ProfileContextApiResponse`:
+
+```json
+{
+  "id": "f3c9…-profile-uuid",
+  "name": "Ashok S.",
+  "role": "Administrator",
+  "active": true,
+
+  "role_artifacts": [
+    "persona", "scenario", "simulation", "cohort",
+    "profile", "department", "agent", "model",
+    "attempt", "test", "system", "setting"
+  ],
+
+  "scoped_roles": ["Learner", "Instructor"],
+
+  "department_ids": ["dept-cs-uuid"],
+  "primary_department_id": "dept-cs-uuid",
+
+  "settings_id": "settings-uuid",
+  "session_id": "session-uuid",
+
+  "is_emulation": false,
+  "emulation_depth": 0
+}
+```
+
+`role_artifacts` is the coarse projection (one entry per artifact the
+role can touch at all). The fine-grained tuple list
+(`role_permissions`) is exposed through the per-artifact
+`/<artifact>/context` shapes when an operation-level gate is needed
+(chat sub-ops, invocation sub-ops, single-op collapsed views).
+`scoped_roles` lists role names the caller is allowed to *assign*
+to other profiles, used by the profile editor's role dropdown.
+
+The full schema is generated under
+[Profile Context API](/api-reference/profile/post-profile-context).
+
+---
+
+{/* DEMO_VIDEO: permissions-client-mirror — replace public/demos/permissions-client-mirror.mp4 */}
+
+## Mirroring on the client
+
+<DemoVideo
+  topic="permissions-client-mirror"
+  caption="The same SIDEBAR_SECTIONS array rendered for two different roles — entries the role lacks are dropped from the rail at render time, no flash."
+/>
+
+The client mirrors the server check so the UI never offers an action
+the server would reject. Reference implementation:
+`/lib/permissions.ts` + `/lib/sidebar-config.ts` in the
+`glow-academic-client` repo.
+
+Three predicates cover every gating site:
+
+```ts
+// 1. Top-level page guard — call in a server component after fetching context.
+guardPage(pathname, context.role_permissions);
+
+// 2. Sidebar item — collapsed VIEW children (home, dashboard, …) and
+//    compound sub-domains (chat_, invocation_) map to their parent
+//    artifact + op/prefix automatically.
+canAccessSidebarItem("persona", role_permissions);
+
+// 3. Arbitrary route check — used by middleware-style guards.
+canAccessPage("/training/personas", role_permissions);
+```
+
+The contract: **any UI element tied to a server-side operation should
+consult `role_permissions`**. If you add a new route, add a
+`PAGE_RULES` entry. If you add a new sidebar item, give it an
+`artifact` field that lines up with the permission catalog. The
+flatten-era reality is that single-op pages (e.g. `/home` ↔ `attempt,
+home`) match by exact op while compound sub-domains (`/chat/*`,
+`/invocation/*`) match by prefix -- see `findRuleForArtifact` for the
+mapping table.
+
+---
+
+## Defining a role
+
+Roles, permissions, and the join between them all live in
+`*_resource` tables hydrated through the standard artifact CRUD:
+
+- **Permission catalog** -- one row per `(artifact, operation)` pair.
+  Surfaced via `POST /permission/get` and `POST /permission/search`
+  (resource type defined in `core/app/tools/resources/permissions/`).
+  Catalog rows are seeded by the OpenAPI / route registry sweep at
+  deploy time -- you do not author them by hand.
+- **Role resource** -- one row per role (`Learner`, `Instructor`,
+  `Administrator`, …). Each role row carries:
+  - `name`, `description`, `level` (0 = highest privilege)
+  - `permission_ids[]` -- the tuple set the role grants
+  - `request_limit_ids[]` -- optional per-role rate limit
+- **Profile → role** -- the profile resource's `role_id` link
+  (single-select).
+
+Seed roles ship in `glow-deploy.yaml` per-instance. The role editor
+(`POST /profile/draft` with the inline `role_draft` payload) is the
+runtime path -- it can re-link an existing role or inline-create a
+new role + new request limits in one round-trip.
+
+`role.level` is an integer hierarchy used by helpers like
+`can_manage_level(user_level, target_level)`: a profile can only
+edit / delete / duplicate / emulate a profile whose role level is
+*strictly greater than* (= less privileged than) their own.
+
+---
+
+## Departments + scoping
+
+Departments are an **orthogonal** concept from roles. The role
+decides *which artifacts* the caller can touch at all
+(`(persona, create)` granted or not). The profile's
+`department_ids` and `primary_department_id` decide *which rows
+within each artifact* are visible -- nearly every artifact's
+search/get pipeline filters by department membership.
+
+The two combine multiplicatively:
+
+| | `(persona, create)` denied | `(persona, create)` granted |
+|---|---|---|
+| Not in dept CS | 403 | 200 -- creates in caller's primary dept |
+| In dept CS | 403 | 200 -- creates in CS (if scoped) |
+
+For the full scoping model see [Departments](/departments).
+
+---
+
+## Related
+
+- [Authentication](/authentication) -- how the Bearer JWT resolves to
+  the `profile_id` that drives the role lookup.
+- [Profile Context API](/api-reference/profile/post-profile-context)
+  -- canonical `role_artifacts` shape on the wire.
+- [Departments](/departments) -- the orthogonal row-scoping layer
+  that combines with role permissions.
+- [Profiles](/profiles) -- where the `role_id` link is set and the
+  role editor lives.
+
+---
+
 # Personas
 
 Route: /personas
@@ -53465,6 +54566,348 @@ catch up, then re-subscribe.
 
 ---
 
+# Tests
+
+Route: /tests
+
+{/* DEMO_VIDEO: tests-overview — replace public/demos/tests-overview.mp4 */}
+
+# Tests
+
+A **test** is the parent record for a fan-out batch run: it spans
+one or more model × scenario × agent cells, kicks off an
+[invocation](/invocation) per cell, and aggregates the resulting
+grades into a [benchmark](/benchmark) view.
+
+<DemoVideo
+  topic="tests-overview"
+  caption="A test detail view — the parent header, the per-cell invocation rows underneath, and the rolled-up benchmark tab."
+/>
+
+## What is a test?
+
+If an [attempt](/chat) is one learner sitting down for one
+conversation, a test is the *batch* equivalent: one configured run
+that fans out across every cell in a model × scenario × agent grid.
+
+Each cell becomes its own [invocation](/invocation) — a sub-namespace
+that owns the per-row lifecycle. Cross-cell scores roll up into the
+[benchmark](/benchmark) view for comparison and reporting.
+
+| Concept | Scope | Owns |
+|---------|-------|------|
+| **Test** | Whole batch | start / stop / grade / feedback / complete / archive |
+| [Invocation](/invocation) | One cell | create / run / terminate / trace / get / complete |
+| [Benchmark](/benchmark) | Aggregated read | comparison + reporting view |
+
+Everything on **this** page is the test-level (parent) surface — ops
+that exist once per test, not per cell.
+
+---
+
+{/* DEMO_VIDEO: tests-lifecycle — replace public/demos/tests-lifecycle.mp4 */}
+
+## The lifecycle
+
+<DemoVideo
+  topic="tests-lifecycle"
+  caption="A test moving through its phases: start → fan-out into invocations → grade rows → complete (or archive)."
+/>
+
+A test moves through a small, predictable set of phases:
+
+1. **Start** — `POST /test/start` materializes the test row and fans
+   out one invocation per cell.
+2. **Run** — each invocation runs independently under
+   [invocation](/invocation)'s own lifecycle.
+3. **Stop** (optional) — `POST /test/stop` halts queued or in-flight
+   invocations without finalizing the test record.
+4. **Grade** — `POST /test/grade` lays down a grade per invocation;
+   `POST /test/feedback` attaches per-criterion comments.
+5. **Complete** — `POST /test/complete` is the terminal write,
+   mirroring `POST /attempt/complete`.
+6. **Archive** (optional) — `POST /test/archive` hides a test from
+   the default search view; reversible.
+
+[Benchmark](/benchmark) is read-only — it renders whatever the
+underlying test + invocations have already produced.
+
+---
+
+{/* DEMO_VIDEO: tests-start — replace public/demos/tests-start.mp4 */}
+
+## Starting a test
+
+<DemoVideo
+  topic="tests-start"
+  caption="Configuring a test (which models, which scenarios, which agents) and watching the per-cell invocation rows appear as the fan-out lands."
+/>
+
+`POST /test/start` is the entry point. It accepts a `TestStartPayload`
+describing the cells to run and returns:
+
+```json
+{
+  "test_id": "…",
+  "invocation_id": "…",
+  "benchmark_id": "…"
+}
+```
+
+`test_id` is the parent every other op on this page targets.
+`invocation_id` points at the first cell so the UI can render
+immediately while the rest of the fan-out materializes — the full
+set is reachable via the invocation sub-namespace.
+`benchmark_id` is the read-side view for rolled-up scores.
+
+```bash
+glow tests start --body '{
+  "eval_id": "…",
+  "model_ids": ["…", "…"],
+  "scenario_ids": ["…", "…"],
+  "agent_ids": ["…"]
+}'
+```
+
+Raw HTTP:
+
+```bash
+curl -X POST https://<your-instance>/test/start \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{ "eval_id": "…", "model_ids": ["…"], "scenario_ids": ["…"], "agent_ids": ["…"] }'
+```
+
+---
+
+{/* DEMO_VIDEO: tests-stop — replace public/demos/tests-stop.mp4 */}
+
+## Stopping in-flight runs
+
+<DemoVideo
+  topic="tests-stop"
+  caption="Hitting stop mid-run — queued cells get cancelled, in-flight cells get a terminate signal."
+/>
+
+`POST /test/stop` halts queued and in-flight invocations attached to
+a test. It is the test-level *cancel* surface and does **not**
+finalize the test record — use `complete` for that.
+
+```bash
+glow tests stop --body '{ "test_id": "…" }'
+```
+
+The response carries `invocation_id`, a `success` flag, and an
+optional `message` explaining what was stopped (or why nothing was).
+
+For per-cell terminate semantics (one invocation, not the whole
+fan-out), use `POST /invocation/terminate` from the
+[invocation](/invocation) page.
+
+---
+
+{/* DEMO_VIDEO: tests-grade — replace public/demos/tests-grade.mp4 */}
+
+## Grading and feedback
+
+<DemoVideo
+  topic="tests-grade"
+  caption="Grading a row with full=true to anchor to the rubric ceiling, then attaching per-standard feedback comments to specific tool calls."
+/>
+
+Tests have a two-level grading surface: one row per invocation
+(`grade`), and per-criterion comments on a row (`feedback`).
+
+### `POST /test/grade`
+
+Creates a grade row for a single invocation. Pass `full: true` to let
+the server resolve the rubric and assign `score = total_points` (the
+rubric ceiling) — useful when the client doesn't know the rubric's
+max ahead of time.
+
+```bash
+glow tests grade --body '{
+  "invocation_id": "…",
+  "full": true
+}'
+```
+
+To pin an explicit numeric score instead, omit `full` and pass
+`score`:
+
+```bash
+glow tests grade --body '{
+  "invocation_id": "…",
+  "score": 7
+}'
+```
+
+### `POST /test/feedback`
+
+Attaches a comment + score for one rubric standard group, on one
+tool call, under a specific grade. This is the *per-row* shape that
+test grading uses and is unique to test (attempts do not need this
+because they grade a single conversation, not a grid).
+
+```bash
+glow tests feedback --body '{
+  "grade_id": "…",
+  "tool_call_id": "…",
+  "standard_group_id": "…",
+  "score": 4,
+  "feedback": "Solid handling of the academic-integrity question, but…"
+}'
+```
+
+The pairing of `grade_id` + `tool_call_id` + `standard_group_id` is
+what lets the benchmark view render a per-cell, per-standard
+heatmap.
+
+---
+
+{/* DEMO_VIDEO: tests-decrypt — replace public/demos/tests-decrypt.mp4 */}
+
+## Decryption surface
+
+<DemoVideo
+  topic="tests-decrypt"
+  caption="Opening a test row that references an encrypted key, then revealing the plaintext via /test/decrypt."
+/>
+
+`POST /test/decrypt` decrypts a key *scoped to an invocation*.
+Internally it:
+
+1. Looks up the invocation by `invocation_id`.
+2. Verifies the `key_id` is in that invocation's `key_ids` set —
+   else **403**.
+3. Runs the profile identity check via shared `resolve_decrypt`
+   infra and returns the plaintext.
+
+It lives on the test namespace because the test UI is where you
+typically see the encrypted reference and want to inspect it. The
+key-belongs-to-invocation check is the authorization boundary —
+without it, knowing a `key_id` would be enough to decrypt.
+
+```bash
+glow tests decrypt --body '{
+  "invocation_id": "…",
+  "key_id": "…"
+}'
+```
+
+Set the `X-Bypass-Cache: 1` header on the request to force a fresh
+decrypt instead of a cached value.
+
+---
+
+## Completing and archiving
+
+`POST /test/complete` is the canonical terminal write for a test —
+the parallel of `POST /attempt/complete`. After complete, the test
+is finalized; downstream consumers (benchmark, reports, exports)
+treat it as immutable.
+
+```bash
+glow tests complete --body '{ "test_id": "…" }'
+```
+
+`POST /test/archive` toggles archival on one or many tests by ID. It
+is reversible — pass the same IDs again to unarchive — and it
+invalidates the `benchmark`, `test`, and `artifacts` cache tags.
+
+```bash
+glow tests archive --body '{
+  "test_ids": ["…", "…"],
+  "archived": true
+}'
+```
+
+Archived tests are hidden from search by default; pass
+`is_archived: true` (or omit the filter and rely on the UI's
+toggle) on `POST /test/search` to see them.
+
+---
+
+## Listing and searching
+
+`POST /test/search` is the canonical list/filter surface. Supported
+filters: `eval_ids`, `department_ids`, `is_archived`, `start_date`,
+`end_date`, plus facet-search text (`eval_search`,
+`department_search`) and pagination (`page_size`, `page_offset`).
+
+```bash
+glow tests search --body '{
+  "eval_ids": ["…"],
+  "is_archived": false,
+  "page_size": 25
+}'
+```
+
+For the canonical facet-search recipe (how to wire facet pickers in
+the UI without a second round-trip), see
+[Patterns](/patterns).
+
+---
+
+## Exporting
+
+`POST /test/export` produces a file the client downloads via the
+canonical media surface. The export is **view-aware**: pass `view`
+to pick the row shape (parent test, per-invocation rows, etc.)
+along with `test_id`, optionally `invocation_id`, `draft_id`, and
+`mode`.
+
+```bash
+glow tests export --body '{
+  "test_id": "…",
+  "view": "invocations"
+}'
+```
+
+The response is `{ file_id, file_name, row_count }`. The client then
+downloads the bytes via the BFF route
+`/api/test/download/{file_id}` which proxies to
+`POST /test/file/download` — see [Media](/media) for the canonical
+download flow.
+
+---
+
+## Universal ops
+
+Test also exposes the **universal artifact ops** shared with every
+other artifact in the catalog. They behave exactly the same as on
+personas, scenarios, agents, etc. — no test-specific notes needed:
+
+- `context` / `problem` / `refresh` / `watch` / `get` / `group` —
+  see [Foundations](/streaming)
+- `title` / `generate` / `generations` — see [Generation](/generation)
+- `draft` / `drafts` — same optimistic-concurrency shape as the
+  [persona draft recipe](/personas)
+- `call/download` / `file/download` / `text/download` — see
+  [Media](/media)
+
+The linked pages are the source of truth for the request/response
+shapes.
+
+---
+
+## Related
+
+- [Invocation](/invocation) — the per-cell sub-namespace
+  (`invocation_create` / `_run` / `_terminate` / `_trace` / `_get` /
+  `_complete`)
+- [Benchmark](/benchmark) — the aggregated, read-only comparison
+  view over a test's invocations
+- [Test API Reference](/api-reference/test) — full endpoint schemas
+  and field definitions
+- [Tests CLI Reference](/cli-reference/tests) — all `glow tests`
+  commands and flags
+- [Patterns](/patterns) — facet-search recipe, bulk-write shape,
+  and other cross-artifact conventions
+
+---
+
 # Tools
 
 Route: /tools
@@ -53715,6 +55158,248 @@ glow tools update --body '{
 - [Tools CLI Reference](/cli-reference/tool) -- all CLI commands
 - [Models Guide](/model) -- models that power the agents using these tools
 - [Rubrics Guide](/rubric) -- rubrics that score agent behavior alongside tool usage
+
+---
+
+# Topology
+
+Route: /topology
+
+{/* DEMO_VIDEO: topology-overview — replace public/demos/topology-overview.mp4 */}
+
+# Topology
+
+Glow ships in three deployment shapes — `airgapped`, `exposed`, and
+`api_only`. The shape you pick decides which containers come up, which
+public domains you need TLS certs for, and how the api's `ORIGIN` /
+`CLIENT_ORIGINS` / `KEYCLOAK_PUBLIC_URL` get wired together.
+
+<DemoVideo
+  topic="topology-overview"
+  caption="A glow-deploy.yaml side-by-side for all three modes — only the topology + origin fields change; everything downstream is derived."
+/>
+
+The mode is set once in your `glow-deploy.yaml`:
+
+```yaml
+# glow-deploy.yaml
+topology: airgapped     # or: exposed | api_only
+client_origin: https://glow.example.edu
+# api_origin only required for exposed / api_only
+```
+
+The api and client *code* are mode-agnostic — topology is purely a
+provisioning, env-var, and routing choice handled by the CLI
+(`src/deploy/config.rs:83` and `src/deploy/env.rs:389`).
+
+## Three modes
+
+| Mode | api visible? | client domain | when to use |
+|------|--------------|---------------|-------------|
+| `airgapped` | proxied via client nginx (internal-only) | required | single public domain, simplest TLS, locked-down |
+| `exposed` | own subdomain | required | separate `api.*` and `client.*` origins, more flexible |
+| `api_only` | own subdomain | none (no web UI) | API-only deployments (programmatic + CLI only) |
+
+The required-fields rules are enforced by `DeployConfig::validate`
+(`src/deploy/config.rs:140`) — a missing `client_origin` on airgapped
+or a missing `api_origin` on exposed fails the deploy before docker is
+touched.
+
+### How ORIGIN and CLIENT_ORIGINS are derived
+
+The heart of the decision table lives in `derive_api_origins`
+(`src/deploy/env.rs:389`):
+
+| Mode | `ORIGIN` (api) | `CLIENT_ORIGINS` (CORS allowlist) |
+|------|----------------|-----------------------------------|
+| `airgapped` | `client_origin` | `client_origin` |
+| `exposed` | `api_origin` | `client_origin` |
+| `api_only` | `api_origin` | *(empty)* |
+
+The airgapped row is the unintuitive one — see the next section.
+
+---
+
+{/* DEMO_VIDEO: topology-airgapped — replace public/demos/topology-airgapped.mp4 */}
+
+## Airgapped
+
+In airgapped mode there is exactly one public domain. The client
+container's nginx is the only thing the outside world can reach; it
+reverse-proxies `/api/`, `/auth/`, and `/mcp/` to the internal `glow-api-nginx`
+container on the shared docker network. The api never gets its own TLS
+cert because it never gets its own hostname.
+
+<DemoVideo
+  topic="topology-airgapped"
+  caption="Browser → Traefik → client nginx → (proxied) api nginx. Single TLS cert, single DNS record, api never exposed."
+/>
+
+The unusual bit: the api's `ORIGIN` env var is set to the **client**
+domain, not an api domain, because OIDC callbacks resolve through the
+client nginx — Keycloak issuer URLs need to match the URL the browser
+actually sees (`src/deploy/env.rs:394`).
+
+```yaml
+topology: airgapped
+client_origin: https://glow.example.edu
+# api_origin: NOT SET — api has no public hostname
+```
+
+Resulting env wiring:
+
+```
+api .env:
+  ORIGIN=https://glow.example.edu
+  CLIENT_ORIGINS=https://glow.example.edu
+
+client .env:
+  NEXT_PUBLIC_API_URL=https://glow.example.edu
+  KEYCLOAK_PUBLIC_URL=https://glow.example.edu/auth
+  INTERNAL_API_BASE=http://glow-api-nginx:80
+```
+
+> **Warning — redeploy trap.** A bare `glow redeploy` on an airgapped
+> instance must explicitly carry the topology forward. If the topology
+> isn't reasserted, Traefik can re-route the client hostname to the
+> wrong backend and the client effectively "disappears" from the
+> public domain. Always run `glow redeploy --airgapped` (or let
+> `glow redeploy` read the existing `glow-deploy.yaml` rather than
+> overriding it on the CLI). See [Redeploy](/cli-reference/redeploy).
+
+### Best for
+
+- Single-domain academic deployments (one DNS record, one cert)
+- Locked-down networks where you don't want the api directly reachable
+- Anyone who wants the simplest possible TLS story
+
+---
+
+{/* DEMO_VIDEO: topology-exposed — replace public/demos/topology-exposed.mp4 */}
+
+## Exposed
+
+In exposed mode the api and client each get their own public domain
+and their own TLS cert (issued by Traefik via Let's Encrypt). The
+browser talks to the api directly — no nginx proxy hop on the way.
+
+<DemoVideo
+  topic="topology-exposed"
+  caption="Two domains, two certs — api.example.edu and glow.example.edu. CORS is what keeps the cross-origin handshake honest."
+/>
+
+```yaml
+topology: exposed
+api_origin: https://api.example.edu
+client_origin: https://glow.example.edu
+```
+
+Resulting env wiring:
+
+```
+api .env:
+  ORIGIN=https://api.example.edu
+  CLIENT_ORIGINS=https://glow.example.edu   # CORS allowlist
+
+client .env:
+  NEXT_PUBLIC_API_URL=https://api.example.edu
+  KEYCLOAK_PUBLIC_URL=https://api.example.edu/auth
+```
+
+`CLIENT_ORIGINS` is comma-separated — add additional client origins
+(staging, a mobile app's redirect URI, an embedded iframe parent) by
+listing them.
+
+### Best for
+
+- SSO setups where the IdP needs a stable, separate api hostname
+- Compliance regimes that require api and UI on distinct origins
+- Deployments that need to expose the api to non-browser clients
+  (mobile apps, scripts, partner integrations) alongside the web UI
+
+---
+
+{/* DEMO_VIDEO: topology-api-only — replace public/demos/topology-api-only.mp4 */}
+
+## API-only
+
+In `api_only` mode no client container is deployed. The api comes up
+on its own public domain and that's the entire surface area. There is
+no web UI, no NextAuth, no `KEYCLOAK_PUBLIC_URL`.
+
+<DemoVideo
+  topic="topology-api-only"
+  caption="One container stack, one domain, no UI. Use the CLI or call /persona/search and friends from your own backend."
+/>
+
+```yaml
+topology: api_only
+api_origin: https://api.example.edu
+# client_origin: NOT SET — no client stack
+# client_version: NOT REQUIRED
+```
+
+Resulting env wiring:
+
+```
+api .env:
+  ORIGIN=https://api.example.edu
+  CLIENT_ORIGINS=        # empty — no browser clients
+```
+
+### Best for
+
+- Backend-only integrations (you have your own UI)
+- Headless / batch evaluation pipelines
+- CLI-only access for research or internal tooling
+
+## Choosing
+
+Start with **airgapped** for academic deployments — fewer moving parts,
+one DNS record, one cert, no CORS to debug. Switch to **exposed** if
+you need separate domains for SSO or compliance reasons, or if you
+plan to call the api directly from mobile apps or external scripts.
+Use **api_only** for backend-only integrations where you're driving
+Glow programmatically and don't need the bundled web UI at all.
+
+## Traefik notes
+
+> **Warning — do not tear down Traefik.** Traefik lives in `/srv/api`
+> on the deploy host and fronts every Glow stack on the box. The CLI
+> handles its lifecycle for you in normal `deploy` / `redeploy` /
+> `destroy` flows. If you're doing manual recovery and find yourself
+> stopping Traefik, you **must** restart it before any other Glow
+> instance on that host will be reachable again.
+
+Traefik routes hostnames to container backends based on labels emitted
+by each stack's compose file. Airgapped instances register the client
+hostname; exposed instances register both api and client hostnames;
+api_only instances register only the api hostname. A redeploy that
+drops the wrong topology will deregister the wrong labels — see the
+airgapped redeploy warning above.
+
+## Switching modes
+
+Switching airgapped ↔ exposed mid-deployment is **non-trivial** and
+not a supported in-place operation. The cert layout, env wiring,
+Keycloak issuer URLs, and Traefik labels all change. In practice you
+should:
+
+1. Take a backup with `glow backup-create`.
+2. `glow destroy` the existing instance.
+3. Edit `glow-deploy.yaml` with the new topology + origins.
+4. `glow deploy` fresh, then `glow backup-restore` if you need the
+   data back.
+
+Switching to or from `api_only` follows the same rule — adding or
+removing the client stack isn't a flip-a-flag operation.
+
+## Related
+
+- [/cli-reference/init](/cli-reference/init) — interactive yaml setup that asks the topology question
+- [/cli-reference/deploy](/cli-reference/deploy) — first-deploy mechanics per topology
+- [/cli-reference/redeploy](/cli-reference/redeploy) — redeploy semantics, including the airgapped trap
+- [/authentication](/authentication) — per-mode auth flow differs (proxied vs direct Keycloak)
 
 ---
 
@@ -54078,5 +55763,234 @@ From here, you can:
 - [Simulations Guide](/simulations) — full reference for simulation configuration
 - [Rubrics Guide](/rubrics) — full reference for rubric design
 - [Personas Guide](/personas) — full reference for persona configuration
+
+---
+
+# Voice pipeline
+
+Route: /voice
+
+{/* DEMO_VIDEO: voice-overview — replace public/demos/voice-overview.mp4 */}
+
+# Voice pipeline
+
+Glow's voice pipeline lets a learner hold a spoken conversation with
+a persona — audio in, audio out — by stitching the existing text
+[generation](/generation) loop between server-side STT and TTS
+stages. It is **not** a separate "voice model" or a custom realtime
+runtime: the same `attempt/generate` call that drives text chat is
+reused, with audio modalities tacked on either end.
+
+<DemoVideo
+  topic="voice-overview"
+  caption="End-to-end voice loop — mic frames are buffered into a conversation, transcribed, run through the LLM, and the response is synthesized back into a downloadable audio asset on the message."
+/>
+
+## End-to-end flow
+
+The server-side loop is intentionally a chain of small primitives —
+each step persists what it produced, so any step can be replayed or
+inspected independently of the rest.
+
+```
+mic / file
+   │  multipart POST  /attempt/audio_upload
+   │  (or socket.io frame: attempt.chat_speak — PCM16 into the
+   │   conversation's inbound_queue, no DB write)
+   ▼
+uploads_entry  →  audios_resource  →  audios_entry
+   │  (resource handle: audios_id — canonical plural form,
+   │   matches images_id / videos_id)
+   ▼
+/attempt/generate  with  audios_id  +  modalities=["text"]
+   │
+   ├──► STT executor       (app/infra/generation/stt.py)
+   │       AsyncOpenAI → /v1/audio/transcriptions
+   │       emits attempt.generate.text.complete with the transcript
+   │
+   ├──► LLM completion     (app/infra/generation/execute.py — text)
+   │       same path as keyboard chat
+   │
+   └──► TTS executor       (app/infra/generation/tts.py)
+           litellm.aspeech → audio bytes
+           media_upload_impl writes  uploads_entry + audios_resource
+           emits attempt.generate.audio.complete with the new audios_id
+                       │
+                       ▼
+   Attempt_Chat_Message tool call receives audios_id in
+   produced_media and forwards it onto the message row
+                       │
+                       ▼
+   Client plays via  POST /attempt/audio_download  (range-supported)
+```
+
+Every audio asset — inbound mic capture, intermediate STT input, TTS
+output — lives behind the same `audios_id` resource handle described
+in [Media](/media), so the rest of the system (audit, search, message
+attachments) does not need to know "voice" is in play.
+
+---
+
+{/* DEMO_VIDEO: voice-upload — replace public/demos/voice-upload.mp4 */}
+
+## Audio upload
+
+<DemoVideo
+  topic="voice-upload"
+  caption="The three upload shapes — multipart file, pre-reserved upload_id, and the promote variant — landing as the same audios_id on the message."
+/>
+
+`POST /attempt/audio_upload` is the one entry point for any audio
+the server needs to reason about. From the route (`core/app/routes/attempt/audio_upload.py`)
+it accepts three shapes:
+
+| Shape | Inputs | Use |
+|-------|--------|-----|
+| **File only** | multipart `file` | Browser `MediaRecorder` blob, CLI file path |
+| **`upload_id` only** | `?upload_id=<uuid>` | Promote bytes already written by the realtime adapter |
+| **`upload_id` + file** | both | Client pre-reserved a slot via `/attempt/audio/new` and is filling it |
+
+Allowed MIME types (parameters stripped before the check, so
+`audio/webm;codecs=opus` from `MediaRecorder` normalizes to `audio/webm`):
+
+```
+audio/mpeg  audio/mp3  audio/wav  audio/ogg  audio/webm
+audio/flac  audio/aac  audio/x-m4a  audio/mp4  audio/x-wav
+```
+
+The response is always `{audio_id, audios_id, upload_id}`. Clients
+only need `audios_id` — that is the canonical resource handle that
+gets passed to `/attempt/generate` and ends up on the message row.
+
+---
+
+## STT
+
+The STT executor lives at `core/app/infra/generation/stt.py` and is
+dispatched as a modality inside `execute_generation` (the same engine
+that runs text completions and image generation).
+
+Implementation notes, taken verbatim from the source:
+
+- The provider is **OpenAI-compatible** via `AsyncOpenAI` pointed at
+  whatever `base_url` the artifact's resolved LLM provider record
+  exposes. The default deployment routes through the LiteLLM proxy
+  to `gpt-4o-transcribe`, but any `/v1/audio/transcriptions`
+  endpoint works.
+- The SDK boundary requires `/v1` on `base_url`; the executor
+  appends it when missing. This is *not* hardcoding our proxy —
+  every OpenAI-compatible STT endpoint (direct OpenAI, Azure, vLLM,
+  etc.) exposes the same path.
+- `litellm.atranscription` is intentionally **not** used because the
+  SDK rewrites `response_format` to `verbose_json`, which the
+  `gpt-4o-transcribe` family rejects.
+- Input is an `audios_id`; the executor resolves down through the
+  canonical join (`audios_resource → audios_audios_connection →
+  audios_entry → audio_uploads_entry → uploads_entry`) to the
+  on-disk path before opening the file.
+
+On success the transcript is emitted as `attempt.generate.text.complete`
+— exactly the same event keyboard chat produces — so downstream
+consumers do not branch on "was this typed or spoken?".
+
+---
+
+{/* DEMO_VIDEO: voice-session — replace public/demos/voice-session.mp4 */}
+
+## Voice session control
+
+<DemoVideo
+  topic="voice-session"
+  caption="The chat_voice → chat_speak (frames) → chat_silence triad — opening a conversation, streaming PCM, then closing the loop."
+/>
+
+Three small operations sit on top of the audio loop to give the
+client a session-style API:
+
+| Op | Route | WS event | What it does |
+|----|-------|----------|-------------|
+| **`chat_voice`** | `POST /attempt/chat_voice` | — | Opens an `attempt_conversation` row for a chat and returns `{chat_id, attempt_id, conversation_id, group_id}`. **Does not** trigger AI generation — the client calls `/attempt/generate` separately with `modalities` + `conversation_id`. |
+| **`chat_speak`** | `POST /attempt/chat_speak` | `attempt.chat_speak` | Pure data primitive. Pushes base64-decoded PCM16 bytes into the session's `inbound_queue`. No DB, no AI. Keyed on `conversation_id` (or `chat_id` to resolve it). |
+| **`chat_silence`** | `POST /attempt/chat_silence` | — | Records `attempt_conversation_completion`, runs `cleanup_audio_session`, and emits `attempt.generate.audio.session_complete` + `attempt.chat.voice_ended` (which closes the mic UI). Silence on a non-existent session is a no-op `{stopped: false}`. |
+
+There is **no server-side VAD**. The client decides when to stop
+speaking and posts `chat_silence`. Frames in `chat_speak` are not
+buffered to disk — they live in the conversation's in-memory
+`inbound_queue` until the realtime adapter consumes them.
+
+---
+
+## TTS
+
+The TTS executor lives at `core/app/infra/generation/tts.py`. It
+takes the last user-role message off the dispatch as input text,
+calls `litellm.aspeech` with the persona's voice, and runs the
+synthesized bytes through the same `media_upload_impl` pipeline used
+by image/video generation.
+
+- **Voice selection** comes from `llm_config.voice` (defaulting to
+  `"alloy"`), which in turn comes from the persona's `voice_id`.
+- The model name is prefixed with `openai/` when routing through a
+  custom proxy with `api_base` set — without the prefix, litellm
+  treats a name like `glow-audio` as an unknown provider and errors
+  locally before any network hop. Same shape as the text-completion
+  path in `execute.py`.
+- The MP3 bytes are persisted as `uploads_entry → audios_resource →
+  audios_entry`, and the new `audios_id` is bubbled onto
+  `ArtifactGenerateResponse.produced_media` so the LLM's
+  `Attempt_Chat_Message` tool call can attach it to the message row.
+- `attribute_to_run=False` on the media upload — the tool-call audit
+  layer writes the run ↔ message ↔ upload junction itself; double
+  attribution would create duplicate assistant messages.
+
+---
+
+## Audio download
+
+`POST /attempt/audio_download` (route at `core/app/routes/attempt/audio_download.py`)
+takes `{audio_id}` and streams the bytes via
+`create_range_response`, so an HTML `<audio>` element can scrub /
+resume. The route runs through the same `run_artifact_operation_with_audit`
+wrapper as other attempt ops, so playback is auditable per group.
+
+For the resource-handle ladder (`audio_id` vs. `audios_id` vs. raw
+`upload_id`) and the range-streaming machinery, see [Media](/media).
+
+---
+
+## Current state
+
+Be honest: the voice pipeline is **wired end-to-end but the canonical
+event hub is only partially integrated.**
+
+- **Server canonical-path gap.** Per the in-progress canonical-path
+  rework, voice events currently **skip** the
+  `wrap_emit_with_stream_bridge` dual-emit that artifact operations
+  flow through. The legacy `attempt.generate.text.complete` /
+  `attempt.generate.audio.complete` events still fire and clients
+  still receive them, but voice has not yet been wired into the same
+  selective-rename + stream-bridge machinery that powers the
+  artifact ops. Mapping entries are pending; until they land, voice
+  events live on a parallel path rather than the canonical hub.
+- **CLI deferral.** The `glow attempts chat voice <chat_id>` REPL is
+  gated on the `cpal` + `rodio` audio crates and ships as a
+  placeholder today — see [Chat: live REPL + voice](/chat#live-repl--voice-ws).
+  The server side (audio_upload + chat_voice/speak/silence) is fully
+  reachable from any HTTP/socket.io client; only the CLI mic capture
+  is on hold.
+
+Neither gap blocks the loop — they are wiring-cleanup work, not
+missing features.
+
+---
+
+## Related
+
+- [Chat](/chat) — where voice surfaces in the learner UX (and the
+  CLI deferral note)
+- [Media](/media) — the `audios_id` resource ladder, the
+  `audio_upload_id` message pattern, and range-streamed download
+- [Generation](/generation) — the text `generate` call that the
+  voice loop wraps with STT in front and TTS behind
 
 ---

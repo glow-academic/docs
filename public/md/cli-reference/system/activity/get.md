@@ -1,0 +1,13 @@
+# `glow system activity get`
+
+# `glow system activity get`
+
+Get on activity (under system).
+
+## Usage
+
+```bash
+glow system activity get --id <id>
+```
+
+> Wire call: `POST /system/activity`. Run `glow system activity get --help` for the full flag list.

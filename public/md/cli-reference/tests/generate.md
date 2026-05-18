@@ -2,7 +2,7 @@
 
 # `glow tests generate`
 
-Generate Test sessions.
+Generate on tests.
 
 ## Usage
 

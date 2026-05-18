@@ -2,7 +2,7 @@
 
 # `glow system problem`
 
-Problem System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Problem on system.
 
 ## Usage
 

@@ -2,7 +2,7 @@
 
 # `glow tests title`
 
-Title Test sessions.
+Title on tests.
 
 ## Usage
 

@@ -2,7 +2,7 @@
 
 # `glow system refresh`
 
-Refresh System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Refresh on system.
 
 ## Usage
 

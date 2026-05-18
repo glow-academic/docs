@@ -2,7 +2,7 @@
 
 # `glow tests search`
 
-Search Test sessions.
+Search on tests.
 
 ## Usage
 

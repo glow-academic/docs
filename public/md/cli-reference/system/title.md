@@ -2,7 +2,7 @@
 
 # `glow system title`
 
-Title System views + cross-artifact ops (activity, health, sessions, groups, pricing, downloads, ...).
+Title on system.
 
 ## Usage
 

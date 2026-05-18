@@ -2,7 +2,7 @@
 
 # `glow tests complete`
 
-Complete Test sessions.
+Complete on tests.
 
 ## Usage
 
