@@ -1,12 +1,13 @@
-{/* DEMO_VIDEO: evals — replace public/demos/evals.mp4 */}
+{/* DEMO_VIDEO: evals-overview — replace public/demos/evals-overview.mp4 */}
 
 # Evals
 
-<DemoVideo topic="evals" />
-
 Evals assess how well TAs handled student interactions during office hour simulations. An eval brings together models, rubrics, and configuration flags to run automated scoring across simulation transcripts, producing actionable feedback on TA performance.
 
-![Evals list showing recent evaluations with scores, pass/fail status, and timestamps](/screenshots/evals/list.png)
+<DemoVideo
+  topic="evals-overview"
+  caption="The evals list -- rows by name with run count, active/dynamic/groups badges, and the scoring model + rubric chips visible at a glance."
+/>
 
 ---
 
@@ -21,71 +22,6 @@ An eval in Glow is an automated assessment pipeline that scores simulation conve
 - **Configuration Flags** -- control whether the eval is active, dynamic, or uses groups
 
 For example, a university might run an eval called "Fall 2025 TA Assessment" that uses GPT-4o as the evaluator model, applies the "Communication Skills" and "Policy Knowledge" rubrics, and flags instances of "Incorrect Information" or "Inappropriate Tone".
-
----
-
-## Quick Start
-
-### CLI
-
-List all evals:
-
-```bash
-glow evals search
-```
-
-Get details for a specific eval:
-
-```bash
-glow evals get --body '{"eval_id": "EVAL_UUID"}'
-```
-
-Create a new eval:
-
-```bash
-glow evals create --body '{
-  "evals": [{
-    "name": "Fall 2025 TA Assessment",
-    "description": "Automated scoring of TA office hour simulations for the fall semester",
-    "model_ids": ["GPT4O_MODEL_UUID"],
-    "model_rubric_ids": ["COMM_SKILLS_RUBRIC_UUID", "POLICY_KNOWLEDGE_RUBRIC_UUID"]
-  }]
-}'
-```
-
-### API
-
-All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` headers.
-
-**Search evals:**
-
-```bash
-curl -X POST https://<your-instance>/eval/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{}'
-```
-
-**Create an eval:**
-
-```bash
-curl -X POST https://<your-instance>/eval/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "evals": [{
-      "name": "Spring 2026 CS Department Eval",
-      "description": "Evaluate TA performance across all CS course simulations",
-      "department_ids": ["CS_DEPT_UUID"],
-      "model_ids": ["EVALUATOR_MODEL_UUID"],
-      "model_rubric_ids": ["DE_ESCALATION_RUBRIC_UUID"]
-    }]
-  }'
-```
-
----
 
 ## How it Connects
 
@@ -106,38 +42,62 @@ Eval
 
 ---
 
-![Eval detail showing per-criterion scores with feedback text and conversation highlights](/screenshots/evals/detail.png)
+{/* DEMO_VIDEO: evals-create — replace public/demos/evals-create.mp4 */}
 
-## Eval Configuration Flags
+## Create an eval
 
-Evals support several configuration flags that control their behavior:
+<DemoVideo
+  topic="evals-create"
+  caption="Spinning up a Fall 2025 TA Assessment: name, description, attaching a judge model and two rubrics -- the new eval_id is wired and ready to run."
+/>
 
-| Flag Section | Purpose |
-|---|---|
-| `active_flags` | Whether the eval is currently active and running |
-| `dynamic_flags` | Whether the eval uses dynamic mode for on-the-fly scoring |
-| `groups_flags` | Whether the eval organizes results into groups |
+### Via the CLI
 
-These flags appear as sections in the GET response, each containing the current flag config and available options. The list response also surfaces these as boolean fields:
+```bash
+glow evals create --body '{
+  "evals": [{
+    "name": "Fall 2025 TA Assessment",
+    "description": "Automated scoring of TA office hour simulations for the fall semester",
+    "model_ids": ["GPT4O_MODEL_UUID"],
+    "model_rubric_ids": ["COMM_SKILLS_RUBRIC_UUID", "POLICY_KNOWLEDGE_RUBRIC_UUID"]
+  }]
+}'
+```
 
-| Field | Description |
-|---|---|
-| `is_inactive` | Whether the eval is currently inactive |
-| `is_dynamic` | Whether the eval uses dynamic mode |
-| `use_groups` | Whether the eval uses groups |
-| `num_runs` | Total number of eval runs completed |
-| `num_groups` | Number of eval groups |
+### Via the API
+
+```bash
+curl -X POST https://<your-instance>/eval/create \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "evals": [{
+      "name": "Spring 2026 CS Department Eval",
+      "description": "Evaluate TA performance across all CS course simulations",
+      "department_ids": ["CS_DEPT_UUID"],
+      "model_ids": ["EVALUATOR_MODEL_UUID"],
+      "model_rubric_ids": ["DE_ESCALATION_RUBRIC_UUID"]
+    }]
+  }'
+```
 
 ---
 
-## Models, Rubrics, and Flags in Evals
+{/* DEMO_VIDEO: evals-wiring — replace public/demos/evals-wiring.mp4 */}
+
+## Wiring models, rubrics, and flags
+
+<DemoVideo
+  topic="evals-wiring"
+  caption="Attaching a second judge model for cross-validation, adding a de-escalation rubric, and defining behavioral flags -- all in a single eval draft update."
+/>
 
 ### Attaching Evaluator Models
 
 Evals reference models through `model_ids`. These models act as judges -- they read simulation transcripts and score TA performance against the attached rubrics. You can attach multiple models to compare scoring consistency across different LLMs.
 
 ```bash
-# Update an eval to add a second evaluator model
 glow evals update --body '{
   "evals": [{
     "eval_id": "EVAL_UUID",
@@ -162,9 +122,45 @@ Use `model_flag_ids` to define specific behaviors the evaluator should tag. Unli
 
 ---
 
-## Drafts
+{/* DEMO_VIDEO: evals-run — replace public/demos/evals-run.mp4 */}
+
+## Running an eval
+
+Evals support several configuration flags that control how runs behave -- whether the eval is active, dynamic (on-the-fly scoring as attempts complete), and whether results are bucketed into groups.
+
+<DemoVideo
+  topic="evals-run"
+  caption="Kicking off an eval run across a batch of attempt transcripts -- num_runs ticks up, per-criterion scores stream in, and a flagged pattern surfaces inline."
+/>
+
+| Flag Section | Purpose |
+|---|---|
+| `active_flags` | Whether the eval is currently active and running |
+| `dynamic_flags` | Whether the eval uses dynamic mode for on-the-fly scoring |
+| `groups_flags` | Whether the eval organizes results into groups |
+
+These flags appear as sections in the GET response, each containing the current flag config and available options. The list response also surfaces these as boolean fields:
+
+| Field | Description |
+|---|---|
+| `is_inactive` | Whether the eval is currently inactive |
+| `is_dynamic` | Whether the eval uses dynamic mode |
+| `use_groups` | Whether the eval uses groups |
+| `num_runs` | Total number of eval runs completed |
+| `num_groups` | Number of eval groups |
+
+---
+
+{/* DEMO_VIDEO: evals-draft — replace public/demos/evals-draft.mp4 */}
+
+## The draft cycle
 
 Evals support a draft workflow for staging changes before they affect scoring pipelines. This is important because modifying an active eval can change how future simulation runs are scored.
+
+<DemoVideo
+  topic="evals-draft"
+  caption="Editing the same eval in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 ```bash
 # Create or update an eval draft
@@ -183,6 +179,63 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 ---
 
+{/* DEMO_VIDEO: evals-search — replace public/demos/evals-search.mp4 */}
+
+## Search & filter
+
+<DemoVideo
+  topic="evals-search"
+  caption="Filtering evals by department and active flag to find the one currently grading fall-semester attempts, then drilling into its runs."
+/>
+
+```bash
+glow evals search --body '{"search": "fall"}'
+
+glow evals search --body '{
+  "filter_department_ids": ["CS_DEPT_UUID"],
+  "page_size": 25
+}'
+```
+
+---
+
+{/* DEMO_VIDEO: evals-bulk — replace public/demos/evals-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs, or `all: true` with flat filter fields plus optional `excluded_ids` and a `patch` body. The persona surface is the prove-out; evals follow the same shape.
+
+<DemoVideo
+  topic="evals-bulk"
+  caption="Bulk-deactivating every eval in a finished semester in one round-trip; excluded_ids keeps the one still producing follow-up reports."
+/>
+
+**Delete by explicit IDs:**
+
+```bash
+glow evals delete --body '{"eval_ids": ["eval-1", "eval-2"]}'
+```
+
+**Delete all matching a filter (with exclusions):**
+
+```bash
+glow evals delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-finished-semester"],
+  "excluded_ids": ["eval-still-running-reports"]
+}'
+```
+
+**Bulk update via `patch`:**
+
+```bash
+glow evals update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-finished-semester"],
+  "patch": { "is_inactive": true }
+}'
+```
+
 ## Common Operations
 
 | Task | CLI | API Endpoint |
@@ -193,6 +246,7 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 | Update eval | `glow evals update --body '{"eval_id": "...", ...}'` | `POST /eval/update` |
 | Duplicate eval | -- | `POST /eval/duplicate` |
 | Delete eval(s) | `glow evals delete --body '{"eval_id": "..."}'` | `POST /eval/delete` |
+| Bulk delete (filter) | `glow evals delete --body '{"all": true, "filter_…": "…"}'` | `POST /eval/delete` |
 | Export to CSV | `glow evals export` | `POST /eval/export` |
 | Stage a draft | `glow evals draft --body '{...}'` | `PATCH /eval/draft` |
 | List drafts | `glow evals list` | `POST /eval/drafts` |
