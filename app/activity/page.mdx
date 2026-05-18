@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: activity — replace public/demos/activity.mp4 */}
+
 # Activity
+
+<DemoVideo topic="activity" />
 
 Activity tracks TA engagement across your Glow instance -- sessions, logins, emulations, and per-profile usage summaries. It gives program coordinators visibility into who is actively training and who may need follow-up.
 
@@ -8,8 +12,8 @@ Activity tracks TA engagement across your Glow instance -- sessions, logins, emu
 
 Activity provides two views of TA engagement:
 
-1. **Summary view** (`/activity/get`) -- Aggregate counts (sessions, active profiles, logins, emulations) plus a per-profile breakdown showing each TA's session count, login count, grants, problems, and total activity.
-2. **Session history** (`/activity/search`) -- Paginated table of individual sessions with details like token usage, run counts, chat counts, attempt counts, and cost.
+1. **Summary view** (`POST /system/activity`) -- Aggregate counts (sessions, active profiles, logins, emulations) plus a per-profile breakdown showing each TA's session count, login count, grants, problems, and total activity.
+2. **Session history** (`POST /system/sessions`) -- Paginated table of individual sessions with details like token usage, run counts, chat counts, attempt counts, and cost.
 
 This is the go-to resource when you need to answer questions like:
 - Which TAs have logged in this week?
@@ -22,23 +26,23 @@ This is the go-to resource when you need to answer questions like:
 
 ```bash
 # Get activity summary with engagement counts
-glow activity get
+glow system activity
 
 # Get activity for a specific date range
-glow activity get --body '{"date_from": "2025-01-01", "date_to": "2025-06-30"}'
+glow system activity --body '{"date_from": "2025-01-01", "date_to": "2025-06-30"}'
 
 # Search session history (paginated)
-glow activity search --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
+glow system sessions --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
 
 # Export all activity data as a ZIP
-glow activity export
+glow system export
 ```
 
 ### API
 
 ```bash
 # Get activity summary
-curl -X POST https://<your-instance>/v5/activity/get \
+curl -X POST https://<your-instance>/system/activity \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -49,7 +53,7 @@ curl -X POST https://<your-instance>/v5/activity/get \
   }'
 
 # Search session history
-curl -X POST https://<your-instance>/v5/activity/search \
+curl -X POST https://<your-instance>/system/sessions \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -73,7 +77,7 @@ curl -X POST https://<your-instance>/v5/activity/search \
 
 ## Understanding the Summary Response
 
-The `ActivityResponse` from `/activity/get` includes:
+The `ActivityResponse` from `POST /system/activity` includes:
 
 - **`sessions_count`** -- Total number of training sessions in the filtered window.
 - **`active_profiles_count`** -- Number of TAs who have been active.
@@ -87,7 +91,7 @@ The `ActivityResponse` from `/activity/get` includes:
 
 ## Understanding the Session History Response
 
-The `ListActivityResponse` from `/activity/search` returns paginated session rows:
+The `ListActivityResponse` from `POST /system/sessions` returns paginated session rows:
 
 Each `SessionListItem` includes:
 - `session_id`, `profile_id`, `profile_name`
@@ -103,7 +107,7 @@ Each `SessionListItem` includes:
 If a session surfaces a problem (e.g., a FERPA concern or inappropriate AI response), you can resolve it:
 
 ```bash
-curl -X POST https://<your-instance>/v5/activity/resolve \
+curl -X POST https://<your-instance>/activity/resolve \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -119,25 +123,25 @@ The response confirms `problem_id`, `resolved` status, and `updated_at` timestam
 
 ```bash
 # Refresh activity materialized views
-glow activity refresh
+glow system refresh
 
 # Export all activity data as a denormalized ZIP
-glow activity export
+glow system export
 ```
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Activity summary | `glow activity get` | `POST /activity/get` |
-| Session history | `glow activity search` | `POST /activity/search` |
+| Activity summary | `glow system activity` | `POST /system/activity` |
+| Session history | `glow system sessions` | `POST /system/sessions` |
 | Resolve a problem | -- | `POST /activity/resolve` |
-| Export data | `glow activity export` | `POST /activity/export` |
-| Refresh caches | -- | `POST /activity/refresh` |
+| Export data | `glow system export` | `POST /system/export` |
+| Refresh caches | -- | `POST /system/refresh` |
 
 ## Related
 
-- [Activity API Reference](/glow/activity/api)
-- [Activity CLI Reference](/glow/activity/cli)
-- [Session Guide](/glow/session/guide) -- detailed view of a single session
-- [Dashboard Guide](/glow/dashboard/guide) -- admin analytics hub
+- [Activity API Reference](/api-reference/system)
+- [Activity CLI Reference](/cli-reference/systems)
+- [Session Guide](/session) -- detailed view of a single session
+- [Dashboard Guide](/dashboard) -- admin analytics hub
