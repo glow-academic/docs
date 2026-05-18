@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: benchmark — replace public/demos/benchmark.mp4 */}
+{/* DEMO_VIDEO: benchmark-overview — replace public/demos/benchmark-overview.mp4 */}
 
 # Benchmark
 
-<DemoVideo topic="benchmark" />
+<DemoVideo
+  topic="benchmark-overview"
+  caption="The Benchmark dashboard at a glance — eval performance cards, department filters, and the test-history table all on one surface."
+/>
 
 The Benchmark resource provides test performance analytics across your Glow instance. Use it to review eval scores, track test history, and export data for reporting. Benchmark is an API-only resource with no CLI commands.
 
@@ -17,6 +20,13 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 ## Quick Start
 
 ### API
+
+{/* DEMO_VIDEO: benchmark-test-config — replace public/demos/benchmark-test-config.mp4 */}
+
+<DemoVideo
+  topic="benchmark-test-config"
+  caption="Building a test configuration: picking models, scenarios, eval rubric, and date scope before kicking off the benchmark."
+/>
 
 ![Benchmark test configuration showing model selection, scenario selection, and test parameters](/screenshots/benchmark/create.png)
 
@@ -47,7 +57,23 @@ curl -X POST https://<your-instance>/test/benchmark \
   }'
 ```
 
+{/* DEMO_VIDEO: benchmark-results-comparison — replace public/demos/benchmark-results-comparison.mp4 */}
+
+<DemoVideo
+  topic="benchmark-results-comparison"
+  caption="Side-by-side model comparison: per-criterion scores from the eval rubric stacked so you can see which model wins on which standard."
+/>
+
 ![Benchmark results showing side-by-side model comparison with per-criterion scores](/screenshots/benchmark/results.png)
+
+{/* DEMO_VIDEO: benchmark-run-execution — replace public/demos/benchmark-run-execution.mp4 */}
+
+## Run execution
+
+<DemoVideo
+  topic="benchmark-run-execution"
+  caption="Watching a benchmark fan out into per-cell invocations — queued → running → completed status pills updating live as each model call returns."
+/>
 
 ## Searching Test History
 
