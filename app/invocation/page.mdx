@@ -1,141 +1,145 @@
+{/* DEMO_VIDEO: invocation — replace public/demos/invocation.mp4 */}
+
 # Invocation
 
-Invocation provides visibility into AI model configurations and their operational parameters. In the context of Glow, an invocation represents the configuration and execution context for AI model calls -- the models, endpoints, pricing, quality settings, and modalities used to power TA training simulations.
+<DemoVideo topic="invocation" />
 
-![Invocation list showing recent model calls with agent name, tokens used, and latency](/screenshots/invocation/list.png)
+Invocations are the per-row units inside a test — each one represents
+a single AI model call made during a benchmark or batch run, with its
+own configuration, status, trace, and grading.
 
-## What is Invocation?
+Invocation is a **sub-namespace on the test artifact**. Every operation
+is named `invocation_<op>` and lives at `POST /test/invocation_<op>`:
+`invocation_get`, `invocation_run`, `invocation_complete`, etc. The
+CLI surfaces them as `glow tests invocation <op>`.
 
-An invocation ties together the configuration details needed to make AI model calls during TA training:
+## What is an Invocation?
 
-- **Names** and **Descriptions** -- Identity for the model configuration
-- **Values** -- Configuration values (e.g., system prompts, persona definitions)
-- **Flags** -- Feature toggles
-- **Departments** -- Department-level scoping
-- **Keys** -- API keys for the model provider
-- **Endpoints** -- Model API endpoint URLs
-- **Modalities** -- Supported input/output types (text, audio, image, video)
-- **Temperature Levels** -- Temperature settings for AI response generation
-- **Pricing** -- Cost-per-token configuration
-- **Reasoning Levels** -- Reasoning depth settings
-- **Qualities** -- Quality tier settings
-- **Voices** -- Voice configuration for audio modalities
+An invocation captures everything needed to make and grade one AI
+model call inside a test:
 
-Invocations are used by the Test system to configure which model and parameters are used for automated benchmark runs, and by the broader platform to manage AI provider configurations.
+- **`invocation_id`** — unique identifier
+- **`test_id`** — the parent test
+- **`model` / `agent` / `provider`** — what's being called
+- **`modalities`** — text / audio / image / video supported
+- **`status`** — queued / running / completed / failed / terminated
+- **`trace`** — full execution trace (prompts, intermediate calls, responses)
+- **`scores`** — per-rubric-standard scores when graded
+
+Invocations are created when a test fans out (e.g., one invocation per
+scenario × model combination). They run independently and report back
+into the parent test for aggregation in the [Benchmark](/benchmark)
+view.
+
+## The invocation sub-op surface
+
+| Sub-op | Endpoint | Purpose |
+|---|---|---|
+| `invocation_get` | `POST /test/invocation_get` | hydrate one invocation by id |
+| `invocation_create` | `POST /test/invocation_create` | seed a new invocation (rare; tests fan out automatically) |
+| `invocation_run` | `POST /test/invocation_run` | start / re-fire an invocation |
+| `invocation_complete` | `POST /test/invocation_complete` | mark complete |
+| `invocation_terminate` | `POST /test/invocation_terminate` | terminate an in-flight invocation |
+| `invocation_trace` | `POST /test/invocation_trace` | fetch the full execution trace |
+| `invocation_draft` / `invocations` | `POST /test/invocation_draft` / `POST /test/invocations` | edit draft / list invocations |
+
+The list endpoint is plural (`POST /test/invocations`) since it
+returns a row collection, while the single-target ops use the
+singular concatenated form.
 
 ## Quick Start
 
 ### CLI
 
 ```bash
-# List all invocations
-glow invocation search
+# Hydrate a single invocation
+glow tests invocation get --body '{"invocation_id": "invocation-uuid"}'
 
-# Get a specific invocation
-glow invocation get --body '{"invocation_id": "invocation-uuid"}'
+# Fan out / re-fire an invocation
+glow tests invocation run --body '{"invocation_id": "invocation-uuid"}'
 
-# Export invocation data
-glow invocation export
+# Pull the full trace
+glow tests invocation trace --body '{"invocation_id": "invocation-uuid"}'
+
+# List invocations for a test
+glow tests invocations --body '{"test_id": "test-uuid"}'
 ```
 
 ### API
 
 ```bash
-# Get invocation detail (via suite endpoint)
-curl -X POST https://<your-instance>/v5/stream/GetSuiteRequest \
+# Get invocation detail
+curl -X POST https://<your-instance>/test/invocation_get \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "test_id": "test-uuid"
-  }'
-```
+  -d '{"invocation_id": "invocation-uuid"}'
 
-## Understanding the Invocation Response
-
-The `GetSuiteResponse` contains the full configuration for an invocation:
-
-- **`test_id`** -- The test this invocation belongs to
-- **`profile_has_access`** -- Whether the current profile can view this invocation
-- **`draft_version`** -- Current draft version number
-- **`group_id`** -- Associated generation group ID
-
-### Configuration Sections
-
-Each section follows a consistent structure with `show` (visibility), `required` (whether the field is mandatory), `show_ai_generate` (whether AI generation is available), `current` (selected items), and `resources` (available options).
-
-| Section | Field | Description |
-|---|---|---|
-| Names | `names` | Model configuration name |
-| Descriptions | `descriptions` | Human-readable description |
-| Values | `values` | Configuration values (prompts, parameters) |
-| Flags | `flags` | Feature toggles |
-| Departments | `departments` | Department scoping |
-| Keys | `keys` | API provider keys |
-| Endpoints | `endpoints` | Model API endpoint URLs |
-| Modalities | `modalities` | Supported I/O types (text, audio, image, video) |
-| Temperature Levels | `temperature_levels` | AI generation temperature settings |
-| Pricing | `pricing` | Cost-per-token configuration |
-| Reasoning Levels | `reasoning_levels` | AI reasoning depth settings |
-| Qualities | `qualities` | Quality tier configuration |
-| Voices | `voices` | Voice settings for audio output |
-
-## Invocations in the Test Flow
-
-Invocations are central to the automated testing system. When a test is started, each benchmark scenario creates an invocation that specifies:
-
-1. Which AI model to use (via `endpoints` and `keys`)
-2. How the model should behave (via `temperature_levels`, `reasoning_levels`, `qualities`)
-3. What input modalities are supported (via `modalities`)
-4. What the cost parameters are (via `pricing`)
-
-During test execution, each invocation produces runs that are tracked in the test detail view. The test's `GetTestArtifactResponse` includes an `invocations` array with per-invocation results.
-
-## Searching Invocations
-
-Use the CLI to list and filter invocations:
-
-```bash
-# List all invocations
-glow invocation search
-
-# Get a specific invocation by ID
-glow invocation get --body '{"invocation_id": "invocation-uuid"}'
-```
-
-The search endpoint uses the standard descriptions search pattern. You can also use `descriptions_search` when fetching via the suite endpoint:
-
-```bash
-curl -X POST https://<your-instance>/v5/stream/GetSuiteRequest \
+# List invocations (paginated)
+curl -X POST https://<your-instance>/test/invocations \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "test_id": "test-uuid",
-    "descriptions_search": "gpt-4"
-  }'
+  -d '{"test_id": "test-uuid", "page_size": 25}'
 ```
 
-## Exporting
+## Invocations in the test flow
+
+When a test runs, the server fans out one invocation per benchmark
+cell (typically: scenario × model × agent). Each invocation:
+
+1. Resolves the model + agent configuration from the test setup
+2. Issues the model call(s) — recorded in `trace`
+3. Grades the resulting transcript against the test's rubric
+4. Writes per-standard scores back onto the row
+5. Reports `status = completed` (or `failed` / `terminated`)
+
+The parent test's response aggregates invocations into
+`AggregatedResults` for benchmark UIs.
+
+## Status lifecycle
+
+| Status | Meaning |
+|---|---|
+| `queued` | created, not yet started |
+| `running` | model call in flight |
+| `completed` | model call done, scores written |
+| `failed` | model call errored — see `trace` for details |
+| `terminated` | cancelled via `invocation_terminate` |
+
+Use `invocation_run` to (re-)kick a queued or failed invocation; use
+`invocation_terminate` to stop a `running` one safely.
+
+## Trace
 
 ```bash
-# Export invocation data
-glow invocation export
+curl -X POST https://<your-instance>/test/invocation_trace \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"invocation_id": "invocation-uuid"}'
 ```
+
+Returns the full call chain — prompts sent, intermediate tool calls,
+responses received — formatted for replay or audit.
 
 ## Common Operations
 
-| Task | CLI | API Endpoint |
+| Task | CLI | API |
 |---|---|---|
-| List invocations | `glow invocation search` | `POST /invocation/search` |
-| Get invocation | `glow invocation get` | `POST /invocation/get` |
-| Get suite config | -- | `POST /stream/GetSuiteRequest` |
-| Export | `glow invocation export` | `POST /invocation/export` |
+| Get one invocation | `glow tests invocation get` | `POST /test/invocation_get` |
+| List invocations | `glow tests invocations` | `POST /test/invocations` |
+| Run / re-fire | `glow tests invocation run` | `POST /test/invocation_run` |
+| Terminate | `glow tests invocation terminate` | `POST /test/invocation_terminate` |
+| Fetch trace | `glow tests invocation trace` | `POST /test/invocation_trace` |
+| Mark complete | `glow tests invocation complete` | `POST /test/invocation_complete` |
+| Save draft | `glow tests invocation draft` | `POST /test/invocation_draft` |
+| List drafts | `glow tests invocation drafts` | `POST /test/invocation_drafts` |
 
 ## Related
 
-- [Invocation API Reference](/glow/invocation/api)
-- [Invocation CLI Reference](/glow/invocation/cli)
-- [Test Guide](/glow/test/guide) -- automated benchmark testing
-- [Group Guide](/glow/group/guide) -- AI generation group details
-- [Pricing Guide](/glow/pricing/guide) -- cost tracking for AI model calls
+- [Test API Reference](/api-reference/test) — every invocation_* endpoint with full schemas
+- [Tests CLI Reference](/cli-reference/tests) — every `glow tests ...` command
+- [Benchmark](/benchmark) — the aggregated view across all invocations in a test
+- [Pricing](/pricing) — cost tracking for invocation runs
+- [Group](/group) — generation group rows that capture invocation cost
