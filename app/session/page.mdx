@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: session — replace public/demos/session.mp4 */}
+{/* DEMO_VIDEO: session-overview — replace public/demos/session-overview.mp4 */}
 
 # Session
 
-<DemoVideo topic="session" />
+<DemoVideo
+  topic="session-overview"
+  caption="Opening a session detail page — TA identity at the top, groups grid in the middle, full event timeline pinned to the right rail."
+/>
 
 Session provides a detailed view of an individual TA training
 session, including the AI generation groups created during the
@@ -69,7 +72,15 @@ curl -X POST https://<your-instance>/system/export \
   -d '{"target_session_id": "session-uuid"}'
 ```
 
+{/* DEMO_VIDEO: session-detail-view — replace public/demos/session-detail-view.mp4 */}
+
 ## Understanding the session detail response
+
+<DemoVideo
+  topic="session-detail-view"
+  caption="Walking through `GetSessionDetailResponse` field-by-field: profile_name, session_created_at, active, and the groups array hydrated inline."
+/>
+
 
 `POST /system/session` returns `GetSessionDetailResponse`:
 
@@ -91,7 +102,15 @@ The **`groups`** array contains `ArtifactSessionGroup` objects, each representin
 - `total_tokens` -- Total tokens consumed
 - `total_cost` -- Dollar cost as a string
 
+{/* DEMO_VIDEO: session-timeline — replace public/demos/session-timeline.mp4 */}
+
 ### Timeline
+
+<DemoVideo
+  topic="session-timeline"
+  caption="Scrolling the chronological event log — group_created, run_started, run_ended events stitched together with entity_name links back into the data."
+/>
+
 
 The **`timeline`** array contains `SessionTimelineItem` objects -- a chronological log of events:
 
@@ -101,7 +120,15 @@ The **`timeline`** array contains `SessionTimelineItem` objects -- a chronologic
 - `created_at` -- Timestamp of the event
 - `extra_1`, `extra_2` -- Additional context fields
 
+{/* DEMO_VIDEO: session-navigate-to-group — replace public/demos/session-navigate-to-group.mp4 */}
+
 ## Navigating from Activity to Session
+
+<DemoVideo
+  topic="session-navigate-to-group"
+  caption="The full drill path: Activity → pick a session_id → Session detail → click a group row → land on the Group detail page with runs + messages."
+/>
+
 
 A common workflow is to start from the Activity page, paginate
 sessions, then drill into one:
