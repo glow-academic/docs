@@ -32,7 +32,7 @@ export default {
 
   // ── Attempt artifact — top-level lifecycle + chat namespace + views
   '---attempt': { type: 'separator', title: 'Attempt' },
-  attempts: 'Attempts (lifecycle)',
+  attempts: 'Attempts',
   chat: 'Chat',
   home: 'Home',
   practice: 'Practice',
@@ -42,7 +42,7 @@ export default {
 
   // ── Test artifact — top-level lifecycle + invocation namespace + views
   '---test': { type: 'separator', title: 'Test' },
-  tests: 'Tests (lifecycle)',
+  tests: 'Tests',
   benchmark: 'Benchmark',
   invocation: 'Invocation',
 
