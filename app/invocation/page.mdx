@@ -1,8 +1,11 @@
-{/* DEMO_VIDEO: invocation — replace public/demos/invocation.mp4 */}
+{/* DEMO_VIDEO: invocation-overview — replace public/demos/invocation-overview.mp4 */}
 
 # Invocation
 
-<DemoVideo topic="invocation" />
+<DemoVideo
+  topic="invocation-overview"
+  caption="Opening a single invocation: model + agent header, status pill, modalities chips, scores grid below, trace expandable on demand."
+/>
 
 Invocations are the per-row units inside a test — each one represents
 a single AI model call made during a benchmark or batch run, with its
@@ -83,7 +86,15 @@ curl -X POST https://<your-instance>/test/invocations \
   -d '{"test_id": "test-uuid", "page_size": 25}'
 ```
 
+{/* DEMO_VIDEO: invocation-fanout — replace public/demos/invocation-fanout.mp4 */}
+
 ## Invocations in the test flow
+
+<DemoVideo
+  topic="invocation-fanout"
+  caption="A single test fanning out into one invocation per scenario × model × agent cell — rows landing as `queued` then flipping to `running` in parallel."
+/>
+
 
 When a test runs, the server fans out one invocation per benchmark
 cell (typically: scenario × model × agent). Each invocation:
@@ -97,7 +108,15 @@ cell (typically: scenario × model × agent). Each invocation:
 The parent test's response aggregates invocations into
 `AggregatedResults` for benchmark UIs.
 
+{/* DEMO_VIDEO: invocation-status-lifecycle — replace public/demos/invocation-status-lifecycle.mp4 */}
+
 ## Status lifecycle
+
+<DemoVideo
+  topic="invocation-status-lifecycle"
+  caption="Walking a row through queued → running → completed, then re-firing a `failed` row with `invocation_run` and terminating one mid-flight with `invocation_terminate`."
+/>
+
 
 | Status | Meaning |
 |---|---|
@@ -110,7 +129,15 @@ The parent test's response aggregates invocations into
 Use `invocation_run` to (re-)kick a queued or failed invocation; use
 `invocation_terminate` to stop a `running` one safely.
 
+{/* DEMO_VIDEO: invocation-trace — replace public/demos/invocation-trace.mp4 */}
+
 ## Trace
+
+<DemoVideo
+  topic="invocation-trace"
+  caption="Expanding `invocation_trace` to walk the full call chain: prompts sent, intermediate tool calls, and the final response — ready for audit or replay."
+/>
+
 
 ```bash
 curl -X POST https://<your-instance>/test/invocation_trace \
@@ -122,6 +149,15 @@ curl -X POST https://<your-instance>/test/invocation_trace \
 
 Returns the full call chain — prompts sent, intermediate tool calls,
 responses received — formatted for replay or audit.
+
+{/* DEMO_VIDEO: invocation-list-paginate — replace public/demos/invocation-list-paginate.mp4 */}
+
+## Listing and paginating
+
+<DemoVideo
+  topic="invocation-list-paginate"
+  caption="Hitting `POST /test/invocations` for a test_id, paginating with page_size, and filtering down to just the `failed` rows to triage."
+/>
 
 ## Common Operations
 
