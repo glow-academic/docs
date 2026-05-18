@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: tools — replace public/demos/tools.mp4 */}
+
 # Tools
+
+<DemoVideo topic="tools" />
 
 Tools give agents the ability to take actions and look up information during office hour simulations. A tool might check a student's enrollment status, look up assignment deadlines, or retrieve course policies -- enabling the AI agent to respond with accurate, real-time data rather than relying solely on its training.
 
@@ -55,7 +59,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search tools:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/tools/search \
+curl -X POST https://<your-instance>/tool/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -65,7 +69,7 @@ curl -X POST https://<your-instance>/v5/tools/search \
 **Create a tool:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/tools/create \
+curl -X POST https://<your-instance>/tool/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -158,21 +162,21 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all tools | `glow tools search` | `POST /tools/search` |
-| Get tool details | `glow tools get --body '{"tool_id": "..."}'` | `POST /tools/get` |
-| Create tool | `glow tools create --body '{...}'` | `POST /tools/create` |
-| Update tool | `glow tools update --body '{"tool_id": "...", ...}'` | `POST /tools/update` |
-| Duplicate tool | -- | `POST /tools/duplicate` |
-| Delete tool(s) | `glow tools delete --body '{"tool_id": "..."}'` | `POST /tools/delete` |
-| Export to CSV | `glow tools export` | `POST /tools/export` |
-| Stage a draft | `glow tools draft --body '{...}'` | `PATCH /tools/draft` |
-| List drafts | `glow tools list` | `POST /tools/drafts` |
+| List all tools | `glow tools search` | `POST /tool/search` |
+| Get tool details | `glow tools get --body '{"tool_id": "..."}'` | `POST /tool/get` |
+| Create tool | `glow tools create --body '{...}'` | `POST /tool/create` |
+| Update tool | `glow tools update --body '{"tool_id": "...", ...}'` | `POST /tool/update` |
+| Duplicate tool | -- | `POST /tool/duplicate` |
+| Delete tool(s) | `glow tools delete --body '{"tool_id": "..."}'` | `POST /tool/delete` |
+| Export to CSV | `glow tools export` | `POST /tool/export` |
+| Stage a draft | `glow tools draft --body '{...}'` | `PATCH /tool/draft` |
+| List drafts | `glow tools list` | `POST /tool/drafts` |
 
 ---
 
 ## Related
 
-- [Tools API Reference](/glow/tools/api) -- full endpoint and type documentation
-- [Tools CLI Reference](/glow/tools/cli) -- all CLI commands
-- [Models Guide](/glow/models/guide) -- models that power the agents using these tools
-- [Rubrics Guide](/glow/rubrics/guide) -- rubrics that score agent behavior alongside tool usage
+- [Tools API Reference](/api-reference/tool) -- full endpoint and type documentation
+- [Tools CLI Reference](/cli-reference/tool) -- all CLI commands
+- [Models Guide](/model) -- models that power the agents using these tools
+- [Rubrics Guide](/rubric) -- rubrics that score agent behavior alongside tool usage
