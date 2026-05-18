@@ -9,6 +9,17 @@ Auths manages authentication providers for your Glow instance -- the SSO configu
   caption="The auths list -- rows by login method, protocol badge, and enabled flag; encrypted items hidden behind a dedicated edit drawer."
 />
 
+> Auth artifacts configure the SSO/IdP providers. For the runtime auth flow (login, tokens, sessions), see [Authentication](/authentication).
+
+## What auth artifacts configure
+
+An auth row is an **identity-provider (IdP) configuration record** — not a runtime session. Each row tells the Glow instance how to wire one external SSO provider (university Shibboleth, Google Workspace, Azure AD, generic OIDC, ...) into the embedded Keycloak.
+
+- **Provider shape.** Each auth carries display fields (`name`, `description`), a `flag` (enabled/disabled), one or more `protocol_ids` (OIDC, SAML, ...), and a `slug` that becomes the login-button path. The `department_ids` set scopes which orgs see the button.
+- **Encrypted item keys.** Sensitive provider config (`client_secret`, signing keys, redirect-URI overrides) lives in `items`, and each item points at one or more `auth_item_key_ids` — encrypted-at-rest key resources. List and get responses **never return the plaintext**; values round-trip through `app.infra.identity.decrypt.resolve_decrypt`, which composes the canonical `get_keys` + `decrypt_api_key` path and requires the actor's `profile_id`.
+- **Keycloak sync.** Creating or saving an auth invalidates the `auths` cache tag and triggers `app.infra.identity.keycloak_sync` on the next sync pass. `sync_identity_provider_for_realm_level` and `sync_identity_provider_for_org` walk the auth rows for each realm/department, decrypt the item keys, and upsert matching Keycloak `IdentityProvider` records — so the auth artifact is the source of truth and Keycloak is the projection.
+- **Runtime handoff.** Once synced, the actual login dance (PKCE, token exchange, session minting) is handled by the flow documented in [Authentication](/authentication). Auths configure *which* providers exist; `/authentication` covers *how* a request authenticates against them.
+
 ## What is an Auth?
 
 An auth provider defines a login method for your Glow instance. This could be a university SSO integration, an email-based login, or another authentication protocol. Each auth provider is composed of sections:
@@ -79,6 +90,53 @@ glow auths draft --body '{
   "item_ids": ["item-client-id", "item-client-secret", "item-redirect-uri"]
 }'
 ```
+
+---
+
+{/* DEMO_VIDEO: auths-idp — replace public/demos/auths-idp.mp4 */}
+
+## Adding a new IdP
+
+End-to-end recipe for wiring a fresh SSO provider into Keycloak. The four moves are: create the auth shell, seed the encrypted item keys, attach them in a draft, then let `keycloak_sync` project the row into the realm.
+
+<DemoVideo
+  topic="auths-idp"
+  caption="Greenfield IdP onboarding: POST /auth/create, encrypted client_secret pasted into an item key, draft saved with protocol+slug+items, sync log lighting up the new Keycloak IdentityProvider."
+/>
+
+**1. Create the auth shell** (returns `auth_id` + a fresh `draft_id`):
+
+```bash
+curl -X POST https://<your-instance>/auth/create \
+  -H "X-Api-Key: <api-key>" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "auths": [{
+      "name": "Acme University SSO",
+      "description": "OIDC login for Acme faculty + TAs",
+      "protocol": "oidc",
+      "slug": "acme-sso",
+      "department_ids": ["dept-acme"]
+    }]
+  }'
+```
+
+`protocol`/`slug` are resolve-or-create — pass a string and the server will reuse an existing resource or mint one. See [POST /auth/create](/api-reference/auth/post-auth-create) for the full request schema, including the `items` array and per-item `auth_item_key_ids` for seeding encrypted values up front.
+
+**2. Save the draft** with the wired items (client ID, secret, redirect URI). Plaintext values you submit go through the encrypted-key pipeline before they land in `items`; subsequent `get`/`search` calls return only the key IDs.
+
+```bash
+glow auths draft --body '{
+  "input_draft_id": "<draft-id-from-step-1>",
+  "expected_version": 1,
+  "item_ids": ["item-client-id", "item-client-secret", "item-redirect-uri"]
+}'
+```
+
+**3. Promote the draft** via `POST /auth/update` (or the UI's *Save* button). The route emits `X-Invalidate-Tags: auths` and the next `keycloak_sync` pass picks up the new row, decrypts the item keys, and upserts the matching Keycloak `IdentityProvider` for each realm the auth's departments map to.
+
+**4. Verify** the login button shows up under `/login/<slug>` and that the round-trip lands a session — that path is covered in [Authentication](/authentication).
 
 ---
 
