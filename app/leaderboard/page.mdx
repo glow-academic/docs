@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: leaderboard — replace public/demos/leaderboard.mp4 */}
+
 # Leaderboard
+
+<DemoVideo topic="leaderboard" />
 
 The Leaderboard ranks TAs by training performance, highlighting top performers and awarding accolades. It helps program coordinators identify which TAs are excelling and which may need additional support with office-hours simulations.
 
@@ -24,23 +28,23 @@ Leaderboard answers questions like:
 
 ```bash
 # Get the full leaderboard with header metrics and accolades
-glow leaderboard get
+glow attempts leaderboard
 
 # Get leaderboard filtered by cohort and date range
-glow leaderboard get --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
+glow attempts leaderboard --body '{"cohort_ids": ["fall-2025-cs101"], "start_date": "2025-01-01", "end_date": "2025-06-30"}'
 
 # Search leaderboard rankings (paginated, sortable)
-glow leaderboard search --body '{"sort_by": "highest_score_avg", "sort_order": "desc", "page_limit": 25}'
+glow attempts search --body '{"sort_by": "highest_score_avg", "sort_order": "desc", "page_limit": 25}'
 
 # Export leaderboard data
-glow leaderboard export
+glow attempts export
 ```
 
 ### API
 
 ```bash
 # Get leaderboard summary
-curl -X POST https://<your-instance>/v5/leaderboard/get \
+curl -X POST https://<your-instance>/attempt/leaderboard \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -51,7 +55,7 @@ curl -X POST https://<your-instance>/v5/leaderboard/get \
   }'
 
 # Search ranked profiles
-curl -X POST https://<your-instance>/v5/leaderboard/search \
+curl -X POST https://<your-instance>/attempt/search \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -80,7 +84,7 @@ curl -X POST https://<your-instance>/v5/leaderboard/search \
 
 ## Understanding the Leaderboard Summary
 
-The `/leaderboard/get` response includes:
+The `POST /attempt/leaderboard` response includes:
 
 ### `sections`
 
@@ -104,7 +108,7 @@ Resource metadata keyed by ID: `profiles`, `simulations`, `scenarios`.
 
 ## Understanding Search Results
 
-The `/leaderboard/search` response returns `LeaderboardDataRow` items:
+The `POST /attempt/search` response returns `LeaderboardDataRow` items:
 
 - `rank` -- Position on the leaderboard
 - `profile_id`, `name` -- TA identity
@@ -123,14 +127,14 @@ The `/leaderboard/search` response returns `LeaderboardDataRow` items:
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Leaderboard summary | `glow leaderboard get` | `POST /leaderboard/get` |
-| Search rankings | `glow leaderboard search` | `POST /leaderboard/search` |
-| Export data | `glow leaderboard export` | `POST /leaderboard/export` |
-| Refresh caches | -- | `POST /leaderboard/refresh` |
+| Leaderboard summary | `glow attempts leaderboard` | `POST /attempt/leaderboard` |
+| Search rankings | `glow attempts search` | `POST /attempt/search` |
+| Export data | `glow attempts export` | `POST /attempt/export` |
+| Refresh caches | -- | `POST /attempt/refresh` |
 
 ## Related
 
-- [Leaderboard API Reference](/glow/leaderboard/api)
-- [Leaderboard CLI Reference](/glow/leaderboard/cli)
-- [Reports Guide](/glow/reports/guide) -- full training reports
-- [Record Guide](/glow/record/guide) -- single-TA performance view
+- [Leaderboard API Reference](/api-reference/attempt)
+- [Leaderboard CLI Reference](/cli-reference/attempts)
+- [Reports Guide](/reports) -- full training reports
+- [Record Guide](/record) -- single-TA performance view
