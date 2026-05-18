@@ -291,3 +291,185 @@ The same conversation gets very different scores on different runs.
 - [Rubrics Guide](/rubrics) — full reference for rubric design
 - [Parameters Guide](/parameters) — full reference for dynamic parameter fields
 - [Benchmark Guide](/benchmark) — evaluate AI providers for your use case
+
+---
+
+## Cross-cutting recipes
+
+Reusable API patterns that apply across many artifacts. Per-artifact pages
+link here instead of re-explaining the same shape.
+
+{/* DEMO_VIDEO: patterns-drafts — replace public/demos/patterns-drafts.mp4 */}
+
+## Recipe 1: Drafts + `expected_version` (optimistic concurrency)
+
+<DemoVideo
+  topic="patterns-drafts"
+  caption="Saving a draft from two tabs — the second save sees an expected_version mismatch and surfaces the conflict instead of clobbering the first edit."
+/>
+
+**Use in:** agents, auths, cohorts, departments, documents, evals, fields,
+models, parameters, personas, profiles, providers, rubrics, scenarios,
+settings, simulations, tools (every artifact with a `/draft` endpoint).
+
+Editable artifacts in Glow use a draft system with optimistic concurrency.
+Instead of mutating the live row on every keystroke, the client POSTs
+buffered changes to `POST /<art>/draft` and gets back a `draft_id` +
+monotonic `version`. The next save passes that `version` as
+`expected_version` so a concurrent edit from another tab (or another user)
+can't silently overwrite yours.
+
+**The round-trip:**
+
+1. Client calls `POST /<art>/draft` with the in-progress form state. First
+   save omits `input_draft_id` and `expected_version`; subsequent saves
+   pass the `draft_id` and most-recent `version` returned by the prior call.
+2. Server returns `{ draft_id, new_version, form_state }`. The client
+   stores `new_version` and uses it as `expected_version` on the next save.
+3. If two clients race, the second save arrives with a stale
+   `expected_version` and the server returns a **409 conflict** carrying
+   the current server-side draft (so the client can show a "your edits
+   collided" UI and decide how to merge).
+4. `POST /<art>/drafts` lists every in-flight draft for the current user
+   so you can resume work across devices or surface "you have unsaved
+   changes" prompts.
+
+**Canonical example:**
+
+```bash
+curl -X POST https://<your-instance>/<art>/draft \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "input_draft_id": "existing-draft-uuid",
+    "expected_version": 3,
+    "name": "Updated name",
+    "...": "rest of the form state"
+  }'
+```
+
+On success the response is `{ draft_id, new_version, form_state }`. On
+conflict the response carries the server's current draft so you can
+present a merge prompt rather than blindly retrying. See the
+[Personas draft cycle](/personas#the-draft-cycle) for the fully worked
+example and the artifact-specific field list in each API reference page.
+
+{/* DEMO_VIDEO: patterns-bulk-write — replace public/demos/patterns-bulk-write.mp4 */}
+
+## Recipe 2: Bulk-write (`all` + flat filters + `excluded_ids` + `patch`)
+
+<DemoVideo
+  topic="patterns-bulk-write"
+  caption="Bulk-archiving every persona in a department except a manually-excluded handful — single round-trip, server-side filter resolution, no row-by-row writes."
+/>
+
+**Use in:** agents, cohorts, documents, fields, personas, scenarios,
+simulations (confirmed adopters); the same shape is rolling out to the
+remaining list-backed artifacts (auths, departments, evals, models,
+parameters, profiles, providers, rubrics, settings, tools) as their UIs
+gain bulk toolbars.
+
+When you need to mutate many rows that match a filter — "archive every
+persona in this department", "delete every scenario tagged as
+deprecated" — don't fetch the ids client-side and loop. The
+`/<art>/delete` and `/<art>/update` endpoints accept an **all-matching**
+body that resolves rows server-side using the same predicates as
+`/<art>/search`.
+
+**Why this shape:**
+
+- **Single round-trip.** No fetch-then-write race. The server resolves
+  matching ids in the same transaction as the mutation.
+- **URL-stable.** The client passes `?selectAll=1&excludedIds=...` instead
+  of stuffing thousands of ids into a URL.
+- **Permission-honoring.** Per-row write checks run server-side; rows the
+  caller can't touch are reported in `skipped_results` rather than failing
+  the whole call.
+- **Exclude semantics.** `excluded_ids` lets the user say "everything
+  matching the filter except these specific rows" — the natural UX for
+  "select all, then unclick a few".
+
+**Request shape:**
+
+```jsonc
+// Explicit ids (small selections, fail-fast):
+{ "persona_ids": ["...", "..."] }
+
+// All matching a filter (large selections, soft-skip):
+{
+  "all": true,
+  "filter_department_ids": ["dept-cs"],
+  "voice_search": "deprecated-voice",
+  "excluded_ids": ["persona-keep-this-one"]
+}
+
+// Bulk update — same shape plus `patch`:
+{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}
+```
+
+Filter field names (`filter_<facet>_ids`, `<facet>_search`) match the
+artifact's `/search` request exactly, so the bulk call can re-use the
+list page's URL state verbatim. The `patch` schema mirrors the artifact's
+own `Update<X>Item` minus `id` (the server stamps the id per matched row).
+
+See the [Personas bulk operations](/personas#bulk-operations) section for
+the fully worked example.
+
+{/* DEMO_VIDEO: patterns-search-facets — replace public/demos/patterns-search-facets.mp4 */}
+
+## Recipe 3: Search facets (`*_search` request + `*_filter` response)
+
+<DemoVideo
+  topic="patterns-search-facets"
+  caption="A persona search response carrying scenario_filter / department_filter / voice_filter sections that the UI renders as dropdowns with counts — no second round-trip."
+/>
+
+**Use in:** every `/<art>/search` endpoint — agents, auths, cohorts,
+departments, documents, evals, fields, models, parameters, personas,
+profiles, providers, rubrics, scenarios, settings, simulations, tools.
+
+Every search endpoint hydrates its own filter sidebar. The client sends
+facet-narrowing fields in the request and gets back fully-formed
+`ListFilterSection` blocks in the response so dropdowns render without a
+second round-trip.
+
+**Request side** (all optional):
+
+- `filter_<facet>_ids: UUID[]` — narrow results to rows whose `<facet>`
+  matches one of the supplied ids.
+- `<facet>_search: string` — sub-search within a facet (e.g.
+  `voice_search: "alloy"` to look up a voice while filtering personas).
+- `search`, `page_size`, `page_offset` — top-level full-text +
+  pagination.
+
+**Response side** — alongside the hydrated rows, each search response
+returns one `<facet>_filter: ListFilterSection` per facet exposed by that
+artifact. Each section carries the facet's available options, counts, and
+the currently-selected ids — exactly what a dropdown needs.
+
+**Canonical example:**
+
+```bash
+curl -X POST https://<your-instance>/persona/search \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your-license-key" \
+  -H "Authorization: Bearer your-token" \
+  -d '{
+    "search": "confused",
+    "filter_department_ids": ["dept-cs"],
+    "voice_search": "alloy",
+    "page_size": 25,
+    "page_offset": 0
+  }'
+```
+
+The response shape is `{ personas: [...], scenario_filter,
+department_filter, voice_filter, ... }`. The specific facet set varies
+per artifact — see each `/<art>/search` entry in the
+[API reference](/api-reference) for the exact `filter_<facet>_ids` /
+`<facet>_search` inputs and `<facet>_filter` outputs available.
