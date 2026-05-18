@@ -31,16 +31,18 @@ persona-driven simulations with full grading + analytics.
   caption="Scrolling the left-hand nav and showing how each sidebar group lines up 1-for-1 with the running client UI."
 />
 
-The left-hand nav mirrors the [client sidebar](/start) so what
-you see in the product UI maps 1-for-1 to a docs section:
+The sidebar is organized by API/CLI taxonomy — each group
+corresponds to a parent artifact or a logical cluster of
+artifacts in the Glow API. The client product UI uses its own
+grouping (Learner / Analytics / etc.) optimized for product
+navigation; the two intentionally differ.
 
 | Sidebar group | What lives there |
 |---|---|
-| **Learner** | Home · Chat · Practice · Leaderboard |
-| **Analytics** | Dashboard · Reports · Activity · Pricing |
-| **Training** | Cohorts · Simulations · Scenarios · Personas |
-| **Management** | Profiles · Documents · Parameters · Fields |
+| **Attempt** | Chat · Home · Practice · Dashboard · Reports · Leaderboard |
+| **Test** | Benchmark · Invocation |
+| **System** | Activity · Health · Pricing · Session · Group |
+| **Training** | Cohorts · Personas · Scenarios · Simulations |
+| **Management** | Documents · Fields · Parameters · Profiles |
 | **Intelligence** | Agents · Models · Providers · Tools |
-| **System** | Auths · Departments · Evals · Rubrics |
-| **Ops** | Health · Benchmark · Invocation |
-| **Internals** | Session · Group (server-side, no client UI) |
+| **Platform** | Auths · Departments · Evals · Rubrics |
