@@ -1,0 +1,235 @@
+{/* DEMO_VIDEO: topology-overview — replace public/demos/topology-overview.mp4 */}
+
+# Topology
+
+Glow ships in three deployment shapes — `airgapped`, `exposed`, and
+`api_only`. The shape you pick decides which containers come up, which
+public domains you need TLS certs for, and how the api's `ORIGIN` /
+`CLIENT_ORIGINS` / `KEYCLOAK_PUBLIC_URL` get wired together.
+
+<DemoVideo
+  topic="topology-overview"
+  caption="A glow-deploy.yaml side-by-side for all three modes — only the topology + origin fields change; everything downstream is derived."
+/>
+
+The mode is set once in your `glow-deploy.yaml`:
+
+```yaml
+# glow-deploy.yaml
+topology: airgapped     # or: exposed | api_only
+client_origin: https://glow.example.edu
+# api_origin only required for exposed / api_only
+```
+
+The api and client *code* are mode-agnostic — topology is purely a
+provisioning, env-var, and routing choice handled by the CLI
+(`src/deploy/config.rs:83` and `src/deploy/env.rs:389`).
+
+## Three modes
+
+| Mode | api visible? | client domain | when to use |
+|------|--------------|---------------|-------------|
+| `airgapped` | proxied via client nginx (internal-only) | required | single public domain, simplest TLS, locked-down |
+| `exposed` | own subdomain | required | separate `api.*` and `client.*` origins, more flexible |
+| `api_only` | own subdomain | none (no web UI) | API-only deployments (programmatic + CLI only) |
+
+The required-fields rules are enforced by `DeployConfig::validate`
+(`src/deploy/config.rs:140`) — a missing `client_origin` on airgapped
+or a missing `api_origin` on exposed fails the deploy before docker is
+touched.
+
+### How ORIGIN and CLIENT_ORIGINS are derived
+
+The heart of the decision table lives in `derive_api_origins`
+(`src/deploy/env.rs:389`):
+
+| Mode | `ORIGIN` (api) | `CLIENT_ORIGINS` (CORS allowlist) |
+|------|----------------|-----------------------------------|
+| `airgapped` | `client_origin` | `client_origin` |
+| `exposed` | `api_origin` | `client_origin` |
+| `api_only` | `api_origin` | *(empty)* |
+
+The airgapped row is the unintuitive one — see the next section.
+
+---
+
+{/* DEMO_VIDEO: topology-airgapped — replace public/demos/topology-airgapped.mp4 */}
+
+## Airgapped
+
+In airgapped mode there is exactly one public domain. The client
+container's nginx is the only thing the outside world can reach; it
+reverse-proxies `/api/`, `/auth/`, and `/mcp/` to the internal `glow-api-nginx`
+container on the shared docker network. The api never gets its own TLS
+cert because it never gets its own hostname.
+
+<DemoVideo
+  topic="topology-airgapped"
+  caption="Browser → Traefik → client nginx → (proxied) api nginx. Single TLS cert, single DNS record, api never exposed."
+/>
+
+The unusual bit: the api's `ORIGIN` env var is set to the **client**
+domain, not an api domain, because OIDC callbacks resolve through the
+client nginx — Keycloak issuer URLs need to match the URL the browser
+actually sees (`src/deploy/env.rs:394`).
+
+```yaml
+topology: airgapped
+client_origin: https://glow.example.edu
+# api_origin: NOT SET — api has no public hostname
+```
+
+Resulting env wiring:
+
+```
+api .env:
+  ORIGIN=https://glow.example.edu
+  CLIENT_ORIGINS=https://glow.example.edu
+
+client .env:
+  NEXT_PUBLIC_API_URL=https://glow.example.edu
+  KEYCLOAK_PUBLIC_URL=https://glow.example.edu/auth
+  INTERNAL_API_BASE=http://glow-api-nginx:80
+```
+
+> **Warning — redeploy trap.** A bare `glow redeploy` on an airgapped
+> instance must explicitly carry the topology forward. If the topology
+> isn't reasserted, Traefik can re-route the client hostname to the
+> wrong backend and the client effectively "disappears" from the
+> public domain. Always run `glow redeploy --airgapped` (or let
+> `glow redeploy` read the existing `glow-deploy.yaml` rather than
+> overriding it on the CLI). See [Redeploy](/cli-reference/redeploy).
+
+### Best for
+
+- Single-domain academic deployments (one DNS record, one cert)
+- Locked-down networks where you don't want the api directly reachable
+- Anyone who wants the simplest possible TLS story
+
+---
+
+{/* DEMO_VIDEO: topology-exposed — replace public/demos/topology-exposed.mp4 */}
+
+## Exposed
+
+In exposed mode the api and client each get their own public domain
+and their own TLS cert (issued by Traefik via Let's Encrypt). The
+browser talks to the api directly — no nginx proxy hop on the way.
+
+<DemoVideo
+  topic="topology-exposed"
+  caption="Two domains, two certs — api.example.edu and glow.example.edu. CORS is what keeps the cross-origin handshake honest."
+/>
+
+```yaml
+topology: exposed
+api_origin: https://api.example.edu
+client_origin: https://glow.example.edu
+```
+
+Resulting env wiring:
+
+```
+api .env:
+  ORIGIN=https://api.example.edu
+  CLIENT_ORIGINS=https://glow.example.edu   # CORS allowlist
+
+client .env:
+  NEXT_PUBLIC_API_URL=https://api.example.edu
+  KEYCLOAK_PUBLIC_URL=https://api.example.edu/auth
+```
+
+`CLIENT_ORIGINS` is comma-separated — add additional client origins
+(staging, a mobile app's redirect URI, an embedded iframe parent) by
+listing them.
+
+### Best for
+
+- SSO setups where the IdP needs a stable, separate api hostname
+- Compliance regimes that require api and UI on distinct origins
+- Deployments that need to expose the api to non-browser clients
+  (mobile apps, scripts, partner integrations) alongside the web UI
+
+---
+
+{/* DEMO_VIDEO: topology-api-only — replace public/demos/topology-api-only.mp4 */}
+
+## API-only
+
+In `api_only` mode no client container is deployed. The api comes up
+on its own public domain and that's the entire surface area. There is
+no web UI, no NextAuth, no `KEYCLOAK_PUBLIC_URL`.
+
+<DemoVideo
+  topic="topology-api-only"
+  caption="One container stack, one domain, no UI. Use the CLI or call /persona/search and friends from your own backend."
+/>
+
+```yaml
+topology: api_only
+api_origin: https://api.example.edu
+# client_origin: NOT SET — no client stack
+# client_version: NOT REQUIRED
+```
+
+Resulting env wiring:
+
+```
+api .env:
+  ORIGIN=https://api.example.edu
+  CLIENT_ORIGINS=        # empty — no browser clients
+```
+
+### Best for
+
+- Backend-only integrations (you have your own UI)
+- Headless / batch evaluation pipelines
+- CLI-only access for research or internal tooling
+
+## Choosing
+
+Start with **airgapped** for academic deployments — fewer moving parts,
+one DNS record, one cert, no CORS to debug. Switch to **exposed** if
+you need separate domains for SSO or compliance reasons, or if you
+plan to call the api directly from mobile apps or external scripts.
+Use **api_only** for backend-only integrations where you're driving
+Glow programmatically and don't need the bundled web UI at all.
+
+## Traefik notes
+
+> **Warning — do not tear down Traefik.** Traefik lives in `/srv/api`
+> on the deploy host and fronts every Glow stack on the box. The CLI
+> handles its lifecycle for you in normal `deploy` / `redeploy` /
+> `destroy` flows. If you're doing manual recovery and find yourself
+> stopping Traefik, you **must** restart it before any other Glow
+> instance on that host will be reachable again.
+
+Traefik routes hostnames to container backends based on labels emitted
+by each stack's compose file. Airgapped instances register the client
+hostname; exposed instances register both api and client hostnames;
+api_only instances register only the api hostname. A redeploy that
+drops the wrong topology will deregister the wrong labels — see the
+airgapped redeploy warning above.
+
+## Switching modes
+
+Switching airgapped ↔ exposed mid-deployment is **non-trivial** and
+not a supported in-place operation. The cert layout, env wiring,
+Keycloak issuer URLs, and Traefik labels all change. In practice you
+should:
+
+1. Take a backup with `glow backup-create`.
+2. `glow destroy` the existing instance.
+3. Edit `glow-deploy.yaml` with the new topology + origins.
+4. `glow deploy` fresh, then `glow backup-restore` if you need the
+   data back.
+
+Switching to or from `api_only` follows the same rule — adding or
+removing the client stack isn't a flip-a-flag operation.
+
+## Related
+
+- [/cli-reference/init](/cli-reference/init) — interactive yaml setup that asks the topology question
+- [/cli-reference/deploy](/cli-reference/deploy) — first-deploy mechanics per topology
+- [/cli-reference/redeploy](/cli-reference/redeploy) — redeploy semantics, including the airgapped trap
+- [/authentication](/authentication) — per-mode auth flow differs (proxied vs direct Keycloak)
