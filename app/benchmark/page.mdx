@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: benchmark — replace public/demos/benchmark.mp4 */}
+
 # Benchmark
+
+<DemoVideo topic="benchmark" />
 
 The Benchmark resource provides test performance analytics across your Glow instance. Use it to review eval scores, track test history, and export data for reporting. Benchmark is an API-only resource with no CLI commands.
 
@@ -19,7 +23,7 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 **Fetch benchmark data** for the current semester:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/get \
+curl -X POST https://<your-instance>/test/benchmark \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -33,7 +37,7 @@ The response includes `evals` (eval performance cards), `departments`, `history`
 **Filter by department:**
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/get \
+curl -X POST https://<your-instance>/test/benchmark \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -47,10 +51,10 @@ curl -X POST https://<your-instance>/benchmark/get \
 
 ## Searching Test History
 
-Use `/benchmark/search` to paginate and filter test history independently of the full benchmark payload:
+Use `POST /test/search` to paginate and filter test history independently of the full benchmark payload:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/search \
+curl -X POST https://<your-instance>/test/search \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -67,7 +71,7 @@ The response returns `data` (an array of `BenchmarkHistoryItem` objects), `total
 ### Filtering by Eval and Archive Status
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/search \
+curl -X POST https://<your-instance>/test/search \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -83,7 +87,7 @@ curl -X POST https://<your-instance>/benchmark/search \
 **Refresh materialized views** to ensure benchmark data is up to date. This invalidates caches and rebuilds aggregated views:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/refresh \
+curl -X POST https://<your-instance>/test/refresh \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -92,7 +96,7 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export benchmark data** as a denormalized ZIP file for offline analysis or institutional reporting:
 
 ```bash
-curl -X POST https://<your-instance>/benchmark/export \
+curl -X POST https://<your-instance>/test/export \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -102,13 +106,13 @@ The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, 
 
 | Operation | Method | Endpoint |
 |---|---|---|
-| Get benchmark data | `POST` | `/benchmark/get` |
-| Search test history | `POST` | `/benchmark/search` |
-| Refresh views | `POST` | `/benchmark/refresh` |
-| Export data (ZIP) | `POST` | `/benchmark/export` |
+| Get benchmark data | `POST` | `POST /test/benchmark` |
+| Search test history | `POST` | `POST /test/search` |
+| Refresh views | `POST` | `POST /test/refresh` |
+| Export data (ZIP) | `POST` | `POST /test/export` |
 | Get documentation | `POST` | `/benchmark/docs` |
 
 ## Related
 
-- [Benchmark API](/glow/benchmark/api)
-- [Health Guide](/glow/health/guide) -- service-level monitoring
+- [Benchmark API](/api-reference/test)
+- [Health Guide](/health) -- service-level monitoring
