@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: pricing — replace public/demos/pricing.mp4 */}
+
 # Pricing
+
+<DemoVideo topic="pricing" />
 
 Pricing tracks the AI costs associated with running TA training simulations. It aggregates cost data by day and model, and provides a paginated history of generation groups with token counts and dollar amounts.
 
@@ -8,8 +12,8 @@ Pricing tracks the AI costs associated with running TA training simulations. It 
 
 Every time a TA interacts with a student persona during an office-hours simulation, Glow makes AI model calls that consume tokens and incur costs. Pricing gives administrators visibility into this spending with:
 
-1. **Daily cost chart** (`/pricing/get`) -- Daily aggregations showing `total_cost` and `run_count` per model, with filter options for models and agents.
-2. **Group history** (`/pricing/search`) -- Paginated table of AI generation groups showing per-group token counts, costs, and associated models/agents.
+1. **Daily cost chart** (`POST /system/pricing`) -- Daily aggregations showing `total_cost` and `run_count` per model, with filter options for models and agents.
+2. **Group history** (`POST /system/groups`) -- Paginated table of AI generation groups showing per-group token counts, costs, and associated models/agents.
 
 This helps institutions monitor budget consumption, compare model costs, and forecast future spending for their TA training programs.
 
@@ -19,23 +23,23 @@ This helps institutions monitor budget consumption, compare model costs, and for
 
 ```bash
 # Get daily cost chart data
-glow pricing get
+glow system pricing
 
 # Get pricing for a specific date range
-glow pricing get --body '{"start_date": "2025-01-01", "end_date": "2025-01-31"}'
+glow system pricing --body '{"start_date": "2025-01-01", "end_date": "2025-01-31"}'
 
 # Search group history (paginated)
-glow pricing search --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
+glow system groups --body '{"page": 1, "page_size": 25, "sort_order": "desc"}'
 
 # Export pricing data
-glow pricing export
+glow system export
 ```
 
 ### API
 
 ```bash
 # Get daily cost aggregations
-curl -X POST https://<your-instance>/v5/pricing/get \
+curl -X POST https://<your-instance>/system/pricing \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -45,7 +49,7 @@ curl -X POST https://<your-instance>/v5/pricing/get \
   }'
 
 # Search group history
-curl -X POST https://<your-instance>/v5/pricing/search \
+curl -X POST https://<your-instance>/system/groups \
   -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -67,7 +71,7 @@ curl -X POST https://<your-instance>/v5/pricing/search \
 
 ## Understanding the Daily Cost Response
 
-The `/pricing/get` response includes:
+The `POST /system/pricing` response includes:
 
 - **`daily`** -- Array of `PricingDailyItem` buckets:
   - `date_key` -- Date bucket (e.g., `"2025-01-15"`)
@@ -84,7 +88,7 @@ The `/pricing/get` response includes:
 
 ## Understanding Group History
 
-The `/pricing/search` response returns paginated `PricingGroupItem` rows:
+The `POST /system/groups` response returns paginated `PricingGroupItem` rows:
 
 - `group_id` -- UUID of the generation group
 - `session_id` -- Associated session
@@ -102,7 +106,7 @@ The `/pricing/search` response returns paginated `PricingGroupItem` rows:
 
 ```bash
 # Export all pricing data as a denormalized ZIP
-glow pricing export
+glow system export
 ```
 
 The response includes `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
@@ -111,14 +115,14 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| Daily cost chart | `glow pricing get` | `POST /pricing/get` |
-| Group history | `glow pricing search` | `POST /pricing/search` |
-| Export data | `glow pricing export` | `POST /pricing/export` |
-| Refresh caches | -- | `POST /pricing/refresh` |
+| Daily cost chart | `glow system pricing` | `POST /system/pricing` |
+| Group history | `glow system groups` | `POST /system/groups` |
+| Export data | `glow system export` | `POST /system/export` |
+| Refresh caches | -- | `POST /system/refresh` |
 
 ## Related
 
-- [Pricing API Reference](/glow/pricing/api)
-- [Pricing CLI Reference](/glow/pricing/cli)
-- [Invocation Guide](/glow/invocation/guide) -- individual AI model call tracking
-- [Group Guide](/glow/group/guide) -- AI generation group details
+- [Pricing API Reference](/api-reference/system)
+- [Pricing CLI Reference](/cli-reference/systems)
+- [Invocation Guide](/invocation) -- individual AI model call tracking
+- [Group Guide](/group) -- AI generation group details
