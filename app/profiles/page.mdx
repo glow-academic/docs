@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: profiles — replace public/demos/profiles.mp4 */}
+
 # Profiles
+
+<DemoVideo topic="profiles" />
 
 Profiles represent the people who use Glow -- instructors, teaching assistants, and administrators. Every user in your institution gets a profile that determines what they can access and how they interact with simulations through cohorts.
 
@@ -58,7 +62,7 @@ All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer
 
 ```bash
 # Search profiles
-curl -X POST https://<your-instance>/v5/profiles/search \
+curl -X POST https://<your-instance>/profile/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -69,7 +73,7 @@ curl -X POST https://<your-instance>/v5/profiles/search \
   }'
 
 # Create a profile
-curl -X POST https://<your-instance>/v5/profiles/create \
+curl -X POST https://<your-instance>/profile/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -135,25 +139,25 @@ glow profiles draft --body '{
 }'
 ```
 
-Via the API, use `PATCH /profiles/draft` with fields like `input_draft_id`, `expected_version`, `name`, `email`, `flag_id`, `department_ids`, and `role_ids`.
+Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expected_version`, `name`, `email`, `flag_id`, `department_ids`, and `role_ids`.
 
 ## Common Operations
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all profiles | `glow profiles list` | `POST /profiles/search` |
-| Get a profile | `glow profiles get --body '{...}'` | `POST /profiles/get` |
-| Create profiles | `glow profiles create --body '{...}'` | `POST /profiles/create` |
-| Update profiles | `glow profiles update --body '{...}'` | `POST /profiles/update` |
-| Duplicate a profile | -- | `POST /profiles/duplicate` |
-| Delete profiles | `glow profiles delete --body '{...}'` | `POST /profiles/delete` |
-| Export to CSV | `glow profiles export` | `POST /profiles/export` |
-| Save a draft | `glow profiles draft --body '{...}'` | `PATCH /profiles/draft` |
-| List drafts | -- | `POST /profiles/drafts` |
+| List all profiles | `glow profiles list` | `POST /profile/search` |
+| Get a profile | `glow profiles get --body '{...}'` | `POST /profile/get` |
+| Create profiles | `glow profiles create --body '{...}'` | `POST /profile/create` |
+| Update profiles | `glow profiles update --body '{...}'` | `POST /profile/update` |
+| Duplicate a profile | -- | `POST /profile/duplicate` |
+| Delete profiles | `glow profiles delete --body '{...}'` | `POST /profile/delete` |
+| Export to CSV | `glow profiles export` | `POST /profile/export` |
+| Save a draft | `glow profiles draft --body '{...}'` | `PATCH /profile/draft` |
+| List drafts | -- | `POST /profile/drafts` |
 
 ## Related
 
-- [Profiles API](/glow/profiles/api)
-- [Profiles CLI](/glow/profiles/cli)
-- [Cohorts Guide](/glow/cohorts/guide) -- assign profiles to cohorts
-- [Departments Guide](/glow/departments/guide) -- manage department membership
+- [Profiles API](/api-reference/profile)
+- [Profiles CLI](/cli-reference/profile)
+- [Cohorts Guide](/cohort) -- assign profiles to cohorts
+- [Departments Guide](/department) -- manage department membership
