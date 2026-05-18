@@ -1,4 +1,8 @@
+{/* DEMO_VIDEO: evals — replace public/demos/evals.mp4 */}
+
 # Evals
+
+<DemoVideo topic="evals" />
 
 Evals assess how well TAs handled student interactions during office hour simulations. An eval brings together models, rubrics, and configuration flags to run automated scoring across simulation transcripts, producing actionable feedback on TA performance.
 
@@ -56,7 +60,7 @@ All endpoints use `POST` and require `X-Api-Key` and `Authorization: Bearer` hea
 **Search evals:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/evals/search \
+curl -X POST https://<your-instance>/eval/search \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -66,7 +70,7 @@ curl -X POST https://<your-instance>/v5/evals/search \
 **Create an eval:**
 
 ```bash
-curl -X POST https://<your-instance>/v5/evals/create \
+curl -X POST https://<your-instance>/eval/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
@@ -183,22 +187,22 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 | Task | CLI | API Endpoint |
 |---|---|---|
-| List all evals | `glow evals search` | `POST /evals/search` |
-| Get eval details | `glow evals get --body '{"eval_id": "..."}'` | `POST /evals/get` |
-| Create eval | `glow evals create --body '{...}'` | `POST /evals/create` |
-| Update eval | `glow evals update --body '{"eval_id": "...", ...}'` | `POST /evals/update` |
-| Duplicate eval | -- | `POST /evals/duplicate` |
-| Delete eval(s) | `glow evals delete --body '{"eval_id": "..."}'` | `POST /evals/delete` |
-| Export to CSV | `glow evals export` | `POST /evals/export` |
-| Stage a draft | `glow evals draft --body '{...}'` | `PATCH /evals/draft` |
-| List drafts | `glow evals list` | `POST /evals/drafts` |
+| List all evals | `glow evals search` | `POST /eval/search` |
+| Get eval details | `glow evals get --body '{"eval_id": "..."}'` | `POST /eval/get` |
+| Create eval | `glow evals create --body '{...}'` | `POST /eval/create` |
+| Update eval | `glow evals update --body '{"eval_id": "...", ...}'` | `POST /eval/update` |
+| Duplicate eval | -- | `POST /eval/duplicate` |
+| Delete eval(s) | `glow evals delete --body '{"eval_id": "..."}'` | `POST /eval/delete` |
+| Export to CSV | `glow evals export` | `POST /eval/export` |
+| Stage a draft | `glow evals draft --body '{...}'` | `PATCH /eval/draft` |
+| List drafts | `glow evals list` | `POST /eval/drafts` |
 
 ---
 
 ## Related
 
-- [Evals API Reference](/glow/evals/api) -- full endpoint and type documentation
-- [Evals CLI Reference](/glow/evals/cli) -- all CLI commands
-- [Rubrics Guide](/glow/rubrics/guide) -- define scoring criteria used by evals
-- [Models Guide](/glow/models/guide) -- configure the evaluator models that power evals
-- [Providers Guide](/glow/providers/guide) -- set up LLM backends for evaluator models
+- [Evals API Reference](/api-reference/eval) -- full endpoint and type documentation
+- [Evals CLI Reference](/cli-reference/eval) -- all CLI commands
+- [Rubrics Guide](/rubric) -- define scoring criteria used by evals
+- [Models Guide](/model) -- configure the evaluator models that power evals
+- [Providers Guide](/provider) -- set up LLM backends for evaluator models
