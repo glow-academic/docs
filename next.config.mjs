@@ -13,6 +13,14 @@ export default withNextra({
   // Remove both lines if/when we move to a custom domain (CNAME → root).
   basePath: '/docs',
   assetPrefix: '/docs',
+  // Mirror the basePath into the client bundle so components that
+  // emit raw asset URLs (e.g. <video src=...> in DemoVideo) can
+  // prepend it — Next only auto-prefixes for next/image + next/link.
+  // Keep this in sync with basePath above; both go together when we
+  // move to a custom domain (just set to '').
+  env: {
+    NEXT_PUBLIC_BASE_PATH: '/docs',
+  },
   devIndicators: false,
   // Skip typechecking during build — already done in CI test stage.
   typescript: { ignoreBuildErrors: true },

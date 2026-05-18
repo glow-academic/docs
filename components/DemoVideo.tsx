@@ -34,9 +34,14 @@ interface DemoVideoProps {
   poster?: string
 }
 
+// Mirrors next.config.mjs ``basePath`` — must be inlined client-side
+// since Next only auto-prefixes raw asset URLs for next/image / next/link.
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+
 export default function DemoVideo({ topic, caption, poster }: DemoVideoProps) {
   const hasPerTopic = DEMO_TOPICS.has(topic)
-  const src = hasPerTopic ? `/demos/${topic}.mp4` : '/demos/_placeholder.mp4'
+  const path = hasPerTopic ? `/demos/${topic}.mp4` : '/demos/_placeholder.mp4'
+  const src = `${BASE_PATH}${path}`
 
   return (
     <figure
