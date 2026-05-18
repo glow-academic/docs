@@ -1,11 +1,12 @@
 # Practice
 
-{/* DEMO_VIDEO: practice-overview */}
+{/* DEMO_VIDEO: practice-overview | playwright */}
 
 # Practice
 
 <DemoVideo
   topic="practice-overview"
+  kind="playwright"
   caption="The practice landing — self-directed simulation cards with persona colors, best score, and a Start button that never counts against assigned-training metrics."
 />
 
@@ -82,12 +83,13 @@ The `POST /attempt/practice` response mirrors the Home response structure:
 - **`standard_groups`** -- Groups like "Communication Skills", "Policy Knowledge", "De-escalation" with `points` and `pass_points`.
 - **`standards`** -- Individual assessment standards within each group.
 
-{/* DEMO_VIDEO: practice-retry */}
+{/* DEMO_VIDEO: practice-retry | playwright */}
 
 ## Retrying a practice session
 
 <DemoVideo
   topic="practice-retry"
+  kind="playwright"
   caption="Re-running a finished practice attempt — same persona + scenario, fresh chat thread, num_sessions ticks up but the highest_score badge stays."
 />
 
@@ -95,10 +97,11 @@ The `POST /attempt/practice` response mirrors the Home response structure:
 
 ## Searching Practice History
 
-{/* DEMO_VIDEO: practice-scores */}
+{/* DEMO_VIDEO: practice-scores | playwright */}
 
 <DemoVideo
   topic="practice-scores"
+  kind="playwright"
   caption="A practice attempt result page — rubric standard breakdown, per-criterion feedback and the suggested-improvement panel side by side."
 />
 
@@ -130,12 +133,13 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 | Certificate | Export includes certificate | Standard export |
 | `view_mode` | `"member"` or `"instructional"` | `"practice"` |
 
-{/* DEMO_VIDEO: practice-export */}
+{/* DEMO_VIDEO: practice-export | vhs */}
 
 ## Exporting practice data
 
 <DemoVideo
   topic="practice-export"
+  kind="vhs"
   caption="glow attempts export from a practice context — same denormalized ZIP shape as Home, minus the official-training certificate gating."
 />
 

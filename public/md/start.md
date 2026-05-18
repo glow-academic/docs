@@ -1,6 +1,6 @@
 # Start
 
-{/* DEMO_VIDEO: start-overview — replace public/demos/start-overview.mp4 */}
+{/* DEMO_VIDEO: start-overview | vhs */}
 
 # Start
 
@@ -8,14 +8,15 @@ Spin up a Glow instance from zero and make your first authenticated
 request. Pinned **Glow API v2.15.38** · **CLI v1.0.0** (see
 [api-versions.json](https://github.com/learnloopllc/glow-academic-docs/blob/main/api-versions.json) for the live pin).
 
-<DemoVideo topic="start-overview" caption="Zero-to-running tour: brew install, glow init, glow deploy, glow status all green." />
+<DemoVideo topic="start-overview" kind="vhs" caption="Zero-to-running tour: brew install, glow init, glow deploy, glow status all green." />
 
-{/* DEMO_VIDEO: start-init — replace public/demos/start-init.mp4 */}
+{/* DEMO_VIDEO: start-init | vhs */}
 
 ## 1 — Install the CLI
 
 <DemoVideo
   topic="start-init"
+  kind="vhs"
   caption="Brew-installing the CLI and running `glow init my-school` — the interactive wizard collecting origin URL, AI provider key, and seed template."
 />
 
@@ -30,12 +31,13 @@ glow --version  # → glow 1.0.0
 Build-from-source instructions live in the
 [`glow-academic-cli` README](https://github.com/learnloopllc/glow-academic-cli).
 
-{/* DEMO_VIDEO: start-deploy — replace public/demos/start-deploy.mp4 */}
+{/* DEMO_VIDEO: start-deploy | vhs */}
 
 ## 2 — Scaffold + deploy an instance
 
 <DemoVideo
   topic="start-deploy"
+  kind="vhs"
   caption="`glow deploy my-school` pulling images and bringing up postgres / api / client / keycloak, then `glow status` showing every container healthy."
 />
 
@@ -66,12 +68,13 @@ Lifecycle commands you'll use most:
 | `glow logs <name> [-f]` | tail `docker compose logs` |
 | `glow backup <name>` | manage local `pg_dump` snapshots |
 
-{/* DEMO_VIDEO: start-login — replace public/demos/start-login.mp4 */}
+{/* DEMO_VIDEO: start-login | vhs */}
 
 ## 3 — Authenticate
 
 <DemoVideo
   topic="start-login"
+  kind="vhs"
   caption="`glow login` opening the browser, the Keycloak round-trip, and the token landing in `~/.config/glow/tokens.json`."
 />
 

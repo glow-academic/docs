@@ -1,6 +1,6 @@
 # Fields
 
-{/* DEMO_VIDEO: fields-overview — replace public/demos/fields-overview.mp4 */}
+{/* DEMO_VIDEO: fields-overview | playwright */}
 
 # Fields
 
@@ -8,6 +8,7 @@ Fields are the specific values within a parameter. While parameters define categ
 
 <DemoVideo
   topic="fields-overview"
+  kind="playwright"
   caption="The fields list grouped by parent parameter, showing each value and which personas / documents reference it."
 />
 
@@ -42,12 +43,13 @@ Fields connect to **parameters** (each field belongs to a parameter) and to **do
 
 ---
 
-{/* DEMO_VIDEO: fields-create — replace public/demos/fields-create.mp4 */}
+{/* DEMO_VIDEO: fields-create | playwright */}
 
 ## Create a field
 
 <DemoVideo
   topic="fields-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, picking the parent parameter so the value shows up wherever that parameter is referenced."
 />
 
@@ -87,12 +89,13 @@ curl -X POST https://<your-instance>/field/create \
 
 ---
 
-{/* DEMO_VIDEO: fields-edit — replace public/demos/fields-edit.mp4 */}
+{/* DEMO_VIDEO: fields-edit | playwright */}
 
 ## Conditional parameters and multiple descriptions
 
 <DemoVideo
   topic="fields-edit"
+  kind="playwright"
   caption="Wiring CS-180 to conditionally surface the Location parameter, and adding a long-form description that the AI uses at runtime alongside the short label."
 />
 
@@ -114,7 +117,7 @@ The get endpoint accepts a `descriptions_search` parameter, letting you search t
 
 ---
 
-{/* DEMO_VIDEO: fields-draft — replace public/demos/fields-draft.mp4 */}
+{/* DEMO_VIDEO: fields-draft | playwright */}
 
 ## Drafts
 
@@ -122,6 +125,7 @@ Fields support the draft workflow. Changes are saved as a draft before being pub
 
 <DemoVideo
   topic="fields-draft"
+  kind="playwright"
   caption="Editing the same field in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -137,7 +141,7 @@ Via the API, use `PATCH /field/draft` with fields like `input_draft_id`, `expect
 
 ---
 
-{/* DEMO_VIDEO: fields-search — replace public/demos/fields-search.mp4 */}
+{/* DEMO_VIDEO: fields-search | playwright */}
 
 ## Filtering and search
 
@@ -145,6 +149,7 @@ Fields support rich search and filtering:
 
 <DemoVideo
   topic="fields-search"
+  kind="playwright"
   caption="Filtering fields by parent parameter (Temperament) and by the personas that reference them."
 />
 
@@ -166,7 +171,7 @@ curl -X POST https://<your-instance>/field/search \
 
 ---
 
-{/* DEMO_VIDEO: fields-bulk — replace public/demos/fields-bulk.mp4 */}
+{/* DEMO_VIDEO: fields-bulk | playwright */}
 
 ## Bulk operations
 
@@ -174,6 +179,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="fields-bulk"
+  kind="playwright"
   caption="Bulk-deleting every field under a retired parameter in one round-trip, keeping a couple of canonical values via excluded_ids."
 />
 

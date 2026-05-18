@@ -1,11 +1,12 @@
 # Group
 
-{/* DEMO_VIDEO: group-overview — replace public/demos/group-overview.mp4 */}
+{/* DEMO_VIDEO: group-overview | playwright */}
 
 # Group
 
 <DemoVideo
   topic="group-overview"
+  kind="playwright"
   caption="Opening a Group: header with group_name + actor_name, runs list expanding to show messages, media thumbnails inline with their upload_ids."
 />
 
@@ -78,12 +79,13 @@ curl -X POST https://<your-instance>/system/groups \
   -d '{"page_size": 20}'
 ```
 
-{/* DEMO_VIDEO: group-lean-vs-detail — replace public/demos/group-lean-vs-detail.mp4 */}
+{/* DEMO_VIDEO: group-lean-vs-detail | vhs */}
 
 ## Lean vs. detail
 
 <DemoVideo
   topic="group-lean-vs-detail"
+  kind="vhs"
   caption="Side-by-side: lean resolve returns just identity (cheap path for audit linking), then flipping `include_detail: true` to pull the full runs + messages tree."
 />
 
@@ -105,12 +107,13 @@ The full-detail response (`include_detail=true`) includes:
 - **`group_name`** -- Display name of the group.
 - **`total_message_count`** -- Total messages in the group (for pagination).
 
-{/* DEMO_VIDEO: group-runs-and-messages — replace public/demos/group-runs-and-messages.mp4 */}
+{/* DEMO_VIDEO: group-runs-and-messages | playwright */}
 
 ### Runs
 
 <DemoVideo
   topic="group-runs-and-messages"
+  kind="playwright"
   caption="Expanding a single run: token counts and cost per call, then messages stepping through system → user → assistant with tool-call rows interleaved."
 />
 
@@ -140,12 +143,13 @@ Each run has:
 - **`agents`** -- Agents used, each with `agent_id` and `name`.
 - **`profiles`** -- Profiles involved, each with `profile_id` and `name`.
 
-{/* DEMO_VIDEO: group-media-downloads — replace public/demos/group-media-downloads.mp4 */}
+{/* DEMO_VIDEO: group-media-downloads | vhs */}
 
 ## Downloading media
 
 <DemoVideo
   topic="group-media-downloads"
+  kind="vhs"
   caption="Pulling an audio_upload_id through `POST /system/audio_download` with a range request, then opening the resulting clip in the inline media viewer."
 />
 
@@ -164,12 +168,13 @@ canonical download path is the system artifact's media endpoints:
 Each takes the relevant `<kind>_upload_id` in the body and supports
 range requests for large files.
 
-{/* DEMO_VIDEO: group-listing — replace public/demos/group-listing.mp4 */}
+{/* DEMO_VIDEO: group-listing | playwright */}
 
 ## Listing groups
 
 <DemoVideo
   topic="group-listing"
+  kind="playwright"
   caption="Paginating `POST /system/groups` — the same row collection that powers the Pricing group-history table, sortable by cost or recency."
 />
 

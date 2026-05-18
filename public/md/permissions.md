@@ -1,6 +1,6 @@
 # Permissions & Roles
 
-{/* DEMO_VIDEO: permissions-overview — replace public/demos/permissions-overview.mp4 */}
+{/* DEMO_VIDEO: permissions-overview | manual */}
 
 # Permissions & Roles
 
@@ -14,6 +14,7 @@ making a round-trip just to discover a 403.
 
 <DemoVideo
   topic="permissions-overview"
+  kind="manual"
   caption="A learner-role profile sees the Home / Practice / Leaderboard rail; an admin-role profile sees the same rail plus Training, Management, Intelligence, and Platform. Same client build, different role_permissions payload."
 />
 
@@ -45,12 +46,13 @@ uses `role_artifacts` for the top-level sidebar gate and
 
 ---
 
-{/* DEMO_VIDEO: permissions-resolve — replace public/demos/permissions-resolve.mp4 */}
+{/* DEMO_VIDEO: permissions-resolve | manual */}
 
 ## How a request gets authorized
 
 <DemoVideo
   topic="permissions-resolve"
+  kind="manual"
   caption="A request to POST /persona/create with a viewer-role token: middleware resolves the identity, the route's has_permission check rejects (persona, create), and the response is a 403 before any work runs."
 />
 
@@ -102,12 +104,13 @@ their `permission_ids`.
 
 ---
 
-{/* DEMO_VIDEO: permissions-context — replace public/demos/permissions-context.mp4 */}
+{/* DEMO_VIDEO: permissions-context | vhs */}
 
 ## `role_artifacts` in responses
 
 <DemoVideo
   topic="permissions-context"
+  kind="vhs"
   caption="DevTools network panel showing a /profile/context response — the role_artifacts list is the same data the sidebar filter reads from."
 />
 
@@ -154,12 +157,13 @@ The full schema is generated under
 
 ---
 
-{/* DEMO_VIDEO: permissions-client-mirror — replace public/demos/permissions-client-mirror.mp4 */}
+{/* DEMO_VIDEO: permissions-client-mirror | manual */}
 
 ## Mirroring on the client
 
 <DemoVideo
   topic="permissions-client-mirror"
+  kind="manual"
   caption="The same SIDEBAR_SECTIONS array rendered for two different roles — entries the role lacks are dropped from the rail at render time, no flash."
 />
 

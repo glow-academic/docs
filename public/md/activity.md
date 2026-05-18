@@ -1,11 +1,12 @@
 # Activity
 
-{/* DEMO_VIDEO: activity-overview — replace public/demos/activity-overview.mp4 */}
+{/* DEMO_VIDEO: activity-overview | playwright */}
 
 # Activity
 
 <DemoVideo
   topic="activity-overview"
+  kind="playwright"
   caption="Landing on the Activity page — engagement counts up top, per-profile breakdown below, session history one click away."
 />
 
@@ -82,12 +83,13 @@ curl -X POST https://<your-instance>/system/sessions \
 | Active sessions | `active` (search only) | Show only active or inactive sessions |
 | Pagination | `page`, `page_size` (search only) | Control page size and offset |
 
-{/* DEMO_VIDEO: activity-summary — replace public/demos/activity-summary.mp4 */}
+{/* DEMO_VIDEO: activity-summary | playwright */}
 
 ## Understanding the Summary Response
 
 <DemoVideo
   topic="activity-summary"
+  kind="playwright"
   caption="Walking through sessions_count, active_profiles_count, logins_count, and emulations_count cards, then expanding the per-profile breakdown table."
 />
 
@@ -104,12 +106,13 @@ The `ActivityResponse` from `POST /system/activity` includes:
 - **`resources`** -- Profile metadata keyed by ID for hydration.
 - **`analytics`** -- Filter facets for rendering dropdowns (departments, roles, date range boundaries).
 
-{/* DEMO_VIDEO: activity-session-history — replace public/demos/activity-session-history.mp4 */}
+{/* DEMO_VIDEO: activity-session-history | playwright */}
 
 ## Understanding the Session History Response
 
 <DemoVideo
   topic="activity-session-history"
+  kind="playwright"
   caption="Paginating the session-history table — sort by recent, filter to active-only, drill into a row to land on the Session detail page."
 />
 
@@ -142,12 +145,13 @@ curl -X POST https://<your-instance>/activity/resolve \
 
 The response confirms `problem_id`, `resolved` status, and `updated_at` timestamp.
 
-{/* DEMO_VIDEO: activity-export — replace public/demos/activity-export.mp4 */}
+{/* DEMO_VIDEO: activity-export | vhs */}
 
 ## Refreshing and Exporting
 
 <DemoVideo
   topic="activity-export"
+  kind="vhs"
   caption="Kicking off `glow system export` to pull a denormalized ZIP for archival, then refreshing the materialized views so the next page-load picks up new sessions."
 />
 

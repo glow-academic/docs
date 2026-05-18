@@ -1,6 +1,6 @@
 # Attempts
 
-{/* DEMO_VIDEO: attempts-overview — replace public/demos/attempts-overview.mp4 */}
+{/* DEMO_VIDEO: attempts-overview | playwright */}
 
 # Attempts
 
@@ -11,6 +11,7 @@ they're inside an attempt.
 
 <DemoVideo
   topic="attempts-overview"
+  kind="playwright"
   caption="The attempts list — filter by cohort or simulation, drill in to see chats, grading, and export."
 />
 
@@ -35,12 +36,13 @@ on an attempt as a whole.
 
 ---
 
-{/* DEMO_VIDEO: attempts-lifecycle — replace public/demos/attempts-lifecycle.mp4 */}
+{/* DEMO_VIDEO: attempts-lifecycle | manual */}
 
 ## The lifecycle
 
 <DemoVideo
   topic="attempts-lifecycle"
+  kind="manual"
   caption="An attempt from start to complete: scenarios spawn chats, the learner runs each one, then complete rolls up grading."
 />
 
@@ -59,12 +61,13 @@ chat surface — covered in full on [/chat](/chat).
 
 ---
 
-{/* DEMO_VIDEO: attempts-start — replace public/demos/attempts-start.mp4 */}
+{/* DEMO_VIDEO: attempts-start | vhs */}
 
 ## Starting an attempt
 
 <DemoVideo
   topic="attempts-start"
+  kind="vhs"
   caption="Clicking Start on a home-page entry: the attempt is minted, one chat per scenario opens, and the learner lands in the first conversation."
 />
 
@@ -89,12 +92,13 @@ conversation.
 
 ---
 
-{/* DEMO_VIDEO: attempts-stop — replace public/demos/attempts-stop.mp4 */}
+{/* DEMO_VIDEO: attempts-stop | vhs */}
 
 ## Stopping in-flight generation
 
 <DemoVideo
   topic="attempts-stop"
+  kind="vhs"
   caption="Hitting Stop mid-response: the streaming AI reply truncates cleanly and control returns to the learner."
 />
 
@@ -114,12 +118,13 @@ cancelled.
 
 ---
 
-{/* DEMO_VIDEO: attempts-complete — replace public/demos/attempts-complete.mp4 */}
+{/* DEMO_VIDEO: attempts-complete | vhs */}
 
 ## Completing and archiving
 
 <DemoVideo
   topic="attempts-complete"
+  kind="vhs"
   caption="Completing an attempt: the rubric grader runs across every chat and the attempt lands on the dashboard with a final score."
 />
 

@@ -1,6 +1,6 @@
 # Topology
 
-{/* DEMO_VIDEO: topology-overview — replace public/demos/topology-overview.mp4 */}
+{/* DEMO_VIDEO: topology-overview | manual */}
 
 # Topology
 
@@ -11,6 +11,7 @@ public domains you need TLS certs for, and how the api's `ORIGIN` /
 
 <DemoVideo
   topic="topology-overview"
+  kind="manual"
   caption="A glow-deploy.yaml side-by-side for all three modes — only the topology + origin fields change; everything downstream is derived."
 />
 
@@ -55,7 +56,7 @@ The airgapped row is the unintuitive one — see the next section.
 
 ---
 
-{/* DEMO_VIDEO: topology-airgapped — replace public/demos/topology-airgapped.mp4 */}
+{/* DEMO_VIDEO: topology-airgapped | vhs */}
 
 ## Airgapped
 
@@ -67,6 +68,7 @@ cert because it never gets its own hostname.
 
 <DemoVideo
   topic="topology-airgapped"
+  kind="vhs"
   caption="Browser → Traefik → client nginx → (proxied) api nginx. Single TLS cert, single DNS record, api never exposed."
 />
 
@@ -110,7 +112,7 @@ client .env:
 
 ---
 
-{/* DEMO_VIDEO: topology-exposed — replace public/demos/topology-exposed.mp4 */}
+{/* DEMO_VIDEO: topology-exposed | vhs */}
 
 ## Exposed
 
@@ -120,6 +122,7 @@ browser talks to the api directly — no nginx proxy hop on the way.
 
 <DemoVideo
   topic="topology-exposed"
+  kind="vhs"
   caption="Two domains, two certs — api.example.edu and glow.example.edu. CORS is what keeps the cross-origin handshake honest."
 />
 
@@ -154,7 +157,7 @@ listing them.
 
 ---
 
-{/* DEMO_VIDEO: topology-api-only — replace public/demos/topology-api-only.mp4 */}
+{/* DEMO_VIDEO: topology-api-only | vhs */}
 
 ## API-only
 
@@ -164,6 +167,7 @@ no web UI, no NextAuth, no `KEYCLOAK_PUBLIC_URL`.
 
 <DemoVideo
   topic="topology-api-only"
+  kind="vhs"
   caption="One container stack, one domain, no UI. Use the CLI or call /persona/search and friends from your own backend."
 />
 

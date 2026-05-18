@@ -1,6 +1,6 @@
 # Voice pipeline
 
-{/* DEMO_VIDEO: voice-overview — replace public/demos/voice-overview.mp4 */}
+{/* DEMO_VIDEO: voice-overview | manual */}
 
 # Voice pipeline
 
@@ -13,6 +13,7 @@ reused, with audio modalities tacked on either end.
 
 <DemoVideo
   topic="voice-overview"
+  kind="manual"
   caption="End-to-end voice loop — mic frames are buffered into a conversation, transcribed, run through the LLM, and the response is synthesized back into a downloadable audio asset on the message."
 />
 
@@ -61,12 +62,13 @@ attachments) does not need to know "voice" is in play.
 
 ---
 
-{/* DEMO_VIDEO: voice-upload — replace public/demos/voice-upload.mp4 */}
+{/* DEMO_VIDEO: voice-upload | vhs */}
 
 ## Audio upload
 
 <DemoVideo
   topic="voice-upload"
+  kind="vhs"
   caption="The three upload shapes — multipart file, pre-reserved upload_id, and the promote variant — landing as the same audios_id on the message."
 />
 
@@ -125,12 +127,13 @@ consumers do not branch on "was this typed or spoken?".
 
 ---
 
-{/* DEMO_VIDEO: voice-session — replace public/demos/voice-session.mp4 */}
+{/* DEMO_VIDEO: voice-session | manual */}
 
 ## Voice session control
 
 <DemoVideo
   topic="voice-session"
+  kind="manual"
   caption="The chat_voice → chat_speak (frames) → chat_silence triad — opening a conversation, streaming PCM, then closing the loop."
 />
 

@@ -1,6 +1,6 @@
 # Tools
 
-{/* DEMO_VIDEO: tools-overview — replace public/demos/tools-overview.mp4 */}
+{/* DEMO_VIDEO: tools-overview | playwright */}
 
 # Tools
 
@@ -8,6 +8,7 @@ Tools give agents the ability to take actions and look up information during off
 
 <DemoVideo
   topic="tools-overview"
+  kind="playwright"
   caption="The tools list -- rows by name with arg count and agent usage, plus a filter to find every tool wired into a specific agent."
 />
 
@@ -43,12 +44,13 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ---
 
-{/* DEMO_VIDEO: tools-create — replace public/demos/tools-create.mp4 */}
+{/* DEMO_VIDEO: tools-create | playwright */}
 
 ## Create a tool
 
 <DemoVideo
   topic="tools-create"
+  kind="playwright"
   caption="Defining a check_enrollment tool: name, description, and the initial arg shape -- the new tool_id is immediately available to wire into agents."
 />
 
@@ -84,12 +86,13 @@ Each entry returns the new `tool_id`, a generated `draft_id`, and the initial `v
 
 ---
 
-{/* DEMO_VIDEO: tools-args — replace public/demos/tools-args.mp4 */}
+{/* DEMO_VIDEO: tools-args | playwright */}
 
 ## Defining arguments and outputs
 
 <DemoVideo
   topic="tools-args"
+  kind="playwright"
   caption="Adding two arguments to lookup_course_policy with arg_positions to lock ordering, then defining the args_outputs shape the LLM will receive."
 />
 
@@ -114,7 +117,7 @@ The tool would return the matching policy text, which the agent uses to answer t
 
 ---
 
-{/* DEMO_VIDEO: tools-invocation — replace public/demos/tools-invocation.mp4 */}
+{/* DEMO_VIDEO: tools-invocation | vhs */}
 
 ## Invocation surface
 
@@ -122,6 +125,7 @@ The tool's `operations` and `artifacts` describe what actually runs when an agen
 
 <DemoVideo
   topic="tools-invocation"
+  kind="vhs"
   caption="Watching the tool fire during a live attempt -- the agent picks check_deadline, args render in the trace, and the structured response feeds back into the next turn."
 />
 
@@ -135,7 +139,7 @@ The search endpoint includes a `creatable_filter` section for filtering tools by
 
 ---
 
-{/* DEMO_VIDEO: tools-draft — replace public/demos/tools-draft.mp4 */}
+{/* DEMO_VIDEO: tools-draft | playwright */}
 
 ## The draft cycle
 
@@ -143,6 +147,7 @@ Tools support a draft workflow for staging changes before they affect running si
 
 <DemoVideo
   topic="tools-draft"
+  kind="playwright"
   caption="Editing a tool in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -163,12 +168,13 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 ---
 
-{/* DEMO_VIDEO: tools-search — replace public/demos/tools-search.mp4 */}
+{/* DEMO_VIDEO: tools-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="tools-search"
+  kind="playwright"
   caption="Filtering tools by agent (which tools does this agent see?) and creatability flag, then drilling in."
 />
 
@@ -184,7 +190,7 @@ glow tools search --body '{
 
 ---
 
-{/* DEMO_VIDEO: tools-bulk — replace public/demos/tools-bulk.mp4 */}
+{/* DEMO_VIDEO: tools-bulk | playwright */}
 
 ## Bulk operations
 
@@ -192,6 +198,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="tools-bulk"
+  kind="playwright"
   caption="Bulk-disabling every legacy lookup tool in one round-trip; excluded_ids keeps a tool that an active agent still depends on."
 />
 

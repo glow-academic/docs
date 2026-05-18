@@ -1,11 +1,12 @@
 # Pricing
 
-{/* DEMO_VIDEO: pricing-overview — replace public/demos/pricing-overview.mp4 */}
+{/* DEMO_VIDEO: pricing-overview | playwright */}
 
 # Pricing
 
 <DemoVideo
   topic="pricing-overview"
+  kind="playwright"
   caption="The Pricing page at a glance — daily-cost chart up top, model + agent filter chips, paginated group-history table below."
 />
 
@@ -76,12 +77,13 @@ curl -X POST https://<your-instance>/system/groups \
 | Pagination | `page`, `page_size` (search only) | Control page size |
 | Sort direction | `sort_order` (search only) | `"asc"` or `"desc"` |
 
-{/* DEMO_VIDEO: pricing-daily-cost — replace public/demos/pricing-daily-cost.mp4 */}
+{/* DEMO_VIDEO: pricing-daily-cost | playwright */}
 
 ## Understanding the Daily Cost Response
 
 <DemoVideo
   topic="pricing-daily-cost"
+  kind="playwright"
   caption="Scoping the daily-cost chart to a single semester and watching the stacked bars redraw per model — easy to spot the day the new model rolled out."
 />
 
@@ -101,12 +103,13 @@ The `POST /system/pricing` response includes:
 - **`total_count`** -- Total number of matching records.
 - **`analytics`** -- Filter facets for the page.
 
-{/* DEMO_VIDEO: pricing-group-history — replace public/demos/pricing-group-history.mp4 */}
+{/* DEMO_VIDEO: pricing-group-history | playwright */}
 
 ## Understanding Group History
 
 <DemoVideo
   topic="pricing-group-history"
+  kind="playwright"
   caption="Sorting the group-history table by total_cost descending, then clicking a row to jump to its Group detail page."
 />
 
@@ -125,12 +128,13 @@ The `POST /system/groups` response returns paginated `PricingGroupItem` rows:
 - `agent_ids`, `agent_names` -- Agents used
 - `model_ids`, `model_names` -- Models used
 
-{/* DEMO_VIDEO: pricing-model-breakdown — replace public/demos/pricing-model-breakdown.mp4 */}
+{/* DEMO_VIDEO: pricing-model-breakdown | playwright */}
 
 ## Model Breakdown
 
 <DemoVideo
   topic="pricing-model-breakdown"
+  kind="playwright"
   caption="Filtering by `model_id` to isolate spend per model — quick way to compare a cheap-and-fast model against a premium one for the same scenarios."
 />
 

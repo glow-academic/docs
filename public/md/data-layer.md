@@ -1,6 +1,6 @@
 # Data layer
 
-{/* DEMO_VIDEO: data-layer-overview — replace public/demos/data-layer-overview.mp4 */}
+{/* DEMO_VIDEO: data-layer-overview | manual */}
 
 # Data layer
 
@@ -14,6 +14,7 @@ mutation paths to read freshness.
 
 <DemoVideo
   topic="data-layer-overview"
+  kind="manual"
   caption="A persona search before/after warmup: first request hits the MV, second hits the route cache; a mutation in another tab fires X-Invalidate-Tags and the third request misses cleanly."
 />
 
@@ -35,12 +36,13 @@ audited — the [Audit](/audit) ledger only captures mutations.
 
 ---
 
-{/* DEMO_VIDEO: data-layer-mvs — replace public/demos/data-layer-mvs.mp4 */}
+{/* DEMO_VIDEO: data-layer-mvs | manual */}
 
 ## Materialized views
 
 <DemoVideo
   topic="data-layer-mvs"
+  kind="manual"
   caption="The personas_mv definition pulled live from pg_matviews — a single SELECT that joins persona, persona_drafts, departments, voices, parameter_fields."
 />
 
@@ -103,12 +105,13 @@ happens in the background worker — `refresh` is **not** a synchronous
 
 ---
 
-{/* DEMO_VIDEO: data-layer-cache — replace public/demos/data-layer-cache.mp4 */}
+{/* DEMO_VIDEO: data-layer-cache | vhs */}
 
 ## Route-level cache
 
 <DemoVideo
   topic="data-layer-cache"
+  kind="vhs"
   caption="Two identical /system/groups requests back-to-back — first emits X-Cache-Hit: 0 and writes Redis, second returns X-Cache-Hit: 1 in single-digit ms."
 />
 
@@ -171,12 +174,13 @@ Every cached response carries two headers so clients can self-report:
 
 ---
 
-{/* DEMO_VIDEO: data-layer-bypass — replace public/demos/data-layer-bypass.mp4 */}
+{/* DEMO_VIDEO: data-layer-bypass | vhs */}
 
 ## `X-Bypass-Cache`
 
 <DemoVideo
   topic="data-layer-bypass"
+  kind="vhs"
   caption="Mutate persona, then immediately re-read with X-Bypass-Cache: 1 — the response shows the new row without waiting for the next refresh cycle."
 />
 

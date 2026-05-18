@@ -1,6 +1,6 @@
 # Cohorts
 
-{/* DEMO_VIDEO: cohorts-overview — replace public/demos/cohorts-overview.mp4 */}
+{/* DEMO_VIDEO: cohorts-overview | playwright */}
 
 # Cohorts
 
@@ -8,6 +8,7 @@ Cohorts bring everything together. A cohort is a group of profiles (learners) as
 
 <DemoVideo
   topic="cohorts-overview"
+  kind="playwright"
   caption="The cohorts list — cards show name, member count, and simulation count; drill in to see profile assignments and simulation availability."
 />
 
@@ -33,12 +34,13 @@ A cohort requires at least one profile and one simulation. Once both are assigne
 
 ---
 
-{/* DEMO_VIDEO: cohorts-create — replace public/demos/cohorts-create.mp4 */}
+{/* DEMO_VIDEO: cohorts-create | playwright */}
 
 ## Create a cohort
 
 <DemoVideo
   topic="cohorts-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then picking the department the cohort lives under."
 />
 
@@ -78,7 +80,7 @@ curl -X POST https://<your-instance>/cohort/create \
 
 ---
 
-{/* DEMO_VIDEO: cohorts-edit — replace public/demos/cohorts-edit.mp4 */}
+{/* DEMO_VIDEO: cohorts-edit | playwright */}
 
 ## Cohort composition
 
@@ -86,6 +88,7 @@ A cohort contains several key sections that you configure together on the detail
 
 <DemoVideo
   topic="cohorts-edit"
+  kind="playwright"
   caption="Editing a cohort: adding profiles, attaching simulations, and reordering with simulation positions."
 />
 
@@ -123,7 +126,7 @@ Profile personas are managed through `profile_persona_ids` (existing personas) a
 
 ---
 
-{/* DEMO_VIDEO: cohorts-draft — replace public/demos/cohorts-draft.mp4 */}
+{/* DEMO_VIDEO: cohorts-draft | playwright */}
 
 ## Drafts
 
@@ -131,6 +134,7 @@ Cohorts support the draft workflow. Changes are saved as a draft before being pu
 
 <DemoVideo
   topic="cohorts-draft"
+  kind="playwright"
   caption="Editing the same cohort in two tabs — the second save sees an expected_version mismatch and surfaces the conflict."
 />
 
@@ -146,7 +150,7 @@ Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expec
 
 ---
 
-{/* DEMO_VIDEO: cohorts-search — replace public/demos/cohorts-search.mp4 */}
+{/* DEMO_VIDEO: cohorts-search | playwright */}
 
 ## Filtering and search
 
@@ -154,6 +158,7 @@ Cohorts support rich search and filtering.
 
 <DemoVideo
   topic="cohorts-search"
+  kind="playwright"
   caption="Filtering cohorts by profile and simulation, then drilling into a single cohort to see its membership."
 />
 
@@ -176,7 +181,7 @@ curl -X POST https://<your-instance>/cohort/search \
 
 ---
 
-{/* DEMO_VIDEO: cohorts-bulk — replace public/demos/cohorts-bulk.mp4 */}
+{/* DEMO_VIDEO: cohorts-bulk | playwright */}
 
 ## Bulk operations
 
@@ -184,6 +189,7 @@ Bulk delete and update follow the canonical *all-matching* shape: pass either ex
 
 <DemoVideo
   topic="cohorts-bulk"
+  kind="playwright"
   caption="Bulk-archiving every cohort in a sunset department in one round-trip, with a manual exclusion list for the cohorts to keep."
 />
 

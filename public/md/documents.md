@@ -1,6 +1,6 @@
 # Documents
 
-{/* DEMO_VIDEO: documents-overview — replace public/demos/documents-overview.mp4 */}
+{/* DEMO_VIDEO: documents-overview | playwright */}
 
 # Documents
 
@@ -8,6 +8,7 @@ Documents provide reference material that grounds AI-driven simulations in real 
 
 <DemoVideo
   topic="documents-overview"
+  kind="playwright"
   caption="The documents list — cards show name, type, and how many scenarios link to each document; drill in to preview the content."
 />
 
@@ -33,12 +34,13 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 
 ---
 
-{/* DEMO_VIDEO: documents-create — replace public/demos/documents-create.mp4 */}
+{/* DEMO_VIDEO: documents-create | playwright */}
 
 ## Create a document
 
 <DemoVideo
   topic="documents-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, picking the template (Policy, Syllabus, Homework, Lab), and assigning to a department."
 />
 
@@ -106,7 +108,7 @@ A document in Glow can include several types of content:
 
 ---
 
-{/* DEMO_VIDEO: documents-upload — replace public/demos/documents-upload.mp4 */}
+{/* DEMO_VIDEO: documents-upload | vhs */}
 
 ## Uploading files
 
@@ -114,6 +116,7 @@ Documents support file uploads for rich content. The upload endpoint is binary-b
 
 <DemoVideo
   topic="documents-upload"
+  kind="vhs"
   caption="Dragging a PDF onto the document draft form — upload progress, returned upload_id, and the file appearing as an attachment ready to publish."
 />
 
@@ -140,7 +143,7 @@ glow documents draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: documents-draft — replace public/demos/documents-draft.mp4 */}
+{/* DEMO_VIDEO: documents-draft | playwright */}
 
 ## Drafts
 
@@ -148,6 +151,7 @@ Documents support the draft workflow. Changes are saved as a draft before being 
 
 <DemoVideo
   topic="documents-draft"
+  kind="playwright"
   caption="Editing the same document in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -163,7 +167,7 @@ Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `exp
 
 ---
 
-{/* DEMO_VIDEO: documents-search — replace public/demos/documents-search.mp4 */}
+{/* DEMO_VIDEO: documents-search | playwright */}
 
 ## Search and filter
 
@@ -171,6 +175,7 @@ Document search supports full-text plus facet filters across department, paramet
 
 <DemoVideo
   topic="documents-search"
+  kind="playwright"
   caption="Searching for 'FERPA' then filtering by Policy template and the CS department, drilling in on a match."
 />
 
@@ -187,7 +192,7 @@ curl -X POST https://<your-instance>/document/search \
 
 ---
 
-{/* DEMO_VIDEO: documents-bulk — replace public/demos/documents-bulk.mp4 */}
+{/* DEMO_VIDEO: documents-bulk | playwright */}
 
 ## Bulk operations
 
@@ -195,6 +200,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="documents-bulk"
+  kind="playwright"
   caption="Bulk-archiving every document in a deprecated department in one round-trip, keeping a manual exception list."
 />
 

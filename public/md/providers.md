@@ -1,6 +1,6 @@
 # Providers
 
-{/* DEMO_VIDEO: providers-overview — replace public/demos/providers-overview.mp4 */}
+{/* DEMO_VIDEO: providers-overview | playwright */}
 
 # Providers
 
@@ -8,6 +8,7 @@ Providers represent the LLM backends that power Glow. Each provider encapsulates
 
 <DemoVideo
   topic="providers-overview"
+  kind="playwright"
   caption="The providers list -- rows by service name with endpoint count, model usage count, and the encrypted key inventory hidden behind a decrypt action."
 />
 
@@ -42,12 +43,13 @@ Provider  -->  Model (model has provider_id)
 
 ---
 
-{/* DEMO_VIDEO: providers-create — replace public/demos/providers-create.mp4 */}
+{/* DEMO_VIDEO: providers-create | playwright */}
 
 ## Create a provider
 
 <DemoVideo
   topic="providers-create"
+  kind="playwright"
   caption="Creating an Anthropic Production provider, then attaching an initial endpoint -- model wiring comes after."
 />
 
@@ -83,7 +85,7 @@ Each entry returns the new `provider_id`, a generated `draft_id`, and the initia
 
 ---
 
-{/* DEMO_VIDEO: providers-endpoints — replace public/demos/providers-endpoints.mp4 */}
+{/* DEMO_VIDEO: providers-endpoints | playwright */}
 
 ## Endpoints
 
@@ -91,6 +93,7 @@ Provider endpoints define where API calls are routed. Each provider can have mul
 
 <DemoVideo
   topic="providers-endpoints"
+  kind="playwright"
   caption="Adding a second endpoint to point at a regional API gateway, then flipping the active endpoint -- linked models pick up the change on next request."
 />
 
@@ -98,7 +101,7 @@ When you retrieve a provider with `GET`, the response includes an `endpoints` se
 
 ---
 
-{/* DEMO_VIDEO: providers-keys — replace public/demos/providers-keys.mp4 */}
+{/* DEMO_VIDEO: providers-keys | playwright */}
 
 ## API key management
 
@@ -106,6 +109,7 @@ Provider keys hold encrypted credentials. Keys are never returned in plaintext f
 
 <DemoVideo
   topic="providers-keys"
+  kind="playwright"
   caption="Rotating a key: adding a new encrypted key, decrypting once to copy into a deploy step, then deleting the old key -- all without exposing plaintext in list views."
 />
 
@@ -124,7 +128,7 @@ The response returns the decrypted `key` value, the key `name`, and the `actor_n
 
 ---
 
-{/* DEMO_VIDEO: providers-draft — replace public/demos/providers-draft.mp4 */}
+{/* DEMO_VIDEO: providers-draft | playwright */}
 
 ## The draft cycle
 
@@ -132,6 +136,7 @@ Providers support a draft workflow for staging configuration changes. This is us
 
 <DemoVideo
   topic="providers-draft"
+  kind="playwright"
   caption="Staging a key+endpoint swap as a draft, reviewing the form_state, then publishing -- linked models cut over atomically."
 />
 
@@ -152,12 +157,13 @@ The draft endpoint uses `PATCH` semantics. Include `input_draft_id` and `expecte
 
 ---
 
-{/* DEMO_VIDEO: providers-search — replace public/demos/providers-search.mp4 */}
+{/* DEMO_VIDEO: providers-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="providers-search"
+  kind="playwright"
   caption="Filtering providers by department and free-text search, then drilling into one to see linked models."
 />
 
@@ -172,7 +178,7 @@ glow providers search --body '{
 
 ---
 
-{/* DEMO_VIDEO: providers-bulk — replace public/demos/providers-bulk.mp4 */}
+{/* DEMO_VIDEO: providers-bulk | playwright */}
 
 ## Bulk operations
 
@@ -180,6 +186,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="providers-bulk"
+  kind="playwright"
   caption="Bulk-deleting providers tagged with a retired department; excluded_ids preserves the one still serving an active eval."
 />
 

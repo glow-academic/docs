@@ -1,6 +1,6 @@
 # Personas
 
-{/* DEMO_VIDEO: personas-overview — replace public/demos/personas-overview.mp4 */}
+{/* DEMO_VIDEO: personas-overview | playwright */}
 
 # Personas
 
@@ -10,6 +10,7 @@ talking to and *how* that character behaves.
 
 <DemoVideo
   topic="personas-overview"
+  kind="playwright"
   caption="The personas list page — cards by color and icon, filter by department or voice, drill in to edit instructions."
 />
 
@@ -45,12 +46,13 @@ Personas are **step 1** in the Glow content pipeline:
 
 ---
 
-{/* DEMO_VIDEO: personas-create — replace public/demos/personas-create.mp4 */}
+{/* DEMO_VIDEO: personas-create | playwright */}
 
 ## Create a persona
 
 <DemoVideo
   topic="personas-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, color, icon, and the instructions textarea."
 />
 
@@ -87,7 +89,7 @@ and the initial `version` for optimistic-concurrency follow-ups.
 
 ---
 
-{/* DEMO_VIDEO: personas-instructions — replace public/demos/personas-instructions.mp4 */}
+{/* DEMO_VIDEO: personas-instructions | playwright */}
 
 ## Writing effective instructions
 
@@ -96,6 +98,7 @@ instructions produce consistent, realistic interactions.
 
 <DemoVideo
   topic="personas-instructions"
+  kind="playwright"
   caption="Editing instructions inline with live preview, swapping {{placeholders}} for sample values to sanity-check the prompt."
 />
 
@@ -138,7 +141,7 @@ Start responses with hedging phrases like "I mean..." or "Look, I just..."
 
 ---
 
-{/* DEMO_VIDEO: personas-parameters — replace public/demos/personas-parameters.mp4 */}
+{/* DEMO_VIDEO: personas-parameters | manual */}
 
 ## Parameter fields
 
@@ -148,6 +151,7 @@ at runtime based on the scenario's parameter configuration.
 
 <DemoVideo
   topic="personas-parameters"
+  kind="manual"
   caption="A persona referencing {{class}} and {{intensity}} — the same persona drives wildly different conversations depending on scenario parameter values."
 />
 
@@ -181,7 +185,7 @@ persona runs inside a scenario that provides matching parameter values.
 
 ---
 
-{/* DEMO_VIDEO: personas-examples — replace public/demos/personas-examples.mp4 */}
+{/* DEMO_VIDEO: personas-examples | playwright */}
 
 ## Examples that teach voice
 
@@ -191,6 +195,7 @@ speech patterns.
 
 <DemoVideo
   topic="personas-examples"
+  kind="playwright"
   caption="Adding two example exchanges to the passive-student persona to anchor the 'Uh...' verbal tic."
 />
 
@@ -216,7 +221,7 @@ through instructions alone.
 
 ---
 
-{/* DEMO_VIDEO: personas-draft — replace public/demos/personas-draft.mp4 */}
+{/* DEMO_VIDEO: personas-draft | playwright */}
 
 ## The draft cycle
 
@@ -228,6 +233,7 @@ silently overwrite yours.
 
 <DemoVideo
   topic="personas-draft"
+  kind="playwright"
   caption="Editing a persona in two tabs: the second save sees expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -270,7 +276,7 @@ glow personas drafts
 
 ---
 
-{/* DEMO_VIDEO: personas-search — replace public/demos/personas-search.mp4 */}
+{/* DEMO_VIDEO: personas-search | playwright */}
 
 ## Search & filter
 
@@ -279,6 +285,7 @@ color, icon, scenario, field), and pagination.
 
 <DemoVideo
   topic="personas-search"
+  kind="playwright"
   caption="Filtering by department + voice picker, then drilling in on a single persona."
 />
 
@@ -311,7 +318,7 @@ filter facets (`scenario_filter`, `department_filter`, `voice_filter`,
 
 ---
 
-{/* DEMO_VIDEO: personas-bulk — replace public/demos/personas-bulk.mp4 */}
+{/* DEMO_VIDEO: personas-bulk | playwright */}
 
 ## Bulk operations
 
@@ -322,6 +329,7 @@ explicit IDs, or `all: true` with flat filter fields + optional
 
 <DemoVideo
   topic="personas-bulk"
+  kind="playwright"
   caption="Bulk-deleting every persona in a department except a manually-excluded list — single round-trip, no row-by-row delete."
 />
 

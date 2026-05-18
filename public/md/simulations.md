@@ -1,6 +1,6 @@
 # Simulations
 
-{/* DEMO_VIDEO: simulations-overview — replace public/demos/simulations-overview.mp4 */}
+{/* DEMO_VIDEO: simulations-overview | playwright */}
 
 # Simulations
 
@@ -8,6 +8,7 @@ Simulations are complete training sessions that bundle one or more scenarios tog
 
 <DemoVideo
   topic="simulations-overview"
+  kind="playwright"
   caption="The simulations list — cards show name, scenario count, and active status; drill in to see scenario ordering, rubrics, and time limits."
 />
 
@@ -45,12 +46,13 @@ Simulations are **step 3** in the Glow content pipeline:
 
 ---
 
-{/* DEMO_VIDEO: simulations-create — replace public/demos/simulations-create.mp4 */}
+{/* DEMO_VIDEO: simulations-create | playwright */}
 
 ## Create a simulation
 
 <DemoVideo
   topic="simulations-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then opening the new simulation's detail page ready for scenario assignment."
 />
 
@@ -88,7 +90,7 @@ curl -X POST https://<your-instance>/simulation/create \
 
 ---
 
-{/* DEMO_VIDEO: simulations-edit — replace public/demos/simulations-edit.mp4 */}
+{/* DEMO_VIDEO: simulations-edit | playwright */}
 
 ## Assigning scenarios and per-scenario configuration
 
@@ -96,6 +98,7 @@ Each scenario added to a simulation gets its own per-scenario configuration: rub
 
 <DemoVideo
   topic="simulations-edit"
+  kind="playwright"
   caption="Adding two scenarios to a simulation, reordering them via drag-and-drop, attaching distinct rubrics to each, and setting a 10-minute time limit."
 />
 
@@ -188,7 +191,7 @@ Single-scenario simulations designed for free-form practice with a specific pers
 
 ---
 
-{/* DEMO_VIDEO: simulations-draft — replace public/demos/simulations-draft.mp4 */}
+{/* DEMO_VIDEO: simulations-draft | playwright */}
 
 ## Working with Drafts
 
@@ -196,6 +199,7 @@ Simulations use the draft system for all edits. The draft endpoint supports opti
 
 <DemoVideo
   topic="simulations-draft"
+  kind="playwright"
   caption="Editing a simulation in two tabs — the second save sees a version mismatch and surfaces the conflict instead of clobbering the first edit."
 />
 
@@ -238,7 +242,7 @@ curl -X POST https://<your-instance>/simulation/drafts \
 
 ---
 
-{/* DEMO_VIDEO: simulations-search — replace public/demos/simulations-search.mp4 */}
+{/* DEMO_VIDEO: simulations-search | playwright */}
 
 ## Search and filter
 
@@ -246,6 +250,7 @@ Simulation search supports full-text plus facet filters across scenario, departm
 
 <DemoVideo
   topic="simulations-search"
+  kind="playwright"
   caption="Filtering simulations by scenario (Academic Integrity Training) and department, then drilling in on a match."
 />
 
@@ -267,7 +272,7 @@ curl -X POST https://<your-instance>/simulation/search \
 
 ---
 
-{/* DEMO_VIDEO: simulations-bulk — replace public/demos/simulations-bulk.mp4 */}
+{/* DEMO_VIDEO: simulations-bulk | playwright */}
 
 ## Bulk operations
 
@@ -275,6 +280,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="simulations-bulk"
+  kind="playwright"
   caption="Bulk-archiving every simulation in a sunset department in one round-trip, keeping a couple of canonical examples via excluded_ids."
 />
 

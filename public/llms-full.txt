@@ -2,12 +2,13 @@
 
 Route: /activity
 
-{/* DEMO_VIDEO: activity-overview — replace public/demos/activity-overview.mp4 */}
+{/* DEMO_VIDEO: activity-overview | playwright */}
 
 # Activity
 
 <DemoVideo
   topic="activity-overview"
+  kind="playwright"
   caption="Landing on the Activity page — engagement counts up top, per-profile breakdown below, session history one click away."
 />
 
@@ -84,12 +85,13 @@ curl -X POST https://<your-instance>/system/sessions \
 | Active sessions | `active` (search only) | Show only active or inactive sessions |
 | Pagination | `page`, `page_size` (search only) | Control page size and offset |
 
-{/* DEMO_VIDEO: activity-summary — replace public/demos/activity-summary.mp4 */}
+{/* DEMO_VIDEO: activity-summary | playwright */}
 
 ## Understanding the Summary Response
 
 <DemoVideo
   topic="activity-summary"
+  kind="playwright"
   caption="Walking through sessions_count, active_profiles_count, logins_count, and emulations_count cards, then expanding the per-profile breakdown table."
 />
 
@@ -106,12 +108,13 @@ The `ActivityResponse` from `POST /system/activity` includes:
 - **`resources`** -- Profile metadata keyed by ID for hydration.
 - **`analytics`** -- Filter facets for rendering dropdowns (departments, roles, date range boundaries).
 
-{/* DEMO_VIDEO: activity-session-history — replace public/demos/activity-session-history.mp4 */}
+{/* DEMO_VIDEO: activity-session-history | playwright */}
 
 ## Understanding the Session History Response
 
 <DemoVideo
   topic="activity-session-history"
+  kind="playwright"
   caption="Paginating the session-history table — sort by recent, filter to active-only, drill into a row to land on the Session detail page."
 />
 
@@ -144,12 +147,13 @@ curl -X POST https://<your-instance>/activity/resolve \
 
 The response confirms `problem_id`, `resolved` status, and `updated_at` timestamp.
 
-{/* DEMO_VIDEO: activity-export — replace public/demos/activity-export.mp4 */}
+{/* DEMO_VIDEO: activity-export | vhs */}
 
 ## Refreshing and Exporting
 
 <DemoVideo
   topic="activity-export"
+  kind="vhs"
   caption="Kicking off `glow system export` to pull a denormalized ZIP for archival, then refreshing the materialized views so the next page-load picks up new sessions."
 />
 
@@ -185,7 +189,7 @@ glow system export
 
 Route: /agents
 
-{/* DEMO_VIDEO: agents-overview — replace public/demos/agents-overview.mp4 */}
+{/* DEMO_VIDEO: agents-overview | playwright */}
 
 # Agents
 
@@ -193,6 +197,7 @@ Agents configure the AI engine that powers Glow simulations -- they control whic
 
 <DemoVideo
   topic="agents-overview"
+  kind="playwright"
   caption="The agents list page -- cards by model and tool count, filter by department, drill in to wire models, tools, rubrics, temperature, and voice."
 />
 
@@ -241,12 +246,13 @@ The agent is the engine that processes every message, generates persona response
 
 ---
 
-{/* DEMO_VIDEO: agents-create — replace public/demos/agents-create.mp4 */}
+{/* DEMO_VIDEO: agents-create | playwright */}
 
 ## Create an agent
 
 <DemoVideo
   topic="agents-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then committing -- the agent comes back with an agent_id and a draft_id for further wiring."
 />
 
@@ -282,12 +288,13 @@ Each entry returns the new `agent_id`, the generated `draft_id`, and the initial
 
 ---
 
-{/* DEMO_VIDEO: agents-wiring — replace public/demos/agents-wiring.mp4 */}
+{/* DEMO_VIDEO: agents-wiring | playwright */}
 
 ## Wiring models, tools, and rubrics
 
 <DemoVideo
   topic="agents-wiring"
+  kind="playwright"
   caption="Attaching a model, two tools, and three rubrics to an agent draft in a single PATCH -- the form_state echoes the resolved IDs so you can re-render confidently."
 />
 
@@ -353,12 +360,13 @@ glow agents draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: agents-tuning — replace public/demos/agents-tuning.mp4 */}
+{/* DEMO_VIDEO: agents-tuning | playwright */}
 
 ## Tuning temperature, reasoning, and voice
 
 <DemoVideo
   topic="agents-tuning"
+  kind="playwright"
   caption="Dialling temperature down and reasoning up on a grading-flavored agent, then swapping the TTS voice for audio mode."
 />
 
@@ -399,7 +407,7 @@ glow agents draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: agents-generate — replace public/demos/agents-generate.mp4 */}
+{/* DEMO_VIDEO: agents-generate | vhs */}
 
 ## Generate sub-op
 
@@ -407,6 +415,7 @@ The agent surface exposes a `generate` sub-op (`POST /agent/generate`) that runs
 
 <DemoVideo
   topic="agents-generate"
+  kind="vhs"
   caption="Triggering /agent/generate from the agent detail page -- the response streams back tokens that prove model/tool/rubric wiring is intact before going live."
 />
 
@@ -414,7 +423,7 @@ Use this in your own scripts to smoke-test an agent after edits or to wire it in
 
 ---
 
-{/* DEMO_VIDEO: agents-draft — replace public/demos/agents-draft.mp4 */}
+{/* DEMO_VIDEO: agents-draft | playwright */}
 
 ## The draft cycle
 
@@ -422,6 +431,7 @@ Agents use the same draft system as other Glow resources. All configuration chan
 
 <DemoVideo
   topic="agents-draft"
+  kind="playwright"
   caption="Editing the same agent in two tabs: the second save sees an expected_version mismatch and surfaces the conflict instead of overwriting the first."
 />
 
@@ -463,12 +473,13 @@ glow agents list
 
 ---
 
-{/* DEMO_VIDEO: agents-search — replace public/demos/agents-search.mp4 */}
+{/* DEMO_VIDEO: agents-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="agents-search"
+  kind="playwright"
   caption="Filtering agents by model and tool together, then drilling into a single agent's wiring."
 />
 
@@ -488,7 +499,7 @@ The response includes hydrated agent rows plus facet sections (`model_filter`, `
 
 ---
 
-{/* DEMO_VIDEO: agents-bulk — replace public/demos/agents-bulk.mp4 */}
+{/* DEMO_VIDEO: agents-bulk | playwright */}
 
 ## Bulk operations
 
@@ -496,6 +507,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="agents-bulk"
+  kind="playwright"
   caption="Bulk-archiving every agent in a deprecated department in a single round-trip -- excluded_ids keeps one production agent alive."
 />
 
@@ -558,22 +570,23 @@ glow agents update --body '{
 
 Route: /annotated-example
 
-{/* DEMO_VIDEO: annotated-example-overview — replace public/demos/annotated-example-overview.mp4 */}
+{/* DEMO_VIDEO: annotated-example-overview | manual */}
 
 # Annotated Example: What Good (and Bad) Looks Like
 
-<DemoVideo topic="annotated-example-overview" caption="Two real attempts side-by-side: the 24/25 passive-student conversation and the 7/25 aggressive-student failure, with rubric scorecards open." />
+<DemoVideo topic="annotated-example-overview" kind="manual" caption="Two real attempts side-by-side: the 24/25 passive-student conversation and the 7/25 aggressive-student failure, with rubric scorecards open." />
 
 The most effective way to learn simulation design is to see what actually happens in practice. This page shows two real conversations from Glow — one excellent, one poor — with commentary explaining why the grading system scored them the way it did.
 
 Both conversations are from the same platform, with the same rubric, using similar scenarios. The difference is entirely in how the TA approached the interaction.
 
-{/* DEMO_VIDEO: annotated-example-excellent — replace public/demos/annotated-example-excellent.mp4 */}
+{/* DEMO_VIDEO: annotated-example-excellent | playwright */}
 
 ## The Excellent Conversation (24/25)
 
 <DemoVideo
   topic="annotated-example-excellent"
+  kind="playwright"
   caption="Replaying the passive-student attempt turn-by-turn — 'You're not interrupting', guided questioning, deferred input validation, 24/25 scorecard at the end."
 />
 
@@ -36070,7 +36083,7 @@ Server-authoritative form state returned after draft save.
 
 Route: /attempts
 
-{/* DEMO_VIDEO: attempts-overview — replace public/demos/attempts-overview.mp4 */}
+{/* DEMO_VIDEO: attempts-overview | playwright */}
 
 # Attempts
 
@@ -36081,6 +36094,7 @@ they're inside an attempt.
 
 <DemoVideo
   topic="attempts-overview"
+  kind="playwright"
   caption="The attempts list — filter by cohort or simulation, drill in to see chats, grading, and export."
 />
 
@@ -36105,12 +36119,13 @@ on an attempt as a whole.
 
 ---
 
-{/* DEMO_VIDEO: attempts-lifecycle — replace public/demos/attempts-lifecycle.mp4 */}
+{/* DEMO_VIDEO: attempts-lifecycle | manual */}
 
 ## The lifecycle
 
 <DemoVideo
   topic="attempts-lifecycle"
+  kind="manual"
   caption="An attempt from start to complete: scenarios spawn chats, the learner runs each one, then complete rolls up grading."
 />
 
@@ -36129,12 +36144,13 @@ chat surface — covered in full on [/chat](/chat).
 
 ---
 
-{/* DEMO_VIDEO: attempts-start — replace public/demos/attempts-start.mp4 */}
+{/* DEMO_VIDEO: attempts-start | vhs */}
 
 ## Starting an attempt
 
 <DemoVideo
   topic="attempts-start"
+  kind="vhs"
   caption="Clicking Start on a home-page entry: the attempt is minted, one chat per scenario opens, and the learner lands in the first conversation."
 />
 
@@ -36159,12 +36175,13 @@ conversation.
 
 ---
 
-{/* DEMO_VIDEO: attempts-stop — replace public/demos/attempts-stop.mp4 */}
+{/* DEMO_VIDEO: attempts-stop | vhs */}
 
 ## Stopping in-flight generation
 
 <DemoVideo
   topic="attempts-stop"
+  kind="vhs"
   caption="Hitting Stop mid-response: the streaming AI reply truncates cleanly and control returns to the learner."
 />
 
@@ -36184,12 +36201,13 @@ cancelled.
 
 ---
 
-{/* DEMO_VIDEO: attempts-complete — replace public/demos/attempts-complete.mp4 */}
+{/* DEMO_VIDEO: attempts-complete | vhs */}
 
 ## Completing and archiving
 
 <DemoVideo
   topic="attempts-complete"
+  kind="vhs"
   caption="Completing an attempt: the rubric grader runs across every chat and the attempt lands on the dashboard with a final score."
 />
 
@@ -36362,12 +36380,13 @@ documented once in Foundations rather than re-explained here:
 
 Route: /audit
 
-{/* DEMO_VIDEO: audit-overview — replace public/demos/audit-overview.mp4 */}
+{/* DEMO_VIDEO: audit-overview | manual */}
 
 # Audit & Lineage
 
 <DemoVideo
   topic="audit-overview"
+  kind="manual"
   caption="The full lineage chain: a single learner action lands as a soft_calls_entry row, stitched back through group_id into the session timeline and the per-group runs view."
 />
 
@@ -36408,6 +36427,7 @@ SSE relay path do not produce ledger rows.
 
 <DemoVideo
   topic="audit-ledger"
+  kind="manual"
   caption="A single soft_calls_entry row expanded: call_id matches the wire-level event identity, artifact + operation mirror the permissions vocabulary, and status tracks pending → accepted | rejected."
 />
 
@@ -36458,6 +36478,7 @@ by reading the base table directly.
 
 <DemoVideo
   topic="audit-stitching"
+  kind="manual"
   caption="Tracing one group_id three ways: into the session timeline as a group_created event, into the group detail tree as runs + messages, and into the audit ledger as a call_id family."
 />
 
@@ -36502,6 +36523,7 @@ The framework guarantees stitching by:
 
 <DemoVideo
   topic="audit-replay"
+  kind="manual"
   caption="Drilling top-down: Activity → pick a session → Session timeline → click a group_created row → Group detail with runs + messages → individual call_id back to the ledger."
 />
 
@@ -36593,7 +36615,7 @@ elsewhere fragments the source of truth.
 
 Route: /authentication
 
-{/* DEMO_VIDEO: authentication-overview — replace public/demos/authentication-overview.mp4 */}
+{/* DEMO_VIDEO: authentication-overview | manual */}
 
 # Authentication
 
@@ -36610,14 +36632,15 @@ for what the license entitles. CLI flows handle both automatically
 after `glow login` writes the bearer to `~/.config/glow/tokens.json`
 and the license key is read from `~/.glow/instances/<name>/glow-deploy.yaml`.
 
-<DemoVideo topic="authentication-overview" caption="Both schemes side-by-side: bearer JWT in Authorization header, license key in X-Api-Key, request flowing through." />
+<DemoVideo topic="authentication-overview" kind="manual" caption="Both schemes side-by-side: bearer JWT in Authorization header, license key in X-Api-Key, request flowing through." />
 
-{/* DEMO_VIDEO: authentication-login — replace public/demos/authentication-login.mp4 */}
+{/* DEMO_VIDEO: authentication-login | vhs */}
 
 ## Interactive flow (`glow login`)
 
 <DemoVideo
   topic="authentication-login"
+  kind="vhs"
   caption="PKCE round-trip end-to-end: localhost listener spawning, browser hitting Keycloak, callback with code+state, token exchange, JSON landing in ~/.config/glow."
 />
 
@@ -36642,12 +36665,13 @@ After login, every subsequent CLI call attaches `Authorization: Bearer
 <access_token>` automatically. The refresh token is used silently when
 the access token expires.
 
-{/* DEMO_VIDEO: authentication-service-account — replace public/demos/authentication-service-account.mp4 */}
+{/* DEMO_VIDEO: authentication-service-account | vhs */}
 
 ## Service-account flow (`--token`)
 
 <DemoVideo
   topic="authentication-service-account"
+  kind="vhs"
   caption="Headless CI flow: minting a service-account JWT, passing it via `glow login --token`, no browser, immediate authenticated `glow personas search`."
 />
 
@@ -36720,12 +36744,13 @@ Sessions are listed in the CLI via the `instance` config under
 `~/.config/glow/`. There's no first-class `glow sessions list` command
 today — read the file directly if needed.
 
-{/* DEMO_VIDEO: authentication-service-accounts — replace public/demos/authentication-service-accounts.mp4 */}
+{/* DEMO_VIDEO: authentication-service-accounts | manual */}
 
 ## Service accounts
 
 <DemoVideo
   topic="authentication-service-accounts"
+  kind="manual"
   caption="Operator mints a JWT in Keycloak admin, drops it into a CI secret, and the runner authenticates non-interactively with `glow login --token` — no browser, ready to script."
 />
 
@@ -36795,12 +36820,13 @@ ends at *consuming* an already-minted token via `--token`.
 
   Never check the token into the repo; never echo it in logs.
 
-{/* DEMO_VIDEO: authentication-license-keys — replace public/demos/authentication-license-keys.mp4 */}
+{/* DEMO_VIDEO: authentication-license-keys | vhs */}
 
 ## License keys (`X-Api-Key`)
 
 <DemoVideo
   topic="authentication-license-keys"
+  kind="vhs"
   caption="Operator seeds a license key in glow-deploy.yaml, runs `glow deploy`, the key lands encrypted-at-rest, and a request carrying X-Api-Key resolves to the right license context."
 />
 
@@ -36895,7 +36921,7 @@ only).
 
 Route: /auths
 
-{/* DEMO_VIDEO: auths-overview — replace public/demos/auths-overview.mp4 */}
+{/* DEMO_VIDEO: auths-overview | playwright */}
 
 # Auths
 
@@ -36903,6 +36929,7 @@ Auths manages authentication providers for your Glow instance -- the SSO configu
 
 <DemoVideo
   topic="auths-overview"
+  kind="playwright"
   caption="The auths list -- rows by login method, protocol badge, and enabled flag; encrypted items hidden behind a dedicated edit drawer."
 />
 
@@ -36931,12 +36958,13 @@ Auths uses a composable architecture with full CRUD, duplication, and a draft sy
 
 ---
 
-{/* DEMO_VIDEO: auths-create — replace public/demos/auths-create.mp4 */}
+{/* DEMO_VIDEO: auths-create | playwright */}
 
 ## Create an auth provider
 
 <DemoVideo
   topic="auths-create"
+  kind="playwright"
   caption="Spinning up a new University SSO entry -- name and description first, then immediately wiring protocol and slug in the follow-up draft."
 />
 
@@ -36967,7 +36995,7 @@ Returns per-item results in `results`, each carrying the new `auth_id` and a `dr
 
 ---
 
-{/* DEMO_VIDEO: auths-oidc — replace public/demos/auths-oidc.mp4 */}
+{/* DEMO_VIDEO: auths-oidc | playwright */}
 
 ## OIDC / protocol wiring
 
@@ -36975,6 +37003,7 @@ The `protocols` section captures which authentication protocol (OIDC, SAML, ...)
 
 <DemoVideo
   topic="auths-oidc"
+  kind="playwright"
   caption="Wiring an OIDC provider end-to-end: protocol set, slug claimed, client_id and client_secret pasted into encrypted items, then a test login round-trip."
 />
 
@@ -36990,7 +37019,7 @@ glow auths draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: auths-idp — replace public/demos/auths-idp.mp4 */}
+{/* DEMO_VIDEO: auths-idp | playwright */}
 
 ## Adding a new IdP
 
@@ -36998,6 +37027,7 @@ End-to-end recipe for wiring a fresh SSO provider into Keycloak. The four moves 
 
 <DemoVideo
   topic="auths-idp"
+  kind="playwright"
   caption="Greenfield IdP onboarding: POST /auth/create, encrypted client_secret pasted into an item key, draft saved with protocol+slug+items, sync log lighting up the new Keycloak IdentityProvider."
 />
 
@@ -37037,7 +37067,7 @@ glow auths draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: auths-draft — replace public/demos/auths-draft.mp4 */}
+{/* DEMO_VIDEO: auths-draft | playwright */}
 
 ## The draft cycle
 
@@ -37045,6 +37075,7 @@ Auths uses a draft system with optimistic locking -- the same pattern as Setting
 
 <DemoVideo
   topic="auths-draft"
+  kind="playwright"
   caption="Editing the same auth provider in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of overwriting."
 />
 
@@ -37091,12 +37122,13 @@ glow auths get --body '{"auth_id": "auth-uuid", "draft_id": "draft-uuid"}'
 
 ---
 
-{/* DEMO_VIDEO: auths-search — replace public/demos/auths-search.mp4 */}
+{/* DEMO_VIDEO: auths-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="auths-search"
+  kind="playwright"
   caption="Filtering by department + free-text name search to find the right SSO entry, then drilling in to its protocol and items."
 />
 
@@ -37126,7 +37158,7 @@ curl -X POST https://<your-instance>/auth/search \
 
 ---
 
-{/* DEMO_VIDEO: auths-bulk — replace public/demos/auths-bulk.mp4 */}
+{/* DEMO_VIDEO: auths-bulk | playwright */}
 
 ## Bulk operations
 
@@ -37134,6 +37166,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="auths-bulk"
+  kind="playwright"
   caption="Bulk-deleting every auth provider scoped to a retired department; excluded_ids keeps a shared SSO entry that other departments still depend on."
 />
 
@@ -37197,7 +37230,7 @@ Returns `success`, `auth_id` (new UUID), and `message`.
 
 Route: /backup-restore
 
-{/* DEMO_VIDEO: backup-overview — replace public/demos/backup-overview.mp4 */}
+{/* DEMO_VIDEO: backup-overview | manual */}
 
 # Backup & restore
 
@@ -37208,6 +37241,7 @@ swap looks exactly like a normal rollout.
 
 <DemoVideo
   topic="backup-overview"
+  kind="manual"
   caption="Listing the snapshots under ~/.glow/instances/<name>/backups/, then walking through a redeploy --from-backup to roll back."
 />
 
@@ -37235,12 +37269,13 @@ If you need an off-box copy, rsync the `backups/` directory yourself.
 
 ---
 
-{/* DEMO_VIDEO: backup-storage — replace public/demos/backup-storage.mp4 */}
+{/* DEMO_VIDEO: backup-storage | manual */}
 
 ## Where backups live
 
 <DemoVideo
   topic="backup-storage"
+  kind="manual"
   caption="ls -lh ~/.glow/instances/default/backups/ — manual snapshots next to the auto pre-deploy snapshots."
 />
 
@@ -37269,12 +37304,13 @@ volumes are wiped. Your snapshots stay put.
 
 ---
 
-{/* DEMO_VIDEO: backup-create — replace public/demos/backup-create.mp4 */}
+{/* DEMO_VIDEO: backup-create | vhs */}
 
 ## Creating a backup
 
 <DemoVideo
   topic="backup-create"
+  kind="vhs"
   caption="glow backup create --label pre-migration — the dump runs inside the database container, lands on the host."
 />
 
@@ -37308,12 +37344,13 @@ the directory is ignored.
 
 ---
 
-{/* DEMO_VIDEO: backup-restore — replace public/demos/backup-restore.mp4 */}
+{/* DEMO_VIDEO: backup-restore | vhs */}
 
 ## Restoring
 
 <DemoVideo
   topic="backup-restore"
+  kind="vhs"
   caption="glow redeploy --from-backup <name> — pre-deploy snapshot fires first, then the restore runs as part of the blue/green swap."
 />
 
@@ -37448,12 +37485,13 @@ A pragmatic checklist when something goes sideways:
 
 Route: /benchmark
 
-{/* DEMO_VIDEO: benchmark-overview — replace public/demos/benchmark-overview.mp4 */}
+{/* DEMO_VIDEO: benchmark-overview | playwright */}
 
 # Benchmark
 
 <DemoVideo
   topic="benchmark-overview"
+  kind="playwright"
   caption="The Benchmark dashboard at a glance — eval performance cards, department filters, and the test-history table all on one surface."
 />
 
@@ -37471,10 +37509,11 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 
 ### API
 
-{/* DEMO_VIDEO: benchmark-test-config — replace public/demos/benchmark-test-config.mp4 */}
+{/* DEMO_VIDEO: benchmark-test-config | playwright */}
 
 <DemoVideo
   topic="benchmark-test-config"
+  kind="playwright"
   caption="Building a test configuration: picking models, scenarios, eval rubric, and date scope before kicking off the benchmark."
 />
 
@@ -37509,21 +37548,23 @@ curl -X POST https://<your-instance>/test/benchmark \
   }'
 ```
 
-{/* DEMO_VIDEO: benchmark-results-comparison — replace public/demos/benchmark-results-comparison.mp4 */}
+{/* DEMO_VIDEO: benchmark-results-comparison | playwright */}
 
 <DemoVideo
   topic="benchmark-results-comparison"
+  kind="playwright"
   caption="Side-by-side model comparison: per-criterion scores from the eval rubric stacked so you can see which model wins on which standard."
 />
 
 ![Benchmark results showing side-by-side model comparison with per-criterion scores](/screenshots/benchmark/results.png)
 
-{/* DEMO_VIDEO: benchmark-run-execution — replace public/demos/benchmark-run-execution.mp4 */}
+{/* DEMO_VIDEO: benchmark-run-execution | playwright */}
 
 ## Run execution
 
 <DemoVideo
   topic="benchmark-run-execution"
+  kind="playwright"
   caption="Watching a benchmark fan out into per-cell invocations — queued → running → completed status pills updating live as each model call returns."
 />
 
@@ -37601,12 +37642,13 @@ The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, 
 
 Route: /chat
 
-{/* DEMO_VIDEO: chat-overview */}
+{/* DEMO_VIDEO: chat-overview | playwright */}
 
 # Chat
 
 <DemoVideo
   topic="chat-overview"
+  kind="playwright"
   caption="Opening a chat from the attempt list — message thread, persona header, attached documents and the input area in one frame."
 />
 
@@ -37644,12 +37686,13 @@ Chats also support a draft system for customizing chat configurations before or 
 
 ![Chat interface showing message thread with AI persona, with voice mode toggle and input area](/screenshots/chat/interface.png)
 
-{/* DEMO_VIDEO: chat-message */}
+{/* DEMO_VIDEO: chat-message | playwright */}
 
 ## Sending a message
 
 <DemoVideo
   topic="chat-message"
+  kind="playwright"
   caption="Typing a learner turn, hitting send, and watching the persona reply stream back token-by-token via chat_message."
 />
 
@@ -37736,30 +37779,33 @@ CLI dispatch is symmetric — `glow attempts chat <op>` (e.g.
 `glow attempts chat message <chat_id> "..."`) maps 1:1 to
 `POST /attempt/chat_<op>`.
 
-{/* DEMO_VIDEO: chat-grade */}
+{/* DEMO_VIDEO: chat-grade | playwright */}
 
 ## Grading a chat
 
 <DemoVideo
   topic="chat-grade"
+  kind="playwright"
   caption="Triggering chat_grade after the conversation closes — rubric standards light up with per-standard scores and the overall pass/fail badge."
 />
 
-{/* DEMO_VIDEO: chat-hints */}
+{/* DEMO_VIDEO: chat-hints | playwright */}
 
 ## Hints, feedback, and analyses
 
 <DemoVideo
   topic="chat-hints"
+  kind="playwright"
   caption="Calling chat_hints mid-conversation for a nudge, then chat_feedback + chat_strengths/improvements after grading to see per-standard rationale."
 />
 
 ## Live REPL + voice (WS)
 
-{/* DEMO_VIDEO: chat-live */}
+{/* DEMO_VIDEO: chat-live | vhs */}
 
 <DemoVideo
   topic="chat-live"
+  kind="vhs"
   caption="glow attempts chat live <chat_id> — interactive socket.io REPL, lines sent as chat_message, replies stream back inline."
 />
 
@@ -37775,10 +37821,11 @@ Voice (`glow attempts chat voice <chat_id>`) is gated on the `cpal` +
 `rodio` audio deps and is currently a deferred placeholder — see the
 deferred CLI capability tracking in the `glow-academic-cli` repo.
 
-{/* DEMO_VIDEO: chat-voice */}
+{/* DEMO_VIDEO: chat-voice | manual */}
 
 <DemoVideo
   topic="chat-voice"
+  kind="manual"
   caption="The deferred voice REPL surface — placeholder warning today, will become chat_speak / chat_silence / chat_voice round-trip once cpal/rodio land."
 />
 
@@ -37815,12 +37862,13 @@ Available search filters:
 | `persona_show_selected` | Show only currently selected personas |
 | `document_show_selected` | Show only currently selected documents |
 
-{/* DEMO_VIDEO: chat-draft */}
+{/* DEMO_VIDEO: chat-draft | playwright */}
 
 ## Working with drafts
 
 <DemoVideo
   topic="chat-draft"
+  kind="playwright"
   caption="Editing a chat's persona + document selection in draft form, saving with expected_version, and watching form_state hydrate the selected IDs."
 />
 
@@ -37864,12 +37912,13 @@ curl -X POST https://<your-instance>/attempt/chat_drafts \
   -H "Authorization: Bearer your-token"
 ```
 
-{/* DEMO_VIDEO: chat-export */}
+{/* DEMO_VIDEO: chat-export | vhs */}
 
 ## Exporting a transcript
 
 <DemoVideo
   topic="chat-export"
+  kind="vhs"
   caption="glow attempts chat export — downloads the message thread + grading metadata as a portable bundle ready to drop into a review packet."
 />
 
@@ -46320,7 +46369,7 @@ glow tools watch --id <id>
 
 Route: /cohorts
 
-{/* DEMO_VIDEO: cohorts-overview — replace public/demos/cohorts-overview.mp4 */}
+{/* DEMO_VIDEO: cohorts-overview | playwright */}
 
 # Cohorts
 
@@ -46328,6 +46377,7 @@ Cohorts bring everything together. A cohort is a group of profiles (learners) as
 
 <DemoVideo
   topic="cohorts-overview"
+  kind="playwright"
   caption="The cohorts list — cards show name, member count, and simulation count; drill in to see profile assignments and simulation availability."
 />
 
@@ -46353,12 +46403,13 @@ A cohort requires at least one profile and one simulation. Once both are assigne
 
 ---
 
-{/* DEMO_VIDEO: cohorts-create — replace public/demos/cohorts-create.mp4 */}
+{/* DEMO_VIDEO: cohorts-create | playwright */}
 
 ## Create a cohort
 
 <DemoVideo
   topic="cohorts-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then picking the department the cohort lives under."
 />
 
@@ -46398,7 +46449,7 @@ curl -X POST https://<your-instance>/cohort/create \
 
 ---
 
-{/* DEMO_VIDEO: cohorts-edit — replace public/demos/cohorts-edit.mp4 */}
+{/* DEMO_VIDEO: cohorts-edit | playwright */}
 
 ## Cohort composition
 
@@ -46406,6 +46457,7 @@ A cohort contains several key sections that you configure together on the detail
 
 <DemoVideo
   topic="cohorts-edit"
+  kind="playwright"
   caption="Editing a cohort: adding profiles, attaching simulations, and reordering with simulation positions."
 />
 
@@ -46443,7 +46495,7 @@ Profile personas are managed through `profile_persona_ids` (existing personas) a
 
 ---
 
-{/* DEMO_VIDEO: cohorts-draft — replace public/demos/cohorts-draft.mp4 */}
+{/* DEMO_VIDEO: cohorts-draft | playwright */}
 
 ## Drafts
 
@@ -46451,6 +46503,7 @@ Cohorts support the draft workflow. Changes are saved as a draft before being pu
 
 <DemoVideo
   topic="cohorts-draft"
+  kind="playwright"
   caption="Editing the same cohort in two tabs — the second save sees an expected_version mismatch and surfaces the conflict."
 />
 
@@ -46466,7 +46519,7 @@ Via the API, use `PATCH /cohort/draft` with fields like `input_draft_id`, `expec
 
 ---
 
-{/* DEMO_VIDEO: cohorts-search — replace public/demos/cohorts-search.mp4 */}
+{/* DEMO_VIDEO: cohorts-search | playwright */}
 
 ## Filtering and search
 
@@ -46474,6 +46527,7 @@ Cohorts support rich search and filtering.
 
 <DemoVideo
   topic="cohorts-search"
+  kind="playwright"
   caption="Filtering cohorts by profile and simulation, then drilling into a single cohort to see its membership."
 />
 
@@ -46496,7 +46550,7 @@ curl -X POST https://<your-instance>/cohort/search \
 
 ---
 
-{/* DEMO_VIDEO: cohorts-bulk — replace public/demos/cohorts-bulk.mp4 */}
+{/* DEMO_VIDEO: cohorts-bulk | playwright */}
 
 ## Bulk operations
 
@@ -46504,6 +46558,7 @@ Bulk delete and update follow the canonical *all-matching* shape: pass either ex
 
 <DemoVideo
   topic="cohorts-bulk"
+  kind="playwright"
   caption="Bulk-archiving every cohort in a sunset department in one round-trip, with a manual exclusion list for the cohorts to keep."
 />
 
@@ -46565,12 +46620,13 @@ See the [Personas guide](/personas) for the canonical write-up of this pattern -
 
 Route: /dashboard
 
-{/* DEMO_VIDEO: dashboard-overview */}
+{/* DEMO_VIDEO: dashboard-overview | playwright */}
 
 # Dashboard
 
 <DemoVideo
   topic="dashboard-overview"
+  kind="playwright"
   caption="A single POST /attempt/dashboard call hydrating the whole admin surface — header KPIs, primary/secondary panels, rubric breakdowns and inline history in one bundle."
 />
 
@@ -46601,12 +46657,13 @@ Dashboard aggregates training data across all TAs, cohorts, and simulations into
 
 Dashboard returns `header_metrics` (total attempts, average score, completion percentage, first-attempt pass rate), `primary_metrics` and `secondary_metrics` panels, rubric/parameter/scenario breakdowns, score `thresholds`, AI-generated `insights`, and inline `history` with pagination.
 
-{/* DEMO_VIDEO: dashboard-header */}
+{/* DEMO_VIDEO: dashboard-header | playwright */}
 
 ## Header metrics at a glance
 
 <DemoVideo
   topic="dashboard-header"
+  kind="playwright"
   caption="The header_metrics strip — total attempts, average score, completion %, first-attempt pass rate, each with trend sparkline and hover detail."
 />
 
@@ -46654,12 +46711,13 @@ curl -X POST https://<your-instance>/attempt/search \
   }'
 ```
 
-{/* DEMO_VIDEO: dashboard-filters */}
+{/* DEMO_VIDEO: dashboard-filters | playwright */}
 
 ## Filtering and Scoping
 
 <DemoVideo
   topic="dashboard-filters"
+  kind="playwright"
   caption="Picking a date range, cohort, and rubric_search — the bundle recomputes server-side and every panel rehydrates without a page reload."
 />
 
@@ -46679,12 +46737,13 @@ Dashboard supports composable filters in the body so you can drill down to exact
 
 When `target_profile_id` is provided, the response includes `profile_name`, `profile_emails`, `profile_primary_email`, and `profile_role` for the scoped TA.
 
-{/* DEMO_VIDEO: dashboard-rubric */}
+{/* DEMO_VIDEO: dashboard-rubric | playwright */}
 
 ## Rubric breakdown
 
 <DemoVideo
   topic="dashboard-rubric"
+  kind="playwright"
   caption="Drilling into the rubrics panel — Communication Skills, Policy Knowledge, De-escalation broken out by standard with average score and threshold marker."
 />
 
@@ -46702,12 +46761,13 @@ The `DashboardBundleResponse` is organized into sections:
 - **`history`** -- Inline paginated attempt history with `HistoryItem` rows.
 - **`analytics`** -- Filter facets (department options, cohort options, role options, date range boundaries) for rendering dropdowns.
 
-{/* DEMO_VIDEO: dashboard-history */}
+{/* DEMO_VIDEO: dashboard-history | playwright */}
 
 ## Sibling: Attempt History Search
 
 <DemoVideo
   topic="dashboard-history"
+  kind="playwright"
   caption="Falling out of the bundle into POST /attempt/search — paginated HistoryItem rows with target_profile_id + scenario_ids scoping to one TA."
 />
 
@@ -46762,7 +46822,7 @@ The export endpoint returns a base64-encoded ZIP with `content`, `file_name`, `m
 
 Route: /data-layer
 
-{/* DEMO_VIDEO: data-layer-overview — replace public/demos/data-layer-overview.mp4 */}
+{/* DEMO_VIDEO: data-layer-overview | manual */}
 
 # Data layer
 
@@ -46776,6 +46836,7 @@ mutation paths to read freshness.
 
 <DemoVideo
   topic="data-layer-overview"
+  kind="manual"
   caption="A persona search before/after warmup: first request hits the MV, second hits the route cache; a mutation in another tab fires X-Invalidate-Tags and the third request misses cleanly."
 />
 
@@ -46797,12 +46858,13 @@ audited — the [Audit](/audit) ledger only captures mutations.
 
 ---
 
-{/* DEMO_VIDEO: data-layer-mvs — replace public/demos/data-layer-mvs.mp4 */}
+{/* DEMO_VIDEO: data-layer-mvs | manual */}
 
 ## Materialized views
 
 <DemoVideo
   topic="data-layer-mvs"
+  kind="manual"
   caption="The personas_mv definition pulled live from pg_matviews — a single SELECT that joins persona, persona_drafts, departments, voices, parameter_fields."
 />
 
@@ -46865,12 +46927,13 @@ happens in the background worker — `refresh` is **not** a synchronous
 
 ---
 
-{/* DEMO_VIDEO: data-layer-cache — replace public/demos/data-layer-cache.mp4 */}
+{/* DEMO_VIDEO: data-layer-cache | vhs */}
 
 ## Route-level cache
 
 <DemoVideo
   topic="data-layer-cache"
+  kind="vhs"
   caption="Two identical /system/groups requests back-to-back — first emits X-Cache-Hit: 0 and writes Redis, second returns X-Cache-Hit: 1 in single-digit ms."
 />
 
@@ -46933,12 +46996,13 @@ Every cached response carries two headers so clients can self-report:
 
 ---
 
-{/* DEMO_VIDEO: data-layer-bypass — replace public/demos/data-layer-bypass.mp4 */}
+{/* DEMO_VIDEO: data-layer-bypass | vhs */}
 
 ## `X-Bypass-Cache`
 
 <DemoVideo
   topic="data-layer-bypass"
+  kind="vhs"
   caption="Mutate persona, then immediately re-read with X-Bypass-Cache: 1 — the response shows the new row without waiting for the next refresh cycle."
 />
 
@@ -47003,7 +47067,7 @@ once per debounce window regardless of how many times you call it.
 
 Route: /departments
 
-{/* DEMO_VIDEO: departments-overview — replace public/demos/departments-overview.mp4 */}
+{/* DEMO_VIDEO: departments-overview | playwright */}
 
 # Departments
 
@@ -47011,6 +47075,7 @@ Departments are the organizational boundary in Glow. They scope nearly every res
 
 <DemoVideo
   topic="departments-overview"
+  kind="playwright"
   caption="The departments list -- cards by name with counts of attached profiles, documents, scenarios, and cohorts; drill in to see member assignments and settings."
 />
 
@@ -47034,12 +47099,13 @@ Departments connect to nearly everything. They are the first resource you should
 
 ---
 
-{/* DEMO_VIDEO: departments-create — replace public/demos/departments-create.mp4 */}
+{/* DEMO_VIDEO: departments-create | playwright */}
 
 ## Create a department
 
 <DemoVideo
   topic="departments-create"
+  kind="playwright"
   caption="Filling out a University department: name and description, then committing -- the new department_id is immediately available as a scoping target."
 />
 
@@ -47079,7 +47145,7 @@ curl -X POST https://<your-instance>/department/create \
 
 ---
 
-{/* DEMO_VIDEO: departments-members — replace public/demos/departments-members.mp4 */}
+{/* DEMO_VIDEO: departments-members | playwright */}
 
 ## Member assignment
 
@@ -47087,6 +47153,7 @@ Profiles belong to one or more departments and can only manage resources within 
 
 <DemoVideo
   topic="departments-members"
+  kind="playwright"
   caption="Walking through department membership: filtering profiles by department, assigning a TA into the CS department, and watching their visible resource pool change."
 />
 
@@ -47104,7 +47171,7 @@ Profiles belong to one or more departments and can only manage resources within 
 
 ---
 
-{/* DEMO_VIDEO: departments-settings — replace public/demos/departments-settings.mp4 */}
+{/* DEMO_VIDEO: departments-settings | playwright */}
 
 ## Settings and flags
 
@@ -47112,12 +47179,13 @@ Departments have a settings section that controls department-level configuration
 
 <DemoVideo
   topic="departments-settings"
+  kind="playwright"
   caption="Editing department-level settings + flags -- enabling a department-only feature flag and persisting it through the draft endpoint."
 />
 
 ---
 
-{/* DEMO_VIDEO: departments-draft — replace public/demos/departments-draft.mp4 */}
+{/* DEMO_VIDEO: departments-draft | playwright */}
 
 ## The draft cycle
 
@@ -47125,6 +47193,7 @@ Departments support the draft workflow. Changes are saved as a draft before bein
 
 <DemoVideo
   topic="departments-draft"
+  kind="playwright"
   caption="Editing a department in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -47141,12 +47210,13 @@ Via the API, use `PATCH /department/draft` with fields like `input_draft_id`, `e
 
 ---
 
-{/* DEMO_VIDEO: departments-search — replace public/demos/departments-search.mp4 */}
+{/* DEMO_VIDEO: departments-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="departments-search"
+  kind="playwright"
   caption="Free-text search across departments to locate the right scope, then drilling in to its members and attached resources."
 />
 
@@ -47163,7 +47233,7 @@ curl -X POST https://<your-instance>/department/search \
 
 ---
 
-{/* DEMO_VIDEO: departments-bulk — replace public/demos/departments-bulk.mp4 */}
+{/* DEMO_VIDEO: departments-bulk | playwright */}
 
 ## Bulk operations
 
@@ -47171,6 +47241,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="departments-bulk"
+  kind="playwright"
   caption="Bulk-archiving every department matching a name pattern in one round-trip; excluded_ids keeps a department that still owns active simulations alive."
 />
 
@@ -47230,7 +47301,7 @@ glow departments update --body '{
 
 Route: /documents
 
-{/* DEMO_VIDEO: documents-overview — replace public/demos/documents-overview.mp4 */}
+{/* DEMO_VIDEO: documents-overview | playwright */}
 
 # Documents
 
@@ -47238,6 +47309,7 @@ Documents provide reference material that grounds AI-driven simulations in real 
 
 <DemoVideo
   topic="documents-overview"
+  kind="playwright"
   caption="The documents list — cards show name, type, and how many scenarios link to each document; drill in to preview the content."
 />
 
@@ -47263,12 +47335,13 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 
 ---
 
-{/* DEMO_VIDEO: documents-create — replace public/demos/documents-create.mp4 */}
+{/* DEMO_VIDEO: documents-create | playwright */}
 
 ## Create a document
 
 <DemoVideo
   topic="documents-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, picking the template (Policy, Syllabus, Homework, Lab), and assigning to a department."
 />
 
@@ -47336,7 +47409,7 @@ A document in Glow can include several types of content:
 
 ---
 
-{/* DEMO_VIDEO: documents-upload — replace public/demos/documents-upload.mp4 */}
+{/* DEMO_VIDEO: documents-upload | vhs */}
 
 ## Uploading files
 
@@ -47344,6 +47417,7 @@ Documents support file uploads for rich content. The upload endpoint is binary-b
 
 <DemoVideo
   topic="documents-upload"
+  kind="vhs"
   caption="Dragging a PDF onto the document draft form — upload progress, returned upload_id, and the file appearing as an attachment ready to publish."
 />
 
@@ -47370,7 +47444,7 @@ glow documents draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: documents-draft — replace public/demos/documents-draft.mp4 */}
+{/* DEMO_VIDEO: documents-draft | playwright */}
 
 ## Drafts
 
@@ -47378,6 +47452,7 @@ Documents support the draft workflow. Changes are saved as a draft before being 
 
 <DemoVideo
   topic="documents-draft"
+  kind="playwright"
   caption="Editing the same document in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -47393,7 +47468,7 @@ Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `exp
 
 ---
 
-{/* DEMO_VIDEO: documents-search — replace public/demos/documents-search.mp4 */}
+{/* DEMO_VIDEO: documents-search | playwright */}
 
 ## Search and filter
 
@@ -47401,6 +47476,7 @@ Document search supports full-text plus facet filters across department, paramet
 
 <DemoVideo
   topic="documents-search"
+  kind="playwright"
   caption="Searching for 'FERPA' then filtering by Policy template and the CS department, drilling in on a match."
 />
 
@@ -47417,7 +47493,7 @@ curl -X POST https://<your-instance>/document/search \
 
 ---
 
-{/* DEMO_VIDEO: documents-bulk — replace public/demos/documents-bulk.mp4 */}
+{/* DEMO_VIDEO: documents-bulk | playwright */}
 
 ## Bulk operations
 
@@ -47425,6 +47501,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="documents-bulk"
+  kind="playwright"
   caption="Bulk-archiving every document in a deprecated department in one round-trip, keeping a manual exception list."
 />
 
@@ -47476,7 +47553,7 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 Route: /evals
 
-{/* DEMO_VIDEO: evals-overview — replace public/demos/evals-overview.mp4 */}
+{/* DEMO_VIDEO: evals-overview | playwright */}
 
 # Evals
 
@@ -47484,6 +47561,7 @@ Evals assess how well TAs handled student interactions during office hour simula
 
 <DemoVideo
   topic="evals-overview"
+  kind="playwright"
   caption="The evals list -- rows by name with run count, active/dynamic/groups badges, and the scoring model + rubric chips visible at a glance."
 />
 
@@ -47520,12 +47598,13 @@ Eval
 
 ---
 
-{/* DEMO_VIDEO: evals-create — replace public/demos/evals-create.mp4 */}
+{/* DEMO_VIDEO: evals-create | playwright */}
 
 ## Create an eval
 
 <DemoVideo
   topic="evals-create"
+  kind="playwright"
   caption="Spinning up a Fall 2025 TA Assessment: name, description, attaching a judge model and two rubrics -- the new eval_id is wired and ready to run."
 />
 
@@ -47564,12 +47643,13 @@ curl -X POST https://<your-instance>/eval/create \
 
 ---
 
-{/* DEMO_VIDEO: evals-wiring — replace public/demos/evals-wiring.mp4 */}
+{/* DEMO_VIDEO: evals-wiring | playwright */}
 
 ## Wiring models, rubrics, and flags
 
 <DemoVideo
   topic="evals-wiring"
+  kind="playwright"
   caption="Attaching a second judge model for cross-validation, adding a de-escalation rubric, and defining behavioral flags -- all in a single eval draft update."
 />
 
@@ -47602,7 +47682,7 @@ Use `model_flag_ids` to define specific behaviors the evaluator should tag. Unli
 
 ---
 
-{/* DEMO_VIDEO: evals-run — replace public/demos/evals-run.mp4 */}
+{/* DEMO_VIDEO: evals-run | vhs */}
 
 ## Running an eval
 
@@ -47610,6 +47690,7 @@ Evals support several configuration flags that control how runs behave -- whethe
 
 <DemoVideo
   topic="evals-run"
+  kind="vhs"
   caption="Kicking off an eval run across a batch of attempt transcripts -- num_runs ticks up, per-criterion scores stream in, and a flagged pattern surfaces inline."
 />
 
@@ -47631,7 +47712,7 @@ These flags appear as sections in the GET response, each containing the current 
 
 ---
 
-{/* DEMO_VIDEO: evals-draft — replace public/demos/evals-draft.mp4 */}
+{/* DEMO_VIDEO: evals-draft | playwright */}
 
 ## The draft cycle
 
@@ -47639,6 +47720,7 @@ Evals support a draft workflow for staging changes before they affect scoring pi
 
 <DemoVideo
   topic="evals-draft"
+  kind="playwright"
   caption="Editing the same eval in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -47659,12 +47741,13 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 ---
 
-{/* DEMO_VIDEO: evals-search — replace public/demos/evals-search.mp4 */}
+{/* DEMO_VIDEO: evals-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="evals-search"
+  kind="playwright"
   caption="Filtering evals by department and active flag to find the one currently grading fall-semester attempts, then drilling into its runs."
 />
 
@@ -47679,7 +47762,7 @@ glow evals search --body '{
 
 ---
 
-{/* DEMO_VIDEO: evals-bulk — replace public/demos/evals-bulk.mp4 */}
+{/* DEMO_VIDEO: evals-bulk | playwright */}
 
 ## Bulk operations
 
@@ -47687,6 +47770,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="evals-bulk"
+  kind="playwright"
   caption="Bulk-deactivating every eval in a finished semester in one round-trip; excluded_ids keeps the one still producing follow-up reports."
 />
 
@@ -47747,7 +47831,7 @@ glow evals update --body '{
 
 Route: /fields
 
-{/* DEMO_VIDEO: fields-overview — replace public/demos/fields-overview.mp4 */}
+{/* DEMO_VIDEO: fields-overview | playwright */}
 
 # Fields
 
@@ -47755,6 +47839,7 @@ Fields are the specific values within a parameter. While parameters define categ
 
 <DemoVideo
   topic="fields-overview"
+  kind="playwright"
   caption="The fields list grouped by parent parameter, showing each value and which personas / documents reference it."
 />
 
@@ -47789,12 +47874,13 @@ Fields connect to **parameters** (each field belongs to a parameter) and to **do
 
 ---
 
-{/* DEMO_VIDEO: fields-create — replace public/demos/fields-create.mp4 */}
+{/* DEMO_VIDEO: fields-create | playwright */}
 
 ## Create a field
 
 <DemoVideo
   topic="fields-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, picking the parent parameter so the value shows up wherever that parameter is referenced."
 />
 
@@ -47834,12 +47920,13 @@ curl -X POST https://<your-instance>/field/create \
 
 ---
 
-{/* DEMO_VIDEO: fields-edit — replace public/demos/fields-edit.mp4 */}
+{/* DEMO_VIDEO: fields-edit | playwright */}
 
 ## Conditional parameters and multiple descriptions
 
 <DemoVideo
   topic="fields-edit"
+  kind="playwright"
   caption="Wiring CS-180 to conditionally surface the Location parameter, and adding a long-form description that the AI uses at runtime alongside the short label."
 />
 
@@ -47861,7 +47948,7 @@ The get endpoint accepts a `descriptions_search` parameter, letting you search t
 
 ---
 
-{/* DEMO_VIDEO: fields-draft — replace public/demos/fields-draft.mp4 */}
+{/* DEMO_VIDEO: fields-draft | playwright */}
 
 ## Drafts
 
@@ -47869,6 +47956,7 @@ Fields support the draft workflow. Changes are saved as a draft before being pub
 
 <DemoVideo
   topic="fields-draft"
+  kind="playwright"
   caption="Editing the same field in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -47884,7 +47972,7 @@ Via the API, use `PATCH /field/draft` with fields like `input_draft_id`, `expect
 
 ---
 
-{/* DEMO_VIDEO: fields-search — replace public/demos/fields-search.mp4 */}
+{/* DEMO_VIDEO: fields-search | playwright */}
 
 ## Filtering and search
 
@@ -47892,6 +47980,7 @@ Fields support rich search and filtering:
 
 <DemoVideo
   topic="fields-search"
+  kind="playwright"
   caption="Filtering fields by parent parameter (Temperament) and by the personas that reference them."
 />
 
@@ -47913,7 +48002,7 @@ curl -X POST https://<your-instance>/field/search \
 
 ---
 
-{/* DEMO_VIDEO: fields-bulk — replace public/demos/fields-bulk.mp4 */}
+{/* DEMO_VIDEO: fields-bulk | playwright */}
 
 ## Bulk operations
 
@@ -47921,6 +48010,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="fields-bulk"
+  kind="playwright"
   caption="Bulk-deleting every field under a retired parameter in one round-trip, keeping a couple of canonical values via excluded_ids."
 />
 
@@ -47971,7 +48061,7 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 Route: /generation
 
-{/* DEMO_VIDEO: generation-overview — replace public/demos/generation-overview.mp4 */}
+{/* DEMO_VIDEO: generation-overview | playwright */}
 
 # Generation
 
@@ -47982,6 +48072,7 @@ families and is the subject of this page.
 
 <DemoVideo
   topic="generation-overview"
+  kind="playwright"
   caption="Triggering POST /persona/generate from the personas list, then watching the SSE stream paint progress, save, and complete events into the row before the page refreshes."
 />
 
@@ -48015,12 +48106,13 @@ before the run exists).
 
 ---
 
-{/* DEMO_VIDEO: generation-trigger — replace public/demos/generation-trigger.mp4 */}
+{/* DEMO_VIDEO: generation-trigger | vhs */}
 
 ## Triggering generation
 
 <DemoVideo
   topic="generation-trigger"
+  kind="vhs"
   caption="POST /persona/generate firing a single-line instructions string; the response panel showing run_id + group_id within ~200ms while the model spins up in the background."
 />
 
@@ -48067,12 +48159,13 @@ into `/watch` (or use `--wait`, below) to block on completion.
 
 ---
 
-{/* DEMO_VIDEO: generation-wait — replace public/demos/generation-wait.mp4 */}
+{/* DEMO_VIDEO: generation-wait | vhs */}
 
 ## The `--wait` shortcut
 
 <DemoVideo
   topic="generation-wait"
+  kind="vhs"
   caption="Running glow personas generate --wait in a terminal: the trigger response prints first with run_id, then live SSE frames stream in until a green `Run completed.` line."
 />
 
@@ -48101,12 +48194,13 @@ already.
 
 ---
 
-{/* DEMO_VIDEO: generation-events — replace public/demos/generation-events.mp4 */}
+{/* DEMO_VIDEO: generation-events | playwright */}
 
 ## Event types you'll see
 
 <DemoVideo
   topic="generation-events"
+  kind="playwright"
   caption="A single persona generate in the network inspector: Progress frames rising from 20% → 80%, a Saved frame, then a final Complete frame carrying the artifact_id."
 />
 
@@ -48237,12 +48331,13 @@ The response carries an `items` list of
 
 Route: /group
 
-{/* DEMO_VIDEO: group-overview — replace public/demos/group-overview.mp4 */}
+{/* DEMO_VIDEO: group-overview | playwright */}
 
 # Group
 
 <DemoVideo
   topic="group-overview"
+  kind="playwright"
   caption="Opening a Group: header with group_name + actor_name, runs list expanding to show messages, media thumbnails inline with their upload_ids."
 />
 
@@ -48315,12 +48410,13 @@ curl -X POST https://<your-instance>/system/groups \
   -d '{"page_size": 20}'
 ```
 
-{/* DEMO_VIDEO: group-lean-vs-detail — replace public/demos/group-lean-vs-detail.mp4 */}
+{/* DEMO_VIDEO: group-lean-vs-detail | vhs */}
 
 ## Lean vs. detail
 
 <DemoVideo
   topic="group-lean-vs-detail"
+  kind="vhs"
   caption="Side-by-side: lean resolve returns just identity (cheap path for audit linking), then flipping `include_detail: true` to pull the full runs + messages tree."
 />
 
@@ -48342,12 +48438,13 @@ The full-detail response (`include_detail=true`) includes:
 - **`group_name`** -- Display name of the group.
 - **`total_message_count`** -- Total messages in the group (for pagination).
 
-{/* DEMO_VIDEO: group-runs-and-messages — replace public/demos/group-runs-and-messages.mp4 */}
+{/* DEMO_VIDEO: group-runs-and-messages | playwright */}
 
 ### Runs
 
 <DemoVideo
   topic="group-runs-and-messages"
+  kind="playwright"
   caption="Expanding a single run: token counts and cost per call, then messages stepping through system → user → assistant with tool-call rows interleaved."
 />
 
@@ -48377,12 +48474,13 @@ Each run has:
 - **`agents`** -- Agents used, each with `agent_id` and `name`.
 - **`profiles`** -- Profiles involved, each with `profile_id` and `name`.
 
-{/* DEMO_VIDEO: group-media-downloads — replace public/demos/group-media-downloads.mp4 */}
+{/* DEMO_VIDEO: group-media-downloads | vhs */}
 
 ## Downloading media
 
 <DemoVideo
   topic="group-media-downloads"
+  kind="vhs"
   caption="Pulling an audio_upload_id through `POST /system/audio_download` with a range request, then opening the resulting clip in the inline media viewer."
 />
 
@@ -48401,12 +48499,13 @@ canonical download path is the system artifact's media endpoints:
 Each takes the relevant `<kind>_upload_id` in the body and supports
 range requests for large files.
 
-{/* DEMO_VIDEO: group-listing — replace public/demos/group-listing.mp4 */}
+{/* DEMO_VIDEO: group-listing | playwright */}
 
 ## Listing groups
 
 <DemoVideo
   topic="group-listing"
+  kind="playwright"
   caption="Paginating `POST /system/groups` — the same row collection that powers the Pricing group-history table, sortable by cost or recency."
 />
 
@@ -48447,12 +48546,13 @@ Each event references the `group_id` and `run_id`.
 
 Route: /health
 
-{/* DEMO_VIDEO: health-overview — replace public/demos/health-overview.mp4 */}
+{/* DEMO_VIDEO: health-overview | playwright */}
 
 # Health
 
 <DemoVideo
   topic="health-overview"
+  kind="playwright"
   caption="Opening the Health page — service tiles glowing green/red across the last 24 hours, with hourly buckets for uptime and latency."
 />
 
@@ -48502,12 +48602,13 @@ curl -X POST https://<your-instance>/system/health \
   }'
 ```
 
-{/* DEMO_VIDEO: health-status-indicators — replace public/demos/health-status-indicators.mp4 */}
+{/* DEMO_VIDEO: health-status-indicators | playwright */}
 
 ## Understanding the Response
 
 <DemoVideo
   topic="health-status-indicators"
+  kind="playwright"
   caption="Hovering an hourly cell to surface check_count / ok_count / fail_count, uptime_percent, and the latest_error string for a degraded service."
 />
 
@@ -48544,12 +48645,13 @@ Each `metrics_hourly` entry contains:
 | `max_requests_total` | Peak total request count |
 | `max_errors_total` | Peak total error count |
 
-{/* DEMO_VIDEO: health-refresh — replace public/demos/health-refresh.mp4 */}
+{/* DEMO_VIDEO: health-refresh | vhs */}
 
 ## Refreshing and Exporting
 
 <DemoVideo
   topic="health-refresh"
+  kind="vhs"
   caption="Hitting `POST /system/refresh` to rebuild the hourly materialized views, then re-fetching health to see the freshest buckets land."
 />
 
@@ -48592,12 +48694,13 @@ Returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
 
 Route: /home
 
-{/* DEMO_VIDEO: home-overview */}
+{/* DEMO_VIDEO: home-overview | playwright */}
 
 # Home
 
 <DemoVideo
   topic="home-overview"
+  kind="playwright"
   caption="The TA landing page — assigned simulation cards on top, attempt history table below, status chips and persona colors at a glance."
 />
 
@@ -48654,12 +48757,13 @@ curl -X POST https://<your-instance>/attempt/search \
   }'
 ```
 
-{/* DEMO_VIDEO: home-assigned */}
+{/* DEMO_VIDEO: home-assigned | playwright */}
 
 ## Understanding the Simulation Cards
 
 <DemoVideo
   topic="home-assigned"
+  kind="playwright"
   caption="POST /attempt/home returning the assigned simulation deck — Confused/Aggressive/Passive/Happy cards with status, highest score, and pass threshold rendered live."
 />
 
@@ -48684,12 +48788,13 @@ The `POST /attempt/home` response includes:
 - **`standard_groups`** -- Standard group metadata: `name`, `description`, `points`, `pass_points`.
 - **`standards`** -- Individual standards: `name`, `description`, `points`, grouped by `standard_group_id`.
 
-{/* DEMO_VIDEO: home-history */}
+{/* DEMO_VIDEO: home-history | playwright */}
 
 ## Understanding the Attempt History
 
 <DemoVideo
   topic="home-history"
+  kind="playwright"
   caption="Paginating the TA's attempt history, sorting by date, and using simulation_search to find a specific past attempt."
 />
 
@@ -48719,12 +48824,13 @@ The `POST /attempt/search` response returns paginated `HistoryItem` rows:
 | Sorting | `sort_by`, `sort_order` | Sort by any column |
 | Pagination | `page`, `page_size` | Control page size |
 
-{/* DEMO_VIDEO: home-export */}
+{/* DEMO_VIDEO: home-export | vhs */}
 
 ## Exporting
 
 <DemoVideo
   topic="home-export"
+  kind="vhs"
   caption="glow attempts export — downloading the denormalized ZIP with the TA's certificate of completion baked into the bundle."
 />
 
@@ -48758,13 +48864,13 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 Route: /how-it-works
 
-{/* DEMO_VIDEO: how-it-works-overview — replace public/demos/how-it-works-overview.mp4 */}
+{/* DEMO_VIDEO: how-it-works-overview | manual */}
 
 # How AI Simulation Training Works
 
 This page explains the ideas behind simulation-based training — why it works, what the building blocks are, and how to think about designing effective simulations. You don't need any technical background to follow along.
 
-<DemoVideo topic="how-it-works-overview" caption="A single attempt walked end-to-end: persona greeting, learner reply, rubric scoring, structured feedback." />
+<DemoVideo topic="how-it-works-overview" kind="manual" caption="A single attempt walked end-to-end: persona greeting, learner reply, rubric scoring, structured feedback." />
 
 ## Why Simulation Training Works
 
@@ -48786,10 +48892,11 @@ There are four reasons it works:
 
 Before thinking about any specific tool or platform, every simulation training program needs the same core ingredients:
 
-{/* DEMO_VIDEO: how-it-works-cant-solve — replace public/demos/how-it-works-cant-solve.mp4 */}
+{/* DEMO_VIDEO: how-it-works-cant-solve | manual */}
 
 <DemoVideo
   topic="how-it-works-cant-solve"
+  kind="manual"
   caption="Side-by-side: a vague 'What do you think?' stalls the persona, while a specific course-terminology question unlocks progress — the can't-solve-alone rule in action."
 />
 
@@ -48807,10 +48914,11 @@ A well-designed persona has:
 - **Knowledge boundaries** — what they know and don't know, and crucially, what misconceptions they hold
 - **"Show, don't tell" design** — the persona's traits are demonstrated through behavior, never labeled. Instead of "a passive student," the scenario reads: "A student stands quietly at the edge of the room, clutching their notes, hesitating before approaching"
 
-{/* DEMO_VIDEO: how-it-works-scenario-design — replace public/demos/how-it-works-scenario-design.mp4 */}
+{/* DEMO_VIDEO: how-it-works-scenario-design | manual */}
 
 <DemoVideo
   topic="how-it-works-scenario-design"
+  kind="manual"
   caption="A scenario rendered to the learner: show-don't-tell problem statement, attached homework PDF as document, and the environmental parameters that set the atmosphere."
 />
 
@@ -48824,10 +48932,11 @@ The context that puts the learner in a position where they need to use their ski
 
 Scenarios work best when they're generated from real situations. In Glow's university deployment, every scenario is grounded in actual course documents (CS 180 homework on loops, EAPS 106 project on plate boundaries, MA 261 quiz on multivariable calculus). This specificity is what makes practice feel real and transfers to actual performance.
 
-{/* DEMO_VIDEO: how-it-works-rubric — replace public/demos/how-it-works-rubric.mp4 */}
+{/* DEMO_VIDEO: how-it-works-rubric | manual */}
 
 <DemoVideo
   topic="how-it-works-rubric"
+  kind="manual"
   caption="Opening a graded attempt and walking the five rubric criteria — each named level (Poor → Excellent) with concrete behavioral feedback quoting the conversation."
 />
 
@@ -48855,10 +48964,11 @@ Because simulation training can be challenging — especially the first time —
 
 The system that turns rubric scores into actionable insights — both for the individual learner ("here's what to work on") and for the training designer ("here's where the cohort is struggling"). Glow provides dashboards, reports, leaderboards, and LMS-compatible exports.
 
-{/* DEMO_VIDEO: how-it-works-attempt-loop — replace public/demos/how-it-works-attempt-loop.mp4 */}
+{/* DEMO_VIDEO: how-it-works-attempt-loop | manual */}
 
 <DemoVideo
   topic="how-it-works-attempt-loop"
+  kind="manual"
   caption="The full attempt loop: start scenario, multi-turn chat with the persona, hints panel, backtrack a message, end attempt, see the rubric scorecard."
 />
 
@@ -48977,12 +49087,13 @@ Even within education, the framework extends beyond CS. Glow has been used with 
 
 Route: /invocation
 
-{/* DEMO_VIDEO: invocation-overview — replace public/demos/invocation-overview.mp4 */}
+{/* DEMO_VIDEO: invocation-overview | playwright */}
 
 # Invocation
 
 <DemoVideo
   topic="invocation-overview"
+  kind="playwright"
   caption="Opening a single invocation: model + agent header, status pill, modalities chips, scores grid below, trace expandable on demand."
 />
 
@@ -49067,12 +49178,13 @@ curl -X POST https://<your-instance>/test/invocations \
   -d '{"test_id": "test-uuid", "page_size": 25}'
 ```
 
-{/* DEMO_VIDEO: invocation-fanout — replace public/demos/invocation-fanout.mp4 */}
+{/* DEMO_VIDEO: invocation-fanout | manual */}
 
 ## Invocations in the test flow
 
 <DemoVideo
   topic="invocation-fanout"
+  kind="manual"
   caption="A single test fanning out into one invocation per scenario × model × agent cell — rows landing as `queued` then flipping to `running` in parallel."
 />
 
@@ -49089,12 +49201,13 @@ cell (typically: scenario × model × agent). Each invocation:
 The parent test's response aggregates invocations into
 `AggregatedResults` for benchmark UIs.
 
-{/* DEMO_VIDEO: invocation-status-lifecycle — replace public/demos/invocation-status-lifecycle.mp4 */}
+{/* DEMO_VIDEO: invocation-status-lifecycle | manual */}
 
 ## Status lifecycle
 
 <DemoVideo
   topic="invocation-status-lifecycle"
+  kind="manual"
   caption="Walking a row through queued → running → completed, then re-firing a `failed` row with `invocation_run` and terminating one mid-flight with `invocation_terminate`."
 />
 
@@ -49110,12 +49223,13 @@ The parent test's response aggregates invocations into
 Use `invocation_run` to (re-)kick a queued or failed invocation; use
 `invocation_terminate` to stop a `running` one safely.
 
-{/* DEMO_VIDEO: invocation-trace — replace public/demos/invocation-trace.mp4 */}
+{/* DEMO_VIDEO: invocation-trace | vhs */}
 
 ## Trace
 
 <DemoVideo
   topic="invocation-trace"
+  kind="vhs"
   caption="Expanding `invocation_trace` to walk the full call chain: prompts sent, intermediate tool calls, and the final response — ready for audit or replay."
 />
 
@@ -49131,12 +49245,13 @@ curl -X POST https://<your-instance>/test/invocation_trace \
 Returns the full call chain — prompts sent, intermediate tool calls,
 responses received — formatted for replay or audit.
 
-{/* DEMO_VIDEO: invocation-list-paginate — replace public/demos/invocation-list-paginate.mp4 */}
+{/* DEMO_VIDEO: invocation-list-paginate | playwright */}
 
 ## Listing and paginating
 
 <DemoVideo
   topic="invocation-list-paginate"
+  kind="playwright"
   caption="Hitting `POST /test/invocations` for a test_id, paginating with page_size, and filtering down to just the `failed` rows to triage."
 />
 
@@ -49167,12 +49282,13 @@ responses received — formatted for replay or audit.
 
 Route: /leaderboard
 
-{/* DEMO_VIDEO: leaderboard-overview */}
+{/* DEMO_VIDEO: leaderboard-overview | playwright */}
 
 # Leaderboard
 
 <DemoVideo
   topic="leaderboard-overview"
+  kind="playwright"
   caption="POST /attempt/leaderboard returning header KPIs + rankings + accolade winners — the full coordinator view of who's leading the cohort."
 />
 
@@ -49256,12 +49372,13 @@ curl -X POST https://<your-instance>/attempt/search \
 | Sorting | `sort_by`, `sort_order` | Sort by any metric column |
 | Pagination | `page_limit`, `page_offset` | Control page size |
 
-{/* DEMO_VIDEO: leaderboard-rankings */}
+{/* DEMO_VIDEO: leaderboard-rankings | playwright */}
 
 ## Rankings table
 
 <DemoVideo
   topic="leaderboard-rankings"
+  kind="playwright"
   caption="The ranked LeaderboardDataRow table — rank, name, highest_score_avg, messages_per_session, quickest_pass_minutes, sortable by any metric column."
 />
 
@@ -49289,12 +49406,13 @@ Each winner includes `profile_id`, `name`, `value`, and `details`.
 
 Resource metadata keyed by ID: `profiles`, `simulations`, `scenarios`.
 
-{/* DEMO_VIDEO: leaderboard-trends */}
+{/* DEMO_VIDEO: leaderboard-trends | playwright */}
 
 ## Score trends and accolades
 
 <DemoVideo
   topic="leaderboard-trends"
+  kind="playwright"
   caption="Accolade winners panel — highest_scorer, rapid_riser, marathon_runner — with each card showing the underlying value + details that earned it."
 />
 
@@ -49315,12 +49433,13 @@ The `POST /attempt/search` response returns `LeaderboardDataRow` items:
   - `perfect_score_count` -- Number of perfect scores
   - `quickest_pass_minutes` -- Fastest pass time
 
-{/* DEMO_VIDEO: leaderboard-scoping */}
+{/* DEMO_VIDEO: leaderboard-scoping | playwright */}
 
 ## Scoping the leaderboard
 
 <DemoVideo
   topic="leaderboard-scoping"
+  kind="playwright"
   caption="Scoping with cohort_ids + simulation_ids + start_date/end_date — rankings, accolades and trends all reshape to the filtered window."
 />
 
@@ -49346,7 +49465,7 @@ The `POST /attempt/search` response returns `LeaderboardDataRow` items:
 
 Route: /mcp
 
-{/* DEMO_VIDEO: mcp-overview — replace public/demos/mcp-overview.mp4 */}
+{/* DEMO_VIDEO: mcp-overview | vhs */}
 
 # MCP
 
@@ -49358,6 +49477,7 @@ the generate pipeline uses internally.
 
 <DemoVideo
   topic="mcp-overview"
+  kind="vhs"
   caption="Listing tools over MCP, then invoking one — same JSON-RPC envelope a real MCP client would send."
 />
 
@@ -49388,12 +49508,13 @@ The exact tool list depends on what's seeded in your instance — call
 
 ---
 
-{/* DEMO_VIDEO: mcp-list-tools — replace public/demos/mcp-list-tools.mp4 */}
+{/* DEMO_VIDEO: mcp-list-tools | vhs */}
 
 ## Listing tools
 
 <DemoVideo
   topic="mcp-list-tools"
+  kind="vhs"
   caption="`glow mcp list-tools` — one POST to /mcp/, prints name + first description line per tool."
 />
 
@@ -49414,12 +49535,13 @@ line of `description` per row. Pass `--json` for the raw array.
 
 ---
 
-{/* DEMO_VIDEO: mcp-call — replace public/demos/mcp-call.mp4 */}
+{/* DEMO_VIDEO: mcp-call | vhs */}
 
 ## Invoking a tool
 
 <DemoVideo
   topic="mcp-call"
+  kind="vhs"
   caption="`glow mcp call` with --args '{...}' — JSON arguments validated against the tool's inputSchema before dispatch."
 />
 
@@ -49562,7 +49684,7 @@ mounts at that exact path.
 
 Route: /media
 
-{/* DEMO_VIDEO: media-overview — replace public/demos/media-overview.mp4 */}
+{/* DEMO_VIDEO: media-overview | manual */}
 
 # Media
 
@@ -49573,6 +49695,7 @@ per-modality routes that hang off the artifact each upload belongs to.
 
 <DemoVideo
   topic="media-overview"
+  kind="manual"
   caption="An attempt with a recorded audio reply, a scenario with an attached cover image, and a document with a PDF — all three trace back to the same upload_id shape on the wire."
 />
 
@@ -49598,12 +49721,13 @@ id**; it's the canonical mirror of every download family.
 
 ---
 
-{/* DEMO_VIDEO: media-upload — replace public/demos/media-upload.mp4 */}
+{/* DEMO_VIDEO: media-upload | playwright */}
 
 ## Uploading
 
 <DemoVideo
   topic="media-upload"
+  kind="playwright"
   caption="Dragging a PDF onto the documents picker — the multipart POST round-trips an upload_id that the client immediately stores against the row."
 />
 
@@ -49661,12 +49785,13 @@ Response is always `{audio_id, audios_id, upload_id}`.
 
 ---
 
-{/* DEMO_VIDEO: media-download — replace public/demos/media-download.mp4 */}
+{/* DEMO_VIDEO: media-download | playwright */}
 
 ## Downloading
 
 <DemoVideo
   topic="media-download"
+  kind="playwright"
   caption="An audio scrubber seeking mid-track — the second request is a Range GET for the bytes ahead of the playhead, served as 206 Partial Content."
 />
 
@@ -49713,12 +49838,13 @@ Body is always `{"<kind>_id": "<upload_id>"}` — `audio_id`, `file_id`,
 
 ---
 
-{/* DEMO_VIDEO: media-preview — replace public/demos/media-preview.mp4 */}
+{/* DEMO_VIDEO: media-preview | playwright */}
 
 ## File preview
 
 <DemoVideo
   topic="media-preview"
+  kind="playwright"
   caption="A PDF document tile showing a PNG thumbnail of its first page — generated server-side, cached for an hour."
 />
 
@@ -49739,12 +49865,13 @@ must-revalidate`. Hosted on `system`, `attempt`, `scenario`, and
 
 ---
 
-{/* DEMO_VIDEO: media-chunked — replace public/demos/media-chunked.mp4 */}
+{/* DEMO_VIDEO: media-chunked | manual */}
 
 ## Resumable uploads (TUS)
 
 <DemoVideo
   topic="media-chunked"
+  kind="manual"
   caption="Uploading a 400 MB lecture recording in 32 MB chunks — the network drops, the client reconnects, status reports the offset, and the upload resumes."
 />
 
@@ -49858,7 +49985,7 @@ Reading the canonical rows:
 
 Route: /models
 
-{/* DEMO_VIDEO: models-overview — replace public/demos/models-overview.mp4 */}
+{/* DEMO_VIDEO: models-overview | playwright */}
 
 # Models
 
@@ -49866,6 +49993,7 @@ Models define the LLM configurations that power AI student personas during offic
 
 <DemoVideo
   topic="models-overview"
+  kind="playwright"
   caption="The models list -- rows grouped by provider, each showing modality icons and agent usage count, with quick filter by provider and department."
 />
 
@@ -49893,12 +50021,13 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ---
 
-{/* DEMO_VIDEO: models-create — replace public/demos/models-create.mp4 */}
+{/* DEMO_VIDEO: models-create | playwright */}
 
 ## Create a model
 
 <DemoVideo
   topic="models-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, provider picker -- the new model_id is wired into the agent's model picker immediately."
 />
 
@@ -49936,7 +50065,7 @@ Each entry returns the new `model_id`, the generated `draft_id`, and the initial
 
 ---
 
-{/* DEMO_VIDEO: models-provider-link — replace public/demos/models-provider-link.mp4 */}
+{/* DEMO_VIDEO: models-provider-link | playwright */}
 
 ## Provider linking
 
@@ -49944,6 +50073,7 @@ Every model requires at least one provider. The `provider_ids` field connects th
 
 <DemoVideo
   topic="models-provider-link"
+  kind="playwright"
   caption="Swapping a model's provider from a deprecated key set to a freshly-rotated one -- no agent rewiring needed because the model_id stays stable."
 />
 
@@ -49958,12 +50088,13 @@ curl -X POST https://<your-instance>/model/search \
 
 ---
 
-{/* DEMO_VIDEO: models-capabilities — replace public/demos/models-capabilities.mp4 */}
+{/* DEMO_VIDEO: models-capabilities | playwright */}
 
 ## Capabilities and feature flags
 
 <DemoVideo
   topic="models-capabilities"
+  kind="playwright"
   caption="Toggling modality (adding image input), bumping reasoning to high, and shifting the quality tier on one model -- every dimension is its own resource set."
 />
 
@@ -49982,7 +50113,7 @@ Use `flag_ids` to toggle boolean capabilities like `image_model` or active/inact
 
 ---
 
-{/* DEMO_VIDEO: models-draft — replace public/demos/models-draft.mp4 */}
+{/* DEMO_VIDEO: models-draft | playwright */}
 
 ## The draft cycle
 
@@ -49990,6 +50121,7 @@ Models support a draft workflow for staging changes before publishing. Use the d
 
 <DemoVideo
   topic="models-draft"
+  kind="playwright"
   caption="Editing a model in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -50010,12 +50142,13 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 ---
 
-{/* DEMO_VIDEO: models-search — replace public/demos/models-search.mp4 */}
+{/* DEMO_VIDEO: models-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="models-search"
+  kind="playwright"
   caption="Filtering by provider + department + modality, then drilling into one model's wiring."
 />
 
@@ -50035,7 +50168,7 @@ The response includes a `department_filter`, `provider_filter`, and modality fac
 
 ---
 
-{/* DEMO_VIDEO: models-bulk — replace public/demos/models-bulk.mp4 */}
+{/* DEMO_VIDEO: models-bulk | playwright */}
 
 ## Bulk operations
 
@@ -50043,6 +50176,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="models-bulk"
+  kind="playwright"
   caption="Bulk-archiving every model tied to a deprecated provider in one round-trip; excluded_ids keeps the model still pinned by a live agent."
 />
 
@@ -50104,7 +50238,7 @@ glow models update --body '{
 
 Route: /
 
-{/* DEMO_VIDEO: index-overview — replace public/demos/index-overview.mp4 */}
+{/* DEMO_VIDEO: index-overview | manual */}
 
 # Glow Documentation
 
@@ -50112,7 +50246,7 @@ Documentation for the **Glow** conversational AI training platform — an
 academic, self-hostable system for designing and running
 persona-driven simulations with full grading + analytics.
 
-<DemoVideo topic="index-overview" caption="Glow in 60 seconds — landing on the docs home and orienting around what the platform does." />
+<DemoVideo topic="index-overview" kind="manual" caption="Glow in 60 seconds — landing on the docs home and orienting around what the platform does." />
 
 ## Getting started
 
@@ -50128,12 +50262,13 @@ persona-driven simulations with full grading + analytics.
 - **[API Reference](/api-reference)** — every HTTP endpoint, auto-generated from OpenAPI
 - **[CLI Reference](/cli-reference)** — every `glow` command, auto-generated from the CLI spec
 
-{/* DEMO_VIDEO: index-sidebar — replace public/demos/index-sidebar.mp4 */}
+{/* DEMO_VIDEO: index-sidebar | playwright */}
 
 ## Sidebar layout
 
 <DemoVideo
   topic="index-sidebar"
+  kind="playwright"
   caption="Scrolling the left-hand nav and showing how each sidebar group lines up 1-for-1 with the running client UI."
 />
 
@@ -50159,7 +50294,7 @@ navigation; the two intentionally differ.
 
 Route: /parameters
 
-{/* DEMO_VIDEO: parameters-overview — replace public/demos/parameters-overview.mp4 */}
+{/* DEMO_VIDEO: parameters-overview | playwright */}
 
 # Parameters
 
@@ -50167,6 +50302,7 @@ Parameters define the dimensions along which simulation scenarios can vary. Each
 
 <DemoVideo
   topic="parameters-overview"
+  kind="playwright"
   caption="The parameters list — each row shows the category, description, and how many fields hang off it; drill in to see the field grid."
 />
 
@@ -50204,12 +50340,13 @@ Parameters connect to **fields**. Each parameter contains one or more fields. Do
 
 ---
 
-{/* DEMO_VIDEO: parameters-create — replace public/demos/parameters-create.mp4 */}
+{/* DEMO_VIDEO: parameters-create | playwright */}
 
 ## Create a parameter
 
 <DemoVideo
   topic="parameters-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then attaching the first batch of fields under the new parameter."
 />
 
@@ -50251,7 +50388,7 @@ curl -X POST https://<your-instance>/parameter/create \
 
 ---
 
-{/* DEMO_VIDEO: parameters-edit — replace public/demos/parameters-edit.mp4 */}
+{/* DEMO_VIDEO: parameters-edit | playwright */}
 
 ## Parameters vs. fields
 
@@ -50262,6 +50399,7 @@ Understanding the relationship between parameters and fields is essential:
 
 <DemoVideo
   topic="parameters-edit"
+  kind="playwright"
   caption="Opening the Temperament parameter and adding two new field values (Anxious, Optimistic) inline, then watching them appear everywhere Temperament is referenced."
 />
 
@@ -50273,7 +50411,7 @@ Parameters own fields. When you create the "Temperament" parameter, you then cre
 
 ---
 
-{/* DEMO_VIDEO: parameters-resolve — replace public/demos/parameters-resolve.mp4 */}
+{/* DEMO_VIDEO: parameters-resolve | manual */}
 
 ## Parameter value resolution
 
@@ -50281,6 +50419,7 @@ When a scenario runs, Glow resolves each persona `{{placeholder}}` against the p
 
 <DemoVideo
   topic="parameters-resolve"
+  kind="manual"
   caption="Side-by-side: same Confused persona, two scenarios. One resolves {{class}} to CS-180 and {{intensity}} to 3; the other to CS-422 and 9. The same persona behaves very differently."
 />
 
@@ -50290,7 +50429,7 @@ See the [Personas parameter fields section](/personas#parameter-fields) for the 
 
 ---
 
-{/* DEMO_VIDEO: parameters-draft — replace public/demos/parameters-draft.mp4 */}
+{/* DEMO_VIDEO: parameters-draft | playwright */}
 
 ## Drafts
 
@@ -50298,6 +50437,7 @@ Parameters support the draft workflow. Changes are saved as a draft before being
 
 <DemoVideo
   topic="parameters-draft"
+  kind="playwright"
   caption="Editing the same parameter in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -50313,7 +50453,7 @@ Via the API, use `PATCH /parameter/draft` with fields like `input_draft_id`, `ex
 
 ---
 
-{/* DEMO_VIDEO: parameters-search — replace public/demos/parameters-search.mp4 */}
+{/* DEMO_VIDEO: parameters-search | playwright */}
 
 ## Filtering and search
 
@@ -50321,6 +50461,7 @@ Parameters support rich search and filtering. You can filter by:
 
 <DemoVideo
   topic="parameters-search"
+  kind="playwright"
   caption="Filtering parameters by which scenarios reference them and by member fields, then drilling in on Temperament."
 />
 
@@ -50342,7 +50483,7 @@ curl -X POST https://<your-instance>/parameter/search \
 
 ---
 
-{/* DEMO_VIDEO: parameters-bulk — replace public/demos/parameters-bulk.mp4 */}
+{/* DEMO_VIDEO: parameters-bulk | playwright */}
 
 ## Bulk operations
 
@@ -50350,6 +50491,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="parameters-bulk"
+  kind="playwright"
   caption="Bulk-archiving every parameter in a deprecated department in one round-trip, keeping a manual exception list."
 />
 
@@ -50400,20 +50542,21 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 Route: /patterns
 
-{/* DEMO_VIDEO: patterns-overview — replace public/demos/patterns-overview.mp4 */}
+{/* DEMO_VIDEO: patterns-overview | manual */}
 
 # Patterns & Best Practices
 
-<DemoVideo topic="patterns-overview" caption="Quick tour through the pattern catalog — persona realism, rubric specificity, parameters, progressive difficulty." />
+<DemoVideo topic="patterns-overview" kind="manual" caption="Quick tour through the pattern catalog — persona realism, rubric specificity, parameters, progressive difficulty." />
 
 Short, actionable recipes for common simulation design challenges. Each pattern stands on its own — read the ones relevant to what you're working on.
 
-{/* DEMO_VIDEO: patterns-persona-realism — replace public/demos/patterns-persona-realism.mp4 */}
+{/* DEMO_VIDEO: patterns-persona-realism | manual */}
 
 ## Making Personas Feel Real
 
 <DemoVideo
   topic="patterns-persona-realism"
+  kind="manual"
   caption="Anti-pattern vs. pattern: a persona that breaks character and offers help, then the same persona rewritten with the golden rule and example exchanges."
 />
 
@@ -50494,12 +50637,13 @@ Student (Mostly calmed down): "Ok fine, I'm just annoyed that I got zero
 points, and I spent hours trying to figure out that last question."
 ```
 
-{/* DEMO_VIDEO: patterns-rubric-criteria — replace public/demos/patterns-rubric-criteria.mp4 */}
+{/* DEMO_VIDEO: patterns-rubric-criteria | manual */}
 
 ## Writing Rubric Criteria That Work
 
 <DemoVideo
   topic="patterns-rubric-criteria"
+  kind="manual"
   caption="Vague 'communicates well' criterion producing identical 3/5 scores, then the same rubric with behavioral-anchor levels producing differentiated feedback."
 />
 
@@ -50589,12 +50733,13 @@ One persona + one document + different parameter combinations = many unique scen
 
 Attach actual course material (homework assignments, problem sets, syllabi) as documents. The document becomes the single source of truth for the course number and topic. This ensures the AI character asks about real problems, not generic ones — which is what makes practice feel authentic.
 
-{/* DEMO_VIDEO: patterns-progressive-difficulty — replace public/demos/patterns-progressive-difficulty.mp4 */}
+{/* DEMO_VIDEO: patterns-progressive-difficulty | playwright */}
 
 ## Progressive Difficulty
 
 <DemoVideo
   topic="patterns-progressive-difficulty"
+  kind="playwright"
   caption="Reordering scenarios inside a simulation from cooperative → confused → aggressive → passive, and seeing scenario_positions enforced at runtime."
 />
 
@@ -50701,12 +50846,13 @@ The same conversation gets very different scores on different runs.
 Reusable API patterns that apply across many artifacts. Per-artifact pages
 link here instead of re-explaining the same shape.
 
-{/* DEMO_VIDEO: patterns-drafts — replace public/demos/patterns-drafts.mp4 */}
+{/* DEMO_VIDEO: patterns-drafts | playwright */}
 
 ## Recipe 1: Drafts + `expected_version` (optimistic concurrency)
 
 <DemoVideo
   topic="patterns-drafts"
+  kind="playwright"
   caption="Saving a draft from two tabs — the second save sees an expected_version mismatch and surfaces the conflict instead of clobbering the first edit."
 />
 
@@ -50757,12 +50903,13 @@ present a merge prompt rather than blindly retrying. See the
 [Personas draft cycle](/personas#the-draft-cycle) for the fully worked
 example and the artifact-specific field list in each API reference page.
 
-{/* DEMO_VIDEO: patterns-bulk-write — replace public/demos/patterns-bulk-write.mp4 */}
+{/* DEMO_VIDEO: patterns-bulk-write | playwright */}
 
 ## Recipe 2: Bulk-write (`all` + flat filters + `excluded_ids` + `patch`)
 
 <DemoVideo
   topic="patterns-bulk-write"
+  kind="playwright"
   caption="Bulk-archiving every persona in a department except a manually-excluded handful — single round-trip, server-side filter resolution, no row-by-row writes."
 />
 
@@ -50822,12 +50969,13 @@ own `Update<X>Item` minus `id` (the server stamps the id per matched row).
 See the [Personas bulk operations](/personas#bulk-operations) section for
 the fully worked example.
 
-{/* DEMO_VIDEO: patterns-search-facets — replace public/demos/patterns-search-facets.mp4 */}
+{/* DEMO_VIDEO: patterns-search-facets | playwright */}
 
 ## Recipe 3: Search facets (`*_search` request + `*_filter` response)
 
 <DemoVideo
   topic="patterns-search-facets"
+  kind="playwright"
   caption="A persona search response carrying scenario_filter / department_filter / voice_filter sections that the UI renders as dropdowns with counts — no second round-trip."
 />
 
@@ -50882,7 +51030,7 @@ per artifact — see each `/<art>/search` entry in the
 
 Route: /permissions
 
-{/* DEMO_VIDEO: permissions-overview — replace public/demos/permissions-overview.mp4 */}
+{/* DEMO_VIDEO: permissions-overview | manual */}
 
 # Permissions & Roles
 
@@ -50896,6 +51044,7 @@ making a round-trip just to discover a 403.
 
 <DemoVideo
   topic="permissions-overview"
+  kind="manual"
   caption="A learner-role profile sees the Home / Practice / Leaderboard rail; an admin-role profile sees the same rail plus Training, Management, Intelligence, and Platform. Same client build, different role_permissions payload."
 />
 
@@ -50927,12 +51076,13 @@ uses `role_artifacts` for the top-level sidebar gate and
 
 ---
 
-{/* DEMO_VIDEO: permissions-resolve — replace public/demos/permissions-resolve.mp4 */}
+{/* DEMO_VIDEO: permissions-resolve | manual */}
 
 ## How a request gets authorized
 
 <DemoVideo
   topic="permissions-resolve"
+  kind="manual"
   caption="A request to POST /persona/create with a viewer-role token: middleware resolves the identity, the route's has_permission check rejects (persona, create), and the response is a 403 before any work runs."
 />
 
@@ -50984,12 +51134,13 @@ their `permission_ids`.
 
 ---
 
-{/* DEMO_VIDEO: permissions-context — replace public/demos/permissions-context.mp4 */}
+{/* DEMO_VIDEO: permissions-context | vhs */}
 
 ## `role_artifacts` in responses
 
 <DemoVideo
   topic="permissions-context"
+  kind="vhs"
   caption="DevTools network panel showing a /profile/context response — the role_artifacts list is the same data the sidebar filter reads from."
 />
 
@@ -51036,12 +51187,13 @@ The full schema is generated under
 
 ---
 
-{/* DEMO_VIDEO: permissions-client-mirror — replace public/demos/permissions-client-mirror.mp4 */}
+{/* DEMO_VIDEO: permissions-client-mirror | manual */}
 
 ## Mirroring on the client
 
 <DemoVideo
   topic="permissions-client-mirror"
+  kind="manual"
   caption="The same SIDEBAR_SECTIONS array rendered for two different roles — entries the role lacks are dropped from the rail at render time, no flash."
 />
 
@@ -51143,7 +51295,7 @@ For the full scoping model see [Departments](/departments).
 
 Route: /personas
 
-{/* DEMO_VIDEO: personas-overview — replace public/demos/personas-overview.mp4 */}
+{/* DEMO_VIDEO: personas-overview | playwright */}
 
 # Personas
 
@@ -51153,6 +51305,7 @@ talking to and *how* that character behaves.
 
 <DemoVideo
   topic="personas-overview"
+  kind="playwright"
   caption="The personas list page — cards by color and icon, filter by department or voice, drill in to edit instructions."
 />
 
@@ -51188,12 +51341,13 @@ Personas are **step 1** in the Glow content pipeline:
 
 ---
 
-{/* DEMO_VIDEO: personas-create — replace public/demos/personas-create.mp4 */}
+{/* DEMO_VIDEO: personas-create | playwright */}
 
 ## Create a persona
 
 <DemoVideo
   topic="personas-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, color, icon, and the instructions textarea."
 />
 
@@ -51230,7 +51384,7 @@ and the initial `version` for optimistic-concurrency follow-ups.
 
 ---
 
-{/* DEMO_VIDEO: personas-instructions — replace public/demos/personas-instructions.mp4 */}
+{/* DEMO_VIDEO: personas-instructions | playwright */}
 
 ## Writing effective instructions
 
@@ -51239,6 +51393,7 @@ instructions produce consistent, realistic interactions.
 
 <DemoVideo
   topic="personas-instructions"
+  kind="playwright"
   caption="Editing instructions inline with live preview, swapping {{placeholders}} for sample values to sanity-check the prompt."
 />
 
@@ -51281,7 +51436,7 @@ Start responses with hedging phrases like "I mean..." or "Look, I just..."
 
 ---
 
-{/* DEMO_VIDEO: personas-parameters — replace public/demos/personas-parameters.mp4 */}
+{/* DEMO_VIDEO: personas-parameters | manual */}
 
 ## Parameter fields
 
@@ -51291,6 +51446,7 @@ at runtime based on the scenario's parameter configuration.
 
 <DemoVideo
   topic="personas-parameters"
+  kind="manual"
   caption="A persona referencing {{class}} and {{intensity}} — the same persona drives wildly different conversations depending on scenario parameter values."
 />
 
@@ -51324,7 +51480,7 @@ persona runs inside a scenario that provides matching parameter values.
 
 ---
 
-{/* DEMO_VIDEO: personas-examples — replace public/demos/personas-examples.mp4 */}
+{/* DEMO_VIDEO: personas-examples | playwright */}
 
 ## Examples that teach voice
 
@@ -51334,6 +51490,7 @@ speech patterns.
 
 <DemoVideo
   topic="personas-examples"
+  kind="playwright"
   caption="Adding two example exchanges to the passive-student persona to anchor the 'Uh...' verbal tic."
 />
 
@@ -51359,7 +51516,7 @@ through instructions alone.
 
 ---
 
-{/* DEMO_VIDEO: personas-draft — replace public/demos/personas-draft.mp4 */}
+{/* DEMO_VIDEO: personas-draft | playwright */}
 
 ## The draft cycle
 
@@ -51371,6 +51528,7 @@ silently overwrite yours.
 
 <DemoVideo
   topic="personas-draft"
+  kind="playwright"
   caption="Editing a persona in two tabs: the second save sees expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -51413,7 +51571,7 @@ glow personas drafts
 
 ---
 
-{/* DEMO_VIDEO: personas-search — replace public/demos/personas-search.mp4 */}
+{/* DEMO_VIDEO: personas-search | playwright */}
 
 ## Search & filter
 
@@ -51422,6 +51580,7 @@ color, icon, scenario, field), and pagination.
 
 <DemoVideo
   topic="personas-search"
+  kind="playwright"
   caption="Filtering by department + voice picker, then drilling in on a single persona."
 />
 
@@ -51454,7 +51613,7 @@ filter facets (`scenario_filter`, `department_filter`, `voice_filter`,
 
 ---
 
-{/* DEMO_VIDEO: personas-bulk — replace public/demos/personas-bulk.mp4 */}
+{/* DEMO_VIDEO: personas-bulk | playwright */}
 
 ## Bulk operations
 
@@ -51465,6 +51624,7 @@ explicit IDs, or `all: true` with flat filter fields + optional
 
 <DemoVideo
   topic="personas-bulk"
+  kind="playwright"
   caption="Bulk-deleting every persona in a department except a manually-excluded list — single round-trip, no row-by-row delete."
 />
 
@@ -51531,12 +51691,13 @@ fields and `patch` schema.
 
 Route: /practice
 
-{/* DEMO_VIDEO: practice-overview */}
+{/* DEMO_VIDEO: practice-overview | playwright */}
 
 # Practice
 
 <DemoVideo
   topic="practice-overview"
+  kind="playwright"
   caption="The practice landing — self-directed simulation cards with persona colors, best score, and a Start button that never counts against assigned-training metrics."
 />
 
@@ -51613,12 +51774,13 @@ The `POST /attempt/practice` response mirrors the Home response structure:
 - **`standard_groups`** -- Groups like "Communication Skills", "Policy Knowledge", "De-escalation" with `points` and `pass_points`.
 - **`standards`** -- Individual assessment standards within each group.
 
-{/* DEMO_VIDEO: practice-retry */}
+{/* DEMO_VIDEO: practice-retry | playwright */}
 
 ## Retrying a practice session
 
 <DemoVideo
   topic="practice-retry"
+  kind="playwright"
   caption="Re-running a finished practice attempt — same persona + scenario, fresh chat thread, num_sessions ticks up but the highest_score badge stays."
 />
 
@@ -51626,10 +51788,11 @@ The `POST /attempt/practice` response mirrors the Home response structure:
 
 ## Searching Practice History
 
-{/* DEMO_VIDEO: practice-scores */}
+{/* DEMO_VIDEO: practice-scores | playwright */}
 
 <DemoVideo
   topic="practice-scores"
+  kind="playwright"
   caption="A practice attempt result page — rubric standard breakdown, per-criterion feedback and the suggested-improvement panel side by side."
 />
 
@@ -51661,12 +51824,13 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 | Certificate | Export includes certificate | Standard export |
 | `view_mode` | `"member"` or `"instructional"` | `"practice"` |
 
-{/* DEMO_VIDEO: practice-export */}
+{/* DEMO_VIDEO: practice-export | vhs */}
 
 ## Exporting practice data
 
 <DemoVideo
   topic="practice-export"
+  kind="vhs"
   caption="glow attempts export from a practice context — same denormalized ZIP shape as Home, minus the official-training certificate gating."
 />
 
@@ -51692,12 +51856,13 @@ Each `HistoryItem` includes `attempt_id`, `simulation_name`, `score`, `score_sta
 
 Route: /pricing
 
-{/* DEMO_VIDEO: pricing-overview — replace public/demos/pricing-overview.mp4 */}
+{/* DEMO_VIDEO: pricing-overview | playwright */}
 
 # Pricing
 
 <DemoVideo
   topic="pricing-overview"
+  kind="playwright"
   caption="The Pricing page at a glance — daily-cost chart up top, model + agent filter chips, paginated group-history table below."
 />
 
@@ -51768,12 +51933,13 @@ curl -X POST https://<your-instance>/system/groups \
 | Pagination | `page`, `page_size` (search only) | Control page size |
 | Sort direction | `sort_order` (search only) | `"asc"` or `"desc"` |
 
-{/* DEMO_VIDEO: pricing-daily-cost — replace public/demos/pricing-daily-cost.mp4 */}
+{/* DEMO_VIDEO: pricing-daily-cost | playwright */}
 
 ## Understanding the Daily Cost Response
 
 <DemoVideo
   topic="pricing-daily-cost"
+  kind="playwright"
   caption="Scoping the daily-cost chart to a single semester and watching the stacked bars redraw per model — easy to spot the day the new model rolled out."
 />
 
@@ -51793,12 +51959,13 @@ The `POST /system/pricing` response includes:
 - **`total_count`** -- Total number of matching records.
 - **`analytics`** -- Filter facets for the page.
 
-{/* DEMO_VIDEO: pricing-group-history — replace public/demos/pricing-group-history.mp4 */}
+{/* DEMO_VIDEO: pricing-group-history | playwright */}
 
 ## Understanding Group History
 
 <DemoVideo
   topic="pricing-group-history"
+  kind="playwright"
   caption="Sorting the group-history table by total_cost descending, then clicking a row to jump to its Group detail page."
 />
 
@@ -51817,12 +51984,13 @@ The `POST /system/groups` response returns paginated `PricingGroupItem` rows:
 - `agent_ids`, `agent_names` -- Agents used
 - `model_ids`, `model_names` -- Models used
 
-{/* DEMO_VIDEO: pricing-model-breakdown — replace public/demos/pricing-model-breakdown.mp4 */}
+{/* DEMO_VIDEO: pricing-model-breakdown | playwright */}
 
 ## Model Breakdown
 
 <DemoVideo
   topic="pricing-model-breakdown"
+  kind="playwright"
   caption="Filtering by `model_id` to isolate spend per model — quick way to compare a cheap-and-fast model against a premium one for the same scenarios."
 />
 
@@ -51857,7 +52025,7 @@ The response includes `content` (base64-encoded), `file_name`, `mime_type`, and 
 
 Route: /profiles
 
-{/* DEMO_VIDEO: profiles-overview — replace public/demos/profiles-overview.mp4 */}
+{/* DEMO_VIDEO: profiles-overview | playwright */}
 
 # Profiles
 
@@ -51865,6 +52033,7 @@ Profiles represent the people who use Glow -- instructors, teaching assistants, 
 
 <DemoVideo
   topic="profiles-overview"
+  kind="playwright"
   caption="The profiles list — cards show name, role, department, and last login; drill in to manage role assignments and department membership."
 />
 
@@ -51890,12 +52059,13 @@ Profiles are the link between real users and the simulation experience. Without 
 
 ---
 
-{/* DEMO_VIDEO: profiles-create — replace public/demos/profiles-create.mp4 */}
+{/* DEMO_VIDEO: profiles-create | playwright */}
 
 ## Create a profile
 
 <DemoVideo
   topic="profiles-create"
+  kind="playwright"
   caption="Filling out the create form: name, email, picking the role (Instructional Staff / Administrator / Super Administrator), and assigning to a department."
 />
 
@@ -51939,12 +52109,13 @@ curl -X POST https://<your-instance>/profile/create \
 
 ---
 
-{/* DEMO_VIDEO: profiles-edit — replace public/demos/profiles-edit.mp4 */}
+{/* DEMO_VIDEO: profiles-edit | playwright */}
 
 ## Roles, departments, and request limits
 
 <DemoVideo
   topic="profiles-edit"
+  kind="playwright"
   caption="Editing a profile: promoting from Instructional Staff to Administrator, adding a second department, and setting a request-limit cap."
 />
 
@@ -51976,7 +52147,7 @@ Profiles can have request limits that cap how many simulation attempts a learner
 
 ---
 
-{/* DEMO_VIDEO: profiles-emulate — replace public/demos/profiles-emulate.mp4 */}
+{/* DEMO_VIDEO: profiles-emulate | playwright */}
 
 ## Emulating another profile
 
@@ -51984,6 +52155,7 @@ Super Administrators can emulate any profile to debug what that user actually se
 
 <DemoVideo
   topic="profiles-emulate"
+  kind="playwright"
   caption="A Super Admin emulating TA Johnson — the UI reflows to show only TA Johnson's cohorts and learner-facing features, then unemulate returns to admin view."
 />
 
@@ -52013,7 +52185,7 @@ Emulation is audit-logged; only Super Administrators can invoke `/profile/emulat
 
 ---
 
-{/* DEMO_VIDEO: profiles-draft — replace public/demos/profiles-draft.mp4 */}
+{/* DEMO_VIDEO: profiles-draft | playwright */}
 
 ## Drafts
 
@@ -52021,6 +52193,7 @@ Profiles support the draft workflow. When you create or update a profile through
 
 <DemoVideo
   topic="profiles-draft"
+  kind="playwright"
   caption="Editing the same profile in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -52037,7 +52210,7 @@ Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expe
 
 ---
 
-{/* DEMO_VIDEO: profiles-search — replace public/demos/profiles-search.mp4 */}
+{/* DEMO_VIDEO: profiles-search | playwright */}
 
 ## Search and filter
 
@@ -52045,6 +52218,7 @@ Profile search supports full-text plus facet filters across role, department, an
 
 <DemoVideo
   topic="profiles-search"
+  kind="playwright"
   caption="Filtering profiles by role (Instructional Staff) and department, then drilling in on a single profile."
 />
 
@@ -52062,7 +52236,7 @@ curl -X POST https://<your-instance>/profile/search \
 
 ---
 
-{/* DEMO_VIDEO: profiles-bulk — replace public/demos/profiles-bulk.mp4 */}
+{/* DEMO_VIDEO: profiles-bulk | playwright */}
 
 ## Bulk operations
 
@@ -52070,6 +52244,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="profiles-bulk"
+  kind="playwright"
   caption="Bulk-archiving every profile in a sunset department in one round-trip, keeping admin users via excluded_ids."
 />
 
@@ -52121,7 +52296,7 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 Route: /providers
 
-{/* DEMO_VIDEO: providers-overview — replace public/demos/providers-overview.mp4 */}
+{/* DEMO_VIDEO: providers-overview | playwright */}
 
 # Providers
 
@@ -52129,6 +52304,7 @@ Providers represent the LLM backends that power Glow. Each provider encapsulates
 
 <DemoVideo
   topic="providers-overview"
+  kind="playwright"
   caption="The providers list -- rows by service name with endpoint count, model usage count, and the encrypted key inventory hidden behind a decrypt action."
 />
 
@@ -52163,12 +52339,13 @@ Provider  -->  Model (model has provider_id)
 
 ---
 
-{/* DEMO_VIDEO: providers-create — replace public/demos/providers-create.mp4 */}
+{/* DEMO_VIDEO: providers-create | playwright */}
 
 ## Create a provider
 
 <DemoVideo
   topic="providers-create"
+  kind="playwright"
   caption="Creating an Anthropic Production provider, then attaching an initial endpoint -- model wiring comes after."
 />
 
@@ -52204,7 +52381,7 @@ Each entry returns the new `provider_id`, a generated `draft_id`, and the initia
 
 ---
 
-{/* DEMO_VIDEO: providers-endpoints — replace public/demos/providers-endpoints.mp4 */}
+{/* DEMO_VIDEO: providers-endpoints | playwright */}
 
 ## Endpoints
 
@@ -52212,6 +52389,7 @@ Provider endpoints define where API calls are routed. Each provider can have mul
 
 <DemoVideo
   topic="providers-endpoints"
+  kind="playwright"
   caption="Adding a second endpoint to point at a regional API gateway, then flipping the active endpoint -- linked models pick up the change on next request."
 />
 
@@ -52219,7 +52397,7 @@ When you retrieve a provider with `GET`, the response includes an `endpoints` se
 
 ---
 
-{/* DEMO_VIDEO: providers-keys — replace public/demos/providers-keys.mp4 */}
+{/* DEMO_VIDEO: providers-keys | playwright */}
 
 ## API key management
 
@@ -52227,6 +52405,7 @@ Provider keys hold encrypted credentials. Keys are never returned in plaintext f
 
 <DemoVideo
   topic="providers-keys"
+  kind="playwright"
   caption="Rotating a key: adding a new encrypted key, decrypting once to copy into a deploy step, then deleting the old key -- all without exposing plaintext in list views."
 />
 
@@ -52245,7 +52424,7 @@ The response returns the decrypted `key` value, the key `name`, and the `actor_n
 
 ---
 
-{/* DEMO_VIDEO: providers-draft — replace public/demos/providers-draft.mp4 */}
+{/* DEMO_VIDEO: providers-draft | playwright */}
 
 ## The draft cycle
 
@@ -52253,6 +52432,7 @@ Providers support a draft workflow for staging configuration changes. This is us
 
 <DemoVideo
   topic="providers-draft"
+  kind="playwright"
   caption="Staging a key+endpoint swap as a draft, reviewing the form_state, then publishing -- linked models cut over atomically."
 />
 
@@ -52273,12 +52453,13 @@ The draft endpoint uses `PATCH` semantics. Include `input_draft_id` and `expecte
 
 ---
 
-{/* DEMO_VIDEO: providers-search — replace public/demos/providers-search.mp4 */}
+{/* DEMO_VIDEO: providers-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="providers-search"
+  kind="playwright"
   caption="Filtering providers by department and free-text search, then drilling into one to see linked models."
 />
 
@@ -52293,7 +52474,7 @@ glow providers search --body '{
 
 ---
 
-{/* DEMO_VIDEO: providers-bulk — replace public/demos/providers-bulk.mp4 */}
+{/* DEMO_VIDEO: providers-bulk | playwright */}
 
 ## Bulk operations
 
@@ -52301,6 +52482,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="providers-bulk"
+  kind="playwright"
   caption="Bulk-deleting providers tagged with a retired department; excluded_ids preserves the one still serving an active eval."
 />
 
@@ -52368,7 +52550,7 @@ The response returns a new `provider_id` for the duplicated provider.
 
 Route: /realtime
 
-{/* DEMO_VIDEO: realtime-overview — replace public/demos/realtime-overview.mp4 */}
+{/* DEMO_VIDEO: realtime-overview | manual */}
 
 # Realtime
 
@@ -52380,6 +52562,7 @@ and server-pushed updates that don't fit a request/response shape.
 
 <DemoVideo
   topic="realtime-overview"
+  kind="manual"
   caption="Glow's WS surface mirrors HTTP: same artifact taxonomy, same operation names, with bidirectional streaming for live flows."
 />
 
@@ -52406,12 +52589,13 @@ surface when you're driving an interactive UI.
 
 ---
 
-{/* DEMO_VIDEO: realtime-events — replace public/demos/realtime-events.mp4 */}
+{/* DEMO_VIDEO: realtime-events | manual */}
 
 ## Event naming taxonomy
 
 <DemoVideo
   topic="realtime-events"
+  kind="manual"
   caption="Every WS event name is <artifact>.<operation> — the same shape as POST /<artifact>/<operation>. Sub-namespaces flatten to <artifact>.<sub_op>."
 />
 
@@ -52443,12 +52627,13 @@ in the API; every file there registers exactly one `@sio.on(...)` event.
 
 ---
 
-{/* DEMO_VIDEO: realtime-connect — replace public/demos/realtime-connect.mp4 */}
+{/* DEMO_VIDEO: realtime-connect | vhs */}
 
 ## Connecting
 
 <DemoVideo
   topic="realtime-connect"
+  kind="vhs"
   caption="socket.io v4 handshake — bearer JWT goes into the auth payload, not the Authorization header. Server resolves identity once at connect time."
 />
 
@@ -52493,12 +52678,13 @@ debug-panel-as-client all coexist without anyone kicking anyone off.
 
 ---
 
-{/* DEMO_VIDEO: realtime-chat-live — replace public/demos/realtime-chat-live.mp4 */}
+{/* DEMO_VIDEO: realtime-chat-live | vhs */}
 
 ## Live chat REPL
 
 <DemoVideo
   topic="realtime-chat-live"
+  kind="vhs"
   caption="glow attempts chat live <chat_id> — interactive terminal REPL over socket.io. Each stdin line emits attempt.chat_message; inbound events stream back between prompts."
 />
 
@@ -52598,12 +52784,13 @@ string.
 
 Route: /reports
 
-{/* DEMO_VIDEO: reports-overview */}
+{/* DEMO_VIDEO: reports-overview | playwright */}
 
 # Reports
 
 <DemoVideo
   topic="reports-overview"
+  kind="playwright"
   caption="POST /attempt/report returning all five sections at once — header KPIs, per-simulation overview, leaderboard, trends and inline history bundled in one bundle."
 />
 
@@ -52684,38 +52871,42 @@ The `ReportsResponse` contains:
 
 The computed report sections:
 
-{/* DEMO_VIDEO: reports-overview-section */}
+{/* DEMO_VIDEO: reports-overview-section | playwright */}
 
 <DemoVideo
   topic="reports-overview-section"
+  kind="playwright"
   caption="The overview table — one row per simulation with attempts, completed, passed, average score and pass_rate computed from the same query that powers the header KPIs."
 />
 
 - **`header_metrics`** -- `total_attempts`, `average_score`, `completion_percentage`, `first_attempt_pass_rate`. Each metric includes `current_value`, `has_data`, `data_points`, and `hover` details (mean, median, mode, count, percent).
 - **`overview`** -- Array of `ReportsOverviewRow` grouped by simulation: `simulation_id`, `attempts`, `completed_attempts`, `passed_attempts`, `average_score`, `pass_rate`.
 
-{/* DEMO_VIDEO: reports-leaderboard-section */}
+{/* DEMO_VIDEO: reports-leaderboard-section | playwright */}
 
 <DemoVideo
   topic="reports-leaderboard-section"
+  kind="playwright"
   caption="The embedded leaderboard rows — rank, profile, highest_score, plus per-profile metrics like messages_per_session and stagnation_rate without a second round-trip."
 />
 
 - **`leaderboard`** -- Array of `ReportsLeaderboardRow` with `rank`, `profile_id`, `total_attempts`, `average_score`, `highest_score`, plus detailed `profile_metrics` (messages per session, session efficiency, stagnation rate, time spent).
 
-{/* DEMO_VIDEO: reports-trends */}
+{/* DEMO_VIDEO: reports-trends | playwright */}
 
 <DemoVideo
   topic="reports-trends"
+  kind="playwright"
   caption="The trends time-series — daily attempts, average_score and pass_rate plotted across the selected date range, hover for the underlying data_points."
 />
 
 - **`trends`** -- Array of `ReportsTrendPoint` with `date`, `attempts`, `average_score`, `pass_rate` for charting.
 
-{/* DEMO_VIDEO: reports-history */}
+{/* DEMO_VIDEO: reports-history | playwright */}
 
 <DemoVideo
   topic="reports-history"
+  kind="playwright"
   caption="Paginated ReportsHistoryRow drill-down — attempt_id, score_percent, num_chats and total_time_seconds for forensic review of individual sessions."
 />
 
@@ -52769,7 +52960,7 @@ The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `ro
 
 Route: /rubrics
 
-{/* DEMO_VIDEO: rubrics-overview — replace public/demos/rubrics-overview.mp4 */}
+{/* DEMO_VIDEO: rubrics-overview | playwright */}
 
 # Rubrics
 
@@ -52777,6 +52968,7 @@ Rubrics define the scoring criteria used to evaluate TA performance during offic
 
 <DemoVideo
   topic="rubrics-overview"
+  kind="playwright"
   caption="The rubrics list -- cards by name with total points, pass threshold, standard-group count, and live simulation usage; drill in to edit groups and standards."
 />
 
@@ -52815,12 +53007,13 @@ Rubric
 
 ---
 
-{/* DEMO_VIDEO: rubrics-create — replace public/demos/rubrics-create.mp4 */}
+{/* DEMO_VIDEO: rubrics-create | playwright */}
 
 ## Create a rubric
 
 <DemoVideo
   topic="rubrics-create"
+  kind="playwright"
   caption="Creating a Communication Skills rubric: name, description, then committing -- standard groups and standards come next."
 />
 
@@ -52856,12 +53049,13 @@ Each entry returns the new `rubric_id`, a generated `draft_id`, and the initial 
 
 ---
 
-{/* DEMO_VIDEO: rubrics-standards — replace public/demos/rubrics-standards.mp4 */}
+{/* DEMO_VIDEO: rubrics-standards | playwright */}
 
 ## Standard groups and standards
 
 <DemoVideo
   topic="rubrics-standards"
+  kind="playwright"
   caption="Adding three standard groups (Active Listening, Empathy, Clarity) and ladder-style standards under each -- the points tally rolls up to the rubric total live."
 />
 
@@ -52906,7 +53100,7 @@ Each standard includes:
 
 ---
 
-{/* DEMO_VIDEO: rubrics-points — replace public/demos/rubrics-points.mp4 */}
+{/* DEMO_VIDEO: rubrics-points | playwright */}
 
 ## Points and passing thresholds
 
@@ -52914,6 +53108,7 @@ Rubrics define scoring at multiple levels. The rubric list response includes `po
 
 <DemoVideo
   topic="rubrics-points"
+  kind="playwright"
   caption="Tuning the total points and pass threshold on a rubric; the pass_percentage recomputes live and the active_simulation_count badge warns about downstream impact."
 />
 
@@ -52933,7 +53128,7 @@ The response for each rubric entry includes:
 
 ---
 
-{/* DEMO_VIDEO: rubrics-draft — replace public/demos/rubrics-draft.mp4 */}
+{/* DEMO_VIDEO: rubrics-draft | playwright */}
 
 ## The draft cycle
 
@@ -52941,6 +53136,7 @@ Rubrics support a draft workflow for staging changes. This is especially importa
 
 <DemoVideo
   topic="rubrics-draft"
+  kind="playwright"
   caption="Editing a rubric in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering live scoring config."
 />
 
@@ -52962,12 +53158,13 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 ---
 
-{/* DEMO_VIDEO: rubrics-search — replace public/demos/rubrics-search.mp4 */}
+{/* DEMO_VIDEO: rubrics-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="rubrics-search"
+  kind="playwright"
   caption="Filtering rubrics by department + free-text to find the one wired into a specific eval, then drilling into its groups and standards."
 />
 
@@ -52982,7 +53179,7 @@ glow rubrics search --body '{
 
 ---
 
-{/* DEMO_VIDEO: rubrics-bulk — replace public/demos/rubrics-bulk.mp4 */}
+{/* DEMO_VIDEO: rubrics-bulk | playwright */}
 
 ## Bulk operations
 
@@ -52990,6 +53187,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="rubrics-bulk"
+  kind="playwright"
   caption="Bulk-archiving deprecated rubrics in one round-trip; excluded_ids keeps the one still attached to a live eval, and active_simulation_count warns about impact."
 />
 
@@ -53049,7 +53247,7 @@ glow rubrics update --body '{
 
 Route: /scenarios
 
-{/* DEMO_VIDEO: scenarios-overview — replace public/demos/scenarios-overview.mp4 */}
+{/* DEMO_VIDEO: scenarios-overview | playwright */}
 
 # Scenarios
 
@@ -53057,6 +53255,7 @@ Scenarios are the training situations that learners encounter -- they combine pe
 
 <DemoVideo
   topic="scenarios-overview"
+  kind="playwright"
   caption="The scenarios list — cards show name, attached personas, and document count; drill in to edit the problem statement and objectives."
 />
 
@@ -53097,12 +53296,13 @@ Scenarios are **step 2** in the Glow content pipeline:
 
 ---
 
-{/* DEMO_VIDEO: scenarios-create — replace public/demos/scenarios-create.mp4 */}
+{/* DEMO_VIDEO: scenarios-create | playwright */}
 
 ## Create a scenario
 
 <DemoVideo
   topic="scenarios-create"
+  kind="playwright"
   caption="Filling out the create form: name, problem statement, objectives, and attaching the first persona and document."
 />
 
@@ -53155,12 +53355,13 @@ curl -X POST https://<your-instance>/scenario/create \
 
 ---
 
-{/* DEMO_VIDEO: scenarios-edit — replace public/demos/scenarios-edit.mp4 */}
+{/* DEMO_VIDEO: scenarios-edit | playwright */}
 
 ## Attaching personas, documents, and objectives
 
 <DemoVideo
   topic="scenarios-edit"
+  kind="playwright"
   caption="Attaching two personas (Confused + Aggressive) and a FERPA policy document to a single scenario, then tightening the objective list."
 />
 
@@ -53228,7 +53429,7 @@ This makes the scenario supply concrete values for each parameter when the simul
 
 ---
 
-{/* DEMO_VIDEO: scenarios-generate — replace public/demos/scenarios-generate.mp4 */}
+{/* DEMO_VIDEO: scenarios-generate | vhs */}
 
 ## Generate scenarios from a prompt
 
@@ -53236,6 +53437,7 @@ The scenario artifact has a `generate` sub-operation that produces draft scenari
 
 <DemoVideo
   topic="scenarios-generate"
+  kind="vhs"
   caption="Typing a brief ('three office-hours variants escalating in intensity') and watching three draft scenarios stream in, each pre-wired with personas and objectives."
 />
 
@@ -53270,7 +53472,7 @@ The university seed data illustrates two common patterns:
 
 ---
 
-{/* DEMO_VIDEO: scenarios-draft — replace public/demos/scenarios-draft.mp4 */}
+{/* DEMO_VIDEO: scenarios-draft | playwright */}
 
 ## Working with Drafts
 
@@ -53278,6 +53480,7 @@ Scenarios use the same draft system as other Glow resources. Edit through the dr
 
 <DemoVideo
   topic="scenarios-draft"
+  kind="playwright"
   caption="Editing a scenario in two tabs — the second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -53320,7 +53523,7 @@ curl -X POST https://<your-instance>/scenario/drafts \
 
 ---
 
-{/* DEMO_VIDEO: scenarios-search — replace public/demos/scenarios-search.mp4 */}
+{/* DEMO_VIDEO: scenarios-search | playwright */}
 
 ## Search and filter
 
@@ -53328,6 +53531,7 @@ Scenario search supports full-text plus facet filters across persona, document, 
 
 <DemoVideo
   topic="scenarios-search"
+  kind="playwright"
   caption="Filtering scenarios by persona (Confused) and document (FERPA policy), then drilling in on a match."
 />
 
@@ -53348,7 +53552,7 @@ curl -X POST https://<your-instance>/scenario/search \
 
 ---
 
-{/* DEMO_VIDEO: scenarios-bulk — replace public/demos/scenarios-bulk.mp4 */}
+{/* DEMO_VIDEO: scenarios-bulk | playwright */}
 
 ## Bulk operations
 
@@ -53356,6 +53560,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="scenarios-bulk"
+  kind="playwright"
   caption="Bulk-archiving every scenario tagged with a deprecated persona in one round-trip, keeping a couple of canonical examples via excluded_ids."
 />
 
@@ -53409,12 +53614,13 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 Route: /session
 
-{/* DEMO_VIDEO: session-overview — replace public/demos/session-overview.mp4 */}
+{/* DEMO_VIDEO: session-overview | playwright */}
 
 # Session
 
 <DemoVideo
   topic="session-overview"
+  kind="playwright"
   caption="Opening a session detail page — TA identity at the top, groups grid in the middle, full event timeline pinned to the right rail."
 />
 
@@ -53485,12 +53691,13 @@ curl -X POST https://<your-instance>/system/export \
   -d '{"target_session_id": "session-uuid"}'
 ```
 
-{/* DEMO_VIDEO: session-detail-view — replace public/demos/session-detail-view.mp4 */}
+{/* DEMO_VIDEO: session-detail-view | playwright */}
 
 ## Understanding the session detail response
 
 <DemoVideo
   topic="session-detail-view"
+  kind="playwright"
   caption="Walking through `GetSessionDetailResponse` field-by-field: profile_name, session_created_at, active, and the groups array hydrated inline."
 />
 
@@ -53515,12 +53722,13 @@ The **`groups`** array contains `ArtifactSessionGroup` objects, each representin
 - `total_tokens` -- Total tokens consumed
 - `total_cost` -- Dollar cost as a string
 
-{/* DEMO_VIDEO: session-timeline — replace public/demos/session-timeline.mp4 */}
+{/* DEMO_VIDEO: session-timeline | playwright */}
 
 ### Timeline
 
 <DemoVideo
   topic="session-timeline"
+  kind="playwright"
   caption="Scrolling the chronological event log — group_created, run_started, run_ended events stitched together with entity_name links back into the data."
 />
 
@@ -53533,12 +53741,13 @@ The **`timeline`** array contains `SessionTimelineItem` objects -- a chronologic
 - `created_at` -- Timestamp of the event
 - `extra_1`, `extra_2` -- Additional context fields
 
-{/* DEMO_VIDEO: session-navigate-to-group — replace public/demos/session-navigate-to-group.mp4 */}
+{/* DEMO_VIDEO: session-navigate-to-group | playwright */}
 
 ## Navigating from Activity to Session
 
 <DemoVideo
   topic="session-navigate-to-group"
+  kind="playwright"
   caption="The full drill path: Activity → pick a session_id → Session detail → click a group row → land on the Group detail page with runs + messages."
 />
 
@@ -53579,11 +53788,11 @@ glow system group --body '{"group_id": "group-uuid"}'
 
 Route: /settings
 
-{/* DEMO_VIDEO: settings-overview — replace public/demos/settings-overview.mp4 */}
+{/* DEMO_VIDEO: settings-overview | playwright */}
 
 # Settings
 
-<DemoVideo topic="settings-overview" caption="Tour of the Settings page — names, colors, flags, departments, profiles, auths, provider keys, systems all visible in one composed view." />
+<DemoVideo topic="settings-overview" kind="playwright" caption="Tour of the Settings page — names, colors, flags, departments, profiles, auths, provider keys, systems all visible in one composed view." />
 
 Settings manages your Glow instance configuration -- names, descriptions, colors, feature flags, departments, profiles, auth providers, provider keys, and system options. It supports full CRUD operations, a draft system with optimistic locking, and encrypted key management.
 
@@ -53654,12 +53863,13 @@ curl -X POST https://<your-instance>/setting/create \
   }'
 ```
 
-{/* DEMO_VIDEO: settings-sections — replace public/demos/settings-sections.mp4 */}
+{/* DEMO_VIDEO: settings-sections | vhs */}
 
 ## CRUD Operations
 
 <DemoVideo
   topic="settings-sections"
+  kind="vhs"
   caption="Drilling into a single setting via `glow settings get` and walking the ten composed sections (names, colors, flags, departments, profiles, auths, provider keys, auth item keys, systems)."
 />
 
@@ -53724,12 +53934,13 @@ curl -X POST https://<your-instance>/setting/delete \
   -d '{"setting_ids": ["setting-uuid-1", "setting-uuid-2"]}'
 ```
 
-{/* DEMO_VIDEO: settings-drafts — replace public/demos/settings-drafts.mp4 */}
+{/* DEMO_VIDEO: settings-drafts | playwright */}
 
 ## Working with Drafts
 
 <DemoVideo
   topic="settings-drafts"
+  kind="playwright"
   caption="Two operators editing the same setting in parallel — second PATCH hits an expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -53780,12 +53991,13 @@ Pass `draft_id` to the get endpoint:
 glow settings get --body '{"settings_id": "setting-uuid", "draft_id": "draft-uuid"}'
 ```
 
-{/* DEMO_VIDEO: settings-provider-keys — replace public/demos/settings-provider-keys.mp4 */}
+{/* DEMO_VIDEO: settings-provider-keys | playwright */}
 
 ## Decrypting Keys
 
 <DemoVideo
   topic="settings-provider-keys"
+  kind="playwright"
   caption="Adding an OpenAI provider key, watching it land encrypted, then `setting/decrypt` revealing the plaintext to an authorized caller only."
 />
 
@@ -53804,12 +54016,13 @@ curl -X POST https://<your-instance>/setting/decrypt \
 
 Returns `key` (decrypted value), `name`, and `actor_name`.
 
-{/* DEMO_VIDEO: settings-csv — replace public/demos/settings-csv.mp4 */}
+{/* DEMO_VIDEO: settings-csv | playwright */}
 
 ## CSV Import
 
 <DemoVideo
   topic="settings-csv"
+  kind="playwright"
   caption="Uploading a settings.csv, the preview rendering parsed items + mapped_fields + row_count, then committing the import."
 />
 
@@ -53853,7 +54066,7 @@ Returns `upload_id`, `items` (parsed setting items), `mapped_fields`, and `row_c
 
 Route: /simulations
 
-{/* DEMO_VIDEO: simulations-overview — replace public/demos/simulations-overview.mp4 */}
+{/* DEMO_VIDEO: simulations-overview | playwright */}
 
 # Simulations
 
@@ -53861,6 +54074,7 @@ Simulations are complete training sessions that bundle one or more scenarios tog
 
 <DemoVideo
   topic="simulations-overview"
+  kind="playwright"
   caption="The simulations list — cards show name, scenario count, and active status; drill in to see scenario ordering, rubrics, and time limits."
 />
 
@@ -53898,12 +54112,13 @@ Simulations are **step 3** in the Glow content pipeline:
 
 ---
 
-{/* DEMO_VIDEO: simulations-create — replace public/demos/simulations-create.mp4 */}
+{/* DEMO_VIDEO: simulations-create | playwright */}
 
 ## Create a simulation
 
 <DemoVideo
   topic="simulations-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then opening the new simulation's detail page ready for scenario assignment."
 />
 
@@ -53941,7 +54156,7 @@ curl -X POST https://<your-instance>/simulation/create \
 
 ---
 
-{/* DEMO_VIDEO: simulations-edit — replace public/demos/simulations-edit.mp4 */}
+{/* DEMO_VIDEO: simulations-edit | playwright */}
 
 ## Assigning scenarios and per-scenario configuration
 
@@ -53949,6 +54164,7 @@ Each scenario added to a simulation gets its own per-scenario configuration: rub
 
 <DemoVideo
   topic="simulations-edit"
+  kind="playwright"
   caption="Adding two scenarios to a simulation, reordering them via drag-and-drop, attaching distinct rubrics to each, and setting a 10-minute time limit."
 />
 
@@ -54041,7 +54257,7 @@ Single-scenario simulations designed for free-form practice with a specific pers
 
 ---
 
-{/* DEMO_VIDEO: simulations-draft — replace public/demos/simulations-draft.mp4 */}
+{/* DEMO_VIDEO: simulations-draft | playwright */}
 
 ## Working with Drafts
 
@@ -54049,6 +54265,7 @@ Simulations use the draft system for all edits. The draft endpoint supports opti
 
 <DemoVideo
   topic="simulations-draft"
+  kind="playwright"
   caption="Editing a simulation in two tabs — the second save sees a version mismatch and surfaces the conflict instead of clobbering the first edit."
 />
 
@@ -54091,7 +54308,7 @@ curl -X POST https://<your-instance>/simulation/drafts \
 
 ---
 
-{/* DEMO_VIDEO: simulations-search — replace public/demos/simulations-search.mp4 */}
+{/* DEMO_VIDEO: simulations-search | playwright */}
 
 ## Search and filter
 
@@ -54099,6 +54316,7 @@ Simulation search supports full-text plus facet filters across scenario, departm
 
 <DemoVideo
   topic="simulations-search"
+  kind="playwright"
   caption="Filtering simulations by scenario (Academic Integrity Training) and department, then drilling in on a match."
 />
 
@@ -54120,7 +54338,7 @@ curl -X POST https://<your-instance>/simulation/search \
 
 ---
 
-{/* DEMO_VIDEO: simulations-bulk — replace public/demos/simulations-bulk.mp4 */}
+{/* DEMO_VIDEO: simulations-bulk | playwright */}
 
 ## Bulk operations
 
@@ -54128,6 +54346,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="simulations-bulk"
+  kind="playwright"
   caption="Bulk-archiving every simulation in a sunset department in one round-trip, keeping a couple of canonical examples via excluded_ids."
 />
 
@@ -54180,7 +54399,7 @@ See the [Personas guide](/personas#bulk-operations) for the canonical write-up o
 
 Route: /start
 
-{/* DEMO_VIDEO: start-overview — replace public/demos/start-overview.mp4 */}
+{/* DEMO_VIDEO: start-overview | vhs */}
 
 # Start
 
@@ -54188,14 +54407,15 @@ Spin up a Glow instance from zero and make your first authenticated
 request. Pinned **Glow API v2.15.38** · **CLI v1.0.0** (see
 [api-versions.json](https://github.com/learnloopllc/glow-academic-docs/blob/main/api-versions.json) for the live pin).
 
-<DemoVideo topic="start-overview" caption="Zero-to-running tour: brew install, glow init, glow deploy, glow status all green." />
+<DemoVideo topic="start-overview" kind="vhs" caption="Zero-to-running tour: brew install, glow init, glow deploy, glow status all green." />
 
-{/* DEMO_VIDEO: start-init — replace public/demos/start-init.mp4 */}
+{/* DEMO_VIDEO: start-init | vhs */}
 
 ## 1 — Install the CLI
 
 <DemoVideo
   topic="start-init"
+  kind="vhs"
   caption="Brew-installing the CLI and running `glow init my-school` — the interactive wizard collecting origin URL, AI provider key, and seed template."
 />
 
@@ -54210,12 +54430,13 @@ glow --version  # → glow 1.0.0
 Build-from-source instructions live in the
 [`glow-academic-cli` README](https://github.com/learnloopllc/glow-academic-cli).
 
-{/* DEMO_VIDEO: start-deploy — replace public/demos/start-deploy.mp4 */}
+{/* DEMO_VIDEO: start-deploy | vhs */}
 
 ## 2 — Scaffold + deploy an instance
 
 <DemoVideo
   topic="start-deploy"
+  kind="vhs"
   caption="`glow deploy my-school` pulling images and bringing up postgres / api / client / keycloak, then `glow status` showing every container healthy."
 />
 
@@ -54246,12 +54467,13 @@ Lifecycle commands you'll use most:
 | `glow logs <name> [-f]` | tail `docker compose logs` |
 | `glow backup <name>` | manage local `pg_dump` snapshots |
 
-{/* DEMO_VIDEO: start-login — replace public/demos/start-login.mp4 */}
+{/* DEMO_VIDEO: start-login | vhs */}
 
 ## 3 — Authenticate
 
 <DemoVideo
   topic="start-login"
+  kind="vhs"
   caption="`glow login` opening the browser, the Keycloak round-trip, and the token landing in `~/.config/glow/tokens.json`."
 />
 
@@ -54319,7 +54541,7 @@ the instance URL replaces what `--api-url` used to do.)
 
 Route: /streaming
 
-{/* DEMO_VIDEO: streaming-overview — replace public/demos/streaming-overview.mp4 */}
+{/* DEMO_VIDEO: streaming-overview | vhs */}
 
 # Streaming
 
@@ -54332,6 +54554,7 @@ arrives.
 
 <DemoVideo
   topic="streaming-overview"
+  kind="vhs"
   caption="A persona generate run watched live: events stream in, the terminal .completed frame fires, the CLI exits 0."
 />
 
@@ -54354,12 +54577,13 @@ pattern as every other endpoint — pass `Authorization: Bearer
 
 ---
 
-{/* DEMO_VIDEO: streaming-connect — replace public/demos/streaming-connect.mp4 */}
+{/* DEMO_VIDEO: streaming-connect | vhs */}
 
 ## Connecting to a watch stream
 
 <DemoVideo
   topic="streaming-connect"
+  kind="vhs"
   caption="curl --no-buffer against /persona/watch with a real run_id — frames stream into the terminal as the generator emits them."
 />
 
@@ -54395,12 +54619,13 @@ native `EventSource` works without a polyfill.
 
 ---
 
-{/* DEMO_VIDEO: streaming-events — replace public/demos/streaming-events.mp4 */}
+{/* DEMO_VIDEO: streaming-events | manual */}
 
 ## SSE event format
 
 <DemoVideo
   topic="streaming-events"
+  kind="manual"
   caption="Side-by-side: a single SSE frame on the wire next to the parsed EventEnvelope it represents."
 />
 
@@ -54437,12 +54662,13 @@ all 20 watch streams):
 
 ---
 
-{/* DEMO_VIDEO: streaming-terminal — replace public/demos/streaming-terminal.mp4 */}
+{/* DEMO_VIDEO: streaming-terminal | vhs */}
 
 ## Terminal events
 
 <DemoVideo
   topic="streaming-terminal"
+  kind="vhs"
   caption="A run that fails: the .failed envelope arrives, the CLI prints the payload, and exits with code 1 — no need to poll a status endpoint."
 />
 
@@ -54466,12 +54692,13 @@ subscribed to the whole group, hydrating their UI on every envelope.
 
 ---
 
-{/* DEMO_VIDEO: streaming-cli — replace public/demos/streaming-cli.mp4 */}
+{/* DEMO_VIDEO: streaming-cli | vhs */}
 
 ## The `glow <art> watch <run_id>` CLI helper
 
 <DemoVideo
   topic="streaming-cli"
+  kind="vhs"
   caption="glow personas watch <run_id> in human and --json modes — same frames, two renderings, terminal frame breaks the loop."
 />
 
@@ -54570,7 +54797,7 @@ catch up, then re-subscribe.
 
 Route: /tests
 
-{/* DEMO_VIDEO: tests-overview — replace public/demos/tests-overview.mp4 */}
+{/* DEMO_VIDEO: tests-overview | playwright */}
 
 # Tests
 
@@ -54581,6 +54808,7 @@ grades into a [benchmark](/benchmark) view.
 
 <DemoVideo
   topic="tests-overview"
+  kind="playwright"
   caption="A test detail view — the parent header, the per-cell invocation rows underneath, and the rolled-up benchmark tab."
 />
 
@@ -54605,12 +54833,13 @@ that exist once per test, not per cell.
 
 ---
 
-{/* DEMO_VIDEO: tests-lifecycle — replace public/demos/tests-lifecycle.mp4 */}
+{/* DEMO_VIDEO: tests-lifecycle | manual */}
 
 ## The lifecycle
 
 <DemoVideo
   topic="tests-lifecycle"
+  kind="manual"
   caption="A test moving through its phases: start → fan-out into invocations → grade rows → complete (or archive)."
 />
 
@@ -54634,12 +54863,13 @@ underlying test + invocations have already produced.
 
 ---
 
-{/* DEMO_VIDEO: tests-start — replace public/demos/tests-start.mp4 */}
+{/* DEMO_VIDEO: tests-start | vhs */}
 
 ## Starting a test
 
 <DemoVideo
   topic="tests-start"
+  kind="vhs"
   caption="Configuring a test (which models, which scenarios, which agents) and watching the per-cell invocation rows appear as the fan-out lands."
 />
 
@@ -54681,12 +54911,13 @@ curl -X POST https://<your-instance>/test/start \
 
 ---
 
-{/* DEMO_VIDEO: tests-stop — replace public/demos/tests-stop.mp4 */}
+{/* DEMO_VIDEO: tests-stop | vhs */}
 
 ## Stopping in-flight runs
 
 <DemoVideo
   topic="tests-stop"
+  kind="vhs"
   caption="Hitting stop mid-run — queued cells get cancelled, in-flight cells get a terminate signal."
 />
 
@@ -54707,12 +54938,13 @@ fan-out), use `POST /invocation/terminate` from the
 
 ---
 
-{/* DEMO_VIDEO: tests-grade — replace public/demos/tests-grade.mp4 */}
+{/* DEMO_VIDEO: tests-grade | vhs */}
 
 ## Grading and feedback
 
 <DemoVideo
   topic="tests-grade"
+  kind="vhs"
   caption="Grading a row with full=true to anchor to the rubric ceiling, then attaching per-standard feedback comments to specific tool calls."
 />
 
@@ -54766,12 +54998,13 @@ heatmap.
 
 ---
 
-{/* DEMO_VIDEO: tests-decrypt — replace public/demos/tests-decrypt.mp4 */}
+{/* DEMO_VIDEO: tests-decrypt | vhs */}
 
 ## Decryption surface
 
 <DemoVideo
   topic="tests-decrypt"
+  kind="vhs"
   caption="Opening a test row that references an encrypted key, then revealing the plaintext via /test/decrypt."
 />
 
@@ -54912,7 +55145,7 @@ shapes.
 
 Route: /tools
 
-{/* DEMO_VIDEO: tools-overview — replace public/demos/tools-overview.mp4 */}
+{/* DEMO_VIDEO: tools-overview | playwright */}
 
 # Tools
 
@@ -54920,6 +55153,7 @@ Tools give agents the ability to take actions and look up information during off
 
 <DemoVideo
   topic="tools-overview"
+  kind="playwright"
   caption="The tools list -- rows by name with arg count and agent usage, plus a filter to find every tool wired into a specific agent."
 />
 
@@ -54955,12 +55189,13 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ---
 
-{/* DEMO_VIDEO: tools-create — replace public/demos/tools-create.mp4 */}
+{/* DEMO_VIDEO: tools-create | playwright */}
 
 ## Create a tool
 
 <DemoVideo
   topic="tools-create"
+  kind="playwright"
   caption="Defining a check_enrollment tool: name, description, and the initial arg shape -- the new tool_id is immediately available to wire into agents."
 />
 
@@ -54996,12 +55231,13 @@ Each entry returns the new `tool_id`, a generated `draft_id`, and the initial `v
 
 ---
 
-{/* DEMO_VIDEO: tools-args — replace public/demos/tools-args.mp4 */}
+{/* DEMO_VIDEO: tools-args | playwright */}
 
 ## Defining arguments and outputs
 
 <DemoVideo
   topic="tools-args"
+  kind="playwright"
   caption="Adding two arguments to lookup_course_policy with arg_positions to lock ordering, then defining the args_outputs shape the LLM will receive."
 />
 
@@ -55026,7 +55262,7 @@ The tool would return the matching policy text, which the agent uses to answer t
 
 ---
 
-{/* DEMO_VIDEO: tools-invocation — replace public/demos/tools-invocation.mp4 */}
+{/* DEMO_VIDEO: tools-invocation | vhs */}
 
 ## Invocation surface
 
@@ -55034,6 +55270,7 @@ The tool's `operations` and `artifacts` describe what actually runs when an agen
 
 <DemoVideo
   topic="tools-invocation"
+  kind="vhs"
   caption="Watching the tool fire during a live attempt -- the agent picks check_deadline, args render in the trace, and the structured response feeds back into the next turn."
 />
 
@@ -55047,7 +55284,7 @@ The search endpoint includes a `creatable_filter` section for filtering tools by
 
 ---
 
-{/* DEMO_VIDEO: tools-draft — replace public/demos/tools-draft.mp4 */}
+{/* DEMO_VIDEO: tools-draft | playwright */}
 
 ## The draft cycle
 
@@ -55055,6 +55292,7 @@ Tools support a draft workflow for staging changes before they affect running si
 
 <DemoVideo
   topic="tools-draft"
+  kind="playwright"
   caption="Editing a tool in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -55075,12 +55313,13 @@ The draft endpoint uses `PATCH` semantics with optimistic concurrency via `expec
 
 ---
 
-{/* DEMO_VIDEO: tools-search — replace public/demos/tools-search.mp4 */}
+{/* DEMO_VIDEO: tools-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="tools-search"
+  kind="playwright"
   caption="Filtering tools by agent (which tools does this agent see?) and creatability flag, then drilling in."
 />
 
@@ -55096,7 +55335,7 @@ glow tools search --body '{
 
 ---
 
-{/* DEMO_VIDEO: tools-bulk — replace public/demos/tools-bulk.mp4 */}
+{/* DEMO_VIDEO: tools-bulk | playwright */}
 
 ## Bulk operations
 
@@ -55104,6 +55343,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="tools-bulk"
+  kind="playwright"
   caption="Bulk-disabling every legacy lookup tool in one round-trip; excluded_ids keeps a tool that an active agent still depends on."
 />
 
@@ -55165,7 +55405,7 @@ glow tools update --body '{
 
 Route: /topology
 
-{/* DEMO_VIDEO: topology-overview — replace public/demos/topology-overview.mp4 */}
+{/* DEMO_VIDEO: topology-overview | manual */}
 
 # Topology
 
@@ -55176,6 +55416,7 @@ public domains you need TLS certs for, and how the api's `ORIGIN` /
 
 <DemoVideo
   topic="topology-overview"
+  kind="manual"
   caption="A glow-deploy.yaml side-by-side for all three modes — only the topology + origin fields change; everything downstream is derived."
 />
 
@@ -55220,7 +55461,7 @@ The airgapped row is the unintuitive one — see the next section.
 
 ---
 
-{/* DEMO_VIDEO: topology-airgapped — replace public/demos/topology-airgapped.mp4 */}
+{/* DEMO_VIDEO: topology-airgapped | vhs */}
 
 ## Airgapped
 
@@ -55232,6 +55473,7 @@ cert because it never gets its own hostname.
 
 <DemoVideo
   topic="topology-airgapped"
+  kind="vhs"
   caption="Browser → Traefik → client nginx → (proxied) api nginx. Single TLS cert, single DNS record, api never exposed."
 />
 
@@ -55275,7 +55517,7 @@ client .env:
 
 ---
 
-{/* DEMO_VIDEO: topology-exposed — replace public/demos/topology-exposed.mp4 */}
+{/* DEMO_VIDEO: topology-exposed | vhs */}
 
 ## Exposed
 
@@ -55285,6 +55527,7 @@ browser talks to the api directly — no nginx proxy hop on the way.
 
 <DemoVideo
   topic="topology-exposed"
+  kind="vhs"
   caption="Two domains, two certs — api.example.edu and glow.example.edu. CORS is what keeps the cross-origin handshake honest."
 />
 
@@ -55319,7 +55562,7 @@ listing them.
 
 ---
 
-{/* DEMO_VIDEO: topology-api-only — replace public/demos/topology-api-only.mp4 */}
+{/* DEMO_VIDEO: topology-api-only | vhs */}
 
 ## API-only
 
@@ -55329,6 +55572,7 @@ no web UI, no NextAuth, no `KEYCLOAK_PUBLIC_URL`.
 
 <DemoVideo
   topic="topology-api-only"
+  kind="vhs"
   caption="One container stack, one domain, no UI. Use the CLI or call /persona/search and friends from your own backend."
 />
 
@@ -55407,11 +55651,11 @@ removing the client stack isn't a flip-a-flag operation.
 
 Route: /tutorial
 
-{/* DEMO_VIDEO: tutorial-overview — replace public/demos/tutorial-overview.mp4 */}
+{/* DEMO_VIDEO: tutorial-overview | manual */}
 
 # Design Your First Simulation
 
-<DemoVideo topic="tutorial-overview" caption="The full tutorial path end-to-end: rubric, four personas, four scenarios, one simulation, cohort assignment." />
+<DemoVideo topic="tutorial-overview" kind="manual" caption="The full tutorial path end-to-end: rubric, four personas, four scenarios, one simulation, cohort assignment." />
 
 This tutorial walks through building a complete simulation from scratch. By the end, you'll have a working training scenario with AI characters, a grading rubric, and a cohort of learners ready to practice.
 
@@ -55431,12 +55675,13 @@ For our example, university TAs often struggle during office hours when students
 
 These five skills will drive every design decision that follows.
 
-{/* DEMO_VIDEO: tutorial-rubric — replace public/demos/tutorial-rubric.mp4 */}
+{/* DEMO_VIDEO: tutorial-rubric | playwright */}
 
 ## Step 1: Define Your Rubric
 
 <DemoVideo
   topic="tutorial-rubric"
+  kind="playwright"
   caption="Creating the TA Office Hours rubric — five standard groups, five named levels each, pass threshold at 20/25."
 />
 
@@ -55477,12 +55722,13 @@ glow rubrics create --body '{
 
 Then add standard groups and standards for each level. See the [Rubrics Guide](/rubrics) for the full API.
 
-{/* DEMO_VIDEO: tutorial-persona — replace public/demos/tutorial-persona.mp4 */}
+{/* DEMO_VIDEO: tutorial-persona | playwright */}
 
 ## Step 2: Create Your Personas
 
 <DemoVideo
   topic="tutorial-persona"
+  kind="playwright"
   caption="Building the Confused Student persona — pasting the can't-solve-independently instructions and saving the draft."
 />
 
@@ -55546,12 +55792,13 @@ glow personas create --body '{
 
 Don't skip this persona because they seem "easy." The happy student tests whether the TA can teach efficiently and accurately when there's no emotional challenge — a different but equally important skill.
 
-{/* DEMO_VIDEO: tutorial-scenario — replace public/demos/tutorial-scenario.mp4 */}
+{/* DEMO_VIDEO: tutorial-scenario | playwright */}
 
 ## Step 3: Build Your Scenarios
 
 <DemoVideo
   topic="tutorial-scenario"
+  kind="playwright"
   caption="Wiring the Help-with-Loops scenario: show-don't-tell problem statement, attaching the confused persona, listing the three objectives."
 />
 
@@ -55632,12 +55879,13 @@ glow documents create --body '{
 
 Then link the document to your scenarios. The scenario generation system uses the document as the **single source of truth** for course number and topic — if there's a conflict between the document and any parameters, the document wins.
 
-{/* DEMO_VIDEO: tutorial-simulation — replace public/demos/tutorial-simulation.mp4 */}
+{/* DEMO_VIDEO: tutorial-simulation | playwright */}
 
 ## Step 5: Create the Simulation
 
 <DemoVideo
   topic="tutorial-simulation"
+  kind="playwright"
   caption="Bundling the four scenarios into the TA Office Hours simulation — ordering happy → confused → aggressive → passive with 10-minute time limits."
 />
 
@@ -55673,12 +55921,13 @@ Notice the design choices:
 - **Same rubric across all scenarios**: the five criteria apply everywhere, but each scenario naturally emphasizes different ones.
 - **10-minute time limits**: based on real usage data, most productive conversations happen in the 5-10 minute range.
 
-{/* DEMO_VIDEO: tutorial-cohort — replace public/demos/tutorial-cohort.mp4 */}
+{/* DEMO_VIDEO: tutorial-cohort | playwright */}
 
 ## Step 6: Assign to a Cohort
 
 <DemoVideo
   topic="tutorial-cohort"
+  kind="playwright"
   caption="Creating the Fall 2025 CS TAs cohort, adding three profiles, and flipping on practice mode + hints + backtracking."
 />
 
@@ -55770,7 +56019,7 @@ From here, you can:
 
 Route: /voice
 
-{/* DEMO_VIDEO: voice-overview — replace public/demos/voice-overview.mp4 */}
+{/* DEMO_VIDEO: voice-overview | manual */}
 
 # Voice pipeline
 
@@ -55783,6 +56032,7 @@ reused, with audio modalities tacked on either end.
 
 <DemoVideo
   topic="voice-overview"
+  kind="manual"
   caption="End-to-end voice loop — mic frames are buffered into a conversation, transcribed, run through the LLM, and the response is synthesized back into a downloadable audio asset on the message."
 />
 
@@ -55831,12 +56081,13 @@ attachments) does not need to know "voice" is in play.
 
 ---
 
-{/* DEMO_VIDEO: voice-upload — replace public/demos/voice-upload.mp4 */}
+{/* DEMO_VIDEO: voice-upload | vhs */}
 
 ## Audio upload
 
 <DemoVideo
   topic="voice-upload"
+  kind="vhs"
   caption="The three upload shapes — multipart file, pre-reserved upload_id, and the promote variant — landing as the same audios_id on the message."
 />
 
@@ -55895,12 +56146,13 @@ consumers do not branch on "was this typed or spoken?".
 
 ---
 
-{/* DEMO_VIDEO: voice-session — replace public/demos/voice-session.mp4 */}
+{/* DEMO_VIDEO: voice-session | manual */}
 
 ## Voice session control
 
 <DemoVideo
   topic="voice-session"
+  kind="manual"
   caption="The chat_voice → chat_speak (frames) → chat_silence triad — opening a conversation, streaming PCM, then closing the loop."
 />
 

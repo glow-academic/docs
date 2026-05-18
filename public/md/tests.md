@@ -1,6 +1,6 @@
 # Tests
 
-{/* DEMO_VIDEO: tests-overview — replace public/demos/tests-overview.mp4 */}
+{/* DEMO_VIDEO: tests-overview | playwright */}
 
 # Tests
 
@@ -11,6 +11,7 @@ grades into a [benchmark](/benchmark) view.
 
 <DemoVideo
   topic="tests-overview"
+  kind="playwright"
   caption="A test detail view — the parent header, the per-cell invocation rows underneath, and the rolled-up benchmark tab."
 />
 
@@ -35,12 +36,13 @@ that exist once per test, not per cell.
 
 ---
 
-{/* DEMO_VIDEO: tests-lifecycle — replace public/demos/tests-lifecycle.mp4 */}
+{/* DEMO_VIDEO: tests-lifecycle | manual */}
 
 ## The lifecycle
 
 <DemoVideo
   topic="tests-lifecycle"
+  kind="manual"
   caption="A test moving through its phases: start → fan-out into invocations → grade rows → complete (or archive)."
 />
 
@@ -64,12 +66,13 @@ underlying test + invocations have already produced.
 
 ---
 
-{/* DEMO_VIDEO: tests-start — replace public/demos/tests-start.mp4 */}
+{/* DEMO_VIDEO: tests-start | vhs */}
 
 ## Starting a test
 
 <DemoVideo
   topic="tests-start"
+  kind="vhs"
   caption="Configuring a test (which models, which scenarios, which agents) and watching the per-cell invocation rows appear as the fan-out lands."
 />
 
@@ -111,12 +114,13 @@ curl -X POST https://<your-instance>/test/start \
 
 ---
 
-{/* DEMO_VIDEO: tests-stop — replace public/demos/tests-stop.mp4 */}
+{/* DEMO_VIDEO: tests-stop | vhs */}
 
 ## Stopping in-flight runs
 
 <DemoVideo
   topic="tests-stop"
+  kind="vhs"
   caption="Hitting stop mid-run — queued cells get cancelled, in-flight cells get a terminate signal."
 />
 
@@ -137,12 +141,13 @@ fan-out), use `POST /invocation/terminate` from the
 
 ---
 
-{/* DEMO_VIDEO: tests-grade — replace public/demos/tests-grade.mp4 */}
+{/* DEMO_VIDEO: tests-grade | vhs */}
 
 ## Grading and feedback
 
 <DemoVideo
   topic="tests-grade"
+  kind="vhs"
   caption="Grading a row with full=true to anchor to the rubric ceiling, then attaching per-standard feedback comments to specific tool calls."
 />
 
@@ -196,12 +201,13 @@ heatmap.
 
 ---
 
-{/* DEMO_VIDEO: tests-decrypt — replace public/demos/tests-decrypt.mp4 */}
+{/* DEMO_VIDEO: tests-decrypt | vhs */}
 
 ## Decryption surface
 
 <DemoVideo
   topic="tests-decrypt"
+  kind="vhs"
   caption="Opening a test row that references an encrypted key, then revealing the plaintext via /test/decrypt."
 />
 

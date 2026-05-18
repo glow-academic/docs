@@ -1,6 +1,6 @@
 # Auths
 
-{/* DEMO_VIDEO: auths-overview — replace public/demos/auths-overview.mp4 */}
+{/* DEMO_VIDEO: auths-overview | playwright */}
 
 # Auths
 
@@ -8,6 +8,7 @@ Auths manages authentication providers for your Glow instance -- the SSO configu
 
 <DemoVideo
   topic="auths-overview"
+  kind="playwright"
   caption="The auths list -- rows by login method, protocol badge, and enabled flag; encrypted items hidden behind a dedicated edit drawer."
 />
 
@@ -36,12 +37,13 @@ Auths uses a composable architecture with full CRUD, duplication, and a draft sy
 
 ---
 
-{/* DEMO_VIDEO: auths-create — replace public/demos/auths-create.mp4 */}
+{/* DEMO_VIDEO: auths-create | playwright */}
 
 ## Create an auth provider
 
 <DemoVideo
   topic="auths-create"
+  kind="playwright"
   caption="Spinning up a new University SSO entry -- name and description first, then immediately wiring protocol and slug in the follow-up draft."
 />
 
@@ -72,7 +74,7 @@ Returns per-item results in `results`, each carrying the new `auth_id` and a `dr
 
 ---
 
-{/* DEMO_VIDEO: auths-oidc — replace public/demos/auths-oidc.mp4 */}
+{/* DEMO_VIDEO: auths-oidc | playwright */}
 
 ## OIDC / protocol wiring
 
@@ -80,6 +82,7 @@ The `protocols` section captures which authentication protocol (OIDC, SAML, ...)
 
 <DemoVideo
   topic="auths-oidc"
+  kind="playwright"
   caption="Wiring an OIDC provider end-to-end: protocol set, slug claimed, client_id and client_secret pasted into encrypted items, then a test login round-trip."
 />
 
@@ -95,7 +98,7 @@ glow auths draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: auths-idp — replace public/demos/auths-idp.mp4 */}
+{/* DEMO_VIDEO: auths-idp | playwright */}
 
 ## Adding a new IdP
 
@@ -103,6 +106,7 @@ End-to-end recipe for wiring a fresh SSO provider into Keycloak. The four moves 
 
 <DemoVideo
   topic="auths-idp"
+  kind="playwright"
   caption="Greenfield IdP onboarding: POST /auth/create, encrypted client_secret pasted into an item key, draft saved with protocol+slug+items, sync log lighting up the new Keycloak IdentityProvider."
 />
 
@@ -142,7 +146,7 @@ glow auths draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: auths-draft — replace public/demos/auths-draft.mp4 */}
+{/* DEMO_VIDEO: auths-draft | playwright */}
 
 ## The draft cycle
 
@@ -150,6 +154,7 @@ Auths uses a draft system with optimistic locking -- the same pattern as Setting
 
 <DemoVideo
   topic="auths-draft"
+  kind="playwright"
   caption="Editing the same auth provider in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of overwriting."
 />
 
@@ -196,12 +201,13 @@ glow auths get --body '{"auth_id": "auth-uuid", "draft_id": "draft-uuid"}'
 
 ---
 
-{/* DEMO_VIDEO: auths-search — replace public/demos/auths-search.mp4 */}
+{/* DEMO_VIDEO: auths-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="auths-search"
+  kind="playwright"
   caption="Filtering by department + free-text name search to find the right SSO entry, then drilling in to its protocol and items."
 />
 
@@ -231,7 +237,7 @@ curl -X POST https://<your-instance>/auth/search \
 
 ---
 
-{/* DEMO_VIDEO: auths-bulk — replace public/demos/auths-bulk.mp4 */}
+{/* DEMO_VIDEO: auths-bulk | playwright */}
 
 ## Bulk operations
 
@@ -239,6 +245,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="auths-bulk"
+  kind="playwright"
   caption="Bulk-deleting every auth provider scoped to a retired department; excluded_ids keeps a shared SSO entry that other departments still depend on."
 />
 

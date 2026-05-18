@@ -1,10 +1,10 @@
 # Settings
 
-{/* DEMO_VIDEO: settings-overview — replace public/demos/settings-overview.mp4 */}
+{/* DEMO_VIDEO: settings-overview | playwright */}
 
 # Settings
 
-<DemoVideo topic="settings-overview" caption="Tour of the Settings page — names, colors, flags, departments, profiles, auths, provider keys, systems all visible in one composed view." />
+<DemoVideo topic="settings-overview" kind="playwright" caption="Tour of the Settings page — names, colors, flags, departments, profiles, auths, provider keys, systems all visible in one composed view." />
 
 Settings manages your Glow instance configuration -- names, descriptions, colors, feature flags, departments, profiles, auth providers, provider keys, and system options. It supports full CRUD operations, a draft system with optimistic locking, and encrypted key management.
 
@@ -75,12 +75,13 @@ curl -X POST https://<your-instance>/setting/create \
   }'
 ```
 
-{/* DEMO_VIDEO: settings-sections — replace public/demos/settings-sections.mp4 */}
+{/* DEMO_VIDEO: settings-sections | vhs */}
 
 ## CRUD Operations
 
 <DemoVideo
   topic="settings-sections"
+  kind="vhs"
   caption="Drilling into a single setting via `glow settings get` and walking the ten composed sections (names, colors, flags, departments, profiles, auths, provider keys, auth item keys, systems)."
 />
 
@@ -145,12 +146,13 @@ curl -X POST https://<your-instance>/setting/delete \
   -d '{"setting_ids": ["setting-uuid-1", "setting-uuid-2"]}'
 ```
 
-{/* DEMO_VIDEO: settings-drafts — replace public/demos/settings-drafts.mp4 */}
+{/* DEMO_VIDEO: settings-drafts | playwright */}
 
 ## Working with Drafts
 
 <DemoVideo
   topic="settings-drafts"
+  kind="playwright"
   caption="Two operators editing the same setting in parallel — second PATCH hits an expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -201,12 +203,13 @@ Pass `draft_id` to the get endpoint:
 glow settings get --body '{"settings_id": "setting-uuid", "draft_id": "draft-uuid"}'
 ```
 
-{/* DEMO_VIDEO: settings-provider-keys — replace public/demos/settings-provider-keys.mp4 */}
+{/* DEMO_VIDEO: settings-provider-keys | playwright */}
 
 ## Decrypting Keys
 
 <DemoVideo
   topic="settings-provider-keys"
+  kind="playwright"
   caption="Adding an OpenAI provider key, watching it land encrypted, then `setting/decrypt` revealing the plaintext to an authorized caller only."
 />
 
@@ -225,12 +228,13 @@ curl -X POST https://<your-instance>/setting/decrypt \
 
 Returns `key` (decrypted value), `name`, and `actor_name`.
 
-{/* DEMO_VIDEO: settings-csv — replace public/demos/settings-csv.mp4 */}
+{/* DEMO_VIDEO: settings-csv | playwright */}
 
 ## CSV Import
 
 <DemoVideo
   topic="settings-csv"
+  kind="playwright"
   caption="Uploading a settings.csv, the preview rendering parsed items + mapped_fields + row_count, then committing the import."
 />
 

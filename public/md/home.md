@@ -1,11 +1,12 @@
 # Home
 
-{/* DEMO_VIDEO: home-overview */}
+{/* DEMO_VIDEO: home-overview | playwright */}
 
 # Home
 
 <DemoVideo
   topic="home-overview"
+  kind="playwright"
   caption="The TA landing page — assigned simulation cards on top, attempt history table below, status chips and persona colors at a glance."
 />
 
@@ -62,12 +63,13 @@ curl -X POST https://<your-instance>/attempt/search \
   }'
 ```
 
-{/* DEMO_VIDEO: home-assigned */}
+{/* DEMO_VIDEO: home-assigned | playwright */}
 
 ## Understanding the Simulation Cards
 
 <DemoVideo
   topic="home-assigned"
+  kind="playwright"
   caption="POST /attempt/home returning the assigned simulation deck — Confused/Aggressive/Passive/Happy cards with status, highest score, and pass threshold rendered live."
 />
 
@@ -92,12 +94,13 @@ The `POST /attempt/home` response includes:
 - **`standard_groups`** -- Standard group metadata: `name`, `description`, `points`, `pass_points`.
 - **`standards`** -- Individual standards: `name`, `description`, `points`, grouped by `standard_group_id`.
 
-{/* DEMO_VIDEO: home-history */}
+{/* DEMO_VIDEO: home-history | playwright */}
 
 ## Understanding the Attempt History
 
 <DemoVideo
   topic="home-history"
+  kind="playwright"
   caption="Paginating the TA's attempt history, sorting by date, and using simulation_search to find a specific past attempt."
 />
 
@@ -127,12 +130,13 @@ The `POST /attempt/search` response returns paginated `HistoryItem` rows:
 | Sorting | `sort_by`, `sort_order` | Sort by any column |
 | Pagination | `page`, `page_size` | Control page size |
 
-{/* DEMO_VIDEO: home-export */}
+{/* DEMO_VIDEO: home-export | vhs */}
 
 ## Exporting
 
 <DemoVideo
   topic="home-export"
+  kind="vhs"
   caption="glow attempts export — downloading the denormalized ZIP with the TA's certificate of completion baked into the bundle."
 />
 

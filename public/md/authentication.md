@@ -1,6 +1,6 @@
 # Authentication
 
-{/* DEMO_VIDEO: authentication-overview — replace public/demos/authentication-overview.mp4 */}
+{/* DEMO_VIDEO: authentication-overview | manual */}
 
 # Authentication
 
@@ -17,14 +17,15 @@ for what the license entitles. CLI flows handle both automatically
 after `glow login` writes the bearer to `~/.config/glow/tokens.json`
 and the license key is read from `~/.glow/instances/<name>/glow-deploy.yaml`.
 
-<DemoVideo topic="authentication-overview" caption="Both schemes side-by-side: bearer JWT in Authorization header, license key in X-Api-Key, request flowing through." />
+<DemoVideo topic="authentication-overview" kind="manual" caption="Both schemes side-by-side: bearer JWT in Authorization header, license key in X-Api-Key, request flowing through." />
 
-{/* DEMO_VIDEO: authentication-login — replace public/demos/authentication-login.mp4 */}
+{/* DEMO_VIDEO: authentication-login | vhs */}
 
 ## Interactive flow (`glow login`)
 
 <DemoVideo
   topic="authentication-login"
+  kind="vhs"
   caption="PKCE round-trip end-to-end: localhost listener spawning, browser hitting Keycloak, callback with code+state, token exchange, JSON landing in ~/.config/glow."
 />
 
@@ -49,12 +50,13 @@ After login, every subsequent CLI call attaches `Authorization: Bearer
 <access_token>` automatically. The refresh token is used silently when
 the access token expires.
 
-{/* DEMO_VIDEO: authentication-service-account — replace public/demos/authentication-service-account.mp4 */}
+{/* DEMO_VIDEO: authentication-service-account | vhs */}
 
 ## Service-account flow (`--token`)
 
 <DemoVideo
   topic="authentication-service-account"
+  kind="vhs"
   caption="Headless CI flow: minting a service-account JWT, passing it via `glow login --token`, no browser, immediate authenticated `glow personas search`."
 />
 
@@ -127,12 +129,13 @@ Sessions are listed in the CLI via the `instance` config under
 `~/.config/glow/`. There's no first-class `glow sessions list` command
 today — read the file directly if needed.
 
-{/* DEMO_VIDEO: authentication-service-accounts — replace public/demos/authentication-service-accounts.mp4 */}
+{/* DEMO_VIDEO: authentication-service-accounts | manual */}
 
 ## Service accounts
 
 <DemoVideo
   topic="authentication-service-accounts"
+  kind="manual"
   caption="Operator mints a JWT in Keycloak admin, drops it into a CI secret, and the runner authenticates non-interactively with `glow login --token` — no browser, ready to script."
 />
 
@@ -202,12 +205,13 @@ ends at *consuming* an already-minted token via `--token`.
 
   Never check the token into the repo; never echo it in logs.
 
-{/* DEMO_VIDEO: authentication-license-keys — replace public/demos/authentication-license-keys.mp4 */}
+{/* DEMO_VIDEO: authentication-license-keys | vhs */}
 
 ## License keys (`X-Api-Key`)
 
 <DemoVideo
   topic="authentication-license-keys"
+  kind="vhs"
   caption="Operator seeds a license key in glow-deploy.yaml, runs `glow deploy`, the key lands encrypted-at-rest, and a request carrying X-Api-Key resolves to the right license context."
 />
 

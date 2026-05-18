@@ -1,6 +1,6 @@
 # Evals
 
-{/* DEMO_VIDEO: evals-overview — replace public/demos/evals-overview.mp4 */}
+{/* DEMO_VIDEO: evals-overview | playwright */}
 
 # Evals
 
@@ -8,6 +8,7 @@ Evals assess how well TAs handled student interactions during office hour simula
 
 <DemoVideo
   topic="evals-overview"
+  kind="playwright"
   caption="The evals list -- rows by name with run count, active/dynamic/groups badges, and the scoring model + rubric chips visible at a glance."
 />
 
@@ -44,12 +45,13 @@ Eval
 
 ---
 
-{/* DEMO_VIDEO: evals-create — replace public/demos/evals-create.mp4 */}
+{/* DEMO_VIDEO: evals-create | playwright */}
 
 ## Create an eval
 
 <DemoVideo
   topic="evals-create"
+  kind="playwright"
   caption="Spinning up a Fall 2025 TA Assessment: name, description, attaching a judge model and two rubrics -- the new eval_id is wired and ready to run."
 />
 
@@ -88,12 +90,13 @@ curl -X POST https://<your-instance>/eval/create \
 
 ---
 
-{/* DEMO_VIDEO: evals-wiring — replace public/demos/evals-wiring.mp4 */}
+{/* DEMO_VIDEO: evals-wiring | playwright */}
 
 ## Wiring models, rubrics, and flags
 
 <DemoVideo
   topic="evals-wiring"
+  kind="playwright"
   caption="Attaching a second judge model for cross-validation, adding a de-escalation rubric, and defining behavioral flags -- all in a single eval draft update."
 />
 
@@ -126,7 +129,7 @@ Use `model_flag_ids` to define specific behaviors the evaluator should tag. Unli
 
 ---
 
-{/* DEMO_VIDEO: evals-run — replace public/demos/evals-run.mp4 */}
+{/* DEMO_VIDEO: evals-run | vhs */}
 
 ## Running an eval
 
@@ -134,6 +137,7 @@ Evals support several configuration flags that control how runs behave -- whethe
 
 <DemoVideo
   topic="evals-run"
+  kind="vhs"
   caption="Kicking off an eval run across a batch of attempt transcripts -- num_runs ticks up, per-criterion scores stream in, and a flagged pattern surfaces inline."
 />
 
@@ -155,7 +159,7 @@ These flags appear as sections in the GET response, each containing the current 
 
 ---
 
-{/* DEMO_VIDEO: evals-draft — replace public/demos/evals-draft.mp4 */}
+{/* DEMO_VIDEO: evals-draft | playwright */}
 
 ## The draft cycle
 
@@ -163,6 +167,7 @@ Evals support a draft workflow for staging changes before they affect scoring pi
 
 <DemoVideo
   topic="evals-draft"
+  kind="playwright"
   caption="Editing the same eval in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -183,12 +188,13 @@ The draft endpoint uses `PATCH` semantics with `expected_version` for optimistic
 
 ---
 
-{/* DEMO_VIDEO: evals-search — replace public/demos/evals-search.mp4 */}
+{/* DEMO_VIDEO: evals-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="evals-search"
+  kind="playwright"
   caption="Filtering evals by department and active flag to find the one currently grading fall-semester attempts, then drilling into its runs."
 />
 
@@ -203,7 +209,7 @@ glow evals search --body '{
 
 ---
 
-{/* DEMO_VIDEO: evals-bulk — replace public/demos/evals-bulk.mp4 */}
+{/* DEMO_VIDEO: evals-bulk | playwright */}
 
 ## Bulk operations
 
@@ -211,6 +217,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="evals-bulk"
+  kind="playwright"
   caption="Bulk-deactivating every eval in a finished semester in one round-trip; excluded_ids keeps the one still producing follow-up reports."
 />
 

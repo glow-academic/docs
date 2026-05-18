@@ -1,11 +1,12 @@
 # Chat
 
-{/* DEMO_VIDEO: chat-overview */}
+{/* DEMO_VIDEO: chat-overview | playwright */}
 
 # Chat
 
 <DemoVideo
   topic="chat-overview"
+  kind="playwright"
   caption="Opening a chat from the attempt list — message thread, persona header, attached documents and the input area in one frame."
 />
 
@@ -43,12 +44,13 @@ Chats also support a draft system for customizing chat configurations before or 
 
 ![Chat interface showing message thread with AI persona, with voice mode toggle and input area](/screenshots/chat/interface.png)
 
-{/* DEMO_VIDEO: chat-message */}
+{/* DEMO_VIDEO: chat-message | playwright */}
 
 ## Sending a message
 
 <DemoVideo
   topic="chat-message"
+  kind="playwright"
   caption="Typing a learner turn, hitting send, and watching the persona reply stream back token-by-token via chat_message."
 />
 
@@ -135,30 +137,33 @@ CLI dispatch is symmetric — `glow attempts chat <op>` (e.g.
 `glow attempts chat message <chat_id> "..."`) maps 1:1 to
 `POST /attempt/chat_<op>`.
 
-{/* DEMO_VIDEO: chat-grade */}
+{/* DEMO_VIDEO: chat-grade | playwright */}
 
 ## Grading a chat
 
 <DemoVideo
   topic="chat-grade"
+  kind="playwright"
   caption="Triggering chat_grade after the conversation closes — rubric standards light up with per-standard scores and the overall pass/fail badge."
 />
 
-{/* DEMO_VIDEO: chat-hints */}
+{/* DEMO_VIDEO: chat-hints | playwright */}
 
 ## Hints, feedback, and analyses
 
 <DemoVideo
   topic="chat-hints"
+  kind="playwright"
   caption="Calling chat_hints mid-conversation for a nudge, then chat_feedback + chat_strengths/improvements after grading to see per-standard rationale."
 />
 
 ## Live REPL + voice (WS)
 
-{/* DEMO_VIDEO: chat-live */}
+{/* DEMO_VIDEO: chat-live | vhs */}
 
 <DemoVideo
   topic="chat-live"
+  kind="vhs"
   caption="glow attempts chat live <chat_id> — interactive socket.io REPL, lines sent as chat_message, replies stream back inline."
 />
 
@@ -174,10 +179,11 @@ Voice (`glow attempts chat voice <chat_id>`) is gated on the `cpal` +
 `rodio` audio deps and is currently a deferred placeholder — see the
 deferred CLI capability tracking in the `glow-academic-cli` repo.
 
-{/* DEMO_VIDEO: chat-voice */}
+{/* DEMO_VIDEO: chat-voice | manual */}
 
 <DemoVideo
   topic="chat-voice"
+  kind="manual"
   caption="The deferred voice REPL surface — placeholder warning today, will become chat_speak / chat_silence / chat_voice round-trip once cpal/rodio land."
 />
 
@@ -214,12 +220,13 @@ Available search filters:
 | `persona_show_selected` | Show only currently selected personas |
 | `document_show_selected` | Show only currently selected documents |
 
-{/* DEMO_VIDEO: chat-draft */}
+{/* DEMO_VIDEO: chat-draft | playwright */}
 
 ## Working with drafts
 
 <DemoVideo
   topic="chat-draft"
+  kind="playwright"
   caption="Editing a chat's persona + document selection in draft form, saving with expected_version, and watching form_state hydrate the selected IDs."
 />
 
@@ -263,12 +270,13 @@ curl -X POST https://<your-instance>/attempt/chat_drafts \
   -H "Authorization: Bearer your-token"
 ```
 
-{/* DEMO_VIDEO: chat-export */}
+{/* DEMO_VIDEO: chat-export | vhs */}
 
 ## Exporting a transcript
 
 <DemoVideo
   topic="chat-export"
+  kind="vhs"
   caption="glow attempts chat export — downloads the message thread + grading metadata as a portable bundle ready to drop into a review packet."
 />
 

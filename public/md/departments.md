@@ -1,6 +1,6 @@
 # Departments
 
-{/* DEMO_VIDEO: departments-overview — replace public/demos/departments-overview.mp4 */}
+{/* DEMO_VIDEO: departments-overview | playwright */}
 
 # Departments
 
@@ -8,6 +8,7 @@ Departments are the organizational boundary in Glow. They scope nearly every res
 
 <DemoVideo
   topic="departments-overview"
+  kind="playwright"
   caption="The departments list -- cards by name with counts of attached profiles, documents, scenarios, and cohorts; drill in to see member assignments and settings."
 />
 
@@ -31,12 +32,13 @@ Departments connect to nearly everything. They are the first resource you should
 
 ---
 
-{/* DEMO_VIDEO: departments-create — replace public/demos/departments-create.mp4 */}
+{/* DEMO_VIDEO: departments-create | playwright */}
 
 ## Create a department
 
 <DemoVideo
   topic="departments-create"
+  kind="playwright"
   caption="Filling out a University department: name and description, then committing -- the new department_id is immediately available as a scoping target."
 />
 
@@ -76,7 +78,7 @@ curl -X POST https://<your-instance>/department/create \
 
 ---
 
-{/* DEMO_VIDEO: departments-members — replace public/demos/departments-members.mp4 */}
+{/* DEMO_VIDEO: departments-members | playwright */}
 
 ## Member assignment
 
@@ -84,6 +86,7 @@ Profiles belong to one or more departments and can only manage resources within 
 
 <DemoVideo
   topic="departments-members"
+  kind="playwright"
   caption="Walking through department membership: filtering profiles by department, assigning a TA into the CS department, and watching their visible resource pool change."
 />
 
@@ -101,7 +104,7 @@ Profiles belong to one or more departments and can only manage resources within 
 
 ---
 
-{/* DEMO_VIDEO: departments-settings — replace public/demos/departments-settings.mp4 */}
+{/* DEMO_VIDEO: departments-settings | playwright */}
 
 ## Settings and flags
 
@@ -109,12 +112,13 @@ Departments have a settings section that controls department-level configuration
 
 <DemoVideo
   topic="departments-settings"
+  kind="playwright"
   caption="Editing department-level settings + flags -- enabling a department-only feature flag and persisting it through the draft endpoint."
 />
 
 ---
 
-{/* DEMO_VIDEO: departments-draft — replace public/demos/departments-draft.mp4 */}
+{/* DEMO_VIDEO: departments-draft | playwright */}
 
 ## The draft cycle
 
@@ -122,6 +126,7 @@ Departments support the draft workflow. Changes are saved as a draft before bein
 
 <DemoVideo
   topic="departments-draft"
+  kind="playwright"
   caption="Editing a department in two tabs: the second save sees the expected_version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -138,12 +143,13 @@ Via the API, use `PATCH /department/draft` with fields like `input_draft_id`, `e
 
 ---
 
-{/* DEMO_VIDEO: departments-search — replace public/demos/departments-search.mp4 */}
+{/* DEMO_VIDEO: departments-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="departments-search"
+  kind="playwright"
   caption="Free-text search across departments to locate the right scope, then drilling in to its members and attached resources."
 />
 
@@ -160,7 +166,7 @@ curl -X POST https://<your-instance>/department/search \
 
 ---
 
-{/* DEMO_VIDEO: departments-bulk — replace public/demos/departments-bulk.mp4 */}
+{/* DEMO_VIDEO: departments-bulk | playwright */}
 
 ## Bulk operations
 
@@ -168,6 +174,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="departments-bulk"
+  kind="playwright"
   caption="Bulk-archiving every department matching a name pattern in one round-trip; excluded_ids keeps a department that still owns active simulations alive."
 />
 

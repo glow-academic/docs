@@ -1,6 +1,6 @@
 # Parameters
 
-{/* DEMO_VIDEO: parameters-overview — replace public/demos/parameters-overview.mp4 */}
+{/* DEMO_VIDEO: parameters-overview | playwright */}
 
 # Parameters
 
@@ -8,6 +8,7 @@ Parameters define the dimensions along which simulation scenarios can vary. Each
 
 <DemoVideo
   topic="parameters-overview"
+  kind="playwright"
   caption="The parameters list — each row shows the category, description, and how many fields hang off it; drill in to see the field grid."
 />
 
@@ -45,12 +46,13 @@ Parameters connect to **fields**. Each parameter contains one or more fields. Do
 
 ---
 
-{/* DEMO_VIDEO: parameters-create — replace public/demos/parameters-create.mp4 */}
+{/* DEMO_VIDEO: parameters-create | playwright */}
 
 ## Create a parameter
 
 <DemoVideo
   topic="parameters-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then attaching the first batch of fields under the new parameter."
 />
 
@@ -92,7 +94,7 @@ curl -X POST https://<your-instance>/parameter/create \
 
 ---
 
-{/* DEMO_VIDEO: parameters-edit — replace public/demos/parameters-edit.mp4 */}
+{/* DEMO_VIDEO: parameters-edit | playwright */}
 
 ## Parameters vs. fields
 
@@ -103,6 +105,7 @@ Understanding the relationship between parameters and fields is essential:
 
 <DemoVideo
   topic="parameters-edit"
+  kind="playwright"
   caption="Opening the Temperament parameter and adding two new field values (Anxious, Optimistic) inline, then watching them appear everywhere Temperament is referenced."
 />
 
@@ -114,7 +117,7 @@ Parameters own fields. When you create the "Temperament" parameter, you then cre
 
 ---
 
-{/* DEMO_VIDEO: parameters-resolve — replace public/demos/parameters-resolve.mp4 */}
+{/* DEMO_VIDEO: parameters-resolve | manual */}
 
 ## Parameter value resolution
 
@@ -122,6 +125,7 @@ When a scenario runs, Glow resolves each persona `{{placeholder}}` against the p
 
 <DemoVideo
   topic="parameters-resolve"
+  kind="manual"
   caption="Side-by-side: same Confused persona, two scenarios. One resolves {{class}} to CS-180 and {{intensity}} to 3; the other to CS-422 and 9. The same persona behaves very differently."
 />
 
@@ -131,7 +135,7 @@ See the [Personas parameter fields section](/personas#parameter-fields) for the 
 
 ---
 
-{/* DEMO_VIDEO: parameters-draft — replace public/demos/parameters-draft.mp4 */}
+{/* DEMO_VIDEO: parameters-draft | playwright */}
 
 ## Drafts
 
@@ -139,6 +143,7 @@ Parameters support the draft workflow. Changes are saved as a draft before being
 
 <DemoVideo
   topic="parameters-draft"
+  kind="playwright"
   caption="Editing the same parameter in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -154,7 +159,7 @@ Via the API, use `PATCH /parameter/draft` with fields like `input_draft_id`, `ex
 
 ---
 
-{/* DEMO_VIDEO: parameters-search — replace public/demos/parameters-search.mp4 */}
+{/* DEMO_VIDEO: parameters-search | playwright */}
 
 ## Filtering and search
 
@@ -162,6 +167,7 @@ Parameters support rich search and filtering. You can filter by:
 
 <DemoVideo
   topic="parameters-search"
+  kind="playwright"
   caption="Filtering parameters by which scenarios reference them and by member fields, then drilling in on Temperament."
 />
 
@@ -183,7 +189,7 @@ curl -X POST https://<your-instance>/parameter/search \
 
 ---
 
-{/* DEMO_VIDEO: parameters-bulk — replace public/demos/parameters-bulk.mp4 */}
+{/* DEMO_VIDEO: parameters-bulk | playwright */}
 
 ## Bulk operations
 
@@ -191,6 +197,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="parameters-bulk"
+  kind="playwright"
   caption="Bulk-archiving every parameter in a deprecated department in one round-trip, keeping a manual exception list."
 />
 

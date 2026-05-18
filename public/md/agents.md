@@ -1,6 +1,6 @@
 # Agents
 
-{/* DEMO_VIDEO: agents-overview — replace public/demos/agents-overview.mp4 */}
+{/* DEMO_VIDEO: agents-overview | playwright */}
 
 # Agents
 
@@ -8,6 +8,7 @@ Agents configure the AI engine that powers Glow simulations -- they control whic
 
 <DemoVideo
   topic="agents-overview"
+  kind="playwright"
   caption="The agents list page -- cards by model and tool count, filter by department, drill in to wire models, tools, rubrics, temperature, and voice."
 />
 
@@ -56,12 +57,13 @@ The agent is the engine that processes every message, generates persona response
 
 ---
 
-{/* DEMO_VIDEO: agents-create — replace public/demos/agents-create.mp4 */}
+{/* DEMO_VIDEO: agents-create | playwright */}
 
 ## Create an agent
 
 <DemoVideo
   topic="agents-create"
+  kind="playwright"
   caption="Filling out the create form: name, description, then committing -- the agent comes back with an agent_id and a draft_id for further wiring."
 />
 
@@ -97,12 +99,13 @@ Each entry returns the new `agent_id`, the generated `draft_id`, and the initial
 
 ---
 
-{/* DEMO_VIDEO: agents-wiring — replace public/demos/agents-wiring.mp4 */}
+{/* DEMO_VIDEO: agents-wiring | playwright */}
 
 ## Wiring models, tools, and rubrics
 
 <DemoVideo
   topic="agents-wiring"
+  kind="playwright"
   caption="Attaching a model, two tools, and three rubrics to an agent draft in a single PATCH -- the form_state echoes the resolved IDs so you can re-render confidently."
 />
 
@@ -168,12 +171,13 @@ glow agents draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: agents-tuning — replace public/demos/agents-tuning.mp4 */}
+{/* DEMO_VIDEO: agents-tuning | playwright */}
 
 ## Tuning temperature, reasoning, and voice
 
 <DemoVideo
   topic="agents-tuning"
+  kind="playwright"
   caption="Dialling temperature down and reasoning up on a grading-flavored agent, then swapping the TTS voice for audio mode."
 />
 
@@ -214,7 +218,7 @@ glow agents draft --body '{
 
 ---
 
-{/* DEMO_VIDEO: agents-generate — replace public/demos/agents-generate.mp4 */}
+{/* DEMO_VIDEO: agents-generate | vhs */}
 
 ## Generate sub-op
 
@@ -222,6 +226,7 @@ The agent surface exposes a `generate` sub-op (`POST /agent/generate`) that runs
 
 <DemoVideo
   topic="agents-generate"
+  kind="vhs"
   caption="Triggering /agent/generate from the agent detail page -- the response streams back tokens that prove model/tool/rubric wiring is intact before going live."
 />
 
@@ -229,7 +234,7 @@ Use this in your own scripts to smoke-test an agent after edits or to wire it in
 
 ---
 
-{/* DEMO_VIDEO: agents-draft — replace public/demos/agents-draft.mp4 */}
+{/* DEMO_VIDEO: agents-draft | playwright */}
 
 ## The draft cycle
 
@@ -237,6 +242,7 @@ Agents use the same draft system as other Glow resources. All configuration chan
 
 <DemoVideo
   topic="agents-draft"
+  kind="playwright"
   caption="Editing the same agent in two tabs: the second save sees an expected_version mismatch and surfaces the conflict instead of overwriting the first."
 />
 
@@ -278,12 +284,13 @@ glow agents list
 
 ---
 
-{/* DEMO_VIDEO: agents-search — replace public/demos/agents-search.mp4 */}
+{/* DEMO_VIDEO: agents-search | playwright */}
 
 ## Search & filter
 
 <DemoVideo
   topic="agents-search"
+  kind="playwright"
   caption="Filtering agents by model and tool together, then drilling into a single agent's wiring."
 />
 
@@ -303,7 +310,7 @@ The response includes hydrated agent rows plus facet sections (`model_filter`, `
 
 ---
 
-{/* DEMO_VIDEO: agents-bulk — replace public/demos/agents-bulk.mp4 */}
+{/* DEMO_VIDEO: agents-bulk | playwright */}
 
 ## Bulk operations
 
@@ -311,6 +318,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 <DemoVideo
   topic="agents-bulk"
+  kind="playwright"
   caption="Bulk-archiving every agent in a deprecated department in a single round-trip -- excluded_ids keeps one production agent alive."
 />
 

@@ -1,11 +1,12 @@
 # Leaderboard
 
-{/* DEMO_VIDEO: leaderboard-overview */}
+{/* DEMO_VIDEO: leaderboard-overview | playwright */}
 
 # Leaderboard
 
 <DemoVideo
   topic="leaderboard-overview"
+  kind="playwright"
   caption="POST /attempt/leaderboard returning header KPIs + rankings + accolade winners — the full coordinator view of who's leading the cohort."
 />
 
@@ -89,12 +90,13 @@ curl -X POST https://<your-instance>/attempt/search \
 | Sorting | `sort_by`, `sort_order` | Sort by any metric column |
 | Pagination | `page_limit`, `page_offset` | Control page size |
 
-{/* DEMO_VIDEO: leaderboard-rankings */}
+{/* DEMO_VIDEO: leaderboard-rankings | playwright */}
 
 ## Rankings table
 
 <DemoVideo
   topic="leaderboard-rankings"
+  kind="playwright"
   caption="The ranked LeaderboardDataRow table — rank, name, highest_score_avg, messages_per_session, quickest_pass_minutes, sortable by any metric column."
 />
 
@@ -122,12 +124,13 @@ Each winner includes `profile_id`, `name`, `value`, and `details`.
 
 Resource metadata keyed by ID: `profiles`, `simulations`, `scenarios`.
 
-{/* DEMO_VIDEO: leaderboard-trends */}
+{/* DEMO_VIDEO: leaderboard-trends | playwright */}
 
 ## Score trends and accolades
 
 <DemoVideo
   topic="leaderboard-trends"
+  kind="playwright"
   caption="Accolade winners panel — highest_scorer, rapid_riser, marathon_runner — with each card showing the underlying value + details that earned it."
 />
 
@@ -148,12 +151,13 @@ The `POST /attempt/search` response returns `LeaderboardDataRow` items:
   - `perfect_score_count` -- Number of perfect scores
   - `quickest_pass_minutes` -- Fastest pass time
 
-{/* DEMO_VIDEO: leaderboard-scoping */}
+{/* DEMO_VIDEO: leaderboard-scoping | playwright */}
 
 ## Scoping the leaderboard
 
 <DemoVideo
   topic="leaderboard-scoping"
+  kind="playwright"
   caption="Scoping with cohort_ids + simulation_ids + start_date/end_date — rankings, accolades and trends all reshape to the filtered window."
 />
 

@@ -1,6 +1,6 @@
 # Backup & restore
 
-{/* DEMO_VIDEO: backup-overview — replace public/demos/backup-overview.mp4 */}
+{/* DEMO_VIDEO: backup-overview | manual */}
 
 # Backup & restore
 
@@ -11,6 +11,7 @@ swap looks exactly like a normal rollout.
 
 <DemoVideo
   topic="backup-overview"
+  kind="manual"
   caption="Listing the snapshots under ~/.glow/instances/<name>/backups/, then walking through a redeploy --from-backup to roll back."
 />
 
@@ -38,12 +39,13 @@ If you need an off-box copy, rsync the `backups/` directory yourself.
 
 ---
 
-{/* DEMO_VIDEO: backup-storage — replace public/demos/backup-storage.mp4 */}
+{/* DEMO_VIDEO: backup-storage | manual */}
 
 ## Where backups live
 
 <DemoVideo
   topic="backup-storage"
+  kind="manual"
   caption="ls -lh ~/.glow/instances/default/backups/ — manual snapshots next to the auto pre-deploy snapshots."
 />
 
@@ -72,12 +74,13 @@ volumes are wiped. Your snapshots stay put.
 
 ---
 
-{/* DEMO_VIDEO: backup-create — replace public/demos/backup-create.mp4 */}
+{/* DEMO_VIDEO: backup-create | vhs */}
 
 ## Creating a backup
 
 <DemoVideo
   topic="backup-create"
+  kind="vhs"
   caption="glow backup create --label pre-migration — the dump runs inside the database container, lands on the host."
 />
 
@@ -111,12 +114,13 @@ the directory is ignored.
 
 ---
 
-{/* DEMO_VIDEO: backup-restore — replace public/demos/backup-restore.mp4 */}
+{/* DEMO_VIDEO: backup-restore | vhs */}
 
 ## Restoring
 
 <DemoVideo
   topic="backup-restore"
+  kind="vhs"
   caption="glow redeploy --from-backup <name> — pre-deploy snapshot fires first, then the restore runs as part of the blue/green swap."
 />
 

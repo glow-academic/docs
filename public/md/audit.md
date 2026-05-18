@@ -1,11 +1,12 @@
 # Audit & Lineage
 
-{/* DEMO_VIDEO: audit-overview — replace public/demos/audit-overview.mp4 */}
+{/* DEMO_VIDEO: audit-overview | manual */}
 
 # Audit & Lineage
 
 <DemoVideo
   topic="audit-overview"
+  kind="manual"
   caption="The full lineage chain: a single learner action lands as a soft_calls_entry row, stitched back through group_id into the session timeline and the per-group runs view."
 />
 
@@ -46,6 +47,7 @@ SSE relay path do not produce ledger rows.
 
 <DemoVideo
   topic="audit-ledger"
+  kind="manual"
   caption="A single soft_calls_entry row expanded: call_id matches the wire-level event identity, artifact + operation mirror the permissions vocabulary, and status tracks pending → accepted | rejected."
 />
 
@@ -96,6 +98,7 @@ by reading the base table directly.
 
 <DemoVideo
   topic="audit-stitching"
+  kind="manual"
   caption="Tracing one group_id three ways: into the session timeline as a group_created event, into the group detail tree as runs + messages, and into the audit ledger as a call_id family."
 />
 
@@ -140,6 +143,7 @@ The framework guarantees stitching by:
 
 <DemoVideo
   topic="audit-replay"
+  kind="manual"
   caption="Drilling top-down: Activity → pick a session → Session timeline → click a group_created row → Group detail with runs + messages → individual call_id back to the ledger."
 />
 

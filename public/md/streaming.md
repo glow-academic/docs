@@ -1,6 +1,6 @@
 # Streaming
 
-{/* DEMO_VIDEO: streaming-overview — replace public/demos/streaming-overview.mp4 */}
+{/* DEMO_VIDEO: streaming-overview | vhs */}
 
 # Streaming
 
@@ -13,6 +13,7 @@ arrives.
 
 <DemoVideo
   topic="streaming-overview"
+  kind="vhs"
   caption="A persona generate run watched live: events stream in, the terminal .completed frame fires, the CLI exits 0."
 />
 
@@ -35,12 +36,13 @@ pattern as every other endpoint — pass `Authorization: Bearer
 
 ---
 
-{/* DEMO_VIDEO: streaming-connect — replace public/demos/streaming-connect.mp4 */}
+{/* DEMO_VIDEO: streaming-connect | vhs */}
 
 ## Connecting to a watch stream
 
 <DemoVideo
   topic="streaming-connect"
+  kind="vhs"
   caption="curl --no-buffer against /persona/watch with a real run_id — frames stream into the terminal as the generator emits them."
 />
 
@@ -76,12 +78,13 @@ native `EventSource` works without a polyfill.
 
 ---
 
-{/* DEMO_VIDEO: streaming-events — replace public/demos/streaming-events.mp4 */}
+{/* DEMO_VIDEO: streaming-events | manual */}
 
 ## SSE event format
 
 <DemoVideo
   topic="streaming-events"
+  kind="manual"
   caption="Side-by-side: a single SSE frame on the wire next to the parsed EventEnvelope it represents."
 />
 
@@ -118,12 +121,13 @@ all 20 watch streams):
 
 ---
 
-{/* DEMO_VIDEO: streaming-terminal — replace public/demos/streaming-terminal.mp4 */}
+{/* DEMO_VIDEO: streaming-terminal | vhs */}
 
 ## Terminal events
 
 <DemoVideo
   topic="streaming-terminal"
+  kind="vhs"
   caption="A run that fails: the .failed envelope arrives, the CLI prints the payload, and exits with code 1 — no need to poll a status endpoint."
 />
 
@@ -147,12 +151,13 @@ subscribed to the whole group, hydrating their UI on every envelope.
 
 ---
 
-{/* DEMO_VIDEO: streaming-cli — replace public/demos/streaming-cli.mp4 */}
+{/* DEMO_VIDEO: streaming-cli | vhs */}
 
 ## The `glow <art> watch <run_id>` CLI helper
 
 <DemoVideo
   topic="streaming-cli"
+  kind="vhs"
   caption="glow personas watch <run_id> in human and --json modes — same frames, two renderings, terminal frame breaks the loop."
 />
 

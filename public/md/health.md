@@ -1,11 +1,12 @@
 # Health
 
-{/* DEMO_VIDEO: health-overview — replace public/demos/health-overview.mp4 */}
+{/* DEMO_VIDEO: health-overview | playwright */}
 
 # Health
 
 <DemoVideo
   topic="health-overview"
+  kind="playwright"
   caption="Opening the Health page — service tiles glowing green/red across the last 24 hours, with hourly buckets for uptime and latency."
 />
 
@@ -55,12 +56,13 @@ curl -X POST https://<your-instance>/system/health \
   }'
 ```
 
-{/* DEMO_VIDEO: health-status-indicators — replace public/demos/health-status-indicators.mp4 */}
+{/* DEMO_VIDEO: health-status-indicators | playwright */}
 
 ## Understanding the Response
 
 <DemoVideo
   topic="health-status-indicators"
+  kind="playwright"
   caption="Hovering an hourly cell to surface check_count / ok_count / fail_count, uptime_percent, and the latest_error string for a degraded service."
 />
 
@@ -97,12 +99,13 @@ Each `metrics_hourly` entry contains:
 | `max_requests_total` | Peak total request count |
 | `max_errors_total` | Peak total error count |
 
-{/* DEMO_VIDEO: health-refresh — replace public/demos/health-refresh.mp4 */}
+{/* DEMO_VIDEO: health-refresh | vhs */}
 
 ## Refreshing and Exporting
 
 <DemoVideo
   topic="health-refresh"
+  kind="vhs"
   caption="Hitting `POST /system/refresh` to rebuild the hourly materialized views, then re-fetching health to see the freshest buckets land."
 />
 

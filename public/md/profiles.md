@@ -1,6 +1,6 @@
 # Profiles
 
-{/* DEMO_VIDEO: profiles-overview — replace public/demos/profiles-overview.mp4 */}
+{/* DEMO_VIDEO: profiles-overview | playwright */}
 
 # Profiles
 
@@ -8,6 +8,7 @@ Profiles represent the people who use Glow -- instructors, teaching assistants, 
 
 <DemoVideo
   topic="profiles-overview"
+  kind="playwright"
   caption="The profiles list — cards show name, role, department, and last login; drill in to manage role assignments and department membership."
 />
 
@@ -33,12 +34,13 @@ Profiles are the link between real users and the simulation experience. Without 
 
 ---
 
-{/* DEMO_VIDEO: profiles-create — replace public/demos/profiles-create.mp4 */}
+{/* DEMO_VIDEO: profiles-create | playwright */}
 
 ## Create a profile
 
 <DemoVideo
   topic="profiles-create"
+  kind="playwright"
   caption="Filling out the create form: name, email, picking the role (Instructional Staff / Administrator / Super Administrator), and assigning to a department."
 />
 
@@ -82,12 +84,13 @@ curl -X POST https://<your-instance>/profile/create \
 
 ---
 
-{/* DEMO_VIDEO: profiles-edit — replace public/demos/profiles-edit.mp4 */}
+{/* DEMO_VIDEO: profiles-edit | playwright */}
 
 ## Roles, departments, and request limits
 
 <DemoVideo
   topic="profiles-edit"
+  kind="playwright"
   caption="Editing a profile: promoting from Instructional Staff to Administrator, adding a second department, and setting a request-limit cap."
 />
 
@@ -119,7 +122,7 @@ Profiles can have request limits that cap how many simulation attempts a learner
 
 ---
 
-{/* DEMO_VIDEO: profiles-emulate — replace public/demos/profiles-emulate.mp4 */}
+{/* DEMO_VIDEO: profiles-emulate | playwright */}
 
 ## Emulating another profile
 
@@ -127,6 +130,7 @@ Super Administrators can emulate any profile to debug what that user actually se
 
 <DemoVideo
   topic="profiles-emulate"
+  kind="playwright"
   caption="A Super Admin emulating TA Johnson — the UI reflows to show only TA Johnson's cohorts and learner-facing features, then unemulate returns to admin view."
 />
 
@@ -156,7 +160,7 @@ Emulation is audit-logged; only Super Administrators can invoke `/profile/emulat
 
 ---
 
-{/* DEMO_VIDEO: profiles-draft — replace public/demos/profiles-draft.mp4 */}
+{/* DEMO_VIDEO: profiles-draft | playwright */}
 
 ## Drafts
 
@@ -164,6 +168,7 @@ Profiles support the draft workflow. When you create or update a profile through
 
 <DemoVideo
   topic="profiles-draft"
+  kind="playwright"
   caption="Editing the same profile in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
 />
 
@@ -180,7 +185,7 @@ Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expe
 
 ---
 
-{/* DEMO_VIDEO: profiles-search — replace public/demos/profiles-search.mp4 */}
+{/* DEMO_VIDEO: profiles-search | playwright */}
 
 ## Search and filter
 
@@ -188,6 +193,7 @@ Profile search supports full-text plus facet filters across role, department, an
 
 <DemoVideo
   topic="profiles-search"
+  kind="playwright"
   caption="Filtering profiles by role (Instructional Staff) and department, then drilling in on a single profile."
 />
 
@@ -205,7 +211,7 @@ curl -X POST https://<your-instance>/profile/search \
 
 ---
 
-{/* DEMO_VIDEO: profiles-bulk — replace public/demos/profiles-bulk.mp4 */}
+{/* DEMO_VIDEO: profiles-bulk | playwright */}
 
 ## Bulk operations
 
@@ -213,6 +219,7 @@ Bulk delete and update follow the canonical *all-matching* shape -- pass either 
 
 <DemoVideo
   topic="profiles-bulk"
+  kind="playwright"
   caption="Bulk-archiving every profile in a sunset department in one round-trip, keeping admin users via excluded_ids."
 />
 
