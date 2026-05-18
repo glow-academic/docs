@@ -1,10 +1,13 @@
-{/* DEMO_VIDEO: documents — replace public/demos/documents.mp4 */}
+{/* DEMO_VIDEO: documents-overview — replace public/demos/documents-overview.mp4 */}
 
 # Documents
 
-<DemoVideo topic="documents" />
-
 Documents provide reference material that grounds AI-driven simulations in real institutional content. They attach to scenarios so the AI character can draw on policies, syllabi, and other materials during a conversation.
+
+<DemoVideo
+  topic="documents-overview"
+  caption="The documents list — cards show name, type, and how many scenarios link to each document; drill in to preview the content."
+/>
 
 ![Documents list showing uploaded documents with name, type, and associated scenario count](/screenshots/documents/list.png)
 
@@ -14,20 +17,32 @@ A document is a piece of content -- such as a policy, syllabus, lab template, or
 
 **University example:** An "Academic Integrity Policy" document ensures that when a student character asks about cheating consequences, the AI responds with the actual university policy rather than generic information. A "FERPA Policy" document gives the AI grounding in privacy regulations for scenarios involving student records.
 
-## Quick Start
+## How It Connects: The 5-Step Workflow
 
-### CLI
+Documents participate in step 2 of the Glow workflow:
+
+1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
+2. **Assign to Scenarios** -- Attach personas and *documents* to scenarios. Documents give the AI factual grounding.
+3. **Add to Simulations** -- Group scenarios into simulations.
+4. **Add to Cohorts** -- Assign profiles and simulations to a cohort.
+5. **Run Attempts** -- Learners launch simulations; the AI uses document content during the conversation.
+
+Documents connect to **scenarios**, not agents. A single document can be shared across multiple scenarios. For example, the Academic Integrity Policy might be referenced in both a "Student Caught Cheating" scenario and a "Grade Appeal" scenario.
+
+---
+
+{/* DEMO_VIDEO: documents-create — replace public/demos/documents-create.mp4 */}
+
+## Create a document
+
+<DemoVideo
+  topic="documents-create"
+  caption="Filling out the create form: name, description, picking the template (Policy, Syllabus, Homework, Lab), and assigning to a department."
+/>
+
+### Via the CLI
 
 ```bash
-# List all documents
-glow documents list
-
-# Search documents
-glow documents search
-
-![Document upload form showing name field, file upload area, and department selection](/screenshots/documents/create.png)
-
-# Create a new document
 glow documents create --body '{
   "documents": [
     {
@@ -36,40 +51,13 @@ glow documents create --body '{
     }
   ]
 }'
-
-# Get a document by ID
-glow documents get --body '{"document_id": "doc-456"}'
-
-# Update an existing document
-glow documents update --body '{
-  "documents": [
-    {
-      "document_id": "doc-456",
-      "name": "Academic Integrity Policy (Updated)"
-    }
-  ]
-}'
-
-# Delete a document
-glow documents delete --body '{"document_id": "doc-456"}'
 ```
 
-### API
+### Via the API
 
 All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
 
 ```bash
-# Search documents
-curl -X POST https://<your-instance>/document/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "search": "FERPA",
-    "page_size": 10
-  }'
-
-# Create a document
 curl -X POST https://<your-instance>/document/create \
   -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -84,17 +72,7 @@ curl -X POST https://<your-instance>/document/create \
   }'
 ```
 
-## How It Connects: The 5-Step Workflow
-
-Documents participate in step 2 of the Glow workflow:
-
-1. **Create Personas** -- Define AI student characters with temperaments and behaviors.
-2. **Assign to Scenarios** -- Attach personas and *documents* to scenarios. Documents give the AI factual grounding.
-3. **Add to Simulations** -- Group scenarios into simulations.
-4. **Add to Cohorts** -- Assign profiles and simulations to a cohort.
-5. **Run Attempts** -- Learners launch simulations; the AI uses document content during the conversation.
-
-Documents connect to **scenarios**, not agents. A single document can be shared across multiple scenarios. For example, the Academic Integrity Policy might be referenced in both a "Student Caught Cheating" scenario and a "Grade Appeal" scenario.
+![Document upload form showing name field, file upload area, and department selection](/screenshots/documents/create.png)
 
 ## Document Types and Templates
 
@@ -122,9 +100,18 @@ A document in Glow can include several types of content:
 - **Parameters and fields** -- Link the document to specific parameter categories and field values for filtering and organization.
 - **Department** -- Scope the document to a department so it appears only for relevant users.
 
-## Uploading Files
+---
 
-Documents support file uploads for rich content. Use the upload endpoint to attach files:
+{/* DEMO_VIDEO: documents-upload — replace public/demos/documents-upload.mp4 */}
+
+## Uploading files
+
+Documents support file uploads for rich content. The upload endpoint is binary-body (no JSON wrapper) and returns an `upload_id` that you then reference when saving the document draft.
+
+<DemoVideo
+  topic="documents-upload"
+  caption="Dragging a PDF onto the document draft form — upload progress, returned upload_id, and the file appearing as an attachment ready to publish."
+/>
 
 ```bash
 # Upload a file
@@ -136,11 +123,29 @@ curl -X POST https://<your-instance>/document/upload \
   --data-binary @academic_integrity_policy.pdf
 ```
 
-The upload returns an `upload_id` that you can reference when creating or updating the document draft.
+The upload returns an `upload_id`. Reference it when saving the document draft:
+
+```bash
+glow documents draft --body '{
+  "input_draft_id": "doc-draft-uuid",
+  "expected_version": 1,
+  "name": "Academic Integrity Policy",
+  "file_ids": ["upload-id-returned-above"]
+}'
+```
+
+---
+
+{/* DEMO_VIDEO: documents-draft — replace public/demos/documents-draft.mp4 */}
 
 ## Drafts
 
-Documents support the draft workflow. Changes are saved as a draft before being published, allowing you to preview and iterate.
+Documents support the draft workflow. Changes are saved as a draft before being published, with optimistic concurrency via `expected_version`.
+
+<DemoVideo
+  topic="documents-draft"
+  caption="Editing the same document in two tabs — second save sees a version mismatch and surfaces the conflict instead of clobbering."
+/>
 
 ```bash
 # Save a document draft
@@ -152,6 +157,61 @@ glow documents draft --body '{
 
 Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `expected_version`, `name`, `description`, `file_ids`, `text_ids`, `department_ids`, `parameter_ids`, and `parameter_field_ids`.
 
+---
+
+{/* DEMO_VIDEO: documents-search — replace public/demos/documents-search.mp4 */}
+
+## Search and filter
+
+Document search supports full-text plus facet filters across department, parameter, and field.
+
+<DemoVideo
+  topic="documents-search"
+  caption="Searching for 'FERPA' then filtering by Policy template and the CS department, drilling in on a match."
+/>
+
+```bash
+curl -X POST https://<your-instance>/document/search \
+  -H "X-Api-Key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "search": "FERPA",
+    "page_size": 10
+  }'
+```
+
+---
+
+{/* DEMO_VIDEO: documents-bulk — replace public/demos/documents-bulk.mp4 */}
+
+## Bulk operations
+
+Bulk delete and update follow the canonical *all-matching* shape -- pass either explicit IDs, or `all: true` with flat filter fields + optional `excluded_ids` + a `patch` for updates.
+
+<DemoVideo
+  topic="documents-bulk"
+  caption="Bulk-archiving every document in a deprecated department in one round-trip, keeping a manual exception list."
+/>
+
+```bash
+# Delete every document in a deprecated department, except the canonical references
+glow documents delete --body '{
+  "all": true,
+  "filter_department_ids": ["dept-deprecated"],
+  "excluded_ids": ["doc-keep-canonical-policy"]
+}'
+
+# Bulk update via patch
+glow documents update --body '{
+  "all": true,
+  "filter_department_ids": ["dept-archive"],
+  "patch": { "archived": true }
+}'
+```
+
+See the [Personas guide](/personas#bulk-operations) for the canonical write-up of this pattern.
+
 ## Common Operations
 
 | Task | CLI | API Endpoint |
@@ -162,6 +222,7 @@ Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `exp
 | Update documents | `glow documents update --body '{...}'` | `POST /document/update` |
 | Duplicate a document | -- | `POST /document/duplicate` |
 | Delete documents | `glow documents delete --body '{...}'` | `POST /document/delete` |
+| Bulk delete (filter) | `glow documents delete --body '{"all": true, "filter_…": "…"}'` | `POST /document/delete` |
 | Upload a file | -- | `POST /document/upload` |
 | Export to CSV | `glow documents export` | `POST /document/export` |
 | Save a draft | `glow documents draft --body '{...}'` | `PATCH /document/draft` |
