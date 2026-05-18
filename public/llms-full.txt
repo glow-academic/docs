@@ -37133,7 +37133,7 @@ glow auths update --id <id>
 
 # `glow backup create`
 
-Route: /cli-reference/backup/create
+Route: /cli-reference/backup-create
 
 # `glow backup create`
 
@@ -37156,7 +37156,7 @@ glow backup create [--name] [--label]
 
 # `glow backup delete`
 
-Route: /cli-reference/backup/delete
+Route: /cli-reference/backup-delete
 
 # `glow backup delete`
 
@@ -37179,7 +37179,7 @@ glow backup delete [--name] file <file>
 
 # `glow backup list`
 
-Route: /cli-reference/backup/list
+Route: /cli-reference/backup-list
 
 # `glow backup list`
 
@@ -37201,7 +37201,7 @@ glow backup list [--name]
 
 # `glow backup restore`
 
-Route: /cli-reference/backup/restore
+Route: /cli-reference/backup-restore
 
 # `glow backup restore`
 
@@ -37757,7 +37757,7 @@ glow logs [--name] [--follow] [service]
 
 # `glow mcp call`
 
-Route: /cli-reference/mcp/call
+Route: /cli-reference/mcp-call
 
 # `glow mcp call`
 
@@ -37780,7 +37780,7 @@ glow mcp call tool_name <tool_name> [--args]
 
 # `glow mcp list-tools`
 
-Route: /cli-reference/mcp/list-tools
+Route: /cli-reference/mcp-list-tools
 
 # `glow mcp list-tools`
 

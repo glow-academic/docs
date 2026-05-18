@@ -493,6 +493,13 @@ function main() {
 
   // ── CLI Reference ─────────────────────────────────────────────
 
+  // Parent commands whose subcommands should render FLAT in the sidebar
+  // (as siblings of glow login / glow deploy / etc.) instead of inside
+  // a collapsible group. Use this for small infra-level groups (~2-5
+  // subs) where a parent dir adds noise. CRUD groups like personas,
+  // scenarios, etc. (10+ subs each) stay grouped.
+  const FLATTEN_CLI_PARENTS = new Set(['mcp', 'backup'])
+
   let totalCliCommands = 0
 
   if (cliSpec) {
@@ -502,6 +509,22 @@ function main() {
     // Top-level commands
     for (const cmd of (cliSpec.subcommands || []).filter(c => !CLI_SKIP.has(c.name))) {
       const subs = (cmd.subcommands || []).filter(s => !CLI_SKIP.has(s.name))
+
+      // Flatten path: emit each sub as a top-level entry named
+      // `{parent}-{sub}` so the sidebar lists them inline.
+      if (subs.length > 0 && FLATTEN_CLI_PARENTS.has(cmd.name)) {
+        for (const sub of subs) {
+          const slug = `${cmd.name}-${sub.name}`
+          const subDir = join(cliRefDir, slug)
+          mkdirSync(subDir, { recursive: true })
+          const lines = renderCliCommandPage(rootName, sub, cmd.name)
+          writeFileSync(join(subDir, 'page.mdx'), lines.join('\n'))
+          writeMdCopy(`/cli-reference/${slug}`, `${rootName} ${cmd.name} ${sub.name}`, lines.join('\n'))
+          cliRefMeta[slug] = `${rootName} ${cmd.name} ${sub.name}`
+          totalCliCommands++
+        }
+        continue
+      }
 
       if (subs.length === 0) {
         const cmdDir = join(cliRefDir, cmd.name)
