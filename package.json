@@ -6,7 +6,9 @@
     "dev": "next dev --port 3300",
     "build": "next build",
     "start": "next start",
-    "gen:llms": "node scripts/generate-llms-txt.mjs"
+    "gen:llms": "node scripts/generate-llms-txt.mjs",
+    "demo:slots": "node scripts/list-demo-slots.mjs",
+    "demo:validate": "node scripts/validate-demo-slots.mjs"
   },
   "//": "better-auth + better-sqlite3 + jose + @modelcontextprotocol/sdk are unused at runtime (the code that imported them was deleted) but kept so bun resolves the exact dep tree learnloopllc-glow-docs builds against. Drop only if a build verifies clean without them.",
   "dependencies": {

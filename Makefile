@@ -4,7 +4,7 @@
 #   make sync-types    → fetch specs from running servers, generate api + cli reference
 #   make dev           → start dev server on :3300
 
-.PHONY: dev build sync-types fetch-specs gen-docs gen-ts-types gen-llms gen-demo-manifest generate help
+.PHONY: dev build sync-types fetch-specs gen-docs gen-ts-types gen-llms gen-demo-manifest demo-slots demo-validate generate help
 
 # ── Configuration ────────────────────────────────────────────────
 GLOW_API_URL ?= http://localhost:8000
@@ -72,6 +72,12 @@ gen-llms:
 gen-demo-manifest:
 	@node scripts/gen-demo-manifest.mjs
 
+demo-slots:
+	@node scripts/list-demo-slots.mjs
+
+demo-validate:
+	@node scripts/validate-demo-slots.mjs
+
 # ── Help ─────────────────────────────────────────────────────────
 
 help:
@@ -93,3 +99,5 @@ help:
 	@echo "  make gen-ts-types     TS types from existing public/specs/"
 	@echo "  make gen-llms         llms.txt + llms-full.txt + public/md/"
 	@echo "  make gen-demo-manifest  components/demo-manifest.ts from public/demos/*.mp4"
+	@echo "  make demo-slots       List DemoVideo slots from app/**/*.mdx"
+	@echo "  make demo-validate    Validate DemoVideo markers/components/manifest"
