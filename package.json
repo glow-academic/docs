@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3300",
-    "build": "next build",
+    "build": "next build && pagefind --site out --output-subdir _pagefind",
     "start": "next start",
     "gen:llms": "node scripts/generate-llms-txt.mjs",
     "demo:slots": "node scripts/list-demo-slots.mjs",
@@ -28,6 +28,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "openapi-typescript": "^7.13.0",
+    "pagefind": "1.5.2",
     "typescript": "latest"
   }
 }
