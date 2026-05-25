@@ -56,7 +56,7 @@ Chats also support a draft system for customizing chat configurations before or 
 
 ### Get Chat Details via CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
@@ -67,7 +67,6 @@ glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
 ```bash
 curl -X POST https://<your-instance>/attempt/chat_get \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
@@ -86,7 +85,6 @@ glow attempts chat export --body '{"chat_entry_id": "..."}'
 # API
 curl -X POST https://<your-instance>/attempt/chat_export \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
@@ -192,7 +190,6 @@ deferred CLI capability tracking in the `glow-academic-cli` repo.
 ```bash
 curl -X POST https://<your-instance>/attempt/chat_get \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
@@ -243,7 +240,6 @@ glow attempts chat draft --body '{
 # API
 curl -X POST https://<your-instance>/attempt/chat_draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "name": "Custom FERPA Chat",
@@ -264,7 +260,6 @@ glow attempts chat drafts
 # API
 curl -X POST https://<your-instance>/attempt/chat_drafts \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
 ```
 

@@ -46,7 +46,7 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow models create --body '{
@@ -62,7 +62,6 @@ glow models create --body '{
 
 ```bash
 curl -X POST https://<your-instance>/model/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -93,7 +92,6 @@ Every model requires at least one provider. The `provider_ids` field connects th
 ```bash
 # Filter models by provider
 curl -X POST https://<your-instance>/model/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"filter_provider_ids": ["OPENAI_PROVIDER_UUID"]}'

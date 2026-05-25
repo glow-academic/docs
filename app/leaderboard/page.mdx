@@ -30,7 +30,7 @@ Leaderboard answers questions like:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Get the full leaderboard with header metrics and accolades
@@ -51,7 +51,6 @@ glow attempts export
 ```bash
 # Get leaderboard summary
 curl -X POST https://<your-instance>/attempt/leaderboard \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -62,7 +61,6 @@ curl -X POST https://<your-instance>/attempt/leaderboard \
 
 # Search ranked profiles
 curl -X POST https://<your-instance>/attempt/search \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{

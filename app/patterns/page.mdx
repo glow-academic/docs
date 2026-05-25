@@ -343,7 +343,6 @@ can't silently overwrite yours.
 ```bash
 curl -X POST https://<your-instance>/<art>/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
@@ -463,7 +462,6 @@ the currently-selected ids — exactly what a dropdown needs.
 ```bash
 curl -X POST https://<your-instance>/persona/search \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "search": "confused",

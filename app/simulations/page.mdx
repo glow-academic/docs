@@ -58,7 +58,7 @@ Simulations are **step 3** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" simulation:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow simulations create --body '{
@@ -74,7 +74,6 @@ glow simulations create --body '{
 ```bash
 curl -X POST https://<your-instance>/simulation/create \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "simulations": [{
@@ -216,7 +215,6 @@ glow simulations draft --body '{
 # Via API
 curl -X PATCH https://<your-instance>/simulation/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
@@ -234,7 +232,6 @@ glow simulations list
 # API
 curl -X POST https://<your-instance>/simulation/drafts \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
 ```
 
@@ -262,7 +259,6 @@ glow simulations search --body '{
 
 ```bash
 curl -X POST https://<your-instance>/simulation/search \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -H "Content-Type: application/json" \
   -d '{"search": "training", "page_size": 25}'

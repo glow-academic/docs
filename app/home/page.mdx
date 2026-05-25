@@ -25,7 +25,7 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Get assigned simulations for the current TA
@@ -43,14 +43,12 @@ glow attempts export
 ```bash
 # Get simulation cards
 curl -X POST https://<your-instance>/attempt/home \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search attempt history
 curl -X POST https://<your-instance>/attempt/search \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{

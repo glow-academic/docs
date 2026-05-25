@@ -25,7 +25,7 @@ Practice offers two views:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Get available practice simulations
@@ -43,14 +43,12 @@ glow attempts export
 ```bash
 # Get practice simulation cards
 curl -X POST https://<your-instance>/attempt/practice \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search practice history
 curl -X POST https://<your-instance>/attempt/search \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{

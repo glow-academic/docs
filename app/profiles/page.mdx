@@ -44,7 +44,7 @@ Profiles are the link between real users and the simulation experience. Without 
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow profiles create --body '{
@@ -60,11 +60,10 @@ glow profiles create --body '{
 
 ### Via the API
 
-All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
+All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
 curl -X POST https://<your-instance>/profile/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -136,7 +135,6 @@ Super Administrators can emulate any profile to debug what that user actually se
 
 ```bash
 curl -X POST https://<your-instance>/profile/emulate \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -148,7 +146,6 @@ curl -X POST https://<your-instance>/profile/emulate \
 
 ```bash
 curl -X POST https://<your-instance>/profile/unemulate \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
@@ -197,7 +194,6 @@ Profile search supports full-text plus facet filters across role, department, an
 
 ```bash
 curl -X POST https://<your-instance>/profile/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

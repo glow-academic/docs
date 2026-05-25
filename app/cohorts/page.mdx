@@ -44,7 +44,7 @@ A cohort requires at least one profile and one simulation. Once both are assigne
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow cohorts create --body '{
@@ -59,11 +59,10 @@ glow cohorts create --body '{
 
 ### Via the API
 
-All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
+All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
 curl -X POST https://<your-instance>/cohort/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -168,7 +167,6 @@ Cohorts support rich search and filtering.
 ```bash
 # Search cohorts by profile
 curl -X POST https://<your-instance>/cohort/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

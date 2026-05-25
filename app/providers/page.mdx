@@ -53,7 +53,7 @@ Provider  -->  Model (model has provider_id)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow providers create --body '{
@@ -68,7 +68,6 @@ glow providers create --body '{
 
 ```bash
 curl -X POST https://<your-instance>/provider/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -113,7 +112,6 @@ Provider keys hold encrypted credentials. Keys are never returned in plaintext f
 
 ```bash
 curl -X POST https://<your-instance>/provider/decrypt \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -192,7 +190,6 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 
 ```bash
 curl -X POST https://<your-instance>/provider/delete \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"provider_ids": ["UUID_1", "UUID_2"]}'
@@ -214,7 +211,6 @@ glow providers delete --body '{
 
 ```bash
 curl -X POST https://<your-instance>/provider/duplicate \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"provider_id": "PROVIDER_UUID"}'

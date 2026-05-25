@@ -19,8 +19,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Layout
           navbar={<Navbar logo={<b>Glow</b>} />}
           pageMap={pageMap}
-          editLink={null}
-          feedback={{ content: null }}
+          docsRepositoryBase="https://github.com/glow-academic/docs/tree/main"
+          editLink="Edit this page on GitHub →"
+          feedback={{ content: 'Question? Give us feedback →' }}
           sidebar={{ defaultMenuCollapseLevel: 1 }}
           footer={
             <Footer>

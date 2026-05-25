@@ -70,7 +70,7 @@ Operations that live in a sub-directory on the HTTP side (for example
 
 The taxonomy is mechanical — if you can name the HTTP route, you can
 name the WS event. The source of truth is the handler tree at
-[`core/app/ws/`](https://github.com/learnloopllc/glow-academic-api/tree/main/core/app/ws)
+[`core/app/ws/`](https://github.com/glow-academic/api/tree/main/core/app/ws)
 in the API; every file there registers exactly one `@sio.on(...)` event.
 
 ---
@@ -175,7 +175,7 @@ distribution mirrors how much each artifact uses live flows:
 | Each of `agent`, `auth`, `cohort`, `department`, `eval`, `field`, `model`, `parameter`, `persona`, `provider`, `rubric`, `setting`, `simulation`, `tool` | 14 | The standard artifact CRUD + draft + search + generate set, mirrored to WS verbatim. |
 
 The exhaustive list lives under
-[`core/app/ws/<artifact>/`](https://github.com/learnloopllc/glow-academic-api/tree/main/core/app/ws)
+[`core/app/ws/<artifact>/`](https://github.com/glow-academic/api/tree/main/core/app/ws)
 — one file per `@sio.on(...)` event. Don't memorise the catalogue; the
 HTTP route is the spec, and the WS name follows mechanically.
 

@@ -63,7 +63,6 @@ voice flows. Artifact type is implicit from the URL path.
 ```bash
 curl -X POST https://<your-instance>/persona/generate \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -d '{
     "instructions": ["A passive student who starts every reply with Uh..."],
@@ -231,7 +230,6 @@ Raw HTTP:
 
 ```bash
 curl -X POST https://<your-instance>/persona/generations \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -d '{ "search": "confused", "page_limit": 50 }'
 ```

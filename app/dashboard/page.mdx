@@ -49,7 +49,7 @@ Dashboard returns `header_metrics` (total attempts, average score, completion pe
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Fetch the full dashboard bundle (all metrics, rubrics, simulations)
@@ -69,7 +69,6 @@ glow attempts refresh
 ```bash
 # Get dashboard bundle — single endpoint, filters in the body
 curl -X POST https://<your-instance>/attempt/dashboard \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -80,7 +79,6 @@ curl -X POST https://<your-instance>/attempt/dashboard \
 
 # Search attempt history (separate endpoint on the attempt artifact)
 curl -X POST https://<your-instance>/attempt/search \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -154,7 +152,6 @@ directly — it returns the same `HistoryItem` shape with full pagination:
 
 ```bash
 curl -X POST https://<your-instance>/attempt/search \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{

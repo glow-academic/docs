@@ -37,7 +37,7 @@ Session is useful when you need to:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Get session detail with groups and timeline
@@ -55,21 +55,18 @@ glow system export --body '{"target_session_id": "session-uuid"}'
 ```bash
 # Get one session detail
 curl -X POST https://<your-instance>/system/session \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"session_id": "session-uuid"}'
 
 # List sessions
 curl -X POST https://<your-instance>/system/sessions \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"page_size": 20}'
 
 # Export
 curl -X POST https://<your-instance>/system/export \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"target_session_id": "session-uuid"}'

@@ -30,7 +30,7 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Fetch the full reports bundle
@@ -48,7 +48,6 @@ glow attempts export
 ```bash
 # Get reports with filters
 curl -X POST https://<your-instance>/attempt/report \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -141,12 +140,10 @@ Resource metadata keyed by ID for hydrating IDs into display names:
 ```bash
 # Refresh materialized views and caches
 curl -X POST https://<your-instance>/attempt/refresh \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 
 # Export all reports data as a denormalized ZIP
 curl -X POST https://<your-instance>/attempt/export \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>"
 ```
 

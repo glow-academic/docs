@@ -61,7 +61,7 @@ Scenarios are **step 2** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" scenario:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow scenarios create --body '{
@@ -85,7 +85,6 @@ glow scenarios create --body '{
 ```bash
 curl -X POST https://<your-instance>/scenario/create \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "scenarios": [{
@@ -134,7 +133,6 @@ glow scenarios draft --body '{
 ```bash
 curl -X PATCH https://<your-instance>/scenario/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "input_draft_id": "scenario-draft-uuid",
@@ -195,7 +193,6 @@ The scenario artifact has a `generate` sub-operation that produces draft scenari
 ```bash
 curl -X POST https://<your-instance>/scenario/generate \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "prompt": "Three office-hours scenarios with the same Confused persona, escalating intensity 3 → 6 → 9",
@@ -251,7 +248,6 @@ glow scenarios draft --body '{
 # Via API
 curl -X PATCH https://<your-instance>/scenario/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "name": "Updated FERPA Training",
@@ -268,7 +264,6 @@ glow scenarios list
 # API
 curl -X POST https://<your-instance>/scenario/drafts \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token"
 ```
 
@@ -292,7 +287,6 @@ glow scenarios search --body '{"persona_ids": ["confused-student-uuid"]}'
 
 ```bash
 curl -X POST https://<your-instance>/scenario/search \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -H "Content-Type: application/json" \
   -d '{

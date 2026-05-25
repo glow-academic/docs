@@ -44,7 +44,7 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow documents create --body '{
@@ -59,11 +59,10 @@ glow documents create --body '{
 
 ### Via the API
 
-All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
+All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
 curl -X POST https://<your-instance>/document/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -121,7 +120,6 @@ Documents support file uploads for rich content. The upload endpoint is binary-b
 ```bash
 # Upload a file
 curl -X POST https://<your-instance>/document/upload \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/pdf" \
   -H "X-Filename: academic_integrity_policy.pdf" \
@@ -179,7 +177,6 @@ Document search supports full-text plus facet filters across department, paramet
 
 ```bash
 curl -X POST https://<your-instance>/document/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

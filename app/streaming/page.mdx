@@ -30,7 +30,7 @@ execution; omit it to receive every event in the group (the
 front-end default for live tables). `group_id` may be omitted and
 the resolver derives it from `run_id`. Auth is the same bearer-token
 pattern as every other endpoint — pass `Authorization: Bearer
-<token>` and the `X-Api-Key` license header.
+<token>`.
 
 ---
 
@@ -54,7 +54,6 @@ every 15 seconds when there are no events.
 ```bash
 curl -N https://<your-instance>/persona/watch?run_id=<run-uuid> \
   -H "Authorization: Bearer your-token" \
-  -H "X-Api-Key: your-license-key" \
   -H "Accept: text/event-stream"
 ```
 

@@ -2,20 +2,18 @@
 
 # Authentication
 
-Every Glow request needs a caller identity. The platform supports two
-schemes, both attached as HTTP headers:
+Every Glow request needs a caller identity. Authentication is a single
+scheme — a bearer token attached as an HTTP header:
 
 | Scheme | Header | Issued by | Resolves to |
 |---|---|---|---|
 | **BearerAuth** | `Authorization: Bearer <jwt>` | Keycloak (interactive) or service-account exchange | profile + session |
-| **ApiKeyAuth** | `X-Api-Key: <license-key>` | the instance's license seed | license context (rate limits, feature gates) |
 
-Most user-driven calls send **both** — bearer for who you are, api-key
-for what the license entitles. CLI flows handle both automatically
-after `glow login` writes the bearer to `~/.config/glow/tokens.json`
-and the license key is read from `~/.glow/instances/<name>/glow-deploy.yaml`.
+The CLI handles this automatically: `glow login` writes the bearer to
+`~/.config/glow/tokens.json`, and every subsequent call attaches the
+`Authorization` header for you.
 
-<DemoVideo topic="authentication-overview" kind="manual" caption="Both schemes side-by-side: bearer JWT in Authorization header, license key in X-Api-Key, request flowing through." />
+<DemoVideo topic="authentication-overview" kind="manual" caption="Bearer JWT in the Authorization header, request flowing through identity resolution." />
 
 {/* DEMO_VIDEO: authentication-login | vhs */}
 
@@ -90,12 +88,11 @@ shape is:
 curl -X POST https://my-school.example.com/persona/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
-  -H "X-Api-Key: $GLOW_LICENSE_KEY" \
   -d '{}'
 ```
 
-`Authorization` alone works for most read paths; mutation endpoints
-typically require both headers.
+That single `Authorization: Bearer` header authenticates every
+endpoint — read and mutation paths alike.
 
 ### Discovery endpoints
 
@@ -151,7 +148,7 @@ glow login --instance-url https://my-school.example.com \
 ```
 
 The CLI's `--token` branch (`save_token` in
-[`src/auth.rs`](https://github.com/learnloopllc/glow-academic-cli/blob/main/src/auth.rs))
+[`src/auth.rs`](https://github.com/glow-academic/cli/blob/main/src/auth.rs))
 writes the JWT straight into `~/.config/glow/tokens.json` with no
 `refresh_token` and no `expires_in` — the server enforces lifetime via
 the JWT's own `exp` claim.
@@ -165,7 +162,7 @@ Today this is an operator-side step, done directly against Keycloak:
 2. Add a `profile.is_service_account = true` claim via a user attribute
    + a protocol mapper, so it lands in the issued token. Server-side
    resolution in
-   [`resolve_identity.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/resolve_identity.py)
+   [`resolve_identity.py`](https://github.com/glow-academic/api/blob/main/core/app/infra/identity/resolve_identity.py)
    accepts the JWT the same way as a human bearer; the claim is what
    downstream policy uses to distinguish "machine" from "person" when
    it matters (e.g. skipping interactive consent prompts).
@@ -203,97 +200,9 @@ ends at *consuming* an already-minted token via `--token`.
 
   Never check the token into the repo; never echo it in logs.
 
-{/* DEMO_VIDEO: authentication-license-keys | vhs */}
-
-## License keys (`X-Api-Key`)
-
-<DemoVideo
-  topic="authentication-license-keys"
-  kind="vhs"
-  caption="Operator seeds a license key in glow-deploy.yaml, runs `glow deploy`, the key lands encrypted-at-rest, and a request carrying X-Api-Key resolves to the right license context."
-/>
-
-License keys are the second authentication channel — distinct from
-the bearer JWT. The bearer carries **identity** ("who is calling");
-the license key carries **entitlement** ("what this caller is
-allowed to spend"). They're sent together on most mutation endpoints
-and resolved independently server-side.
-
-### Where they live
-
-- **Operator machine.** The license key is declared once in
-  `~/.glow/instances/<name>/glow-deploy.yaml` (the same file the
-  deploy wizard writes). Treat the file as a secret — it's the
-  source of truth for the instance.
-- **Server-side.** The deploy pipeline pushes the key into the
-  `keys_resource` table, encrypted-at-rest via the symmetric helper
-  in
-  [`app/utils/auth/decrypt_api_key.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/utils/auth/decrypt_api_key.py)
-  (decrypt counterpart used in
-  [`app/infra/identity/decrypt.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/decrypt.py)).
-  Plaintext is never logged or returned via the API.
-
-### How a request is resolved
-
-1. The client attaches the header: `X-Api-Key: <license-key>`.
-2. Middleware pulls it via `extract_api_key` (defined alongside
-   `extract_bearer_token` in
-   [`resolve_identity.py`](https://github.com/learnloopllc/glow-academic-api/blob/main/core/app/infra/identity/resolve_identity.py)
-   — `extract_api_key` is the trivial `.strip()` helper; the heavier
-   lookup is the database round-trip).
-3. The trimmed value is matched against a row in `keys_resource`,
-   decrypted on read via `decrypt_api_key`, and the resulting
-   license context (rate limit bucket, feature flags, billing
-   account) is attached to the request.
-4. The bearer JWT is resolved independently in the same middleware
-   pass — neither channel knows about the other until they meet in
-   the request handler.
-
-### Seeding at deploy time
-
-The key flows in from the deploy yaml: `glow deploy` reads
-`glow-deploy.yaml`, the server's bootstrap seeds the `keys_resource`
-row (encrypted via the same helper), and the row is keyed by the
-license value so the X-Api-Key lookup is O(1) once warmed.
-
-### Rotation
-
-There is no atomic `glow license rotate` command today. **Honest
-gap:** rotation is a three-step manual flow:
-
-1. Generate a new key value (any sufficiently-random string the
-   operator trusts — the value is opaque to the server).
-2. Update `~/.glow/instances/<name>/glow-deploy.yaml` with the new
-   value.
-3. Re-run `glow deploy` to re-seed; old key row remains until
-   manually purged. Update any CI / client secret stores that hold
-   the previous value before the cutover.
-
-Plan rotations during a low-traffic window — there is no overlap
-period where both keys are valid unless you keep both rows in the
-table.
-
-### Bearer + license key together
-
-Most mutation endpoints want both headers:
-
-```bash
-curl -X POST https://my-school.example.com/persona/search \
-  -H "Authorization: Bearer $GLOW_TOKEN" \
-  -H "X-Api-Key: $GLOW_LICENSE_KEY" \
-  -d '{}'
-```
-
-The bearer answers "who is this caller?"; the license key answers
-"what tier of service do they get?". A request with only a bearer
-gets identity but no entitlement (and may be rate-limited or
-rejected on metered routes); a request with only a license key has
-entitlement but no profile (read-only / unauthenticated surface
-only).
-
 ## Related
 
 - [Start](/start) — install + first-boot
 - [CLI Reference: login](/cli-reference/login/) · [logout](/cli-reference/logout/)
 - API Reference: [`POST /profile/context`](/api-reference/profile/post-profile-context/) returns the authenticated profile
-- [Permissions](/permissions/) — roles, role_artifacts, and how license context interacts with per-route policy
+- [Permissions](/permissions/) — roles, role_artifacts, and per-route policy

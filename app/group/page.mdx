@@ -38,7 +38,7 @@ Groups are essential for debugging AI behavior, auditing training interactions f
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Lean resolve — group identity only (cheap path used by audit linking)
@@ -59,7 +59,6 @@ glow system export --body '{"target_group_id": "group-uuid"}'
 ```bash
 # Get one group (set include_detail for the full tree)
 curl -X POST https://<your-instance>/system/group \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -71,7 +70,6 @@ curl -X POST https://<your-instance>/system/group \
 
 # List groups (pricing / cost view)
 curl -X POST https://<your-instance>/system/groups \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"page_size": 20}'

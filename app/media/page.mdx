@@ -51,7 +51,6 @@ owns the eventual binding. The route name is always `<kind>_upload`:
 ```bash
 curl -X POST https://<your-instance>/document/file_upload \
   -H "Authorization: Bearer your-token" \
-  -H "X-Api-Key: your-license-key" \
   -F "file=@./paper.pdf"
 ```
 
@@ -117,7 +116,6 @@ protocol:
 ```bash
 curl -X POST https://<your-instance>/system/audio_download \
   -H "Authorization: Bearer your-token" \
-  -H "X-Api-Key: your-license-key" \
   -H "Range: bytes=0-65535" \
   -d '{"audio_id": "<upload_id>"}' \
   --output chunk.webm

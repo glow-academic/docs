@@ -54,7 +54,7 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow tools create --body '{
@@ -69,7 +69,6 @@ glow tools create --body '{
 
 ```bash
 curl -X POST https://<your-instance>/tool/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

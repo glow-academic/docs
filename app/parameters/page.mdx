@@ -56,7 +56,7 @@ Parameters connect to **fields**. Each parameter contains one or more fields. Do
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow parameters create --body '{
@@ -71,11 +71,10 @@ glow parameters create --body '{
 
 ### Via the API
 
-All endpoints use `POST` and require both `X-Api-Key` and `Authorization: Bearer` headers.
+All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
 curl -X POST https://<your-instance>/parameter/create \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -176,7 +175,6 @@ Parameters support rich search and filtering. You can filter by:
 ```bash
 # Search parameters by field
 curl -X POST https://<your-instance>/parameter/search \
-  -H "X-Api-Key: YOUR_API_KEY" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

@@ -4,7 +4,7 @@
 
 Spin up a Glow instance from zero and make your first authenticated
 request. Pinned **Glow API v2.15.38** · **CLI v1.0.0** (see
-[api-versions.json](https://github.com/learnloopllc/glow-academic-docs/blob/main/api-versions.json) for the live pin).
+[api-versions.json](https://github.com/glow-academic/docs/blob/main/api-versions.json) for the live pin).
 
 <DemoVideo topic="start-overview" kind="vhs" caption="Zero-to-running tour: brew install, glow init, glow deploy, glow status all green." />
 
@@ -27,7 +27,7 @@ glow --version  # → glow 1.0.0
 ```
 
 Build-from-source instructions live in the
-[`glow-academic-cli` README](https://github.com/learnloopllc/glow-academic-cli).
+[`glow-academic-cli` README](https://github.com/glow-academic/cli).
 
 {/* DEMO_VIDEO: start-deploy | vhs */}
 

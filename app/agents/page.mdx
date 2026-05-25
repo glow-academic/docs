@@ -67,7 +67,7 @@ The agent is the engine that processes every message, generates persona response
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 glow agents create --body '{
@@ -83,7 +83,6 @@ glow agents create --body '{
 ```bash
 curl -X POST https://<your-instance>/agent/create \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "agents": [{
@@ -121,7 +120,6 @@ glow agents draft --body '{
 ```bash
 curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "input_draft_id": "agent-draft-uuid",
@@ -134,7 +132,6 @@ You can search agents by model using the `filter_model_ids` parameter:
 ```bash
 curl -X POST https://<your-instance>/agent/search \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{"filter_model_ids": ["model-uuid-1"]}'
 ```
@@ -264,7 +261,6 @@ glow agents draft --body '{
 # Via API
 curl -X PATCH https://<your-instance>/agent/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "input_draft_id": "existing-draft-uuid",

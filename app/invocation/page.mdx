@@ -55,7 +55,7 @@ singular concatenated form.
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer + license-key headers.
+> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
 
 ```bash
 # Hydrate a single invocation
@@ -76,14 +76,12 @@ glow tests invocations --body '{"test_id": "test-uuid"}'
 ```bash
 # Get invocation detail
 curl -X POST https://<your-instance>/test/invocation_get \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"invocation_id": "invocation-uuid"}'
 
 # List invocations (paginated)
 curl -X POST https://<your-instance>/test/invocations \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"test_id": "test-uuid", "page_size": 25}'
@@ -147,7 +145,6 @@ Use `invocation_run` to (re-)kick a queued or failed invocation; use
 
 ```bash
 curl -X POST https://<your-instance>/test/invocation_trace \
-  -H "X-Api-Key: <api-key>" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"invocation_id": "invocation-uuid"}'

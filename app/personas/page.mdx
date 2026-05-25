@@ -71,7 +71,6 @@ glow personas create --body '{
 ```bash
 curl -X POST https://<your-instance>/persona/create \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "personas": [{
@@ -254,7 +253,6 @@ Equivalent raw HTTP:
 ```bash
 curl -X POST https://<your-instance>/persona/draft \
   -H "Content-Type: application/json" \
-  -H "X-Api-Key: your-license-key" \
   -H "Authorization: Bearer your-token" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
