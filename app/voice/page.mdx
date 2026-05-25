@@ -1,5 +1,3 @@
-{/* DEMO_VIDEO: voice-overview | manual */}
-
 # Voice pipeline
 
 Glow's voice pipeline lets a learner hold a spoken conversation with
@@ -8,12 +6,6 @@ a persona — audio in, audio out — by stitching the existing text
 stages. It is **not** a separate "voice model" or a custom realtime
 runtime: the same `attempt/generate` call that drives text chat is
 reused, with audio modalities tacked on either end.
-
-<DemoVideo
-  topic="voice-overview"
-  kind="manual"
-  caption="End-to-end voice loop — mic frames are buffered into a conversation, transcribed, run through the LLM, and the response is synthesized back into a downloadable audio asset on the message."
-/>
 
 ## End-to-end flow
 
@@ -125,15 +117,7 @@ consumers do not branch on "was this typed or spoken?".
 
 ---
 
-{/* DEMO_VIDEO: voice-session | manual */}
-
 ## Voice session control
-
-<DemoVideo
-  topic="voice-session"
-  kind="manual"
-  caption="The chat_voice → chat_speak (frames) → chat_silence triad — opening a conversation, streaming PCM, then closing the loop."
-/>
 
 Three small operations sit on top of the audio loop to give the
 client a session-style API:

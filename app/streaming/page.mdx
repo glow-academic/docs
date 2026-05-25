@@ -75,15 +75,7 @@ native `EventSource` works without a polyfill.
 
 ---
 
-{/* DEMO_VIDEO: streaming-events | manual */}
-
 ## SSE event format
-
-<DemoVideo
-  topic="streaming-events"
-  kind="manual"
-  caption="Side-by-side: a single SSE frame on the wire next to the parsed EventEnvelope it represents."
-/>
 
 Every frame is a single `data:` line carrying the JSON-serialized
 `EventEnvelope` followed by a blank line. The wire format does **not**

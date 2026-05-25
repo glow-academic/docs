@@ -1,17 +1,9 @@
-{/* DEMO_VIDEO: topology-overview | manual */}
-
 # Topology
 
 Glow ships in three deployment shapes — `airgapped`, `exposed`, and
 `api_only`. The shape you pick decides which containers come up, which
 public domains you need TLS certs for, and how the api's `ORIGIN` /
 `CLIENT_ORIGINS` / `KEYCLOAK_PUBLIC_URL` get wired together.
-
-<DemoVideo
-  topic="topology-overview"
-  kind="manual"
-  caption="A glow-deploy.yaml side-by-side for all three modes — only the topology + origin fields change; everything downstream is derived."
-/>
 
 The mode is set once in your `glow-deploy.yaml`:
 

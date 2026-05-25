@@ -1,5 +1,3 @@
-{/* DEMO_VIDEO: realtime-overview | manual */}
-
 # Realtime
 
 Glow's HTTP surface is the canonical entry point for every artifact
@@ -7,12 +5,6 @@ operation. Alongside it, the API exposes a parallel **socket.io
 WebSocket** surface that mirrors most of those operations 1-for-1 —
 intended for live message flow (chat, voice), live progress streams,
 and server-pushed updates that don't fit a request/response shape.
-
-<DemoVideo
-  topic="realtime-overview"
-  kind="manual"
-  caption="Glow's WS surface mirrors HTTP: same artifact taxonomy, same operation names, with bidirectional streaming for live flows."
-/>
 
 ## When to use WS vs HTTP
 
@@ -37,15 +29,7 @@ surface when you're driving an interactive UI.
 
 ---
 
-{/* DEMO_VIDEO: realtime-events | manual */}
-
 ## Event naming taxonomy
-
-<DemoVideo
-  topic="realtime-events"
-  kind="manual"
-  caption="Every WS event name is <artifact>.<operation> — the same shape as POST /<artifact>/<operation>. Sub-namespaces flatten to <artifact>.<sub_op>."
-/>
 
 Server-side handlers register against a flat namespace where each
 event name is `<artifact>.<operation>`:

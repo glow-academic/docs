@@ -87,16 +87,15 @@ curl -X POST https://<your-instance>/test/invocations \
   -d '{"test_id": "test-uuid", "page_size": 25}'
 ```
 
-{/* DEMO_VIDEO: invocation-fanout | manual */}
+{/* DEMO_VIDEO: invocation-fanout | playwright */}
 
 ## Invocations in the test flow
 
 <DemoVideo
   topic="invocation-fanout"
-  kind="manual"
+  kind="playwright"
   caption="A single test fanning out into one invocation per scenario × model × agent cell — rows landing as `queued` then flipping to `running` in parallel."
 />
-
 
 When a test runs, the server fans out one invocation per benchmark
 cell (typically: scenario × model × agent). Each invocation:
@@ -110,16 +109,15 @@ cell (typically: scenario × model × agent). Each invocation:
 The parent test's response aggregates invocations into
 `AggregatedResults` for benchmark UIs.
 
-{/* DEMO_VIDEO: invocation-status-lifecycle | manual */}
+{/* DEMO_VIDEO: invocation-status-lifecycle | playwright */}
 
 ## Status lifecycle
 
 <DemoVideo
   topic="invocation-status-lifecycle"
-  kind="manual"
+  kind="playwright"
   caption="Walking a row through queued → running → completed, then re-firing a `failed` row with `invocation_run` and terminating one mid-flight with `invocation_terminate`."
 />
-
 
 | Status | Meaning |
 |---|---|
@@ -141,7 +139,6 @@ Use `invocation_run` to (re-)kick a queued or failed invocation; use
   kind="vhs"
   caption="Expanding `invocation_trace` to walk the full call chain: prompts sent, intermediate tool calls, and the final response — ready for audit or replay."
 />
-
 
 ```bash
 curl -X POST https://<your-instance>/test/invocation_trace \

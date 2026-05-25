@@ -89,7 +89,6 @@ curl -X POST https://<your-instance>/system/sessions \
   caption="Walking through sessions_count, active_profiles_count, logins_count, and emulations_count cards, then expanding the per-profile breakdown table."
 />
 
-
 The `ActivityResponse` from `POST /system/activity` includes:
 
 - **`sessions_count`** -- Total number of training sessions in the filtered window.
@@ -111,7 +110,6 @@ The `ActivityResponse` from `POST /system/activity` includes:
   kind="playwright"
   caption="Paginating the session-history table — sort by recent, filter to active-only, drill into a row to land on the Session detail page."
 />
-
 
 The `ListActivityResponse` from `POST /system/sessions` returns paginated session rows:
 
@@ -149,7 +147,6 @@ The response confirms `problem_id`, `resolved` status, and `updated_at` timestam
   kind="vhs"
   caption="Kicking off `glow system export` to pull a denormalized ZIP for archival, then refreshing the materialized views so the next page-load picks up new sessions."
 />
-
 
 ```bash
 # Refresh activity materialized views

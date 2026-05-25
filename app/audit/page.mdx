@@ -1,12 +1,13 @@
-{/* DEMO_VIDEO: audit-overview | manual */}
-
 # Audit & Lineage
 
-<DemoVideo
-  topic="audit-overview"
-  kind="manual"
-  caption="The full lineage chain: a single learner action lands as a soft_calls_entry row, stitched back through group_id into the session timeline and the per-group runs view."
-/>
+```mermaid
+flowchart TD
+    A[Learner action] --> B[soft_calls_entry row]
+    B -->|group_id| C[Session timeline]
+    B -->|group_id| D[Per-group runs view]
+```
+
+*One learner action becomes a `soft_calls_entry` row, stitched back through `group_id` into the session timeline and the per-group runs view.*
 
 Glow records every mutation that crosses the wire as an append-only
 ledger row, then stitches those rows back through `group_id` into
@@ -43,13 +44,14 @@ SSE relay path do not produce ledger rows.
 
 ## The soft_calls_entry shape
 
-{/* DEMO_VIDEO: audit-ledger | manual */}
+```mermaid
+stateDiagram-v2
+    [*] --> pending
+    pending --> accepted
+    pending --> rejected
+```
 
-<DemoVideo
-  topic="audit-ledger"
-  kind="manual"
-  caption="A single soft_calls_entry row expanded: call_id matches the wire-level event identity, artifact + operation mirror the permissions vocabulary, and status tracks pending → accepted | rejected."
-/>
+*Each `soft_calls_entry` carries the wire-level `call_id` plus an `artifact`/`operation` pair; its `status` moves pending → accepted | rejected.*
 
 The ledger lives in `public.soft_calls_entry` and is **insert-only** —
 state transitions are recorded as new rows, never updates. A companion
@@ -96,13 +98,14 @@ by reading the base table directly.
 
 ## group_id stitches audit, session, and group
 
-{/* DEMO_VIDEO: audit-stitching | manual */}
+```mermaid
+flowchart LR
+    G([group_id]) --> T["Session timeline: group_created"]
+    G --> R["Group detail: runs + messages"]
+    G --> L["Audit ledger: call_id family"]
+```
 
-<DemoVideo
-  topic="audit-stitching"
-  kind="manual"
-  caption="Tracing one group_id three ways: into the session timeline as a group_created event, into the group detail tree as runs + messages, and into the audit ledger as a call_id family."
-/>
+*A single `group_id` resolves three ways — a timeline event, the group-detail tree, and the call_id family in the ledger.*
 
 Every audit row, every run, and every timeline event carries a
 `group_id`. That single id is the join key across the three views:
@@ -143,11 +146,11 @@ The framework guarantees stitching by:
 
 ## Reading the audit trail
 
-{/* DEMO_VIDEO: audit-replay | manual */}
+{/* DEMO_VIDEO: audit-replay | playwright */}
 
 <DemoVideo
   topic="audit-replay"
-  kind="manual"
+  kind="playwright"
   caption="Drilling top-down: Activity → pick a session → Session timeline → click a group_created row → Group detail with runs + messages → individual call_id back to the ledger."
 />
 

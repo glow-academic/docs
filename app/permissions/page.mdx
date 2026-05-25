@@ -1,4 +1,4 @@
-{/* DEMO_VIDEO: permissions-overview | manual */}
+{/* DEMO_VIDEO: permissions-overview | playwright */}
 
 # Permissions & Roles
 
@@ -12,7 +12,7 @@ making a round-trip just to discover a 403.
 
 <DemoVideo
   topic="permissions-overview"
-  kind="manual"
+  kind="playwright"
   caption="A learner-role profile sees the Home / Practice / Leaderboard rail; an admin-role profile sees the same rail plus Training, Management, Intelligence, and Platform. Same client build, different role_permissions payload."
 />
 
@@ -44,15 +44,21 @@ uses `role_artifacts` for the top-level sidebar gate and
 
 ---
 
-{/* DEMO_VIDEO: permissions-resolve | manual */}
-
 ## How a request gets authorized
 
-<DemoVideo
-  topic="permissions-resolve"
-  kind="manual"
-  caption="A request to POST /persona/create with a viewer-role token: middleware resolves the identity, the route's has_permission check rejects (persona, create), and the response is a 403 before any work runs."
-/>
+```mermaid
+sequenceDiagram
+    participant C as Client with viewer token
+    participant M as Middleware
+    participant H as Route handler
+    C->>M: POST /persona/create + Bearer
+    M->>M: resolve identity
+    M->>M: has_permission persona create?
+    M-->>C: 403 denied before any work
+    Note over H: handler never runs
+```
+
+*A viewer-role token to `POST /persona/create` is rejected by `has_permission(persona, create)` in middleware — 403 before any work runs.*
 
 The flow is the same for every authenticated route:
 
@@ -155,13 +161,13 @@ The full schema is generated under
 
 ---
 
-{/* DEMO_VIDEO: permissions-client-mirror | manual */}
+{/* DEMO_VIDEO: permissions-client-mirror | playwright */}
 
 ## Mirroring on the client
 
 <DemoVideo
   topic="permissions-client-mirror"
-  kind="manual"
+  kind="playwright"
   caption="The same SIDEBAR_SECTIONS array rendered for two different roles — entries the role lacks are dropped from the rail at render time, no flash."
 />
 
