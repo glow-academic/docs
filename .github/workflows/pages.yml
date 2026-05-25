@@ -31,10 +31,10 @@ jobs:
       # branch fall back to the most-recent cache rather than starting
       # cold every time.
       - name: Cache bun deps
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.bun/install/cache
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lockb') }}
           restore-keys: |
             bun-${{ runner.os }}-
 
@@ -44,12 +44,12 @@ jobs:
       # source so an unchanged content tree reuses the prerender + bundle
       # cache and a typical edit only rebuilds touched pages.
       - name: Cache next build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: .next/cache
-          key: next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ hashFiles('**/*.mdx', '**/*.tsx', '**/*.ts', 'next.config.mjs') }}
+          key: next-${{ runner.os }}-${{ hashFiles('bun.lockb') }}-${{ hashFiles('**/*.mdx', '**/*.tsx', '**/*.ts', 'next.config.mjs') }}
           restore-keys: |
-            next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
+            next-${{ runner.os }}-${{ hashFiles('bun.lockb') }}-
             next-${{ runner.os }}-
 
       - name: Build (static export)
@@ -59,9 +59,9 @@ jobs:
       # paths by default, so disable Jekyll explicitly.
       - run: touch out/.nojekyll
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: out
 
@@ -73,4 +73,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

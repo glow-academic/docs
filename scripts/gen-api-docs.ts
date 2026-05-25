@@ -501,6 +501,29 @@ function main() {
   apiMetaLines.push('}', '')
   writeFileSync(join(apiRefDir, '_meta.ts'), apiMetaLines.join('\n'))
 
+  // Section landing page so /api-reference resolves (not a 404) and the
+  // sidebar "API Reference" entry is clickable. Static intro — the
+  // sidebar + search cover navigation, so there's nothing per-spec to
+  // template here.
+  const apiIndex = [
+    '# API Reference',
+    '',
+    "Every Glow HTTP endpoint, auto-generated from the platform's OpenAPI",
+    'spec — so these pages track the deployed API version (see',
+    '[`api-versions.json`](https://github.com/glow-academic/docs/blob/main/api-versions.json)).',
+    '',
+    'Each resource (Agent, Attempt, Persona, Scenario, and the rest) has its',
+    'own section in the sidebar on the left; expand one to see its endpoints,',
+    'request and response shapes, and types. Or press <kbd>⌘ K</kbd> to',
+    'search straight to an endpoint.',
+    '',
+    'Every endpoint authenticates with a bearer token — see',
+    '[Authentication](/authentication).',
+    '',
+  ].join('\n')
+  writeFileSync(join(apiRefDir, 'page.mdx'), apiIndex)
+  writeMdCopy('/api-reference', 'API Reference', apiIndex)
+
   // ── CLI Reference ─────────────────────────────────────────────
 
   // Parent commands whose subcommands should render FLAT in the sidebar
@@ -843,6 +866,27 @@ function main() {
     }
     cliMetaLines.push('}', '')
     writeFileSync(join(cliRefDir, '_meta.ts'), cliMetaLines.join('\n'))
+
+    // Section landing page so /cli-reference resolves (not a 404) and the
+    // sidebar "CLI Reference" entry is clickable.
+    const cliIndex = [
+      '# CLI Reference',
+      '',
+      'Every `glow` command, auto-generated from the CLI spec — so these pages',
+      'track the released CLI version (see',
+      '[`api-versions.json`](https://github.com/glow-academic/docs/blob/main/api-versions.json)).',
+      '',
+      'Commands are grouped in the sidebar on the left: lifecycle commands like',
+      '`glow login`, `glow deploy`, and `glow status`, alongside per-resource',
+      'groups (`glow personas …`, `glow scenarios …`, and so on). Press',
+      '<kbd>⌘ K</kbd> to jump straight to a command.',
+      '',
+      'See [Start](/start) for install and first-boot, and',
+      '[Authentication](/authentication) for how `glow login` stores its token.',
+      '',
+    ].join('\n')
+    writeFileSync(join(cliRefDir, 'page.mdx'), cliIndex)
+    writeMdCopy('/cli-reference', 'CLI Reference', cliIndex)
 
     console.log(`  cli: ${totalCliCommands} command pages`)
   }
