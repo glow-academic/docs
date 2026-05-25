@@ -973,38 +973,13 @@ function main() {
     }
   }
 
-  // ── llms-full.txt + llms.txt ──────────────────────────────────
+  // ── llms.txt (curated index) ──────────────────────────────────
+  // Note: llms-full.txt (the full page-body reference) is generated
+  // separately by scripts/generate-llms-txt.mjs, which walks the MDX tree.
+  // We emit ONLY the curated index here so the two don't fight over the
+  // same file (they used to, and the content-less index version won).
 
-  const llmsLines = ['# Glow Documentation', '', 'Complete API and CLI reference for the Glow platform.', '']
-  for (const [tag, endpoints] of [...tagged].sort((a, b) => a[0].localeCompare(b[0]))) {
-    const slug = slugify(tag)
-    const display = DISPLAY_NAMES[slug] || titleCase(tag)
-    llmsLines.push(`## ${display}`, '')
-    for (const [path, method, op] of endpoints) {
-      const methodUpper = method.toUpperCase()
-      const summary = op.summary || ''
-      llmsLines.push(`### \`${methodUpper}\` \`${escapeMdx(path)}\``)
-      llmsLines.push('')
-      if (summary) { llmsLines.push(escapeMdx(summary)); llmsLines.push('') }
-    }
-  }
-  if (mcpSpec && mcpSpec.tools.length > 0) {
-    llmsLines.push('## MCP Tools', '')
-    for (const tool of mcpSpec.tools) {
-      llmsLines.push(`### \`${tool.name}\``, '')
-      if (tool.description) llmsLines.push(escapeMdx(tool.description), '')
-      if (tool.parameters.length > 0) {
-        llmsLines.push('| Name | Type | Required | Description |', '|---|---|---|---|')
-        for (const p of tool.parameters) {
-          llmsLines.push(`| \`${p.name}\` | \`${p.type}\` | ${p.required ? 'Yes' : 'No'} | ${escapeMdx(p.description || '—')} |`)
-        }
-        llmsLines.push('')
-      }
-      llmsLines.push('---', '')
-    }
-  }
   mkdirSync(join(ROOT, 'public'), { recursive: true })
-  writeFileSync(join(ROOT, 'public/llms-full.txt'), llmsLines.join('\n'))
 
   const summary = [
     '# Glow Documentation', '',
@@ -1037,7 +1012,7 @@ function main() {
   writeFileSync(join(ROOT, 'public/llms.txt'), summary.join('\n'))
 
   console.log(`  total: ${totalEndpoints} API endpoints, ${totalCliCommands} CLI commands`)
-  console.log(`  llms-full.txt: ${(llmsLines.join('\n').length / 1024).toFixed(0)}KB`)
+  console.log(`  llms.txt: ${(summary.join('\n').length / 1024).toFixed(0)}KB (run generate-llms-txt.mjs for llms-full.txt)`)
 }
 
 console.log('Generating Glow docs from specs...')

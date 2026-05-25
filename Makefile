@@ -43,7 +43,7 @@ sync-types:
 	@echo "Generating TS types..."
 	@bash scripts/gen-ts-types.sh
 	@echo ""
-	@echo "Regenerating llms.txt..."
+	@echo "Regenerating llms-full.txt..."
 	@node scripts/generate-llms-txt.mjs
 	@echo ""
 	@echo "Regenerating demo-video manifest..."
@@ -97,7 +97,7 @@ help:
 	@echo "Individual gen steps:"
 	@echo "  make gen-docs         MDX pages from existing public/specs/"
 	@echo "  make gen-ts-types     TS types from existing public/specs/"
-	@echo "  make gen-llms         llms.txt + llms-full.txt + public/md/"
+	@echo "  make gen-llms         llms-full.txt (full page bodies; llms.txt comes from gen-docs)"
 	@echo "  make gen-demo-manifest  components/demo-manifest.ts from public/demos/*.mp4"
 	@echo "  make demo-slots       List DemoVideo slots from app/**/*.mdx"
 	@echo "  make demo-validate    Validate DemoVideo markers/components/manifest"

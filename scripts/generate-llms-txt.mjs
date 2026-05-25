@@ -1,36 +1,37 @@
 #!/usr/bin/env node
-// Regenerates public/llms.txt + public/llms-full.txt from the MDX tree.
+// Regenerates public/llms-full.txt — the full-content reference: every
+// MDX page body concatenated into one file for LLM ingestion.
 //
 // Maintainers run this manually after touching docs content:
 //   node scripts/generate-llms-txt.mjs
 //
-// Not wired into the build step on purpose — the .txt files are checked
-// into public/ so static export ships them as-is, and we don't want a
-// regenerator quirk to brick the GH Pages deploy. Re-run after content
-// edits, commit the diff, push.
+// Scope split: the curated INDEX (public/llms.txt, with .md links) is
+// written by scripts/gen-api-docs.ts. This script owns ONLY llms-full.txt
+// so the two don't fight over the same file — previously both wrote it and
+// the content-less index version won, leaving llms-full.txt with no bodies.
+//
+// Not wired into the build on purpose — the .txt is checked into public/ so
+// static export ships it as-is. Re-run after content edits, commit, push.
 
-import { readdirSync, statSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readdirSync, statSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, relative, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const APP_DIR = join(ROOT, 'app')
 const PUBLIC = join(ROOT, 'public')
-const MD_DIR = join(PUBLIC, 'md')
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
     const path = join(dir, name)
-    const stat = statSync(path)
-    if (stat.isDirectory()) walk(path, out)
+    if (statSync(path).isDirectory()) walk(path, out)
     else if (name.endsWith('.mdx')) out.push(path)
   }
   return out
 }
 
 function routeFor(mdxPath) {
-  // app/foo/bar/page.mdx → /foo/bar
-  // app/page.mdx         → /
+  // app/foo/bar/page.mdx → /foo/bar ; app/page.mdx → /
   const rel = relative(APP_DIR, mdxPath)
     .replace(/\\/g, '/')
     .replace(/\/page\.mdx$/, '')
@@ -57,48 +58,25 @@ function slugTitle(route) {
     .replace(/\b\w/g, c => c.toUpperCase())
 }
 
+// Strip MDX-only noise so the concatenated text reads as plain Markdown.
+// Mermaid blocks are kept — they carry meaning as text.
+function cleanBody(src) {
+  return src
+    .replace(/^import .*$/gm, '')             // import statements
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')     // MDX brace comments (e.g. DEMO_VIDEO markers)
+    .replace(/<DemoVideo[\s\S]*?\/>/g, '')    // video embeds — meaningless in plain text
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 const files = walk(APP_DIR).sort()
-const entries = []
 const full = []
-
-mkdirSync(MD_DIR, { recursive: true })
-
 for (const file of files) {
   const route = routeFor(file)
   const raw = stripFrontmatter(readFileSync(file, 'utf8'))
   const title = titleFrom(raw, slugTitle(route))
-  entries.push({ route, title })
-  full.push(`# ${title}\n\nRoute: ${route}\n\n${raw.trim()}\n\n---\n`)
-
-  // Mirror to public/md/<route>.md so /<route>.md works for LLM clients.
-  const mdPath = join(MD_DIR, `${route === '/' ? 'index' : route.slice(1)}.md`)
-  mkdirSync(dirname(mdPath), { recursive: true })
-  writeFileSync(mdPath, `# ${title}\n\n${raw}`)
+  full.push(`# ${title}\n\nRoute: ${route}\n\n${cleanBody(raw)}\n\n---\n`)
 }
 
-const sections = new Map()
-for (const e of entries) {
-  const seg = e.route.split('/').filter(Boolean)[0] ?? 'Top'
-  const section = seg
-    ? seg.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-    : 'Top'
-  if (!sections.has(section)) sections.set(section, [])
-  sections.get(section).push(e)
-}
-
-const llms =
-  `# Glow Documentation\n\n` +
-  `> Glow is an open-source conversational AI training platform.\n\n` +
-  `- [Full Reference](llms-full.txt)\n\n` +
-  [...sections.entries()]
-    .map(([sec, list]) =>
-      `## ${sec}\n\n` +
-      list.map(e => `- [${e.title}](${e.route}.md)`).join('\n')
-    )
-    .join('\n\n') + '\n'
-
-writeFileSync(join(PUBLIC, 'llms.txt'), llms)
 writeFileSync(join(PUBLIC, 'llms-full.txt'), full.join('\n'))
-
-console.log(`✓ wrote llms.txt (${entries.length} pages) + llms-full.txt`)
-console.log(`✓ mirrored ${entries.length} .md files into public/md/`)
+console.log(`✓ wrote llms-full.txt (${files.length} pages)`)
