@@ -15,7 +15,6 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const MD_DIR = join(ROOT, 'public/md')
 
 // ── Helpers ─────────────────────────────────────────────────────
 
@@ -40,20 +39,11 @@ function endpointLabel(method: string, path: string, resourcePrefix: string): st
   return `${method.toUpperCase()} ${shortPath}`
 }
 
-function writeMdCopy(route: string, title: string, content: string): void {
-  const mdContent = content
-    .replace(/^import .*$/gm, '')
-    .replace(/<Tabs[^>]*>/g, '')
-    .replace(/<\/Tabs>/g, '')
-    .replace(/<Tabs\.Tab>/g, '')
-    .replace(/<\/Tabs\.Tab>/g, '')
-    .trim()
-
-  const parentDir = join(MD_DIR, dirname(route))
-  const fileName = route.split('/').pop() || 'index'
-  mkdirSync(parentDir, { recursive: true })
-  writeFileSync(join(parentDir, `${fileName}.md`), mdContent)
-}
+// No-op: per-page Markdown is now emitted at build time for EVERY page by
+// scripts/emit-page-md.mjs (writes out/<route>.md beside each page). This
+// generator no longer maintains the public/md mirror — kept as a stub so the
+// call sites below don't need touching. See scripts/emit-page-md.mjs.
+function writeMdCopy(_route: string, _title: string, _content: string): void {}
 
 // ── OpenAPI types ───────────────────────────────────────────────
 
@@ -396,8 +386,6 @@ function main() {
   const cliRefDir = join(appDir, 'cli-reference')
 
   // Clean generated dirs
-  rmSync(MD_DIR, { recursive: true, force: true })
-  mkdirSync(MD_DIR, { recursive: true })
   rmSync(apiRefDir, { recursive: true, force: true })
   mkdirSync(apiRefDir, { recursive: true })
   rmSync(cliRefDir, { recursive: true, force: true })
@@ -973,46 +961,12 @@ function main() {
     }
   }
 
-  // ── llms.txt (curated index) ──────────────────────────────────
-  // Note: llms-full.txt (the full page-body reference) is generated
-  // separately by scripts/generate-llms-txt.mjs, which walks the MDX tree.
-  // We emit ONLY the curated index here so the two don't fight over the
-  // same file (they used to, and the content-less index version won).
-
-  mkdirSync(join(ROOT, 'public'), { recursive: true })
-
-  const summary = [
-    '# Glow Documentation', '',
-    '> Glow is a conversational AI training platform.', '',
-    '- [Full Reference](llms-full.txt)', '',
-    '## Guides', '',
-    '- [Start](/start.md)',
-    '- [How It Works](/how-it-works.md)',
-    '- [Tutorial](/tutorial.md)',
-    '- [Patterns](/patterns.md)', '',
-    '## API Reference', '',
-  ]
-  for (const slug of [...tagged.keys()].map(slugify).sort()) {
-    const display = DISPLAY_NAMES[slug] || titleCase(slug)
-    summary.push(`- [${display} API](/api-reference/${slug}.md)`)
-  }
-  if (cliSpec) {
-    summary.push('', '## CLI Reference', '')
-    for (const cmd of (cliSpec.subcommands || []).filter(c => !CLI_SKIP.has(c.name))) {
-      summary.push(`- [${rootName} ${cmd.name}](/cli-reference/${cmd.name}.md)`)
-    }
-  }
-  if (mcpSpec && mcpSpec.tools.length > 0) {
-    summary.push('', '## MCP Reference', '')
-    for (const tool of mcpSpec.tools) {
-      summary.push(`- [${tool.name}](/mcp-reference/${slugify(tool.name)}.md)`)
-    }
-  }
-  summary.push('')
-  writeFileSync(join(ROOT, 'public/llms.txt'), summary.join('\n'))
+  // llms.txt (curated index) and the per-page .md mirror are both produced
+  // at build time by scripts/emit-page-md.mjs, which walks the real page tree
+  // (so coverage stays complete and links resolve under the basePath). This
+  // generator only emits the reference page.mdx + _meta files.
 
   console.log(`  total: ${totalEndpoints} API endpoints, ${totalCliCommands} CLI commands`)
-  console.log(`  llms.txt: ${(summary.join('\n').length / 1024).toFixed(0)}KB (run generate-llms-txt.mjs for llms-full.txt)`)
 }
 
 console.log('Generating Glow docs from specs...')

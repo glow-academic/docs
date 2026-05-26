@@ -25,7 +25,8 @@ export default withNextra({
   // Skip typechecking during build — already done in CI test stage.
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
-  // Note: `rewrites()` doesn't work in static export. The previous
-  // /:path*.md → /md/:path*.md rewrite is gone; Nextra emits .md
-  // alongside the MDX output when configured to.
+  // Note: `rewrites()` doesn't work in static export, so per-page Markdown
+  // can't be served via a rewrite. Instead scripts/emit-page-md.mjs runs as a
+  // postbuild step and writes a real out/<route>.md beside every page (see
+  // the "build" script in package.json).
 })

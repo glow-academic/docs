@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3300",
-    "build": "next build && pagefind --site out --output-subdir _pagefind",
+    "build": "next build && pagefind --site out --output-subdir _pagefind && node scripts/emit-page-md.mjs",
     "start": "next start",
     "gen:llms": "node scripts/generate-llms-txt.mjs",
     "demo:slots": "node scripts/list-demo-slots.mjs",
