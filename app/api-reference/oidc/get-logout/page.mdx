@@ -1,0 +1,29 @@
+# `GET` `/logout`
+
+Logout
+
+OIDC end_session_endpoint — proxy logout to Keycloak.
+
+The client sends a Glow-signed id_token_hint. We look up the
+corresponding KC-signed id_token (stored during login) and pass
+that to Keycloak so it can do a silent logout without confirmation.
+
+Also writes a ``logouts_entry`` row when the caller includes a
+valid bearer token, so the session resolver mints a fresh session
+on the next request. FE flows that fetch ``/logout`` with the
+access token attached get this immediately; raw browser
+navigations (no header) fall through to the 10-min idle gap.
+
+## Parameters
+
+| Name | In | Required | Description |
+|---|---|---|---|
+| `post_logout_redirect_uri` | query | No | — |
+| `client_id` | query | No | — |
+| `id_token_hint` | query | No | — |
+
+## Response
+
+```
+{}
+```

@@ -8,6 +8,7 @@ export default {
   'eval': 'Eval',
   'field': 'Field',
   'model': 'Model',
+  'oidc': 'OIDC',
   'parameter': 'Parameter',
   'persona': 'Persona',
   'profile': 'Profile',

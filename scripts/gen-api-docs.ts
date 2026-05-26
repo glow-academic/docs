@@ -358,10 +358,14 @@ const DISPLAY_NAMES: Record<string, string> = {
   health: 'Health', settings: 'Settings', record: 'Record', group: 'Group', session: 'Session',
   authentication: 'Authentication', connect: 'Connect', context: 'Context',
   emulation: 'Emulation', generate: 'Generate', info: 'Info', other: 'Other',
-  problem: 'Problem', stream: 'Stream', audio: 'Audio',
+  problem: 'Problem', stream: 'Stream', audio: 'Audio', oidc: 'OIDC',
 }
 
 const SKIP_TAGS = new Set(['webhooks'])
+// Operations with no OpenAPI tag (the top-level OIDC / identity / discovery
+// endpoints: /login, /token, /jwks, /.well-known/*, /authorize, /userinfo, …)
+// would otherwise be dropped. Bucket them here so they still get pages.
+const UNTAGGED_GROUP = 'oidc'
 const CLI_SKIP = new Set(['serve', 'help', 'completions'])
 
 // ── Sidebar grouping (glow features) ────────────────────────────
@@ -414,8 +418,9 @@ function main() {
     for (const method of HTTP_METHODS) {
       const op = methods[method] as Operation | undefined
       if (!op) continue
-      const tag = op.tags?.[0]
-      if (!tag || SKIP_TAGS.has(tag)) continue
+      let tag = op.tags?.[0]
+      if (tag && SKIP_TAGS.has(tag)) continue
+      if (!tag) tag = UNTAGGED_GROUP   // don't drop untagged top-level routes
       if (!tagged.has(tag)) tagged.set(tag, [])
       tagged.get(tag)!.push([path, method, op])
     }

@@ -1,0 +1,28 @@
+# `GET` `/authorize`
+
+Authorize
+
+OIDC authorization endpoint.
+
+Without profile_id: standard OIDC flow — redirect to Keycloak for login.
+With profile_id: Keycloak broker callback — issue auth code directly.
+
+## Parameters
+
+| Name | In | Required | Description |
+|---|---|---|---|
+| `client_id` | query | Yes | — |
+| `redirect_uri` | query | Yes | — |
+| `response_type` | query | Yes | — |
+| `state` | query | No | — |
+| `scope` | query | No | — |
+| `nonce` | query | No | — |
+| `profile_id` | query | No | — |
+| `emulation_grant` | query | No | — |
+| `login_hint` | query | No | — |
+
+## Response
+
+```
+{}
+```

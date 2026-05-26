@@ -1,0 +1,16 @@
+# `GET` `/auth/client-config`
+
+Client Config
+
+Return OAuth client credentials for frontend integration.
+
+Authenticated by the deployment token (generated on first deploy by
+the glow CLI and written to the server's .env). Any frontend can call
+this with the token to fetch the keycloak client_id + secret needed
+to connect to this server's auth.
+
+## Response
+
+```
+{}
+```
