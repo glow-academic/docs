@@ -9,7 +9,8 @@ Create personas using composable infra architecture.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `personas` | [`CreatePersonaItem`](/api-reference/persona/types#createpersonaitem)[] | No | List of persona items to create (required on first call) |
-| `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
+| `idempotency_key` | `string` | No | Idempotency key — safe-retry replay on the first call; ack of a dormant create when sent with accept |
+| `soft` | `boolean` | No | Stage the create dormant (active=False) — propose; the response echoes a server key to ack with (\{idempotency_key, accept\}) |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response (`CreatePersonaApiResponse`)

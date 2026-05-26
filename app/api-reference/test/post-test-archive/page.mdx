@@ -10,9 +10,13 @@ Archive or unarchive benchmark tests by IDs.
 |---|---|---|---|
 | `test_ids` | `string`[] | Yes | UUIDs of tests to archive/unarchive |
 | `archived` | `boolean` | No | Whether to archive or unarchive |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject a staged archive |
+| `soft` | `boolean` | No | Stage the archive dormant (active=False); accept activates the whole set |
+| `accept` | `boolean` | No | Ack: True activates the staged archive, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`ArchiveTestsResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `updated_count` | `integer` | No | Number of tests updated |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to activate/reject the staged archive. |

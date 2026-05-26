@@ -20,6 +20,7 @@ Bulk delete scenarios — composable infra architecture.
 | `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
 | `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `soft` | `boolean` | No | Stage the delete dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
 
 ## Response (`DeleteScenarioApiResponse`)

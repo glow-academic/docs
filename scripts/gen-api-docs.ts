@@ -358,14 +358,10 @@ const DISPLAY_NAMES: Record<string, string> = {
   health: 'Health', settings: 'Settings', record: 'Record', group: 'Group', session: 'Session',
   authentication: 'Authentication', connect: 'Connect', context: 'Context',
   emulation: 'Emulation', generate: 'Generate', info: 'Info', other: 'Other',
-  problem: 'Problem', stream: 'Stream', audio: 'Audio', oidc: 'OIDC',
+  problem: 'Problem', stream: 'Stream', audio: 'Audio',
 }
 
 const SKIP_TAGS = new Set(['webhooks'])
-// Operations with no OpenAPI tag (the top-level OIDC / identity / discovery
-// endpoints: /login, /token, /jwks, /.well-known/*, /authorize, /userinfo, …)
-// would otherwise be dropped. Bucket them here so they still get pages.
-const UNTAGGED_GROUP = 'oidc'
 const CLI_SKIP = new Set(['serve', 'help', 'completions'])
 
 // ── Sidebar grouping (glow features) ────────────────────────────
@@ -414,13 +410,14 @@ function main() {
   // Group endpoints by tag → per-endpoint pages
 
   const tagged = new Map<string, [string, string, Operation][]>()
+  const topLevel: [string, string, Operation][] = []   // untagged routes → own top-level page
   for (const [path, methods] of Object.entries(apiSpec.paths)) {
     for (const method of HTTP_METHODS) {
       const op = methods[method] as Operation | undefined
       if (!op) continue
-      let tag = op.tags?.[0]
+      const tag = op.tags?.[0]
       if (tag && SKIP_TAGS.has(tag)) continue
-      if (!tag) tag = UNTAGGED_GROUP   // don't drop untagged top-level routes
+      if (!tag) { topLevel.push([path, method, op]); continue }   // no tag → top-level route
       if (!tagged.has(tag)) tagged.set(tag, [])
       tagged.get(tag)!.push([path, method, op])
     }
@@ -486,11 +483,40 @@ function main() {
     console.log(`  api: ${slug} (${endpoints.length} endpoints${allRefs.size > 0 ? `, ${allRefs.size} types` : ''})`)
   }
 
-  // Write api-reference/_meta.ts
-  const apiMetaLines = ['export default {']
-  for (const [key, label] of Object.entries(apiRefMeta)) {
-    apiMetaLines.push(`  '${key}': '${label}',`)
+  // Top-level routes (no OpenAPI tag) — the OIDC / identity / discovery
+  // surface: /login, /token, /jwks, /.well-known/*, /authorize, /userinfo, …
+  // Emitted as single pages directly under api-reference/<route> and listed
+  // first, mirroring how CLI root commands (glow login, glow deploy) sit at
+  // the top. Each page inlines its referenced types (same-page anchors) so it
+  // stands alone without a per-route types page.
+  const topLevelMeta: Record<string, string> = {}
+  for (const [path, method, op] of [...topLevel].sort((a, b) => a[0].localeCompare(b[0]))) {
+    const slug = slugify(path.replace(/^\//, '')) || 'root'
+    const dir = join(apiRefDir, slug)
+    mkdirSync(dir, { recursive: true })
+
+    const refs = new Set<string>()
+    const visited = new Set<string>()
+    const req = getRequestBodySchema(apiSpec, op)
+    if (req) collectSchemaRefs(apiSpec, req, refs, visited)
+    const resp = getResponseSchema(apiSpec, op)
+    if (resp) collectSchemaRefs(apiSpec, resp, refs, visited)
+
+    const lines = renderEndpointPage(apiSpec, path, method, op, '')   // '' → $refs become same-page anchors
+    if (refs.size > 0) {
+      lines.push('## Types', '')
+      lines.push(...renderReferencedTypes(apiSpec, refs))
+    }
+    writeFileSync(join(dir, 'page.mdx'), lines.join('\n'))
+    topLevelMeta[slug] = `${method.toUpperCase()} ${path}`
+    totalEndpoints++
   }
+  if (topLevel.length) console.log(`  api: ${topLevel.length} top-level routes`)
+
+  // Write api-reference/_meta.ts — top-level routes first, then resources.
+  const apiMetaLines = ['export default {']
+  for (const [key, label] of Object.entries(topLevelMeta)) apiMetaLines.push(`  '${key}': '${label}',`)
+  for (const [key, label] of Object.entries(apiRefMeta)) apiMetaLines.push(`  '${key}': '${label}',`)
   apiMetaLines.push('}', '')
   writeFileSync(join(apiRefDir, '_meta.ts'), apiMetaLines.join('\n'))
 

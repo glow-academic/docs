@@ -8,8 +8,11 @@ Create emulation grant. Next request will resolve to target profile.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `target_profile_id` | `string` | Yes | UUID of the profile to emulate |
+| `target_profile_id` | `string` | No | UUID of the profile to emulate (omit on the ack call) |
 | `ttl_minutes` | `integer` | No | Emulation duration in minutes |
+| `idempotency_key` | `string` | No | Idempotency / soft-call key. Echo the server-minted value with accept to promote/reject a staged emulation. |
+| `soft` | `boolean` | No | Stage the emulation grant dormant (active=False) — it impersonates nothing until accepted |
+| `accept` | `boolean` | No | Ack: True promotes the staged emulation, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`EmulateProfileApiResponse`)
 
@@ -19,3 +22,4 @@ Create emulation grant. Next request will resolve to target profile.
 | `reason` | `string` | No | Reason if emulation is denied |
 | `grant_id` | `string` | No | UUID of the emulation grant |
 | `expires_at` | `string` | No | When the emulation grant expires |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to promote/reject the staged emulation. |

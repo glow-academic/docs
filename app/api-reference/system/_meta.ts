@@ -10,6 +10,7 @@ export default {
   'post-system-problem': 'POST /problem',
   'post-system-refresh': 'POST /refresh',
   'get-system-watch': 'GET /watch',
+  'post-system-watch': 'POST /watch',
   'post-system-group': 'POST /group',
   'post-system-session': 'POST /session',
   'post-system-health': 'POST /health',

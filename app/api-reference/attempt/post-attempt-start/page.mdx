@@ -11,6 +11,9 @@ Create a new attempt from a home or practice entry.
 | `home_id` | `string` | No | — |
 | `practice_id` | `string` | No | — |
 | `infinite_mode` | `boolean` | No | — |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject a staged attempt |
+| `soft` | `boolean` | No | Stage the attempt dormant (persona+attempt+junction active=False) — agent proposes; accept activates. The sim-env 'dormant attempt' primitive. |
+| `accept` | `boolean` | No | Ack: True activates the staged attempt, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`AttemptStartResponse`)
 
@@ -19,3 +22,4 @@ Create a new attempt from a home or practice entry.
 | `attempt_id` | `string` | Yes | — |
 | `chat_id` | `string` | Yes | — |
 | `department_id` | `string` | No | — |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to activate/reject the staged attempt. |

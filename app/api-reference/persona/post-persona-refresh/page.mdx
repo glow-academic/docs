@@ -4,6 +4,15 @@ Persona Refresh
 
 Refresh persona materialized views and invalidate caches.
 
+## Request Body (`RefreshPersonaApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `targets` | `string`[] | No | MV targets to refresh (omit for all). Options: personas_mv, persona_drafts_mv |
+| `idempotency_key` | `string` | No | Operation key for ack |
+| `accept` | `boolean` | No | Accept or reject. Only meaningful with idempotency_key |
+| `soft` | `boolean` | No | Stage the refresh as a pending (held) request — recorded but not enqueued; ack with accept releases/enqueues it |
+
 ## Response (`RefreshResponse`)
 
 | Field | Type | Required | Description |

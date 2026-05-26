@@ -17,6 +17,7 @@ export default {
   'post-department-problem': 'POST /problem',
   'post-department-refresh': 'POST /refresh',
   'get-department-watch': 'GET /watch',
+  'post-department-watch': 'POST /watch',
   'post-department-text-download': 'POST /text_download',
   'post-department-file-download': 'POST /file_download',
   'post-department-call-download': 'POST /call_download',

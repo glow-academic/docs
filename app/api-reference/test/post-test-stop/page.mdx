@@ -9,6 +9,9 @@ Stop current test execution.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `invocation_id` | `string` | Yes | UUID of the test invocation to stop |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to emit/discard the staged stop |
+| `soft` | `boolean` | No | Stage the stop (record intent without emitting); accept emits it |
+| `accept` | `boolean` | No | Ack: True emits the staged stop, False discards. Only meaningful with idempotency_key |
 
 ## Response (`StopTestApiResponse`)
 
@@ -17,3 +20,4 @@ Stop current test execution.
 | `invocation_id` | `string` | Yes | — |
 | `success` | `boolean` | Yes | — |
 | `message` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |

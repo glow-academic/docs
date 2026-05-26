@@ -17,6 +17,7 @@ export default {
   'post-parameter-problem': 'POST /problem',
   'post-parameter-refresh': 'POST /refresh',
   'get-parameter-watch': 'GET /watch',
+  'post-parameter-watch': 'POST /watch',
   'post-parameter-text-download': 'POST /text_download',
   'post-parameter-file-download': 'POST /file_download',
   'post-parameter-call-download': 'POST /call_download',

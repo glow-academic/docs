@@ -17,6 +17,7 @@ export default {
   'post-persona-problem': 'POST /problem',
   'post-persona-refresh': 'POST /refresh',
   'get-persona-watch': 'GET /watch',
+  'post-persona-watch': 'POST /watch',
   'post-persona-text-download': 'POST /text_download',
   'post-persona-call-download': 'POST /call_download',
   'post-persona-file-download': 'POST /file_download',

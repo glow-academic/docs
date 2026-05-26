@@ -17,6 +17,7 @@ export default {
   'post-auth-problem': 'POST /problem',
   'post-auth-refresh': 'POST /refresh',
   'get-auth-watch': 'GET /watch',
+  'post-auth-watch': 'POST /watch',
   'post-auth-text-download': 'POST /text_download',
   'post-auth-call-download': 'POST /call_download',
   'post-auth-file-download': 'POST /file_download',

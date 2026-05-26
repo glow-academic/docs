@@ -13,6 +13,7 @@ Export all scenarios as a clean, denormalized CSV.
 | `persona_ids` | `string`[] | No | Filter by persona UUIDs |
 | `simulation_ids` | `string`[] | No | Filter by simulation UUIDs |
 | `filter_department_ids` | `string`[] | No | Filter by department UUIDs |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior export instead of re-running |
 
 ## Response (`ExportScenarioApiResponse`)
 

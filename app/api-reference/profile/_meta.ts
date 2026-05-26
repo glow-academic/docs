@@ -16,6 +16,7 @@ export default {
   'post-profile-problem': 'POST /problem',
   'post-profile-refresh': 'POST /refresh',
   'get-profile-watch': 'GET /watch',
+  'post-profile-watch': 'POST /watch',
   'post-profile-context': 'POST /context',
   'post-profile-emulate': 'POST /emulate',
   'post-profile-unemulate': 'POST /unemulate',

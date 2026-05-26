@@ -11,6 +11,7 @@ Patch setting draft — composable infra architecture.
 | `draft_id` | `string` | No | Existing draft UUID to update |
 | `input_draft_id` | `string` | No | Legacy draft UUID alias |
 | `idempotency_key` | `string` | No | Operation key for accept/reject acknowledgement |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept or reject pending draft state when used with idempotency_key |
 | `name` | `string` | No | Name value to resolve or create |
 | `name_id` | `string` | No | UUID of the name resource |

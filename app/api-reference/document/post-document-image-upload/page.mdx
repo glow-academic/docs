@@ -1,0 +1,29 @@
+# `POST` `/document/image_upload`
+
+Upload Image
+
+Upload an image for later use in documents (soft/accept dormant flow).
+
+## Parameters
+
+| Name | In | Required | Description |
+|---|---|---|---|
+| `name` | query | No | — |
+| `description` | query | No | — |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `file` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
+
+## Response (`ImageUploadDocumentApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `image_id` | `string` | Yes | UUID of the created images_resource |
+| `upload_id` | `string` | Yes | UUID of the underlying uploads_entry |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (the audit call_id). On a soft propose, echo this back with `accept` to promote/reject the staged upload. |

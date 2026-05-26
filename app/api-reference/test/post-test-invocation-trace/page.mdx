@@ -19,6 +19,9 @@ Test Trace
 | `instruction_ids` | `string`[] | No | — |
 | `prompt_text` | `string` | No | User-typed system prompt; minted as a prompts_resource |
 | `instructions` | `string`[] | No | User-typed instruction templates; each minted separately |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to perform/discard the staged trace |
+| `soft` | `boolean` | No | Stage the trace (store intent without creating); accept performs it |
+| `accept` | `boolean` | No | Ack: True performs the staged trace, False discards. Only meaningful with idempotency_key |
 
 ## Response (`TestTraceInternalResult`)
 
@@ -26,3 +29,4 @@ Test Trace
 |---|---|---|---|
 | `test_invocation_trace_id` | `string` | Yes | — |
 | `success` | `boolean` | No | — |
+| `idempotency_key` | `string` | No | — |

@@ -6,14 +6,9 @@ Get simulations available for home (operational).
 
 ## Request Body (`GetHomeRequest`)
 
-```
-{
-  "properties": {},
-  "type": "object",
-  "title": "GetHomeRequest",
-  "description": "Request for home get endpoint — simulation cards only."
-}
-```
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
 
 ## Response (`GetHomeResponse`)
 

@@ -10,6 +10,7 @@ Decrypt a key scoped to a setting artifact.
 |---|---|---|---|
 | `setting_id` | `string` | Yes | UUID of the parent setting |
 | `key_id` | `string` | Yes | UUID of the key to decrypt |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
 
 ## Response (`DecryptSettingKeyApiResponse`)
 

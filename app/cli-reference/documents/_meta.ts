@@ -19,5 +19,6 @@ export default {
   'watch': 'glow documents watch',
   'call': 'Call',
   'file': 'File',
+  'image': 'Image',
   'text': 'Text',
 }

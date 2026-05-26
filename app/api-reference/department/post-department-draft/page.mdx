@@ -20,6 +20,7 @@ Patch department draft — composable infra architecture.
 | `setting_ids` | `string`[] | No | Setting UUIDs to assign |
 | `pending_ids` | `string`[] | No | Resource IDs to keep pending where supported |
 | `idempotency_key` | `string` | No | Operation key for ack or retry |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept or reject dormant state |
 
 ## Response (`PatchDepartmentDraftApiResponse`)

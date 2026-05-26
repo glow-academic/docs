@@ -10,6 +10,9 @@ Create a new test.
 |---|---|---|---|
 | `eval_id` | `string` | Yes | UUID of the eval to test |
 | `infinite_mode` | `boolean` | No | Whether to run in infinite mode |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject the staged test |
+| `soft` | `boolean` | No | Stage the test dormant (test+benchmark_test active=False); accept activates it |
+| `accept` | `boolean` | No | Ack: True activates the staged test, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`StartTestApiResponse`)
 
@@ -18,3 +21,4 @@ Create a new test.
 | `test_id` | `string` | Yes | — |
 | `invocation_id` | `string` | No | — |
 | `benchmark_id` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |

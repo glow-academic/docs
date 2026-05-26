@@ -18,6 +18,7 @@ export default {
   'post-tool-problem': 'POST /problem',
   'post-tool-refresh': 'POST /refresh',
   'get-tool-watch': 'GET /watch',
+  'post-tool-watch': 'POST /watch',
   'post-tool-text-download': 'POST /text_download',
   'post-tool-file-download': 'POST /file_download',
   'post-tool-call-download': 'POST /call_download',

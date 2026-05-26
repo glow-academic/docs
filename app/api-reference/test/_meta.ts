@@ -16,6 +16,7 @@ export default {
   'post-test-generations': 'POST /generations',
   'post-test-group': 'POST /group',
   'get-test-watch': 'GET /watch',
+  'post-test-watch': 'POST /watch',
   'post-test-problem': 'POST /problem',
   'post-test-draft': 'POST /draft',
   'post-test-drafts': 'POST /drafts',

@@ -4,6 +4,22 @@ Attempt Refresh
 
 Refresh attempt materialized views and invalidate caches.
 
+## Request Body
+
+```
+{
+  "anyOf": [
+    {
+      "$ref": "#/components/schemas/RefreshApiRequest"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "title": "Request"
+}
+```
+
 ## Response (`RefreshResponse`)
 
 | Field | Type | Required | Description |

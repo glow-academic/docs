@@ -26,6 +26,7 @@ Patch eval draft — composable infra architecture.
 | `model_rubric_ids` | `string`[] | No | Model rubric UUIDs |
 | `pending_ids` | `string`[] | No | Resource IDs to keep inactive on the draft |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant draft |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response (`PatchEvalDraftApiResponse`)

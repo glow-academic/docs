@@ -2,7 +2,7 @@
 
 Upload Video
 
-Upload a video for later use in scenarios.
+Upload a video for later use in scenarios (soft/accept dormant flow).
 
 ## Parameters
 
@@ -15,7 +15,10 @@ Upload a video for later use in scenarios.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `file` | `string` | Yes | — |
+| `file` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`VideoUploadScenarioApiResponse`)
 
@@ -23,3 +26,4 @@ Upload a video for later use in scenarios.
 |---|---|---|---|
 | `video_id` | `string` | Yes | UUID of the created videos_resource |
 | `upload_id` | `string` | Yes | UUID of the uploads_entry (file on disk) |
+| `idempotency_key` | `string` | No | Server-minted soft-call key; echo with accept to promote/reject the staged upload. |

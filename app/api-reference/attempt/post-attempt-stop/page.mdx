@@ -7,9 +7,13 @@ Attempt Stop
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `group_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, set to the server-minted soft key to perform/reject a staged stop |
+| `soft` | `boolean` | No | Stage the stop (record the intent without cancelling) — for composing a stop into a dormant benchmark scenario; accept performs it |
+| `accept` | `boolean` | No | Ack: True performs the staged stop, False discards. Only meaningful with idempotency_key |
 
 ## Response (`AttemptStopResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `success` | `boolean` | Yes | — |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to perform/reject the staged stop. |

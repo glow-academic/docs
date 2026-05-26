@@ -12,6 +12,7 @@ Create a test grade.
 | `run_id` | `string` | No | Run ID for audit linkage |
 | `score` | `integer` | No | Overall score (ignored when full=True) |
 | `full` | `boolean` | No | When true, server resolves the rubric and assigns score=total_points (max marks). Callers don't need to know the rubric ceiling ahead of time. Overrides any caller-supplied score. |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call instead of re-running |
 
 ## Response
 

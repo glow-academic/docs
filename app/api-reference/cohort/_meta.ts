@@ -17,6 +17,7 @@ export default {
   'post-cohort-problem': 'POST /problem',
   'post-cohort-refresh': 'POST /refresh',
   'get-cohort-watch': 'GET /watch',
+  'post-cohort-watch': 'POST /watch',
   'post-cohort-text-download': 'POST /text_download',
   'post-cohort-file-download': 'POST /file_download',
   'post-cohort-call-download': 'POST /call_download',

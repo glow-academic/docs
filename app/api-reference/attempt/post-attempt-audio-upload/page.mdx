@@ -31,6 +31,9 @@ Returns ``\{audio_id, audios_id, upload_id\}``. Client only needs
 | `length_seconds` | `integer` | No | — |
 | `name` | `string` | No | — |
 | `description` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`AudioUploadAttemptApiResponse`)
 
@@ -39,3 +42,4 @@ Returns ``\{audio_id, audios_id, upload_id\}``. Client only needs
 | `audio_id` | `string` | Yes | UUID of the audios_entry (server plumbing; public handle is audios_id) |
 | `audios_id` | `string` | Yes | UUID of the audios_resource — use this for /generate, /chat/message, download |
 | `upload_id` | `string` | Yes | UUID of the uploads_entry (primitive raw file) |
+| `idempotency_key` | `string` | No | Server-minted soft-call key; echo with accept to promote/reject the staged upload. |

@@ -11,6 +11,7 @@ Patch model draft — composable infra architecture.
 | `draft_id` | `string` | No | Existing draft ID to update |
 | `input_draft_id` | `string` | No | Existing draft ID to update |
 | `idempotency_key` | `string` | No | Operation key for accept/reject style ack |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept or reject when idempotency_key is supplied |
 | `name` | `string` | No | Display name value |
 | `name_id` | `string` | No | Name resource identifier |

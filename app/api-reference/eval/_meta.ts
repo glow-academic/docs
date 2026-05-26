@@ -17,6 +17,7 @@ export default {
   'post-eval-problem': 'POST /problem',
   'post-eval-refresh': 'POST /refresh',
   'get-eval-watch': 'GET /watch',
+  'post-eval-watch': 'POST /watch',
   'post-eval-text-download': 'POST /text_download',
   'post-eval-file-download': 'POST /file_download',
   'post-eval-call-download': 'POST /call_download',

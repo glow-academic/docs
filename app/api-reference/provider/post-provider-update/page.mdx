@@ -20,6 +20,7 @@ Update providers using composable infra architecture.
 | `model_search` | `string` | No | Search text for model facet (no-op for row filtering) |
 | `flag_search` | `string` | No | Search text for flag facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant update |
+| `soft` | `boolean` | No | Stage the update dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response (`UpdateProviderApiResponse`)

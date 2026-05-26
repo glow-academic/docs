@@ -10,6 +10,7 @@ Report an attempt problem — composable infra architecture.
 |---|---|---|---|
 | `type` | `string` | Yes | Problem type: feature, bug, question, other |
 | `message` | `string` | Yes | Problem description (max 1000 chars) |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call instead of re-running |
 
 ## Response (`ProblemAttemptApiResponse`)
 

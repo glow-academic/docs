@@ -17,6 +17,7 @@ export default {
   'post-rubric-problem': 'POST /problem',
   'post-rubric-refresh': 'POST /refresh',
   'get-rubric-watch': 'GET /watch',
+  'post-rubric-watch': 'POST /watch',
   'post-rubric-text-download': 'POST /text_download',
   'post-rubric-file-download': 'POST /file_download',
   'post-rubric-call-download': 'POST /call_download',

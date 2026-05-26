@@ -1,0 +1,24 @@
+# `POST` `/cohort/watch`
+
+Cohort Watch Once
+
+One-shot snapshot of run state, snapshot-replayable via ``snapshot_key``.
+
+## Request Body (`WatchApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | Chat group whose events we watch |
+| `run_id` | `string` | No | Specific run to watch (e.g. the ``run_id`` returned by a prior ``X_Generate`` call). If None, watches every active run in the group at call time. |
+| `wait_for_complete` | `boolean` | No | If True, block until the watched run reaches a terminal (complete/failed) event or timeout fires. If False, return current state and exit immediately. |
+| `timeout_seconds` | `integer` | No | Max wait time when ``wait_for_complete=True``. |
+| `snapshot_key` | `string` | No | Read snapshot key — on the one-shot POST /watch, the audit wrapper records this watch's point-in-time view (latest run state at call time) keyed by it and replays the same view on any later call with the same key. Ignored by the SSE GET stream. |
+
+## Response (`WatchApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `group_id` | `string` | Yes | — |
+| `runs` | [`RunStatus`](/api-reference/cohort/types#runstatus)[] | Yes | — |
+| `timed_out` | `boolean` | No | — |
+| `waited_seconds` | `number` | No | — |

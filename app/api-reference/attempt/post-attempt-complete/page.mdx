@@ -8,8 +8,11 @@ Mark an entire attempt as completed.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `attempt_id` | `string` | Yes | — |
+| `attempt_id` | `string` | No | Attempt to complete (omit on the ack call) |
 | `message` | `string` | No | — |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject a staged completion |
+| `soft` | `boolean` | No | Stage the completion dormant (active=False) — agent proposes; accept activates it. Composes into a dormant benchmark scenario. |
+| `accept` | `boolean` | No | Ack: True activates the staged completion, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`AttemptCompleteResponse`)
 
@@ -18,3 +21,4 @@ Mark an entire attempt as completed.
 | `success` | `boolean` | Yes | — |
 | `completion_id` | `string` | Yes | — |
 | `attempt_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to activate/reject the staged completion. |

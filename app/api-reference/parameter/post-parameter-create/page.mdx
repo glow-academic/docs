@@ -10,6 +10,7 @@ Create parameters using composable infra architecture.
 |---|---|---|---|
 | `parameters` | [`CreateParameterItem`](/api-reference/parameter/types#createparameteritem)[] | Yes | List of parameters to create |
 | `idempotency_key` | `string` | No | Operation key for ack — promotes or rejects a dormant create |
+| `soft` | `boolean` | No | Stage the create dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept (promote) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response (`CreateParameterApiResponse`)

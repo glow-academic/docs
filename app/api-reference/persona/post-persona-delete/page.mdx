@@ -23,6 +23,7 @@ Bulk delete personas — composable infra architecture.
 | `voice_search` | `string` | No | Search text for voice facet (no-op for row filtering) |
 | `instruction_search` | `string` | No | Search text for instruction facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `soft` | `boolean` | No | Stage the delete dormant — propose; the ack (\{idempotency_key, accept\}) confirms/rejects it |
 | `accept` | `boolean` | No | Accept (confirm deletion) or reject (restore). Only meaningful with idempotency_key |
 
 ## Response (`DeletePersonaApiResponse`)

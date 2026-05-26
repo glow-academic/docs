@@ -2,13 +2,16 @@
 
 Upload Text
 
-Upload a text file for later use in documents.
+Upload a text file for later use in documents (soft/accept dormant flow).
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `file` | `string` | Yes | — |
+| `file` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`TextUploadDocumentApiResponse`)
 
@@ -16,3 +19,4 @@ Upload a text file for later use in documents.
 |---|---|---|---|
 | `text_id` | `string` | Yes | UUID of the created texts_resource |
 | `upload_id` | `string` | Yes | UUID of the uploads_entry (file on disk) |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (the audit call_id). On a soft propose, echo this back with `accept` to promote/reject the staged upload. |

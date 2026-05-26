@@ -12,6 +12,7 @@ Patch agent draft — composable infra architecture.
 | `group_id` | `string` | No | UUID of the owning group |
 | `input_draft_id` | `string` | No | UUID of the input draft |
 | `idempotency_key` | `string` | No | Idempotency key for accept/reject acknowledgement |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Whether pending changes should be accepted |
 | `name` | `string` | No | Display name value |
 | `name_id` | `string` | No | UUID of the name resource |

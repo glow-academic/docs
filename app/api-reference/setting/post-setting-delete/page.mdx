@@ -23,6 +23,7 @@ Bulk delete settings — composable infra architecture.
 | `system_search` | `string` | No | Search text for system facet (no-op for row filtering) |
 | `department_search` | `string` | No | Search text for department facet (no-op for row filtering) |
 | `idempotency_key` | `string` | No | Operation key for ack — confirms or rejects a dormant delete |
+| `soft` | `boolean` | No | Stage the delete dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept (confirm) or reject dormant state. Only meaningful with idempotency_key |
 
 ## Response (`DeleteSettingApiResponse`)

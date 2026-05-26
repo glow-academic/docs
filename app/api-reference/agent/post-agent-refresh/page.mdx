@@ -11,6 +11,7 @@ Refresh agent materialized views and invalidate caches.
 | `targets` | `string`[] | No | MV targets to refresh (omit for all). Options: agent_drafts_mv |
 | `idempotency_key` | `string` | No | Operation key for ack |
 | `accept` | `boolean` | No | Accept or reject. Only meaningful with idempotency_key |
+| `soft` | `boolean` | No | Stage the refresh as a pending (held) request — recorded but not enqueued; ack with accept releases/enqueues it |
 
 ## Response (`RefreshResponse`)
 

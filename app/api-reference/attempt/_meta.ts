@@ -14,6 +14,7 @@ export default {
   'post-attempt-complete': 'POST /complete',
   'post-attempt-stop': 'POST /stop',
   'get-attempt-watch': 'GET /watch',
+  'post-attempt-watch': 'POST /watch',
   'post-attempt-chat-analyses': 'POST /chat_analyses',
   'post-attempt-chat-audio': 'POST /chat_audio',
   'post-attempt-chat-complete': 'POST /chat_complete',

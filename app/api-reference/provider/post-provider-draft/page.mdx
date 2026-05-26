@@ -30,6 +30,7 @@ Patch provider draft — composable infra architecture.
 | `value_id` | `string` | No | Value resource identifier |
 | `pending_ids` | `string`[] | No | Pending resource identifiers to preserve |
 | `idempotency_key` | `string` | No | Operation key for ack semantics |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept or reject acknowledgement when idempotency_key is supplied |
 
 ## Response (`PatchProviderDraftApiResponse`)

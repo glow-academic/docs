@@ -9,6 +9,9 @@ Start a voice session for an attempt chat.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `chat_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`AudioStartInternalResult`)
 
@@ -18,3 +21,4 @@ Start a voice session for an attempt chat.
 | `attempt_id` | `string` | Yes | — |
 | `conversation_id` | `string` | Yes | — |
 | `group_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | — |

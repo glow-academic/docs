@@ -9,6 +9,7 @@ Export all auths as a clean, denormalized CSV.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `auth_id` | `string` | No | UUID of the auth provider to export |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior export instead of re-running |
 
 ## Response (`ExportAuthApiResponse`)
 

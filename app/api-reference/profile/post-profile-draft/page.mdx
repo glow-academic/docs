@@ -25,6 +25,7 @@ Patch profile draft — composable infra architecture.
 | `primary_department_id` | `string` | No | UUID of the department to designate as primary |
 | `pending_ids` | `string`[] | No | Resources to keep dormant |
 | `idempotency_key` | `string` | No | Idempotency key for draft writes |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Whether to accept the pending draft state |
 
 ## Response (`PatchProfileDraftApiResponse`)

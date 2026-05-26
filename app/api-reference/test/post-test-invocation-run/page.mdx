@@ -10,6 +10,9 @@ Run Invocation
 | `test_invocation_id` | `string` | Yes | UUID of the test invocation |
 | `test_invocation_trace_id` | `string` | No | UUID of the parent trace (test_invocation_traces_entry) |
 | `run_id` | `string` | Yes | UUID of the runs_entry to bind |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject the staged run binding |
+| `soft` | `boolean` | No | Stage the run binding dormant (active=False); accept activates it |
+| `accept` | `boolean` | No | Ack: True activates the staged run binding, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`TestRunInternalResult`)
 
@@ -17,3 +20,4 @@ Run Invocation
 |---|---|---|---|
 | `test_invocation_run_id` | `string` | Yes | — |
 | `success` | `boolean` | No | — |
+| `idempotency_key` | `string` | No | — |

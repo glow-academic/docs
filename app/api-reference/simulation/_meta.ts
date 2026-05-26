@@ -17,6 +17,7 @@ export default {
   'post-simulation-refresh': 'POST /refresh',
   'post-simulation-group': 'POST /group',
   'get-simulation-watch': 'GET /watch',
+  'post-simulation-watch': 'POST /watch',
   'post-simulation-text-download': 'POST /text_download',
   'post-simulation-file-download': 'POST /file_download',
   'post-simulation-call-download': 'POST /call_download',

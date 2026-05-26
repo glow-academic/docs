@@ -17,6 +17,9 @@ Client downloads via ``/api/system/download/\{file_id\}`` (BFF) →
 | `session_id` | `string` | No | Target session UUID (required for view='session') |
 | `group_id` | `string` | No | Target group UUID (required for view='group') |
 | `mode` | `string` | No | Optional sub-mode within a view. Currently recognized: view=reports → mode='brightspace' (gradebook CSV only); view=home → mode='certificate' (PDF cert only) or 'attempts' (CSV only). Default (None) returns the full per-view bundle. |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior export; on the ack, the server-minted soft key to activate/reject a staged export |
+| `soft` | `boolean` | No | Stage the export dormant (file chain active=False) — agent proposes; accept activates. Sim-env 'dormant export' primitive. |
+| `accept` | `boolean` | No | Ack: True activates the staged export, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`ExportSystemApiResponse`)
 
@@ -25,3 +28,4 @@ Client downloads via ``/api/system/download/\{file_id\}`` (BFF) →
 | `file_id` | `string` | Yes | UUID of the files_resource holding the export bytes |
 | `file_name` | `string` | Yes | Suggested download file name |
 | `row_count` | `integer` | Yes | Number of data rows in the export |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to activate/reject the staged export. |

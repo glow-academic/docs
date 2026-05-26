@@ -18,6 +18,9 @@ Bulk archive or unarchive attempts (simulation or benchmark).
 | `scenario_ids` | `string`[] | No | Scenario UUIDs to filter by |
 | `profile_ids_filter` | `string`[] | No | Profile UUIDs to filter by |
 | `infinite_mode` | `boolean` | No | Filter by infinite mode status |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject a staged archive |
+| `soft` | `boolean` | No | Stage the archive dormant (active=False); accept activates the whole set |
+| `accept` | `boolean` | No | Ack: True activates the staged archive, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`ArchiveAttemptsResponse`)
 
@@ -25,3 +28,4 @@ Bulk archive or unarchive attempts (simulation or benchmark).
 |---|---|---|---|
 | `updated_count` | `integer` | No | Number of attempts updated |
 | `profile_ids_to_invalidate` | `string`[] | No | Profile IDs whose caches need invalidation |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to activate/reject the staged archive. |

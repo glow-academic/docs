@@ -9,6 +9,7 @@ Export all documents as a clean, denormalized CSV.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `document_id` | `string` | No | Document UUID to export |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior export instead of re-running |
 
 ## Response (`ExportDocumentApiResponse`)
 

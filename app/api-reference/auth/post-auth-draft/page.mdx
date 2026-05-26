@@ -11,6 +11,7 @@ Patch auth draft — composable infra architecture.
 | `draft_id` | `string` | No | Existing draft UUID to update |
 | `input_draft_id` | `string` | No | Existing draft UUID to update |
 | `idempotency_key` | `string` | No | Stable idempotency key for ack/promote flows |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Whether to accept a pending draft when acknowledging |
 | `name` | `string` | No | Name value to resolve or create |
 | `name_id` | `string` | No | UUID of the name resource |

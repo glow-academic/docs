@@ -8,7 +8,10 @@ Exit emulation for a specific target profile.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `target_profile_id` | `string` | Yes | Profile ID to stop emulating |
+| `target_profile_id` | `string` | No | Profile ID to stop emulating (omit on the ack call) |
+| `idempotency_key` | `string` | No | Idempotency / soft-call key. Echo the server-minted value with accept to perform/reject a proposed unemulation. |
+| `soft` | `boolean` | No | Propose the unemulation without performing it — emulation continues until accepted (record-and-hold) |
+| `accept` | `boolean` | No | Ack: True performs the proposed unemulation, False discards it. Only meaningful with idempotency_key |
 
 ## Response (`UnemulateProfileApiResponse`)
 
@@ -16,3 +19,4 @@ Exit emulation for a specific target profile.
 |---|---|---|---|
 | `ok` | `boolean` | Yes | Whether unemulation succeeded |
 | `reason` | `string` | No | Reason if unemulation failed |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (audit call_id). On a soft propose, echo this back with accept to perform/reject the proposed unemulation. |

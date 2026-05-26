@@ -146,7 +146,7 @@ Single generation group in the setting generations response.
 | `active` | `boolean` | Yes | Whether this draft is active |
 | `session_id` | `string` | Yes | Associated session UUID |
 | `name` | `string` | No | Immutable draft label set at create time |
-| `agent_ids` | `string`[] | Yes | Associated agent UUIDs |
+| `system_ids` | `string`[] | Yes | Associated system UUIDs |
 | `auth_item_key_ids` | `string`[] | Yes | Associated auth item key UUIDs |
 | `auth_ids` | `string`[] | Yes | Associated auth UUIDs |
 | `color_ids` | `string`[] | Yes | Associated color UUIDs |
@@ -160,7 +160,7 @@ Single generation group in the setting generations response.
 | `threshold_ids` | `string`[] | Yes | Associated threshold UUIDs |
 | `mcp_ids` | `string`[] | No | — |
 | `logins_ids` | `string`[] | No | — |
-| `pending_agent_ids` | `string`[] | No | Pending agent UUIDs |
+| `pending_system_ids` | `string`[] | No | Pending system UUIDs |
 | `pending_auth_item_key_ids` | `string`[] | No | Pending auth item key UUIDs |
 | `pending_auth_ids` | `string`[] | No | Pending auth UUIDs |
 | `pending_color_ids` | `string`[] | No | Pending color UUIDs |
@@ -470,6 +470,20 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 | `description` | `string` | No | — |
 | `icon_value` | `string` | No | — |
 | `color_hex` | `string` | No | — |
+
+---
+
+## `RunStatus`
+
+Outcome of one watched run.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run_id` | `string` | Yes | — |
+| `status` | `"pending"` \| `"completed"` \| `"failed"` | Yes | — |
+| `modality` | `string` | No | Modality of generated output (image, video, text…) |
+| `resource_ids` | `string`[] | No | Resource UUIDs produced by this run (e.g. images_resource ids) |
+| `error` | `string` | No | — |
 
 ---
 

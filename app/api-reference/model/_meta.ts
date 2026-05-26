@@ -17,6 +17,7 @@ export default {
   'post-model-problem': 'POST /problem',
   'post-model-refresh': 'POST /refresh',
   'get-model-watch': 'GET /watch',
+  'post-model-watch': 'POST /watch',
   'post-model-text-download': 'POST /text_download',
   'post-model-file-download': 'POST /file_download',
   'post-model-call-download': 'POST /call_download',

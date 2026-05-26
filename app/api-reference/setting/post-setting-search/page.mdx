@@ -6,14 +6,9 @@ Search settings — composable infra architecture.
 
 ## Request Body (`SearchSettingApiRequest`)
 
-```
-{
-  "properties": {},
-  "type": "object",
-  "title": "SearchSettingApiRequest",
-  "description": "Request model for setting search endpoint."
-}
-```
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
 
 ## Response (`ListSettingApiResponse`)
 

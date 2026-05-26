@@ -7,6 +7,9 @@ Complete Test
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `test_id` | `string` | Yes | UUID of the test |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject the staged completion |
+| `soft` | `boolean` | No | Stage the completion dormant (all completion rows active=False); accept activates the whole set |
+| `accept` | `boolean` | No | Ack: True activates the staged completion, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`TestCompleteInternalResult`)
 
@@ -15,3 +18,4 @@ Complete Test
 | `test_id` | `string` | Yes | — |
 | `success` | `boolean` | No | — |
 | `completed_count` | `integer` | No | — |
+| `idempotency_key` | `string` | No | — |

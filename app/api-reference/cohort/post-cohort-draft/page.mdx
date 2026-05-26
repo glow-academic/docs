@@ -30,6 +30,7 @@ Patch cohort draft — composable infra architecture.
 | `profile_personas` | [`DraftProfilePersonaValue`](/api-reference/cohort/types#draftprofilepersonavalue)[] | No | Profile persona values to create |
 | `pending_ids` | `string`[] | No | Resource IDs to keep as pending where supported by the tool layer |
 | `idempotency_key` | `string` | No | Operation key for ack or retry |
+| `soft` | `boolean` | No | Stage the draft dormant (active=False) — propose; the ack (\{idempotency_key, accept\}) promotes/rejects it |
 | `accept` | `boolean` | No | Accept or reject dormant draft state |
 
 ## Response (`PatchCohortDraftApiResponse`)

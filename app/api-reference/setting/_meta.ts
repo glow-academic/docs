@@ -18,6 +18,7 @@ export default {
   'post-setting-refresh': 'POST /refresh',
   'post-setting-decrypt': 'POST /decrypt',
   'get-setting-watch': 'GET /watch',
+  'post-setting-watch': 'POST /watch',
   'post-setting-text-download': 'POST /text_download',
   'post-setting-file-download': 'POST /file_download',
   'post-setting-call-download': 'POST /call_download',

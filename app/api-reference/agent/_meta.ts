@@ -17,6 +17,7 @@ export default {
   'post-agent-problem': 'POST /problem',
   'post-agent-refresh': 'POST /refresh',
   'get-agent-watch': 'GET /watch',
+  'post-agent-watch': 'POST /watch',
   'post-agent-text-download': 'POST /text_download',
   'post-agent-file-download': 'POST /file_download',
   'post-agent-call-download': 'POST /call_download',

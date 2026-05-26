@@ -9,6 +9,9 @@ End a voice session for an attempt chat.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `chat_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`AudioStopInternalResult`)
 
@@ -16,3 +19,4 @@ End a voice session for an attempt chat.
 |---|---|---|---|
 | `chat_id` | `string` | Yes | — |
 | `stopped` | `boolean` | No | — |
+| `idempotency_key` | `string` | No | — |

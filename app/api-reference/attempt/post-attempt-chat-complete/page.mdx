@@ -10,6 +10,9 @@ Mark an attempt chat as completed — final step after grading.
 |---|---|---|---|
 | `chat_id` | `string` | Yes | — |
 | `message` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`ChatCompleteResponse`)
 
@@ -18,3 +21,4 @@ Mark an attempt chat as completed — final step after grading.
 | `success` | `boolean` | Yes | — |
 | `completion_id` | `string` | Yes | — |
 | `chat_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | — |

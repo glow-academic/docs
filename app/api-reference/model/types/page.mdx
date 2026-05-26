@@ -672,6 +672,20 @@ and the extra ``getLayoutContextData`` round-trip can be dropped.
 
 ---
 
+## `RunStatus`
+
+Outcome of one watched run.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `run_id` | `string` | Yes | — |
+| `status` | `"pending"` \| `"completed"` \| `"failed"` | Yes | — |
+| `modality` | `string` | No | Modality of generated output (image, video, text…) |
+| `resource_ids` | `string`[] | No | Resource UUIDs produced by this run (e.g. images_resource ids) |
+| `error` | `string` | No | — |
+
+---
+
 ## `TableInfo`
 
 | Field | Type | Required | Description |

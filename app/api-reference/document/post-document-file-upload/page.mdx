@@ -2,16 +2,20 @@
 
 Upload File
 
-Upload a file for later use in documents.
+Upload a file for later use in documents (soft/accept dormant flow).
 
 ## Request Body
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `file` | `string` | Yes | — |
+| `file` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`FileUploadDocumentApiResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `file_id` | `string` | Yes | UUID of the created files_resource |
+| `idempotency_key` | `string` | No | Server-minted soft-call key (the audit call_id). On a soft propose, echo this back with `accept` to promote/reject the staged upload. |

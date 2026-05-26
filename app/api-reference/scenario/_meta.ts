@@ -17,6 +17,7 @@ export default {
   'post-scenario-problem': 'POST /problem',
   'post-scenario-refresh': 'POST /refresh',
   'get-scenario-watch': 'GET /watch',
+  'post-scenario-watch': 'POST /watch',
   'post-scenario-image-download': 'POST /image_download',
   'post-scenario-image-upload': 'POST /image_upload',
   'post-scenario-video-download': 'POST /video_download',

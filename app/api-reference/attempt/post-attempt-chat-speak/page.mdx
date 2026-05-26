@@ -2,7 +2,7 @@
 
 Chat Speak
 
-Push audio bytes into a conversation's inbound buffer.
+Push audio bytes into a conversation's inbound buffer (or stage them).
 
 ## Request Body (`ChatSpeakRequest`)
 
@@ -10,10 +10,14 @@ Push audio bytes into a conversation's inbound buffer.
 |---|---|---|---|
 | `conversation_id` | `string` | No | — |
 | `chat_id` | `string` | No | — |
-| `audio` | `string` | Yes | — |
+| `audio` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`ChatSpeakResponse`)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `accepted` | `boolean` | Yes | — |
+| `idempotency_key` | `string` | No | — |

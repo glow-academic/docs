@@ -17,6 +17,7 @@ export default {
   'post-field-problem': 'POST /problem',
   'post-field-refresh': 'POST /refresh',
   'get-field-watch': 'GET /watch',
+  'post-field-watch': 'POST /watch',
   'post-field-text-download': 'POST /text_download',
   'post-field-file-download': 'POST /file_download',
   'post-field-call-download': 'POST /call_download',

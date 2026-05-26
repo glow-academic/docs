@@ -13,6 +13,7 @@ Superset of /docs — clients can migrate from /docs to /context incrementally.
 |---|---|---|---|
 | `entity_id` | `string` | No | — |
 | `snapshot_key` | `string` | No | — |
+| `schema` | `boolean` | No | If true, include MCP/tooling schema metadata (artifact, entries, resources, permission_docs, api_operations). Defaults to false for lean page-bootstrap responses. |
 
 ## Response (`ComposedContextResponse`)
 
@@ -21,11 +22,11 @@ Superset of /docs — clients can migrate from /docs to /context incrementally.
 | `name` | `string` | Yes | Artifact name |
 | `type` | `string` | Yes | Artifact type identifier |
 | `description` | `string` | Yes | Human-readable description |
-| `artifact` | [`DocsResponse`](/api-reference/parameter/types#docsresponse) | No | Artifact tool documentation |
-| `entries` | [`DocsResponse`](/api-reference/parameter/types#docsresponse)[] | Yes | Entry documentation list |
-| `resources` | [`DocsResponse`](/api-reference/parameter/types#docsresponse)[] | Yes | Resource documentation list |
-| `permission_docs` | [`OperationInfo`](/api-reference/parameter/types#operationinfo)[] | Yes | Permission function signatures (for MCP/dev tooling) |
-| `api_operations` | [`OperationInfo`](/api-reference/parameter/types#operationinfo)[] | Yes | API operation documentation |
+| `artifact` | [`DocsResponse`](/api-reference/parameter/types#docsresponse) | No | Artifact tool documentation (None unless schema=true) |
+| `entries` | [`DocsResponse`](/api-reference/parameter/types#docsresponse)[] | No | Entry documentation list (None unless schema=true) |
+| `resources` | [`DocsResponse`](/api-reference/parameter/types#docsresponse)[] | No | Resource documentation list (None unless schema=true) |
+| `permission_docs` | [`OperationInfo`](/api-reference/parameter/types#operationinfo)[] | No | Permission function signatures for MCP/dev tooling (None unless schema=true) |
+| `api_operations` | [`OperationInfo`](/api-reference/parameter/types#operationinfo)[] | No | API operation documentation (None unless schema=true) |
 | `page_metadata` | [`DocsApiResponse`](/api-reference/parameter/types#docsapiresponse) | No | Page-level metadata |
 | `prompts` | [`OperationPrompts`](/api-reference/parameter/types#operationprompts) | No | Starter prompts keyed by operation |
 | `profile` | [`ProfileSummary`](/api-reference/parameter/types#profilesummary) | Yes | Caller identity from JWT |

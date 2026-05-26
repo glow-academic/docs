@@ -11,6 +11,9 @@ Submit a video question response.
 | `chat_id` | `string` | Yes | UUID of the chat |
 | `question_id` | `string` | Yes | UUID of the question being answered |
 | `option_ids` | `string`[] | Yes | List of selected option UUIDs |
+| `idempotency_key` | `string` | No | Idempotency key — replays the prior call; on the ack, the server-minted soft key to activate/reject the staged response |
+| `soft` | `boolean` | No | Stage the response dormant (active=False); accept activates it |
+| `accept` | `boolean` | No | Ack: True activates the staged response, False rejects. Only meaningful with idempotency_key |
 
 ## Response (`ResponseAttemptApiResponse`)
 
@@ -20,3 +23,4 @@ Submit a video question response.
 | `message` | `string` | No | — |
 | `is_correct` | `boolean` | No | — |
 | `response_id` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |

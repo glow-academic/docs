@@ -9,8 +9,11 @@ Attach an audios_id to an attempt chat message.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `chat_id` | `string` | Yes | — |
-| `message_id` | `string` | Yes | — |
-| `audios_id` | `string` | Yes | — |
+| `message_id` | `string` | No | — |
+| `audios_id` | `string` | No | — |
+| `idempotency_key` | `string` | No | — |
+| `soft` | `boolean` | No | — |
+| `accept` | `boolean` | No | — |
 
 ## Response (`ChatAudioResponse`)
 
@@ -18,3 +21,4 @@ Attach an audios_id to an attempt chat message.
 |---|---|---|---|
 | `success` | `boolean` | Yes | — |
 | `attempt_audio_id` | `string` | Yes | — |
+| `idempotency_key` | `string` | No | — |

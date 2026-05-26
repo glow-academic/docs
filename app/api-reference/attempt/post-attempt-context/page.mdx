@@ -5,7 +5,8 @@ Get Attempt Context
 Get page context for the attempt artifact.
 
 Returns docs + profile identity + evaluated permissions in a single call.
-Superset of /docs — clients can migrate from /docs to /context incrementally.
+Routed through the audit wrapper so ``snapshot_key`` replays a consistent
+view across related reads.
 
 ## Request Body (`DocsApiRequest`)
 
@@ -13,6 +14,7 @@ Superset of /docs — clients can migrate from /docs to /context incrementally.
 |---|---|---|---|
 | `entity_id` | `string` | No | — |
 | `snapshot_key` | `string` | No | — |
+| `schema` | `boolean` | No | If true, include MCP/tooling schema metadata (artifact, entries, resources, permission_docs, api_operations). Defaults to false for lean page-bootstrap responses. |
 
 ## Response (`ComposedContextResponse`)
 
@@ -21,11 +23,11 @@ Superset of /docs — clients can migrate from /docs to /context incrementally.
 | `name` | `string` | Yes | Artifact name |
 | `type` | `string` | Yes | Artifact type identifier |
 | `description` | `string` | Yes | Human-readable description |
-| `artifact` | [`DocsResponse`](/api-reference/attempt/types#docsresponse) | No | Artifact tool documentation |
-| `entries` | [`DocsResponse`](/api-reference/attempt/types#docsresponse)[] | Yes | Entry documentation list |
-| `resources` | [`DocsResponse`](/api-reference/attempt/types#docsresponse)[] | Yes | Resource documentation list |
-| `permission_docs` | [`OperationInfo`](/api-reference/attempt/types#operationinfo)[] | Yes | Permission function signatures (for MCP/dev tooling) |
-| `api_operations` | [`OperationInfo`](/api-reference/attempt/types#operationinfo)[] | Yes | API operation documentation |
+| `artifact` | [`DocsResponse`](/api-reference/attempt/types#docsresponse) | No | Artifact tool documentation (None unless schema=true) |
+| `entries` | [`DocsResponse`](/api-reference/attempt/types#docsresponse)[] | No | Entry documentation list (None unless schema=true) |
+| `resources` | [`DocsResponse`](/api-reference/attempt/types#docsresponse)[] | No | Resource documentation list (None unless schema=true) |
+| `permission_docs` | [`OperationInfo`](/api-reference/attempt/types#operationinfo)[] | No | Permission function signatures for MCP/dev tooling (None unless schema=true) |
+| `api_operations` | [`OperationInfo`](/api-reference/attempt/types#operationinfo)[] | No | API operation documentation (None unless schema=true) |
 | `page_metadata` | [`DocsApiResponse`](/api-reference/attempt/types#docsapiresponse) | No | Page-level metadata |
 | `prompts` | [`OperationPrompts`](/api-reference/attempt/types#operationprompts) | No | Starter prompts keyed by operation |
 | `profile` | [`ProfileSummary`](/api-reference/attempt/types#profilesummary) | Yes | Caller identity from JWT |

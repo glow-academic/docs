@@ -18,6 +18,7 @@ export default {
   'post-provider-group': 'POST /group',
   'post-provider-problem': 'POST /problem',
   'get-provider-watch': 'GET /watch',
+  'post-provider-watch': 'POST /watch',
   'post-provider-text-download': 'POST /text_download',
   'post-provider-file-download': 'POST /file_download',
   'post-provider-call-download': 'POST /call_download',
