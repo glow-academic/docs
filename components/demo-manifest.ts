@@ -127,7 +127,6 @@ export const DEMO_TOPICS: ReadonlyMap<string, DemoVideoExt> = new Map([
   ['mcp-call', 'mp4'],
   ['mcp-list-tools', 'mp4'],
   ['mcp-overview', 'mp4'],
-  ['media-chunked', 'mp4'],
   ['media-download', 'webm'],
   ['media-overview', 'mp4'],
   ['media-preview', 'webm'],

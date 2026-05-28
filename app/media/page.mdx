@@ -177,50 +177,6 @@ must-revalidate`. Hosted on `system`, `attempt`, `scenario`, and
 
 ---
 
-{/* DEMO_VIDEO: media-chunked | vhs */}
-
-## Resumable uploads (TUS)
-
-<DemoVideo
-  topic="media-chunked"
-  kind="vhs"
-  caption="Uploading a 400 MB lecture recording in 32 MB chunks — the network drops, the client reconnects, status reports the offset, and the upload resumes."
-/>
-
-Large files use a TUS-flavored chunked protocol exposed via the CLI:
-
-```bash
-glow scenarios video discover                                       # list types
-glow scenarios video create   --filename role-play.mp4 --size 419430400
-glow scenarios video chunk    --id <upload_id> --file chunk-0.bin --offset 0
-glow scenarios video chunk    --id <upload_id> --file chunk-1.bin --offset 33554432
-glow scenarios video status   --id <upload_id>                      # poll offset
-glow scenarios video finalize --id <upload_id>                      # promote
-```
-
-URL shape (slash-form, parallel to the underscore download routes
-above):
-
-```
-POST   /<resource>/<media>/create          — initiate
-GET    /<resource>/<media>/<id>/status     — poll offset
-PATCH  /<resource>/<media>/<id>/chunk      — push a chunk
-POST   /<resource>/<media>/<id>/finalize   — close + promote
-GET    /<resource>/<media>/discover        — list resumable types
-```
-
-`chunk` is `application/offset+octet-stream` with an `Upload-Offset`
-header; the response carries the new offset.
-
-**Deferred capability.** End-to-end client orchestration (split file,
-retry chunks, resume after disconnect, fall back to single-shot for
-small files) is not wired into a single CLI command today — the
-primitives above are the building blocks. Track the deferred capability
-list in `cli-reference` for the eventual `glow <art> upload <type>
-<file> --resumable` flag.
-
----
-
 ## How media attaches to messages
 
 Inside a `GroupDetailMessageItem` (see [Group](/group) for the full
