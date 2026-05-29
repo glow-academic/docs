@@ -49,8 +49,8 @@ Uploads are `multipart/form-data` `POST`s against the artifact that
 owns the eventual binding. The route name is always `<kind>_upload`:
 
 ```bash
-curl -X POST https://<your-instance>/document/file_upload \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/document/file_upload \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -F "file=@./paper.pdf"
 ```
 
@@ -114,8 +114,8 @@ scrubbing, video seeking, and partial PDF loads work without a custom
 protocol:
 
 ```bash
-curl -X POST https://<your-instance>/system/audio_download \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/system/audio_download \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Range: bytes=0-65535" \
   -d '{"audio_id": "<upload_id>"}' \
   --output chunk.webm
@@ -165,8 +165,8 @@ of a previewable upload — today, PDFs. Useful for document tiles and
 inline message previews.
 
 ```bash
-curl -X POST https://<your-instance>/system/file_preview \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/system/file_preview \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"file_id": "<upload_id>"}' \
   --output preview.png
 ```

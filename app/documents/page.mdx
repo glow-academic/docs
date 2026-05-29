@@ -44,7 +44,7 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow documents create --body '{
@@ -62,8 +62,8 @@ glow documents create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/document/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/document/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "documents": [
@@ -119,8 +119,8 @@ Documents support file uploads for rich content. The upload endpoint is binary-b
 
 ```bash
 # Upload a file
-curl -X POST https://<your-instance>/document/upload \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/document/upload \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/pdf" \
   -H "X-Filename: academic_integrity_policy.pdf" \
   --data-binary @academic_integrity_policy.pdf
@@ -176,8 +176,8 @@ Document search supports full-text plus facet filters across department, paramet
 />
 
 ```bash
-curl -X POST https://<your-instance>/document/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/document/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "FERPA",

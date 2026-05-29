@@ -18,7 +18,7 @@ Settings uses a **composable infra architecture** -- you can search for all sett
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # List all settings
@@ -47,20 +47,20 @@ glow settings export
 
 ```bash
 # Search all settings
-curl -X POST https://<your-instance>/setting/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Get a specific setting
-curl -X POST https://<your-instance>/setting/get \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/get \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"settings_id": "setting-uuid"}'
 
 # Create settings
-curl -X POST https://<your-instance>/setting/create \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "settings": [{
@@ -120,8 +120,8 @@ The response also includes `can_edit`, `disabled_reason`, `draft_version`, and `
 `POST /setting/duplicate` clones a setting:
 
 ```bash
-curl -X POST https://<your-instance>/setting/duplicate \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/duplicate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"setting_id": "setting-uuid"}'
 ```
@@ -133,8 +133,8 @@ Returns `success`, `setting_id` (new UUID), and `message`.
 `POST /setting/delete` bulk-deletes settings by ID array:
 
 ```bash
-curl -X POST https://<your-instance>/setting/delete \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/delete \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"setting_ids": ["setting-uuid-1", "setting-uuid-2"]}'
 ```
@@ -156,8 +156,8 @@ Settings supports a draft system with optimistic locking for safe concurrent edi
 `PATCH /setting/draft` creates or updates a draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/setting/draft \
-  -H "Authorization: Bearer <token>" \
+curl -X PATCH $GLOW_INSTANCE_URL/setting/draft \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
@@ -182,8 +182,8 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state` (ser
 `POST /setting/drafts` returns all drafts owned by the current profile:
 
 ```bash
-curl -X POST https://<your-instance>/setting/drafts \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/setting/drafts \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ### Loading a Draft
@@ -207,8 +207,8 @@ glow settings get --body '{"settings_id": "setting-uuid", "draft_id": "draft-uui
 Settings can store encrypted provider keys. To decrypt:
 
 ```bash
-curl -X POST https://<your-instance>/setting/decrypt \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/decrypt \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "setting_id": "setting-uuid",
@@ -231,8 +231,8 @@ Returns `key` (decrypted value), `name`, and `actor_name`.
 Settings supports bulk import via CSV:
 
 ```bash
-curl -X POST https://<your-instance>/setting/csv \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/csv \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -F "file=@settings.csv"
 ```
 

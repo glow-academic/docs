@@ -54,7 +54,7 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow tools create --body '{
@@ -68,8 +68,8 @@ glow tools create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/tool/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/tool/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "tools": [{

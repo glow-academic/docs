@@ -105,10 +105,12 @@ glow system health
 glow profiles context
 ```
 
-Equivalent raw HTTP (no `/v5` prefix, singular paths):
+Equivalent raw HTTP (no `/v5` prefix, singular paths). Export
+`$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` once and the examples throughout
+these docs are copy-paste-ready — see [Authentication](/authentication#raw-http):
 
 ```bash
-curl -X POST https://my-school.example.com/persona/search \
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{}'

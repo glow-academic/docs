@@ -24,7 +24,7 @@ This is the go-to resource when you need to answer questions like:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get activity summary with engagement counts
@@ -44,8 +44,8 @@ glow system export
 
 ```bash
 # Get activity summary
-curl -X POST https://<your-instance>/system/activity \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/activity \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "date_from": "2025-01-01",
@@ -54,8 +54,8 @@ curl -X POST https://<your-instance>/system/activity \
   }'
 
 # Search session history
-curl -X POST https://<your-instance>/system/sessions \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/sessions \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,
@@ -107,8 +107,8 @@ Each `SessionListItem` includes:
 If a session surfaces a problem (e.g., a FERPA concern or inappropriate AI response), you can resolve it:
 
 ```bash
-curl -X POST https://<your-instance>/activity/resolve \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/activity/resolve \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "problem_id": "problem-uuid",
@@ -204,7 +204,7 @@ The agent is the engine that processes every message, generates persona response
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow agents create --body '{
@@ -218,9 +218,9 @@ glow agents create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/agent/create \
+curl -X POST $GLOW_INSTANCE_URL/agent/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "agents": [{
       "name": "Default Simulation Agent",
@@ -247,9 +247,9 @@ glow agents draft --body '{
 ```
 
 ```bash
-curl -X PATCH https://<your-instance>/agent/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/agent/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "agent-draft-uuid",
     "model_ids": ["model-uuid-1"]
@@ -259,9 +259,9 @@ curl -X PATCH https://<your-instance>/agent/draft \
 You can search agents by model using the `filter_model_ids` parameter:
 
 ```bash
-curl -X POST https://<your-instance>/agent/search \
+curl -X POST $GLOW_INSTANCE_URL/agent/search \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"filter_model_ids": ["model-uuid-1"]}'
 ```
 
@@ -364,9 +364,9 @@ glow agents draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/agent/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/agent/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 3,
@@ -38299,11 +38299,22 @@ clear always runs even if the server is unreachable.
 
 ## Raw HTTP
 
-If you're calling the API directly without the CLI, the canonical
-shape is:
+The curl examples throughout these docs read two environment variables —
+your instance URL and your bearer token — so you can **export them once
+and every example is copy-paste-ready**:
 
 ```bash
-curl -X POST https://my-school.example.com/persona/search \
+export GLOW_INSTANCE_URL=https://your-school.example.edu
+export GLOW_TOKEN=$(cat ~/.config/glow/tokens.json | jq -r '.[].access_token' | head -1)
+# …or paste a token directly: export GLOW_TOKEN=eyJhbG...
+```
+
+`GLOW_INSTANCE_URL` is the same variable the CLI reads; `GLOW_TOKEN` is the
+JWT `glow login` already stored under `~/.config/glow/`. With both set, the
+canonical request shape is:
+
+```bash
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{}'
@@ -38456,7 +38467,7 @@ Auths uses a composable architecture with full CRUD, duplication, and a draft sy
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow auths create --body '{"auths": [{"name": "University SSO", "description": "SAML SSO for university login"}]}'
@@ -38465,8 +38476,8 @@ glow auths create --body '{"auths": [{"name": "University SSO", "description": "
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/auth/create \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "auths": [{
@@ -38503,8 +38514,8 @@ End-to-end recipe for wiring a fresh SSO provider into Keycloak. The four moves 
 **1. Create the auth shell** (returns `auth_id` + a fresh `draft_id`):
 
 ```bash
-curl -X POST https://<your-instance>/auth/create \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "auths": [{
@@ -38540,8 +38551,8 @@ glow auths draft --body '{
 Auths uses a draft system with optimistic locking -- the same pattern as Settings. Saving via `PATCH /auth/draft` returns the new `version`; pass it as `expected_version` on the next save so concurrent edits surface a conflict instead of clobbering.
 
 ```bash
-curl -X PATCH https://<your-instance>/auth/draft \
-  -H "Authorization: Bearer <token>" \
+curl -X PATCH $GLOW_INSTANCE_URL/auth/draft \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
@@ -38568,8 +38579,8 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state`.
 **List your drafts:**
 
 ```bash
-curl -X POST https://<your-instance>/auth/drafts \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/auth/drafts \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 **Loading a draft:**
@@ -38599,8 +38610,8 @@ Optional filters:
 | Pagination | `page_size`, `page_offset` | Control page size |
 
 ```bash
-curl -X POST https://<your-instance>/auth/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"search": "sso", "filter_department_ids": ["dept-cs"], "page_size": 25}'
 ```
@@ -38614,8 +38625,8 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 **Delete by explicit IDs:**
 
 ```bash
-curl -X POST https://<your-instance>/auth/delete \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/delete \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"auth_ids": ["auth-uuid-1", "auth-uuid-2"]}'
 ```
@@ -38633,8 +38644,8 @@ glow auths delete --body '{
 **Duplicate an auth provider:**
 
 ```bash
-curl -X POST https://<your-instance>/auth/duplicate \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/duplicate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"auth_id": "auth-uuid"}'
 ```
@@ -38912,11 +38923,11 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 
 **Fetch benchmark data** for the current semester:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
-curl -X POST https://<your-instance>/test/benchmark \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/benchmark \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "start_date": "2026-01-15",
@@ -38929,8 +38940,8 @@ The response includes `evals` (eval performance cards), `departments`, `history`
 **Filter by department:**
 
 ```bash
-curl -X POST https://<your-instance>/test/benchmark \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/benchmark \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "start_date": "2026-01-15",
@@ -38948,8 +38959,8 @@ curl -X POST https://<your-instance>/test/benchmark \
 Use `POST /test/search` to paginate and filter test history independently of the full benchmark payload:
 
 ```bash
-curl -X POST https://<your-instance>/test/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "history_page": 1,
@@ -38965,8 +38976,8 @@ The response returns `data` (an array of `BenchmarkHistoryItem` objects), `total
 ### Filtering by Eval and Archive Status
 
 ```bash
-curl -X POST https://<your-instance>/test/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "history_eval_ids": ["eval-abc-123"],
@@ -38981,8 +38992,8 @@ curl -X POST https://<your-instance>/test/search \
 **Refresh materialized views** to ensure benchmark data is up to date. This invalidates caches and rebuilds aggregated views:
 
 ```bash
-curl -X POST https://<your-instance>/test/refresh \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/test/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 Returns `success`, `refreshed_views`, and `invalidated_tags`.
@@ -38990,8 +39001,8 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export benchmark data** as a denormalized ZIP file for offline analysis or institutional reporting:
 
 ```bash
-curl -X POST https://<your-instance>/test/export \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/test/export \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, and `row_count`.
@@ -39059,7 +39070,7 @@ Chats also support a draft system for customizing chat configurations before or 
 
 ### Get Chat Details via CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
@@ -39068,9 +39079,9 @@ glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
 ### Get Chat Details via API
 
 ```bash
-curl -X POST https://<your-instance>/attempt/chat_get \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_get \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
     "attempt_id": "parent-attempt-uuid"
@@ -39086,9 +39097,9 @@ The response includes all hydrated resources: personas, documents, parameter fie
 glow attempts chat export --body '{"chat_entry_id": "..."}'
 
 # API
-curl -X POST https://<your-instance>/attempt/chat_export \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_export \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
     "attempt_id": "parent-attempt-uuid"
@@ -39160,9 +39171,9 @@ each a plain call to its `POST /attempt/chat_*` endpoint) — see the
 `POST /attempt/chat_get` supports search filters to narrow down the resources shown for a chat:
 
 ```bash
-curl -X POST https://<your-instance>/attempt/chat_get \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_get \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
     "persona_search": "confused",
@@ -39202,9 +39213,9 @@ glow attempts chat draft --body '{
 }'
 
 # API
-curl -X POST https://<your-instance>/attempt/chat_draft \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "name": "Custom FERPA Chat",
     "description": "Modified chat with additional documents",
@@ -39222,9 +39233,9 @@ The draft endpoint supports optimistic concurrency through `expected_version` an
 glow attempts chat drafts
 
 # API
-curl -X POST https://<your-instance>/attempt/chat_drafts \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_drafts \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token"
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ## Exporting a transcript
@@ -48086,7 +48097,7 @@ A cohort requires at least one profile and one simulation. Once both are assigne
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow cohorts create --body '{
@@ -48104,8 +48115,8 @@ glow cohorts create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/cohort/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/cohort/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "cohorts": [
@@ -48184,8 +48195,8 @@ Cohorts support rich search and filtering.
 
 ```bash
 # Search cohorts by profile
-curl -X POST https://<your-instance>/cohort/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/cohort/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "profile_search": "Johnson",
@@ -48292,7 +48303,7 @@ Dashboard returns `header_metrics` (total attempts, average score, completion pe
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Fetch the full dashboard bundle (all metrics, rubrics, simulations)
@@ -48311,8 +48322,8 @@ glow attempts refresh
 
 ```bash
 # Get dashboard bundle — single endpoint, filters in the body
-curl -X POST https://<your-instance>/attempt/dashboard \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/dashboard \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "department_ids": ["dept-cs"],
@@ -48321,8 +48332,8 @@ curl -X POST https://<your-instance>/attempt/dashboard \
   }'
 
 # Search attempt history (separate endpoint on the attempt artifact)
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page_size": 20,
@@ -48370,8 +48381,8 @@ For larger paginated history tables, use the attempt search endpoint
 directly — it returns the same `HistoryItem` shape with full pagination:
 
 ```bash
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "target_profile_id": "ta-profile-uuid",
@@ -48505,8 +48516,8 @@ glow personas refresh
 ```
 
 ```bash
-curl -X POST https://<your-instance>/persona/refresh \
-  -H "Authorization: Bearer your-token"
+curl -X POST $GLOW_INSTANCE_URL/persona/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 The response carries the list of invalidated tags and the per-target
@@ -48669,7 +48680,7 @@ Departments connect to nearly everything. They are the first resource you should
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow departments create --body '{
@@ -48687,8 +48698,8 @@ glow departments create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/department/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/department/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "departments": [
@@ -48746,8 +48757,8 @@ Via the API, use `PATCH /department/draft` with fields like `input_draft_id`, `e
 ## Search & filter
 
 ```bash
-curl -X POST https://<your-instance>/department/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/department/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "University",
@@ -48847,7 +48858,7 @@ Documents connect to **scenarios**, not agents. A single document can be shared 
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow documents create --body '{
@@ -48865,8 +48876,8 @@ glow documents create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/document/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/document/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "documents": [
@@ -48914,8 +48925,8 @@ Documents support file uploads for rich content. The upload endpoint is binary-b
 
 ```bash
 # Upload a file
-curl -X POST https://<your-instance>/document/upload \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/document/upload \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/pdf" \
   -H "X-Filename: academic_integrity_policy.pdf" \
   --data-binary @academic_integrity_policy.pdf
@@ -48955,8 +48966,8 @@ Via the API, use `PATCH /document/draft` with fields like `input_draft_id`, `exp
 Document search supports full-text plus facet filters across department, parameter, and field.
 
 ```bash
-curl -X POST https://<your-instance>/document/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/document/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "FERPA",
@@ -49059,7 +49070,7 @@ Eval
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow evals create --body '{
@@ -49075,8 +49086,8 @@ glow evals create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/eval/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/eval/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "evals": [{
@@ -49278,7 +49289,7 @@ Fields connect to **parameters** (each field belongs to a parameter) and to **do
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow fields create --body '{
@@ -49296,8 +49307,8 @@ glow fields create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/field/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/field/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "fields": [
@@ -49357,8 +49368,8 @@ Fields support rich search and filtering:
 
 ```bash
 # Search fields by parameter
-curl -X POST https://<your-instance>/field/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/field/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "parameter_search": "Temperament",
@@ -49466,9 +49477,9 @@ voice flows. Artifact type is implicit from the URL path.
 **Raw HTTP:**
 
 ```bash
-curl -X POST https://<your-instance>/persona/generate \
+curl -X POST $GLOW_INSTANCE_URL/persona/generate \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <token>" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "instructions": ["A passive student who starts every reply with Uh..."],
     "config": { "dangerous": false }
@@ -49618,8 +49629,8 @@ org.
 Raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/persona/generations \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/persona/generations \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{ "search": "confused", "page_limit": 50 }'
 ```
 
@@ -49687,7 +49698,7 @@ Groups are essential for debugging AI behavior, auditing training interactions f
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Lean resolve — group identity only (cheap path used by audit linking)
@@ -49707,8 +49718,8 @@ glow system export --body '{"target_group_id": "group-uuid"}'
 
 ```bash
 # Get one group (set include_detail for the full tree)
-curl -X POST https://<your-instance>/system/group \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/group \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "group_id": "group-uuid",
@@ -49718,8 +49729,8 @@ curl -X POST https://<your-instance>/system/group \
   }'
 
 # List groups (pricing / cost view)
-curl -X POST https://<your-instance>/system/groups \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/groups \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"page_size": 20}'
 ```
@@ -49847,11 +49858,11 @@ The health response includes two materialized views:
 
 **Fetch health data** for the last 7 days:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
-curl -X POST https://<your-instance>/system/health \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/health \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "date_from": "2026-03-21",
@@ -49864,8 +49875,8 @@ curl -X POST https://<your-instance>/system/health \
 **Filter by service:**
 
 ```bash
-curl -X POST https://<your-instance>/system/health \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/health \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "service": "glow-api",
@@ -49913,8 +49924,8 @@ Each `metrics_hourly` entry contains:
 **Refresh materialized views** to ensure health data is current:
 
 ```bash
-curl -X POST https://<your-instance>/system/refresh \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/system/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 Returns `success`, `refreshed_views`, and `invalidated_tags`.
@@ -49922,8 +49933,8 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export health data** as a denormalized ZIP for offline analysis:
 
 ```bash
-curl -X POST https://<your-instance>/system/export \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/system/export \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 Returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
@@ -49967,7 +49978,7 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get assigned simulations for the current TA
@@ -49984,14 +49995,14 @@ glow attempts export
 
 ```bash
 # Get simulation cards
-curl -X POST https://<your-instance>/attempt/home \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/home \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search attempt history
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,
@@ -50320,7 +50331,7 @@ singular concatenated form.
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Hydrate a single invocation
@@ -50340,14 +50351,14 @@ glow tests invocations --body '{"test_id": "test-uuid"}'
 
 ```bash
 # Get invocation detail
-curl -X POST https://<your-instance>/test/invocation_get \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/invocation_get \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"invocation_id": "invocation-uuid"}'
 
 # List invocations (paginated)
-curl -X POST https://<your-instance>/test/invocations \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/invocations \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"test_id": "test-uuid", "page_size": 25}'
 ```
@@ -50382,8 +50393,8 @@ Use `invocation_run` to (re-)kick a queued or failed invocation; use
 ## Trace
 
 ```bash
-curl -X POST https://<your-instance>/test/invocation_trace \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/invocation_trace \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"invocation_id": "invocation-uuid"}'
 ```
@@ -50444,7 +50455,7 @@ Leaderboard answers questions like:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get the full leaderboard with header metrics and accolades
@@ -50464,8 +50475,8 @@ glow attempts export
 
 ```bash
 # Get leaderboard summary
-curl -X POST https://<your-instance>/attempt/leaderboard \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/leaderboard \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "department_ids": ["dept-cs"],
@@ -50474,8 +50485,8 @@ curl -X POST https://<your-instance>/attempt/leaderboard \
   }'
 
 # Search ranked profiles
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "simulation_ids": ["sim-confused-student"],
@@ -50656,7 +50667,7 @@ block in human mode, or the whole `result` object with `--json`.
 carry a JWT in the `Authorization` header:
 
 ```
-Authorization: Bearer <token>
+Authorization: Bearer $GLOW_TOKEN
 ```
 
 The OAuth middleware sets `request.state.profile_id` on success, and
@@ -50725,14 +50736,14 @@ To call MCP without the CLI:
 
 ```bash
 # List tools
-curl -X POST https://<your-instance>/mcp/ \
+curl -X POST $GLOW_INSTANCE_URL/mcp/ \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}'
 
 # Call a tool
-curl -X POST https://<your-instance>/mcp/ \
+curl -X POST $GLOW_INSTANCE_URL/mcp/ \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
@@ -50799,8 +50810,8 @@ Uploads are `multipart/form-data` `POST`s against the artifact that
 owns the eventual binding. The route name is always `<kind>_upload`:
 
 ```bash
-curl -X POST https://<your-instance>/document/file_upload \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/document/file_upload \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -F "file=@./paper.pdf"
 ```
 
@@ -50856,8 +50867,8 @@ scrubbing, video seeking, and partial PDF loads work without a custom
 protocol:
 
 ```bash
-curl -X POST https://<your-instance>/system/audio_download \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/system/audio_download \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Range: bytes=0-65535" \
   -d '{"audio_id": "<upload_id>"}' \
   --output chunk.webm
@@ -50899,8 +50910,8 @@ of a previewable upload — today, PDFs. Useful for document tiles and
 inline message previews.
 
 ```bash
-curl -X POST https://<your-instance>/system/file_preview \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/system/file_preview \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"file_id": "<upload_id>"}' \
   --output preview.png
 ```
@@ -51019,7 +51030,7 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow models create --body '{
@@ -51034,8 +51045,8 @@ glow models create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/model/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/model/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "models": [{
@@ -51056,8 +51067,8 @@ Every model requires at least one provider. The `provider_ids` field connects th
 
 ```bash
 # Filter models by provider
-curl -X POST https://<your-instance>/model/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/model/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"filter_provider_ids": ["OPENAI_PROVIDER_UUID"]}'
 ```
@@ -51268,7 +51279,7 @@ Parameters connect to **fields**. Each parameter contains one or more fields. Do
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow parameters create --body '{
@@ -51286,8 +51297,8 @@ glow parameters create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/parameter/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/parameter/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "parameters": [
@@ -51354,8 +51365,8 @@ Parameters support rich search and filtering. You can filter by:
 
 ```bash
 # Search parameters by field
-curl -X POST https://<your-instance>/parameter/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/parameter/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "field_search": "Confused",
@@ -51723,9 +51734,9 @@ can't silently overwrite yours.
 **Canonical example:**
 
 ```bash
-curl -X POST https://<your-instance>/<art>/draft \
+curl -X POST $GLOW_INSTANCE_URL/<art>/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 3,
@@ -51826,9 +51837,9 @@ the currently-selected ids — exactly what a dropdown needs.
 **Canonical example:**
 
 ```bash
-curl -X POST https://<your-instance>/persona/search \
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "search": "confused",
     "filter_department_ids": ["dept-cs"],
@@ -52152,9 +52163,9 @@ glow personas create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/persona/create \
+curl -X POST $GLOW_INSTANCE_URL/persona/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "personas": [{
       "name": "Confused Student",
@@ -52302,9 +52313,9 @@ glow personas draft --body '{
 Equivalent raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/persona/draft \
+curl -X POST $GLOW_INSTANCE_URL/persona/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 1,
@@ -52345,9 +52356,9 @@ glow personas search --body '{
 Raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/persona/search \
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"search": "confused", "page_size": 25}'
 ```
 
@@ -52446,7 +52457,7 @@ Practice offers two views:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get available practice simulations
@@ -52463,14 +52474,14 @@ glow attempts export
 
 ```bash
 # Get practice simulation cards
-curl -X POST https://<your-instance>/attempt/practice \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/practice \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search practice history
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,
@@ -52577,7 +52588,7 @@ This helps institutions monitor budget consumption, compare model costs, and for
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get daily cost chart data
@@ -52597,8 +52608,8 @@ glow system export
 
 ```bash
 # Get daily cost aggregations
-curl -X POST https://<your-instance>/system/pricing \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/pricing \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "start_date": "2025-01-01",
@@ -52606,8 +52617,8 @@ curl -X POST https://<your-instance>/system/pricing \
   }'
 
 # Search group history
-curl -X POST https://<your-instance>/system/groups \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/groups \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,
@@ -52721,7 +52732,7 @@ Profiles are the link between real users and the simulation experience. Without 
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow profiles create --body '{
@@ -52740,8 +52751,8 @@ glow profiles create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/profile/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "profiles": [
@@ -52795,8 +52806,8 @@ Super Administrators can emulate any profile to debug what that user actually se
 **Start emulation:**
 
 ```bash
-curl -X POST https://<your-instance>/profile/emulate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/emulate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "profile_id": "ta-johnson-uuid"
@@ -52806,8 +52817,8 @@ curl -X POST https://<your-instance>/profile/emulate \
 **Stop emulating and return to your own profile:**
 
 ```bash
-curl -X POST https://<your-instance>/profile/unemulate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/unemulate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 ```
@@ -52838,8 +52849,8 @@ Via the API, use `PATCH /profile/draft` with fields like `input_draft_id`, `expe
 Profile search supports full-text plus facet filters across role, department, and cohort membership.
 
 ```bash
-curl -X POST https://<your-instance>/profile/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "Johnson",
@@ -52941,7 +52952,7 @@ Provider  -->  Model (model has provider_id)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow providers create --body '{
@@ -52955,8 +52966,8 @@ glow providers create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/provider/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "providers": [{
@@ -52983,8 +52994,8 @@ When you retrieve a provider with `GET`, the response includes an `endpoints` se
 Provider keys hold encrypted credentials. Keys are never returned in plaintext from list or search operations. To decrypt a key, use the dedicated decrypt endpoint -- every decrypt request is audited with the requesting user's identity.
 
 ```bash
-curl -X POST https://<your-instance>/provider/decrypt \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/decrypt \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "provider_id": "PROVIDER_UUID",
@@ -53037,8 +53048,8 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 **Delete by explicit IDs:**
 
 ```bash
-curl -X POST https://<your-instance>/provider/delete \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/delete \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"provider_ids": ["UUID_1", "UUID_2"]}'
 ```
@@ -53058,8 +53069,8 @@ glow providers delete --body '{
 **Duplicate a provider:**
 
 ```bash
-curl -X POST https://<your-instance>/provider/duplicate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/duplicate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"provider_id": "PROVIDER_UUID"}'
 ```
@@ -53321,7 +53332,7 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Fetch the full reports bundle
@@ -53338,8 +53349,8 @@ glow attempts export
 
 ```bash
 # Get reports with filters
-curl -X POST https://<your-instance>/attempt/report \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/report \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "department_ids": ["dept-cs"],
@@ -53398,12 +53409,12 @@ Resource metadata keyed by ID for hydrating IDs into display names:
 
 ```bash
 # Refresh materialized views and caches
-curl -X POST https://<your-instance>/attempt/refresh \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/attempt/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 
 # Export all reports data as a denormalized ZIP
-curl -X POST https://<your-instance>/attempt/export \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/attempt/export \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.
@@ -53473,7 +53484,7 @@ Rubric
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow rubrics create --body '{
@@ -53487,8 +53498,8 @@ glow rubrics create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/rubric/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/rubric/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "rubrics": [{
@@ -53707,7 +53718,7 @@ Scenarios are **step 2** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" scenario:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow scenarios create --body '{
@@ -53729,9 +53740,9 @@ glow scenarios create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/scenario/create \
+curl -X POST $GLOW_INSTANCE_URL/scenario/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "scenarios": [{
       "name": "Academic Integrity Training",
@@ -53769,9 +53780,9 @@ glow scenarios draft --body '{
 **Via API:**
 
 ```bash
-curl -X PATCH https://<your-instance>/scenario/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/scenario/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "scenario-draft-uuid",
     "persona_ids": ["confused-student-uuid", "aggressive-student-uuid"]
@@ -53821,9 +53832,9 @@ This makes the scenario supply concrete values for each parameter when the simul
 The scenario artifact has a `generate` sub-operation that produces draft scenarios from a natural-language prompt -- useful for bulk authoring or templating off an existing situation.
 
 ```bash
-curl -X POST https://<your-instance>/scenario/generate \
+curl -X POST $GLOW_INSTANCE_URL/scenario/generate \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "prompt": "Three office-hours scenarios with the same Confused persona, escalating intensity 3 → 6 → 9",
     "persona_ids": ["confused-student-uuid"]
@@ -53868,9 +53879,9 @@ glow scenarios draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/scenario/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/scenario/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "name": "Updated FERPA Training",
     "description": "Updated description with new policy references"
@@ -53884,9 +53895,9 @@ curl -X PATCH https://<your-instance>/scenario/draft \
 glow scenarios list
 
 # API
-curl -X POST https://<your-instance>/scenario/drafts \
+curl -X POST $GLOW_INSTANCE_URL/scenario/drafts \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token"
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ---
@@ -53900,8 +53911,8 @@ glow scenarios search --body '{"persona_ids": ["confused-student-uuid"]}'
 ```
 
 ```bash
-curl -X POST https://<your-instance>/scenario/search \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/scenario/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "FERPA",
@@ -53996,7 +54007,7 @@ Session is useful when you need to:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get session detail with groups and timeline
@@ -54013,20 +54024,20 @@ glow system export --body '{"target_session_id": "session-uuid"}'
 
 ```bash
 # Get one session detail
-curl -X POST https://<your-instance>/system/session \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/session \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"session_id": "session-uuid"}'
 
 # List sessions
-curl -X POST https://<your-instance>/system/sessions \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/sessions \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"page_size": 20}'
 
 # Export
-curl -X POST https://<your-instance>/system/export \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/export \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"target_session_id": "session-uuid"}'
 ```
@@ -54117,7 +54128,7 @@ Settings uses a **composable infra architecture** -- you can search for all sett
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # List all settings
@@ -54146,20 +54157,20 @@ glow settings export
 
 ```bash
 # Search all settings
-curl -X POST https://<your-instance>/setting/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Get a specific setting
-curl -X POST https://<your-instance>/setting/get \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/get \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"settings_id": "setting-uuid"}'
 
 # Create settings
-curl -X POST https://<your-instance>/setting/create \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "settings": [{
@@ -54211,8 +54222,8 @@ The response also includes `can_edit`, `disabled_reason`, `draft_version`, and `
 `POST /setting/duplicate` clones a setting:
 
 ```bash
-curl -X POST https://<your-instance>/setting/duplicate \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/duplicate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"setting_id": "setting-uuid"}'
 ```
@@ -54224,8 +54235,8 @@ Returns `success`, `setting_id` (new UUID), and `message`.
 `POST /setting/delete` bulk-deletes settings by ID array:
 
 ```bash
-curl -X POST https://<your-instance>/setting/delete \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/delete \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"setting_ids": ["setting-uuid-1", "setting-uuid-2"]}'
 ```
@@ -54239,8 +54250,8 @@ Settings supports a draft system with optimistic locking for safe concurrent edi
 `PATCH /setting/draft` creates or updates a draft:
 
 ```bash
-curl -X PATCH https://<your-instance>/setting/draft \
-  -H "Authorization: Bearer <token>" \
+curl -X PATCH $GLOW_INSTANCE_URL/setting/draft \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
@@ -54265,8 +54276,8 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state` (ser
 `POST /setting/drafts` returns all drafts owned by the current profile:
 
 ```bash
-curl -X POST https://<your-instance>/setting/drafts \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/setting/drafts \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ### Loading a Draft
@@ -54282,8 +54293,8 @@ glow settings get --body '{"settings_id": "setting-uuid", "draft_id": "draft-uui
 Settings can store encrypted provider keys. To decrypt:
 
 ```bash
-curl -X POST https://<your-instance>/setting/decrypt \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/decrypt \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "setting_id": "setting-uuid",
@@ -54298,8 +54309,8 @@ Returns `key` (decrypted value), `name`, and `actor_name`.
 Settings supports bulk import via CSV:
 
 ```bash
-curl -X POST https://<your-instance>/setting/csv \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/setting/csv \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -F "file=@settings.csv"
 ```
 
@@ -54378,7 +54389,7 @@ Simulations are **step 3** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" simulation:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow simulations create --body '{
@@ -54392,9 +54403,9 @@ glow simulations create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/simulation/create \
+curl -X POST $GLOW_INSTANCE_URL/simulation/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "simulations": [{
       "name": "Academic Integrity Training",
@@ -54517,9 +54528,9 @@ glow simulations draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/simulation/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/simulation/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 2,
@@ -54534,9 +54545,9 @@ curl -X PATCH https://<your-instance>/simulation/draft \
 glow simulations list
 
 # API
-curl -X POST https://<your-instance>/simulation/drafts \
+curl -X POST $GLOW_INSTANCE_URL/simulation/drafts \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token"
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ---
@@ -54554,8 +54565,8 @@ glow simulations search --body '{
 ```
 
 ```bash
-curl -X POST https://<your-instance>/simulation/search \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/simulation/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"search": "training", "page_size": 25}'
 ```
@@ -54694,10 +54705,12 @@ glow system health
 glow profiles context
 ```
 
-Equivalent raw HTTP (no `/v5` prefix, singular paths):
+Equivalent raw HTTP (no `/v5` prefix, singular paths). Export
+`$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` once and the examples throughout
+these docs are copy-paste-ready — see [Authentication](/authentication#raw-http):
 
 ```bash
-curl -X POST https://my-school.example.com/persona/search \
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{}'
@@ -54767,8 +54780,8 @@ every 15 seconds when there are no events.
 **Raw HTTP:**
 
 ```bash
-curl -N https://<your-instance>/persona/watch?run_id=<run-uuid> \
-  -H "Authorization: Bearer your-token" \
+curl -N $GLOW_INSTANCE_URL/persona/watch?run_id=<run-uuid> \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Accept: text/event-stream"
 ```
 
@@ -54894,15 +54907,15 @@ always go through an artifact path.
 
 ```bash
 # 1. Trigger
-RESP=$(curl -sX POST https://<host>/persona/generate \
-  -H "Authorization: Bearer $TOKEN" \
+RESP=$(curl -sX POST $GLOW_INSTANCE_URL/persona/generate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"prompt": "Confused CS-180 student"}')
 RUN_ID=$(echo "$RESP" | jq -r .run_id)
 
 # 2. Block on the run
-curl -N "https://<host>/persona/watch?run_id=$RUN_ID" \
-  -H "Authorization: Bearer $TOKEN" \
+curl -N "$GLOW_INSTANCE_URL/persona/watch?run_id=$RUN_ID" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Accept: text/event-stream"
 ```
 
@@ -55025,9 +55038,9 @@ glow tests start --body '{
 Raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/test/start \
+curl -X POST $GLOW_INSTANCE_URL/test/start \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{ "eval_id": "…", "model_ids": ["…"], "scenario_ids": ["…"], "agent_ids": ["…"] }'
 ```
 
@@ -55283,7 +55296,7 @@ Tool  -->  Agent (via agent_tools_junction)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow tools create --body '{
@@ -55297,8 +55310,8 @@ glow tools create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/tool/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/tool/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "tools": [{

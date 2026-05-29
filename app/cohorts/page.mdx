@@ -44,7 +44,7 @@ A cohort requires at least one profile and one simulation. Once both are assigne
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow cohorts create --body '{
@@ -62,8 +62,8 @@ glow cohorts create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/cohort/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/cohort/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "cohorts": [
@@ -166,8 +166,8 @@ Cohorts support rich search and filtering.
 
 ```bash
 # Search cohorts by profile
-curl -X POST https://<your-instance>/cohort/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/cohort/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "profile_search": "Johnson",

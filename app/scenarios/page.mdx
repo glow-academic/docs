@@ -61,7 +61,7 @@ Scenarios are **step 2** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" scenario:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow scenarios create --body '{
@@ -83,9 +83,9 @@ glow scenarios create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/scenario/create \
+curl -X POST $GLOW_INSTANCE_URL/scenario/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "scenarios": [{
       "name": "Academic Integrity Training",
@@ -131,9 +131,9 @@ glow scenarios draft --body '{
 **Via API:**
 
 ```bash
-curl -X PATCH https://<your-instance>/scenario/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/scenario/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "scenario-draft-uuid",
     "persona_ids": ["confused-student-uuid", "aggressive-student-uuid"]
@@ -191,9 +191,9 @@ The scenario artifact has a `generate` sub-operation that produces draft scenari
 />
 
 ```bash
-curl -X POST https://<your-instance>/scenario/generate \
+curl -X POST $GLOW_INSTANCE_URL/scenario/generate \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "prompt": "Three office-hours scenarios with the same Confused persona, escalating intensity 3 → 6 → 9",
     "persona_ids": ["confused-student-uuid"]
@@ -246,9 +246,9 @@ glow scenarios draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/scenario/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/scenario/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "name": "Updated FERPA Training",
     "description": "Updated description with new policy references"
@@ -262,9 +262,9 @@ curl -X PATCH https://<your-instance>/scenario/draft \
 glow scenarios list
 
 # API
-curl -X POST https://<your-instance>/scenario/drafts \
+curl -X POST $GLOW_INSTANCE_URL/scenario/drafts \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token"
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ---
@@ -286,8 +286,8 @@ glow scenarios search --body '{"persona_ids": ["confused-student-uuid"]}'
 ```
 
 ```bash
-curl -X POST https://<your-instance>/scenario/search \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/scenario/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "FERPA",

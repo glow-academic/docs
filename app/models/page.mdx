@@ -46,7 +46,7 @@ Provider  -->  Model  -->  Agent (via agent_models_junction)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow models create --body '{
@@ -61,8 +61,8 @@ glow models create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/model/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/model/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "models": [{
@@ -91,8 +91,8 @@ Every model requires at least one provider. The `provider_ids` field connects th
 
 ```bash
 # Filter models by provider
-curl -X POST https://<your-instance>/model/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/model/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"filter_provider_ids": ["OPENAI_PROVIDER_UUID"]}'
 ```

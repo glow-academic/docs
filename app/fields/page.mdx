@@ -53,7 +53,7 @@ Fields connect to **parameters** (each field belongs to a parameter) and to **do
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow fields create --body '{
@@ -71,8 +71,8 @@ glow fields create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/field/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/field/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "fields": [
@@ -156,8 +156,8 @@ Fields support rich search and filtering:
 
 ```bash
 # Search fields by parameter
-curl -X POST https://<your-instance>/field/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/field/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "parameter_search": "Temperament",

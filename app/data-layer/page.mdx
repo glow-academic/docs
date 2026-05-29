@@ -95,8 +95,8 @@ glow personas refresh
 ```
 
 ```bash
-curl -X POST https://<your-instance>/persona/refresh \
-  -H "Authorization: Bearer your-token"
+curl -X POST $GLOW_INSTANCE_URL/persona/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 The response carries the list of invalidated tags and the per-target

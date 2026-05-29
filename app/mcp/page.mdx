@@ -109,7 +109,7 @@ block in human mode, or the whole `result` object with `--json`.
 carry a JWT in the `Authorization` header:
 
 ```
-Authorization: Bearer <token>
+Authorization: Bearer $GLOW_TOKEN
 ```
 
 The OAuth middleware sets `request.state.profile_id` on success, and
@@ -178,14 +178,14 @@ To call MCP without the CLI:
 
 ```bash
 # List tools
-curl -X POST https://<your-instance>/mcp/ \
+curl -X POST $GLOW_INSTANCE_URL/mcp/ \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}'
 
 # Call a tool
-curl -X POST https://<your-instance>/mcp/ \
+curl -X POST $GLOW_INSTANCE_URL/mcp/ \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GLOW_TOKEN" \

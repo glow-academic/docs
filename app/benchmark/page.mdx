@@ -34,11 +34,11 @@ Each benchmark response includes eval cards (high-level performance summaries), 
 
 **Fetch benchmark data** for the current semester:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
-curl -X POST https://<your-instance>/test/benchmark \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/benchmark \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "start_date": "2026-01-15",
@@ -51,8 +51,8 @@ The response includes `evals` (eval performance cards), `departments`, `history`
 **Filter by department:**
 
 ```bash
-curl -X POST https://<your-instance>/test/benchmark \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/benchmark \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "start_date": "2026-01-15",
@@ -86,8 +86,8 @@ curl -X POST https://<your-instance>/test/benchmark \
 Use `POST /test/search` to paginate and filter test history independently of the full benchmark payload:
 
 ```bash
-curl -X POST https://<your-instance>/test/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "history_page": 1,
@@ -103,8 +103,8 @@ The response returns `data` (an array of `BenchmarkHistoryItem` objects), `total
 ### Filtering by Eval and Archive Status
 
 ```bash
-curl -X POST https://<your-instance>/test/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/test/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "history_eval_ids": ["eval-abc-123"],
@@ -119,8 +119,8 @@ curl -X POST https://<your-instance>/test/search \
 **Refresh materialized views** to ensure benchmark data is up to date. This invalidates caches and rebuilds aggregated views:
 
 ```bash
-curl -X POST https://<your-instance>/test/refresh \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/test/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 Returns `success`, `refreshed_views`, and `invalidated_tags`.
@@ -128,8 +128,8 @@ Returns `success`, `refreshed_views`, and `invalidated_tags`.
 **Export benchmark data** as a denormalized ZIP file for offline analysis or institutional reporting:
 
 ```bash
-curl -X POST https://<your-instance>/test/export \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/test/export \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 The response contains `content` (base64-encoded ZIP), `file_name`, `mime_type`, and `row_count`.

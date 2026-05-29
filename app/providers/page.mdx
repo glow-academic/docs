@@ -53,7 +53,7 @@ Provider  -->  Model (model has provider_id)
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow providers create --body '{
@@ -67,8 +67,8 @@ glow providers create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/provider/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "providers": [{
@@ -111,8 +111,8 @@ Provider keys hold encrypted credentials. Keys are never returned in plaintext f
 />
 
 ```bash
-curl -X POST https://<your-instance>/provider/decrypt \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/decrypt \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "provider_id": "PROVIDER_UUID",
@@ -189,8 +189,8 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 **Delete by explicit IDs:**
 
 ```bash
-curl -X POST https://<your-instance>/provider/delete \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/delete \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"provider_ids": ["UUID_1", "UUID_2"]}'
 ```
@@ -210,8 +210,8 @@ glow providers delete --body '{
 **Duplicate a provider:**
 
 ```bash
-curl -X POST https://<your-instance>/provider/duplicate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/provider/duplicate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"provider_id": "PROVIDER_UUID"}'
 ```

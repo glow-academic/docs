@@ -28,7 +28,7 @@ This is the go-to resource when you need to answer questions like:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get activity summary with engagement counts
@@ -48,8 +48,8 @@ glow system export
 
 ```bash
 # Get activity summary
-curl -X POST https://<your-instance>/system/activity \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/activity \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "date_from": "2025-01-01",
@@ -58,8 +58,8 @@ curl -X POST https://<your-instance>/system/activity \
   }'
 
 # Search session history
-curl -X POST https://<your-instance>/system/sessions \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/sessions \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,
@@ -127,8 +127,8 @@ Each `SessionListItem` includes:
 If a session surfaces a problem (e.g., a FERPA concern or inappropriate AI response), you can resolve it:
 
 ```bash
-curl -X POST https://<your-instance>/activity/resolve \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/activity/resolve \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "problem_id": "problem-uuid",

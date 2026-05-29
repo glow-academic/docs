@@ -103,9 +103,9 @@ glow tests start --body '{
 Raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/test/start \
+curl -X POST $GLOW_INSTANCE_URL/test/start \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{ "eval_id": "…", "model_ids": ["…"], "scenario_ids": ["…"], "agent_ids": ["…"] }'
 ```
 

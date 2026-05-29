@@ -67,7 +67,7 @@ The agent is the engine that processes every message, generates persona response
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow agents create --body '{
@@ -81,9 +81,9 @@ glow agents create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/agent/create \
+curl -X POST $GLOW_INSTANCE_URL/agent/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "agents": [{
       "name": "Default Simulation Agent",
@@ -118,9 +118,9 @@ glow agents draft --body '{
 ```
 
 ```bash
-curl -X PATCH https://<your-instance>/agent/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/agent/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "agent-draft-uuid",
     "model_ids": ["model-uuid-1"]
@@ -130,9 +130,9 @@ curl -X PATCH https://<your-instance>/agent/draft \
 You can search agents by model using the `filter_model_ids` parameter:
 
 ```bash
-curl -X POST https://<your-instance>/agent/search \
+curl -X POST $GLOW_INSTANCE_URL/agent/search \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"filter_model_ids": ["model-uuid-1"]}'
 ```
 
@@ -259,9 +259,9 @@ glow agents draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/agent/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/agent/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 3,

@@ -38,7 +38,7 @@ Groups are essential for debugging AI behavior, auditing training interactions f
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Lean resolve — group identity only (cheap path used by audit linking)
@@ -58,8 +58,8 @@ glow system export --body '{"target_group_id": "group-uuid"}'
 
 ```bash
 # Get one group (set include_detail for the full tree)
-curl -X POST https://<your-instance>/system/group \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/group \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "group_id": "group-uuid",
@@ -69,8 +69,8 @@ curl -X POST https://<your-instance>/system/group \
   }'
 
 # List groups (pricing / cost view)
-curl -X POST https://<your-instance>/system/groups \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/system/groups \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"page_size": 20}'
 ```

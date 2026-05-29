@@ -341,9 +341,9 @@ can't silently overwrite yours.
 **Canonical example:**
 
 ```bash
-curl -X POST https://<your-instance>/<art>/draft \
+curl -X POST $GLOW_INSTANCE_URL/<art>/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 3,
@@ -460,9 +460,9 @@ the currently-selected ids — exactly what a dropdown needs.
 **Canonical example:**
 
 ```bash
-curl -X POST https://<your-instance>/persona/search \
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "search": "confused",
     "filter_department_ids": ["dept-cs"],

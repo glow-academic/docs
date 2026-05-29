@@ -52,8 +52,8 @@ every 15 seconds when there are no events.
 **Raw HTTP:**
 
 ```bash
-curl -N https://<your-instance>/persona/watch?run_id=<run-uuid> \
-  -H "Authorization: Bearer your-token" \
+curl -N $GLOW_INSTANCE_URL/persona/watch?run_id=<run-uuid> \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Accept: text/event-stream"
 ```
 
@@ -195,15 +195,15 @@ always go through an artifact path.
 
 ```bash
 # 1. Trigger
-RESP=$(curl -sX POST https://<host>/persona/generate \
-  -H "Authorization: Bearer $TOKEN" \
+RESP=$(curl -sX POST $GLOW_INSTANCE_URL/persona/generate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"prompt": "Confused CS-180 student"}')
 RUN_ID=$(echo "$RESP" | jq -r .run_id)
 
 # 2. Block on the run
-curl -N "https://<host>/persona/watch?run_id=$RUN_ID" \
-  -H "Authorization: Bearer $TOKEN" \
+curl -N "$GLOW_INSTANCE_URL/persona/watch?run_id=$RUN_ID" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Accept: text/event-stream"
 ```
 

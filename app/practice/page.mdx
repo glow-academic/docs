@@ -25,7 +25,7 @@ Practice offers two views:
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get available practice simulations
@@ -42,14 +42,14 @@ glow attempts export
 
 ```bash
 # Get practice simulation cards
-curl -X POST https://<your-instance>/attempt/practice \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/practice \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search practice history
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,

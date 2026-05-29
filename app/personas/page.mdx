@@ -69,9 +69,9 @@ glow personas create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/persona/create \
+curl -X POST $GLOW_INSTANCE_URL/persona/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "personas": [{
       "name": "Confused Student",
@@ -251,9 +251,9 @@ glow personas draft --body '{
 Equivalent raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/persona/draft \
+curl -X POST $GLOW_INSTANCE_URL/persona/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 1,
@@ -302,9 +302,9 @@ glow personas search --body '{
 Raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/persona/search \
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{"search": "confused", "page_size": 25}'
 ```
 

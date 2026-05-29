@@ -58,7 +58,7 @@ Simulations are **step 3** in the Glow content pipeline:
 
 Create an "Academic Integrity Training" simulation:
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow simulations create --body '{
@@ -72,9 +72,9 @@ glow simulations create --body '{
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/simulation/create \
+curl -X POST $GLOW_INSTANCE_URL/simulation/create \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "simulations": [{
       "name": "Academic Integrity Training",
@@ -213,9 +213,9 @@ glow simulations draft --body '{
 
 ```bash
 # Via API
-curl -X PATCH https://<your-instance>/simulation/draft \
+curl -X PATCH $GLOW_INSTANCE_URL/simulation/draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
     "expected_version": 2,
@@ -230,9 +230,9 @@ curl -X PATCH https://<your-instance>/simulation/draft \
 glow simulations list
 
 # API
-curl -X POST https://<your-instance>/simulation/drafts \
+curl -X POST $GLOW_INSTANCE_URL/simulation/drafts \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token"
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 ---
@@ -258,8 +258,8 @@ glow simulations search --body '{
 ```
 
 ```bash
-curl -X POST https://<your-instance>/simulation/search \
-  -H "Authorization: Bearer your-token" \
+curl -X POST $GLOW_INSTANCE_URL/simulation/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"search": "training", "page_size": 25}'
 ```

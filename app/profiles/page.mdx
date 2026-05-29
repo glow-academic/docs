@@ -44,7 +44,7 @@ Profiles are the link between real users and the simulation experience. Without 
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow profiles create --body '{
@@ -63,8 +63,8 @@ glow profiles create --body '{
 All endpoints use `POST` and require an `Authorization: Bearer` header.
 
 ```bash
-curl -X POST https://<your-instance>/profile/create \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "profiles": [
@@ -134,8 +134,8 @@ Super Administrators can emulate any profile to debug what that user actually se
 **Start emulation:**
 
 ```bash
-curl -X POST https://<your-instance>/profile/emulate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/emulate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "profile_id": "ta-johnson-uuid"
@@ -145,8 +145,8 @@ curl -X POST https://<your-instance>/profile/emulate \
 **Stop emulating and return to your own profile:**
 
 ```bash
-curl -X POST https://<your-instance>/profile/unemulate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/unemulate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 ```
@@ -193,8 +193,8 @@ Profile search supports full-text plus facet filters across role, department, an
 />
 
 ```bash
-curl -X POST https://<your-instance>/profile/search \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+curl -X POST $GLOW_INSTANCE_URL/profile/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "search": "Johnson",

@@ -90,11 +90,22 @@ clear always runs even if the server is unreachable.
 
 ## Raw HTTP
 
-If you're calling the API directly without the CLI, the canonical
-shape is:
+The curl examples throughout these docs read two environment variables —
+your instance URL and your bearer token — so you can **export them once
+and every example is copy-paste-ready**:
 
 ```bash
-curl -X POST https://my-school.example.com/persona/search \
+export GLOW_INSTANCE_URL=https://your-school.example.edu
+export GLOW_TOKEN=$(cat ~/.config/glow/tokens.json | jq -r '.[].access_token' | head -1)
+# …or paste a token directly: export GLOW_TOKEN=eyJhbG...
+```
+
+`GLOW_INSTANCE_URL` is the same variable the CLI reads; `GLOW_TOKEN` is the
+JWT `glow login` already stored under `~/.config/glow/`. With both set, the
+canonical request shape is:
+
+```bash
+curl -X POST $GLOW_INSTANCE_URL/persona/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{}'

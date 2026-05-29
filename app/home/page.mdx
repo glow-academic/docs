@@ -25,7 +25,7 @@ Home also returns rubric and standard mappings so the UI can display which Commu
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Get assigned simulations for the current TA
@@ -42,14 +42,14 @@ glow attempts export
 
 ```bash
 # Get simulation cards
-curl -X POST https://<your-instance>/attempt/home \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/home \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
 
 # Search attempt history
-curl -X POST https://<your-instance>/attempt/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "page": 1,

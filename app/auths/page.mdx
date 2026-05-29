@@ -47,7 +47,7 @@ Auths uses a composable architecture with full CRUD, duplication, and a draft sy
 
 ### Via the CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow auths create --body '{"auths": [{"name": "University SSO", "description": "SAML SSO for university login"}]}'
@@ -56,8 +56,8 @@ glow auths create --body '{"auths": [{"name": "University SSO", "description": "
 ### Via the API
 
 ```bash
-curl -X POST https://<your-instance>/auth/create \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "auths": [{
@@ -110,8 +110,8 @@ End-to-end recipe for wiring a fresh SSO provider into Keycloak. The four moves 
 **1. Create the auth shell** (returns `auth_id` + a fresh `draft_id`):
 
 ```bash
-curl -X POST https://<your-instance>/auth/create \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/create \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "auths": [{
@@ -155,8 +155,8 @@ Auths uses a draft system with optimistic locking -- the same pattern as Setting
 />
 
 ```bash
-curl -X PATCH https://<your-instance>/auth/draft \
-  -H "Authorization: Bearer <token>" \
+curl -X PATCH $GLOW_INSTANCE_URL/auth/draft \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "input_draft_id": "existing-draft-uuid",
@@ -183,8 +183,8 @@ Response: `success`, `draft_id`, `new_version`, `message`, and `form_state`.
 **List your drafts:**
 
 ```bash
-curl -X POST https://<your-instance>/auth/drafts \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/auth/drafts \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 **Loading a draft:**
@@ -222,8 +222,8 @@ Optional filters:
 | Pagination | `page_size`, `page_offset` | Control page size |
 
 ```bash
-curl -X POST https://<your-instance>/auth/search \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/search \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"search": "sso", "filter_department_ids": ["dept-cs"], "page_size": 25}'
 ```
@@ -245,8 +245,8 @@ Bulk delete and update follow the canonical *all-matching* shape -- explicit IDs
 **Delete by explicit IDs:**
 
 ```bash
-curl -X POST https://<your-instance>/auth/delete \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/delete \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"auth_ids": ["auth-uuid-1", "auth-uuid-2"]}'
 ```
@@ -264,8 +264,8 @@ glow auths delete --body '{
 **Duplicate an auth provider:**
 
 ```bash
-curl -X POST https://<your-instance>/auth/duplicate \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/auth/duplicate \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"auth_id": "auth-uuid"}'
 ```

@@ -30,7 +30,7 @@ Reports is designed for program coordinators who need to evaluate how a cohort o
 
 ### CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 # Fetch the full reports bundle
@@ -47,8 +47,8 @@ glow attempts export
 
 ```bash
 # Get reports with filters
-curl -X POST https://<your-instance>/attempt/report \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/attempt/report \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "department_ids": ["dept-cs"],
@@ -139,12 +139,12 @@ Resource metadata keyed by ID for hydrating IDs into display names:
 
 ```bash
 # Refresh materialized views and caches
-curl -X POST https://<your-instance>/attempt/refresh \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/attempt/refresh \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 
 # Export all reports data as a denormalized ZIP
-curl -X POST https://<your-instance>/attempt/export \
-  -H "Authorization: Bearer <token>"
+curl -X POST $GLOW_INSTANCE_URL/attempt/export \
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 The export returns `content` (base64-encoded), `file_name`, `mime_type`, and `row_count`.

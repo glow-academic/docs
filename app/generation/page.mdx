@@ -61,9 +61,9 @@ voice flows. Artifact type is implicit from the URL path.
 **Raw HTTP:**
 
 ```bash
-curl -X POST https://<your-instance>/persona/generate \
+curl -X POST $GLOW_INSTANCE_URL/persona/generate \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <token>" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "instructions": ["A passive student who starts every reply with Uh..."],
     "config": { "dangerous": false }
@@ -229,8 +229,8 @@ org.
 Raw HTTP:
 
 ```bash
-curl -X POST https://<your-instance>/persona/generations \
-  -H "Authorization: Bearer <token>" \
+curl -X POST $GLOW_INSTANCE_URL/persona/generations \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{ "search": "confused", "page_limit": 50 }'
 ```
 

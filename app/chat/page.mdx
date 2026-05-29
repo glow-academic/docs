@@ -56,7 +56,7 @@ Chats also support a draft system for customizing chat configurations before or 
 
 ### Get Chat Details via CLI
 
-> Calls below assume you've authenticated — see [Authentication](/authentication) for the bearer token.
+> Calls below use `$GLOW_INSTANCE_URL` + `$GLOW_TOKEN` — see [Authentication](/authentication) to export them once.
 
 ```bash
 glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
@@ -65,9 +65,9 @@ glow attempts chat get --body '{"chat_entry_id": "your-chat-entry-uuid"}'
 ### Get Chat Details via API
 
 ```bash
-curl -X POST https://<your-instance>/attempt/chat_get \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_get \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
     "attempt_id": "parent-attempt-uuid"
@@ -83,9 +83,9 @@ The response includes all hydrated resources: personas, documents, parameter fie
 glow attempts chat export --body '{"chat_entry_id": "..."}'
 
 # API
-curl -X POST https://<your-instance>/attempt/chat_export \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_export \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
     "attempt_id": "parent-attempt-uuid"
@@ -181,9 +181,9 @@ each a plain call to its `POST /attempt/chat_*` endpoint) — see the
 `POST /attempt/chat_get` supports search filters to narrow down the resources shown for a chat:
 
 ```bash
-curl -X POST https://<your-instance>/attempt/chat_get \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_get \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "chat_entry_id": "your-chat-entry-uuid",
     "persona_search": "confused",
@@ -231,9 +231,9 @@ glow attempts chat draft --body '{
 }'
 
 # API
-curl -X POST https://<your-instance>/attempt/chat_draft \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_draft \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token" \
+  -H "Authorization: Bearer $GLOW_TOKEN" \
   -d '{
     "name": "Custom FERPA Chat",
     "description": "Modified chat with additional documents",
@@ -251,9 +251,9 @@ The draft endpoint supports optimistic concurrency through `expected_version` an
 glow attempts chat drafts
 
 # API
-curl -X POST https://<your-instance>/attempt/chat_drafts \
+curl -X POST $GLOW_INSTANCE_URL/attempt/chat_drafts \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-token"
+  -H "Authorization: Bearer $GLOW_TOKEN"
 ```
 
 {/* DEMO_VIDEO: chat-export | vhs */}
