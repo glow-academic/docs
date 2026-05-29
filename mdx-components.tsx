@@ -1,5 +1,6 @@
 import { useMDXComponents as getDocsMDXComponents } from 'nextra-theme-docs'
 import DemoVideo from './components/DemoVideo'
+import { VersionPin } from './components/VersionPin'
 
 const docsComponents = getDocsMDXComponents()
 
@@ -9,6 +10,7 @@ export function useMDXComponents(components?: Record<string, unknown>) {
   return {
     ...docsComponents,
     DemoVideo,
+    VersionPin,
     ...components,
   }
 }

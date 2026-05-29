@@ -16,6 +16,7 @@
 import { readdirSync, statSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, relative, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { resolveVersionPin } from './lib/version-pin.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const APP_DIR = join(ROOT, 'app')
@@ -61,7 +62,7 @@ function slugTitle(route) {
 // Strip MDX-only noise so the concatenated text reads as plain Markdown.
 // Mermaid blocks are kept — they carry meaning as text.
 function cleanBody(src) {
-  return src
+  return resolveVersionPin(src)              // <VersionPin /> → live pin from api-versions.json
     .replace(/^import .*$/gm, '')             // import statements
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')     // MDX brace comments (e.g. DEMO_VIDEO markers)
     .replace(/<DemoVideo[\s\S]*?\/>/g, '')    // video embeds — meaningless in plain text

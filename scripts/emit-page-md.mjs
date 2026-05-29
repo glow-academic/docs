@@ -14,6 +14,7 @@
 import { readdirSync, statSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { join, relative, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { resolveVersionPin } from './lib/version-pin.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const APP_DIR = join(ROOT, 'app')
@@ -49,7 +50,7 @@ const slugTitle = r => r === '' ? 'Home'
 
 // Strip MDX-only noise so the .md reads as plain Markdown (mermaid kept).
 function cleanBody(s) {
-  return s
+  return resolveVersionPin(s)
     .replace(/^import .*$/gm, '')
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
     .replace(/<DemoVideo[\s\S]*?\/>/g, '')

@@ -54618,7 +54618,7 @@ Route: /start
 # Start
 
 Spin up a Glow instance from zero and make your first authenticated
-request. Pinned **Glow API v2.15.38** · **CLI v1.0.0** (see
+request. Pinned **Glow API v1.0.50** · **CLI v1.0.6** (see
 [api-versions.json](https://github.com/glow-academic/docs/blob/main/api-versions.json) for the live pin).
 
 ## 1 — Install the CLI
