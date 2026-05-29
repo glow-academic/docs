@@ -82,7 +82,7 @@ curl -X POST $GLOW_INSTANCE_URL/system/groups \
 <DemoVideo
   topic="group-lean-vs-detail"
   kind="vhs"
-  caption="Side-by-side: lean resolve returns just identity (cheap path for audit linking), then flipping `include_detail: true` to pull the full runs + messages tree."
+  caption="A run group two ways via POST /system/groups: the lean table (id, run count, cost, time span) for quick scanning, then the full JSON row behind a line — group id, run count, exact first/last run timestamps, and session — for audit linking."
 />
 
 ## Request fields
