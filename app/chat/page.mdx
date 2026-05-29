@@ -153,7 +153,7 @@ CLI dispatch is symmetric — `glow attempts chat <op>` (e.g.
   caption="Calling chat_hints mid-conversation for a nudge, then chat_feedback + chat_strengths/improvements after grading to see per-standard rationale."
 />
 
-## Live REPL + voice (WS)
+## Live REPL (WS)
 
 {/* DEMO_VIDEO: chat-live | vhs */}
 
@@ -171,9 +171,10 @@ flow. The CLI has an interactive REPL at:
 glow attempts chat live <chat_id>
 ```
 
-Voice (`glow attempts chat voice <chat_id>`) is gated on the `cpal` +
-`rodio` audio deps and is currently a deferred placeholder — see the
-deferred CLI capability tracking in the `glow-academic-cli` repo.
+Voice is handled separately by the `chat_voice` / `chat_speak` /
+`chat_silence` session ops (`glow attempts chat voice|speak|silence`,
+each a plain call to its `POST /attempt/chat_*` endpoint) — see the
+[Voice pipeline](/voice) for the full STT → LLM → TTS loop.
 
 ## Searching and filtering chat resources
 

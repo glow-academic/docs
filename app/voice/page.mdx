@@ -187,15 +187,15 @@ event hub is only partially integrated.**
   selective-rename + stream-bridge machinery that powers the
   artifact ops. Mapping entries are pending; until they land, voice
   events live on a parallel path rather than the canonical hub.
-- **CLI deferral.** The `glow attempts chat voice <chat_id>` REPL is
-  gated on the `cpal` + `rodio` audio crates and ships as a
-  placeholder today — see [Chat: live REPL + voice](/chat#live-repl--voice-ws).
-  The server side (audio_upload + chat_voice/speak/silence) is fully
-  reachable from any HTTP/socket.io client; only the CLI mic capture
-  is on hold.
 
-Neither gap blocks the loop — they are wiring-cleanup work, not
-missing features.
+The pipeline is driven entirely through the HTTP / socket.io API
+(`audio_upload` + `chat_voice` / `chat_speak` / `chat_silence`), so any
+client can run it. There is no dedicated CLI mic-capture command — the
+`glow attempts chat voice|speak|silence` commands are thin calls to
+those same endpoints.
+
+This gap doesn't block the loop — it's wiring-cleanup work, not a
+missing feature.
 
 ---
 
