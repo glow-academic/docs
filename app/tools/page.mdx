@@ -123,7 +123,7 @@ The tool's `operations` and `artifacts` describe what actually runs when an agen
 <DemoVideo
   topic="tools-invocation"
   kind="vhs"
-  caption="Watching the tool fire during a live attempt -- the agent picks check_deadline, args render in the trace, and the structured response feeds back into the next turn."
+  caption="A tool firing inside a live attempt: the agent invokes Attempt_Get, the call + arguments render in the invocation trace (call.start → call.complete), and the structured result feeds back into the assistant's next turn."
 />
 
 Tools support feature flags through `flag_ids` that control behavior such as:
