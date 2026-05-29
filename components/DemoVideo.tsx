@@ -41,7 +41,11 @@ export type DemoVideoKind = 'playwright' | 'vhs' | 'manual'
 
 interface DemoVideoProps {
   topic: string
-  /** Optional caption rendered under the video. */
+  /**
+   * Short description of the clip. Used as the video's accessible label
+   * (its `aria-label` + hover `title`) — the "alt text" for the video —
+   * rather than a visible caption, to keep the page clean.
+   */
   caption?: string
   /** Optional poster image (defaults to first frame of the video). */
   poster?: string
@@ -64,6 +68,9 @@ export default function DemoVideo({ topic, caption, poster, kind }: DemoVideoPro
   const hasPerTopic = ext !== undefined
   const path = hasPerTopic ? `/demos/${topic}.${ext}` : '/demos/_placeholder.mp4'
   const src = `${BASE_PATH}${path}`
+  // The caption is the accessible description (the "alt" for a video, i.e.
+  // its aria-label) rather than a visible figcaption — keeps the page clean.
+  const label = caption ?? `Demo video for ${topic}`
 
   return (
     <figure
@@ -71,7 +78,6 @@ export default function DemoVideo({ topic, caption, poster, kind }: DemoVideoPro
       data-demo-video={topic}
       data-demo-fallback={hasPerTopic ? undefined : 'placeholder'}
       data-demo-kind={kind}
-      aria-label={`Demo video for ${topic}`}
     >
       <video
         src={src}
@@ -79,15 +85,12 @@ export default function DemoVideo({ topic, caption, poster, kind }: DemoVideoPro
         controls
         playsInline
         preload="metadata"
+        aria-label={label}
+        title={label}
         className="w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-black"
       >
         Your browser does not support the video tag.
       </video>
-      {(caption || !hasPerTopic) && (
-        <figcaption className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-          {caption ?? `Placeholder — drop a real clip at public/demos/${topic}.webm (or .mp4) to replace.`}
-        </figcaption>
-      )}
     </figure>
   )
 }
