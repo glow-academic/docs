@@ -2,6 +2,7 @@ import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { CodePersonalizer } from '@/components/CodePersonalizer'
+import { Logo } from '@/components/Logo'
 import 'nextra-theme-docs/style.css'
 import './custom.css'
 
@@ -17,7 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <Head />
       <body>
         <Layout
-          navbar={<Navbar logo={<b>Glow</b>} />}
+          navbar={<Navbar logo={<Logo />} />}
           pageMap={pageMap}
           docsRepositoryBase="https://github.com/glow-academic/docs/tree/main"
           editLink="Edit this page on GitHub →"
