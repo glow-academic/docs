@@ -45,19 +45,17 @@ interface DemoVideoProps {
   caption?: string
   /** Optional poster image (defaults to first frame of the video). */
   poster?: string
-  /** How this clip is produced — surfaces a small badge + lets tooling enumerate. */
+  /**
+   * How this clip is produced ('playwright' | 'vhs'). Recorded in the
+   * `data-demo-kind` attribute for tooling/enumeration only — it is NOT
+   * shown to readers (an internal detail; users don't need it).
+   */
   kind?: DemoVideoKind
 }
 
 // Mirrors next.config.mjs ``basePath`` — must be inlined client-side
 // since Next only auto-prefixes raw asset URLs for next/image / next/link.
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
-
-const KIND_LABEL: Record<DemoVideoKind, string> = {
-  playwright: 'Playwright clip',
-  vhs: 'VHS clip',
-  manual: 'Manual recording',
-}
 
 export default function DemoVideo({ topic, caption, poster, kind }: DemoVideoProps) {
   // Manifest maps topic → extension ('webm' | 'mp4'). Missing topic =>
@@ -85,13 +83,8 @@ export default function DemoVideo({ topic, caption, poster, kind }: DemoVideoPro
       >
         Your browser does not support the video tag.
       </video>
-      {(caption || !hasPerTopic || kind) && (
+      {(caption || !hasPerTopic) && (
         <figcaption className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-          {kind && (
-            <span className="mr-2 inline-block rounded border border-neutral-300 dark:border-neutral-700 px-1.5 py-0.5 text-xs font-mono text-neutral-600 dark:text-neutral-400">
-              {KIND_LABEL[kind]}
-            </span>
-          )}
           {caption ?? `Placeholder — drop a real clip at public/demos/${topic}.webm (or .mp4) to replace.`}
         </figcaption>
       )}
