@@ -7898,6 +7898,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/attempt/chat_export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Chat Export
+         * @description Export a single chat entry as a denormalized CSV row.
+         */
+        post: operations["chat_export_attempt_chat_export_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/attempt/chat_feedback": {
         parameters: {
             query?: never;
@@ -22875,6 +22895,63 @@ export interface components {
             row_count: number;
         };
         /**
+         * ExportChatApiRequest
+         * @description Request model for the chat export endpoint.
+         *
+         *     The route resolves ``group_id`` from session for audit linking, so the
+         *     client only supplies the chat-scoping ids. ``attempt_id`` and
+         *     ``draft_id`` are forwarded as-is to ``export_chat_impl`` when present.
+         */
+        ExportChatApiRequest: {
+            /**
+             * Chat Entry Id
+             * Format: uuid
+             * @description UUID of the chat entry to export
+             */
+            chat_entry_id: string;
+            /**
+             * Attempt Id
+             * @description Optional attempt context for the chat
+             */
+            attempt_id?: string | null;
+            /**
+             * Draft Id
+             * @description Optional draft context for the chat
+             */
+            draft_id?: string | null;
+            /**
+             * Snapshot Key
+             * @description Cache snapshot key for consistent reads across related requests
+             */
+            snapshot_key?: string | null;
+        };
+        /**
+         * ExportChatApiResponse
+         * @description Response model for chat export.
+         */
+        ExportChatApiResponse: {
+            /**
+             * Content
+             * @description Exported file content
+             */
+            content: string;
+            /**
+             * File Name
+             * @description Name of the exported file
+             */
+            file_name: string;
+            /**
+             * Mime Type
+             * @description MIME type of the exported file
+             */
+            mime_type: string;
+            /**
+             * Row Count
+             * @description Number of rows in the export
+             */
+            row_count: number;
+        };
+        /**
          * ExportCohortApiRequest
          * @description Request model for cohort export.
          */
@@ -37577,6 +37654,11 @@ export interface components {
          */
         ListAgentApiAgent: {
             /**
+             * Id
+             * @description Agent artifact UUID (canonical id; mirrors agent_id)
+             */
+            id?: string | null;
+            /**
              * Agent Id
              * @description UUID of the agent
              */
@@ -37822,6 +37904,11 @@ export interface components {
          */
         ListCohortApiCohort: {
             /**
+             * Id
+             * @description Cohort artifact UUID (canonical id; mirrors cohort_id)
+             */
+            id?: string | null;
+            /**
              * Cohort Id
              * @description Cohort UUID
              */
@@ -38042,6 +38129,11 @@ export interface components {
         /** ListDepartmentApiDepartment */
         ListDepartmentApiDepartment: {
             /**
+             * Id
+             * @description Department artifact UUID (canonical id; mirrors department_id)
+             */
+            id?: string | null;
+            /**
              * Department Id
              * @description Unique department identifier
              */
@@ -38153,6 +38245,11 @@ export interface components {
          * @description Document type for list endpoint with computed permissions.
          */
         ListDocumentApiDocument: {
+            /**
+             * Id
+             * @description Document artifact UUID (canonical id; mirrors document_id)
+             */
+            id?: string | null;
             /**
              * Document Id
              * @description Document UUID
@@ -38294,6 +38391,11 @@ export interface components {
          */
         ListEvalApiEval: {
             /**
+             * Id
+             * @description Eval artifact UUID (canonical id; mirrors eval_id)
+             */
+            id?: string | null;
+            /**
              * Eval Id
              * @description Eval UUID
              */
@@ -38425,6 +38527,11 @@ export interface components {
         };
         /** ListFieldApiField */
         ListFieldApiField: {
+            /**
+             * Id
+             * @description Field artifact UUID (canonical id; mirrors field_id)
+             */
+            id?: string | null;
             /**
              * Field Id
              * @description Unique field identifier
@@ -38590,6 +38697,11 @@ export interface components {
          */
         ListModelApiModel: {
             /**
+             * Id
+             * @description Model artifact UUID (canonical id; mirrors model_id)
+             */
+            id?: string | null;
+            /**
              * Model Id
              * @description Model unique identifier
              */
@@ -38712,6 +38824,11 @@ export interface components {
         /** ListParameterApiParameter */
         ListParameterApiParameter: {
             /**
+             * Id
+             * @description Parameter artifact UUID (canonical id; mirrors parameter_id)
+             */
+            id?: string | null;
+            /**
              * Parameter Id
              * @description Parameter unique identifier
              */
@@ -38833,6 +38950,11 @@ export interface components {
          * @description Persona type for list endpoint with computed permissions.
          */
         ListPersonaApiPersona: {
+            /**
+             * Id
+             * @description Persona artifact UUID (canonical id; mirrors persona_id)
+             */
+            id?: string | null;
             /**
              * Persona Id
              * @description UUID of the persona
@@ -39106,6 +39228,11 @@ export interface components {
          */
         ListProfilesApiProfile: {
             /**
+             * Id
+             * @description Profile artifact UUID (canonical id; mirrors profile_id)
+             */
+            id?: string | null;
+            /**
              * Profile Id
              * @description Unique profile identifier
              */
@@ -39235,6 +39362,11 @@ export interface components {
          * @description Provider type for list endpoint with computed permissions.
          */
         ListProviderApiProvider: {
+            /**
+             * Id
+             * @description Provider artifact UUID (canonical id; mirrors provider_id)
+             */
+            id?: string | null;
             /**
              * Provider Id
              * @description Provider unique identifier
@@ -39390,6 +39522,11 @@ export interface components {
         };
         /** ListRubricApiRubric */
         ListRubricApiRubric: {
+            /**
+             * Id
+             * @description Rubric artifact UUID (canonical id; mirrors rubric_id)
+             */
+            id?: string | null;
             /**
              * Rubric Id
              * @description Rubric UUID
@@ -39727,6 +39864,11 @@ export interface components {
          */
         ListScenarioApiScenario: {
             /**
+             * Id
+             * @description Scenario artifact UUID (canonical id; mirrors scenario_id)
+             */
+            id?: string | null;
+            /**
              * Scenario Id
              * @description UUID of the scenario
              */
@@ -39939,6 +40081,11 @@ export interface components {
          */
         ListSettingApiSetting: {
             /**
+             * Id
+             * @description Setting artifact UUID (canonical id; mirrors settings_id)
+             */
+            id?: string | null;
+            /**
              * Settings Id
              * @description Unique setting identifier
              */
@@ -40106,6 +40253,11 @@ export interface components {
          */
         ListSimulationApiSimulation: {
             /**
+             * Id
+             * @description Simulation artifact UUID (canonical id; mirrors simulation_id)
+             */
+            id?: string | null;
+            /**
              * Simulation Id
              * @description UUID of the simulation
              */
@@ -40246,6 +40398,11 @@ export interface components {
         };
         /** ListToolApiTool */
         ListToolApiTool: {
+            /**
+             * Id
+             * @description Tool artifact UUID (canonical id; mirrors tool_id)
+             */
+            id?: string | null;
             /**
              * Tool Id
              * @description Tool unique identifier
@@ -78263,6 +78420,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CreateAttemptChatApiResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chat_export_attempt_chat_export_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExportChatApiRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportChatApiResponse"];
                 };
             };
             /** @description Validation Error */

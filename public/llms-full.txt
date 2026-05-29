@@ -1885,6 +1885,7 @@ Agent type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Agent artifact UUID (canonical id; mirrors agent_id) |
 | `agent_id` | `string` | No | UUID of the agent |
 | `name` | `string` | No | Display name |
 | `description` | `string` | No | Agent description text |
@@ -2606,6 +2607,36 @@ Create a chat within an attempt.
 |---|---|---|---|
 | `attempt_chat_id` | `string` | Yes | — |
 | `idempotency_key` | `string` | No | — |
+
+---
+
+# `POST` `/attempt/chat_export`
+
+Route: /api-reference/attempt/post-attempt-chat-export
+
+# `POST` `/attempt/chat_export`
+
+Chat Export
+
+Export a single chat entry as a denormalized CSV row.
+
+## Request Body (`ExportChatApiRequest`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `chat_entry_id` | `string` | Yes | UUID of the chat entry to export |
+| `attempt_id` | `string` | No | Optional attempt context for the chat |
+| `draft_id` | `string` | No | Optional draft context for the chat |
+| `snapshot_key` | `string` | No | Cache snapshot key for consistent reads across related requests |
+
+## Response (`ExportChatApiResponse`)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `content` | `string` | Yes | Exported file content |
+| `file_name` | `string` | Yes | Name of the exported file |
+| `mime_type` | `string` | Yes | MIME type of the exported file |
+| `row_count` | `integer` | Yes | Number of rows in the export |
 
 ---
 
@@ -9331,6 +9362,7 @@ Cohort item in list response with Python-computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Cohort artifact UUID (canonical id; mirrors cohort_id) |
 | `cohort_id` | `string` | No | Cohort UUID |
 | `name` | `string` | No | Cohort name |
 | `description` | `string` | No | Cohort description |
@@ -10858,6 +10890,7 @@ existing ``idempotency_key + accept`` pattern.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Department artifact UUID (canonical id; mirrors department_id) |
 | `department_id` | `string` | No | Unique department identifier |
 | `name` | `string` | No | Department display name |
 | `description` | `string` | No | Department description text |
@@ -12625,6 +12658,7 @@ Document type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Document artifact UUID (canonical id; mirrors document_id) |
 | `document_id` | `string` | No | Document UUID |
 | `name` | `string` | No | Document name |
 | `description` | `string` | No | Document description |
@@ -14252,6 +14286,7 @@ Eval type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Eval artifact UUID (canonical id; mirrors eval_id) |
 | `eval_id` | `string` | No | Eval UUID |
 | `name` | `string` | No | Eval name |
 | `description` | `string` | No | Eval description |
@@ -15761,6 +15796,7 @@ existing ``idempotency_key + accept`` pattern.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Field artifact UUID (canonical id; mirrors field_id) |
 | `field_id` | `string` | No | Unique field identifier |
 | `name` | `string` | No | Field display name |
 | `description` | `string` | No | Field description text |
@@ -17333,6 +17369,7 @@ Model type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Model artifact UUID (canonical id; mirrors model_id) |
 | `model_id` | `string` | No | Model unique identifier |
 | `name` | `string` | No | Display name of the model |
 | `description` | `string` | No | Model description text |
@@ -19019,6 +19056,7 @@ Filter section with options and echoed request state.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Parameter artifact UUID (canonical id; mirrors parameter_id) |
 | `parameter_id` | `string` | No | Parameter unique identifier |
 | `name` | `string` | No | Display name of the parameter |
 | `description` | `string` | No | Parameter description text |
@@ -20593,6 +20631,7 @@ Persona type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Persona artifact UUID (canonical id; mirrors persona_id) |
 | `persona_id` | `string` | No | UUID of the persona |
 | `name` | `string` | No | Display name |
 | `description` | `string` | No | Persona description text |
@@ -22261,6 +22300,7 @@ Profile type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Profile artifact UUID (canonical id; mirrors profile_id) |
 | `profile_id` | `string` | No | Unique profile identifier |
 | `emails` | `string`[] | No | All email addresses for the profile |
 | `primary_email` | `string` | No | Primary email address |
@@ -23889,6 +23929,7 @@ Provider type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Provider artifact UUID (canonical id; mirrors provider_id) |
 | `provider_id` | `string` | No | Provider unique identifier |
 | `name` | `string` | No | Display name of the provider |
 | `description` | `string` | No | Provider description text |
@@ -25449,6 +25490,7 @@ Filter section with options and echoed request state.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Rubric artifact UUID (canonical id; mirrors rubric_id) |
 | `rubric_id` | `string` | No | Rubric UUID |
 | `name` | `string` | No | Rubric name |
 | `description` | `string` | No | Rubric description |
@@ -27352,6 +27394,7 @@ Scenario item in list response with Python-computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Scenario artifact UUID (canonical id; mirrors scenario_id) |
 | `scenario_id` | `string` | No | UUID of the scenario |
 | `name` | `string` | No | Display name |
 | `problem_statement` | `string` | No | Problem statement text |
@@ -29230,6 +29273,7 @@ Setting type for list endpoint with computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Setting artifact UUID (canonical id; mirrors settings_id) |
 | `settings_id` | `string` | No | Unique setting identifier |
 | `created_at` | `string` | No | Timestamp when setting was created |
 | `active` | `boolean` | No | Whether the setting is currently active |
@@ -31256,6 +31300,7 @@ Simulation item in list response with Python-computed permissions.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Simulation artifact UUID (canonical id; mirrors simulation_id) |
 | `simulation_id` | `string` | No | UUID of the simulation |
 | `name` | `string` | No | Display name |
 | `description` | `string` | No | Simulation description text |
@@ -37028,6 +37073,7 @@ Filter section with options and echoed request state.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
+| `id` | `string` | No | Tool artifact UUID (canonical id; mirrors tool_id) |
 | `tool_id` | `string` | No | Tool unique identifier |
 | `name` | `string` | No | Display name of the tool |
 | `description` | `string` | No | Tool description text |
@@ -39782,6 +39828,24 @@ glow attempts chat create --body '\{...\}'
 ```
 
 > Wire call: `POST /attempt/chat_create`. Run `glow attempts chat create --help` for the full flag list.
+
+---
+
+# `glow attempts chat export`
+
+Route: /cli-reference/attempts/chat/export
+
+# `glow attempts chat export`
+
+Export on chat (under attempts).
+
+## Usage
+
+```bash
+glow attempts chat export --id <id>
+```
+
+> Wire call: `POST /attempt/chat_export`. Run `glow attempts chat export --help` for the full flag list.
 
 ---
 
@@ -50396,11 +50460,13 @@ Use `invocation_run` to (re-)kick a queued or failed invocation; use
 curl -X POST $GLOW_INSTANCE_URL/test/invocation_trace \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"invocation_id": "invocation-uuid"}'
+  -d '{"test_id": "test-uuid", "test_invocation_id": "test-invocation-uuid"}'
 ```
 
-Returns the full call chain — prompts sent, intermediate tool calls,
-responses received — formatted for replay or audit.
+Returns a `test_invocation_trace_id` — the trace entry binding the
+invocation to its bundle config and recorded run, the anchor every
+replay or audit of this cell resolves against. Pass `run_id` to bind a
+specific recorded run.
 
 ## Listing and paginating
 
@@ -54629,7 +54695,7 @@ Route: /start
 # Start
 
 Spin up a Glow instance from zero and make your first authenticated
-request. Pinned **Glow API v1.0.50** · **CLI v1.0.6** (see
+request. Pinned **Glow API v1.0.52** · **CLI v1.0.6** (see
 [api-versions.json](https://github.com/glow-academic/docs/blob/main/api-versions.json) for the live pin).
 
 ## 1 — Install the CLI

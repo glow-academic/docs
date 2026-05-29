@@ -137,18 +137,20 @@ Use `invocation_run` to (re-)kick a queued or failed invocation; use
 <DemoVideo
   topic="invocation-trace"
   kind="vhs"
-  caption="Expanding `invocation_trace` to walk the full call chain: prompts sent, intermediate tool calls, and the final response — ready for audit or replay."
+  caption="Opening a trace for a test invocation — `invocation_trace` pins the invocation's bundle config + run binding into a trace entry, the replay/audit anchor for the cell."
 />
 
 ```bash
 curl -X POST $GLOW_INSTANCE_URL/test/invocation_trace \
   -H "Authorization: Bearer $GLOW_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"invocation_id": "invocation-uuid"}'
+  -d '{"test_id": "test-uuid", "test_invocation_id": "test-invocation-uuid"}'
 ```
 
-Returns the full call chain — prompts sent, intermediate tool calls,
-responses received — formatted for replay or audit.
+Returns a `test_invocation_trace_id` — the trace entry binding the
+invocation to its bundle config and recorded run, the anchor every
+replay or audit of this cell resolves against. Pass `run_id` to bind a
+specific recorded run.
 
 {/* DEMO_VIDEO: invocation-list-paginate | playwright */}
 

@@ -3,6 +3,7 @@ export default {
   'audio': 'glow attempts chat audio',
   'complete': 'glow attempts chat complete',
   'create': 'glow attempts chat create',
+  'export': 'glow attempts chat export',
   'feedback': 'glow attempts chat feedback',
   'get': 'glow attempts chat get',
   'grade': 'glow attempts chat grade',

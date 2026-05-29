@@ -19,6 +19,7 @@ export default {
   'post-attempt-chat-audio': 'POST /chat_audio',
   'post-attempt-chat-complete': 'POST /chat_complete',
   'post-attempt-chat-create': 'POST /chat_create',
+  'post-attempt-chat-export': 'POST /chat_export',
   'post-attempt-chat-feedback': 'POST /chat_feedback',
   'post-attempt-chat-get': 'POST /chat_get',
   'post-attempt-chat-grade': 'POST /chat_grade',
